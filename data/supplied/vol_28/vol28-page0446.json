@@ -1,0 +1,270 @@
+{
+ "volume": 28,
+ "page_number": 446,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri28chisrich/page/n454",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri28chisrich/page/n454",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.1,
+  "column_width": 1160,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     143,
+     0,
+     2366,
+     244
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     143,
+     244,
+     1216,
+     1332
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     143,
+     1332,
+     1216,
+     1921
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     143,
+     1921,
+     1216,
+     2907
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     143,
+     2907,
+     1216,
+     3332
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1216,
+     244,
+     2366,
+     1910
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1937,
+     1910,
+     2366,
+     2243
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1937,
+     2243,
+     2366,
+     2268
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1216,
+     1910,
+     1937,
+     2268
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1216,
+     2268,
+     2366,
+     2645
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1826,
+     2645,
+     2366,
+     3014
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1826,
+     3017,
+     2366,
+     3051
+    ]
+   },
+   {
+    "name": "c2s6",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1216,
+     2645,
+     1826,
+     3051
+    ]
+   },
+   {
+    "name": "c2s7",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1216,
+     3051,
+     2366,
+     3332
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|428|WAVE|}}",
+   "c1s1": "and it is therefore usual to fix attention in the first place on the case of an infinitely extended wave-system of simple-harmonic profile, say\n{{block center|<math>\\eta=\\beta \\sin k(x-ct).</math> (5)}}\nThe corresponding value of <math>\\phi</math> is\n{{block center|<math>\\phi=\\frac{g\\beta}{kc}\\,\\frac{\\cos \\text{h}\\, k(y+h)}{\\cos \\text{h}\\, kh}\\cos k(x-ct),</math> (6)}}\nwhere <math>h</math> denotes the depth; it is in fact easily verified that this satisfies (1), and makes <math>\\partial\\phi/\\partial y=0</math>, for <math>y=-h</math>, and that it fulfils the pressure-condition (3) at the free surface. The kinematic condition (4) will also be satisfied, provided\n{{block center|<math>c^2=\\frac{g}{k}\\tan \\text{h}kh=\\frac{g\\lambda}{2\\pi}\\tan \\text{h}\\frac{2\\pi h}{\\lambda},</math> (7)}}\n<math>\\lambda</math> denoting the wave-length <math>2\\pi/k</math>. It appears, on calculating the component velocities from (6), that the motion of each particle is elliptic-harmonic, the semi-axes of the orbit, horizontal and vertical, being\n{{block center|<math>\\beta\\frac{\\cos \\text{h}\\, k(y+h)}{\\sin \\text{h}\\, kh}, \\beta\\frac{\\sin \\text{h}\\, k(y+h)}{\\sin \\text{h}\\, kh},</math> (8)}}\nwhere <math>y</math> refers to the mean level of the particle. The dimensions of the orbits diminish from the surface downwards. The direction of motion of a surface-particle is forwards when it coincides with a crest, and backwards when it coincides with a trough, of the waves.\n\nWhen the wave-length is anything less than double the depth we have <math>\\tan \\text{h}\\, kh=1</math>, practically, and the formula (6) reduces to\n{{block center|<math>\\phi=\\frac{g\\beta}{kc}e^{ky}\\cos k(x-ct)</math> (9)}}\nwith\n{{block center|<math>c^2=\\frac{g}{k}=\\frac{g\\lambda}{2\\pi},</math> (10)}}",
+   "c1s2": "the same as if the depth were infinite. The orbits of the particles are now circles of radii <math>\\beta e^{ky}</math>. When, on the other hand, <math>\\lambda</math> is moderately large compared with <math>h</math>, we have <math>\\text{tan h}\\ kh=kh</math>, and <math>c=\\sqrt{(gh)}</math>, in agreement with the preceding theory of “long” waves. These results date from G. Green (1839) and Sir G. B. Airy (1845).\n\nThe energy of our simple-harmonic wave-train is, as usual, half kinetic and half potential, the total amount per unit area of the free surface being <math>\\tfrac{1}{2}g\\rho\\beta^2</math>. This is equal to the work which would be required to raise a stratum of fluid, of thickness equal to the surface-amplitude <math>\\beta</math>, through a height <math>\\tfrac{1}{2}\\beta</math>.\n\nIt has been assumed so far that the upper surface is free, the pressure there being uniform. We might also consider the case of waves on the common surface of two liquids of different densities. For wave-lengths which are less than double the depth of either liquid the formula (10) is replaced by\n{{block center|<math>c^2=\\frac{g\\lambda}{2\\pi}\\cdot\\frac{\\rho-\\rho'}{\\rho+\\rho'},</math> . . . . . (11)}}",
+   "c1s3": "where <math>\\rho</math>, <math>\\rho'</math> are the densities of the lower and upper fluids respectively. The diminution in the wave-velocity <math>c</math> has, as the formula indicates, a twofold cause; the potential energy of a given deformation of the common surface is diminished by the presence of the upper fluid in the ratio <math>(\\rho-\\rho')/\\rho</math>, whilst the inertia is increased in the ratio <math>(\\rho+\\rho')/\\rho</math>. When the two densities are very nearly equal the waves have little energy, and the oscillations of the common surface are very slow. This is easily observed in the case of paraffin oil over water.\n\nTo examine the progress, over the surface of deep water, of a disturbance whose initial character is given quite arbitrarily it would be necessary to resolve it by Fourier's theorem into systems of simple-harmonic trains. Since each of these is propagated with the velocity proper to its own wave-length, as given by (10), the resulting wave-profile will continually alter its shape. The case of an initial local impulse has been studied in detail by S. D. Poisson (1816), A. Cauchy (1815) and others. At any subsequent instant the surface is occupied on either side by a train of waves of varying height and length, the wave-length increasing, and the height diminishing, with increasing distance (<math>x</math>) from the origin of the disturbance. The longer waves travel faster than the shorter, so that each wave is continually being drawn out in length, and its velocity of propagation therefore continually increases as it advances. If we fix our attention on a particular point of the surface, the level there will rise and fall with increasing rapidity and increasing amplitude. These statements are all involved in Poisson's approximate formula\n{{block center|<math>\\eta \\propto \\frac{t^2}{x^{\\frac{5}{2}}} \\left( \\cos \\frac{gt^2}{4x} - \\sin \\frac{gt^2}{4x} \\right),</math> . . . . (12)}}",
+   "c1s4": "which, however, is only valid under the condition that <math>x</math> is large compared with <math>\\tfrac{1}{2}gt^2</math>. This shows moreover that the occurrence of a particular wave-length <math>\\lambda</math> is conditioned by the relation\n{{block center|<math>\\frac{x}{t} = \\frac{1}{2}\\sqrt{\\frac{g\\lambda}{2\\pi}}</math>. . . . . . (13)}}\nThe foregoing description applies in the first instance only to the case of an initial impulse concentrated upon an infinitely narrow",
+   "c2s1": "band of the surface. The corresponding results for the more practical case of a band of finite breadth are to be inferred by superposition. The initial stages of the disturbance at a distance <math>x</math>, which is large compared with the breadth <math>b</math> of the band, will have the same character as before, but when, owing to the continual diminution of the length of the waves emitted, <math>\\lambda</math> becomes comparable with or smaller than <math>b</math>, the parts of the disturbance which are due to the various parts of the band will no longer be approximately in the same phase, and we have a case of \"interference\" in the optical sense. The result is in general that in the final stages the surface will be marked by a series of groups of waves of diminishing amplitude separated by bands of comparatively smooth water.\n\nThe fact that the wave-velocity of a simple-harmonic train varies with the wave-length has an analogy in optics, in the propagation of light in a dispersive medium. In both cases we have a contrast with the simpler phenomena of waves on a tense string or of light-waves ''in vacuo'', and the notion of \"group-velocity,\" as distinguished from wave-velocity, comes to be important. If in the above analysis of the disturbance due to a local impulse we denote by <math>\\text{U}</math> the velocity with which the locus of any particular wave-lengths <math>\\lambda</math> travels, we see from (13) that <math>\\text{U}=\\tfrac{1}{2}c</math>. The actual fact that when a limited group of waves of approximately equal wave-length travels over relatively deep water the velocity of advance of the group as a whole is less than that of the individual waves composing it seems to have been first explicitly remarked by J. Scott Russell (1844). If attention is concentrated on a particular wave, this is seen to progress through the group, gradually dying out as it approaches the front, whilst its former place in the group is occupied in succession by other waves which have come forward from the rear. General explanations, not restricted to the case of water-waves, have been given by Stokes, Rayleigh, and others. If the wave-length <math>\\lambda</math> be regarded as a function of <math>x</math> and <math>t</math>, we have\n{{block center|<math>\\frac{\\partial\\lambda}{\\partial t}+\\text{U}\\frac{\\partial\\lambda}{\\partial x}=0</math>, . . . . . . (14)}}\nsince <math>\\lambda</math> does not vary in the neighbourhood of a geometrical point travelling with velocity <math>\\text{U}</math>, this being in fact the definition of <math>\\text{U}</math>. Again, if we imagine a second geometrical point to move with the ''waves'', we have\n{{block center|<math>\\frac{\\partial\\lambda}{\\partial t}+c\\frac{\\partial\\lambda}{\\partial x}=\\frac{\\partial c}{\\partial x}\\lambda=\\lambda\\frac{dc}{d\\lambda}\\cdot\\frac{\\partial\\lambda}{\\partial x}</math>, . . . . (15)}}\nthe second member expressing the rate at which two consecutive wave-crests are separating from one another. Comparing (14) and (15), we have\n{{block center|<math>\\text{U}=c-\\lambda\\frac{dc}{d\\lambda}</math>. . . . . . . (16)}}\nIf a curve be constructed with <math>\\lambda</math> as abscissa and <math>c</math> as ordinate, the group-velocity <math>\\text{U}</math> will be represented by the intercept made by the tangent on the axis of <math>c</math>. This is illustrated",
+   "c2s2": "{{c|{{sc|Fig.}} 2.}}",
+   "c2s3": "by the annexed figure, which refers to the case of deep-water waves; the curve is a parabola, and the intercept is half the ordinate, in accordance with the relation <math>\\text{U} = \\frac{1}{2}c</math>, already remarked. The physical importance of the motion of group-velocity was pointed out by O. Reynolds (1877), who showed that the rate at which energy is propagated is only half that which would be required for the transport of the group as a whole with the velocity <math>c</math>.",
+   "c2s4": "¶\nThe preceding investigations enable us to infer the effect of a pressure-disturbance travelling over the surface of still water with, say, a constant velocity <math>c</math> in the direction of <math>x</math>-negative. The abnormal pressure being supposed concentrated on an infinitely narrow band of the surface, the elevation <math>\\eta</math> at any point <math>\\text{P}</math> may be regarded as due to a succession of infinitely small impulses delivered over bands of the surface at equal infinitely short intervals of time on equidistant lines parallel to the (horizontal) axis of <math>z</math>. Of the wave-systems thus successively generated, those only will combine to produce a sensible effect at <math>\\text{P}</math> which had their origin in the neighbourhood of a line <math>\\text{Q}</math>",
+   "c2s5": "{{c|{{sc|Fig.}} 3.}}",
+   "c2s6": "whose position is determined by the consideration that the phase at <math>\\text{P}</math> is “stationary” for variations in the position of <math>\\text{Q}</math>. Now if <math>t</math> be the time which the source of disturbance has taken to travel from <math>\\text{Q}</math> to its actual position <math>\\text{O}</math>, it appears from (12) that the phase of the waves at <math>\\text{P}</math>, originated at <math>\\text{Q}</math>, is <math>gt^2/4x+\\tfrac{1}{4}\\pi</math>, where <math>x=\\text{QP}</math>. The condition for stationary phase is therefore\n{{block center|<math>\\dot{x}=2x/t.</math> . . (17)}}",
+   "c2s7": "In this differentiation, <math>\\text{O}</math> and <math>\\text{P}</math> are to be regarded as fixed; hence <math>\\dot{x}=c</math>, and therefore <math>\\text{OQ}=ct=2\\text{PQ}</math>. We have already seen that the wave-length at <math>\\text{P}</math> is such that <math>\\text{PQ}=\\text{U}t</math>, where <math>\\text{U}</math> is the corresponding group-velocity. Hence the"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v28 p0446 c2f1.png",
+   "c2f2": "eb1911 v28 p0446 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1946,
+     1913,
+     2288,
+     2240
+    ],
+    "caption": [
+     2067,
+     2240,
+     2173,
+     2268
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1941,
+     1908,
+     2295,
+     2233
+    ]
+   },
+   {
+    "box": [
+     1836,
+     2648,
+     2286,
+     3011
+    ],
+    "caption": [
+     2014,
+     3017,
+     2122,
+     3051
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1839,
+     2655,
+     2295,
+     3002
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    0,
+    1
+   ],
+   "1": [
+    0,
+    3
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6187,
+    "output_tokens": 184,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 12,
+    "input_tokens": 9728,
+    "output_tokens": 6002,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 23088
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|428|WAVE|}}</noinclude>and it is therefore usual to fix attention in the first place on the case of an infinitely extended wave-system of simple-harmonic profile, say\n{{block center|<math>\\eta=\\beta \\sin k(x-ct).</math> (5)}}\nThe corresponding value of <math>\\phi</math> is\n{{block center|<math>\\phi=\\frac{g\\beta}{kc}\\,\\frac{\\cos \\text{h}\\, k(y+h)}{\\cos \\text{h}\\, kh}\\cos k(x-ct),</math> (6)}}\nwhere <math>h</math> denotes the depth; it is in fact easily verified that this satisfies (1), and makes <math>\\partial\\phi/\\partial y=0</math>, for <math>y=-h</math>, and that it fulfils the pressure-condition (3) at the free surface. The kinematic condition (4) will also be satisfied, provided\n{{block center|<math>c^2=\\frac{g}{k}\\tan \\text{h}kh=\\frac{g\\lambda}{2\\pi}\\tan \\text{h}\\frac{2\\pi h}{\\lambda},</math> (7)}}\n<math>\\lambda</math> denoting the wave-length <math>2\\pi/k</math>. It appears, on calculating the component velocities from (6), that the motion of each particle is elliptic-harmonic, the semi-axes of the orbit, horizontal and vertical, being\n{{block center|<math>\\beta\\frac{\\cos \\text{h}\\, k(y+h)}{\\sin \\text{h}\\, kh}, \\beta\\frac{\\sin \\text{h}\\, k(y+h)}{\\sin \\text{h}\\, kh},</math> (8)}}\nwhere <math>y</math> refers to the mean level of the particle. The dimensions of the orbits diminish from the surface downwards. The direction of motion of a surface-particle is forwards when it coincides with a crest, and backwards when it coincides with a trough, of the waves.\n\nWhen the wave-length is anything less than double the depth we have <math>\\tan \\text{h}\\, kh=1</math>, practically, and the formula (6) reduces to\n{{block center|<math>\\phi=\\frac{g\\beta}{kc}e^{ky}\\cos k(x-ct)</math> (9)}}\nwith\n{{block center|<math>c^2=\\frac{g}{k}=\\frac{g\\lambda}{2\\pi},</math> (10)}} the same as if the depth were infinite. The orbits of the particles are now circles of radii <math>\\beta e^{ky}</math>. When, on the other hand, <math>\\lambda</math> is moderately large compared with <math>h</math>, we have <math>\\text{tan h}\\ kh=kh</math>, and <math>c=\\sqrt{(gh)}</math>, in agreement with the preceding theory of “long” waves. These results date from G. Green (1839) and Sir G. B. Airy (1845).\n\nThe energy of our simple-harmonic wave-train is, as usual, half kinetic and half potential, the total amount per unit area of the free surface being <math>\\tfrac{1}{2}g\\rho\\beta^2</math>. This is equal to the work which would be required to raise a stratum of fluid, of thickness equal to the surface-amplitude <math>\\beta</math>, through a height <math>\\tfrac{1}{2}\\beta</math>.\n\nIt has been assumed so far that the upper surface is free, the pressure there being uniform. We might also consider the case of waves on the common surface of two liquids of different densities. For wave-lengths which are less than double the depth of either liquid the formula (10) is replaced by\n{{block center|<math>c^2=\\frac{g\\lambda}{2\\pi}\\cdot\\frac{\\rho-\\rho'}{\\rho+\\rho'},</math> . . . . . (11)}} where <math>\\rho</math>, <math>\\rho'</math> are the densities of the lower and upper fluids respectively. The diminution in the wave-velocity <math>c</math> has, as the formula indicates, a twofold cause; the potential energy of a given deformation of the common surface is diminished by the presence of the upper fluid in the ratio <math>(\\rho-\\rho')/\\rho</math>, whilst the inertia is increased in the ratio <math>(\\rho+\\rho')/\\rho</math>. When the two densities are very nearly equal the waves have little energy, and the oscillations of the common surface are very slow. This is easily observed in the case of paraffin oil over water.\n\nTo examine the progress, over the surface of deep water, of a disturbance whose initial character is given quite arbitrarily it would be necessary to resolve it by Fourier's theorem into systems of simple-harmonic trains. Since each of these is propagated with the velocity proper to its own wave-length, as given by (10), the resulting wave-profile will continually alter its shape. The case of an initial local impulse has been studied in detail by S. D. Poisson (1816), A. Cauchy (1815) and others. At any subsequent instant the surface is occupied on either side by a train of waves of varying height and length, the wave-length increasing, and the height diminishing, with increasing distance (<math>x</math>) from the origin of the disturbance. The longer waves travel faster than the shorter, so that each wave is continually being drawn out in length, and its velocity of propagation therefore continually increases as it advances. If we fix our attention on a particular point of the surface, the level there will rise and fall with increasing rapidity and increasing amplitude. These statements are all involved in Poisson's approximate formula\n{{block center|<math>\\eta \\propto \\frac{t^2}{x^{\\frac{5}{2}}} \\left( \\cos \\frac{gt^2}{4x} - \\sin \\frac{gt^2}{4x} \\right),</math> . . . . (12)}} which, however, is only valid under the condition that <math>x</math> is large compared with <math>\\tfrac{1}{2}gt^2</math>. This shows moreover that the occurrence of a particular wave-length <math>\\lambda</math> is conditioned by the relation\n{{block center|<math>\\frac{x}{t} = \\frac{1}{2}\\sqrt{\\frac{g\\lambda}{2\\pi}}</math>. . . . . . (13)}}\nThe foregoing description applies in the first instance only to the case of an initial impulse concentrated upon an infinitely narrow band of the surface. The corresponding results for the more practical case of a band of finite breadth are to be inferred by superposition. The initial stages of the disturbance at a distance <math>x</math>, which is large compared with the breadth <math>b</math> of the band, will have the same character as before, but when, owing to the continual diminution of the length of the waves emitted, <math>\\lambda</math> becomes comparable with or smaller than <math>b</math>, the parts of the disturbance which are due to the various parts of the band will no longer be approximately in the same phase, and we have a case of \"interference\" in the optical sense. The result is in general that in the final stages the surface will be marked by a series of groups of waves of diminishing amplitude separated by bands of comparatively smooth water.\n\nThe fact that the wave-velocity of a simple-harmonic train varies with the wave-length has an analogy in optics, in the propagation of light in a dispersive medium. In both cases we have a contrast with the simpler phenomena of waves on a tense string or of light-waves ''in vacuo'', and the notion of \"group-velocity,\" as distinguished from wave-velocity, comes to be important. If in the above analysis of the disturbance due to a local impulse we denote by <math>\\text{U}</math> the velocity with which the locus of any particular wave-lengths <math>\\lambda</math> travels, we see from (13) that <math>\\text{U}=\\tfrac{1}{2}c</math>. The actual fact that when a limited group of waves of approximately equal wave-length travels over relatively deep water the velocity of advance of the group as a whole is less than that of the individual waves composing it seems to have been first explicitly remarked by J. Scott Russell (1844). If attention is concentrated on a particular wave, this is seen to progress through the group, gradually dying out as it approaches the front, whilst its former place in the group is occupied in succession by other waves which have come forward from the rear. General explanations, not restricted to the case of water-waves, have been given by Stokes, Rayleigh, and others. If the wave-length <math>\\lambda</math> be regarded as a function of <math>x</math> and <math>t</math>, we have\n{{block center|<math>\\frac{\\partial\\lambda}{\\partial t}+\\text{U}\\frac{\\partial\\lambda}{\\partial x}=0</math>, . . . . . . (14)}}\nsince <math>\\lambda</math> does not vary in the neighbourhood of a geometrical point travelling with velocity <math>\\text{U}</math>, this being in fact the definition of <math>\\text{U}</math>. Again, if we imagine a second geometrical point to move with the ''waves'', we have\n{{block center|<math>\\frac{\\partial\\lambda}{\\partial t}+c\\frac{\\partial\\lambda}{\\partial x}=\\frac{\\partial c}{\\partial x}\\lambda=\\lambda\\frac{dc}{d\\lambda}\\cdot\\frac{\\partial\\lambda}{\\partial x}</math>, . . . . (15)}}\nthe second member expressing the rate at which two consecutive wave-crests are separating from one another. Comparing (14) and (15), we have\n{{block center|<math>\\text{U}=c-\\lambda\\frac{dc}{d\\lambda}</math>. . . . . . . (16)}}\nIf a curve be constructed with <math>\\lambda</math> as abscissa and <math>c</math> as ordinate, the group-velocity <math>\\text{U}</math> will be represented by the intercept made by the tangent on the axis of <math>c</math>. This is illustrated by the annexed figure, which refers to the case of deep-water waves; the curve is a parabola, and the intercept is half the ordinate, in accordance with the relation <math>\\text{U} = \\frac{1}{2}c</math>, already remarked. The physical importance of the motion of group-velocity was pointed out by O. Reynolds (1877), who showed that the rate at which energy is propagated is only half that which would be required for the transport of the group as a whole with the velocity <math>c</math>.\n\n[[File:eb1911 v28 p0446 c2f1.png|center|133px]]\n{{c|{{sc|Fig.}} 2.}}\n\nThe preceding investigations enable us to infer the effect of a pressure-disturbance travelling over the surface of still water with, say, a constant velocity <math>c</math> in the direction of <math>x</math>-negative. The abnormal pressure being supposed concentrated on an infinitely narrow band of the surface, the elevation <math>\\eta</math> at any point <math>\\text{P}</math> may be regarded as due to a succession of infinitely small impulses delivered over bands of the surface at equal infinitely short intervals of time on equidistant lines parallel to the (horizontal) axis of <math>z</math>. Of the wave-systems thus successively generated, those only will combine to produce a sensible effect at <math>\\text{P}</math> which had their origin in the neighbourhood of a line <math>\\text{Q}</math> whose position is determined by the consideration that the phase at <math>\\text{P}</math> is “stationary” for variations in the position of <math>\\text{Q}</math>. Now if <math>t</math> be the time which the source of disturbance has taken to travel from <math>\\text{Q}</math> to its actual position <math>\\text{O}</math>, it appears from (12) that the phase of the waves at <math>\\text{P}</math>, originated at <math>\\text{Q}</math>, is <math>gt^2/4x+\\tfrac{1}{4}\\pi</math>, where <math>x=\\text{QP}</math>. The condition for stationary phase is therefore\n{{block center|<math>\\dot{x}=2x/t.</math> . . (17)}} In this differentiation, <math>\\text{O}</math> and <math>\\text{P}</math> are to be regarded as fixed; hence <math>\\dot{x}=c</math>, and therefore <math>\\text{OQ}=ct=2\\text{PQ}</math>. We have already seen that the wave-length at <math>\\text{P}</math> is such that <math>\\text{PQ}=\\text{U}t</math>, where <math>\\text{U}</math> is the corresponding group-velocity. Hence the\n\n[[File:eb1911 v28 p0446 c2f2.png|center|168px]]\n{{c|{{sc|Fig.}} 3.}}<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,254 @@
+{
+ "volume": 25,
+ "page_number": 1047,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n1069",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n1069",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1091,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     103,
+     98,
+     2255,
+     167
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     103,
+     167,
+     1175,
+     1265
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     103,
+     1265,
+     1175,
+     2059
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     103,
+     2059,
+     673,
+     2605
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     103,
+     2612,
+     673,
+     2652
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     673,
+     2059,
+     1175,
+     2663
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     103,
+     2663,
+     1175,
+     3107
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1175,
+     167,
+     2255,
+     709
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1927,
+     709,
+     2255,
+     1346
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1927,
+     1354,
+     2255,
+     1388
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1175,
+     709,
+     1927,
+     1388
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1175,
+     1388,
+     2255,
+     2469
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1175,
+     2469,
+     2255,
+     3107
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||STRENGTH OF MATERIALS|1021}}",
+   "c1s1": "<math>\\text{F}_1</math>, <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, &c., may be referred to HK by introducing couples whose moments are <math>\\text{F}_1x_1</math>, <math>\\text{F}_2x_2</math>, <math>\\text{F}_3x_3</math>, &c. Hence the stress at HK must equilibrate, first, a couple whose moment is <math>\\Sigma\\text{F}x</math>, and, second, a force whose value is <math>\\Sigma\\text{F}</math>, which tends to shear B from A. In these summations regard must of course be had to the sign of each force; in the diagram the sign of <math>\\text{F}_4</math> is opposite to the sign of <math>\\text{F}_1</math>, <math>\\text{F}_2</math> and <math>\\text{F}_3</math>. Thus the stress at HK may be regarded as that due to a bending moment <math>\\text{M}</math> equal to the sum of the moments about the section of the externally applied forces on one side of the section (<math>\\Sigma\\text{F}x</math>), and a shearing force equal to the sum of the forces about one side of the section (<math>\\Sigma\\text{F}</math>). It is a matter of convenience only whether the forces on B or on A be taken in reckoning the bending moment and the shearing force. The bending moment causes a uniformly varying normal stress on HK of the kind already discussed; the shearing force causes a shearing stress in the plane of the section, the distribution of which will be investigated later. This shearing stress in the plane of the section is necessarily accompanied by an equal intensity of shearing stress in horizontal planes parallel to the length of the beam.\n\nThe stress due to the bending moment, consisting of longitudinal push in filaments above the neutral axis and longitudinal pull in filaments below the neutral axis, is the thing chiefly to be considered in practical problems relating to the strength of beams. The general formula <math>p_1 = \\text{M}y_1/\\text{I}</math> becomes, for a beam of rectangular section of breadth <math>b</math> and depth <math>h</math>, <math>p_1 = 6\\text{M}/bh^2 = 6\\text{M}/\\text{S}h</math>, <math>\\text{S}</math> being the area of section. For a beam of circular section it becomes <math>p_1 = 32\\text{M}/\\pi h^3 = 8\\text{M}/\\text{S}h</math>. The material of a beam is disposed to the greatest advantage as regards resistance to bending when the form is that of a pair of flanges or booms at top and bottom, held apart by a thin but stiff web or by cross-bracing, as in I beams and braced trusses. In such cases sensibly the whole bending moment is taken by the flanges; the intensity of stress over the section of each flange is very nearly uniform, and the areas of section of the tension and compression",
+   "c1s2": "flanges (<math>\\text{S}_1</math> and <math>\\text{S}_2</math> respectively) should be proportioned to the value of the ultimate strengths in tension and compression <math>f_t</math> and <math>f_c</math>, so that <math>\\text{S}_1f_t = \\text{S}_2f_c</math>. Thus for cast-iron beams Hodgkinson recommended that the tension flange should have six times the sectional area of the compression flange. The intensity of longitudinal stress on the two flanges of an '''I''' beam is approximately <math>\\text{M}/\\text{S}_1h</math> and <math>\\text{M}/\\text{S}_2h</math>, <math>h</math> being the depth from centre to centre of the flanges.\n\n''Diagrams of Bending Moment and Shearing Force.''—In the examination of loaded beams it is convenient to represent graphically the bending moment and the shearing force at various sections by setting up ordinates to represent the values of these quantities, and so drawing curves of bending moment and shearing force.\n\nThe area enclosed by the curve of shearing force, up to any ordinate, is equal to the bending moment at the same section. For let <math>x</math> be increased to <math>x+\\delta x</math>, the bending moment changes to <math>\\Sigma\\text{F}(x+\\delta x)</math>, or <math>\\delta\\text{M} = \\delta x\\Sigma\\text{F}</math>. Hence the shearing force at any section is equal to the rate of change of the bending moment there per unit of the length, and the bending moment is the integral of the shearing force with respect to the length. In the case of a continuous distribution of load, it should be observed that, when <math>x</math> is increased to <math>x+\\delta x</math>, the moment changes by an additional amount which depends on <math>(\\delta x)^2</math> and may therefore be neglected.\n\n''Distribution of Shearing Stress.''—To examine the distribution of shearing stress over any vertical section of a beam, we may consider",
+   "c1s3": "{{c|{{sc|Fig.}} 37.}}",
+   "c1s4": "two closely adjacent sections <math>\\text{AB}</math> and <math>\\text{DE}</math> (fig. 37), on which the bending moments are <math>\\text{M}</math> and <math>\\text{M}+\\delta\\text{M}</math> respectively. The resultant horizontal force due to the bending stresses on a piece <math>\\text{ADHG}</math> enclosed between the adjacent sections, and bounded by the horizontal plane <math>\\text{GH}</math> at a distance <math>y_0</math> from the neutral axis, is shown by the shaded figure. This must be equilibrated by the horizontal shearing stress on <math>\\text{GH}</math>, which is the only other horizontal force acting on the piece. At any height <math>y</math> the intensity of resultant horizontal stress due to the difference of",
+   "c1s5": "the bending moments is <math>y\\delta\\text{M}/\\text{I}</math>, and the whole horizontal force on GH is <math>\\frac{\\delta\\text{M}}{\\text{I}}\\int^{y_1}_{y_0} yzdy</math>, <math>z</math> being the breadth. If <math>q</math> be the intensity of horizontal shearing stress on the section GH, whose breadth is <math>z_0</math>, we have\n{{block center|<math>qz_0\\delta x = \\frac{\\delta\\text{M}}{\\text{I}}\\int^{y_1}_{y_0} yzdy.</math>}}\nBut <math>\\delta\\text{M}/\\delta x</math> is the whole shearing force Q on the section of the beam. Hence\n{{block center|<math>q = \\frac{\\text{Q}}{z_0\\text{I}}\\int^{y_1}_{y_0} yzdy</math>;}}\nand this is also the intensity of vertical shearing stress at the distance",
+   "c2s1": "<math>y_0</math> from the neutral axis. This expression may conveniently be written <math>q=\\text{QA}y/z_0\\text{I}</math>, where <math>\\text{A}</math> is the area of the surface <math>\\text{AG}</math> and <math>y</math> the distance of its centre of gravity from the neutral axis. The intensity <math>q</math> is a maximum at the neutral axis and diminishes to zero at the top and bottom of the beam. In a beam of rectangular section the value of the shearing stress at the neutral axis is <math>q\\ \\text{max.} =\\frac{3}{2}\\text{Q}/bh</math>. In other words, the maximum intensity of shearing stress on any section is <math>\\frac{3}{2}</math> of the mean intensity. Similarly, in a beam of circular section the maximum is <math>\\frac{4}{3}</math> of the mean. This result is of some importance in application to the pins of pin-joints, which may be treated as very short beams liable to give way by shearing.\n\nIn the case of an '''I''' beam with wide flanges and a thin web, the above expression shows that in any vertical section <math>q</math> is nearly constant in the web and insignificantly small in the flanges. Practically all the shearing stress is borne by the web, and its intensity is very nearly equal to <math>\\text{Q}</math> divided by the area of section of the web.",
+   "c2s2": "{{c|{{sc|Fig.}} 38.}}",
+   "c2s3": "¶\n''Principal Stresses in a Beam.''—The forego stresses in a beam, which resolves them into l push, due to bending moment, along with shear in longitudinal and transverse planes, is generally sufficient in the treatment of practical cases. If, however, it is desired to find the direction and magnitude of the principal stresses at any point we may proceed thus:—\n\nLet AC (fig. 38) be an indefinitely small portion of the horizontal section of a beam, on which there is only shearing stress, and let AB be an indefinitely small portion of the vertical section at the same place, on which there is shearing and normal stress. Let <math>q</math> be the intensity of the shearing stress, which is the same on AB and AC, and let <math>p</math> be the intensity of normal stress on AB: it is required to find a third plane BC, such that the stress on it is wholly normal, and to find <math>r</math>, the intensity of that stress. Let <math>\\theta</math> be the angle",
+   "c2s4": "(to be determined) which BC makes with AB. Then the equilibrium of the triangular wedge ABC requires that\n\n{{block center|<math>r\\text{BC}\\cos\\theta = p.\\text{AB} + q.\\text{AC}</math>, and <math>r\\text{BC}\\sin\\theta = q.\\text{AB}</math>;}}\n\n{{block center|or <math>(r-p)\\cos\\theta = q\\sin\\theta</math>, and <math>r\\sin\\theta = q\\cos\\theta</math>.}}\n\nHence,\n\n{{block center|<math>q^2 = r(r-p)</math>,}}\n\n{{block center|<math>\\tan 2\\theta = 2q/p</math>,}}\n\n{{block center|<math>r = \\tfrac{1}{2}p \\pm \\sqrt{(q^2 + \\tfrac{1}{4}p^2)}</math>.}}\n\nThe positive value of <math>r</math> is the greater principal stress, and is of the same sign as <math>p</math>. The negative value is the lesser principal stress which occurs on a plane at right angles to the former. The equation for <math>\\theta</math> gives two values corresponding to the two planes of principal stress. The greatest intensity of shearing stress occurs on the pair of planes inclined at 45° to the planes of principal stress, and its value is <math>\\sqrt{(q^2 + \\tfrac{1}{4}p^2)}</math>.\n\n''Deflexion of Beams''.—The deflexion of beams is due partly to the distortion caused by shearing, but chiefly to the simple bending which occurs at each vertical section. As regards the second, which in most cases is the only important cause of deflexion, we have seen that the radius of curvature <math>\\text{R}</math> at any section, due to a bending moment <math>\\text{M}</math>, is <math>\\text{EI}/\\text{M}</math>, which may also be written <math>\\text{E}y_1/p_1</math>. Thus beams of uniform strength and depth (and, as a particular case, beams of uniform section subjected to a uniform bending moment) bend into a circular arc. In other cases the form of the bent beam, and the resulting slope and deflexion, may be determined by integrating the curvature throughout the span, or by a graphic process, which consists in drawing a curve to represent the beam with its curvature greatly exaggerated, after the radius of curvature has been determined for a sufficient number of sections. In all practical cases the curvature is so small that the arc and chord are of sensibly the same length. Calling <math>i</math> the angle of slope, and <math>u</math> the dip or deflexion from the chord, the equation to the curve into which an originally straight beam bends may be written",
+   "c2s5": "{{block center|<math>\\frac{du}{dx} = i;\\quad \\frac{d^2u}{dx^2} = \\frac{di}{dx} = \\frac{\\text{EI}}{\\text{M}}</math>.}}\nIntegrating this for a beam of uniform section, of span <math>\\text{L}</math>, supported at its ends and loaded with a weight <math>\\text{W}</math> at the centre, we have, for the greatest slope and greatest deflexion, respectively, <math>i_1 = \\text{WL}^2/16\\text{EI}</math>, <math>u_1 = \\text{WL}^3/48\\text{EI}</math>. If the load <math>\\text{W}</math> is uniformly distributed over <math>\\text{L}</math>, <math>i_1 = \\text{WL}^2/24\\text{EI}</math> and <math>u_1 = 5\\text{WL}^3/384\\text{EI}</math>.\n\nThe additional slope which shearing stress produces in any originally horizontal layer is <math>q/\\text{C}</math>, where <math>q</math> is, as before, the intensity of shearing stress and <math>\\text{C}</math> is the modulus of rigidity. In a round or rectangular bar the additional deflexion due to shearing is scarcely appreciable. In an I beam, with a web only thick enough to resist shear, it may be a somewhat considerable proportion of the whole.\n\n''Torsion of Solid and Hollow Shafts''.—Torsion occurs in a bar to which equal and opposite couples are applied, the axis of the bar being the axis of the couples, and gives rise to shearing stress in planes perpendicular to the axis. Let <math>\\text{AB}</math> (fig. 39) be a uniform circular shaft held fast at the end <math>\\text{A}</math>, and twisted by a couple applied in the plane <math>\\text{BB}</math>. Assuming the strain to be within the limits of"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v25 p1047 c1f1.png",
+   "c2f1": "eb1911 v25 p1047 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     113,
+     2061,
+     658,
+     2602
+    ],
+    "caption": [
+     336,
+     2612,
+     461,
+     2652
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     110,
+     2054,
+     663,
+     2611
+    ]
+   },
+   {
+    "box": [
+     1933,
+     790,
+     2229,
+     1346
+    ],
+    "caption": [
+     2030,
+     1354,
+     2155,
+     1388
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1977,
+     784,
+     2242,
+     1347
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6851,
+    "output_tokens": 179,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 11,
+    "input_tokens": 8163,
+    "output_tokens": 6048,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 21164
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||STRENGTH OF MATERIALS|1021}}</noinclude><math>\\text{F}_1</math>, <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, &c., may be referred to HK by introducing couples whose moments are <math>\\text{F}_1x_1</math>, <math>\\text{F}_2x_2</math>, <math>\\text{F}_3x_3</math>, &c. Hence the stress at HK must equilibrate, first, a couple whose moment is <math>\\Sigma\\text{F}x</math>, and, second, a force whose value is <math>\\Sigma\\text{F}</math>, which tends to shear B from A. In these summations regard must of course be had to the sign of each force; in the diagram the sign of <math>\\text{F}_4</math> is opposite to the sign of <math>\\text{F}_1</math>, <math>\\text{F}_2</math> and <math>\\text{F}_3</math>. Thus the stress at HK may be regarded as that due to a bending moment <math>\\text{M}</math> equal to the sum of the moments about the section of the externally applied forces on one side of the section (<math>\\Sigma\\text{F}x</math>), and a shearing force equal to the sum of the forces about one side of the section (<math>\\Sigma\\text{F}</math>). It is a matter of convenience only whether the forces on B or on A be taken in reckoning the bending moment and the shearing force. The bending moment causes a uniformly varying normal stress on HK of the kind already discussed; the shearing force causes a shearing stress in the plane of the section, the distribution of which will be investigated later. This shearing stress in the plane of the section is necessarily accompanied by an equal intensity of shearing stress in horizontal planes parallel to the length of the beam.\n\nThe stress due to the bending moment, consisting of longitudinal push in filaments above the neutral axis and longitudinal pull in filaments below the neutral axis, is the thing chiefly to be considered in practical problems relating to the strength of beams. The general formula <math>p_1 = \\text{M}y_1/\\text{I}</math> becomes, for a beam of rectangular section of breadth <math>b</math> and depth <math>h</math>, <math>p_1 = 6\\text{M}/bh^2 = 6\\text{M}/\\text{S}h</math>, <math>\\text{S}</math> being the area of section. For a beam of circular section it becomes <math>p_1 = 32\\text{M}/\\pi h^3 = 8\\text{M}/\\text{S}h</math>. The material of a beam is disposed to the greatest advantage as regards resistance to bending when the form is that of a pair of flanges or booms at top and bottom, held apart by a thin but stiff web or by cross-bracing, as in I beams and braced trusses. In such cases sensibly the whole bending moment is taken by the flanges; the intensity of stress over the section of each flange is very nearly uniform, and the areas of section of the tension and compression flanges (<math>\\text{S}_1</math> and <math>\\text{S}_2</math> respectively) should be proportioned to the value of the ultimate strengths in tension and compression <math>f_t</math> and <math>f_c</math>, so that <math>\\text{S}_1f_t = \\text{S}_2f_c</math>. Thus for cast-iron beams Hodgkinson recommended that the tension flange should have six times the sectional area of the compression flange. The intensity of longitudinal stress on the two flanges of an '''I''' beam is approximately <math>\\text{M}/\\text{S}_1h</math> and <math>\\text{M}/\\text{S}_2h</math>, <math>h</math> being the depth from centre to centre of the flanges.\n\n''Diagrams of Bending Moment and Shearing Force.''—In the examination of loaded beams it is convenient to represent graphically the bending moment and the shearing force at various sections by setting up ordinates to represent the values of these quantities, and so drawing curves of bending moment and shearing force.\n\nThe area enclosed by the curve of shearing force, up to any ordinate, is equal to the bending moment at the same section. For let <math>x</math> be increased to <math>x+\\delta x</math>, the bending moment changes to <math>\\Sigma\\text{F}(x+\\delta x)</math>, or <math>\\delta\\text{M} = \\delta x\\Sigma\\text{F}</math>. Hence the shearing force at any section is equal to the rate of change of the bending moment there per unit of the length, and the bending moment is the integral of the shearing force with respect to the length. In the case of a continuous distribution of load, it should be observed that, when <math>x</math> is increased to <math>x+\\delta x</math>, the moment changes by an additional amount which depends on <math>(\\delta x)^2</math> and may therefore be neglected.\n\n''Distribution of Shearing Stress.''—To examine the distribution of shearing stress over any vertical section of a beam, we may consider two closely adjacent sections <math>\\text{AB}</math> and <math>\\text{DE}</math> (fig. 37), on which the bending moments are <math>\\text{M}</math> and <math>\\text{M}+\\delta\\text{M}</math> respectively. The resultant horizontal force due to the bending stresses on a piece <math>\\text{ADHG}</math> enclosed between the adjacent sections, and bounded by the horizontal plane <math>\\text{GH}</math> at a distance <math>y_0</math> from the neutral axis, is shown by the shaded figure. This must be equilibrated by the horizontal shearing stress on <math>\\text{GH}</math>, which is the only other horizontal force acting on the piece. At any height <math>y</math> the intensity of resultant horizontal stress due to the difference of the bending moments is <math>y\\delta\\text{M}/\\text{I}</math>, and the whole horizontal force on GH is <math>\\frac{\\delta\\text{M}}{\\text{I}}\\int^{y_1}_{y_0} yzdy</math>, <math>z</math> being the breadth. If <math>q</math> be the intensity of horizontal shearing stress on the section GH, whose breadth is <math>z_0</math>, we have\n{{block center|<math>qz_0\\delta x = \\frac{\\delta\\text{M}}{\\text{I}}\\int^{y_1}_{y_0} yzdy.</math>}}\nBut <math>\\delta\\text{M}/\\delta x</math> is the whole shearing force Q on the section of the beam. Hence\n{{block center|<math>q = \\frac{\\text{Q}}{z_0\\text{I}}\\int^{y_1}_{y_0} yzdy</math>;}}\nand this is also the intensity of vertical shearing stress at the distance <math>y_0</math> from the neutral axis. This expression may conveniently be written <math>q=\\text{QA}y/z_0\\text{I}</math>, where <math>\\text{A}</math> is the area of the surface <math>\\text{AG}</math> and <math>y</math> the distance of its centre of gravity from the neutral axis. The intensity <math>q</math> is a maximum at the neutral axis and diminishes to zero at the top and bottom of the beam. In a beam of rectangular section the value of the shearing stress at the neutral axis is <math>q\\ \\text{max.} =\\frac{3}{2}\\text{Q}/bh</math>. In other words, the maximum intensity of shearing stress on any section is <math>\\frac{3}{2}</math> of the mean intensity. Similarly, in a beam of circular section the maximum is <math>\\frac{4}{3}</math> of the mean. This result is of some importance in application to the pins of pin-joints, which may be treated as very short beams liable to give way by shearing.\n\n[[File:eb1911 v25 p1047 c1f1.png|center|188px]]\n{{c|{{sc|Fig.}} 37.}}\n\nIn the case of an '''I''' beam with wide flanges and a thin web, the above expression shows that in any vertical section <math>q</math> is nearly constant in the web and insignificantly small in the flanges. Practically all the shearing stress is borne by the web, and its intensity is very nearly equal to <math>\\text{Q}</math> divided by the area of section of the web.\n\n[[File:eb1911 v25 p1047 c2f1.png|center|108px]]\n{{c|{{sc|Fig.}} 38.}}\n\n''Principal Stresses in a Beam.''—The forego stresses in a beam, which resolves them into l push, due to bending moment, along with shear in longitudinal and transverse planes, is generally sufficient in the treatment of practical cases. If, however, it is desired to find the direction and magnitude of the principal stresses at any point we may proceed thus:—\n\nLet AC (fig. 38) be an indefinitely small portion of the horizontal section of a beam, on which there is only shearing stress, and let AB be an indefinitely small portion of the vertical section at the same place, on which there is shearing and normal stress. Let <math>q</math> be the intensity of the shearing stress, which is the same on AB and AC, and let <math>p</math> be the intensity of normal stress on AB: it is required to find a third plane BC, such that the stress on it is wholly normal, and to find <math>r</math>, the intensity of that stress. Let <math>\\theta</math> be the angle (to be determined) which BC makes with AB. Then the equilibrium of the triangular wedge ABC requires that\n\n{{block center|<math>r\\text{BC}\\cos\\theta = p.\\text{AB} + q.\\text{AC}</math>, and <math>r\\text{BC}\\sin\\theta = q.\\text{AB}</math>;}}\n\n{{block center|or <math>(r-p)\\cos\\theta = q\\sin\\theta</math>, and <math>r\\sin\\theta = q\\cos\\theta</math>.}}\n\nHence,\n\n{{block center|<math>q^2 = r(r-p)</math>,}}\n\n{{block center|<math>\\tan 2\\theta = 2q/p</math>,}}\n\n{{block center|<math>r = \\tfrac{1}{2}p \\pm \\sqrt{(q^2 + \\tfrac{1}{4}p^2)}</math>.}}\n\nThe positive value of <math>r</math> is the greater principal stress, and is of the same sign as <math>p</math>. The negative value is the lesser principal stress which occurs on a plane at right angles to the former. The equation for <math>\\theta</math> gives two values corresponding to the two planes of principal stress. The greatest intensity of shearing stress occurs on the pair of planes inclined at 45° to the planes of principal stress, and its value is <math>\\sqrt{(q^2 + \\tfrac{1}{4}p^2)}</math>.\n\n''Deflexion of Beams''.—The deflexion of beams is due partly to the distortion caused by shearing, but chiefly to the simple bending which occurs at each vertical section. As regards the second, which in most cases is the only important cause of deflexion, we have seen that the radius of curvature <math>\\text{R}</math> at any section, due to a bending moment <math>\\text{M}</math>, is <math>\\text{EI}/\\text{M}</math>, which may also be written <math>\\text{E}y_1/p_1</math>. Thus beams of uniform strength and depth (and, as a particular case, beams of uniform section subjected to a uniform bending moment) bend into a circular arc. In other cases the form of the bent beam, and the resulting slope and deflexion, may be determined by integrating the curvature throughout the span, or by a graphic process, which consists in drawing a curve to represent the beam with its curvature greatly exaggerated, after the radius of curvature has been determined for a sufficient number of sections. In all practical cases the curvature is so small that the arc and chord are of sensibly the same length. Calling <math>i</math> the angle of slope, and <math>u</math> the dip or deflexion from the chord, the equation to the curve into which an originally straight beam bends may be written {{block center|<math>\\frac{du}{dx} = i;\\quad \\frac{d^2u}{dx^2} = \\frac{di}{dx} = \\frac{\\text{EI}}{\\text{M}}</math>.}}\nIntegrating this for a beam of uniform section, of span <math>\\text{L}</math>, supported at its ends and loaded with a weight <math>\\text{W}</math> at the centre, we have, for the greatest slope and greatest deflexion, respectively, <math>i_1 = \\text{WL}^2/16\\text{EI}</math>, <math>u_1 = \\text{WL}^3/48\\text{EI}</math>. If the load <math>\\text{W}</math> is uniformly distributed over <math>\\text{L}</math>, <math>i_1 = \\text{WL}^2/24\\text{EI}</math> and <math>u_1 = 5\\text{WL}^3/384\\text{EI}</math>.\n\nThe additional slope which shearing stress produces in any originally horizontal layer is <math>q/\\text{C}</math>, where <math>q</math> is, as before, the intensity of shearing stress and <math>\\text{C}</math> is the modulus of rigidity. In a round or rectangular bar the additional deflexion due to shearing is scarcely appreciable. In an I beam, with a web only thick enough to resist shear, it may be a somewhat considerable proportion of the whole.\n\n''Torsion of Solid and Hollow Shafts''.—Torsion occurs in a bar to which equal and opposite couples are applied, the axis of the bar being the axis of the couples, and gives rise to shearing stress in planes perpendicular to the axis. Let <math>\\text{AB}</math> (fig. 39) be a uniform circular shaft held fast at the end <math>\\text{A}</math>, and twisted by a couple applied in the plane <math>\\text{BB}</math>. Assuming the strain to be within the limits of<noinclude><references/></noinclude>"
+}

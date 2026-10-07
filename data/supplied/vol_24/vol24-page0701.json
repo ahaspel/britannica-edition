@@ -1,0 +1,144 @@
+{
+ "volume": 24,
+ "page_number": 701,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n711",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n711",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1175,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     1,
+     2258,
+     162
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     162,
+     1186,
+     1200
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1200,
+     1186,
+     2181
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2181,
+     1186,
+     3097
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1186,
+     162,
+     2258,
+     1172
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1186,
+     1172,
+     2258,
+     1522
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1186,
+     1522,
+     2258,
+     2606
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1186,
+     2606,
+     2258,
+     3097
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||SERINGAPATAM|671}}",
+   "c1s1": "The series is then said to converge uniformly throughout this region.\n\nIf, as <math>z</math> approaches the value <math>z_1</math>, <math>n</math> increases as <math>|z-z_1|</math> diminishes and becomes indefinitely great as <math>|z-z_1|</math> becomes indefinitely small the series is said to be non-uniformly convergent at the point <math>z_1</math>.\n\nA function represented by a series is continuous throughout any region in which the series is uniformly convergent; there cannot be discontinuity with uniform convergence; on the other hand there may be continuity and non-uniform convergence. If <math>u_1(z)+u_2(z)+\\dots</math> is uniformly convergent we shall have <math>\\int\\text{S}(z)dz=\\int u_1(z)dz+\\int u_2(z)dz+\\dots</math> along any path in the region of uniform convergence; and we shall also have <math>\\frac{d}{dz}\\text{S}(z)=\\frac{d}{dz}u_1(z)+\\frac{d}{dz}u_2(z)+\\dots</math> if the series <math>\\frac{d}{dz}u_1(z)+\\frac{d}{dz}u_2(z)+\\dots</math> is uniformly convergent.\n\nUniform convergence is essentially different from absolute convergence; neither implies the other (see {{sc|Function}}).\n\n18. A series of the form <math>a_0+a_1z+a_2z^2+\\dots</math>, in which <math>a_0</math>, <math>a_1</math>, <math>a_2</math>, … are independent of <math>z</math>, is called a power series.\n\nIn the case of a power series there is a quantity <math>\\text{R}</math> such that the series converges if <math>|z|<\\text{R}</math>, and diverges if <math>|z|>\\text{R}</math>. A circle described with the origin as centre and radius <math>\\text{R}</math> is called the circle of convergence. A power series may or may not converge on the circle of convergence. The circle of convergence may be of infinite radius as in the case of the series for <math>\\sin z</math>, viz. <math>z-\\frac{z^3}{3!}+\\frac{z^5}{5!}-\\dots</math> In this case the series converges over the whole of the <math>z</math> plane. Or its radius may be zero as in the case of the series <math>1+1!\\,z+2!\\,z^2+\\dots</math>, which converges nowhere except at the origin. The radius <math>\\text{R}</math> may be found usually, but not always, from the consideration that a series converges absolutely if <math>|u_{n+1}/u_n|<1</math>, and",
+   "c1s2": "diverges if <math>|u_{n+1}/u_n| > 1</math>.\n\nA power series converges absolutely and uniformly at every point within its circle of convergence; it may be differentiated or integrated term by term; the function represented by a power series is continuous within its circle of convergence and, if the series is convergent on the circle of convergence, the continuity extends on to the circle of convergence. Two power series cannot be equal throughout any region in which both are convergent without being identical.\n\n19. Series of the type <math>a_0 + a_1 \\cos z + a_2 \\cos 2z + \\dots</math> <math>+ b_1 \\sin z + b_2 \\sin 2z + \\dots</math>, where the coefficients <math>a_0</math>, <math>a_1</math>, <math>a_2</math>, <math>\\dots</math> <math>b_1</math>, <math>b_2</math>, <math>\\dots</math> are independent of <math>z</math>, are called Fourier's series. They are of the greatest interest and importance both from the point of view of analysis and also because of their applications to physical problems. For the consideration of these series and the expansion of arbitrary functions in series of this type see {{sc|Function}} and {{sc|Fourier's Series}}. For the general problem of the development of functions in infinite series of various types see {{sc|Function}}.\n\n20. The modern theory of convergence dates from the publication in 1821 of Cauchy's ''Analyse algébrique.'' The great mathematicians of the 18th century used infinite series freely with very little regard to their convergence or divergence and with, occasionally, very extraordinary results. Series which are ultimately divergent may be used to calculate values of functions in special cases and to represent what are called \"asymptotic expansions\" of functions (see {{sc|Function}}).\n\n{{c|''Infinite Products.''}}\n\n21. The product of an infinite number of factors formed in suc-",
+   "c1s3": "cession according to any given law is called an infinite product. The infinite product <math>\\Pi_n \\equiv (1+u_1)(1+u_2) \\dots (1+u_n)</math> is said to be convergent when <math>\\text{Lt}_{n-\\infty}\\Pi_n</math> tends to a definite finite limit other than zero. If <math>\\text{Lt}\\,\\Pi_n</math> is zero or infinite or tending to different finite values according to the form of <math>n</math> the product is said to be divergent.\n\nThe condition for convergency may also be stated in the following form. (1) The value of <math>\\Pi_n</math> remains finite and different from zero however great <math>n</math> may become, and (2) <math>\\text{Lt}\\,\\Pi_n</math> and <math>\\text{Lt}\\,\\Pi_{n+r}</math> must be equal, when <math>n</math> is increased indefinitely, and <math>r</math> is any positive integer. Since in particular <math>\\text{Lt}\\,\\Pi_n = \\text{Lt}\\,\\Pi_{n+1}</math>, we must have <math>\\text{Lt}\\,u_{n+1} = 0</math>. Hence after some fixed term <math>u_1</math>, <math>u_2</math>, ... or their moduli in the case of complex quantities, must diminish continually down to zero. Since we may remove any finite number of terms in which <math>|u_n| > 1</math> without affecting the convergence of the whole product, we may regard as the general type of a convergent product <math>(1+u_1)(1+u_2) \\dots (1+u_n) \\dots</math> where <math>|u_1|</math>, <math>|u_2|, \\dots |u_n|, \\dots</math> are all less than unity and decrease continually to zero.\n\nA convergent infinite product is said to be absolutely convergent where the order of its factors is immaterial. Where this is not the case it is said to be semi-convergent.\n\n22. The necessary and sufficient condition that the product <math>(1+u_1)(1+u_2) \\dots</math> should converge absolutely is that the series <math>|u_1|+|u_2|+ \\dots</math> should be convergent. If <math>u_1</math>, <math>u_2, \\dots</math> are all of the same sign, then, if the series <math>u_1+u_2+ \\dots</math> is divergent, the product is infinite if <math>u_1, u_2, \\dots</math> are all positive and zero if they are all negative.\n\nIf <math>u_1+u_2+ \\dots</math> is a semi-convergent series the product converges, but not absolutely, or diverges to the value zero, according as the series <math>u_1^2+u_2^2+ \\dots</math> is convergent or divergent. These results may",
+   "c2s1": "be deduced by considering, instead of <math>\\Pi_n</math>, <math>\\log \\Pi_n</math> which is the series <math>\\log (1+u_1)+\\log (1+u_2)+\\dots</math> (see G. Chrystal's ''Algebra'', vol. ii., or E. T. Whittaker's ''Modern Analysis'', chap. ii.); they may also be proved by means of elementary theorems on inequalities (see E. W. Hobson's ''Plane Trigonometry'', chap. xvii.).\n\n23. If <math>u_1</math>, <math>u_2</math>, ... are functions of a variable <math>z</math>, a convergent infinite product <math>(1+u_1)(1+u_2)\\dots</math> defines a function of <math>z</math>. For such products there is a theory of uniform convergence analogous to that of infinite series. Is is not in general possible to represent a function as an infinite product; the question has been dealt with by Weierstrass (see his ''Abhandlungen aus der Functionlehre'' or A. R. Forsyth's ''Theory of Functions''). One of the simplest cases of a function expressed as an infinite product is that of <math>\\sin z/z</math>, which is the value of the absolutely convergent infinite product.\n{{block center|<math>\\left(1-\\frac{z^2}{\\pi^2}\\right) \\left(1-\\frac{z^2}{2^2\\pi^2}\\right) \\dots \\left(1-\\frac{z^2}{n^2\\pi^2}\\right) \\dots</math>}}\n\n24. K. T. W. Weierstrass has shown that a semi-convergent or divergent infinite product may be made absolutely convergent by the association with each factor of a suitable exponential factor called sometimes a \"convergency factor.\" The product <math>\\left(1+\\frac{z}{\\pi}\\right) \\left(1+\\frac{z}{2\\pi}\\right) \\left(1+\\frac{z}{3\\pi}\\right) \\dots</math> is divergent; the product <math>\\left(1+\\frac{z}{\\pi}\\right) e^{-\\frac{z}{\\pi}} \\left(1+\\frac{z}{2\\pi}\\right) e^{-\\frac{z}{2\\pi}} \\dots</math> is absolutely convergent. The product for <math>\\sin z/z</math> is semi-convergent when written in the form\n{{block center|<math>\\left(1-\\frac{z}{\\pi}\\right) \\left(1+\\frac{z}{\\pi}\\right) \\left(1-\\frac{z}{2\\pi}\\right) \\left(1+\\frac{z}{2\\pi}\\right) \\dots,</math>}}\nbut absolutely convergent when written in the form",
+   "c2s2": "{{block center|<math>\\left(1-\\frac{z}{\\pi}\\right)e^{\\frac{z}{\\pi}}\\left(1+\\frac{z}{\\pi}\\right)e^{-\\frac{z}{\\pi}}\\left(1-\\frac{z}{2\\pi}\\right)e^{\\frac{z}{2\\pi}}\\left(1+\\frac{z}{2\\pi}\\right)e^{-\\frac{z}{2\\pi}}\\dots</math>}}\nFrom this last form it can be shown that if\n{{block center|<math>\\phi(z)\\equiv\\left(1-\\frac{z}{\\pi}\\right)\\left(1-\\frac{z}{2\\pi}\\right)\\dots\\left(1-\\frac{z}{n\\pi}\\right)\\left(1+\\frac{z}{\\pi}\\right)\\left(1+\\frac{z}{2\\pi}\\right)\\dots\\left(1+\\frac{z}{m\\pi}\\right),</math>}}\nthen the limit of <math>\\phi(z)</math> as <math>m</math> and <math>n</math> are both made infinite in any given ratio is\n{{block center|<math>\\left(\\frac{m}{n}\\right)^{\\frac{z}{\\pi}}\\frac{\\sin z}{z}.</math>}}",
+   "c2s3": "¶\nAnother example of an absolutely convergent infinite product, whose convergency depends on the presence of an exponential factor, is the product <math>z\\Pi\\left(1-\\frac{z}{\\Omega}\\right)e^{\\frac{z}{\\Omega}+\\frac{1}{2}\\frac{z^2}{\\Omega^2}}</math>, where <math>\\Omega</math> denotes <math>2m\\omega_1+2n\\omega_2</math>, <math>\\omega_1</math> and <math>\\omega_2</math> being any two quantities having a complex ratio, and the product is taken over all positive and negative integer and zero values of <math>m</math> and <math>n</math>, except simultaneous zeros. This product is the expression in factors of Weierstrass's elliptic function <math>\\sigma(z)</math>.\n\n{{smaller block|{{sc|Authorities}}.—G. Chrystal, ''Algebra'', vol. ii. (1900); E. Goursat, ''Cours d'analyse'' (translated by E. R. Hedrick), vol. i. (1902); J. Harkness and F. Morley, ''A Treatise on the Theory of Functions'' (1893) and ''Introduction to the Theory of Analytic Functions'' (1899); E. W. Hobson, ''Plane Trigonometry'' (1891), and ''Theory of Functions of a Real Variable'': H. S. Carslaw, ''Fourier's Series''; E. T. Whittaker, ''Modern Analysis'' (1902); J. Tannery, ''Introduction à la théorie des functions d'une variable''; C. Jordan, ''Cours d'analyse de l'École Polytechnique'' (2nd ed., 1896); E. Césaro, ''Corso di analisi algebraica'' (1894); O. Stolz, ''Allgemeine Arithmetik'' (1886); O. Biermann, ''Elemente der höheren Mathematik'' (1895); W. F. Osgood, ''Introduction to Infinite Series''; T. J. I'A. Bromwich, ''Theory of Infinite Series'' (1908). Also the article by A. Pringsheim, \"Irrationalzahlen und Konvergenz unendlichen Prozesse\" in the ''Encyclopädie der mathematischen Wissenschaften'' 1, a. 3 (Leipzig). For the history of the subject see R. Reiff, ''Geschichte der unendlichen Reihen''; G. H. Hardy, ''A Course of Pure Mathematics''. (A. E. J.)}}\n\n'''SERINGAPATAM,''' or {{sc|Srirangapatana}}, a town of India, formerly capital of the state of Mysore, situated on an island of the same name in the Cauvery river. Pop. (1901) 8584. The town is chiefly noted for its fortress, which figured prominently in Indian history at the close of the 18th century. This formidable stronghold of Tippoo Sultan twice sustained a siege from",
+   "c2s4": "the British, and was finally stormed in 1799. After its capture the island was ceded to the British, but restored to Mysore in 1881. The island of Seringapatam is about 3 m. in length from east to west and 1 in breadth, and yields valuable crops of rice and sugar-cane. The fort occupies the western side, immediately overhanging the river. Seringapatam is said to have been founded in 1454 by a descendant of one of the local officers appointed by Ramanuja, the Vishnuite apostle, who named it the city of Sri Ranga or Vishnu. At the eastern or lower end of the island is the Lal Bagh or \"red garden,\" containing the mausoleum built by Tippoo Sultan for his father Hyder Ali, in which Tippoo himself also lies."
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 9465,
+    "output_tokens": 6152,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||SERINGAPATAM|671}}</noinclude>The series is then said to converge uniformly throughout this region.\n\nIf, as <math>z</math> approaches the value <math>z_1</math>, <math>n</math> increases as <math>|z-z_1|</math> diminishes and becomes indefinitely great as <math>|z-z_1|</math> becomes indefinitely small the series is said to be non-uniformly convergent at the point <math>z_1</math>.\n\nA function represented by a series is continuous throughout any region in which the series is uniformly convergent; there cannot be discontinuity with uniform convergence; on the other hand there may be continuity and non-uniform convergence. If <math>u_1(z)+u_2(z)+\\dots</math> is uniformly convergent we shall have <math>\\int\\text{S}(z)dz=\\int u_1(z)dz+\\int u_2(z)dz+\\dots</math> along any path in the region of uniform convergence; and we shall also have <math>\\frac{d}{dz}\\text{S}(z)=\\frac{d}{dz}u_1(z)+\\frac{d}{dz}u_2(z)+\\dots</math> if the series <math>\\frac{d}{dz}u_1(z)+\\frac{d}{dz}u_2(z)+\\dots</math> is uniformly convergent.\n\nUniform convergence is essentially different from absolute convergence; neither implies the other (see {{sc|Function}}).\n\n18. A series of the form <math>a_0+a_1z+a_2z^2+\\dots</math>, in which <math>a_0</math>, <math>a_1</math>, <math>a_2</math>, … are independent of <math>z</math>, is called a power series.\n\nIn the case of a power series there is a quantity <math>\\text{R}</math> such that the series converges if <math>|z|<\\text{R}</math>, and diverges if <math>|z|>\\text{R}</math>. A circle described with the origin as centre and radius <math>\\text{R}</math> is called the circle of convergence. A power series may or may not converge on the circle of convergence. The circle of convergence may be of infinite radius as in the case of the series for <math>\\sin z</math>, viz. <math>z-\\frac{z^3}{3!}+\\frac{z^5}{5!}-\\dots</math> In this case the series converges over the whole of the <math>z</math> plane. Or its radius may be zero as in the case of the series <math>1+1!\\,z+2!\\,z^2+\\dots</math>, which converges nowhere except at the origin. The radius <math>\\text{R}</math> may be found usually, but not always, from the consideration that a series converges absolutely if <math>|u_{n+1}/u_n|<1</math>, and diverges if <math>|u_{n+1}/u_n| > 1</math>.\n\nA power series converges absolutely and uniformly at every point within its circle of convergence; it may be differentiated or integrated term by term; the function represented by a power series is continuous within its circle of convergence and, if the series is convergent on the circle of convergence, the continuity extends on to the circle of convergence. Two power series cannot be equal throughout any region in which both are convergent without being identical.\n\n19. Series of the type <math>a_0 + a_1 \\cos z + a_2 \\cos 2z + \\dots</math> <math>+ b_1 \\sin z + b_2 \\sin 2z + \\dots</math>, where the coefficients <math>a_0</math>, <math>a_1</math>, <math>a_2</math>, <math>\\dots</math> <math>b_1</math>, <math>b_2</math>, <math>\\dots</math> are independent of <math>z</math>, are called Fourier's series. They are of the greatest interest and importance both from the point of view of analysis and also because of their applications to physical problems. For the consideration of these series and the expansion of arbitrary functions in series of this type see {{sc|Function}} and {{sc|Fourier's Series}}. For the general problem of the development of functions in infinite series of various types see {{sc|Function}}.\n\n20. The modern theory of convergence dates from the publication in 1821 of Cauchy's ''Analyse algébrique.'' The great mathematicians of the 18th century used infinite series freely with very little regard to their convergence or divergence and with, occasionally, very extraordinary results. Series which are ultimately divergent may be used to calculate values of functions in special cases and to represent what are called \"asymptotic expansions\" of functions (see {{sc|Function}}).\n\n{{c|''Infinite Products.''}}\n\n21. The product of an infinite number of factors formed in succession according to any given law is called an infinite product. The infinite product <math>\\Pi_n \\equiv (1+u_1)(1+u_2) \\dots (1+u_n)</math> is said to be convergent when <math>\\text{Lt}_{n-\\infty}\\Pi_n</math> tends to a definite finite limit other than zero. If <math>\\text{Lt}\\,\\Pi_n</math> is zero or infinite or tending to different finite values according to the form of <math>n</math> the product is said to be divergent.\n\nThe condition for convergency may also be stated in the following form. (1) The value of <math>\\Pi_n</math> remains finite and different from zero however great <math>n</math> may become, and (2) <math>\\text{Lt}\\,\\Pi_n</math> and <math>\\text{Lt}\\,\\Pi_{n+r}</math> must be equal, when <math>n</math> is increased indefinitely, and <math>r</math> is any positive integer. Since in particular <math>\\text{Lt}\\,\\Pi_n = \\text{Lt}\\,\\Pi_{n+1}</math>, we must have <math>\\text{Lt}\\,u_{n+1} = 0</math>. Hence after some fixed term <math>u_1</math>, <math>u_2</math>, ... or their moduli in the case of complex quantities, must diminish continually down to zero. Since we may remove any finite number of terms in which <math>|u_n| > 1</math> without affecting the convergence of the whole product, we may regard as the general type of a convergent product <math>(1+u_1)(1+u_2) \\dots (1+u_n) \\dots</math> where <math>|u_1|</math>, <math>|u_2|, \\dots |u_n|, \\dots</math> are all less than unity and decrease continually to zero.\n\nA convergent infinite product is said to be absolutely convergent where the order of its factors is immaterial. Where this is not the case it is said to be semi-convergent.\n\n22. The necessary and sufficient condition that the product <math>(1+u_1)(1+u_2) \\dots</math> should converge absolutely is that the series <math>|u_1|+|u_2|+ \\dots</math> should be convergent. If <math>u_1</math>, <math>u_2, \\dots</math> are all of the same sign, then, if the series <math>u_1+u_2+ \\dots</math> is divergent, the product is infinite if <math>u_1, u_2, \\dots</math> are all positive and zero if they are all negative.\n\nIf <math>u_1+u_2+ \\dots</math> is a semi-convergent series the product converges, but not absolutely, or diverges to the value zero, according as the series <math>u_1^2+u_2^2+ \\dots</math> is convergent or divergent. These results may be deduced by considering, instead of <math>\\Pi_n</math>, <math>\\log \\Pi_n</math> which is the series <math>\\log (1+u_1)+\\log (1+u_2)+\\dots</math> (see G. Chrystal's ''Algebra'', vol. ii., or E. T. Whittaker's ''Modern Analysis'', chap. ii.); they may also be proved by means of elementary theorems on inequalities (see E. W. Hobson's ''Plane Trigonometry'', chap. xvii.).\n\n23. If <math>u_1</math>, <math>u_2</math>, ... are functions of a variable <math>z</math>, a convergent infinite product <math>(1+u_1)(1+u_2)\\dots</math> defines a function of <math>z</math>. For such products there is a theory of uniform convergence analogous to that of infinite series. Is is not in general possible to represent a function as an infinite product; the question has been dealt with by Weierstrass (see his ''Abhandlungen aus der Functionlehre'' or A. R. Forsyth's ''Theory of Functions''). One of the simplest cases of a function expressed as an infinite product is that of <math>\\sin z/z</math>, which is the value of the absolutely convergent infinite product.\n{{block center|<math>\\left(1-\\frac{z^2}{\\pi^2}\\right) \\left(1-\\frac{z^2}{2^2\\pi^2}\\right) \\dots \\left(1-\\frac{z^2}{n^2\\pi^2}\\right) \\dots</math>}}\n\n24. K. T. W. Weierstrass has shown that a semi-convergent or divergent infinite product may be made absolutely convergent by the association with each factor of a suitable exponential factor called sometimes a \"convergency factor.\" The product <math>\\left(1+\\frac{z}{\\pi}\\right) \\left(1+\\frac{z}{2\\pi}\\right) \\left(1+\\frac{z}{3\\pi}\\right) \\dots</math> is divergent; the product <math>\\left(1+\\frac{z}{\\pi}\\right) e^{-\\frac{z}{\\pi}} \\left(1+\\frac{z}{2\\pi}\\right) e^{-\\frac{z}{2\\pi}} \\dots</math> is absolutely convergent. The product for <math>\\sin z/z</math> is semi-convergent when written in the form\n{{block center|<math>\\left(1-\\frac{z}{\\pi}\\right) \\left(1+\\frac{z}{\\pi}\\right) \\left(1-\\frac{z}{2\\pi}\\right) \\left(1+\\frac{z}{2\\pi}\\right) \\dots,</math>}}\nbut absolutely convergent when written in the form {{block center|<math>\\left(1-\\frac{z}{\\pi}\\right)e^{\\frac{z}{\\pi}}\\left(1+\\frac{z}{\\pi}\\right)e^{-\\frac{z}{\\pi}}\\left(1-\\frac{z}{2\\pi}\\right)e^{\\frac{z}{2\\pi}}\\left(1+\\frac{z}{2\\pi}\\right)e^{-\\frac{z}{2\\pi}}\\dots</math>}}\nFrom this last form it can be shown that if\n{{block center|<math>\\phi(z)\\equiv\\left(1-\\frac{z}{\\pi}\\right)\\left(1-\\frac{z}{2\\pi}\\right)\\dots\\left(1-\\frac{z}{n\\pi}\\right)\\left(1+\\frac{z}{\\pi}\\right)\\left(1+\\frac{z}{2\\pi}\\right)\\dots\\left(1+\\frac{z}{m\\pi}\\right),</math>}}\nthen the limit of <math>\\phi(z)</math> as <math>m</math> and <math>n</math> are both made infinite in any given ratio is\n{{block center|<math>\\left(\\frac{m}{n}\\right)^{\\frac{z}{\\pi}}\\frac{\\sin z}{z}.</math>}}\n\nAnother example of an absolutely convergent infinite product, whose convergency depends on the presence of an exponential factor, is the product <math>z\\Pi\\left(1-\\frac{z}{\\Omega}\\right)e^{\\frac{z}{\\Omega}+\\frac{1}{2}\\frac{z^2}{\\Omega^2}}</math>, where <math>\\Omega</math> denotes <math>2m\\omega_1+2n\\omega_2</math>, <math>\\omega_1</math> and <math>\\omega_2</math> being any two quantities having a complex ratio, and the product is taken over all positive and negative integer and zero values of <math>m</math> and <math>n</math>, except simultaneous zeros. This product is the expression in factors of Weierstrass's elliptic function <math>\\sigma(z)</math>.\n\n{{smaller block|{{sc|Authorities}}.—G. Chrystal, ''Algebra'', vol. ii. (1900); E. Goursat, ''Cours d'analyse'' (translated by E. R. Hedrick), vol. i. (1902); J. Harkness and F. Morley, ''A Treatise on the Theory of Functions'' (1893) and ''Introduction to the Theory of Analytic Functions'' (1899); E. W. Hobson, ''Plane Trigonometry'' (1891), and ''Theory of Functions of a Real Variable'': H. S. Carslaw, ''Fourier's Series''; E. T. Whittaker, ''Modern Analysis'' (1902); J. Tannery, ''Introduction à la théorie des functions d'une variable''; C. Jordan, ''Cours d'analyse de l'École Polytechnique'' (2nd ed., 1896); E. Césaro, ''Corso di analisi algebraica'' (1894); O. Stolz, ''Allgemeine Arithmetik'' (1886); O. Biermann, ''Elemente der höheren Mathematik'' (1895); W. F. Osgood, ''Introduction to Infinite Series''; T. J. I'A. Bromwich, ''Theory of Infinite Series'' (1908). Also the article by A. Pringsheim, \"Irrationalzahlen und Konvergenz unendlichen Prozesse\" in the ''Encyclopädie der mathematischen Wissenschaften'' 1, a. 3 (Leipzig). For the history of the subject see R. Reiff, ''Geschichte der unendlichen Reihen''; G. H. Hardy, ''A Course of Pure Mathematics''. (A. E. J.)}}\n\n'''SERINGAPATAM,''' or {{sc|Srirangapatana}}, a town of India, formerly capital of the state of Mysore, situated on an island of the same name in the Cauvery river. Pop. (1901) 8584. The town is chiefly noted for its fortress, which figured prominently in Indian history at the close of the 18th century. This formidable stronghold of Tippoo Sultan twice sustained a siege from the British, and was finally stormed in 1799. After its capture the island was ceded to the British, but restored to Mysore in 1881. The island of Seringapatam is about 3 m. in length from east to west and 1 in breadth, and yields valuable crops of rice and sugar-cane. The fort occupies the western side, immediately overhanging the river. Seringapatam is said to have been founded in 1454 by a descendant of one of the local officers appointed by Ramanuja, the Vishnuite apostle, who named it the city of Sri Ranga or Vishnu. At the eastern or lower end of the island is the Lal Bagh or \"red garden,\" containing the mausoleum built by Tippoo Sultan for his father Hyder Ali, in which Tippoo himself also lies.<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,151 @@
+{
+ "volume": 26,
+ "page_number": 137,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n141",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n141",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1212,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     1,
+     2273,
+     211
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     211,
+     1200,
+     1248
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1248,
+     1200,
+     1834
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1834,
+     1200,
+     2848
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2848,
+     1200,
+     3154
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     211,
+     2273,
+     1307
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     1307,
+     2273,
+     2256
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     2256,
+     2273,
+     3154
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||SURFACE|119}}",
+   "c1s1": "but we cannot with a single sheet of paper properly exhibit the form in the neighbourhood of the edge of regression: we need two sheets connected along a plane curve, which, when the paper is bent, becomes the edge of regression and appears as a cuspidal curve on the surface.\n\nIt may be mentioned that the condition which must be satisfied in order that the equation <math>U=0</math> shall represent a developable is <math>H(U)=0</math>; that is, the Hessian or functional determinant formed with the second differential coefficients of <math>U</math> must vanish in virtue of the equation <math>U=0</math>, or—what is the same thing—<math>H(U)</math> must contain <math>U</math> as a factor. If in cartesian co-ordinates the equation is taken in the form <math>z-f\\ (x, y)=0</math>, then the condition is <math>rt-s^2=0</math> identically, where <math>r</math>, <math>s</math>, <math>t</math> denote as usual the second differential coefficients of <math>z</math> in regard to <math>x</math>, <math>y</math> respectively.\n\n'''''Regulus or Ruled Surface.''''' 9. A regulus or ruled surface is the locus of a singly infinite system of lines, where the consecutive lines do not intersect; this is a true surface, for there is a doubly infinite series of tangent planes—in fact any plane through any one of the lines is a tangent plane of the surface, touching it at a point on the line, and in such wise that, as the tangent plane turns about the line, the point of contact moves along the line. The complete intersection of the surface by the tangent plane is made up of the line counting once and of a residual curve of the order <math>n-1</math>. A quadric surface is a regulus in a two-fold manner, for there are on the surface two systems of lines each of which is a regulus. A cubic surface may be a regulus (see below, par. 11).\n\n{{c|''Surfaces of the Orders'' 2, 3 ''and'' 4.}}\n\n10. A surface of the second order or a quadric surface is a surface such that every line meets it in two points, or—what comes to the",
+   "c1s2": "'''''Quadric Surfaces.''''' same thing—such that every plane section thereof is a conic or quadric curve. Such surfaces have been studied from every point of view. The only singular forms are when there is (1) a conical point (cnicnode), when the surface is a cone of the second order or quadricone; (2) a conic of contact (cnictrope), when the surface is this conic; from a different point of view it is a “ surface aplatie ” or flattened surface. Excluding these degenerate forms, the surface is of the order, rank and class each <math>= 2</math>, and it has no singularities. Distinguishing the forms according to ''reality'', we have the ellipsoid, the hyperboloid of two sheets, the hyperboloid of one sheet, the elliptic paraboloid and the hyperbolic paraboloid (see {{sc|Geometry}}: § ''Analytical''). A particular case of the ellipsoid is the sphere; in abstract geometry this is a quadric surface passing through a given quadric curve, the circle at infinity. The tangent plane of a quadric surface meets it in a quadric curve having a node, that is, in a pair of lines; hence there are on the surface two singly infinite sets of lines. Two lines of the same set do not meet, but each line of the one set meets",
+   "c1s3": "each line of the other set; the surface is thus a regulus in a twofold manner. The lines are real for the hyperboloid of one sheet and for the hyperbolic paraboloid; for the other forms of surface they are imaginary.\n\n'''''Cubic Surfaces.''''' 11. We have next the surface of the third order or cubic surface, which has also been very completely studied. Such a surface may have isolated point singularities (cnicnodes or points of higher singularity), or it may have a nodal line; we have thus <math>21+2, =23</math> cases. In the general case of a surface without any singularities, the order, rank and class <math>\\text{are} = 3, 6, 12</math> respectively. The surface has upon it 27 lines, lying by threes in 45 planes, which are triple tangent planes. Observe that the tangent plane is a plane meeting the surface in a curve having a node. For a surface of any given order <math>n</math> there will be a certain number of planes each meeting the surface in a curve with 3 nodes, that is, triple tangent planes; and, in the particular case where <math>n=3</math>, the cubic curve with 3 nodes is of course a set of 3 lines; it is found that the number of triple tangent planes is, as just mentioned, <math>=45</math>. This would give 135 lines, but through each line we have 5 such planes, and the number of lines is thus <math>=27</math>. The theory of the 27 lines is an extensive and interesting one; in particular, it may be noticed that we can, in thirty-six ways, select a system of <math>6\\times 6</math> lines, or “double sixer,” such that no two lines of the same set intersect each other, but that each line of the one set intersects each line of the other set.\n\nA cubic surface having a nodal line is a ruled surface or regulus; in fact any plane through the nodal line meets the surface in this line counting twice and in a residual line, and there is thus on the surface a singly infinite set of lines. There are two forms.",
+   "c1s4": "¶\n'''''Quartic Surfaces.'''''\n\n12. As regards quartic surfaces, only particular forms have been much studied. A quartic surface can have at most 16 conical points (cnicnodes); an instance of such a surface is Fresnel's wave surface, which has 4 real cnicnodes in one of the principal planes, <math>4\\times 2</math> imaginary ones in the other two principal planes, and 4 imaginary ones at infinity—in all 16 cnicnodes; the same surface has also <math>4</math> real<math>{}+12</math> imaginary planes each touching the surface along a circle (cnictropes)—in all 16 cnictropes. It was easy by a mere homographic transforma-",
+   "c2s1": "",
+   "c2s2": "",
+   "c2s3": "observed that, while for a congruence there is in general a surface having the congruence lines for bitangents, for a complex there is not in general any surface having the complex lines for tangents; the tangent lines of a surface are thus only a special form of complex. The theory of complexes first presented itself in the researches of Malus on systems of rays of light in connexion with double refraction.\n\n15. The analytical theory as well of congruences as of complexes is most easily carried out by means of the six co-ordinates of a line; viz. there are co-ordinates <math>(a, b, c, f, g, h)</math> connected by the equation <math>af+bg+ch=0</math>, and therefore such that the ratios <math>a:b:c:f:g:h</math> constitute a system of four arbitrary parameters. We have thus a congruence of the order <math>n</math> represented by a single homogeneous equation of that order <math>(*\\between a, b, c, f, g, h)^n=0</math> between the six co-ordinates; two such relations determine a congruence. But we have in regard to congruences the same difficulty as that which presents itself in regard to curves in space: it is not every congruence which can be represented completely and precisely by ''two'' such equations (see {{sc|Geometry}}: § ''Line'').\n\nThe linear equation <math>(*\\between a, b, c, f, g, h)=0</math> represents a congruence of the first order or linear congruence; such congruences are interesting both in geometry and in connexion with the theory of forces acting on a rigid body.\n\n{{c|''Curves of Curvature; Asymptotic Lines.''}}\n\n16. The normals of a surface form a congruence. In any congruence the lines consecutive to a given congruence line do not"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [
+   "c2s1",
+   "c2s2"
+  ],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    3
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 6,
+    "input_tokens": 6699,
+    "output_tokens": 4690,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 11544
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader||SURFACE|119}}</noinclude>but we cannot with a single sheet of paper properly exhibit the form in the neighbourhood of the edge of regression: we need two sheets connected along a plane curve, which, when the paper is bent, becomes the edge of regression and appears as a cuspidal curve on the surface.\n\nIt may be mentioned that the condition which must be satisfied in order that the equation <math>U=0</math> shall represent a developable is <math>H(U)=0</math>; that is, the Hessian or functional determinant formed with the second differential coefficients of <math>U</math> must vanish in virtue of the equation <math>U=0</math>, or—what is the same thing—<math>H(U)</math> must contain <math>U</math> as a factor. If in cartesian co-ordinates the equation is taken in the form <math>z-f\\ (x, y)=0</math>, then the condition is <math>rt-s^2=0</math> identically, where <math>r</math>, <math>s</math>, <math>t</math> denote as usual the second differential coefficients of <math>z</math> in regard to <math>x</math>, <math>y</math> respectively.\n\n'''''Regulus or Ruled Surface.''''' 9. A regulus or ruled surface is the locus of a singly infinite system of lines, where the consecutive lines do not intersect; this is a true surface, for there is a doubly infinite series of tangent planes—in fact any plane through any one of the lines is a tangent plane of the surface, touching it at a point on the line, and in such wise that, as the tangent plane turns about the line, the point of contact moves along the line. The complete intersection of the surface by the tangent plane is made up of the line counting once and of a residual curve of the order <math>n-1</math>. A quadric surface is a regulus in a two-fold manner, for there are on the surface two systems of lines each of which is a regulus. A cubic surface may be a regulus (see below, par. 11).\n\n{{c|''Surfaces of the Orders'' 2, 3 ''and'' 4.}}\n\n10. A surface of the second order or a quadric surface is a surface such that every line meets it in two points, or—what comes to the '''''Quadric Surfaces.''''' same thing—such that every plane section thereof is a conic or quadric curve. Such surfaces have been studied from every point of view. The only singular forms are when there is (1) a conical point (cnicnode), when the surface is a cone of the second order or quadricone; (2) a conic of contact (cnictrope), when the surface is this conic; from a different point of view it is a “ surface aplatie ” or flattened surface. Excluding these degenerate forms, the surface is of the order, rank and class each <math>= 2</math>, and it has no singularities. Distinguishing the forms according to ''reality'', we have the ellipsoid, the hyperboloid of two sheets, the hyperboloid of one sheet, the elliptic paraboloid and the hyperbolic paraboloid (see {{sc|Geometry}}: § ''Analytical''). A particular case of the ellipsoid is the sphere; in abstract geometry this is a quadric surface passing through a given quadric curve, the circle at infinity. The tangent plane of a quadric surface meets it in a quadric curve having a node, that is, in a pair of lines; hence there are on the surface two singly infinite sets of lines. Two lines of the same set do not meet, but each line of the one set meets each line of the other set; the surface is thus a regulus in a twofold manner. The lines are real for the hyperboloid of one sheet and for the hyperbolic paraboloid; for the other forms of surface they are imaginary.\n\n'''''Cubic Surfaces.''''' 11. We have next the surface of the third order or cubic surface, which has also been very completely studied. Such a surface may have isolated point singularities (cnicnodes or points of higher singularity), or it may have a nodal line; we have thus <math>21+2, =23</math> cases. In the general case of a surface without any singularities, the order, rank and class <math>\\text{are} = 3, 6, 12</math> respectively. The surface has upon it 27 lines, lying by threes in 45 planes, which are triple tangent planes. Observe that the tangent plane is a plane meeting the surface in a curve having a node. For a surface of any given order <math>n</math> there will be a certain number of planes each meeting the surface in a curve with 3 nodes, that is, triple tangent planes; and, in the particular case where <math>n=3</math>, the cubic curve with 3 nodes is of course a set of 3 lines; it is found that the number of triple tangent planes is, as just mentioned, <math>=45</math>. This would give 135 lines, but through each line we have 5 such planes, and the number of lines is thus <math>=27</math>. The theory of the 27 lines is an extensive and interesting one; in particular, it may be noticed that we can, in thirty-six ways, select a system of <math>6\\times 6</math> lines, or “double sixer,” such that no two lines of the same set intersect each other, but that each line of the one set intersects each line of the other set.\n\nA cubic surface having a nodal line is a ruled surface or regulus; in fact any plane through the nodal line meets the surface in this line counting twice and in a residual line, and there is thus on the surface a singly infinite set of lines. There are two forms.\n\n'''''Quartic Surfaces.'''''\n\n12. As regards quartic surfaces, only particular forms have been much studied. A quartic surface can have at most 16 conical points (cnicnodes); an instance of such a surface is Fresnel's wave surface, which has 4 real cnicnodes in one of the principal planes, <math>4\\times 2</math> imaginary ones in the other two principal planes, and 4 imaginary ones at infinity—in all 16 cnicnodes; the same surface has also <math>4</math> real<math>{}+12</math> imaginary planes each touching the surface along a circle (cnictropes)—in all 16 cnictropes. It was easy by a mere homographic transformaobserved that, while for a congruence there is in general a surface having the congruence lines for bitangents, for a complex there is not in general any surface having the complex lines for tangents; the tangent lines of a surface are thus only a special form of complex. The theory of complexes first presented itself in the researches of Malus on systems of rays of light in connexion with double refraction.\n\n15. The analytical theory as well of congruences as of complexes is most easily carried out by means of the six co-ordinates of a line; viz. there are co-ordinates <math>(a, b, c, f, g, h)</math> connected by the equation <math>af+bg+ch=0</math>, and therefore such that the ratios <math>a:b:c:f:g:h</math> constitute a system of four arbitrary parameters. We have thus a congruence of the order <math>n</math> represented by a single homogeneous equation of that order <math>(*\\between a, b, c, f, g, h)^n=0</math> between the six co-ordinates; two such relations determine a congruence. But we have in regard to congruences the same difficulty as that which presents itself in regard to curves in space: it is not every congruence which can be represented completely and precisely by ''two'' such equations (see {{sc|Geometry}}: § ''Line'').\n\nThe linear equation <math>(*\\between a, b, c, f, g, h)=0</math> represents a congruence of the first order or linear congruence; such congruences are interesting both in geometry and in connexion with the theory of forces acting on a rigid body.\n\n{{c|''Curves of Curvature; Asymptotic Lines.''}}\n\n16. The normals of a surface form a congruence. In any congruence the lines consecutive to a given congruence line do not<noinclude><references/></noinclude>"
+}

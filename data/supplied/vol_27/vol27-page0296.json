@@ -1,0 +1,127 @@
+{
+ "volume": 27,
+ "page_number": 296,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n303",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n303",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1169,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     1,
+     2253,
+     180
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     180,
+     1179,
+     1265
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1265,
+     1179,
+     2221
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2221,
+     1179,
+     3103
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1179,
+     180,
+     2253,
+     1276
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1179,
+     1276,
+     2253,
+     2280
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1179,
+     2280,
+     2253,
+     3103
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||TRIGONOMETRY|281}}",
+   "c1s1": "¶\n27. We shall now obtain expressions for sin <math>x</math> and cos <math>x</math> as infinite products of rational factors. We have\n\n''Factorization of Sine and Cosine.''\n\n{{block center|<math>\\sin x = 2 \\sin \\frac{x}{2} \\cdot \\sin \\frac{x+\\pi}{2} = 2^3 \\sin \\frac{x}{4} \\cdot \\sin \\frac{x+\\pi}{4}</math>}}\n\n{{block center|<math>\\sin \\frac{x+2\\pi}{4} \\cdot \\sin \\frac{x+3\\pi}{4}</math>;}}\n\nproceeding continually in this way with each factor, we obtain\n\n{{block center|<math>\\sin x = 2^{n-1} \\sin \\frac{x}{n} \\cdot \\sin \\frac{x+\\pi}{n} \\cdot \\sin \\frac{x+2\\pi}{n} \\dots \\sin \\frac{x+\\overline{n-1}\\pi}{n}</math>,}}\n\nwhere <math>n</math> is any positive integral power of 2. Now\n\n{{block center|<math>\\sin \\frac{x+r\\pi}{n} \\cdot \\sin \\frac{x+n-r\\pi}{n} = \\sin \\frac{x+r\\pi}{n} \\cdot \\sin \\frac{\\overline{r\\pi-x}}{n} = \\sin^2 \\frac{r\\pi}{n} - \\sin^2 \\frac{x}{n}</math>,}}\n\n{{block center|and <math>\\sin \\frac{x+\\frac{1}{2}n\\pi}{n} = \\cos \\frac{x}{n}</math>.}}\n\nHence the above may be written\n\n{{block center|<math>\\sin x = 2^{n-1} \\sin \\frac{x}{n} \\left(\\sin^2 \\frac{\\pi}{n} - \\sin^2 \\frac{x}{n}\\right) \\left(\\sin^2 \\frac{2\\pi}{n} - \\sin^2 \\frac{x}{n}\\right) \\dots</math>}}\n\n{{block center|<math>\\left(\\sin^2 \\frac{k\\pi}{n} - \\sin^2 \\frac{x}{n}\\right) \\cos \\frac{x}{n}</math>,}}\n\nwhere <math>k = \\frac{1}{2}n = 1</math>. Let <math>x</math> be indefinitely small, then we have\n\n{{block center|<math>1 = \\frac{2^{n-1}}{n} \\sin^2 \\frac{\\pi}{n} \\sin^2 \\frac{2\\pi}{n} \\dots \\sin^2 \\frac{k\\pi}{n}</math>;}}\n\nhence\n\n{{block center|<math>\\sin x = n \\sin \\frac{x}{n} \\cos \\frac{x}{n} \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 \\pi/n}\\right) \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 2\\pi/n}\\right) \\dots \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 k\\pi/n}\\right)</math>.}}\n\nWe may write this",
+   "c1s2": "{{block center|<math>\\sin x = n \\sin \\frac{x}{n} \\cos \\frac{x}{n} \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 \\pi/n}\\right) \\dots \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 m\\pi/n}\\right) R,</math>}}\nwhere <math>R</math> denotes the product\n{{block center|<math>\\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 \\overline{m+1}\\pi/n}\\right) \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 \\overline{m+2}\\pi/n}\\right) \\dots \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 k\\pi/n}\\right),</math>}}\nand <math>m</math> is any fixed integer independent of <math>n</math>. It is necessary, when we make <math>n</math> infinite, to determine the limiting value of the quantity <math>R</math>; then, since the limit of <math>\\frac{\\sin x}{n \\sin x/n \\cos x/n}</math> is <math>\\frac{\\sin x}{x},</math> and that of <math>\\frac{\\sin m\\pi/n}{m\\pi/n}</math> is unity, we have\n{{block center|<math>\\frac{\\sin x}{x} = \\left(1 - \\frac{x^2}{\\pi^2}\\right) \\left(1 - \\frac{x^2}{2^2\\pi^2}\\right) \\dots \\left(1 - \\frac{x^2}{m^2\\pi^2}\\right) \\lim_{m=\\infty} \\text{R}.</math>}}\nThe modulus of <math>R - 1</math> is less than\n{{block center|<math>\\left(1 + \\frac{\\rho^2}{\\sin^2 \\overline{m+1}\\pi/n}\\right) \\left(1 + \\frac{\\rho^2}{\\sin^2 \\overline{m+2}\\pi/n}\\right) \\dots \\left(1 + \\frac{\\rho^2}{\\sin^2 k\\pi/n}\\right) - 1,</math>}}\nwhere <math>\\rho = \\text{mod. } \\sin x/n</math>. Now <math>e^{A\\rho^2} > 1 + A\\rho^2</math>, if <math>A</math> is positive; hence <math>\\text{mod. } (R-1)</math> is less than <math>\\text{exp. } \\{\\rho^2(\\text{cosec}^2 \\overline{m+1}\\pi/n + \\dots + \\text{cosec}^2 k\\pi/n) - 1</math>, or than <math>\\text{exp. } \\tfrac{1}{4}\\rho^2n^2\\{1/(m+1)^2 + \\dots + 1/k^2\\} - 1</math>, or than <math>\\text{exp. } \\{\\rho^2n^2/4m^2\\} - 1</math>. Now <math>\\rho^2 = \\sin^2 \\alpha/n . \\cosh^2 \\beta/n + \\cos^2 \\alpha/n . \\sinh^2 \\beta/n</math>, if <math>x = \\alpha + i\\beta</math>; or <math>\\rho^2 = \\sin^2 \\alpha/n + \\sinh^2 \\beta/n</math>. Hence <math>\\lim_{n=\\infty} \\rho^2n^2 = \\alpha^2 + \\beta^2</math>, <math>\\lim_{n=\\infty} \\rho n = \\text{mod. } x</math>. It follows that <math>\\text{mod.}_{n=\\infty} (R-1)</math> is between 0 and <math>\\text{exp. } \\{(\\text{mod. } 4)^2/ xm^2\\} - 1</math>, and",
+   "c1s3": "the latter may be made arbitrarily small by taking <math>m</math> large enough. It has now been shown that <math>\\sin x = x(1 - x^2/\\pi^2)(1 - x^2/2^2\\pi^2) \\dots (1 - x^2/m^2\\pi^2)(1 + \\epsilon_m)</math>, where mod. <math>\\epsilon_m</math> decreases indefinitely as <math>m</math> is increased indefinitely. When <math>m</math> is indefinitely increased this becomes\n\n{{block center|<math>\\sin x = x\\left(1 - \\frac{x^2}{\\pi^2}\\right)\\left(1 - \\frac{x^2}{2^2\\pi^2}\\right) \\dots = x\\underset{n=1}{\\overset{n=\\infty}{P}}\\left(1 - \\frac{x^2}{n^2\\pi^2}\\right).</math> (25)}}\n\nThis has been shown to hold for any real or complex value of <math>x</math>. The expression for <math>\\cos x</math> in factors may be found in a similar manner by means of the equation <math>\\cos x = 2\\sin\\frac{\\pi - 2x}{4}\\cos\\frac{3\\pi - 2x}{4}</math>, or may be deduced thus\n\n{{block center|<math>\\cos x = \\frac{\\sin 2x}{2\\sin x} = \\frac{P\\left(1 - \\frac{4x^2}{n^2\\pi^2}\\right)}{P\\left(1 - \\frac{x^2}{n^2\\pi^2}\\right)} = \\left(1 - \\frac{4x^2}{\\pi^2}\\right)\\left(1 - \\frac{4x^2}{3^2\\pi^2}\\right)\\left(1 - \\frac{4x^2}{5^2\\pi^2}\\right) \\dots</math>}}\n\n{{block center|<math>= \\underset{n=0}{\\overset{n=\\infty}{P}}\\left(1 - \\frac{4x^2}{(2n+1)^2\\pi^2}\\right).</math> (26)}}\n\nIf we change <math>x</math> into <math>\\iota x</math>, we have the formulae for <math>\\sinh x</math>, <math>\\cosh x</math> as infinite products—\n\n{{block center|<math>\\sinh x = x\\underset{n=0}{\\overset{n=\\infty}{P}}\\left(1 + \\frac{x^2}{n^2\\pi^2}\\right), \\cosh x = \\underset{n=0}{\\overset{n=\\infty}{P}}\\left(1 + \\frac{4x^2}{(2n+1)^2\\pi^2}\\right).</math>}}",
+   "c2s1": "¶\nIn the formula for <math>\\sin x</math> as an infinite product put <math>x=\\tfrac{1}{2}\\pi</math>, we then get <math>1=\\frac{\\pi}{2}\\cdot\\frac{1\\cdot 3\\cdot 3\\cdot 5\\cdot 5\\dots}{2.2.4.4.6\\dots}</math>; if we stop after <math>2n</math> factors in the numerator and denominator, we obtain the approximate equation\n\n{{block center|<math>1=\\frac{\\pi}{2}\\frac{1^2.3^2.5^2\\ \\dots\\ (2n-1)^2}{2^2.4^2.6^2\\ \\dots\\ \\ (2n)^2}.(2n+1)</math>}}\n\nor <math>\\frac{2.4.6\\dots\\ 2n}{1.3.5\\dots 2n-1}=\\sqrt{n\\pi}</math>, where <math>n</math> is a large integer. This expression was obtained in a quite different manner by Wallis (''Arithmetica infinitorum'', vol. i. of ''Opp.'').\n\n'''''Series for Cot, Cosec, Tan and Sec.''''' 28. We have\n\n{{block center|<math>\\frac{\\sin(x+y)}{\\sin x}=\\frac{(x+y)P\\left(1+\\frac{x+y}{n\\pi}\\right)}{xP\\left(1+\\frac{x}{n\\pi}\\right)}</math>,}}\n\nor <math>\\cos y+\\sin y\\cot x</math>\n\n{{block center|<math>=\\left(1+\\frac{y}{x}\\right)\\left(1+\\frac{y}{x+\\pi}\\right)\\left(1+\\frac{y}{x-\\pi}\\right)\\left(1+\\frac{y}{x+2\\pi}\\right)\\left(1+\\frac{y}{x-2\\pi}\\right)\\dots</math>}}\n\nEquating the coefficients of the first power of <math>y</math> on both sides we obtain the series\n\n{{block center|<math>\\cot x=\\frac{1}{x}+\\frac{1}{x+\\pi}+\\frac{1}{x-\\pi}+\\frac{1}{x+2\\pi}+\\frac{1}{x-2\\pi}+\\dots</math> (27)}}\n\nFrom this we may deduce a corresponding series for <math>\\operatorname{cosec} x</math>, for, since <math>\\operatorname{cosec} x=\\cot\\tfrac{1}{2}x-\\cot x</math>, we obtain\n\n{{block center|<math>\\operatorname{cosec} x=\\frac{1}{x}-\\frac{1}{x+\\pi}-\\frac{1}{x-\\pi}+\\frac{1}{x+2\\pi}+\\frac{1}{x-2\\pi}-\\frac{1}{x+3\\pi}-\\frac{1}{x-3\\pi}+\\dots</math> (28)}}\n\nBy resolving <math>\\frac{\\cos(x+y)}{\\cos x}</math> into factors we should obtain in a similar",
+   "c2s2": "manner the series\n\n{{block center|<math>\\tan x = \\frac{2}{\\pi-2x} - \\frac{2}{\\pi+2x} + \\frac{2}{3\\pi-2x} - \\frac{2}{3\\pi+2x} + \\frac{2}{5\\pi-2x} - \\frac{2}{5\\pi+2x} + \\dots,</math> (29)}}\n\nand thence\n\n{{block center|<math>\\sec x = \\tan\\left(\\frac{\\pi}{4}+\\frac{x}{2}\\right) - \\tan x = \\frac{2}{\\pi-2x} + \\frac{2}{\\pi+2x} - \\frac{2}{3\\pi-2x} - \\frac{2}{3\\pi+2x} + \\dots.</math> (30)}}\n\nThese four formulae may also be derived from the product formulae for <math>\\sin x</math> and <math>\\cos x</math> by taking logarithms and then differentiating. Glaisher has proved them by resolving the expressions for <math>\\cos x/\\sin x</math> and <math>1/\\sin x</math> . . . as products into partial fractions (see ''Quart. Journ. Math.'', vol. xvii.). The series for <math>\\cot x</math> may also be obtained by a continued use of the equation <math>\\cot x = \\tfrac{1}{2}\\{\\cot \\tfrac{1}{2}x + \\cot \\tfrac{1}{2}(x+\\pi)\\}</math> (see a paper by Dr Schröter in Schlömilch's ''Zeitschrift'', vol. xiii.).\n\n'''''Series for <math>\\pi</math> derived from Series for Cot and Cosec.''''' Various series for <math>\\pi</math> may be derived from the series (27), (28), (29), (30), and from the series obtained by differentiating them one or more times. For example, in the formulae (27) and (28), by putting <math>x = \\pi/n</math> we get\n\n{{block center|<math>\\pi = n \\tan \\frac{\\pi}{n} \\left\\{ 1 - \\frac{1}{n-1} + \\frac{1}{n+1} - \\frac{1}{2n-1} + \\frac{1}{2n+1} \\dots \\right\\},</math>}}\n\n{{block center|<math>[\\pi = n \\sin \\frac{\\pi}{n} \\left\\{ 1 + \\frac{1}{n-1} - \\frac{1}{n+1} - \\frac{1}{2n-1} + \\frac{1}{2n+1} \\dots \\right\\};</math>}}\n\nIf we put <math>n = 3</math>, these become\n\n{{block center|<math>\\pi = 3\\sqrt{3} \\left(1 - \\frac{1}{2} + \\frac{1}{4} - \\frac{1}{5} + \\frac{1}{7} - \\frac{1}{8} + \\dots\\right),</math>}}\n\n{{block center|<math>\\pi = \\frac{3\\sqrt{3}}{2} \\left(1 + \\frac{1}{2} - \\frac{1}{4} - \\frac{1}{5} + \\frac{1}{7} + \\frac{1}{8} \\dots\\right).</math>}}",
+   "c2s3": "By differentiating (27) we get\n\n{{block center|<math>\\text{cosec}^2\\, x = \\frac{1}{x^2} + \\frac{1}{(x+\\pi)^2} + \\frac{1}{(x-\\pi)^2} + \\frac{1}{(x+2\\pi)^2} + \\frac{1}{(x-2\\pi)^2} + \\dots;</math>}}\n\nput <math>x = \\frac{\\pi}{6}</math>, and we get <math>\\pi^2 = 9 \\left\\{ 1 + \\frac{1}{5^2} + \\frac{1}{7^2} + \\frac{1}{11^2} + \\dots \\right\\}</math>. These series, among others, were given by Glaisher (''Quart. Journ. Math.'' vol. xii.).\n\n'''''Sums of Certain Series.''''' 29. We have <math>\\sinh \\pi x = \\pi x P \\left( 1 + \\frac{x^2}{n^2} \\right)</math>, <math>\\cosh \\pi x = P \\left( 1 + \\frac{x^2}{(2n+1)^2} \\right)</math>; if we differentiate these formulae after taking logarithms we obtain the series\n\n{{block center|<math>\\frac{\\pi}{2x} \\coth \\pi x - \\frac{1}{2x^2} = \\frac{1}{1^2+x^2} + \\frac{1}{2^2+x^2} + \\frac{1}{3^2+x^2} + \\dots,</math>}}\n\n{{block center|<math>\\frac{\\pi}{2x} \\tanh \\pi x = \\frac{1}{1^2+x^2} + \\frac{1}{3^2+x^2} + \\frac{1}{5^2+x^2} + \\dots</math>}}\n\nThese series were given by Kummer (in ''Crelle's Journ.'' vol. xvii.) The sum of the more general series <math>\\frac{1}{1^{2n}+x^{2n}} + \\frac{1}{2^{2n}+x^{2n}} + \\frac{1}{3^{2n}+x^{2n}} + \\dots</math>, has been found by Glaisher (''Proc. Lond. Math. Soc.'', vol. vii.)\n\nIf <math>U^m</math> denotes the sum of the series <math>\\frac{1}{1^m} + \\frac{1}{2^m} + \\frac{1}{3^m} + \\dots</math>, <math>V^m</math> that"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2669,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 9439,
+    "output_tokens": 8817,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||TRIGONOMETRY|281}}</noinclude>27. We shall now obtain expressions for sin <math>x</math> and cos <math>x</math> as infinite products of rational factors. We have\n\n''Factorization of Sine and Cosine.''\n\n{{block center|<math>\\sin x = 2 \\sin \\frac{x}{2} \\cdot \\sin \\frac{x+\\pi}{2} = 2^3 \\sin \\frac{x}{4} \\cdot \\sin \\frac{x+\\pi}{4}</math>}}\n\n{{block center|<math>\\sin \\frac{x+2\\pi}{4} \\cdot \\sin \\frac{x+3\\pi}{4}</math>;}}\n\nproceeding continually in this way with each factor, we obtain\n\n{{block center|<math>\\sin x = 2^{n-1} \\sin \\frac{x}{n} \\cdot \\sin \\frac{x+\\pi}{n} \\cdot \\sin \\frac{x+2\\pi}{n} \\dots \\sin \\frac{x+\\overline{n-1}\\pi}{n}</math>,}}\n\nwhere <math>n</math> is any positive integral power of 2. Now\n\n{{block center|<math>\\sin \\frac{x+r\\pi}{n} \\cdot \\sin \\frac{x+n-r\\pi}{n} = \\sin \\frac{x+r\\pi}{n} \\cdot \\sin \\frac{\\overline{r\\pi-x}}{n} = \\sin^2 \\frac{r\\pi}{n} - \\sin^2 \\frac{x}{n}</math>,}}\n\n{{block center|and <math>\\sin \\frac{x+\\frac{1}{2}n\\pi}{n} = \\cos \\frac{x}{n}</math>.}}\n\nHence the above may be written\n\n{{block center|<math>\\sin x = 2^{n-1} \\sin \\frac{x}{n} \\left(\\sin^2 \\frac{\\pi}{n} - \\sin^2 \\frac{x}{n}\\right) \\left(\\sin^2 \\frac{2\\pi}{n} - \\sin^2 \\frac{x}{n}\\right) \\dots</math>}}\n\n{{block center|<math>\\left(\\sin^2 \\frac{k\\pi}{n} - \\sin^2 \\frac{x}{n}\\right) \\cos \\frac{x}{n}</math>,}}\n\nwhere <math>k = \\frac{1}{2}n = 1</math>. Let <math>x</math> be indefinitely small, then we have\n\n{{block center|<math>1 = \\frac{2^{n-1}}{n} \\sin^2 \\frac{\\pi}{n} \\sin^2 \\frac{2\\pi}{n} \\dots \\sin^2 \\frac{k\\pi}{n}</math>;}}\n\nhence\n\n{{block center|<math>\\sin x = n \\sin \\frac{x}{n} \\cos \\frac{x}{n} \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 \\pi/n}\\right) \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 2\\pi/n}\\right) \\dots \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 k\\pi/n}\\right)</math>.}}\n\nWe may write this {{block center|<math>\\sin x = n \\sin \\frac{x}{n} \\cos \\frac{x}{n} \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 \\pi/n}\\right) \\dots \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 m\\pi/n}\\right) R,</math>}}\nwhere <math>R</math> denotes the product\n{{block center|<math>\\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 \\overline{m+1}\\pi/n}\\right) \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 \\overline{m+2}\\pi/n}\\right) \\dots \\left(1 - \\frac{\\sin^2 x/n}{\\sin^2 k\\pi/n}\\right),</math>}}\nand <math>m</math> is any fixed integer independent of <math>n</math>. It is necessary, when we make <math>n</math> infinite, to determine the limiting value of the quantity <math>R</math>; then, since the limit of <math>\\frac{\\sin x}{n \\sin x/n \\cos x/n}</math> is <math>\\frac{\\sin x}{x},</math> and that of <math>\\frac{\\sin m\\pi/n}{m\\pi/n}</math> is unity, we have\n{{block center|<math>\\frac{\\sin x}{x} = \\left(1 - \\frac{x^2}{\\pi^2}\\right) \\left(1 - \\frac{x^2}{2^2\\pi^2}\\right) \\dots \\left(1 - \\frac{x^2}{m^2\\pi^2}\\right) \\lim_{m=\\infty} \\text{R}.</math>}}\nThe modulus of <math>R - 1</math> is less than\n{{block center|<math>\\left(1 + \\frac{\\rho^2}{\\sin^2 \\overline{m+1}\\pi/n}\\right) \\left(1 + \\frac{\\rho^2}{\\sin^2 \\overline{m+2}\\pi/n}\\right) \\dots \\left(1 + \\frac{\\rho^2}{\\sin^2 k\\pi/n}\\right) - 1,</math>}}\nwhere <math>\\rho = \\text{mod. } \\sin x/n</math>. Now <math>e^{A\\rho^2} > 1 + A\\rho^2</math>, if <math>A</math> is positive; hence <math>\\text{mod. } (R-1)</math> is less than <math>\\text{exp. } \\{\\rho^2(\\text{cosec}^2 \\overline{m+1}\\pi/n + \\dots + \\text{cosec}^2 k\\pi/n) - 1</math>, or than <math>\\text{exp. } \\tfrac{1}{4}\\rho^2n^2\\{1/(m+1)^2 + \\dots + 1/k^2\\} - 1</math>, or than <math>\\text{exp. } \\{\\rho^2n^2/4m^2\\} - 1</math>. Now <math>\\rho^2 = \\sin^2 \\alpha/n . \\cosh^2 \\beta/n + \\cos^2 \\alpha/n . \\sinh^2 \\beta/n</math>, if <math>x = \\alpha + i\\beta</math>; or <math>\\rho^2 = \\sin^2 \\alpha/n + \\sinh^2 \\beta/n</math>. Hence <math>\\lim_{n=\\infty} \\rho^2n^2 = \\alpha^2 + \\beta^2</math>, <math>\\lim_{n=\\infty} \\rho n = \\text{mod. } x</math>. It follows that <math>\\text{mod.}_{n=\\infty} (R-1)</math> is between 0 and <math>\\text{exp. } \\{(\\text{mod. } 4)^2/ xm^2\\} - 1</math>, and the latter may be made arbitrarily small by taking <math>m</math> large enough. It has now been shown that <math>\\sin x = x(1 - x^2/\\pi^2)(1 - x^2/2^2\\pi^2) \\dots (1 - x^2/m^2\\pi^2)(1 + \\epsilon_m)</math>, where mod. <math>\\epsilon_m</math> decreases indefinitely as <math>m</math> is increased indefinitely. When <math>m</math> is indefinitely increased this becomes\n\n{{block center|<math>\\sin x = x\\left(1 - \\frac{x^2}{\\pi^2}\\right)\\left(1 - \\frac{x^2}{2^2\\pi^2}\\right) \\dots = x\\underset{n=1}{\\overset{n=\\infty}{P}}\\left(1 - \\frac{x^2}{n^2\\pi^2}\\right).</math> (25)}}\n\nThis has been shown to hold for any real or complex value of <math>x</math>. The expression for <math>\\cos x</math> in factors may be found in a similar manner by means of the equation <math>\\cos x = 2\\sin\\frac{\\pi - 2x}{4}\\cos\\frac{3\\pi - 2x}{4}</math>, or may be deduced thus\n\n{{block center|<math>\\cos x = \\frac{\\sin 2x}{2\\sin x} = \\frac{P\\left(1 - \\frac{4x^2}{n^2\\pi^2}\\right)}{P\\left(1 - \\frac{x^2}{n^2\\pi^2}\\right)} = \\left(1 - \\frac{4x^2}{\\pi^2}\\right)\\left(1 - \\frac{4x^2}{3^2\\pi^2}\\right)\\left(1 - \\frac{4x^2}{5^2\\pi^2}\\right) \\dots</math>}}\n\n{{block center|<math>= \\underset{n=0}{\\overset{n=\\infty}{P}}\\left(1 - \\frac{4x^2}{(2n+1)^2\\pi^2}\\right).</math> (26)}}\n\nIf we change <math>x</math> into <math>\\iota x</math>, we have the formulae for <math>\\sinh x</math>, <math>\\cosh x</math> as infinite products—\n\n{{block center|<math>\\sinh x = x\\underset{n=0}{\\overset{n=\\infty}{P}}\\left(1 + \\frac{x^2}{n^2\\pi^2}\\right), \\cosh x = \\underset{n=0}{\\overset{n=\\infty}{P}}\\left(1 + \\frac{4x^2}{(2n+1)^2\\pi^2}\\right).</math>}}\n\nIn the formula for <math>\\sin x</math> as an infinite product put <math>x=\\tfrac{1}{2}\\pi</math>, we then get <math>1=\\frac{\\pi}{2}\\cdot\\frac{1\\cdot 3\\cdot 3\\cdot 5\\cdot 5\\dots}{2.2.4.4.6\\dots}</math>; if we stop after <math>2n</math> factors in the numerator and denominator, we obtain the approximate equation\n\n{{block center|<math>1=\\frac{\\pi}{2}\\frac{1^2.3^2.5^2\\ \\dots\\ (2n-1)^2}{2^2.4^2.6^2\\ \\dots\\ \\ (2n)^2}.(2n+1)</math>}}\n\nor <math>\\frac{2.4.6\\dots\\ 2n}{1.3.5\\dots 2n-1}=\\sqrt{n\\pi}</math>, where <math>n</math> is a large integer. This expression was obtained in a quite different manner by Wallis (''Arithmetica infinitorum'', vol. i. of ''Opp.'').\n\n'''''Series for Cot, Cosec, Tan and Sec.''''' 28. We have\n\n{{block center|<math>\\frac{\\sin(x+y)}{\\sin x}=\\frac{(x+y)P\\left(1+\\frac{x+y}{n\\pi}\\right)}{xP\\left(1+\\frac{x}{n\\pi}\\right)}</math>,}}\n\nor <math>\\cos y+\\sin y\\cot x</math>\n\n{{block center|<math>=\\left(1+\\frac{y}{x}\\right)\\left(1+\\frac{y}{x+\\pi}\\right)\\left(1+\\frac{y}{x-\\pi}\\right)\\left(1+\\frac{y}{x+2\\pi}\\right)\\left(1+\\frac{y}{x-2\\pi}\\right)\\dots</math>}}\n\nEquating the coefficients of the first power of <math>y</math> on both sides we obtain the series\n\n{{block center|<math>\\cot x=\\frac{1}{x}+\\frac{1}{x+\\pi}+\\frac{1}{x-\\pi}+\\frac{1}{x+2\\pi}+\\frac{1}{x-2\\pi}+\\dots</math> (27)}}\n\nFrom this we may deduce a corresponding series for <math>\\operatorname{cosec} x</math>, for, since <math>\\operatorname{cosec} x=\\cot\\tfrac{1}{2}x-\\cot x</math>, we obtain\n\n{{block center|<math>\\operatorname{cosec} x=\\frac{1}{x}-\\frac{1}{x+\\pi}-\\frac{1}{x-\\pi}+\\frac{1}{x+2\\pi}+\\frac{1}{x-2\\pi}-\\frac{1}{x+3\\pi}-\\frac{1}{x-3\\pi}+\\dots</math> (28)}}\n\nBy resolving <math>\\frac{\\cos(x+y)}{\\cos x}</math> into factors we should obtain in a similar manner the series\n\n{{block center|<math>\\tan x = \\frac{2}{\\pi-2x} - \\frac{2}{\\pi+2x} + \\frac{2}{3\\pi-2x} - \\frac{2}{3\\pi+2x} + \\frac{2}{5\\pi-2x} - \\frac{2}{5\\pi+2x} + \\dots,</math> (29)}}\n\nand thence\n\n{{block center|<math>\\sec x = \\tan\\left(\\frac{\\pi}{4}+\\frac{x}{2}\\right) - \\tan x = \\frac{2}{\\pi-2x} + \\frac{2}{\\pi+2x} - \\frac{2}{3\\pi-2x} - \\frac{2}{3\\pi+2x} + \\dots.</math> (30)}}\n\nThese four formulae may also be derived from the product formulae for <math>\\sin x</math> and <math>\\cos x</math> by taking logarithms and then differentiating. Glaisher has proved them by resolving the expressions for <math>\\cos x/\\sin x</math> and <math>1/\\sin x</math> . . . as products into partial fractions (see ''Quart. Journ. Math.'', vol. xvii.). The series for <math>\\cot x</math> may also be obtained by a continued use of the equation <math>\\cot x = \\tfrac{1}{2}\\{\\cot \\tfrac{1}{2}x + \\cot \\tfrac{1}{2}(x+\\pi)\\}</math> (see a paper by Dr Schröter in Schlömilch's ''Zeitschrift'', vol. xiii.).\n\n'''''Series for <math>\\pi</math> derived from Series for Cot and Cosec.''''' Various series for <math>\\pi</math> may be derived from the series (27), (28), (29), (30), and from the series obtained by differentiating them one or more times. For example, in the formulae (27) and (28), by putting <math>x = \\pi/n</math> we get\n\n{{block center|<math>\\pi = n \\tan \\frac{\\pi}{n} \\left\\{ 1 - \\frac{1}{n-1} + \\frac{1}{n+1} - \\frac{1}{2n-1} + \\frac{1}{2n+1} \\dots \\right\\},</math>}}\n\n{{block center|<math>[\\pi = n \\sin \\frac{\\pi}{n} \\left\\{ 1 + \\frac{1}{n-1} - \\frac{1}{n+1} - \\frac{1}{2n-1} + \\frac{1}{2n+1} \\dots \\right\\};</math>}}\n\nIf we put <math>n = 3</math>, these become\n\n{{block center|<math>\\pi = 3\\sqrt{3} \\left(1 - \\frac{1}{2} + \\frac{1}{4} - \\frac{1}{5} + \\frac{1}{7} - \\frac{1}{8} + \\dots\\right),</math>}}\n\n{{block center|<math>\\pi = \\frac{3\\sqrt{3}}{2} \\left(1 + \\frac{1}{2} - \\frac{1}{4} - \\frac{1}{5} + \\frac{1}{7} + \\frac{1}{8} \\dots\\right).</math>}} By differentiating (27) we get\n\n{{block center|<math>\\text{cosec}^2\\, x = \\frac{1}{x^2} + \\frac{1}{(x+\\pi)^2} + \\frac{1}{(x-\\pi)^2} + \\frac{1}{(x+2\\pi)^2} + \\frac{1}{(x-2\\pi)^2} + \\dots;</math>}}\n\nput <math>x = \\frac{\\pi}{6}</math>, and we get <math>\\pi^2 = 9 \\left\\{ 1 + \\frac{1}{5^2} + \\frac{1}{7^2} + \\frac{1}{11^2} + \\dots \\right\\}</math>. These series, among others, were given by Glaisher (''Quart. Journ. Math.'' vol. xii.).\n\n'''''Sums of Certain Series.''''' 29. We have <math>\\sinh \\pi x = \\pi x P \\left( 1 + \\frac{x^2}{n^2} \\right)</math>, <math>\\cosh \\pi x = P \\left( 1 + \\frac{x^2}{(2n+1)^2} \\right)</math>; if we differentiate these formulae after taking logarithms we obtain the series\n\n{{block center|<math>\\frac{\\pi}{2x} \\coth \\pi x - \\frac{1}{2x^2} = \\frac{1}{1^2+x^2} + \\frac{1}{2^2+x^2} + \\frac{1}{3^2+x^2} + \\dots,</math>}}\n\n{{block center|<math>\\frac{\\pi}{2x} \\tanh \\pi x = \\frac{1}{1^2+x^2} + \\frac{1}{3^2+x^2} + \\frac{1}{5^2+x^2} + \\dots</math>}}\n\nThese series were given by Kummer (in ''Crelle's Journ.'' vol. xvii.) The sum of the more general series <math>\\frac{1}{1^{2n}+x^{2n}} + \\frac{1}{2^{2n}+x^{2n}} + \\frac{1}{3^{2n}+x^{2n}} + \\dots</math>, has been found by Glaisher (''Proc. Lond. Math. Soc.'', vol. vii.)\n\nIf <math>U^m</math> denotes the sum of the series <math>\\frac{1}{1^m} + \\frac{1}{2^m} + \\frac{1}{3^m} + \\dots</math>, <math>V^m</math> that<noinclude><references/></noinclude>"
+}

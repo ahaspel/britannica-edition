@@ -1,0 +1,144 @@
+{
+ "volume": 25,
+ "page_number": 464,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n472",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n472",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1088,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     134,
+     111,
+     2284,
+     181
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     181,
+     1206,
+     931
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     931,
+     1206,
+     1985
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     1985,
+     1206,
+     3060
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     3060,
+     1206,
+     3140
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1206,
+     181,
+     2284,
+     1235
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1206,
+     1235,
+     2284,
+     2319
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1206,
+     2319,
+     2284,
+     3140
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|448|SOUND|[DIATONIC SCALE}}",
+   "c1s1": "¶\n{{smaller block|If two such flames are placed one under the other they may be excited by different sources, and the ratio of the frequencies may be approximately determined by counting the number of teeth in each in the same space.}}\n\n{{c|''The Diatonic Scale.''}}\n\nIt is not necessary here to deal generally with the various musical scales. We shall treat only of the diatonic scale, which is the basis of European music, and is approximated to as closely as is consistent with convenience of construction in key-board instruments, such as the piano, where the eight white notes beginning with C and ending with C an octave higher may be taken as representing the scale with C as the key-note.\n\nAll experiments in frequency show that two notes, forming a definite musical interval, have their frequencies always in the same ratio wherever in the musical scale the two notes are situated. In the scale of C the intervals from the key-note, the frequency ratios with the key-note, the successive frequency ratios and the successive intervals are as follows:—",
+   "c1s2": "¶\nNote . . . C D E F G A se\n\nInterval with C . second, major third, fourth, fifth, major sixth\n\nFrequency . <math>1</math> <math>\\frac{9}{8}</math> <math>\\frac{5}{4}</math> <math>\\frac{4}{3}</math> <math>\\frac{3}{2}</math> <math>\\frac{5}{3}</math>\n\nSuccessive frequency ratios. <math>\\frac{9}{8}</math> <math>\\frac{10}{9}</math> <math>\\frac{16}{15}</math> <math>\\frac{9}{8}</math> <math>\\frac{10}{9}</math>\n\nSuccessive intervals . . major tone, minor tone, major semitone, major tone, minor tone, m\n\nIf we pass through two intervals in succession, as, for instance, if we ascend through a fourth from C to F and then through a third from F to A, the frequency ratio of A to C is <math>\\frac{5}{3}</math>, which is the product of the ratios for a fourth <math>\\frac{4}{3}</math>, and a third <math>\\frac{5}{4}</math>. That is, if we add intervals we must multiply frequency ratios to obtain the frequency ratio for the interval which is the sum of the two.\n\nThe frequency ratios in the diatonic scale are all expressible either as fractions, with 1, 2, 3 or 5 as numerator and denominator, or as products of such fractions; and it may be shown that for a given note the numerator and denominator are smaller than any other numbers which would give us a note in the immediate neighbourhood.\n\nThus the second <math>\\frac{9}{8} = \\frac{3}{2} \\times \\frac{3}{2} \\times \\frac{1}{2}</math>, and we may regard it as an ascent through two fifths in succession and then a descent through an octave. The third <math>\\frac{5}{4} = 5 \\times \\frac{1}{2} \\times \\frac{1}{2}</math> or ascent through an interval <math>\\frac{5}{1}</math>, which has no special name, and a descent",
+   "c1s3": "through two octaves, and so on.\n\nNow suppose we take G as the key-note and form its diatonic scale. If we write down the eight notes from G to <math>g</math> in the key of C, their frequency ratios to C, the frequency ratios required by the diatonic scale for G, we get the frequency ratios required in the last line:—\n\n{{block center|<math>\\begin{array}{|l|c|c|c|c|c|c|c|c|}\\hline \\text{Notes on scale of C} \\dots & \\text{G} & \\text{A} & \\text{B} & c & d & e & f & g \\\\ \\text{Frequency ratios with C}=1 \\dots & \\frac{3}{2} & \\frac{5}{3} & \\frac{15}{8} & 2 & \\frac{9}{4} & \\frac{5}{2} & \\frac{8}{3} & 3 \\\\ \\text{Frequency ratios of diatonic scale} & & & & & & & & \\\\ \\quad\\text{with G}=1 \\dots & 1 & \\frac{9}{8} & \\frac{5}{4} & \\frac{4}{3} & \\frac{3}{2} & \\frac{5}{3} & \\frac{15}{8} & 2 \\\\ \\text{Frequency ratios with C}=1,\\ \\text{G}=\\frac{3}{2} & \\frac{3}{2} & \\frac{27}{16} & \\frac{15}{8} & 2 & \\frac{9}{4} & \\frac{5}{2} & \\frac{45}{16} & 3 \\\\ \\hline \\end{array}</math>}}\n\nWe see that all but two notes coincide with notes on the scale of C. But instead of <math>\\text{A}=\\frac{5}{3}</math> we have <math>\\frac{27}{16}</math>, and instead of <math>f=\\frac{8}{3}</math> we have <math>\\frac{45}{16}</math>. The interval between <math>\\frac{5}{3}</math> and <math>\\frac{27}{16} = \\frac{27}{16} \\div \\frac{5}{3} = \\frac{81}{80}</math> is termed a “comma,” and is so small that the same note on an instrument may serve for both. But the interval between <math>\\frac{8}{3}</math> and <math>\\frac{45}{16} = \\frac{45}{16} \\div \\frac{8}{3} = \\frac{135}{128}</math> is quite perceptible, and on the piano, for instance, a separate string must be provided above <math>f</math>. This note is <math>f</math> sharp, and the interval <math>\\frac{135}{128}</math> is termed a sharp.\n\nTaking the successive key-notes D, A, E, B, it is found that besides small and negligible differences, each introduces a new sharp, and so we get the five sharps, C, D, F, G, A, represented nearly by the black keys.\n\nIf we start with F as key-note, besides a small difference at <math>d</math>, we have as the fourth from it <math>\\frac{4}{3} \\times \\frac{4}{3} = \\frac{16}{9}</math>, making with <math>\\text{B} = \\frac{15}{8}</math> an interval <math>\\frac{128}{135}</math>, and requiring a new note, B flat.",
+   "c1s4": "This does not coincide with A sharp which is the octave below the seventh from B or <math>\\frac{15}{8} \\times \\frac{15}{8} \\times \\frac{1}{2} = \\frac{225}{128}</math>. It makes with",
+   "c2s1": "it an interval = <math>\\frac{16}{9} \\div \\frac{225}{128} = \\frac{2048}{2025}</math>, rather less than a comma; so that the same string in the piano may serve for both. If we take the new note B flat as key-note, another note, E flat, is required. E flat as key-note introduces another flat, and so on, each flat not quite coinciding with a sharp but at a very small interval from it.\n\nIt is evident that for exact diatonic scales for even a limited number of key-notes, key-board instruments would have to be provided with a great number of separate strings or pipes, and the corresponding keys would be required. The construction would be complicated and the playing exceedingly difficult. The same string or pipe and the same key have therefore to serve for what should be slightly different notes. A compromise has to be made, and the note has to be tuned so as to make the compromise as little unsatisfactory as possible. At present twelve notes are used in the octave, and these are arranged at equal intervals <math>2^{\\frac{1}{12}}</math>. This is termed the ''equal temperament scale'', and it is obviously only an approach to the diatonic scale.\n\n''Helmholtz's Notation''.—In works on sound it is usual to adopt Helmholtz's notation, in which the octave from bass to middle C is written ''c d e f g a b c′''. The octave above is ''c′ d′ e′ f′ g′ a′ b′ c″''. The next octave above has two accents, and each succeeding octave another accent. The octave below bass C is written C D E F G A B ''c''. The next octave below is C<sub>1</sub> D<sub>1</sub> E<sub>1</sub> F<sub>1</sub> G<sub>1</sub> A<sub>1</sub> B<sub>1</sub> C, and each preceding octave has another accent as suffix.",
+   "c2s2": "¶\n''The standard frequency'' for laboratory work is <math>c = 128</math>, so that middle <math>c' = 256</math> and treble <math>c'' = 512</math>.\n\nThe standard for musical instruments has varied (see {{sc|Pitch, Musical}}). Here it is sufficient to say that the French standard is <math>a' = 435</math> with <math>c''</math> practically 522, and that in England the pitch is somewhat higher.\n\nThe French notation is as under:—\n\n{{block center|C D E F G A B c}}\n\n{{block center|Ut<sub>1</sub> Re<sub>1</sub> M<sub>1</sub> Fa<sub>1</sub> Sol<sub>1</sub> La<sub>1</sub> Si<sub>1</sub> Ut<sub>2</sub>.}}\n\nThe next higher octave has the suffix 2, the next higher the suffix 3, and so on. French forks are marked with double the true frequency, so that Ut<sub>3</sub> is marked 512.\n\n''Limiting Frequencies for Musical Sounds.''—Until the vibrations of a source have a frequency in the neighbourhood of 30 per second the ear can hear the separate impulses, if strong enough, but does not hear a note. It is not easy to determine the exact point at which the impulses fuse into a continuous tone, for higher tones are usually present with the deepest of which the frequency is being counted, and these may be mistaken for it. Helmholtz (''Sensations of Tone'', ch. ix.) used a string loaded at the middle point so that the higher tones were several octaves above the fundamental, and so not likely to be mistaken for it; he found that with 37 vibrations per second a very weak sensation of tone was heard, but with 34 there was scarcely anything audible left. A determinate musical pitch is not perceived, he says, till about 40 vibrations per second. At the other end of the scale with increasing frequency there is another limiting frequency somewhere about 20,000 per second, beyond which no sound is heard. But this limit varies greatly with different individuals and with age for the same individual. Persons who when young could hear the squeaks of bats may be quite deaf to them when older. Koenig constructed a series of bars forming a harmonicon, the frequency of each bar being calculable,",
+   "c2s3": "and he found the limit to be between 16,000 and 24,000.\n\n''The Number of Vibrations needed to give the Perception of Pitch.''—Experiments have been made on this subject by various workers, the most extensive by W. Kohlrausch (''Wied. Ann.'', 1880, x. 1). He allowed a limited number of teeth on the arc of a circle to strike against a card. With sixteen teeth the pitch was well defined; with nine teeth it was fairly determinate; and even with two teeth it could be assigned with no great error. His remarkable result that two waves give some sense of pitch, in fact a tone with wave-length equal to the interval between the waves, has been confirmed by other observers.\n\n''Alteration of Pitch with Motion of Source or Hearer: Doppler's Principle.''—A very noticeable illustration of the alteration of pitch by motion occurs when a whistling locomotive moves rapidly past an observer. As it passes, the pitch of the whistle falls quite appreciably. The explanation is simple. The engine follows up any wave that it has sent forward, and so crowds up the succeeding waves into a less distance than if it remained at rest. It draws off from any wave it has sent backward and so spreads the succeeding waves over a longer distance than if it had remained at rest. Hence the forward waves are shorter and the backward waves are longer. Since <math>\\text{U} = n\\,\\lambda</math> where <math>\\text{U}</math> is the velocity of sound, <math>\\lambda</math> the wave-length, and <math>n</math> the frequency, it follows that the forward frequency is greater than the backward frequency.\n\nThe more general case of motion of source, medium and receiver"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 8782,
+    "output_tokens": 6679,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|448|SOUND|[DIATONIC SCALE}}</noinclude>{{smaller block|If two such flames are placed one under the other they may be excited by different sources, and the ratio of the frequencies may be approximately determined by counting the number of teeth in each in the same space.}}\n\n{{c|''The Diatonic Scale.''}}\n\nIt is not necessary here to deal generally with the various musical scales. We shall treat only of the diatonic scale, which is the basis of European music, and is approximated to as closely as is consistent with convenience of construction in key-board instruments, such as the piano, where the eight white notes beginning with C and ending with C an octave higher may be taken as representing the scale with C as the key-note.\n\nAll experiments in frequency show that two notes, forming a definite musical interval, have their frequencies always in the same ratio wherever in the musical scale the two notes are situated. In the scale of C the intervals from the key-note, the frequency ratios with the key-note, the successive frequency ratios and the successive intervals are as follows:—\n\nNote . . . C D E F G A se\n\nInterval with C . second, major third, fourth, fifth, major sixth\n\nFrequency . <math>1</math> <math>\\frac{9}{8}</math> <math>\\frac{5}{4}</math> <math>\\frac{4}{3}</math> <math>\\frac{3}{2}</math> <math>\\frac{5}{3}</math>\n\nSuccessive frequency ratios. <math>\\frac{9}{8}</math> <math>\\frac{10}{9}</math> <math>\\frac{16}{15}</math> <math>\\frac{9}{8}</math> <math>\\frac{10}{9}</math>\n\nSuccessive intervals . . major tone, minor tone, major semitone, major tone, minor tone, m\n\nIf we pass through two intervals in succession, as, for instance, if we ascend through a fourth from C to F and then through a third from F to A, the frequency ratio of A to C is <math>\\frac{5}{3}</math>, which is the product of the ratios for a fourth <math>\\frac{4}{3}</math>, and a third <math>\\frac{5}{4}</math>. That is, if we add intervals we must multiply frequency ratios to obtain the frequency ratio for the interval which is the sum of the two.\n\nThe frequency ratios in the diatonic scale are all expressible either as fractions, with 1, 2, 3 or 5 as numerator and denominator, or as products of such fractions; and it may be shown that for a given note the numerator and denominator are smaller than any other numbers which would give us a note in the immediate neighbourhood.\n\nThus the second <math>\\frac{9}{8} = \\frac{3}{2} \\times \\frac{3}{2} \\times \\frac{1}{2}</math>, and we may regard it as an ascent through two fifths in succession and then a descent through an octave. The third <math>\\frac{5}{4} = 5 \\times \\frac{1}{2} \\times \\frac{1}{2}</math> or ascent through an interval <math>\\frac{5}{1}</math>, which has no special name, and a descent through two octaves, and so on.\n\nNow suppose we take G as the key-note and form its diatonic scale. If we write down the eight notes from G to <math>g</math> in the key of C, their frequency ratios to C, the frequency ratios required by the diatonic scale for G, we get the frequency ratios required in the last line:—\n\n{{block center|<math>\\begin{array}{|l|c|c|c|c|c|c|c|c|}\\hline \\text{Notes on scale of C} \\dots & \\text{G} & \\text{A} & \\text{B} & c & d & e & f & g \\\\ \\text{Frequency ratios with C}=1 \\dots & \\frac{3}{2} & \\frac{5}{3} & \\frac{15}{8} & 2 & \\frac{9}{4} & \\frac{5}{2} & \\frac{8}{3} & 3 \\\\ \\text{Frequency ratios of diatonic scale} & & & & & & & & \\\\ \\quad\\text{with G}=1 \\dots & 1 & \\frac{9}{8} & \\frac{5}{4} & \\frac{4}{3} & \\frac{3}{2} & \\frac{5}{3} & \\frac{15}{8} & 2 \\\\ \\text{Frequency ratios with C}=1,\\ \\text{G}=\\frac{3}{2} & \\frac{3}{2} & \\frac{27}{16} & \\frac{15}{8} & 2 & \\frac{9}{4} & \\frac{5}{2} & \\frac{45}{16} & 3 \\\\ \\hline \\end{array}</math>}}\n\nWe see that all but two notes coincide with notes on the scale of C. But instead of <math>\\text{A}=\\frac{5}{3}</math> we have <math>\\frac{27}{16}</math>, and instead of <math>f=\\frac{8}{3}</math> we have <math>\\frac{45}{16}</math>. The interval between <math>\\frac{5}{3}</math> and <math>\\frac{27}{16} = \\frac{27}{16} \\div \\frac{5}{3} = \\frac{81}{80}</math> is termed a “comma,” and is so small that the same note on an instrument may serve for both. But the interval between <math>\\frac{8}{3}</math> and <math>\\frac{45}{16} = \\frac{45}{16} \\div \\frac{8}{3} = \\frac{135}{128}</math> is quite perceptible, and on the piano, for instance, a separate string must be provided above <math>f</math>. This note is <math>f</math> sharp, and the interval <math>\\frac{135}{128}</math> is termed a sharp.\n\nTaking the successive key-notes D, A, E, B, it is found that besides small and negligible differences, each introduces a new sharp, and so we get the five sharps, C, D, F, G, A, represented nearly by the black keys.\n\nIf we start with F as key-note, besides a small difference at <math>d</math>, we have as the fourth from it <math>\\frac{4}{3} \\times \\frac{4}{3} = \\frac{16}{9}</math>, making with <math>\\text{B} = \\frac{15}{8}</math> an interval <math>\\frac{128}{135}</math>, and requiring a new note, B flat. This does not coincide with A sharp which is the octave below the seventh from B or <math>\\frac{15}{8} \\times \\frac{15}{8} \\times \\frac{1}{2} = \\frac{225}{128}</math>. It makes with it an interval = <math>\\frac{16}{9} \\div \\frac{225}{128} = \\frac{2048}{2025}</math>, rather less than a comma; so that the same string in the piano may serve for both. If we take the new note B flat as key-note, another note, E flat, is required. E flat as key-note introduces another flat, and so on, each flat not quite coinciding with a sharp but at a very small interval from it.\n\nIt is evident that for exact diatonic scales for even a limited number of key-notes, key-board instruments would have to be provided with a great number of separate strings or pipes, and the corresponding keys would be required. The construction would be complicated and the playing exceedingly difficult. The same string or pipe and the same key have therefore to serve for what should be slightly different notes. A compromise has to be made, and the note has to be tuned so as to make the compromise as little unsatisfactory as possible. At present twelve notes are used in the octave, and these are arranged at equal intervals <math>2^{\\frac{1}{12}}</math>. This is termed the ''equal temperament scale'', and it is obviously only an approach to the diatonic scale.\n\n''Helmholtz's Notation''.—In works on sound it is usual to adopt Helmholtz's notation, in which the octave from bass to middle C is written ''c d e f g a b c′''. The octave above is ''c′ d′ e′ f′ g′ a′ b′ c″''. The next octave above has two accents, and each succeeding octave another accent. The octave below bass C is written C D E F G A B ''c''. The next octave below is C<sub>1</sub> D<sub>1</sub> E<sub>1</sub> F<sub>1</sub> G<sub>1</sub> A<sub>1</sub> B<sub>1</sub> C, and each preceding octave has another accent as suffix.\n\n''The standard frequency'' for laboratory work is <math>c = 128</math>, so that middle <math>c' = 256</math> and treble <math>c'' = 512</math>.\n\nThe standard for musical instruments has varied (see {{sc|Pitch, Musical}}). Here it is sufficient to say that the French standard is <math>a' = 435</math> with <math>c''</math> practically 522, and that in England the pitch is somewhat higher.\n\nThe French notation is as under:—\n\n{{block center|C D E F G A B c}}\n\n{{block center|Ut<sub>1</sub> Re<sub>1</sub> M<sub>1</sub> Fa<sub>1</sub> Sol<sub>1</sub> La<sub>1</sub> Si<sub>1</sub> Ut<sub>2</sub>.}}\n\nThe next higher octave has the suffix 2, the next higher the suffix 3, and so on. French forks are marked with double the true frequency, so that Ut<sub>3</sub> is marked 512.\n\n''Limiting Frequencies for Musical Sounds.''—Until the vibrations of a source have a frequency in the neighbourhood of 30 per second the ear can hear the separate impulses, if strong enough, but does not hear a note. It is not easy to determine the exact point at which the impulses fuse into a continuous tone, for higher tones are usually present with the deepest of which the frequency is being counted, and these may be mistaken for it. Helmholtz (''Sensations of Tone'', ch. ix.) used a string loaded at the middle point so that the higher tones were several octaves above the fundamental, and so not likely to be mistaken for it; he found that with 37 vibrations per second a very weak sensation of tone was heard, but with 34 there was scarcely anything audible left. A determinate musical pitch is not perceived, he says, till about 40 vibrations per second. At the other end of the scale with increasing frequency there is another limiting frequency somewhere about 20,000 per second, beyond which no sound is heard. But this limit varies greatly with different individuals and with age for the same individual. Persons who when young could hear the squeaks of bats may be quite deaf to them when older. Koenig constructed a series of bars forming a harmonicon, the frequency of each bar being calculable, and he found the limit to be between 16,000 and 24,000.\n\n''The Number of Vibrations needed to give the Perception of Pitch.''—Experiments have been made on this subject by various workers, the most extensive by W. Kohlrausch (''Wied. Ann.'', 1880, x. 1). He allowed a limited number of teeth on the arc of a circle to strike against a card. With sixteen teeth the pitch was well defined; with nine teeth it was fairly determinate; and even with two teeth it could be assigned with no great error. His remarkable result that two waves give some sense of pitch, in fact a tone with wave-length equal to the interval between the waves, has been confirmed by other observers.\n\n''Alteration of Pitch with Motion of Source or Hearer: Doppler's Principle.''—A very noticeable illustration of the alteration of pitch by motion occurs when a whistling locomotive moves rapidly past an observer. As it passes, the pitch of the whistle falls quite appreciably. The explanation is simple. The engine follows up any wave that it has sent forward, and so crowds up the succeeding waves into a less distance than if it remained at rest. It draws off from any wave it has sent backward and so spreads the succeeding waves over a longer distance than if it had remained at rest. Hence the forward waves are shorter and the backward waves are longer. Since <math>\\text{U} = n\\,\\lambda</math> where <math>\\text{U}</math> is the velocity of sound, <math>\\lambda</math> the wave-length, and <math>n</math> the frequency, it follows that the forward frequency is greater than the backward frequency.\n\nThe more general case of motion of source, medium and receiver<noinclude><references/></noinclude>"
+}

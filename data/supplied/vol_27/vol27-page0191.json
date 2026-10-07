@@ -1,0 +1,266 @@
+{
+ "volume": 27,
+ "page_number": 191,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n198",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n198",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1091,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     129,
+     119,
+     2280,
+     191
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     191,
+     1200,
+     1147
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     1147,
+     1200,
+     2211
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     2211,
+     1200,
+     2482
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     129,
+     2482,
+     601,
+     2734
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     2752,
+     601,
+     2936
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     601,
+     2482,
+     1200,
+     2936
+    ]
+   },
+   {
+    "name": "c1s6",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     2936,
+     1200,
+     3126
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     191,
+     2280,
+     215
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1668,
+     777,
+     2280,
+     1694
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1668,
+     1695,
+     2280,
+     1861
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     215,
+     1668,
+     1861
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     1861,
+     2280,
+     2468
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     2468,
+     2280,
+     3126
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|176|TRANSFORMERS|}}",
+   "c1s1": "has increased by ageing. If so, it may mean a very considerable increase in the cost of magnetizing power. Consider the case of a 30-kilowatt transformer connected to the mains all the year round; the normal core loss of such a transformer should be about 300 watts, and therefore, since there are 8760 hours in the year, the total annual energy dissipated in the core should be 2628 kilowatt hours. Reckoning the value of this electric energy at only one penny per unit, the core loss costs £10, 19s. per annum. If the core loss becomes doubled, it means an additional annual expenditure of nearly £11. Since the cost of such a transformer would not exceed £100, it follows that it would be economical to replace it by a new one rather than continue to work it at its enhanced core loss.\n\nIn Great Britain the sheet steel or iron alloy used for the transformer cores is usually furnished to specifications which state the maximum hysteresis loss to be allowed in it in watts per ℔ (avoirdupois) at a frequency of 50, and at a maximum flux-density during the cycle of 4000 C.G.S. units. When plates having a thickness <math>t</math> mils are made up into a transformer core, the total energy loss in the core due to hysteresis and eddy current loss when worked at a frequency <math>n</math> and a maximum flux-density during the cycle <math>\\text{B}</math> is given by the empirical formulae\n{{block center|<math>\\text{T} = \\cdot 0032n\\text{B}^{1\\cdot 55}10^{-7} + (tn\\text{B})^2 10^{-16},</math>}}\nor\n{{block center|<math>\\text{T}^1 = 0\\cdot 88n\\text{B}_1^{1\\cdot 55}10^{-9} + 1\\cdot 4(t_1n\\text{B}_1)^2 10^{-10},</math>}}",
+   "c1s2": "where <math>\\text{T}</math> stands for the loss per cubic centimetre, and <math>\\text{T}_1</math> for the same in watts per pound of iron core, <math>\\text{B}</math> for the maximum flux-density in lines per square centimetre, and <math>\\text{B}_1</math> for the same in lines per square inch, <math>t</math> for the thickness of the plates in thousandths of an inch (mils), and <math>t_1</math> for the same in inches. The hysteresis loss varies as some power near to 1·6 of the maximum flux-density during the cycle as shown by Steinmetz (see {{sc|Electromagnetism}}). Since the hysteresis loss varies as the 1·6th power of the maximum flux-density during the cycle (<math>\\text{B}</math> max.), the advantages of a low flux-density are evident. An excessively low flux-density increases, however, the cost of the core and the copper by increasing the size of the transformer. If the form factor (<math>f</math>) of the primary voltage curve is known, then the maximum value of the flux-density in the core can always be calculated from the formula <math>\\text{B} = \\text{E}_1/4fn\\text{SN}_1</math>, where <math>\\text{E}</math> is the R.M.S. value of the primary voltage, <math>\\text{N}_1</math> the primary turns, <math>\\text{S}</math> the section of the core, and <math>n</math> the frequency.\n\n''Curve Tracing.''—The study of the processes taking place in the core and circuits of a transformer have been greatly facilitated in recent years by the improvements made in methods of observing and recording the variation of periodic currents and electromotive forces. The original method, due to Joubert, was greatly improved and employed by Ryan, Bell, Duncan and Hutchinson, Fleming, Hopkinson and Rosa, Callendar and Lyle; but the most important improvement was the introduction and invention of the oscillograph by Blondel, subsequently improved by Duddell, and also of the ondograph of Hospitalier (see {{sc|Oscillograph}}). This instrument enables us, as it were, to look inside a transformer, for which it, in fact, performs the same function that a steam engine indicator does",
+   "c1s3": "for the steam cylinder.<sup>1</sup> Delineating in this way the curves of primary and secondary current and primary and secondary electromotive forces, we get the following result: Whatever may be the form of the curve of primary terminal potential difference, or primary voltage, that of the secondary voltage or terminal potential difference is an almost exact copy, but displaced 180° in phase. Hence",
+   "c1s4": "{{c|{{sc|Fig.}} 6.—Transformer Curves at no load.}}\n\n{{c|<math>e_1</math>, Primary voltage curve; <math>i_1</math>, Primary current curve; <math>e_2</math>, Secondary voltage curve.}}",
+   "c1s5": "the alternating current transformer reproduces on its secondary terminals all the variations of potential on the primary, but changed in scale. The curve of primary current when the transformer is an open secondary circuit is different in form and phase, lagging behind the primary voltage curve (fig. 6); but if the transformer is loaded up on its",
+   "c1s6": "¶\n<sup>1</sup> For a useful list of references to published papers on alternating current curve tracing, see a paper by W. D. B. Duddell, read before the British Association, Toronto, 1897; also ''Electrician'' (1897), xxxix. 636; also ''Handbook for the Electrical Laboratory and Testing Room'' (J. A. Fleming), i. 407.",
+   "c2s1": "",
+   "c2s2": "{{c|{{sc|Fig.}} 7.—Transformer Curves at full load.}}\n{{c|<math>e_1</math>, Primary voltage curve; <math>i_1</math>, Primary current curve; <math>e_2</math>, Secondary voltage curve; <math>i_2</math>, Secondary current curve.}}",
+   "c2s3": "secondary side, then the pr step with the primary vo curve, if the secondary loa secondary voltage curve ( yield much information a proceeding in the transform\n\nThe form of the curve of a consequence of the hyster that the form of the core is always not far removed fr moment the electromotive circuit, and <math>b_1</math> is the flux-d fundamental relation <math>e_1 = \\text{R}</math> sistance of the primary, an the cross-section of the cor formers the quantity <math>\\text{R}_1i_1</math> is <math>\\text{SN}db/dt</math> except at one insta integral of the above equat the integral of the first te neglected in comparison wit mately <math>b_1 = (\\text{SN}_1)^{-1}\\textstyle\\int e_1dt</math>. In density in the core is obtaine voltage curve. In so doing the time point through wh area of the primary voltag such that its ordinate <math>y</math> is th viz. <math>y = \\textstyle\\int y^1dx</math>, the first curv in form than the second. when applied to a complex theorem be resolved into a in a relative reduction of t compared with the fundamental term, and hence a wiping out of the minor irregularities of the curve. In actual practice the curve of electromotive force of alternators can be quite sufficiently reproduced by employing three terms of the expansion, viz. the first three odd harmonics, and the resulting flux-density curve is always very nearly a simple sine curve.\n\nWe have then the following rules for predetermining the form of the current curve",
+   "c2s4": "of the transformer at no load, assuming that the hysteresis curve of the iron is given, set out in terms of flux-density and ampere-turns per centimetre, and also the form of the curve of primary electromotive force. Let the time base line be divided up into equal small elements. Through any selected point draw a line perpendicular to the base line. Bisect the area enclosed by the curve representing the half wave of primary electromotive force and the base line by another perpendicular. Integrate the area enclosed between the electromotive force curve and these two perpendicular lines and the base. Lastly, set up a length on the last perpendicular equal to the value of this area divided by the product of the cross-section of the core and the number of primary turns. The resulting value will be the core flux-density <math>b</math> at the phase instant corresponding. Look out on the hysteresis loop the same flux-density value, and corresponding to it will be found two values of the magnetizing force in ampere-turns per centimetre, one the value for increasing flux-density and one for decreasing. An inspection of the position of the point of time selected on the time line will at once show which of these to select.",
+   "c2s5": "Divide that value of the ampere-turns per centimetre by the product of the values of the primary turns and the mean length of the magnetic circuit of the core of the transformer, and the result gives the value of the primary current of the transformer. This can be set up to scale on the perpendicular through the time instant selected. Hence, given the form of the primary electromotive force curve and that of the hysteresis loop of the iron, we can draw the curves representing the changes of flux-density in the core and that of the corresponding primary current, and thus predict the root-mean-square value of the magnetizing current of the transformer. It is therefore possible, when given the primary electromotive force curve and the hysteresis curve of the iron, to predetermine the curves depicting all the other variables of the transformer, provided that the magnetic leakage is negligible.\n\n'''''Elementary Theory.''''' The elementary theory of the closed iron circuit transformer may be stated as follows: Let <math>\\text{N}_1</math>, <math>\\text{N}_2</math> be the turns on the primary and secondary circuits, <math>\\text{R}_1</math> and <math>\\text{R}_2</math> the resistances, <math>\\text{S}</math> the section of the core, and <math>b_1</math> and <math>b_2</math> the co-instantaneous values of the flux-density just inside the primary and secondary windings. Then, if <math>i_1</math> and <math>i_2</math> and <math>e_1</math> and <math>e_2</math> are the primary"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0191 c1f1.png",
+   "c2f1": "eb1911 v27 p0191 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1683,
+     1323,
+     2275,
+     1692
+    ],
+    "caption": [
+     1674,
+     1695,
+     2278,
+     1861
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1711,
+     1321,
+     2275,
+     1668
+    ]
+   },
+   {
+    "box": [
+     142,
+     2483,
+     587,
+     2731
+    ],
+    "caption": [
+     129,
+     2755,
+     605,
+     2935
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     199,
+     2513,
+     589,
+     2719
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    2
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6505,
+    "output_tokens": 181,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 12,
+    "input_tokens": 7509,
+    "output_tokens": 5113,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 23088
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|176|TRANSFORMERS|}}</noinclude>has increased by ageing. If so, it may mean a very considerable increase in the cost of magnetizing power. Consider the case of a 30-kilowatt transformer connected to the mains all the year round; the normal core loss of such a transformer should be about 300 watts, and therefore, since there are 8760 hours in the year, the total annual energy dissipated in the core should be 2628 kilowatt hours. Reckoning the value of this electric energy at only one penny per unit, the core loss costs £10, 19s. per annum. If the core loss becomes doubled, it means an additional annual expenditure of nearly £11. Since the cost of such a transformer would not exceed £100, it follows that it would be economical to replace it by a new one rather than continue to work it at its enhanced core loss.\n\nIn Great Britain the sheet steel or iron alloy used for the transformer cores is usually furnished to specifications which state the maximum hysteresis loss to be allowed in it in watts per ℔ (avoirdupois) at a frequency of 50, and at a maximum flux-density during the cycle of 4000 C.G.S. units. When plates having a thickness <math>t</math> mils are made up into a transformer core, the total energy loss in the core due to hysteresis and eddy current loss when worked at a frequency <math>n</math> and a maximum flux-density during the cycle <math>\\text{B}</math> is given by the empirical formulae\n{{block center|<math>\\text{T} = \\cdot 0032n\\text{B}^{1\\cdot 55}10^{-7} + (tn\\text{B})^2 10^{-16},</math>}}\nor\n{{block center|<math>\\text{T}^1 = 0\\cdot 88n\\text{B}_1^{1\\cdot 55}10^{-9} + 1\\cdot 4(t_1n\\text{B}_1)^2 10^{-10},</math>}} where <math>\\text{T}</math> stands for the loss per cubic centimetre, and <math>\\text{T}_1</math> for the same in watts per pound of iron core, <math>\\text{B}</math> for the maximum flux-density in lines per square centimetre, and <math>\\text{B}_1</math> for the same in lines per square inch, <math>t</math> for the thickness of the plates in thousandths of an inch (mils), and <math>t_1</math> for the same in inches. The hysteresis loss varies as some power near to 1·6 of the maximum flux-density during the cycle as shown by Steinmetz (see {{sc|Electromagnetism}}). Since the hysteresis loss varies as the 1·6th power of the maximum flux-density during the cycle (<math>\\text{B}</math> max.), the advantages of a low flux-density are evident. An excessively low flux-density increases, however, the cost of the core and the copper by increasing the size of the transformer. If the form factor (<math>f</math>) of the primary voltage curve is known, then the maximum value of the flux-density in the core can always be calculated from the formula <math>\\text{B} = \\text{E}_1/4fn\\text{SN}_1</math>, where <math>\\text{E}</math> is the R.M.S. value of the primary voltage, <math>\\text{N}_1</math> the primary turns, <math>\\text{S}</math> the section of the core, and <math>n</math> the frequency.\n\n''Curve Tracing.''—The study of the processes taking place in the core and circuits of a transformer have been greatly facilitated in recent years by the improvements made in methods of observing and recording the variation of periodic currents and electromotive forces. The original method, due to Joubert, was greatly improved and employed by Ryan, Bell, Duncan and Hutchinson, Fleming, Hopkinson and Rosa, Callendar and Lyle; but the most important improvement was the introduction and invention of the oscillograph by Blondel, subsequently improved by Duddell, and also of the ondograph of Hospitalier (see {{sc|Oscillograph}}). This instrument enables us, as it were, to look inside a transformer, for which it, in fact, performs the same function that a steam engine indicator does for the steam cylinder.<sup>1</sup> Delineating in this way the curves of primary and secondary current and primary and secondary electromotive forces, we get the following result: Whatever may be the form of the curve of primary terminal potential difference, or primary voltage, that of the secondary voltage or terminal potential difference is an almost exact copy, but displaced 180° in phase. Hence the alternating current transformer reproduces on its secondary terminals all the variations of potential on the primary, but changed in scale. The curve of primary current when the transformer is an open secondary circuit is different in form and phase, lagging behind the primary voltage curve (fig. 6); but if the transformer is loaded up on its\n\n[[File:eb1911 v27 p0191 c1f1.png|center|156px]]\n{{c|{{sc|Fig.}} 6.—Transformer Curves at no load.}}\n\n{{c|<math>e_1</math>, Primary voltage curve; <math>i_1</math>, Primary current curve; <math>e_2</math>, Secondary voltage curve.}}\n\n<sup>1</sup> For a useful list of references to published papers on alternating current curve tracing, see a paper by W. D. B. Duddell, read before the British Association, Toronto, 1897; also ''Electrician'' (1897), xxxix. 636; also ''Handbook for the Electrical Laboratory and Testing Room'' (J. A. Fleming), i. 407. secondary side, then the pr step with the primary vo curve, if the secondary loa secondary voltage curve ( yield much information a proceeding in the transform\n\n[[File:eb1911 v27 p0191 c2f1.png|center|202px]]\n{{c|{{sc|Fig.}} 7.—Transformer Curves at full load.}}\n{{c|<math>e_1</math>, Primary voltage curve; <math>i_1</math>, Primary current curve; <math>e_2</math>, Secondary voltage curve; <math>i_2</math>, Secondary current curve.}}\n\nThe form of the curve of a consequence of the hyster that the form of the core is always not far removed fr moment the electromotive circuit, and <math>b_1</math> is the flux-d fundamental relation <math>e_1 = \\text{R}</math> sistance of the primary, an the cross-section of the cor formers the quantity <math>\\text{R}_1i_1</math> is <math>\\text{SN}db/dt</math> except at one insta integral of the above equat the integral of the first te neglected in comparison wit mately <math>b_1 = (\\text{SN}_1)^{-1}\\textstyle\\int e_1dt</math>. In density in the core is obtaine voltage curve. In so doing the time point through wh area of the primary voltag such that its ordinate <math>y</math> is th viz. <math>y = \\textstyle\\int y^1dx</math>, the first curv in form than the second. when applied to a complex theorem be resolved into a in a relative reduction of t compared with the fundamental term, and hence a wiping out of the minor irregularities of the curve. In actual practice the curve of electromotive force of alternators can be quite sufficiently reproduced by employing three terms of the expansion, viz. the first three odd harmonics, and the resulting flux-density curve is always very nearly a simple sine curve.\n\nWe have then the following rules for predetermining the form of the current curve of the transformer at no load, assuming that the hysteresis curve of the iron is given, set out in terms of flux-density and ampere-turns per centimetre, and also the form of the curve of primary electromotive force. Let the time base line be divided up into equal small elements. Through any selected point draw a line perpendicular to the base line. Bisect the area enclosed by the curve representing the half wave of primary electromotive force and the base line by another perpendicular. Integrate the area enclosed between the electromotive force curve and these two perpendicular lines and the base. Lastly, set up a length on the last perpendicular equal to the value of this area divided by the product of the cross-section of the core and the number of primary turns. The resulting value will be the core flux-density <math>b</math> at the phase instant corresponding. Look out on the hysteresis loop the same flux-density value, and corresponding to it will be found two values of the magnetizing force in ampere-turns per centimetre, one the value for increasing flux-density and one for decreasing. An inspection of the position of the point of time selected on the time line will at once show which of these to select. Divide that value of the ampere-turns per centimetre by the product of the values of the primary turns and the mean length of the magnetic circuit of the core of the transformer, and the result gives the value of the primary current of the transformer. This can be set up to scale on the perpendicular through the time instant selected. Hence, given the form of the primary electromotive force curve and that of the hysteresis loop of the iron, we can draw the curves representing the changes of flux-density in the core and that of the corresponding primary current, and thus predict the root-mean-square value of the magnetizing current of the transformer. It is therefore possible, when given the primary electromotive force curve and the hysteresis curve of the iron, to predetermine the curves depicting all the other variables of the transformer, provided that the magnetic leakage is negligible.\n\n'''''Elementary Theory.''''' The elementary theory of the closed iron circuit transformer may be stated as follows: Let <math>\\text{N}_1</math>, <math>\\text{N}_2</math> be the turns on the primary and secondary circuits, <math>\\text{R}_1</math> and <math>\\text{R}_2</math> the resistances, <math>\\text{S}</math> the section of the core, and <math>b_1</math> and <math>b_2</math> the co-instantaneous values of the flux-density just inside the primary and secondary windings. Then, if <math>i_1</math> and <math>i_2</math> and <math>e_1</math> and <math>e_2</math> are the primary<noinclude><references/></noinclude>"
+}

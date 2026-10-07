@@ -1,0 +1,127 @@
+{
+ "volume": 25,
+ "page_number": 646,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n666",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n666",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1078,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     110,
+     107,
+     2244,
+     178
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     110,
+     178,
+     1177,
+     1253
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     110,
+     1253,
+     1177,
+     2266
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     110,
+     2266,
+     1177,
+     3119
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1177,
+     178,
+     2244,
+     1253
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1177,
+     1253,
+     2244,
+     2317
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1177,
+     2317,
+     2244,
+     3119
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|624|SPECTROSCOPY|}}",
+   "c1s1": "radiations. A homogeneous oscillation is one which for all time is described by a circular function such as <math>\\sin(nt+\\alpha)</math>, <math>t</math> being the time and <math>n</math> and <math>\\alpha</math> constants. The qualification that the circular function must apply to all time is important, and unless it is recognized as a necessary condition of homogeneity, confusion in the more intricate problems or radiation becomes inevitable. Thus if a molecule were set into vibration at a specified time and oscillated according to the above equation during a finite period, it would not send out homogeneous vibrations. In interpreting the phenomena observed in a spectroscope, it is necessary to remember that the instrument, as pointed out by Lord Rayleigh, is itself a producer of homogeneity within the limits defined by its resolving power. A spectroscope may be compared to a mechanical harmonic analyser which when fed with an irregular function of one variable represented by a curve supplies us with the sine curves into which the original function may be resolved. This analogy is useful because the application of Fourier's analysis to the optical theory of spectroscopes has been doubted, and it may be urged in answer to the objections raised that the instrument acts in all respects like a mechanical analyser,<sup>1</sup> the applicability of which has never been called into question.\n\nA limit to homogeneity of radiation is ultimately set by the so-called Doppler effect, which is the change of wave-length due to the translatory motion of the vibrating molecule from or towards the observer. If <math>N</math> be the frequency of a homogeneous",
+   "c1s2": "vibration sent out by a molecule at rest, the apparent frequency will be <math>\\text{N}\\ (1 \\pm v/V)</math>, where <math>V</math> is the velocity of light and <math>v</math> is the velocity of the line of sight, taken as positive if the distance from the observer increases. If all molecules moved with the velocity of mean square, the line would be drawn out into a band having on the frequency scale a width <math>2Nv/V</math>, where <math>v</math> is now the velocity of mean square. According to Maxwell's law, however, the number of molecules having a velocity in the line of sight lying between <math>v</math> and <math>v+dv</math> is proportional to <math>e^{-\\beta v^2}dv</math>, where <math>\\beta</math> is equal to <math>3/2u^2</math>; for <math>v=u</math>, we have therefore the ratio in the number of molecules having velocity <math>u</math> to those having no velocity in the line of sight <math>e^{-\\beta u^2} = e^{-\\frac{3}{2}} = \\cdot 22</math>. We may therefcre still take <math>2Nu/V</math> to be the width of the band if we define its edge to be the frequency at which its intensity has fallen to 22% of the central intensity. In the case of hydrogen rendered luminous in a vacuum tube we may put approximately <math>u</math> equal to 2000 metres per second, if the translatory motion of the luminous molecules is about the same as that at the ordinary temperature. In that case <math>\\lambda u/V</math> or the half width of the band measured in wave lengths would be <math>\\frac{2}{3} \\cdot 10^{-5}\\lambda</math>, or, for the red line, the half width would be 0·044 Å. Michelson, who has compared the theoretical widening with that found experimentally by means of his interferometer, had to use a somewhat more complicated expression for the comparison, as his visibility curve does not directly give intensities for",
+   "c1s3": "particular frequencies but an integral depending on a range of frequency.<sup>2</sup> He finds a remarkable agreement between the theoretical and experimental values, which it would be important to confirm with the more suitable instruments which are now at our disposal, as we might in this way get an estimate of the energy of translatory motion of the luminous molecules. If the motion were that of a body at white heat, or say a temperature of 1000°, the velocity of mean square would be 3900 metres per second and the apparent width of the band would be doubled. Michelson's experiments therefore argue in favour of the view that the luminescence in a vacuum tube is similar to that produced by phosphorescence where the translatory energy does not correspond to the oscillatory energy—but further experiments are desirable. The experimental verification of the change of wave-length due to a source moving in the line of sight has been realized in the laboratory by A. Bélopolsky and Prince Galitzin, who substituted for the source an image formed of a stationary object in a rapidly moving mirror.\n\n{{smaller block|<sup>1</sup> ''Phil. Mag.'' (1894), 37, p. 509.\n\n<sup>2</sup> Cf. Rayleigh, ''Phil. Mag.'' (1899), 27, p. 298; Michelson, ''Phil. Mag.'' (1892), 34, p. 280.}}",
+   "c2s1": "¶\nThe homogeneity of vibration may also be diminished by molecular impacts, but the number of shocks in a given time depends on pressure and we may therefore expect to diminish the width of a line by diminishing the pressure. It is not, however, obvious that the sudden change of direction in the translatory motion, which is commonly called a molecular shock, necessarily also affects the phase of vibration. Experiments which will be discussed in § 10 seem to show that there is a difference in this respect between the impacts of similar and those of dissimilar molecules. When the lines are obtained under circumstances which tend towards sharpness and homogeneity they are often found to possess complicated structures, single lines breaking up into two or more components of varying intensities. One of the most interesting examples is that furnished by the green mercury line, which when examined by a powerful échelon spectroscope splits up into a number of constituents which have been examined by several investigators. Six companions to the main lines are found with comparative ease and certainty and these have been carefully measured by Prince Galitzin,<sup>3</sup> H. Stansfield<sup>4</sup> and L. Janicki.<sup>5</sup> According to Stansfield there are three companion lines on either side of a central line, which consists of two lines of unequal brightness.\n\n8. ''Distribution of Frequencies in Line Spectra.''—It is natural to consider the frequencies of vibrations of radiating molecules as analogous to the different notes sent out by an acoustical vibrator. The efforts which were consequently made in the",
+   "c2s2": "early days of spectroscopy to discover some numerical relationship between the different wave lengths of the lines belonging to the same spectrum rather disregard the fact that even in acoustics the relationship of integer numbers holds only in special and very simple cases. Some corroboration of the simple law was apparently found by Johnstone Stoney, who first noted that the frequencies of three out of the four visible hydrogen lines are in the ratios <math>20 : 27 : 32</math>. In other spectra such “harmonic” ratios were also discovered, but their search was abandoned when it was found that their number did not exceed that calculated by the laws of probability on the supposition of a chance distribution.<sup>6</sup> The next great step was made by J. J. Balmer, who showed that the four hydrogen lines in the visible part of the spectrum may be represented by the equation\n{{block center|<math>n = \\text{A}(1 - 4/s^2)</math>,}}\nwhere <math>n</math> is the reciprocal of the wave-length and therefore proportional to the wave frequency, and <math>s</math> successively takes the values <math>3, 4, 5, 6</math>. Balmer’s formula received a striking confirmation when it was found to include the ultra-violet lines which were discovered by Sir William Huggins<sup>7</sup> in the photographic spectra of stars. The most complete hydrogen spectrum is that measured by Evershed<sup>8</sup> in the flash spectrum observed during a total solar eclipse, and contains thirty-one lines, all of which agree with considerable accuracy with the formula, if the frequency number <math>n</math> is calculated correctly by reducing the wave-length to vacuo.<sup>9</sup>",
+   "c2s3": "¶\nIt is a characteristic of Balmer's formula that the frequency approaches a definite limit as <math>s</math> is increased, and it was soon discovered that in several other spectra besides hydrogen, series of lines could be found, which gradually come nearer and nearer to each other as they become fainter, and approach a definite limit. Such series ought all to be capable of being represented by a formula resembling that of Balmer, but so far the exact form of the series has not been established with certainty. The more important of the different forms suggested are as follow:\n\n{{block center|(1) <math>n = \\text{A} + \\frac{\\text{B}}{s^2} + \\frac{\\text{C}}{s^4}</math> (H. Kayser and C. Runge).}}\n\n{{block center|(2) <math>n = \\text{A} - \\frac{\\text{N}}{s(+\\mu)^2}</math> (J. R. Rydberg).}}\n\n{{smaller block|<sup>3</sup> ''Bulletin Akad. St Petersburg'' (1907), p. 159.\n<sup>4</sup> ''Phil. Mag.'' (September, 1909), 18, p. 371.\n<sup>5</sup> ''Ann. d. Phys.'' (1909), 29, p. 1833.\n<sup>6</sup> A. Schuster, ''Proc. Roy. Soc.'' (1881), 21, p. 337.\n<sup>7</sup> ''Phil. Trans.'' (1880), 171, p. 619.\n<sup>8</sup> Ibid (1891), 197, p. 381.\n<sup>9</sup> The table so corrected will be found in C. Baly's ''Spectroscopy'', p. 472.}}"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8718,
+    "output_tokens": 3714,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|624|SPECTROSCOPY|}}</noinclude>radiations. A homogeneous oscillation is one which for all time is described by a circular function such as <math>\\sin(nt+\\alpha)</math>, <math>t</math> being the time and <math>n</math> and <math>\\alpha</math> constants. The qualification that the circular function must apply to all time is important, and unless it is recognized as a necessary condition of homogeneity, confusion in the more intricate problems or radiation becomes inevitable. Thus if a molecule were set into vibration at a specified time and oscillated according to the above equation during a finite period, it would not send out homogeneous vibrations. In interpreting the phenomena observed in a spectroscope, it is necessary to remember that the instrument, as pointed out by Lord Rayleigh, is itself a producer of homogeneity within the limits defined by its resolving power. A spectroscope may be compared to a mechanical harmonic analyser which when fed with an irregular function of one variable represented by a curve supplies us with the sine curves into which the original function may be resolved. This analogy is useful because the application of Fourier's analysis to the optical theory of spectroscopes has been doubted, and it may be urged in answer to the objections raised that the instrument acts in all respects like a mechanical analyser,<sup>1</sup> the applicability of which has never been called into question.\n\nA limit to homogeneity of radiation is ultimately set by the so-called Doppler effect, which is the change of wave-length due to the translatory motion of the vibrating molecule from or towards the observer. If <math>N</math> be the frequency of a homogeneous vibration sent out by a molecule at rest, the apparent frequency will be <math>\\text{N}\\ (1 \\pm v/V)</math>, where <math>V</math> is the velocity of light and <math>v</math> is the velocity of the line of sight, taken as positive if the distance from the observer increases. If all molecules moved with the velocity of mean square, the line would be drawn out into a band having on the frequency scale a width <math>2Nv/V</math>, where <math>v</math> is now the velocity of mean square. According to Maxwell's law, however, the number of molecules having a velocity in the line of sight lying between <math>v</math> and <math>v+dv</math> is proportional to <math>e^{-\\beta v^2}dv</math>, where <math>\\beta</math> is equal to <math>3/2u^2</math>; for <math>v=u</math>, we have therefore the ratio in the number of molecules having velocity <math>u</math> to those having no velocity in the line of sight <math>e^{-\\beta u^2} = e^{-\\frac{3}{2}} = \\cdot 22</math>. We may therefcre still take <math>2Nu/V</math> to be the width of the band if we define its edge to be the frequency at which its intensity has fallen to 22% of the central intensity. In the case of hydrogen rendered luminous in a vacuum tube we may put approximately <math>u</math> equal to 2000 metres per second, if the translatory motion of the luminous molecules is about the same as that at the ordinary temperature. In that case <math>\\lambda u/V</math> or the half width of the band measured in wave lengths would be <math>\\frac{2}{3} \\cdot 10^{-5}\\lambda</math>, or, for the red line, the half width would be 0·044 Å. Michelson, who has compared the theoretical widening with that found experimentally by means of his interferometer, had to use a somewhat more complicated expression for the comparison, as his visibility curve does not directly give intensities for particular frequencies but an integral depending on a range of frequency.<sup>2</sup> He finds a remarkable agreement between the theoretical and experimental values, which it would be important to confirm with the more suitable instruments which are now at our disposal, as we might in this way get an estimate of the energy of translatory motion of the luminous molecules. If the motion were that of a body at white heat, or say a temperature of 1000°, the velocity of mean square would be 3900 metres per second and the apparent width of the band would be doubled. Michelson's experiments therefore argue in favour of the view that the luminescence in a vacuum tube is similar to that produced by phosphorescence where the translatory energy does not correspond to the oscillatory energy—but further experiments are desirable. The experimental verification of the change of wave-length due to a source moving in the line of sight has been realized in the laboratory by A. Bélopolsky and Prince Galitzin, who substituted for the source an image formed of a stationary object in a rapidly moving mirror.\n\n{{smaller block|<sup>1</sup> ''Phil. Mag.'' (1894), 37, p. 509.\n\n<sup>2</sup> Cf. Rayleigh, ''Phil. Mag.'' (1899), 27, p. 298; Michelson, ''Phil. Mag.'' (1892), 34, p. 280.}}\n\nThe homogeneity of vibration may also be diminished by molecular impacts, but the number of shocks in a given time depends on pressure and we may therefore expect to diminish the width of a line by diminishing the pressure. It is not, however, obvious that the sudden change of direction in the translatory motion, which is commonly called a molecular shock, necessarily also affects the phase of vibration. Experiments which will be discussed in § 10 seem to show that there is a difference in this respect between the impacts of similar and those of dissimilar molecules. When the lines are obtained under circumstances which tend towards sharpness and homogeneity they are often found to possess complicated structures, single lines breaking up into two or more components of varying intensities. One of the most interesting examples is that furnished by the green mercury line, which when examined by a powerful échelon spectroscope splits up into a number of constituents which have been examined by several investigators. Six companions to the main lines are found with comparative ease and certainty and these have been carefully measured by Prince Galitzin,<sup>3</sup> H. Stansfield<sup>4</sup> and L. Janicki.<sup>5</sup> According to Stansfield there are three companion lines on either side of a central line, which consists of two lines of unequal brightness.\n\n8. ''Distribution of Frequencies in Line Spectra.''—It is natural to consider the frequencies of vibrations of radiating molecules as analogous to the different notes sent out by an acoustical vibrator. The efforts which were consequently made in the early days of spectroscopy to discover some numerical relationship between the different wave lengths of the lines belonging to the same spectrum rather disregard the fact that even in acoustics the relationship of integer numbers holds only in special and very simple cases. Some corroboration of the simple law was apparently found by Johnstone Stoney, who first noted that the frequencies of three out of the four visible hydrogen lines are in the ratios <math>20 : 27 : 32</math>. In other spectra such “harmonic” ratios were also discovered, but their search was abandoned when it was found that their number did not exceed that calculated by the laws of probability on the supposition of a chance distribution.<sup>6</sup> The next great step was made by J. J. Balmer, who showed that the four hydrogen lines in the visible part of the spectrum may be represented by the equation\n{{block center|<math>n = \\text{A}(1 - 4/s^2)</math>,}}\nwhere <math>n</math> is the reciprocal of the wave-length and therefore proportional to the wave frequency, and <math>s</math> successively takes the values <math>3, 4, 5, 6</math>. Balmer’s formula received a striking confirmation when it was found to include the ultra-violet lines which were discovered by Sir William Huggins<sup>7</sup> in the photographic spectra of stars. The most complete hydrogen spectrum is that measured by Evershed<sup>8</sup> in the flash spectrum observed during a total solar eclipse, and contains thirty-one lines, all of which agree with considerable accuracy with the formula, if the frequency number <math>n</math> is calculated correctly by reducing the wave-length to vacuo.<sup>9</sup>\n\nIt is a characteristic of Balmer's formula that the frequency approaches a definite limit as <math>s</math> is increased, and it was soon discovered that in several other spectra besides hydrogen, series of lines could be found, which gradually come nearer and nearer to each other as they become fainter, and approach a definite limit. Such series ought all to be capable of being represented by a formula resembling that of Balmer, but so far the exact form of the series has not been established with certainty. The more important of the different forms suggested are as follow:\n\n{{block center|(1) <math>n = \\text{A} + \\frac{\\text{B}}{s^2} + \\frac{\\text{C}}{s^4}</math> (H. Kayser and C. Runge).}}\n\n{{block center|(2) <math>n = \\text{A} - \\frac{\\text{N}}{s(+\\mu)^2}</math> (J. R. Rydberg).}}\n\n{{smaller block|<sup>3</sup> ''Bulletin Akad. St Petersburg'' (1907), p. 159.\n<sup>4</sup> ''Phil. Mag.'' (September, 1909), 18, p. 371.\n<sup>5</sup> ''Ann. d. Phys.'' (1909), 29, p. 1833.\n<sup>6</sup> A. Schuster, ''Proc. Roy. Soc.'' (1881), 21, p. 337.\n<sup>7</sup> ''Phil. Trans.'' (1880), 171, p. 619.\n<sup>8</sup> Ibid (1891), 197, p. 381.\n<sup>9</sup> The table so corrected will be found in C. Baly's ''Spectroscopy'', p. 472.}}<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,139 @@
+{
+ "volume": 25,
+ "page_number": 680,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n700",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n700",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1080,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     121,
+     116,
+     2255,
+     185
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     185,
+     1189,
+     983
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     983,
+     1189,
+     1981
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     1981,
+     1189,
+     3010
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     3010,
+     1189,
+     3118
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     185,
+     2255,
+     1117
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     1117,
+     2255,
+     2198
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2198,
+     2255,
+     3118
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|658|SPHERICAL HARMONICS|}}",
+   "c1s1": "infinite, and at the same time let <math>n</math> become infinite in such a way that <math>n/a</math> has a finite value <math>\\lambda</math>. Then\n{{block center|<math>\\text{L}\\ \\sec^n \\theta = \\text{L}\\left(\\sec\\frac{\\rho}{a}\\right)^{\\lambda a} = 1,\\ \\text{L}\\left(1+\\frac{z}{a}\\right)^n = e^{\\lambda z},</math>}}\nand it remains to find the limiting value of <math>\\text{P}_n(\\cos\\theta)</math>. From the series (15), it may be at once proved that\n{{block center|<math>\\text{P}_n(\\cos\\theta) = 1 - \\frac{(n+1)n}{1^2}\\left(\\sin\\frac{\\theta}{2}\\right)^2 + \\dots</math>}}\n{{block center|<math>+(-1)^m\\delta\\frac{(n+m)\\dots(n-m+1)}{1^2.2^2.m^2}\\left(\\sin\\frac{\\theta}{2}\\right)^{2m}</math>}}\nwhere <math>\\delta</math> is some number numerically less than unity and <math>m</math> is a fixed finite quantity sufficiently large; on proceeding to the limit, we have\n{{block center|<math>\\text{LP}_n\\left(\\cos\\frac{\\lambda\\rho}{n}\\right) = 1 - \\frac{\\lambda^2\\rho^2}{2^2} + \\frac{\\lambda^4\\rho^4}{2^2.4^2} - \\dots + (-1)^m\\delta_1\\frac{\\lambda^{2m}\\rho^{2m}}{2^2.4^2.(2m)^2}</math>}}\nwhere <math>\\delta_1</math> is less than unity.\n\nHence\n{{block center|<math>\\underset{n=\\infty}{\\text{L}}\\ \\text{P}_n\\left(\\cos\\frac{\\lambda\\rho}{n}\\right) = \\text{J}_0(\\lambda\\rho).</math>}}",
+   "c1s2": "Again, since\n\n{{block center|<math>\\text{P}^m_n(\\cos\\rho) = \\sin^m\\theta \\frac{d^m\\text{P}_n(\\cos\\theta)}{d(\\cos\\theta)^m},</math>}}\n\nwe have\n\n{{block center|<math>\\text{L}n^{-m}\\text{P}^m_n\\left(\\cos\\frac{\\rho}{n}\\right) = \\text{L}\\frac{\\rho^m}{n^{2m}} \\frac{d^m\\text{P}_n\\left(\\cos\\frac{\\rho}{n}\\right)}{d\\left(-\\frac{\\rho^2}{2n^2}\\right)^m}</math>}}\n\n{{block center|<math>= (-2)^m\\rho^m\\frac{d_m\\text{J}_0(\\rho)}{d(\\rho^2)^m}</math>}}\n\nhence\n\n{{block center|<math>\\underset{n=\\infty}{\\text{L}}\\, n^{-m}\\text{P}^m_n\\left(\\cos\\frac{\\rho}{n}\\right) = \\text{J}_m(\\rho).</math>}}\n\nIt may be shown that <math>\\text{Y}_0(\\rho)</math> is obtainable as the limit of <math>\\text{Q}_n\\left(\\cos\\frac{\\rho}{n}\\right)</math> the zonal harmonic of the second kind; and that\n\n{{block center|<math>\\text{Y}_m(\\rho) = \\text{L}n^{-m}\\text{Q}^m_n\\left(\\cos\\frac{\\rho}{n}\\right).</math>}}\n\n24. ''Definite Integral Solutions of Bessel's Equation.''—Bessel's equation of order <math>m</math>, where <math>m</math> is unrestricted, is satisfied by the expression <math>\\rho^m\\int e^{\\iota\\rho t}(t^2-1)^{m-\\frac{1}{2}}dt</math>, where the path of integration is either a curve which is closed on the Riemann's surface on which the integrand is represented, or is taken between limits, at each of which <math>e^{\\iota\\rho t}(t^2-1)^{m+\\frac{1}{2}}</math> is zero. The equation is also satisfied by the expres-",
+   "c1s3": "sion <math>\\int e^{\\frac{1}{2}\\rho(t-t^{-1})}t^{-m-1}dt</math> where the integral is taken along a closed path as before, or between limits at each of which <math>e^{\\frac{1}{2}\\rho(t-t^{-1})}t^{-m-1}</math> vanishes.\n\nThe following definite integral expressions for Bessel's functions are derivable from these fundamental forms.\n{{block center|<math>\\text{J}_m(\\rho) = \\frac{1}{\\Pi(-\\frac{1}{2})\\Pi(m-\\frac{1}{2})}\\left(\\frac{\\rho}{2}\\right)^m\\int_0^\\pi e^{\\iota\\rho\\cos\\phi}\\sin^{2m}\\phi\\, d\\phi</math>}}\nwhere the real part of <math>m+\\frac{1}{2}</math> is positive.\n{{block center|<math>\\text{Y}_m(\\rho)+\\frac{1}{2}\\pi\\iota.e^{m\\pi\\iota}\\sec m\\pi.\\text{J}_m(\\rho)</math>}}\n{{block center|<math>= \\frac{\\Pi(-\\frac{1}{2}-m)}{\\Pi(-\\frac{1}{2})}\\left(\\frac{\\rho}{2}\\right)^m\\int_0^{\\infty+\\frac{1}{2}\\pi\\iota} e^{\\iota\\rho\\cosh\\phi}\\sinh^{2m}\\phi\\, d\\phi</math>}}\nwhere the real parts of <math>m+\\frac{1}{2}</math>, <math>\\rho</math> are positive; if <math>\\rho</math> is purely imaginary and positive the upper limit may be replaced by <math>\\infty</math>.\n{{block center|<math>\\text{Y}_m(\\rho)-\\frac{1}{2}\\pi\\iota.e^{m\\pi\\iota}\\sec m\\pi.\\text{J}_m(\\rho)</math>}}\n{{block center|<math>= e^{2m\\pi\\iota}\\frac{\\Pi(-\\frac{1}{2}-m)}{\\Pi(-\\frac{1}{2})}\\left(\\frac{\\rho}{2}\\right)^m\\int_0^{\\infty-\\frac{1}{2}\\pi\\iota} e^{-\\iota\\rho\\cos h\\phi}\\sinh^{2m}\\phi\\, d\\phi</math>}}\nunder the same restrictions as in the last case; if <math>\\rho</math> is a negative imaginary number, we may put <math>\\infty</math> for the upper limit.\n\nIf <math>\\rho</math> is real and positive\n{{block center|<math>\\text{J}_0(\\rho) = \\frac{2}{\\pi}\\int_0^\\infty \\sin(\\rho\\cosh\\phi)d\\phi</math>}}\n{{block center|<math>\\text{Y}_0(\\rho) = \\int_0^\\infty \\cos(\\rho\\cosh\\phi)d\\phi.</math>}}",
+   "c1s4": "¶\n25. ''Bessel's Functions with Imaginary Argument.''—The functions with purely imaginary argument are of such importance in connexion with certain differential equations of physics that a special notation",
+   "c2s1": "has been introduced for them. We denote the two solutions of the equation\n{{block center|<math>\\frac{d^2u}{dr^2}+\\frac{1}{r}\\frac{du}{dr}-u=0</math>}}\nby <math>\\text{I}_0(r)</math>, <math>\\text{K}_0(r)</math> when\n{{block center|<math>\\text{I}_0(r)=\\text{J}_0(\\iota r)=1+\\frac{r^2}{2^2}+\\frac{r^2}{2^2.4^2}+\\dots</math>}}\n{{block center|<math>=\\frac{1}{\\pi}\\int_0^\\pi \\cosh\\,(r\\cos\\phi)d\\phi</math>,}}\nand\n{{block center|<math>\\text{K}_0(r)=\\text{Y}_0(\\iota r)+\\frac{1}{2}\\iota\\pi\\text{J}_0(\\iota r)=\\int_0^\\infty e^{-r\\cos h\\phi}d\\phi=\\int_0^\\infty \\cos\\,(r\\sinh\\psi)d\\psi</math>.}}\n\nThe particular integral <math>\\text{K}_0(r)</math> is so chosen that it vanishes when <math>r</math> is real and infinite; it is also represented by\n{{block center|<math>\\int_0^\\infty \\frac{\\cos v}{\\sqrt{(v^2+r^2)}}dv</math>,}}\nand by\n{{block center|<math>\\int_1^\\infty \\frac{e^{-ru}}{\\sqrt{(u^2-1)}}du</math>.}}\nThe solutions of the equation\n{{block center|<math>\\frac{du^2}{dr^2}+\\frac{1}{r}\\frac{du}{dr}-\\left(1+\\frac{m^2}{r^2}\\right)u=0</math>}}\nare denoted by <math>\\text{I}_m(r)</math>, <math>\\text{K}_m(r)</math>, where",
+   "c2s2": "{{block center|<math>\\text{I}_m(r) = \\frac{r^m}{2^m\\Pi(m)}\\left\\{1 + \\frac{\\rho^2}{2.2m+2} + \\frac{\\rho^4}{2.4.2m+2.2m+4} + \\dots\\right\\}</math>}}\n\n{{block center|<math>= (2r)^m \\frac{d^m}{d(r^2)^m}\\text{I}_0(r),</math>}}\n\nwhen <math>m</math> is an integer, and\n\n{{block center|<math>\\text{K}_m(r) = (2r)^m \\frac{d^m}{d(r^2)^m}\\text{K}_0(r) = e^{-\\frac{1}{2}m\\pi\\iota}\\left\\{\\text{Y}_m(\\iota r) + \\frac{1}{2}\\iota\\pi\\text{J}_m(\\iota r)\\right\\}.</math>}}\n\nWe find also\n\n{{block center|<math>\\text{I}_m(r) = \\frac{r^m}{1.3.5\\dots(2m-1)}\\frac{1}{\\pi}\\int_0^\\pi \\cosh\\,(r\\cos\\phi)\\,\\sin^{2m}\\phi d\\phi</math>}}\n\n{{block center|<math>\\text{K}_m(r) = \\frac{(-1)^m r^m}{1.3.5\\dots(2m-1)}\\int_0^\\infty e^{-r\\cosh\\phi}\\sinh{}^{2m}\\phi d\\phi</math>}}\n\n{{block center|<math>= (-1)^m 3.5\\dots\\overline{2m-1}r^m\\int_0^\\infty \\frac{\\cos u}{(u^2+r^2)^{m+\\frac{1}{2}}}du.</math>}}\n\n26. ''The Asymptotic Series for Bessel's Functions.''—It may be shown, by means of definite integral expressions for the Bessel's functions, that\n\n{{block center|<math>\\text{J}_m(\\rho) = \\sqrt{\\frac{2}{\\pi\\rho}}\\left\\{\\text{P}\\cos\\left(\\frac{m\\pi}{2} + \\frac{\\pi}{4} - \\rho\\right) + \\text{Q}\\sin\\left(\\frac{m\\pi}{2} + \\frac{\\pi}{4} - \\rho\\right)\\right\\}</math>}}\n\n{{block center|<math>\\text{Y}_m(\\rho) = \\sqrt{\\frac{\\pi}{2\\rho}}e^{m\\pi\\iota}\\sec m\\pi\\left\\{\\text{P}\\sin\\left(\\frac{m\\pi}{2} + \\frac{\\pi}{4} - \\rho\\right) - \\text{Q}\\cos\\left(\\frac{m\\pi}{2} + \\frac{\\pi}{4} - \\rho\\right)\\right\\}</math>}}\n\nwhere P and Q denote the series\n\n{{block center|<math>\\text{P} = 1 - \\frac{(4m^2-1^2)(4m^2-3^2)}{1.2.(8\\rho)^2}</math>}}\n\n{{block center|<math>+ \\frac{(4m^2-1^2)(4m^2-3^2)(4m^2-5^2)(4m^2-7^2)}{1.2.3.4(8\\rho)^4} - \\dots</math>}}",
+   "c2s3": "{{block center|<math>\\text{Q} = \\frac{4m^2}{1.8\\rho} - \\frac{(4m^2-1^2)(4m^2-3^2)(4m^2-5^2)}{1.2.3.(8\\rho)^3} + \\dots</math>}}\n\nThese series for <math>\\text{P}</math>, <math>\\text{Q}</math> are divergent unless <math>m</math> is half an odd integer, but it can be shown that they may be used for calculating the values of the functions, as they have the property that if in the calculation we stop at any term, the error in the value of the function is less than the next term; thus in using the series for calculation, we must stop at a term which is small. In such series the remainder after <math>n</math> terms has a minimum for some value of <math>n</math>, and for greater values of <math>n</math> increases beyond all limits; such series are called semi-convergent or asymptotic.\n\nWe have as particular cases of such series:—\n\n{{block center|<math>\\text{J}_0(\\rho) = \\sqrt{\\frac{2}{\\pi\\rho}} \\cos\\left(\\frac{\\pi}{4}-\\rho\\right) \\left\\{1 - \\frac{1^2.3^2}{1.2(8\\rho)^2} + \\frac{1^2.3^2.5^2.7^2}{1.2.3.4(8\\rho)^4} - \\dots\\right\\}</math>}}\n\n{{block center|<math>- \\sqrt{\\frac{2}{\\pi\\rho}} \\sin\\left(\\frac{\\pi}{4}-\\rho\\right) \\left\\{\\frac{1^2}{1.8\\rho} - \\frac{1^2.3^2.5^2}{1.2.3(8\\rho)^3} + \\dots\\right\\}</math>}}\n\nwhen <math>m</math> is an integer,\n\n{{block center|<math>\\text{K}_m(r) = (-1)^m \\sqrt{\\frac{\\pi}{2r}} e^{-r} \\left\\{1 + \\frac{4m^2-1^2}{1.8r} + \\frac{(4m^2-1^2)(4m^2-3^2)}{1.2(8r)^2} + \\dots\\right\\}</math>}}\n\n{{block center|<math>\\text{I}_m(r) = \\frac{1}{\\sqrt{2\\pi r}} e^r \\left\\{1 - \\frac{4m^2-1^2}{1.8r} + \\frac{(4m^2-1^2)(4m^2-3^2)}{1.2(8r)^2} - \\dots\\right\\}</math>}}\n\n27. ''The Bessel's functions of degree half an odd integer'' are of special"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 8704,
+    "output_tokens": 8305,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|658|SPHERICAL HARMONICS|}}</noinclude>infinite, and at the same time let <math>n</math> become infinite in such a way that <math>n/a</math> has a finite value <math>\\lambda</math>. Then\n{{block center|<math>\\text{L}\\ \\sec^n \\theta = \\text{L}\\left(\\sec\\frac{\\rho}{a}\\right)^{\\lambda a} = 1,\\ \\text{L}\\left(1+\\frac{z}{a}\\right)^n = e^{\\lambda z},</math>}}\nand it remains to find the limiting value of <math>\\text{P}_n(\\cos\\theta)</math>. From the series (15), it may be at once proved that\n{{block center|<math>\\text{P}_n(\\cos\\theta) = 1 - \\frac{(n+1)n}{1^2}\\left(\\sin\\frac{\\theta}{2}\\right)^2 + \\dots</math>}}\n{{block center|<math>+(-1)^m\\delta\\frac{(n+m)\\dots(n-m+1)}{1^2.2^2.m^2}\\left(\\sin\\frac{\\theta}{2}\\right)^{2m}</math>}}\nwhere <math>\\delta</math> is some number numerically less than unity and <math>m</math> is a fixed finite quantity sufficiently large; on proceeding to the limit, we have\n{{block center|<math>\\text{LP}_n\\left(\\cos\\frac{\\lambda\\rho}{n}\\right) = 1 - \\frac{\\lambda^2\\rho^2}{2^2} + \\frac{\\lambda^4\\rho^4}{2^2.4^2} - \\dots + (-1)^m\\delta_1\\frac{\\lambda^{2m}\\rho^{2m}}{2^2.4^2.(2m)^2}</math>}}\nwhere <math>\\delta_1</math> is less than unity.\n\nHence\n{{block center|<math>\\underset{n=\\infty}{\\text{L}}\\ \\text{P}_n\\left(\\cos\\frac{\\lambda\\rho}{n}\\right) = \\text{J}_0(\\lambda\\rho).</math>}} Again, since\n\n{{block center|<math>\\text{P}^m_n(\\cos\\rho) = \\sin^m\\theta \\frac{d^m\\text{P}_n(\\cos\\theta)}{d(\\cos\\theta)^m},</math>}}\n\nwe have\n\n{{block center|<math>\\text{L}n^{-m}\\text{P}^m_n\\left(\\cos\\frac{\\rho}{n}\\right) = \\text{L}\\frac{\\rho^m}{n^{2m}} \\frac{d^m\\text{P}_n\\left(\\cos\\frac{\\rho}{n}\\right)}{d\\left(-\\frac{\\rho^2}{2n^2}\\right)^m}</math>}}\n\n{{block center|<math>= (-2)^m\\rho^m\\frac{d_m\\text{J}_0(\\rho)}{d(\\rho^2)^m}</math>}}\n\nhence\n\n{{block center|<math>\\underset{n=\\infty}{\\text{L}}\\, n^{-m}\\text{P}^m_n\\left(\\cos\\frac{\\rho}{n}\\right) = \\text{J}_m(\\rho).</math>}}\n\nIt may be shown that <math>\\text{Y}_0(\\rho)</math> is obtainable as the limit of <math>\\text{Q}_n\\left(\\cos\\frac{\\rho}{n}\\right)</math> the zonal harmonic of the second kind; and that\n\n{{block center|<math>\\text{Y}_m(\\rho) = \\text{L}n^{-m}\\text{Q}^m_n\\left(\\cos\\frac{\\rho}{n}\\right).</math>}}\n\n24. ''Definite Integral Solutions of Bessel's Equation.''—Bessel's equation of order <math>m</math>, where <math>m</math> is unrestricted, is satisfied by the expression <math>\\rho^m\\int e^{\\iota\\rho t}(t^2-1)^{m-\\frac{1}{2}}dt</math>, where the path of integration is either a curve which is closed on the Riemann's surface on which the integrand is represented, or is taken between limits, at each of which <math>e^{\\iota\\rho t}(t^2-1)^{m+\\frac{1}{2}}</math> is zero. The equation is also satisfied by the expression <math>\\int e^{\\frac{1}{2}\\rho(t-t^{-1})}t^{-m-1}dt</math> where the integral is taken along a closed path as before, or between limits at each of which <math>e^{\\frac{1}{2}\\rho(t-t^{-1})}t^{-m-1}</math> vanishes.\n\nThe following definite integral expressions for Bessel's functions are derivable from these fundamental forms.\n{{block center|<math>\\text{J}_m(\\rho) = \\frac{1}{\\Pi(-\\frac{1}{2})\\Pi(m-\\frac{1}{2})}\\left(\\frac{\\rho}{2}\\right)^m\\int_0^\\pi e^{\\iota\\rho\\cos\\phi}\\sin^{2m}\\phi\\, d\\phi</math>}}\nwhere the real part of <math>m+\\frac{1}{2}</math> is positive.\n{{block center|<math>\\text{Y}_m(\\rho)+\\frac{1}{2}\\pi\\iota.e^{m\\pi\\iota}\\sec m\\pi.\\text{J}_m(\\rho)</math>}}\n{{block center|<math>= \\frac{\\Pi(-\\frac{1}{2}-m)}{\\Pi(-\\frac{1}{2})}\\left(\\frac{\\rho}{2}\\right)^m\\int_0^{\\infty+\\frac{1}{2}\\pi\\iota} e^{\\iota\\rho\\cosh\\phi}\\sinh^{2m}\\phi\\, d\\phi</math>}}\nwhere the real parts of <math>m+\\frac{1}{2}</math>, <math>\\rho</math> are positive; if <math>\\rho</math> is purely imaginary and positive the upper limit may be replaced by <math>\\infty</math>.\n{{block center|<math>\\text{Y}_m(\\rho)-\\frac{1}{2}\\pi\\iota.e^{m\\pi\\iota}\\sec m\\pi.\\text{J}_m(\\rho)</math>}}\n{{block center|<math>= e^{2m\\pi\\iota}\\frac{\\Pi(-\\frac{1}{2}-m)}{\\Pi(-\\frac{1}{2})}\\left(\\frac{\\rho}{2}\\right)^m\\int_0^{\\infty-\\frac{1}{2}\\pi\\iota} e^{-\\iota\\rho\\cos h\\phi}\\sinh^{2m}\\phi\\, d\\phi</math>}}\nunder the same restrictions as in the last case; if <math>\\rho</math> is a negative imaginary number, we may put <math>\\infty</math> for the upper limit.\n\nIf <math>\\rho</math> is real and positive\n{{block center|<math>\\text{J}_0(\\rho) = \\frac{2}{\\pi}\\int_0^\\infty \\sin(\\rho\\cosh\\phi)d\\phi</math>}}\n{{block center|<math>\\text{Y}_0(\\rho) = \\int_0^\\infty \\cos(\\rho\\cosh\\phi)d\\phi.</math>}}\n\n25. ''Bessel's Functions with Imaginary Argument.''—The functions with purely imaginary argument are of such importance in connexion with certain differential equations of physics that a special notation has been introduced for them. We denote the two solutions of the equation\n{{block center|<math>\\frac{d^2u}{dr^2}+\\frac{1}{r}\\frac{du}{dr}-u=0</math>}}\nby <math>\\text{I}_0(r)</math>, <math>\\text{K}_0(r)</math> when\n{{block center|<math>\\text{I}_0(r)=\\text{J}_0(\\iota r)=1+\\frac{r^2}{2^2}+\\frac{r^2}{2^2.4^2}+\\dots</math>}}\n{{block center|<math>=\\frac{1}{\\pi}\\int_0^\\pi \\cosh\\,(r\\cos\\phi)d\\phi</math>,}}\nand\n{{block center|<math>\\text{K}_0(r)=\\text{Y}_0(\\iota r)+\\frac{1}{2}\\iota\\pi\\text{J}_0(\\iota r)=\\int_0^\\infty e^{-r\\cos h\\phi}d\\phi=\\int_0^\\infty \\cos\\,(r\\sinh\\psi)d\\psi</math>.}}\n\nThe particular integral <math>\\text{K}_0(r)</math> is so chosen that it vanishes when <math>r</math> is real and infinite; it is also represented by\n{{block center|<math>\\int_0^\\infty \\frac{\\cos v}{\\sqrt{(v^2+r^2)}}dv</math>,}}\nand by\n{{block center|<math>\\int_1^\\infty \\frac{e^{-ru}}{\\sqrt{(u^2-1)}}du</math>.}}\nThe solutions of the equation\n{{block center|<math>\\frac{du^2}{dr^2}+\\frac{1}{r}\\frac{du}{dr}-\\left(1+\\frac{m^2}{r^2}\\right)u=0</math>}}\nare denoted by <math>\\text{I}_m(r)</math>, <math>\\text{K}_m(r)</math>, where {{block center|<math>\\text{I}_m(r) = \\frac{r^m}{2^m\\Pi(m)}\\left\\{1 + \\frac{\\rho^2}{2.2m+2} + \\frac{\\rho^4}{2.4.2m+2.2m+4} + \\dots\\right\\}</math>}}\n\n{{block center|<math>= (2r)^m \\frac{d^m}{d(r^2)^m}\\text{I}_0(r),</math>}}\n\nwhen <math>m</math> is an integer, and\n\n{{block center|<math>\\text{K}_m(r) = (2r)^m \\frac{d^m}{d(r^2)^m}\\text{K}_0(r) = e^{-\\frac{1}{2}m\\pi\\iota}\\left\\{\\text{Y}_m(\\iota r) + \\frac{1}{2}\\iota\\pi\\text{J}_m(\\iota r)\\right\\}.</math>}}\n\nWe find also\n\n{{block center|<math>\\text{I}_m(r) = \\frac{r^m}{1.3.5\\dots(2m-1)}\\frac{1}{\\pi}\\int_0^\\pi \\cosh\\,(r\\cos\\phi)\\,\\sin^{2m}\\phi d\\phi</math>}}\n\n{{block center|<math>\\text{K}_m(r) = \\frac{(-1)^m r^m}{1.3.5\\dots(2m-1)}\\int_0^\\infty e^{-r\\cosh\\phi}\\sinh{}^{2m}\\phi d\\phi</math>}}\n\n{{block center|<math>= (-1)^m 3.5\\dots\\overline{2m-1}r^m\\int_0^\\infty \\frac{\\cos u}{(u^2+r^2)^{m+\\frac{1}{2}}}du.</math>}}\n\n26. ''The Asymptotic Series for Bessel's Functions.''—It may be shown, by means of definite integral expressions for the Bessel's functions, that\n\n{{block center|<math>\\text{J}_m(\\rho) = \\sqrt{\\frac{2}{\\pi\\rho}}\\left\\{\\text{P}\\cos\\left(\\frac{m\\pi}{2} + \\frac{\\pi}{4} - \\rho\\right) + \\text{Q}\\sin\\left(\\frac{m\\pi}{2} + \\frac{\\pi}{4} - \\rho\\right)\\right\\}</math>}}\n\n{{block center|<math>\\text{Y}_m(\\rho) = \\sqrt{\\frac{\\pi}{2\\rho}}e^{m\\pi\\iota}\\sec m\\pi\\left\\{\\text{P}\\sin\\left(\\frac{m\\pi}{2} + \\frac{\\pi}{4} - \\rho\\right) - \\text{Q}\\cos\\left(\\frac{m\\pi}{2} + \\frac{\\pi}{4} - \\rho\\right)\\right\\}</math>}}\n\nwhere P and Q denote the series\n\n{{block center|<math>\\text{P} = 1 - \\frac{(4m^2-1^2)(4m^2-3^2)}{1.2.(8\\rho)^2}</math>}}\n\n{{block center|<math>+ \\frac{(4m^2-1^2)(4m^2-3^2)(4m^2-5^2)(4m^2-7^2)}{1.2.3.4(8\\rho)^4} - \\dots \\text{Q} = \\frac{4m^2}{1.8\\rho} - \\frac{(4m^2-1^2)(4m^2-3^2)(4m^2-5^2)}{1.2.3.(8\\rho)^3} + \\dots</math>}}\n\nThese series for <math>\\text{P}</math>, <math>\\text{Q}</math> are divergent unless <math>m</math> is half an odd integer, but it can be shown that they may be used for calculating the values of the functions, as they have the property that if in the calculation we stop at any term, the error in the value of the function is less than the next term; thus in using the series for calculation, we must stop at a term which is small. In such series the remainder after <math>n</math> terms has a minimum for some value of <math>n</math>, and for greater values of <math>n</math> increases beyond all limits; such series are called semi-convergent or asymptotic.\n\nWe have as particular cases of such series:—\n\n{{block center|<math>\\text{J}_0(\\rho) = \\sqrt{\\frac{2}{\\pi\\rho}} \\cos\\left(\\frac{\\pi}{4}-\\rho\\right) \\left\\{1 - \\frac{1^2.3^2}{1.2(8\\rho)^2} + \\frac{1^2.3^2.5^2.7^2}{1.2.3.4(8\\rho)^4} - \\dots\\right\\}</math>}}\n\n{{block center|<math>- \\sqrt{\\frac{2}{\\pi\\rho}} \\sin\\left(\\frac{\\pi}{4}-\\rho\\right) \\left\\{\\frac{1^2}{1.8\\rho} - \\frac{1^2.3^2.5^2}{1.2.3(8\\rho)^3} + \\dots\\right\\}</math>}}\n\nwhen <math>m</math> is an integer,\n\n{{block center|<math>\\text{K}_m(r) = (-1)^m \\sqrt{\\frac{\\pi}{2r}} e^{-r} \\left\\{1 + \\frac{4m^2-1^2}{1.8r} + \\frac{(4m^2-1^2)(4m^2-3^2)}{1.2(8r)^2} + \\dots\\right\\}</math>}}\n\n{{block center|<math>\\text{I}_m(r) = \\frac{1}{\\sqrt{2\\pi r}} e^r \\left\\{1 - \\frac{4m^2-1^2}{1.8r} + \\frac{(4m^2-1^2)(4m^2-3^2)}{1.2(8r)^2} - \\dots\\right\\}</math>}}\n\n27. ''The Bessel's functions of degree half an odd integer'' are of special<noinclude><references/></noinclude>"
+}

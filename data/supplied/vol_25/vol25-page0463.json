@@ -1,0 +1,214 @@
+{
+ "volume": 25,
+ "page_number": 463,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n471",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n471",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1090,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     84,
+     127,
+     2237,
+     198
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     84,
+     215,
+     1158,
+     1216
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     1241,
+     1158,
+     1314
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     1314,
+     1158,
+     2397
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     2397,
+     1158,
+     3144
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1158,
+     198,
+     2237,
+     902
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1158,
+     902,
+     2237,
+     1897
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1158,
+     1897,
+     2237,
+     2638
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1158,
+     2639,
+     2237,
+     2672
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1158,
+     2672,
+     2237,
+     3144
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|FREQUENCY AND PITCH]|SOUND|447}}",
+   "c1s1": "{{c|(From Lord Rayleigh's ''Theory of Sound'', by permission of Macmillan & Co., Ltd.)}}\n{{c|{{sc|Fig.}} 18.}}",
+   "c1s2": "¶\nKoenig also used the apparatus to investigate the effect on the frequency of a fork of a resonating cavity placed near it. He found that when the pitch of the cavity was below that of the fork the pitch of the fork was raised, and vice versa. But when the pitch of the cavity was exactly that of the fork when vibrating alone, though it resounded most strongly, it did not affect the frequency of the fork. These effects have been explained by Lord Rayleigh (''Sound'', i. § 117).\n\n'''''M‘Leod and Clarke’s Stroboscopic Method.''''' In the stroboscopic method of H. M‘Leod and G. S. Clarke, the full details of which will be found in the original memoir (''Phil. Trans.'', 1880, pt. i. p. 1), a cylinder is ruled with equidistant white lines parallel to the axis on a black ground. It is set so that it can be turned at any desired and determined speed about a horizontal axis, and when going fast enough it appears grey. Imagine now that a fork with black prongs is held near the cylinder with its prongs vertical and the plane of vibration parallel to the axis, and suppose that we watch the outer outline of the right-hand prong. Let the cylinder be rotated so that each white line moves exactly into the place of the next while the prong moves once in and out. Hence when a white line is in a particular position on the cylinder, the prong will always be the same distance along it and cut off the same length from view. The most will be cut off in the position of the lines corresponding to the furthest swing out, then less and less till the furthest swing in, then more and more till the furthest swing out, when the appearance will be exactly as at first. The boundary between the grey cylinder and the black fork will therefore appear wavy with fixed undulations, the distance from crest to crest being the distance between the lines on the cylinder. If the fork has slightly greater frequency, then a white line will not quite reach the next place while the fork is making its swing in and out, and the waves will travel against the motion of the cylinder. If the fork has slightly",
+   "c1s3": "less frequency the waves will travel in the opposite direction, and it is easily seen that the frequency of the fork is the number of white lines passing a point in a second <math>\\pm</math> the number of waves passing the point per second. This apparatus was used to find the temperature coefficient of the frequency of forks, the value obtained <math>-{\\cdot}00011</math> being the same as that found by Koenig. Another important result of the investigation was that the phase of vibration of the fork was not altered by bowing it, the amplitude alone changing. The method is easily adapted for the converse determination of speed of revolution when the frequency of a fork is known.\n\n''Rayleigh's Phonic Wheel.'' The phonic wheel, invented independently by Paul La Cour and Lord Rayleigh (see ''Sound'', i. § 68 ''c''), consists of a wheel carrying several soft-iron armatures fixed at equal distances round its circumference. The wheel rotates between the poles of an electro-magnet, which is fed by an intermittent current such as that which is working an electrically maintained tuning-fork (see ''infra''). If the wheel be driven at such rate that the armatures move one place on in about the period of the current, then on putting on the current the electro-magnet controls the rate of the wheel so that the agreement of period is exact, and the wheel settles down to move so that the electric driving forces just supply the work taken out of the wheel.",
+   "c2s1": "If the wheel has very little work to do it may not be necessary to apply driving power, and uniform rotation may be maintained by the electro-magnet. In an experiment described by Rayleigh such a wheel provided with four armatures was used to determine the exact frequency of a driving fork known to have a frequency near 32. Thus the wheel made about 8 revolutions per second. There was one opening in its disk, and through this was viewed the pendulum of a clock beating seconds. On the pendulum was fixed an illuminated silver bead which appeared as a bright point of light when seen for an instant. Suppose now an observer to be looking from a fixed point at the bead through the hole in the phonic wheel, he will see the bead as 8 bright points flashing out in each beat, and in succession at intervals of <math>\\tfrac{1}{8}</math> second. Let us suppose that he notes the positions of two of these next to each other in the beat of the pendulum one way. If the fork makes exactly 32 vibrations and the wheel 8 revolutions in one pendulum beat, then the positions will be fixed, and every two seconds, the time of a complete pendulum vibration, he will see the two positions looked at flash out in succession at an interval of <math>\\tfrac{1}{8}</math> second. But if the fork has, say, rather greater frequency, the hole in the wheel comes round at the end of the two seconds before the bead has",
+   "c2s2": "quite come into position, and the two flashes appear gradually to move back in the opposite way to the pendulum. Suppose that in <math>\\text{N}</math> beats of the clock the flashes have moved exactly one place back. Then the first flash in the new position is viewed by the <math>8\\text{N}</math>th passage of the opening, and the second flash in the original position of the first is viewed when the pendulum has made exactly <math>\\text{N}</math> beats and by the <math>(8\\ \\text{N} + 1)</math>th passage of the hole. Then the wheel makes <math>8\\ \\text{N} + 1</math> revolutions in <math>\\text{N}</math> clock beats, and the fork makes <math>32\\ \\text{N} + 4</math> vibrations in the same time. If the clock is going exactly right, this gives a frequency for the fork of <math>32 + 4/\\text{N}</math>. If the fork has rather less frequency than 32 then the flashes appear to move forward and the frequency will be <math>32-4/\\text{N}</math>. In Rayleigh's experiment the 32 fork was made to drive electrically one of frequency about 128, and somewhat as with the phonic wheel, the frequency was controlled so as to be exactly four times that of the 32 fork. A standard 128 fork could then be compared either optically or by beats with the electrically driven fork.\n\n''Scheibler's Tonometer''.—When two tones are sounded together with frequencies not very different, \"beats\" or swellings-out of the sound are heard of frequency equal to the difference of frequencies of the two tones (see below). Johann Heinrich Scheibler (1777–1838) tuned two forks to an exact octave, and then prepared a number of others dividing the octave into such small steps that the beats between each and the next could be counted easily. Let the forks be numbered <math>0, 1, 2, \\dots \\text{N}</math>. If the frequency of <math>0</math> is <math>n</math>, that of <math>\\text{N}</math> is <math>2n</math>. Suppose that No. 1 makes <math>m_1</math> beats with No. 0, that No. 2 makes <math>m_2</math> beats with No. 1, and so on, then the frequencies are\n{{block center|<math>n, n+m_1, n+m_1+m_2, \\dots, n+m_1+m_2+ \\dots + m_\\text{N}</math>.}}\n{{block center|Since <math>n+m_1+m_2+ \\dots + m_\\text{N}=2n,\\ n=m_1+m_2+ \\dots +m_\\text{N}</math>,}}",
+   "c2s3": "{{c|{{sc|Fig.}} 19.}}",
+   "c2s4": "from a pinhole burner, fed through a cavity <math>\\text{C}</math>, one side of which is closed by a membrane <math>m</math>; on the other side of the membrane is another cavity <math>\\text{C}'</math>, which is put into connexion with a source of sound, as, for instance, a Helmholtz resonator excited by a fork of the same frequency. The membrane vibrates, and alternately checks and increases the gas supply, and the flame jumps up and down with the frequency of the source. It then appears elongated. To show its intermittent character its reflection is viewed in a revolving mirror. For this purpose four vertical mirrors are arranged round the vertical sides of a cube which is rapidly revolved about a vertical axis. The flame then appears toothed as shown. If several notes are present the flame is jagged by each. Interesting results are obtained by singing the different vowels into a funnel substituted for the resonator in the figure."
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v25 p0463 c1f1.png",
+   "c2f1": "eb1911 v25 p0463 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     163,
+     424,
+     1061,
+     1215
+    ],
+    "caption": [
+     110,
+     1241,
+     1124,
+     1314
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     115,
+     415,
+     1131,
+     1210
+    ]
+   },
+   {
+    "box": [
+     1196,
+     2275,
+     2216,
+     2638
+    ],
+    "caption": [
+     1651,
+     2640,
+     1772,
+     2672
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1188,
+     2288,
+     2222,
+     2624
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6703,
+    "output_tokens": 182,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 6288,
+    "output_tokens": 4222,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|FREQUENCY AND PITCH]|SOUND|447}}</noinclude>[[File:eb1911 v25 p0463 c1f1.png|center|355px]]\n{{c|(From Lord Rayleigh's ''Theory of Sound'', by permission of Macmillan & Co., Ltd.)}}\n{{c|{{sc|Fig.}} 18.}}\n\nKoenig also used the apparatus to investigate the effect on the frequency of a fork of a resonating cavity placed near it. He found that when the pitch of the cavity was below that of the fork the pitch of the fork was raised, and vice versa. But when the pitch of the cavity was exactly that of the fork when vibrating alone, though it resounded most strongly, it did not affect the frequency of the fork. These effects have been explained by Lord Rayleigh (''Sound'', i. § 117).\n\n'''''M‘Leod and Clarke’s Stroboscopic Method.''''' In the stroboscopic method of H. M‘Leod and G. S. Clarke, the full details of which will be found in the original memoir (''Phil. Trans.'', 1880, pt. i. p. 1), a cylinder is ruled with equidistant white lines parallel to the axis on a black ground. It is set so that it can be turned at any desired and determined speed about a horizontal axis, and when going fast enough it appears grey. Imagine now that a fork with black prongs is held near the cylinder with its prongs vertical and the plane of vibration parallel to the axis, and suppose that we watch the outer outline of the right-hand prong. Let the cylinder be rotated so that each white line moves exactly into the place of the next while the prong moves once in and out. Hence when a white line is in a particular position on the cylinder, the prong will always be the same distance along it and cut off the same length from view. The most will be cut off in the position of the lines corresponding to the furthest swing out, then less and less till the furthest swing in, then more and more till the furthest swing out, when the appearance will be exactly as at first. The boundary between the grey cylinder and the black fork will therefore appear wavy with fixed undulations, the distance from crest to crest being the distance between the lines on the cylinder. If the fork has slightly greater frequency, then a white line will not quite reach the next place while the fork is making its swing in and out, and the waves will travel against the motion of the cylinder. If the fork has slightly less frequency the waves will travel in the opposite direction, and it is easily seen that the frequency of the fork is the number of white lines passing a point in a second <math>\\pm</math> the number of waves passing the point per second. This apparatus was used to find the temperature coefficient of the frequency of forks, the value obtained <math>-{\\cdot}00011</math> being the same as that found by Koenig. Another important result of the investigation was that the phase of vibration of the fork was not altered by bowing it, the amplitude alone changing. The method is easily adapted for the converse determination of speed of revolution when the frequency of a fork is known.\n\n''Rayleigh's Phonic Wheel.'' The phonic wheel, invented independently by Paul La Cour and Lord Rayleigh (see ''Sound'', i. § 68 ''c''), consists of a wheel carrying several soft-iron armatures fixed at equal distances round its circumference. The wheel rotates between the poles of an electro-magnet, which is fed by an intermittent current such as that which is working an electrically maintained tuning-fork (see ''infra''). If the wheel be driven at such rate that the armatures move one place on in about the period of the current, then on putting on the current the electro-magnet controls the rate of the wheel so that the agreement of period is exact, and the wheel settles down to move so that the electric driving forces just supply the work taken out of the wheel. If the wheel has very little work to do it may not be necessary to apply driving power, and uniform rotation may be maintained by the electro-magnet. In an experiment described by Rayleigh such a wheel provided with four armatures was used to determine the exact frequency of a driving fork known to have a frequency near 32. Thus the wheel made about 8 revolutions per second. There was one opening in its disk, and through this was viewed the pendulum of a clock beating seconds. On the pendulum was fixed an illuminated silver bead which appeared as a bright point of light when seen for an instant. Suppose now an observer to be looking from a fixed point at the bead through the hole in the phonic wheel, he will see the bead as 8 bright points flashing out in each beat, and in succession at intervals of <math>\\tfrac{1}{8}</math> second. Let us suppose that he notes the positions of two of these next to each other in the beat of the pendulum one way. If the fork makes exactly 32 vibrations and the wheel 8 revolutions in one pendulum beat, then the positions will be fixed, and every two seconds, the time of a complete pendulum vibration, he will see the two positions looked at flash out in succession at an interval of <math>\\tfrac{1}{8}</math> second. But if the fork has, say, rather greater frequency, the hole in the wheel comes round at the end of the two seconds before the bead has quite come into position, and the two flashes appear gradually to move back in the opposite way to the pendulum. Suppose that in <math>\\text{N}</math> beats of the clock the flashes have moved exactly one place back. Then the first flash in the new position is viewed by the <math>8\\text{N}</math>th passage of the opening, and the second flash in the original position of the first is viewed when the pendulum has made exactly <math>\\text{N}</math> beats and by the <math>(8\\ \\text{N} + 1)</math>th passage of the hole. Then the wheel makes <math>8\\ \\text{N} + 1</math> revolutions in <math>\\text{N}</math> clock beats, and the fork makes <math>32\\ \\text{N} + 4</math> vibrations in the same time. If the clock is going exactly right, this gives a frequency for the fork of <math>32 + 4/\\text{N}</math>. If the fork has rather less frequency than 32 then the flashes appear to move forward and the frequency will be <math>32-4/\\text{N}</math>. In Rayleigh's experiment the 32 fork was made to drive electrically one of frequency about 128, and somewhat as with the phonic wheel, the frequency was controlled so as to be exactly four times that of the 32 fork. A standard 128 fork could then be compared either optically or by beats with the electrically driven fork.\n\n''Scheibler's Tonometer''.—When two tones are sounded together with frequencies not very different, \"beats\" or swellings-out of the sound are heard of frequency equal to the difference of frequencies of the two tones (see below). Johann Heinrich Scheibler (1777–1838) tuned two forks to an exact octave, and then prepared a number of others dividing the octave into such small steps that the beats between each and the next could be counted easily. Let the forks be numbered <math>0, 1, 2, \\dots \\text{N}</math>. If the frequency of <math>0</math> is <math>n</math>, that of <math>\\text{N}</math> is <math>2n</math>. Suppose that No. 1 makes <math>m_1</math> beats with No. 0, that No. 2 makes <math>m_2</math> beats with No. 1, and so on, then the frequencies are\n{{block center|<math>n, n+m_1, n+m_1+m_2, \\dots, n+m_1+m_2+ \\dots + m_\\text{N}</math>.}}\n{{block center|Since <math>n+m_1+m_2+ \\dots + m_\\text{N}=2n,\\ n=m_1+m_2+ \\dots +m_\\text{N}</math>,}} from a pinhole burner, fed through a cavity <math>\\text{C}</math>, one side of which is closed by a membrane <math>m</math>; on the other side of the membrane is another cavity <math>\\text{C}'</math>, which is put into connexion with a source of sound, as, for instance, a Helmholtz resonator excited by a fork of the same frequency. The membrane vibrates, and alternately checks and increases the gas supply, and the flame jumps up and down with the frequency of the source. It then appears elongated. To show its intermittent character its reflection is viewed in a revolving mirror. For this purpose four vertical mirrors are arranged round the vertical sides of a cube which is rapidly revolved about a vertical axis. The flame then appears toothed as shown. If several notes are present the flame is jagged by each. Interesting results are obtained by singing the different vowels into a funnel substituted for the resonator in the figure.\n\n[[File:eb1911 v25 p0463 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 19.}}<noinclude><references/></noinclude>"
+}

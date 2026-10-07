@@ -1,0 +1,250 @@
+{
+ "volume": 25,
+ "page_number": 391,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n399",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n399",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1093,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     106,
+     100,
+     2260,
+     173
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     106,
+     173,
+     1182,
+     1191
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     106,
+     1191,
+     1182,
+     1497
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     106,
+     1497,
+     1182,
+     2440
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     106,
+     2440,
+     1182,
+     3105
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1182,
+     173,
+     2260,
+     530
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1182,
+     530,
+     2260,
+     1306
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1182,
+     1318,
+     2260,
+     1354
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1182,
+     1354,
+     2260,
+     2199
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1702,
+     2199,
+     2260,
+     2740
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1702,
+     2764,
+     2260,
+     2795
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1182,
+     2199,
+     1702,
+     2795
+    ]
+   },
+   {
+    "name": "c2s6",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1182,
+     2795,
+     2260,
+     3105
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||SOLUTION|375}}",
+   "c1s1": "semi-permeable membrane with its solvent, when that solvent is under its own vapour pressure, may be calculated from the results of observations on vapour pressure of solvent and solution at ordinary low hydrostatic pressures. The chief difficulty lies in the determination of the quantity <math>\\text{V}'</math>, the change in volume of the solution under the pressure <math>\\text{P}_0</math> when unit mass of solvent is mixed with it. This determination involves a knowledge of the density and of the compressibility of the solution; the latter property is difficult to measure accurately.\n\nIn some solutions such as those of sugar the change in volume on dilution is nearly equal to the volume of solvent added; <math>\\text{V}'</math> then becomes equal to <math>\\text{V}</math>, the specific volume of the solvent. The osmotic pressures of strong sugar solutions were measured successfully by a direct method with semi-permeable membranes of copper ferrocyanide by Lord Berkeley and E. G. J. Hartley, who also determined the vapour pressures by passing a current of air successively through weighed vessels containing solution and water respectively.\n\nTheir table of comparison published in 1906 shows the following agreement:—\n\nConcentration in grammes per litre of solution. — Osmotic pressure at 0° C. in atmospheres: From vapour pressures. — From direct measurement.\n\n420 — 44·3 (at 12·6°) — 43·97\n\n540 — 69·4 — 67·51\n\n660 — 101·9 — 100·78\n\n750 — 136·0 — 133·74",
+   "c1s2": "¶\nIt seems likely that measurements of vapour pressure and compressibility may eventually enable us to determine accurately osmotic pressures in cases where direct measurement is impossible.\n\n'''''Freezing Point.—Solutions.''''' The slope of the temperature vapour pressure curves in the neighbourhood of the freezing point of the solvent is given by the latest heat equation. The difference in the two slopes for water and ice is <math>dp/d\\text{T} - dp'/d\\text{T} = \\text{L}/\\text{T}v</math>, where <math>\\text{L}</math>, the latent heat of fusion, is the difference",
+   "c1s3": "between the heats of evaporation for ice and water, and <math>v</math> is the specific volume of the vapour.\n\nThe difference in the lowering of vapour pressures <math>dp-dp'</math> may be put equal to <math>\\text{V}d\\text{P}/v</math>, where <math>\\text{P}</math> is the osmotic pressure, and <math>\\text{V}</math> the specific volume of the solvent. We then get <math>\\text{V}d\\text{P}=\\text{L}d\\text{T}/\\text{T}</math>.\n\nIn order to integrate this expression we need to know <math>\\text{L}</math> and <math>v</math> as functions of the temperature and pressure. The latent heat <math>\\text{L}</math> at any temperature is given by <math>\\text{L}=\\text{L}_0-\\int_{\\theta_0}^{\\theta}(s-s')d\\text{T}</math>, where <math>\\text{L}_0</math> is value at <math>\\text{T}_0</math> and <math>s-s'</math> is the difference in the specific heats of water and ice. The probable error in neglecting any variation of specific heat is small, and we may calculate <math>\\text{L}</math> from the values of <math>\\text{L}_0-(s-s')\\ (\\text{T}_0-\\text{T})</math>, where <math>s-s'</math> is about 0·5 calories. The variation of <math>\\text{L}</math> with pressure is probably small.\n\nThe volume of a gramme of water also depends on temperature and pressure. Approximately one degree lowering of freezing point corresponds with a change of 12 atmospheres in the osmotic pressure. From the known coefficients of compressibility and thermal expansion we find that <math>\\text{V}</math> may be represented by the linear equation <math>\\text{V}=1\\cdot000+0\\cdot0008\\ \\Delta</math>, where <math>\\Delta</math> is the lowering of the freezing point below 0°.\n\nPutting in these values and integrating we have, neglecting terms involving <math>\\Delta^3</math>, <math>\\text{P}=12\\cdot06\\ \\Delta-0\\cdot021\\ \\Delta^2</math> where <math>\\text{P}</math> is the osmotic pressure in atmospheres.\n\nH. W. Morse and J. C. W. Frazer, who have made direct measurements of osmotic pressure of solution of cane-sugar, have also measured the freezing points of corresponding solutions. From these results the equation just given has been examined by G. N. Lewis.",
+   "c1s4": "{{smaller block|Concentration in gramme-molecules per litre of water. — Depression of the freezing point = <math>\\Delta</math>. — Osmotic pressure: Calculated from <math>\\Delta</math>. — Observed.\n\n0·1 — 0·195 — 2·35 — 2·44\n\n0·5 — 0·985 — 11·8 — 11·8\n\n1·0 — 2·07 — 24·9 — 24·8}}\n\nThus the theory of the connexion of osmotic pressure with freezing point (like that with vapour pressure) seems to give results which accord with experiments.\n\n''Osmotic Pressure.'' At the limit of dilution, when the concentration of a solution approaches zero, we have seen that thermodynamical theory, verified by experiment, shows that the osmotic pressure has the same value as the gas pressure of the same number of molecules in the same space. Gases at high pressures fail to conform to Boyle's law, and solu-",
+   "c2s1": "tions at moderate concentrations give osmotic pressures which increase faster than the concentration. The variation of gases from Boyle's law is represented in the equation of Van der Waals by subtracting a constant <math>b</math> from the total volume to represent the effect of the volume of the molecules themselves. The corresponding correction in solutions consists in counting only the volume of the solvent in which the solute is dissolved, instead of the whole volume of the solution.",
+   "c2s2": "{{c|{{sc|Fig.}} 15.}}",
+   "c2s3": "¶\n{{smaller block|In fig. 15 the curve I represents Boyle's law if the volume is taken to be that of the solution, and the curve II if the volume is that of the solvent. Even this correction is not sufficient in solution of sugar, where the theoretical curve II lies below the experimental observations. A further correction may be made by adding more empirical terms to the equation, but a more promising idea, due to J. H. Poynting and H. L. Callendar is to trace the effect of possible combination of molecules of solute with molecules of the solvent. These combined solvent molecules are thus removed from existence as solvent, the effective volume of which is reduced to that of the remaining free molecules of solvent. The greater the number of water molecules attached to one sugar molecule, the less the residual volume, and the greater the theoretical pressure. Callendar finds that five molecules of water in the case of cane-sugar or two molecules in the case of dextrose are required to bring the curves into conformity with the observations of Berkeley and Hartley, which in fig. 15 are indicated by crosses.}}\n\n''Solubility and Heat of Solution''.—The conceptions of osmotic pressure and ideal semi-permeable membranes enable us to deduce other thermodynamic relations between the different properties of solutions. As an example, let us take the following investigation:—\n\n{{smaller block|An engine cylinder may be imagined to possess a semi-permeable bottom and to work without friction. If it be filled with a solution}}",
+   "c2s4": "{{c|{{sc|Fig.}} 16.}}",
+   "c2s5": "and the bottom immersed in the pure solvent, pressure equal to the osmotic pressure must be exerted on the piston to maintain equilibrium. Such a system is in the thermodynamic equilibrium. The slightest change in the load will cause motion in one direction or the other—the system is thermodynamically reversible. Such an arrangement may be put through a cycle of operations as in Carnot's engine (see {{sc|Thermodynamics}}) and all the laws of reversible engines applied to it. If the solution in the cylinder be kept saturated by the presence",
+   "c2s6": "of crystals of the solute, crystals will dissolve as solvent enters, and the solution remains saturated throughout. By an imaginary cycle of operations we may then justify the application to solutions of the latent heat equation which we have already assumed as applicable. In the equation <math>d\\text{P}/d\\text{T} = \\lambda/\\text{T}(v_2-v_1)</math>, <math>\\text{P}</math> is the osmotic pressure, <math>\\text{T}</math> the absolute temperature and <math>\\lambda</math> the heat of solution of unit mass of the solute when dissolving to form a volume <math>v_2-v_1</math> of saturated solution in an osmotic cylinder. This process involves the performance of"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v25 p0391 c2f1.png",
+   "c2f2": "eb1911 v25 p0391 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1256,
+     529,
+     2218,
+     1303
+    ],
+    "caption": [
+     1697,
+     1318,
+     1787,
+     1354
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1221,
+     526,
+     2235,
+     1307
+    ]
+   },
+   {
+    "box": [
+     1715,
+     2198,
+     2256,
+     2740
+    ],
+    "caption": [
+     1919,
+     2764,
+     2042,
+     2795
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1800,
+     2248,
+     2239,
+     2745
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 7051,
+    "output_tokens": 170,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 11,
+    "input_tokens": 7367,
+    "output_tokens": 5274,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 21164
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||SOLUTION|375}}</noinclude>semi-permeable membrane with its solvent, when that solvent is under its own vapour pressure, may be calculated from the results of observations on vapour pressure of solvent and solution at ordinary low hydrostatic pressures. The chief difficulty lies in the determination of the quantity <math>\\text{V}'</math>, the change in volume of the solution under the pressure <math>\\text{P}_0</math> when unit mass of solvent is mixed with it. This determination involves a knowledge of the density and of the compressibility of the solution; the latter property is difficult to measure accurately.\n\nIn some solutions such as those of sugar the change in volume on dilution is nearly equal to the volume of solvent added; <math>\\text{V}'</math> then becomes equal to <math>\\text{V}</math>, the specific volume of the solvent. The osmotic pressures of strong sugar solutions were measured successfully by a direct method with semi-permeable membranes of copper ferrocyanide by Lord Berkeley and E. G. J. Hartley, who also determined the vapour pressures by passing a current of air successively through weighed vessels containing solution and water respectively.\n\nTheir table of comparison published in 1906 shows the following agreement:—\n\nConcentration in grammes per litre of solution. — Osmotic pressure at 0° C. in atmospheres: From vapour pressures. — From direct measurement.\n\n420 — 44·3 (at 12·6°) — 43·97\n\n540 — 69·4 — 67·51\n\n660 — 101·9 — 100·78\n\n750 — 136·0 — 133·74\n\nIt seems likely that measurements of vapour pressure and compressibility may eventually enable us to determine accurately osmotic pressures in cases where direct measurement is impossible.\n\n'''''Freezing Point.—Solutions.''''' The slope of the temperature vapour pressure curves in the neighbourhood of the freezing point of the solvent is given by the latest heat equation. The difference in the two slopes for water and ice is <math>dp/d\\text{T} - dp'/d\\text{T} = \\text{L}/\\text{T}v</math>, where <math>\\text{L}</math>, the latent heat of fusion, is the difference between the heats of evaporation for ice and water, and <math>v</math> is the specific volume of the vapour.\n\nThe difference in the lowering of vapour pressures <math>dp-dp'</math> may be put equal to <math>\\text{V}d\\text{P}/v</math>, where <math>\\text{P}</math> is the osmotic pressure, and <math>\\text{V}</math> the specific volume of the solvent. We then get <math>\\text{V}d\\text{P}=\\text{L}d\\text{T}/\\text{T}</math>.\n\nIn order to integrate this expression we need to know <math>\\text{L}</math> and <math>v</math> as functions of the temperature and pressure. The latent heat <math>\\text{L}</math> at any temperature is given by <math>\\text{L}=\\text{L}_0-\\int_{\\theta_0}^{\\theta}(s-s')d\\text{T}</math>, where <math>\\text{L}_0</math> is value at <math>\\text{T}_0</math> and <math>s-s'</math> is the difference in the specific heats of water and ice. The probable error in neglecting any variation of specific heat is small, and we may calculate <math>\\text{L}</math> from the values of <math>\\text{L}_0-(s-s')\\ (\\text{T}_0-\\text{T})</math>, where <math>s-s'</math> is about 0·5 calories. The variation of <math>\\text{L}</math> with pressure is probably small.\n\nThe volume of a gramme of water also depends on temperature and pressure. Approximately one degree lowering of freezing point corresponds with a change of 12 atmospheres in the osmotic pressure. From the known coefficients of compressibility and thermal expansion we find that <math>\\text{V}</math> may be represented by the linear equation <math>\\text{V}=1\\cdot000+0\\cdot0008\\ \\Delta</math>, where <math>\\Delta</math> is the lowering of the freezing point below 0°.\n\nPutting in these values and integrating we have, neglecting terms involving <math>\\Delta^3</math>, <math>\\text{P}=12\\cdot06\\ \\Delta-0\\cdot021\\ \\Delta^2</math> where <math>\\text{P}</math> is the osmotic pressure in atmospheres.\n\nH. W. Morse and J. C. W. Frazer, who have made direct measurements of osmotic pressure of solution of cane-sugar, have also measured the freezing points of corresponding solutions. From these results the equation just given has been examined by G. N. Lewis. {{smaller block|Concentration in gramme-molecules per litre of water. — Depression of the freezing point = <math>\\Delta</math>. — Osmotic pressure: Calculated from <math>\\Delta</math>. — Observed.\n\n0·1 — 0·195 — 2·35 — 2·44\n\n0·5 — 0·985 — 11·8 — 11·8\n\n1·0 — 2·07 — 24·9 — 24·8}}\n\nThus the theory of the connexion of osmotic pressure with freezing point (like that with vapour pressure) seems to give results which accord with experiments.\n\n''Osmotic Pressure.'' At the limit of dilution, when the concentration of a solution approaches zero, we have seen that thermodynamical theory, verified by experiment, shows that the osmotic pressure has the same value as the gas pressure of the same number of molecules in the same space. Gases at high pressures fail to conform to Boyle's law, and solutions at moderate concentrations give osmotic pressures which increase faster than the concentration. The variation of gases from Boyle's law is represented in the equation of Van der Waals by subtracting a constant <math>b</math> from the total volume to represent the effect of the volume of the molecules themselves. The corresponding correction in solutions consists in counting only the volume of the solvent in which the solute is dissolved, instead of the whole volume of the solution.\n\n[[File:eb1911 v25 p0391 c2f1.png|center|355px]]\n{{c|{{sc|Fig.}} 15.}}\n\n{{smaller block|In fig. 15 the curve I represents Boyle's law if the volume is taken to be that of the solution, and the curve II if the volume is that of the solvent. Even this correction is not sufficient in solution of sugar, where the theoretical curve II lies below the experimental observations. A further correction may be made by adding more empirical terms to the equation, but a more promising idea, due to J. H. Poynting and H. L. Callendar is to trace the effect of possible combination of molecules of solute with molecules of the solvent. These combined solvent molecules are thus removed from existence as solvent, the effective volume of which is reduced to that of the remaining free molecules of solvent. The greater the number of water molecules attached to one sugar molecule, the less the residual volume, and the greater the theoretical pressure. Callendar finds that five molecules of water in the case of cane-sugar or two molecules in the case of dextrose are required to bring the curves into conformity with the observations of Berkeley and Hartley, which in fig. 15 are indicated by crosses.}}\n\n''Solubility and Heat of Solution''.—The conceptions of osmotic pressure and ideal semi-permeable membranes enable us to deduce other thermodynamic relations between the different properties of solutions. As an example, let us take the following investigation:—\n\n{{smaller block|An engine cylinder may be imagined to possess a semi-permeable bottom and to work without friction. If it be filled with a solution}} and the bottom immersed in the pure solvent, pressure equal to the osmotic pressure must be exerted on the piston to maintain equilibrium. Such a system is in the thermodynamic equilibrium. The slightest change in the load will cause motion in one direction or the other—the system is thermodynamically reversible. Such an arrangement may be put through a cycle of operations as in Carnot's engine (see {{sc|Thermodynamics}}) and all the laws of reversible engines applied to it. If the solution in the cylinder be kept saturated by the presence of crystals of the solute, crystals will dissolve as solvent enters, and the solution remains saturated throughout. By an imaginary cycle of operations we may then justify the application to solutions of the latent heat equation which we have already assumed as applicable. In the equation <math>d\\text{P}/d\\text{T} = \\lambda/\\text{T}(v_2-v_1)</math>, <math>\\text{P}</math> is the osmotic pressure, <math>\\text{T}</math> the absolute temperature and <math>\\lambda</math> the heat of solution of unit mass of the solute when dissolving to form a volume <math>v_2-v_1</math> of saturated solution in an osmotic cylinder. This process involves the performance of\n\n[[File:eb1911 v25 p0391 c2f2.png|center|184px]]\n{{c|{{sc|Fig.}} 16.}}<noinclude><references/></noinclude>"
+}

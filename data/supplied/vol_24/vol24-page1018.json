@@ -1,0 +1,252 @@
+{
+ "volume": 24,
+ "page_number": 1018,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1028",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1028",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1076,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     84,
+     128,
+     2212,
+     197
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     197,
+     1145,
+     1212
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     84,
+     1212,
+     1145,
+     1721
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     1872,
+     1145,
+     1938
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     1869,
+     1145,
+     1938
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     1938,
+     1145,
+     2987
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     2987,
+     1145,
+     3123
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1145,
+     214,
+     2212,
+     1868
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1145,
+     1874,
+     2212,
+     1943
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1145,
+     1943,
+     2212,
+     2953
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1145,
+     2953,
+     2212,
+     3123
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|950|SHIPBUILDING|[STRENGTH}}",
+   "c1s1": "¶\nThe stresses at a transverse section due to bending are obtained from the usual formula <math>\\frac{\\text{M}}{\\text{I}} = \\frac{p}{y}</math>, where <math>\\text{M}</math> is the bending moment, <math>\\text{I}</math> the moment of inertia of the section about the neutral axis, <math>y</math> the distance from the neutral axis of the point at which the stress is required, and <math>p</math> the intensity of stress. In calculating <math>\\text{I}</math>, a deduction from the area of plating in tension is made for rivet holes, and only the continuous longitudinal portions of the structure are assumed effective in resisting bending.\n\nThe stresses obtained by this method undergo considerable variation with class and size of ship. As regards the former, it is evident that the actual straining actions upon a ship necessarily vary with the type; and the stresses allowable, as calculated on a uniform basis of applied forces, must vary accordingly. The variation due to size is less obvious, but it is clear that the larger the ship, the less is the probability of encountering waves as long as herself; and, moreover, the proportion of height to length of the largest waves is generally less than that assumed. For these reasons greater calculated stresses are allowable in large ships than in small ships or in those of moderate size. The limiting stress frequently adopted for small ships is 6 tons per sq. in., which may be increased for portions in tension to 8 tons with high tensile steel; on the other hand, the calculated stresses in the largest vessels frequently exceed 8 tons compressive and 10 tons tensile.\n\nThe above method is that now universally adopted for comparing the stresses in ships caused by longitudinal bending; although imperfect, it affords a reasonable basis of comparison between the longitudinal strengths of vessels, especially when, as is generally",
+   "c1s2": "{{c|{{sc|Fig.}} 57.—Torpedo-Boat Destroyer in Wave Trough.}}",
+   "c1s3": "{{sc|Fig.}} 57.—Torpedo-Boat Destroyer in Wave Trough.\n\n{{sc|Fig.}} 58.—Cargo Ves Wav",
+   "c1s4": "the case, the comparison is made between two ships of similar type. The relation between stress and strain has therefore to be investigated, which involves the experimental determination of the modulus of elasticity of the structure.\n\nThe assumptions on which the theory of bending is based are:\n\n(''a'') At any transverse section the material lying on the neutral surface, which passes through the C.G. of the effective sectional material, is neither extended nor compressed.\n\n(''b'') The material is homogeneous; and the layers comprised between adjacent surfaces parallel to the neutral surface act independently. (This is probably more nearly the case in a ship than in a beam of solid section.)\n\n(''c'') The material situated at a distance <math>y</math> from the neutral surface is compressed (or extended) longitudinally by an amount <math>\\frac{y}{\\rho}</math> of its original length; where <math>1/\\rho</math> is the curvature of the neutral surface if originally straight, or the alteration of curvature if originally curved.\n\n(''d'') The stress is proportional to the strain and equal to <math>\\frac{\\text{E}y}{\\rho}</math>, <math>\\text{E}</math> being Young's modulus for the material. It follows that the resultant longitudinal force across a section is zero, and the moment of the internal forces about the neutral axis (''i.e.'' about the trace of the neutral surface in the section) is <math>\\frac{\\text{EI}}{\\rho}</math>, which is equal and opposite to the external bending moment <math>\\text{M}</math>.\n\n(''e'') Taking axes—<math>\\text{O}x</math> longitudinal, <math>\\text{O}z</math> vertical, since <math>\\rho</math> is large, <math>\\frac{1}{\\rho}</math> may be replaced by <math>\\frac{d^2z}{dx^2}</math>, and\n{{block center|<math>\\text{E}\\frac{d^2z}{dx^2}=\\frac{\\text{M}}{\\text{I}}\\text{ or }\\text{E}z=\\iint\\frac{\\text{M}}{\\text{I}}\\,dx\\,dx</math>,}}",
+   "c1s5": "giving the deflection <math>z</math> at any point.\n\nThe validity of the theory as applied to a ship was tested and confirmed in 1903 at Portsmouth Dockyard when experiments were made on H.M.S. “Wolf” by Professor J. H. Biles for the Committee",
+   "c2s1": "{{c|ssel of 12,000 Tons on ve Crest.}}\n\n{{c|{{sc|Fig.}} 59.—Cargo Vessel of 12,000 Tons in Wave Trough.}}",
+   "c2s2": "section was approximately in accordance with the linear law assumed in the theory of bending.\n\n(''c'') The modulus of elasticity <math>\\text{E}</math> was obtained by equating the sum of the moments about the neutral axis of the stresses deduced from the observed strains to the bending moment.\n\n(''d'') The value of <math>\\text{E}</math> was also deduced from the deflections by means of the formula\n{{block center|<math>\\text{E}z = \\iint \\frac{\\text{M}}{\\text{I}}\\, dx\\, dx;</math>}}\nand its value under a sagging moment is in agreement with that found by (''c''). Under a hogging moment the mean value obtained from the deflection is less than that from the strain, showing that the curvature obtained from the deflections is greater than that to which the structure is actually bent.\n\nThe table at the top of the following page shows the values obtained for <math>\\text{E}</math>, the modulus of elasticity.\n\nBy observing the deflections of two vessels when loaded with ballast, the following values for <math>\\text{E}</math> were obtained by T. C. Read and G. Stanbury (''Trans. Inst. Nav. Arch.'', 1894), and are given for purposes of comparison:.\n\nPrincipal Dimensions of Vessel. — Load in Tons. — Deflection in Inches. — Value of <math>\\text{E}</math> deduced.\n\n<math>347'\\times45'-6''\\times27'-2''</math> — 5000 — 2·31 — 11,000\n\n<math>300'\\times41'-6''\\times21'-2''</math> — 1800 — ·62 — 9,000",
+   "c2s3": "¶\nAfter the experiments the “Wolf” was sent to sea in rough weather with the object of comparing the stresses then observed with those calculated under the standard conditions on trough or crest. The strains at various portions of the structure were again measured with Stromeyer’s indicators, and the stresses deduced from"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1018 c1f1.png",
+   "c2f1": "eb1911 v24 p1018 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     88,
+     1215,
+     726,
+     1718
+    ],
+    "caption": [
+     119,
+     1872,
+     684,
+     1937
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     84,
+     1240,
+     691,
+     1716
+    ]
+   },
+   {
+    "box": [
+     88,
+     1240,
+     726,
+     1718
+    ],
+    "caption": [
+     117,
+     1869,
+     684,
+     1938
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     837,
+     1147,
+     1439,
+     1694
+    ]
+   },
+   {
+    "box": [
+     1587,
+     1179,
+     2208,
+     1864
+    ],
+    "caption": [
+     1599,
+     1874,
+     2178,
+     1942
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1643,
+     1163,
+     2214,
+     1860
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    0
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 4,
+    "input_tokens": 9595,
+    "output_tokens": 406,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 5561,
+    "output_tokens": 3682,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|950|SHIPBUILDING|[STRENGTH}}</noinclude>The stresses at a transverse section due to bending are obtained from the usual formula <math>\\frac{\\text{M}}{\\text{I}} = \\frac{p}{y}</math>, where <math>\\text{M}</math> is the bending moment, <math>\\text{I}</math> the moment of inertia of the section about the neutral axis, <math>y</math> the distance from the neutral axis of the point at which the stress is required, and <math>p</math> the intensity of stress. In calculating <math>\\text{I}</math>, a deduction from the area of plating in tension is made for rivet holes, and only the continuous longitudinal portions of the structure are assumed effective in resisting bending.\n\nThe stresses obtained by this method undergo considerable variation with class and size of ship. As regards the former, it is evident that the actual straining actions upon a ship necessarily vary with the type; and the stresses allowable, as calculated on a uniform basis of applied forces, must vary accordingly. The variation due to size is less obvious, but it is clear that the larger the ship, the less is the probability of encountering waves as long as herself; and, moreover, the proportion of height to length of the largest waves is generally less than that assumed. For these reasons greater calculated stresses are allowable in large ships than in small ships or in those of moderate size. The limiting stress frequently adopted for small ships is 6 tons per sq. in., which may be increased for portions in tension to 8 tons with high tensile steel; on the other hand, the calculated stresses in the largest vessels frequently exceed 8 tons compressive and 10 tons tensile.\n\nThe above method is that now universally adopted for comparing the stresses in ships caused by longitudinal bending; although imperfect, it affords a reasonable basis of comparison between the longitudinal strengths of vessels, especially when, as is generally {{sc|Fig.}} 57.—Torpedo-Boat Destroyer in Wave Trough.\n\n[[File:eb1911 v24 p1018 c1f1.png|center|355px]]\n{{c|{{sc|Fig.}} 57.—Torpedo-Boat Destroyer in Wave Trough.}}\n\n{{sc|Fig.}} 58.—Cargo Ves Wav the case, the comparison is made between two ships of similar type. The relation between stress and strain has therefore to be investigated, which involves the experimental determination of the modulus of elasticity of the structure.\n\nThe assumptions on which the theory of bending is based are:\n\n(''a'') At any transverse section the material lying on the neutral surface, which passes through the C.G. of the effective sectional material, is neither extended nor compressed.\n\n(''b'') The material is homogeneous; and the layers comprised between adjacent surfaces parallel to the neutral surface act independently. (This is probably more nearly the case in a ship than in a beam of solid section.)\n\n(''c'') The material situated at a distance <math>y</math> from the neutral surface is compressed (or extended) longitudinally by an amount <math>\\frac{y}{\\rho}</math> of its original length; where <math>1/\\rho</math> is the curvature of the neutral surface if originally straight, or the alteration of curvature if originally curved.\n\n(''d'') The stress is proportional to the strain and equal to <math>\\frac{\\text{E}y}{\\rho}</math>, <math>\\text{E}</math> being Young's modulus for the material. It follows that the resultant longitudinal force across a section is zero, and the moment of the internal forces about the neutral axis (''i.e.'' about the trace of the neutral surface in the section) is <math>\\frac{\\text{EI}}{\\rho}</math>, which is equal and opposite to the external bending moment <math>\\text{M}</math>.\n\n(''e'') Taking axes—<math>\\text{O}x</math> longitudinal, <math>\\text{O}z</math> vertical, since <math>\\rho</math> is large, <math>\\frac{1}{\\rho}</math> may be replaced by <math>\\frac{d^2z}{dx^2}</math>, and\n{{block center|<math>\\text{E}\\frac{d^2z}{dx^2}=\\frac{\\text{M}}{\\text{I}}\\text{ or }\\text{E}z=\\iint\\frac{\\text{M}}{\\text{I}}\\,dx\\,dx</math>,}} giving the deflection <math>z</math> at any point.\n\nThe validity of the theory as applied to a ship was tested and confirmed in 1903 at Portsmouth Dockyard when experiments were made on H.M.S. “Wolf” by Professor J. H. Biles for the Committee section was approximately in accordance with the linear law assumed in the theory of bending.\n\n[[File:eb1911 v24 p1018 c2f1.png|center|357px]]\n{{c|ssel of 12,000 Tons on ve Crest.}}\n\n{{c|{{sc|Fig.}} 59.—Cargo Vessel of 12,000 Tons in Wave Trough.}}\n\n(''c'') The modulus of elasticity <math>\\text{E}</math> was obtained by equating the sum of the moments about the neutral axis of the stresses deduced from the observed strains to the bending moment.\n\n(''d'') The value of <math>\\text{E}</math> was also deduced from the deflections by means of the formula\n{{block center|<math>\\text{E}z = \\iint \\frac{\\text{M}}{\\text{I}}\\, dx\\, dx;</math>}}\nand its value under a sagging moment is in agreement with that found by (''c''). Under a hogging moment the mean value obtained from the deflection is less than that from the strain, showing that the curvature obtained from the deflections is greater than that to which the structure is actually bent.\n\nThe table at the top of the following page shows the values obtained for <math>\\text{E}</math>, the modulus of elasticity.\n\nBy observing the deflections of two vessels when loaded with ballast, the following values for <math>\\text{E}</math> were obtained by T. C. Read and G. Stanbury (''Trans. Inst. Nav. Arch.'', 1894), and are given for purposes of comparison:.\n\nPrincipal Dimensions of Vessel. — Load in Tons. — Deflection in Inches. — Value of <math>\\text{E}</math> deduced.\n\n<math>347'\\times45'-6''\\times27'-2''</math> — 5000 — 2·31 — 11,000\n\n<math>300'\\times41'-6''\\times21'-2''</math> — 1800 — ·62 — 9,000\n\nAfter the experiments the “Wolf” was sent to sea in rough weather with the object of comparing the stresses then observed with those calculated under the standard conditions on trough or crest. The strains at various portions of the structure were again measured with Stromeyer’s indicators, and the stresses deduced from<noinclude><references/></noinclude>"
+}

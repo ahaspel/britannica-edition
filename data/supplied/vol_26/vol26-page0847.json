@@ -1,0 +1,144 @@
+{
+ "volume": 26,
+ "page_number": 847,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n861",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n861",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1114,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     44,
+     151,
+     2214,
+     219
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     44,
+     219,
+     1111,
+     1111
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     44,
+     1111,
+     1111,
+     1978
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     44,
+     1978,
+     1111,
+     3078
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     44,
+     3078,
+     1111,
+     3149
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1111,
+     219,
+     2214,
+     1244
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1111,
+     1244,
+     2214,
+     2326
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1111,
+     2326,
+     2214,
+     3149
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||THERMOCHEMISTRY|807}}",
+   "c1s1": "reacting substances, or to some multiples of them. The notation which Julius Thomsen employed to express his thermochemical measurements is still extensively used, and is as follows:—The chemical symbols of the reacting substances are written in juxtaposition and separated by commas; the whole is then enclosed in brackets and connected by the sign of equality to the number expressing the thermal effect of the action. The chemical symbols stand for quantities measured in grammes, and heat-evolution is reckoned as positive, heat-absorption as negative. Thus\n\n{{block center|[S, 2O] = 71100 cal.}}\n\nindicates that 71100 calories are evolved when 32 grammes of sulphur react with <math>2\\times16</math> grammes of free oxygen to form sulphur dioxide. It is of course necessary in accurate work to state the conditions of the reaction. In the above instance the sulphur is supposed to be in the solid rhombic modification, the oxygen and sulphur dioxide being in the gaseous state, and the initial and final systems being at the ordinary temperature. Again, the equation\n\n{{block center|[2N, O] = −18500 cal.}}\n\nindicates that it 28 grammes of nitrogen could be made to unite directly with 16 grammes of oxygen to form nitrous oxide, the union would cause the absorption of 18500 calories. When substances in solution are dealt with, Thomsen indicates their state by affixing Aq to their symbols. Thus\n\n{{block center|[NaOH Aq, HNO<sub>3</sub> Aq] = 13680 cal.}}",
+   "c1s2": "represents the heat of neutralization of one gramme-equivalent of caustic soda with nitric acid, each in dilute aqueous solution before being brought into contact. One drawback of Thomsen's notation is that the nature of the final system is not indicated, although this defect in general causes no ambiguity.\n\nBerthelot's notation defines both initial and final systems by giving the chemical equation for the reaction considered, the thermal effect being appended, and the state of the various substances being affixed to their formulae after brackets. W. Ostwald has proposed a modification of Berthelot's method which has many advantages, and is now commonly in use. Like Berthelot, he writes the chemical equation of the reaction, but in addition he considers the chemical formula of each substance to express not only its material composition, but also the (unknown) value of its intrinsic energy. To the right-hand member of the equation he then adds the number expressing the thermal effect of the reaction, heat-evolution being as before counted positive, and heat-absorption negative. The mass-equation then becomes an energy-equation. He thus writes\n\n{{block center|S+O<sub>2</sub>=SO<sub>2</sub>+71100 cal.,}}\n\nwhich expresses the fact that the intrinsic energy of the quantities of sulphur and oxygen considered exceeds that of the sulphur dioxide derived from them by 71100 cal. when thermal units are employed. The equation\n\n{{block center|H<sub>2</sub>+I<sub>2</sub>=2HI−12200 cal.}}",
+   "c1s3": "{{smaller block|expresses that under certain conditions the intrinsic energy of hydriodic acid is greater than the intrinsic energy of its component elements by 12200 cal., ''i.e.'' that hydriodic acid is formed from its elements with absorption of this amount of heat. Energy-equations, such as the above, may be operated with precisely as if they were algebraic equations, a property which is of great advantage in calculation. Thus by transposition we may write the last equation as follows:—\n{{block center|2HI = H<sub>2</sub>+I<sub>2</sub>+12200 cal.,}}\nand thus express that hydriodic acid when decomposed into its elements evolves 12200 cal. for the quantity indicated by the equation.\n\nOstwald has made the further proposal that the formulae of solids should be printed in heavy type (or within square brackets), of liquids (solutions, &c.) in ordinary type, and of gases in italics (or within curved brackets), so that the physical state of the substances might be indicated by the equation itself. Thus the equation\n{{block center|''Cl<sub>2</sub>''+2KI, Aq = 2KCl, Aq+'''I<sub>2</sub>'''+52400 cal.,}}\n{{block center|or (Cl<sub>2</sub>)+2KI, Aq = 2KCl, Aq+[I<sub>2</sub>]+52400 cal.,}}\nwould express that when gaseous chlorine acts on a solution of potassium iodide, with separation of solid iodine, 52400 calories are evolved.}}\n\n§ 6. ''Heat of Formation.''—For thermochemical calculations it is of great importance to know the heat of formation of compounds from their elements, even when the combination cannot be brought about directly. As an example of the use of Ostwald's energy-equations for the indirect determination we may take the case of carbon monoxide.\n\nThe following equations give the result of direct experiment:—",
+   "c1s4": "{{block center|C+2O = CO<sub>2</sub>+94300 cal.}}\n{{block center|CO+ O = CO<sub>2</sub>+68000 cal.}}",
+   "c2s1": "If now it is required to find the heat of formation of the compound CO, which cannot be directly ascertained, we have merely to subtract the second equation from the first, each symbol representing constant intrinsic energy, and thus we obtain\n{{block center|C+O−CO=26300 cal.,}}\n{{block center|or C+O=CO+26300 cal.,}}\nthat is, the heat of formation of a gramme-molecule of carbon monoxide is 26300 cal.\n\nAs has already been stated, the heat of formation of a compound is the amount (expressed in thermal units) by which its intrinsic energy exceeds or falls short of that of the elements which enter into its composition. Now of the absolute values of intrinsic energy we know nothing; we can only estimate differences of intrinsic energy when one system is compared with another into which it may be directly or indirectly converted. But since the elements cannot be converted one into the other, we are absolutely without knowledge of the relative values of their intrinsic energy. This being the case, we are at liberty to make the assumption that the intrinsic energy of each element (under specified conditions) is zero, without thereby introducing any risk of self-contradiction in thermochemical calculations. This assumption has the great advantage, that the intrinsic energy of a compound relatively to its elements now appears as the heat of formation of the compound with its sign reversed. Thus if we consider the energy-equation\n{{block center|C+O<sub>2</sub>=CO<sub>2</sub>+94300 cal.,}}\nand replace the symbols by the values of the intrinsic energy, viz. zero for carbon and oxygen, and <math>x</math> for carbon dioxide, we obtain the equation",
+   "c2s2": "{{block center|<math>0+0=x+94300\\ \\text{cal.}</math>}}\n{{block center|or <math>x=\\ -94300\\ \\text{cal.}</math>}}\n\nWith knowledge then of the heats of formation of the substances involved in any chemical action, we can at once calculate the thermal effect of the action, by placing for each compound in the energy-equation its heat of formation with the sign reversed, ''i.e.'' its heat of decomposition into its elements. Thus if we wish to ascertain the thermal effect of the action\n{{block center|Mg+CaO = MgO+Ca,}}\nwe may write, knowing the heats of formation of CaO and MgO to be 131000 and 146000 respectively,\n{{block center|<math>0-131000=0-146000+x</math>}}\n{{block center|<math>x=15000\\ \\text{cal.}</math>}}\nSince heats of formation afford such convenient data for calculation on the above method, they have been ascertained for as many compounds as possible.\n\nSubstances with positive heats of formation are termed ''exothermic;'' those with negative heats of formation are termed ''endothermic.'' The latter, which are not very numerous, give out heat on decomposition into their elements, and are more or less unstable. Amongst endothermic compounds may be noted hydriodic acid, HI, acetylene, C<sub>2</sub>H<sub>2</sub>, nitrous oxide, N<sub>2</sub>O, nitric oxide, NO, azoimide, N<sub>3</sub>H, nitrogen trichloride, NCl<sub>3</sub>. Some of these pass into their elements with explosive violence, owing to the heat generated by their decomposition and the gaseous nature of the products.\n\n§ 7. ''Heat of Combustion.''—The thermochemical magnitude which is universally determined for organic compounds is the heat of combustion, usually by means of the calorimetric bomb. The relation between the heat of combustion of a hydrocarbon",
+   "c2s3": "and its heat of formation may be readily seen from the following example. The hydrocarbon methane, CH<sub>4</sub>, when completely burned to carbon dioxide and water, generates 213800 cal. We may therefore write\n{{block center|CH<sub>4</sub>+4O=CO<sub>2</sub>+2H<sub>2</sub>O+213800.}}\nNow we know the heats of formation of carbon dioxide (from diamond) and of liquid water to be 94300 cal. and 68300 cal. respectively. The above equation may consequently be written, if <math>x</math> is the heat of formation of methane,\n{{block center|<math>-x+0=-94300-(2\\times 68300)+213800</math>}}\n{{block center|<math>x=17000 \\text{ cal.}</math>}}\n\nThis heat of formation, like that of most hydrocarbons, is comparatively small: the heat of formation of saturated hydrocarbons is always positive, but the heat of formation of unsaturated hydrocarbons is frequently negative. For example, ethylene, C<sub>2</sub>H<sub>4</sub>, is formed with absorption of 16200 cal., acetylene, C<sub>2</sub>H<sub>2</sub>, with absorption of 59100 cal., and liquid benzene, C<sub>6</sub>H<sub>6</sub>, with absorption of 9100 cal. Since the heat of combustion of a hydrocarbon is equal to the heat of combustion of the carbon and hydrogen it contains minus its heat of formation,"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 8813,
+    "output_tokens": 4930,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||THERMOCHEMISTRY|807}}</noinclude>reacting substances, or to some multiples of them. The notation which Julius Thomsen employed to express his thermochemical measurements is still extensively used, and is as follows:—The chemical symbols of the reacting substances are written in juxtaposition and separated by commas; the whole is then enclosed in brackets and connected by the sign of equality to the number expressing the thermal effect of the action. The chemical symbols stand for quantities measured in grammes, and heat-evolution is reckoned as positive, heat-absorption as negative. Thus\n\n{{block center|[S, 2O] = 71100 cal.}}\n\nindicates that 71100 calories are evolved when 32 grammes of sulphur react with <math>2\\times16</math> grammes of free oxygen to form sulphur dioxide. It is of course necessary in accurate work to state the conditions of the reaction. In the above instance the sulphur is supposed to be in the solid rhombic modification, the oxygen and sulphur dioxide being in the gaseous state, and the initial and final systems being at the ordinary temperature. Again, the equation\n\n{{block center|[2N, O] = −18500 cal.}}\n\nindicates that it 28 grammes of nitrogen could be made to unite directly with 16 grammes of oxygen to form nitrous oxide, the union would cause the absorption of 18500 calories. When substances in solution are dealt with, Thomsen indicates their state by affixing Aq to their symbols. Thus\n\n{{block center|[NaOH Aq, HNO<sub>3</sub> Aq] = 13680 cal.}} represents the heat of neutralization of one gramme-equivalent of caustic soda with nitric acid, each in dilute aqueous solution before being brought into contact. One drawback of Thomsen's notation is that the nature of the final system is not indicated, although this defect in general causes no ambiguity.\n\nBerthelot's notation defines both initial and final systems by giving the chemical equation for the reaction considered, the thermal effect being appended, and the state of the various substances being affixed to their formulae after brackets. W. Ostwald has proposed a modification of Berthelot's method which has many advantages, and is now commonly in use. Like Berthelot, he writes the chemical equation of the reaction, but in addition he considers the chemical formula of each substance to express not only its material composition, but also the (unknown) value of its intrinsic energy. To the right-hand member of the equation he then adds the number expressing the thermal effect of the reaction, heat-evolution being as before counted positive, and heat-absorption negative. The mass-equation then becomes an energy-equation. He thus writes\n\n{{block center|S+O<sub>2</sub>=SO<sub>2</sub>+71100 cal.,}}\n\nwhich expresses the fact that the intrinsic energy of the quantities of sulphur and oxygen considered exceeds that of the sulphur dioxide derived from them by 71100 cal. when thermal units are employed. The equation\n\n{{block center|H<sub>2</sub>+I<sub>2</sub>=2HI−12200 cal. expresses that under certain conditions the intrinsic energy of hydriodic acid is greater than the intrinsic energy of its component elements by 12200 cal., ''i.e.'' that hydriodic acid is formed from its elements with absorption of this amount of heat. Energy-equations, such as the above, may be operated with precisely as if they were algebraic equations, a property which is of great advantage in calculation. Thus by transposition we may write the last equation as follows:—\n{{block center|2HI = H<sub>2</sub>+I<sub>2</sub>+12200 cal.,}}\nand thus express that hydriodic acid when decomposed into its elements evolves 12200 cal. for the quantity indicated by the equation.\n\nOstwald has made the further proposal that the formulae of solids should be printed in heavy type (or within square brackets), of liquids (solutions, &c.) in ordinary type, and of gases in italics (or within curved brackets), so that the physical state of the substances might be indicated by the equation itself. Thus the equation\n{{block center|''Cl<sub>2</sub>''+2KI, Aq = 2KCl, Aq+'''I<sub>2</sub>'''+52400 cal.,}}\n{{block center|or (Cl<sub>2</sub>)+2KI, Aq = 2KCl, Aq+[I<sub>2</sub>]+52400 cal.,}}\nwould express that when gaseous chlorine acts on a solution of potassium iodide, with separation of solid iodine, 52400 calories are evolved.}}\n\n§ 6. ''Heat of Formation.''—For thermochemical calculations it is of great importance to know the heat of formation of compounds from their elements, even when the combination cannot be brought about directly. As an example of the use of Ostwald's energy-equations for the indirect determination we may take the case of carbon monoxide.\n\nThe following equations give the result of direct experiment:— {{block center|C+2O = CO<sub>2</sub>+94300 cal.}}\n{{block center|CO+ O = CO<sub>2</sub>+68000 cal.}} If now it is required to find the heat of formation of the compound CO, which cannot be directly ascertained, we have merely to subtract the second equation from the first, each symbol representing constant intrinsic energy, and thus we obtain\n{{block center|C+O−CO=26300 cal.,}}\n{{block center|or C+O=CO+26300 cal.,}}\nthat is, the heat of formation of a gramme-molecule of carbon monoxide is 26300 cal.\n\nAs has already been stated, the heat of formation of a compound is the amount (expressed in thermal units) by which its intrinsic energy exceeds or falls short of that of the elements which enter into its composition. Now of the absolute values of intrinsic energy we know nothing; we can only estimate differences of intrinsic energy when one system is compared with another into which it may be directly or indirectly converted. But since the elements cannot be converted one into the other, we are absolutely without knowledge of the relative values of their intrinsic energy. This being the case, we are at liberty to make the assumption that the intrinsic energy of each element (under specified conditions) is zero, without thereby introducing any risk of self-contradiction in thermochemical calculations. This assumption has the great advantage, that the intrinsic energy of a compound relatively to its elements now appears as the heat of formation of the compound with its sign reversed. Thus if we consider the energy-equation\n{{block center|C+O<sub>2</sub>=CO<sub>2</sub>+94300 cal.,}}\nand replace the symbols by the values of the intrinsic energy, viz. zero for carbon and oxygen, and <math>x</math> for carbon dioxide, we obtain the equation {{block center|<math>0+0=x+94300\\ \\text{cal.}</math>}}\n{{block center|or <math>x=\\ -94300\\ \\text{cal.}</math>}}\n\nWith knowledge then of the heats of formation of the substances involved in any chemical action, we can at once calculate the thermal effect of the action, by placing for each compound in the energy-equation its heat of formation with the sign reversed, ''i.e.'' its heat of decomposition into its elements. Thus if we wish to ascertain the thermal effect of the action\n{{block center|Mg+CaO = MgO+Ca,}}\nwe may write, knowing the heats of formation of CaO and MgO to be 131000 and 146000 respectively,\n{{block center|<math>0-131000=0-146000+x</math>}}\n{{block center|<math>x=15000\\ \\text{cal.}</math>}}\nSince heats of formation afford such convenient data for calculation on the above method, they have been ascertained for as many compounds as possible.\n\nSubstances with positive heats of formation are termed ''exothermic;'' those with negative heats of formation are termed ''endothermic.'' The latter, which are not very numerous, give out heat on decomposition into their elements, and are more or less unstable. Amongst endothermic compounds may be noted hydriodic acid, HI, acetylene, C<sub>2</sub>H<sub>2</sub>, nitrous oxide, N<sub>2</sub>O, nitric oxide, NO, azoimide, N<sub>3</sub>H, nitrogen trichloride, NCl<sub>3</sub>. Some of these pass into their elements with explosive violence, owing to the heat generated by their decomposition and the gaseous nature of the products.\n\n§ 7. ''Heat of Combustion.''—The thermochemical magnitude which is universally determined for organic compounds is the heat of combustion, usually by means of the calorimetric bomb. The relation between the heat of combustion of a hydrocarbon and its heat of formation may be readily seen from the following example. The hydrocarbon methane, CH<sub>4</sub>, when completely burned to carbon dioxide and water, generates 213800 cal. We may therefore write\n{{block center|CH<sub>4</sub>+4O=CO<sub>2</sub>+2H<sub>2</sub>O+213800.}}\nNow we know the heats of formation of carbon dioxide (from diamond) and of liquid water to be 94300 cal. and 68300 cal. respectively. The above equation may consequently be written, if <math>x</math> is the heat of formation of methane,\n{{block center|<math>-x+0=-94300-(2\\times 68300)+213800</math>}}\n{{block center|<math>x=17000 \\text{ cal.}</math>}}\n\nThis heat of formation, like that of most hydrocarbons, is comparatively small: the heat of formation of saturated hydrocarbons is always positive, but the heat of formation of unsaturated hydrocarbons is frequently negative. For example, ethylene, C<sub>2</sub>H<sub>4</sub>, is formed with absorption of 16200 cal., acetylene, C<sub>2</sub>H<sub>2</sub>, with absorption of 59100 cal., and liquid benzene, C<sub>6</sub>H<sub>6</sub>, with absorption of 9100 cal. Since the heat of combustion of a hydrocarbon is equal to the heat of combustion of the carbon and hydrogen it contains minus its heat of formation,<noinclude><references/></noinclude>"
+}

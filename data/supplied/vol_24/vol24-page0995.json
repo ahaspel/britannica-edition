@@ -1,0 +1,203 @@
+{
+ "volume": 24,
+ "page_number": 995,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1005",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1005",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 1085,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     69,
+     137,
+     2214,
+     213
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     69,
+     213,
+     2214,
+     1099
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     69,
+     1099,
+     1139,
+     1317
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     69,
+     1383,
+     490,
+     1874
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     69,
+     1877,
+     490,
+     1912
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     490,
+     1317,
+     1139,
+     1912
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     69,
+     1912,
+     1139,
+     2963
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     69,
+     2963,
+     1139,
+     3168
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1139,
+     1099,
+     2214,
+     2159
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1139,
+     2159,
+     2214,
+     3168
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|THEORETICAL]|SHIPBUILDING|933}}",
+   "c0s1": "where <math>\\text{I}_x</math>, <math>\\text{I}_y</math> are the principal moments of inertia of the water-plane. Hence\n{{block center|<math>x = -\\frac{\\theta}{\\text{V}}\\cdot\\text{I}_y\\cdot\\sin\\phi;</math>}}\n{{block center|<math>y = \\frac{\\theta}{\\text{V}}\\cdot\\text{I}_x\\cdot\\cos\\phi;</math>}}\n{{block center|<math>z = \\tfrac{1}{2}\\frac{\\theta^2}{\\text{V}}(\\text{I}_x\\cos^2\\phi+\\text{I}_y\\sin^2\\phi).</math>}}\nEliminating <math>\\theta</math> and <math>\\phi</math>, the locus of the centre of buoyancy for small inclinations of the ship becomes the elliptic paraboloid—\n{{block center|<math>2z = \\frac{x^2}{\\text{I}_y/\\text{V}}+\\frac{y^2}{\\text{I}_x/\\text{V}}.</math>}}\nThe equation to the indicatrix referred to axes parallel to <math>\\text{B}x</math>, <math>\\text{B}y</math> is therefore\n{{block center|<math>\\frac{x^2}{\\text{I}_y/\\text{V}}+\\frac{y^2}{\\text{I}_x/\\text{V}} = \\text{constant};</math>}}\nunaltered. The resultant couple can be readily found, but in this case it bears no simple relation to the indicatrix, as before; it may be shown, however, that the plane of the couple is conjugate to the axis of inclination with respect to the confocal ellipse\n{{block center|<math>\\frac{x^2}{\\frac{\\text{I}_y}{\\text{V}}-a}+\\frac{y^2}{\\frac{\\text{I}_x}{\\text{V}}-a} = \\text{constant}.</math>}}\nIn the case when <math>\\text{GM}=\\text{O}</math>, the ship being in neutral equilibrium for that direction of inclination, the resultant couple is parallel to the axis <math>\\text{O}x'</math>, ''i.e.'' perpendicular to the plane of the indicatrix.\n\nNumerical values of the metacentric height GM, the angle of obliquity <math>\\alpha</math> or QOM <math>\\left(\\text{equal to }\\tan^{-1}\\frac{\\text{P}}{\\text{I}_x'-a\\text{V}}\\right)</math> and the angle <math>\\psi</math> are given in the following table for a ship whose transverse GM is 4 ft., longitudinal GM 400 ft., and BG 10 ft.:—\n\n{{block center|<math>\\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}\n\\hline\n\\phi & 0^\\circ & 1^\\circ & 5^\\circ & 10^\\circ & 20^\\circ & 30^\\circ & 40^\\circ & 50^\\circ & 60^\\circ & 70^\\circ & 80^\\circ & 90^\\circ \\\\\n\\text{GM} & 4' & 4\\cdot1 & 7' & 16 & 50\\cdot4' & 103' & 168' & 237 & 300 & 354 & 388 & 400' \\\\\n\\alpha & 0^\\circ & 60^\\circ & 78\\cdot5 & 76\\cdot8^\\circ & 68\\cdot5^\\circ & 59^\\circ & 49\\cdot3^\\circ & 39\\cdot5^\\circ & 29\\cdot7^\\circ & 19\\cdot8^\\circ & 9\\cdot9^\\circ & 0^\\circ \\\\\n\\psi & 90^\\circ & 29\\cdot0^\\circ & 6\\cdot5^\\circ & 3\\cdot2^\\circ & 1\\cdot5^\\circ & 1\\cdot0^\\circ & 0\\cdot7^\\circ & 0\\cdot5^\\circ & 0\\cdot3^\\circ & 0\\cdot2^\\circ & 0\\cdot1^\\circ & 0^\\circ \\\\\n\\hline\n\\end{array}</math>}}",
+   "c1s1": "and the indicatrix is therefore similar and similarly situated to the momental ellipse of the water-plane, and the surface of buoyancy is everywhere synclastic and concave to all points within it. The quantities <math>\\text{I}_y/\\text{V}</math> and <math>\\text{I}_x/\\text{V}</math> are evidently equal to <math>\\text{BM}_x</math> and <math>\\text{BM}_y</math> (referring to inclinations about <math>\\text{O}y</math> and <math>\\text{O}x</math> respectively); and the indicatrix and momental ellipse become",
+   "c1s2": "{{c|{{sc|Fig.}} 25.}}",
+   "c1s3": "{{block center|<math>+\\frac{y^2}{\\text{BM}_x} = \\text{constant}.</math>}}\ne projection of <math>\\text{BB}'</math> on the plane of the is given by\n{{block center|<math>\\psi = -\\frac{y}{x} = \\frac{\\text{I}_x}{\\text{I}_y}.\\ \\cot\\phi;</math>}}\nugate to that of the axis of rotation with respect to the indicatrix.\n\nThis is illustrated in fig. 25, where the ellipse shown is the indicatrix; <math>\\text{OP}x'</math> the axis of inclination, <math>\\text{OQ}</math> the conjugate radius, and <math>\\text{ORM}y'</math> the perpendicular on the tangent. Draw <math>\\text{QN}</math> parallel to <math>\\text{OM}</math> to meet <math>\\text{OP}</math>. The triangle <math>\\text{OMQ}</math> is similar to <math>\\text{BB}_1\\text{B}_2</math>; and they can be made equal by giving a suitable value to the constant in the indicatrix equation. In that case",
+   "c1s4": "the figure of the normal to the surface at <math>\\text{B}^1</math>, and the shortest distance between the normals at <math>\\text{B}</math> and <math>\\text{B}^1</math> is equal to <math>\\text{ON} = \\text{MQ} = \\text{B}_1\\text{B}_2 = \\frac{\\text{P}\\theta}{\\text{V}}</math>, since <math>\\text{ON}</math> or the axis of inclination is perpendicular to them both. Also, the length <math>\\text{B}'\\text{M}</math> of the normal at <math>\\text{B}'</math> intercepted between <math>\\text{B}''</math> and the foot of the common perpendicular is equal to <math>\\frac{\\text{QN}}{\\theta}</math> since <math>\\theta</math> is the angle between the normals at <math>\\text{B}</math> and <math>\\text{B}'</math>; it follows that\n\n{{block center|<math>\\text{B}'\\text{M}' = \\frac{\\text{BB}_1}{\\theta} = \\frac{\\text{I}_x'}{\\text{V}},</math>}}\n\nan expression analogous to that obtained before for the case of small inclinations in the direction of the principal axes of the water-plane. It is worthy of note that the radius of curvature <math>\\rho</math> of the normal section of the surface of buoyancy through <math>\\text{O}y'</math> is, in general, less than <math>\\text{BM}</math>; the latter being equal to <math>\\frac{\\text{OM}^2}{2z}</math>, and <math>\\rho</math> being equal to <math>\\frac{\\text{OR}^2}{2z}</math>; <math>\\rho</math> is also obtainable by Euler's equation—\n\n{{block center|<math>\\frac{1}{\\rho} = \\frac{\\cos^2\\phi}{\\text{BM}_x} + \\frac{\\sin^2\\phi}{\\text{BM}_y},</math>}}\n\nbecoming equal to <math>\\text{BM}</math> for inclinations about the principal axes. Similarly the radius of curvature of the normal section through <math>\\text{Q}</math> is, in general, greater than <math>\\text{BM}</math>.\n\nIf the centre of gravity <math>\\text{G}</math> of the ship is coincident with <math>\\text{B}</math>, the arm of the righting couple is <math>\\text{OM}</math> or <math>\\frac{\\text{I}_x'}{\\text{V}}\\cdot\\theta</math>; and there is also a couple of lever <math>\\text{ON}</math> or <math>\\frac{\\text{P}}{\\text{V}}\\cdot\\theta</math> in a perpendicular vertical plane. The resultant couple lies in a plane containing <math>\\text{OQ}</math>, having a lever equal to",
+   "c1s5": "{{block center|<math>\\text{OQ}</math> or <math>\\frac{\\theta}{\\text{V}}\\sqrt{\\text{I}_x'^2+\\text{P}^2}</math> or <math>\\frac{\\theta}{\\text{V}}\\sqrt{\\text{I}_x^2\\cos^2\\phi+\\text{I}_y^2\\sin^2\\phi}</math>.}}\nIn the general case when <math>\\text{G}</math> is situated at a distance <math>a</math> above <math>\\text{B}</math>, the righting lever becomes <math>\\left(\\frac{\\text{I}_x'}{\\text{V}}-a\\right)\\theta</math>, and the perpendicular couple is",
+   "c2s1": "¶\nThe greatest angle of obliquity (<math>\\alpha</math>) occurs in this case when <math>\\phi</math> is about <math>5\\tfrac{3}{4}^\\circ</math> and the plane of the couple is nearly coincident with the middle line plane for all angles of <math>\\phi</math> greater than about <math>30^\\circ</math>. It follows that if a weight is moved obliquely across the ship the axis of rotation is approximately longitudinal, except when the line of movement is nearly fore and aft; and in the latter case a small deviation from a fore and aft direction produces a large change in the position of the axis of rotation.\n\nThe direction of the axis of rotation is above expressed with reference to the position of the inclining couple in relation to the indicatrix of the surface of buoyancy; as, however, the couple is assumed small, the direction of the axis and the amount of inclination may equally be obtained by resolving the couple in planes perpendicular to the principal axes and superposing the separate inclinations produced by its components.\n\nIt has been shown above that the positions of equilibrium are found by drawing all possible normals to the surface of the buoyancy, and the condition for stability for an inclination in any direction is that the centre of gravity shall lie below the corresponding metacentre. The height of the metacentre varies with the moment of inertia of the water-plane about the axis of inclination, and the maximum and minimum heights are associated with the maximum and minimum moments of inertia, which again correspond to inclinations about the least and greatest axes of inertia respectively. If the centre of gravity lies below the lowest position of the metacentre (the transverse metacentre in the case of a ship when upright) the equilibrium is stable for all inclinations, and the condition is referred to as one of ''absolute stability''; if it lies above the highest metacentre, the condition is one of ''absolute instability''; if it lies between the highest and lowest metacentres, the condition is one of ''relative stability'', the ship being stable for inclinations about a certain set of axes, and unstable otherwise.",
+   "c2s2": "¶\nThe foregoing remarks apply to a vessel whose axis of inclination is fixed so that the component couple perpendicular to the plane of inclination is resisted. If, on the other hand, the vessel is free to move in all directions the resultant couple does not in general tend to restore the original position of equilibrium, although the component in the plane of inclination complies with the conditions above stated for absolute stability. If <math>m_1</math> and <math>m_2</math> be the greatest and least values of <math>\\text{GM}</math>, the ratio of the component couples perpendicular to and in the plane of inclination, or <math>\\tan\\alpha</math> (fig. 25), is greatest when <math>\\tan\\phi = \\sqrt{\\frac{m_1}{m^2}}</math>; and then <math>\\tan\\alpha = \\frac{m_1 - m_2}{2\\sqrt{m_1m_2}}</math>. If <math>m_2/m_1</math> be small, this ratio is large, being equal to 4·95 in the numerical example above. In such cases the extent of the movement that can result from a small initial disturbance cannot be readily determined by a statical method, but the investigation of the work done in moving the vessel from one position to another appears to meet this difficulty.\n\nThis process is employed by M. Guyon in his ''Théorie du navire'', the stability of a ship in any condition being treated throughout from the dynamical standpoint. He proved that:—\n\n1. For changes of displacement, without change in inclination, the potential energy of a system consisting of a floating body and the water surrounding is a minimum when the weight of the body is equal to its displacement.\n\n2. For changes of direction, without change of displacement, the potential energy of the system is equal to the weight of the body, multiplied by the vertical resolute of <math>\\text{BG}</math>; when this distance is a minimum or a maximum the stability is respectively stable or unstable. A statical proof of this has been given in the two-dimensional case.\n\nThe potential energy is thus equal to the dynamical stability"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p0995 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     79,
+     1579,
+     511,
+     1839
+    ],
+    "caption": [
+     223,
+     1877,
+     347,
+     1910
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     80,
+     1577,
+     554,
+     1867
+    ]
+   }
+  ],
+  "across": [
+   [
+    159,
+    802,
+    2214,
+    1085
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4279,
+    "output_tokens": 211,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 8517,
+    "output_tokens": 7110,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|THEORETICAL]|SHIPBUILDING|933}}</noinclude>where <math>\\text{I}_x</math>, <math>\\text{I}_y</math> are the principal moments of inertia of the water-plane. Hence\n{{block center|<math>x = -\\frac{\\theta}{\\text{V}}\\cdot\\text{I}_y\\cdot\\sin\\phi;</math>}}\n{{block center|<math>y = \\frac{\\theta}{\\text{V}}\\cdot\\text{I}_x\\cdot\\cos\\phi;</math>}}\n{{block center|<math>z = \\tfrac{1}{2}\\frac{\\theta^2}{\\text{V}}(\\text{I}_x\\cos^2\\phi+\\text{I}_y\\sin^2\\phi).</math>}}\nEliminating <math>\\theta</math> and <math>\\phi</math>, the locus of the centre of buoyancy for small inclinations of the ship becomes the elliptic paraboloid—\n{{block center|<math>2z = \\frac{x^2}{\\text{I}_y/\\text{V}}+\\frac{y^2}{\\text{I}_x/\\text{V}}.</math>}}\nThe equation to the indicatrix referred to axes parallel to <math>\\text{B}x</math>, <math>\\text{B}y</math> is therefore\n{{block center|<math>\\frac{x^2}{\\text{I}_y/\\text{V}}+\\frac{y^2}{\\text{I}_x/\\text{V}} = \\text{constant};</math>}}\nunaltered. The resultant couple can be readily found, but in this case it bears no simple relation to the indicatrix, as before; it may be shown, however, that the plane of the couple is conjugate to the axis of inclination with respect to the confocal ellipse\n{{block center|<math>\\frac{x^2}{\\frac{\\text{I}_y}{\\text{V}}-a}+\\frac{y^2}{\\frac{\\text{I}_x}{\\text{V}}-a} = \\text{constant}.</math>}}\nIn the case when <math>\\text{GM}=\\text{O}</math>, the ship being in neutral equilibrium for that direction of inclination, the resultant couple is parallel to the axis <math>\\text{O}x'</math>, ''i.e.'' perpendicular to the plane of the indicatrix.\n\nNumerical values of the metacentric height GM, the angle of obliquity <math>\\alpha</math> or QOM <math>\\left(\\text{equal to }\\tan^{-1}\\frac{\\text{P}}{\\text{I}_x'-a\\text{V}}\\right)</math> and the angle <math>\\psi</math> are given in the following table for a ship whose transverse GM is 4 ft., longitudinal GM 400 ft., and BG 10 ft.:—\n\n{{block center|<math>\\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}\n\\hline\n\\phi & 0^\\circ & 1^\\circ & 5^\\circ & 10^\\circ & 20^\\circ & 30^\\circ & 40^\\circ & 50^\\circ & 60^\\circ & 70^\\circ & 80^\\circ & 90^\\circ \\\\\n\\text{GM} & 4' & 4\\cdot1 & 7' & 16 & 50\\cdot4' & 103' & 168' & 237 & 300 & 354 & 388 & 400' \\\\\n\\alpha & 0^\\circ & 60^\\circ & 78\\cdot5 & 76\\cdot8^\\circ & 68\\cdot5^\\circ & 59^\\circ & 49\\cdot3^\\circ & 39\\cdot5^\\circ & 29\\cdot7^\\circ & 19\\cdot8^\\circ & 9\\cdot9^\\circ & 0^\\circ \\\\\n\\psi & 90^\\circ & 29\\cdot0^\\circ & 6\\cdot5^\\circ & 3\\cdot2^\\circ & 1\\cdot5^\\circ & 1\\cdot0^\\circ & 0\\cdot7^\\circ & 0\\cdot5^\\circ & 0\\cdot3^\\circ & 0\\cdot2^\\circ & 0\\cdot1^\\circ & 0^\\circ \\\\\n\\hline\n\\end{array}</math>}}\n\nand the indicatrix is therefore similar and similarly situated to the momental ellipse of the water-plane, and the surface of buoyancy is everywhere synclastic and concave to all points within it. The quantities <math>\\text{I}_y/\\text{V}</math> and <math>\\text{I}_x/\\text{V}</math> are evidently equal to <math>\\text{BM}_x</math> and <math>\\text{BM}_y</math> (referring to inclinations about <math>\\text{O}y</math> and <math>\\text{O}x</math> respectively); and the indicatrix and momental ellipse become {{block center|<math>+\\frac{y^2}{\\text{BM}_x} = \\text{constant}.</math>}}\ne projection of <math>\\text{BB}'</math> on the plane of the is given by\n{{block center|<math>\\psi = -\\frac{y}{x} = \\frac{\\text{I}_x}{\\text{I}_y}.\\ \\cot\\phi;</math>}}\nugate to that of the axis of rotation with respect to the indicatrix.\n\n[[File:eb1911 v24 p0995 c1f1.png|center|140px]]\n{{c|{{sc|Fig.}} 25.}}\n\nThis is illustrated in fig. 25, where the ellipse shown is the indicatrix; <math>\\text{OP}x'</math> the axis of inclination, <math>\\text{OQ}</math> the conjugate radius, and <math>\\text{ORM}y'</math> the perpendicular on the tangent. Draw <math>\\text{QN}</math> parallel to <math>\\text{OM}</math> to meet <math>\\text{OP}</math>. The triangle <math>\\text{OMQ}</math> is similar to <math>\\text{BB}_1\\text{B}_2</math>; and they can be made equal by giving a suitable value to the constant in the indicatrix equation. In that case the figure of the normal to the surface at <math>\\text{B}^1</math>, and the shortest distance between the normals at <math>\\text{B}</math> and <math>\\text{B}^1</math> is equal to <math>\\text{ON} = \\text{MQ} = \\text{B}_1\\text{B}_2 = \\frac{\\text{P}\\theta}{\\text{V}}</math>, since <math>\\text{ON}</math> or the axis of inclination is perpendicular to them both. Also, the length <math>\\text{B}'\\text{M}</math> of the normal at <math>\\text{B}'</math> intercepted between <math>\\text{B}''</math> and the foot of the common perpendicular is equal to <math>\\frac{\\text{QN}}{\\theta}</math> since <math>\\theta</math> is the angle between the normals at <math>\\text{B}</math> and <math>\\text{B}'</math>; it follows that\n\n{{block center|<math>\\text{B}'\\text{M}' = \\frac{\\text{BB}_1}{\\theta} = \\frac{\\text{I}_x'}{\\text{V}},</math>}}\n\nan expression analogous to that obtained before for the case of small inclinations in the direction of the principal axes of the water-plane. It is worthy of note that the radius of curvature <math>\\rho</math> of the normal section of the surface of buoyancy through <math>\\text{O}y'</math> is, in general, less than <math>\\text{BM}</math>; the latter being equal to <math>\\frac{\\text{OM}^2}{2z}</math>, and <math>\\rho</math> being equal to <math>\\frac{\\text{OR}^2}{2z}</math>; <math>\\rho</math> is also obtainable by Euler's equation—\n\n{{block center|<math>\\frac{1}{\\rho} = \\frac{\\cos^2\\phi}{\\text{BM}_x} + \\frac{\\sin^2\\phi}{\\text{BM}_y},</math>}}\n\nbecoming equal to <math>\\text{BM}</math> for inclinations about the principal axes. Similarly the radius of curvature of the normal section through <math>\\text{Q}</math> is, in general, greater than <math>\\text{BM}</math>.\n\nIf the centre of gravity <math>\\text{G}</math> of the ship is coincident with <math>\\text{B}</math>, the arm of the righting couple is <math>\\text{OM}</math> or <math>\\frac{\\text{I}_x'}{\\text{V}}\\cdot\\theta</math>; and there is also a couple of lever <math>\\text{ON}</math> or <math>\\frac{\\text{P}}{\\text{V}}\\cdot\\theta</math> in a perpendicular vertical plane. The resultant couple lies in a plane containing <math>\\text{OQ}</math>, having a lever equal to {{block center|<math>\\text{OQ}</math> or <math>\\frac{\\theta}{\\text{V}}\\sqrt{\\text{I}_x'^2+\\text{P}^2}</math> or <math>\\frac{\\theta}{\\text{V}}\\sqrt{\\text{I}_x^2\\cos^2\\phi+\\text{I}_y^2\\sin^2\\phi}</math>.}}\nIn the general case when <math>\\text{G}</math> is situated at a distance <math>a</math> above <math>\\text{B}</math>, the righting lever becomes <math>\\left(\\frac{\\text{I}_x'}{\\text{V}}-a\\right)\\theta</math>, and the perpendicular couple is\n\nThe greatest angle of obliquity (<math>\\alpha</math>) occurs in this case when <math>\\phi</math> is about <math>5\\tfrac{3}{4}^\\circ</math> and the plane of the couple is nearly coincident with the middle line plane for all angles of <math>\\phi</math> greater than about <math>30^\\circ</math>. It follows that if a weight is moved obliquely across the ship the axis of rotation is approximately longitudinal, except when the line of movement is nearly fore and aft; and in the latter case a small deviation from a fore and aft direction produces a large change in the position of the axis of rotation.\n\nThe direction of the axis of rotation is above expressed with reference to the position of the inclining couple in relation to the indicatrix of the surface of buoyancy; as, however, the couple is assumed small, the direction of the axis and the amount of inclination may equally be obtained by resolving the couple in planes perpendicular to the principal axes and superposing the separate inclinations produced by its components.\n\nIt has been shown above that the positions of equilibrium are found by drawing all possible normals to the surface of the buoyancy, and the condition for stability for an inclination in any direction is that the centre of gravity shall lie below the corresponding metacentre. The height of the metacentre varies with the moment of inertia of the water-plane about the axis of inclination, and the maximum and minimum heights are associated with the maximum and minimum moments of inertia, which again correspond to inclinations about the least and greatest axes of inertia respectively. If the centre of gravity lies below the lowest position of the metacentre (the transverse metacentre in the case of a ship when upright) the equilibrium is stable for all inclinations, and the condition is referred to as one of ''absolute stability''; if it lies above the highest metacentre, the condition is one of ''absolute instability''; if it lies between the highest and lowest metacentres, the condition is one of ''relative stability'', the ship being stable for inclinations about a certain set of axes, and unstable otherwise.\n\nThe foregoing remarks apply to a vessel whose axis of inclination is fixed so that the component couple perpendicular to the plane of inclination is resisted. If, on the other hand, the vessel is free to move in all directions the resultant couple does not in general tend to restore the original position of equilibrium, although the component in the plane of inclination complies with the conditions above stated for absolute stability. If <math>m_1</math> and <math>m_2</math> be the greatest and least values of <math>\\text{GM}</math>, the ratio of the component couples perpendicular to and in the plane of inclination, or <math>\\tan\\alpha</math> (fig. 25), is greatest when <math>\\tan\\phi = \\sqrt{\\frac{m_1}{m^2}}</math>; and then <math>\\tan\\alpha = \\frac{m_1 - m_2}{2\\sqrt{m_1m_2}}</math>. If <math>m_2/m_1</math> be small, this ratio is large, being equal to 4·95 in the numerical example above. In such cases the extent of the movement that can result from a small initial disturbance cannot be readily determined by a statical method, but the investigation of the work done in moving the vessel from one position to another appears to meet this difficulty.\n\nThis process is employed by M. Guyon in his ''Théorie du navire'', the stability of a ship in any condition being treated throughout from the dynamical standpoint. He proved that:—\n\n1. For changes of displacement, without change in inclination, the potential energy of a system consisting of a floating body and the water surrounding is a minimum when the weight of the body is equal to its displacement.\n\n2. For changes of direction, without change of displacement, the potential energy of the system is equal to the weight of the body, multiplied by the vertical resolute of <math>\\text{BG}</math>; when this distance is a minimum or a maximum the stability is respectively stable or unstable. A statical proof of this has been given in the two-dimensional case.\n\nThe potential energy is thus equal to the dynamical stability<noinclude><references/></noinclude>"
+}

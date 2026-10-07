@@ -1,0 +1,370 @@
+{
+ "volume": 25,
+ "page_number": 386,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n394",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n394",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1085,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     115,
+     99,
+     2258,
+     167
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     167,
+     1189,
+     1246
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     115,
+     1246,
+     687,
+     1832
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     1852,
+     687,
+     1882
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     687,
+     1246,
+     1189,
+     1882
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     1882,
+     1189,
+     2952
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     2952,
+     1189,
+     3111
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     167,
+     2258,
+     456
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1189,
+     456,
+     2258,
+     940
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     942,
+     2258,
+     976
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     976,
+     2258,
+     1368
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1723,
+     1369,
+     2258,
+     1990
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1723,
+     1998,
+     2258,
+     2034
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     1368,
+     1723,
+     2034
+    ]
+   },
+   {
+    "name": "c2s6",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2034,
+     2258,
+     2350
+    ]
+   },
+   {
+    "name": "c2f3",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1671,
+     2350,
+     2258,
+     2785
+    ]
+   },
+   {
+    "name": "c2s7",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1671,
+     2790,
+     2258,
+     2822
+    ]
+   },
+   {
+    "name": "c2s8",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2350,
+     1671,
+     2822
+    ]
+   },
+   {
+    "name": "c2s9",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2822,
+     2258,
+     3111
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|370|SOLUTION|}}",
+   "c1s1": "{{smaller block|(see {{sc|Thermodynamics}}), <math>dp/dt = \\lambda/t(v_2 - v_1)</math>, where <math>p</math> and <math>t</math> denote the pressure and temperature, <math>\\lambda</math> the heat required to change unit mass of the systems from one phase to the other, and <math>v_2 - v_1</math> the resulting change in volume. The phase rule combined with the latent heat equation contains the whole theory of chemical and physical equilibrium.}}\n\n''Application to Solutions.''—In a system containing a solution we have to deal with two components at least. The simplest case is that of water and a salt, such as sodium chloride, which crystallizes without water. To obtain a non-variant system, we must assemble four phases—two more than the number of components. The four phases are (1) crystals of salt, (2) crystals of ice, (3) a saturated solution of the salt in water, and (4) the vapour, which is that practically of water alone, since the salt is non-volatile at the temperature in question. Equilibrium between these phases is obtained at the freezing point of the saturated solution under the pressure of the vapour. At that pressure and temperature the four phases can co-exist, and, as long as all of them are present, the pressure and temperature will remain steady. Thus a mixture of ice, salt and the saturated solution has a constant freezing point, and the composition of the solution is constant and the same as that of the mixed solids which freeze out on the abstraction of heat. This constancy both in freezing point and composition formerly was considered as a characteristic of a pure chemical compound, and hence these mixtures were described as components and given the name of “cryohydrates.”",
+   "c1s2": "{{c|{{sc|Fig.}} 2.}}",
+   "c1s3": "he phenomena of equilibrium quire a third axis along which to plot the composition of a variable phase. It is usual to take three axes at right angles to each other to represent pressure, temperature and the composition of the variable phase. On a plane figure this solid diagram must be drawn in perspective, the third axis <math>\\text{C}</math> being imagined to lie out of the plane of the paper. The phase-rule diagram that we construct is then a sketch",
+   "c1s4": "of a solid model, the lines of which do not really lie in the plane of the paper.\n\nLet us return to the case of the system of salt and water. At the cryohydric point O we have four phases in equilibrium at a definite pressure, temperature and composition of the liquid phase. The condition of the system is represented by a single point on the diagram. If heat be added to the mixture ice will melt and salt dissolve in the water so formed. If the supply of ice fails first the temperature will rise, and, since solid salt remains, we pass along a curve OA giving the relation between temperature and the vapour pressure of the saturated solution. If, on the other hand, the salt of the cryohydrate fails before the ice the water given by the continued fusion dilutes the solution, and we pass along the curve OB which shows the freezing points of a series of solutions of constantly increasing dilution. If the process be continued till a very large quantity of ice be melted the resulting solution is so dilute that its freezing point B is identical with that of the pure solvent. Again, starting from O, by the abstraction of heat we can remove all the liquid and travel along the curve OD of equilibrium between the two solids (salt and ice) and the vapour. Or, by increasing the pressure, we eliminate the vapour and obtain the curve OF giving the relation between pressure, freezing point and composition when a saturated solution is in contact with ice and salt.\n\nIf the salt crystallizes with a certain amount of water as well as with none, we get a second point of equilibrium between four phases. Sodium sulphate, for instance, crystallizes below 32·6° as Na<sub>2</sub>SO<sub>4</sub>·10H<sub>2</sub>O, and above that temperature as the anhydrous solid Na<sub>2</sub>SO<sub>4</sub>. Taking the point O to denote the state of equilibrium between ice, hydrate, saturated solution and vapour, we pass along OA till a new solid phase, that of Na<sub>2</sub>SO<sub>4</sub>, appears at 32·6°; from this point arise four curves, analogous to those diverging from the",
+   "c1s5": "point <math>\\text{O}</math>.\n\nFor the quantitative study of such systems in detail it is convenient to draw plane diagrams which are theoretically projections of the curves of the solid phase rule diagram on one or other of these planes. Experiments on the relation between",
+   "c2s1": "temperature and concentration are illustrated by projecting the curve <math>\\text{OA}</math> of fig. 2 on the <math>tc</math>-plane. The pressure at each point should be that of the vapour, but since the solubility of a solid does not change much with pressure, measurements under the constant atmospheric pressure give a curve practically identical with the theoretical one.\n\nFig. 3 gives the equilibrium between sodium sulphate and water in this way. <math>\\text{B}</math> is the freezing point of pure water, <math>\\text{O}</math> that",
+   "c2s2": "{{c|{{sc|Fig.}} 3.}}",
+   "c2s3": "of a saturated solution of Na<sub>2</sub>SO<sub>4</sub>·10H<sub>2</sub>O. The curve OP represents the varying solubility of the hydrate as the temperature rises from the cryohydric point to 32·6°. At that temperature crystals of the anhydrous Na<sub>2</sub>SO<sub>4</sub> appear, and a new fixed equilibrium exists between the four phases—hydrate, anhydrous salt, solution and vapour. As heat is supplied, the hydrate is transformed gradually into the anhydrous salt and water. When this process is complete the temperature rises, and we pass along a new curve giving the equilibrium between anhydrous crystals, solution and vapour. In this particular case the solubility decreases with rise of temperature. This behaviour is exceptional.",
+   "c2s4": "{{c|{{sc|Fig}}. 4.}}",
+   "c2s5": "¶\n''Two Liquid Components''.—Th mutual solubility are illustrated\n\nIn fig. 4 A represents the freezing point of pure water, and AB the freezing point curve showing the depression of the freezing point as phenol is added. At B is a non-variant system made up of ice, solid phenol, saturated solution and vapour. BCD is the solubility curve of phenol in water. At C a new liquid phase appears—the solution of water in liquid phenol, the solubility of which",
+   "c2s6": "is represented by the curve DE. At D the composition of the two liquids becomes identical, and at temperatures above D, 68°C the liquids are soluble in each other in all proportions, and only one liquid phase can exist. If the two substances are soluble in each other in all proportions at all temperatures above their melting points we get a diagram reduced to the two fusion curves cutting each other at a non-variant point. This behaviour is illustrated by the case of",
+   "c2s7": "{{c|{{sc|Fig.}} 5.}}",
+   "c2s8": "silver and copper (fig. 5). At the non-variant point the two metals freeze out together and the composition of the liquid is the same as that of the mixed solid which crystallizes from it. The solid is then known as a eutectic alloy.\n\nA liquid in which the composition is nearly that of the eutectic shows the changes",
+   "c2s9": "in the rate of fall of temperature as it is allowed to cool. First a small quantity of one of the pure components begins to crystallize out, and the rate of cooling is thereby diminished owing to the latent heat liberated by the change of state. This process continues till the composition of the liquid phase reaches that of the eutectic, when the whole mass solidifies on the further loss of heat without change of temperature, giving a very definite freezing point. The process of cooling is thus represented by a path which runs vertically downwards till it cuts the"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v25 p0386 c1f1.png",
+   "c2f1": "eb1911 v25 p0386 c2f1.png",
+   "c2f2": "eb1911 v25 p0386 c2f2.png",
+   "c2f3": "eb1911 v25 p0386 c2f3.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1375,
+     457,
+     2076,
+     940
+    ],
+    "caption": [
+     1679,
+     942,
+     1783,
+     976
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1369,
+     464,
+     2076,
+     945
+    ]
+   },
+   {
+    "box": [
+     139,
+     1332,
+     677,
+     1832
+    ],
+    "caption": [
+     354,
+     1852,
+     461,
+     1882
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     128,
+     1330,
+     685,
+     1833
+    ]
+   },
+   {
+    "box": [
+     1731,
+     1468,
+     2257,
+     1990
+    ],
+    "caption": [
+     1955,
+     1998,
+     2059,
+     2034
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1727,
+     1542,
+     2262,
+     1988
+    ]
+   },
+   {
+    "box": [
+     1677,
+     2352,
+     2253,
+     2785
+    ],
+    "caption": [
+     1911,
+     2790,
+     1987,
+     2822
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1670,
+     2350,
+     2257,
+     2787
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    3,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 10527,
+    "output_tokens": 311,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 15,
+    "input_tokens": 7165,
+    "output_tokens": 4431,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 28860
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|370|SOLUTION|}}</noinclude>{{smaller block|(see {{sc|Thermodynamics}}), <math>dp/dt = \\lambda/t(v_2 - v_1)</math>, where <math>p</math> and <math>t</math> denote the pressure and temperature, <math>\\lambda</math> the heat required to change unit mass of the systems from one phase to the other, and <math>v_2 - v_1</math> the resulting change in volume. The phase rule combined with the latent heat equation contains the whole theory of chemical and physical equilibrium.}}\n\n''Application to Solutions.''—In a system containing a solution we have to deal with two components at least. The simplest case is that of water and a salt, such as sodium chloride, which crystallizes without water. To obtain a non-variant system, we must assemble four phases—two more than the number of components. The four phases are (1) crystals of salt, (2) crystals of ice, (3) a saturated solution of the salt in water, and (4) the vapour, which is that practically of water alone, since the salt is non-volatile at the temperature in question. Equilibrium between these phases is obtained at the freezing point of the saturated solution under the pressure of the vapour. At that pressure and temperature the four phases can co-exist, and, as long as all of them are present, the pressure and temperature will remain steady. Thus a mixture of ice, salt and the saturated solution has a constant freezing point, and the composition of the solution is constant and the same as that of the mixed solids which freeze out on the abstraction of heat. This constancy both in freezing point and composition formerly was considered as a characteristic of a pure chemical compound, and hence these mixtures were described as components and given the name of “cryohydrates.” he phenomena of equilibrium quire a third axis along which to plot the composition of a variable phase. It is usual to take three axes at right angles to each other to represent pressure, temperature and the composition of the variable phase. On a plane figure this solid diagram must be drawn in perspective, the third axis <math>\\text{C}</math> being imagined to lie out of the plane of the paper. The phase-rule diagram that we construct is then a sketch of a solid model, the lines of which do not really lie in the plane of the paper.\n\n[[File:eb1911 v25 p0386 c1f1.png|center|190px]]\n{{c|{{sc|Fig.}} 2.}}\n\nLet us return to the case of the system of salt and water. At the cryohydric point O we have four phases in equilibrium at a definite pressure, temperature and composition of the liquid phase. The condition of the system is represented by a single point on the diagram. If heat be added to the mixture ice will melt and salt dissolve in the water so formed. If the supply of ice fails first the temperature will rise, and, since solid salt remains, we pass along a curve OA giving the relation between temperature and the vapour pressure of the saturated solution. If, on the other hand, the salt of the cryohydrate fails before the ice the water given by the continued fusion dilutes the solution, and we pass along the curve OB which shows the freezing points of a series of solutions of constantly increasing dilution. If the process be continued till a very large quantity of ice be melted the resulting solution is so dilute that its freezing point B is identical with that of the pure solvent. Again, starting from O, by the abstraction of heat we can remove all the liquid and travel along the curve OD of equilibrium between the two solids (salt and ice) and the vapour. Or, by increasing the pressure, we eliminate the vapour and obtain the curve OF giving the relation between pressure, freezing point and composition when a saturated solution is in contact with ice and salt.\n\nIf the salt crystallizes with a certain amount of water as well as with none, we get a second point of equilibrium between four phases. Sodium sulphate, for instance, crystallizes below 32·6° as Na<sub>2</sub>SO<sub>4</sub>·10H<sub>2</sub>O, and above that temperature as the anhydrous solid Na<sub>2</sub>SO<sub>4</sub>. Taking the point O to denote the state of equilibrium between ice, hydrate, saturated solution and vapour, we pass along OA till a new solid phase, that of Na<sub>2</sub>SO<sub>4</sub>, appears at 32·6°; from this point arise four curves, analogous to those diverging from the point <math>\\text{O}</math>.\n\nFor the quantitative study of such systems in detail it is convenient to draw plane diagrams which are theoretically projections of the curves of the solid phase rule diagram on one or other of these planes. Experiments on the relation between temperature and concentration are illustrated by projecting the curve <math>\\text{OA}</math> of fig. 2 on the <math>tc</math>-plane. The pressure at each point should be that of the vapour, but since the solubility of a solid does not change much with pressure, measurements under the constant atmospheric pressure give a curve practically identical with the theoretical one.\n\nFig. 3 gives the equilibrium between sodium sulphate and water in this way. <math>\\text{B}</math> is the freezing point of pure water, <math>\\text{O}</math> that of a saturated solution of Na<sub>2</sub>SO<sub>4</sub>·10H<sub>2</sub>O. The curve OP represents the varying solubility of the hydrate as the temperature rises from the cryohydric point to 32·6°. At that temperature crystals of the anhydrous Na<sub>2</sub>SO<sub>4</sub> appear, and a new fixed equilibrium exists between the four phases—hydrate, anhydrous salt, solution and vapour. As heat is supplied, the hydrate is transformed gradually into the anhydrous salt and water. When this process is complete the temperature rises, and we pass along a new curve giving the equilibrium between anhydrous crystals, solution and vapour. In this particular case the solubility decreases with rise of temperature. This behaviour is exceptional.\n\n[[File:eb1911 v25 p0386 c2f1.png|center|355px]]\n{{c|{{sc|Fig.}} 3.}}\n\n[[File:eb1911 v25 p0386 c2f2.png|center|178px]]\n{{c|{{sc|Fig}}. 4.}}\n\n''Two Liquid Components''.—Th mutual solubility are illustrated\n\nIn fig. 4 A represents the freezing point of pure water, and AB the freezing point curve showing the depression of the freezing point as phenol is added. At B is a non-variant system made up of ice, solid phenol, saturated solution and vapour. BCD is the solubility curve of phenol in water. At C a new liquid phase appears—the solution of water in liquid phenol, the solubility of which is represented by the curve DE. At D the composition of the two liquids becomes identical, and at temperatures above D, 68°C the liquids are soluble in each other in all proportions, and only one liquid phase can exist. If the two substances are soluble in each other in all proportions at all temperatures above their melting points we get a diagram reduced to the two fusion curves cutting each other at a non-variant point. This behaviour is illustrated by the case of silver and copper (fig. 5). At the non-variant point the two metals freeze out together and the composition of the liquid is the same as that of the mixed solid which crystallizes from it. The solid is then known as a eutectic alloy.\n\n[[File:eb1911 v25 p0386 c2f3.png|center|195px]]\n{{c|{{sc|Fig.}} 5.}}\n\nA liquid in which the composition is nearly that of the eutectic shows the changes in the rate of fall of temperature as it is allowed to cool. First a small quantity of one of the pure components begins to crystallize out, and the rate of cooling is thereby diminished owing to the latent heat liberated by the change of state. This process continues till the composition of the liquid phase reaches that of the eutectic, when the whole mass solidifies on the further loss of heat without change of temperature, giving a very definite freezing point. The process of cooling is thus represented by a path which runs vertically downwards till it cuts the<noinclude><references/></noinclude>"
+}

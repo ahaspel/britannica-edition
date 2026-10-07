@@ -1,0 +1,342 @@
+{
+ "volume": 26,
+ "page_number": 140,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n144",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n144",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1058,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     84,
+     150,
+     2323,
+     219
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     219,
+     1155,
+     1148
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     1148,
+     1155,
+     1566
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     84,
+     1566,
+     713,
+     2914
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     2932,
+     713,
+     2963
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     713,
+     1566,
+     1155,
+     2963
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     2963,
+     1155,
+     3133
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1608,
+     237,
+     2323,
+     1193
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1608,
+     1200,
+     2323,
+     1230
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1155,
+     237,
+     1608,
+     1230
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1601,
+     1237,
+     2323,
+     2055
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1601,
+     2061,
+     2323,
+     2097
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1155,
+     1237,
+     1601,
+     2097
+    ]
+   },
+   {
+    "name": "c2f3",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1602,
+     2117,
+     2323,
+     2965
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1602,
+     2980,
+     2323,
+     3015
+    ]
+   },
+   {
+    "name": "c2s6",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1155,
+     2117,
+     1602,
+     3015
+    ]
+   },
+   {
+    "name": "c2s7",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1155,
+     3015,
+     2323,
+     3133
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|122|SURFACE|}}",
+   "c1s1": "tan <math>\\tfrac{1}{2}\\text{PSH}</math> tan <math>\\tfrac{1}{2}\\text{PHS} = \\text{const}</math>, and for the hyperbola tan <math>\\tfrac{1}{2}\\text{PSH}</math>/tan <math>\\tfrac{1}{2}\\text{PHS} = \\text{const}</math>, so for a line of curvature on a central quadric, if <math>\\text{P}</math> be joined to two umbilics <math>\\text{S}</math> and <math>\\text{H}</math> by geodetics, either the product or the ratio of the tangents of <math>\\tfrac{1}{2}\\text{PSH}</math> and <math>\\tfrac{1}{2}\\text{PHS}</math> will be constant.\n\nChasles proved that if an ellipse be intersected in the point <math>\\text{A}</math> by a confocal hyperbola, and from any point <math>\\text{P}</math> on the hyperbola tangents <math>\\text{PT}</math>, <math>\\text{PT}'</math> be drawn to the ellipse, then the difference of the arcs of the ellipse <math>\\text{TA}</math>, <math>\\text{T}'\\text{A}</math> = the difference of the tangents <math>\\text{PT}</math>, <math>\\text{PT}'</math>; and subsequently Graves showed that if from any point <math>\\text{P}</math> on the outer of two confocal ellipses tangents be drawn to the inner, then the excess of the sum of the tangents <math>\\text{PT}</math>, <math>\\text{PT}'</math> over the intercepted arc <math>\\text{TT}'</math> is constant. Precisely the same theorems hold for a quadric replacing the confocals by lines of curvature and the rectilineal tangents by geodetic tangents. Hart still further developed the analogies with confocal conics, and established the following : If a geodetic polygon circumscribe a line of curvature, and all its vertices but one move on lines of curvature, this vertex will also describe a line of curvature, and when the lines of curvature all belong to the same system the perimeter of the polygon will be constant.\n\n2. ''Geodetics on Developable Surfaces.''—On these the geodetics are the curves which become right lines when the surface is unrolled into a plane. From this property a first integral can be immediately deduced.\n\n3. ''Geodetics on Surfaces of Revolution.''—In all such the geodetics are the curves given by the equation <math>r \\sin \\phi = \\text{const}</math>, <math>r</math> being the perpendicular on the axis of revolution, <math>\\phi</math> the angle at which the curve crosses the meridian.",
+   "c1s2": "¶\nThe general problem of the determination of geodetics on any surface may be advantageously treated in connexion with that of “parallel” curves. By “parallel” curves are meant curves whose geodetic distances from one another are constant—in other words, the orthogonal trajectories of a system of geodetics. In applying this method the determination of a system of parallel curves comes first, and the determination of the geodetics to which they are orthogonal follows as a deduction. If <math>\\phi\\ (u, v) = \\text{const}</math> be a system of parallel curves, it is shown that <math>\\phi</math> must satisfy the partial differential equation\n{{block center|<math>\\text{E} \\left(\\frac{d\\phi}{dv}\\right)^2 - 2\\text{F} \\left(\\frac{d\\phi}{du}\\right) \\left(\\frac{d\\phi}{dv}\\right) + \\text{G} \\left(\\frac{d\\phi}{dv}\\right)^2 = \\text{EG} - \\text{F}^2.</math>}}",
+   "c1s3": "{{c|{{sc|Fig.}} 1.}}",
+   "c1s4": "arallel curves satisfying this o represent the orthogonal s to establish a result first st integral of the differential he final integral is always thod <math>\\phi</math> corresponds to the an dynamics, the geodetics d to the surface when no\n\nt on a quadric in elliptic consideration of the class kes the more general form <math>\\text{U}_1</math> are functions of <math>u</math>, and this class, the first integral iately obtainable, and hence is to be remarked that for orems of Chasles and Graves\n\no right lines on a plane, the ce should be considered to two claimants for the posi- int whose geodetic distance ond, the curves of constant\n\ntisfy one of these conditions wo curves must be carefully distinguished. The property involved in the second definition is more intrinsic, and we shall therefore, following Liouville, call the curves possessing it geodetic circles. It may be noted that geodetic circles, except on surfaces of constant specific curvature, do not return back upon themselves like circles ''in plano.'' As a particular instance, a geodetic on an ellipsoid (which is, of course, a geodetic circle of zero",
+   "c1s5": "curvature), starting from an umbilic, when it returns again, as it does to that umbilic, makes a finite angle with its original starting position. As to the curve described by a point whose geodetic distance from a given centre is constant, Gauss showed from the fundamental property of a",
+   "c2s1": "{{c|{{sc|Fig.}} 2.}}",
+   "c2s2": "geodetic that this curve res where perpendicular to its that the curve described by a point the sum (or difference) of whose geodetic distances from two given points (foci) is constant, resembles the plane ellipse (or hyperbola) in the property that it bisects at every point the external (or internal) angle between the geodetic focal radii, and, as a consequence, that the curves on any surface answering to confocal ellipses and hyperbolas intersect at right angles. The equation for the lineal element enables us to discuss geodetic circles on surfaces of constant specific curvature; for we have seen that if we choose as parameters geodetics and their orthogonal trajectories, the equation becomes <math>ds^2 = du^2 + \\text{P}^2du^2</math>; and since <math>(\\text{RR}')^{-1} = -\\text{P}^{-1}d^2\\text{P}/du^2</math>, and here <math>(\\text{RR}')^{-1} = \\pm a^{-2}</math>, it follows <math>\\text{P} = \\text{A}\\cos ua^{-1} +</math>",
+   "c2s3": "{{c|{{sc|Fig.}} 3.}}",
+   "c2s4": "<math>\\text{B}\\sin ua^{-1}</math>, or <math>\\text{P}=\\text{A}\\cosh</math> surface is synclastic or a ature <math>k^{-1}</math>) be chosen for the starting curve <math>u=0</math>, and if <math>v</math> be made the length of the arc OY, intercepted on this circle by the curve <math>v=\\text{const}</math> (see fig. 1), then A and B can be proved to be independent of <math>u</math> and <math>\\text{P}=\\cos ua^{-1}+ak^{-1}\\sin ua^{-1}</math> for a synclastic surface, <math>\\text{P}=\\cosh ua^{-1}+ak^{-1}\\sinh ua^{-1}</math> for an anticlastic surface. It follows from the expression for the geodetic curvature <math>\\rho^{-1}=\\text{P}^{-1}d\\text{P}/du</math> that in both classes of surfaces all the other orthogonal curves <math>u=\\text{const}</math> will be geodetic circles. It also appears that on a synclastic surface of constant specific curvature",
+   "c2s5": "{{c|{{sc|Fig.}} 4.}}",
+   "c2s6": "to a geodetic circle converge and can be described with points as centre, the lengt fig. 2). These normals will that is, by a geodetic circle of zero curvature.\n\nFor anticlastic surfaces, however, we must distinguish two cases. If the curvature <math>k^{-1}</math> of the geodetic circle <math>>a^{-1}</math> the geodetic normals meet in a point on the concave side of the geodetic circle, and can be described as on the synclastic by a stretched string, the length of the string being <math>a \\tanh^{-1} ak^{-1}</math>, but in this case the geodetic normals have no equator (see fig. 3). If on the other hand the curvature of the geodetic circle be <math><a^{-1}</math> the normals do not meet on either side, but do possess an equator, and at this equa-",
+   "c2s7": "for the geodetic normals come nearer together than they do anywhere else (see fig. 4).\n\nOn a synclastic surface of constant specific curvature <math>a^{-2}</math> two near geodetics proceeding from a point always meet again at the geodetic"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0140 c1f1.png",
+   "c2f1": "eb1911 v26 p0140 c2f1.png",
+   "c2f2": "eb1911 v26 p0140 c2f2.png",
+   "c2f3": "eb1911 v26 p0140 c2f3.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1622,
+     323,
+     2221,
+     1190
+    ],
+    "caption": [
+     1856,
+     1200,
+     1963,
+     1230
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1608,
+     530,
+     2222,
+     1171
+    ]
+   },
+   {
+    "box": [
+     1616,
+     1341,
+     2223,
+     2053
+    ],
+    "caption": [
+     1851,
+     2061,
+     1930,
+     2094
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1608,
+     1343,
+     2227,
+     2043
+    ]
+   },
+   {
+    "box": [
+     1617,
+     2270,
+     2225,
+     2961
+    ],
+    "caption": [
+     1873,
+     2980,
+     1981,
+     3012
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1608,
+     2258,
+     2227,
+     2971
+    ]
+   },
+   {
+    "box": [
+     96,
+     2439,
+     704,
+     2913
+    ],
+    "caption": [
+     360,
+     2933,
+     463,
+     2963
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     221,
+     2437,
+     711,
+     2883
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    3,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 12005,
+    "output_tokens": 326,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 13,
+    "input_tokens": 5606,
+    "output_tokens": 5184,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 25012
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|122|SURFACE|}}</noinclude>tan <math>\\tfrac{1}{2}\\text{PSH}</math> tan <math>\\tfrac{1}{2}\\text{PHS} = \\text{const}</math>, and for the hyperbola tan <math>\\tfrac{1}{2}\\text{PSH}</math>/tan <math>\\tfrac{1}{2}\\text{PHS} = \\text{const}</math>, so for a line of curvature on a central quadric, if <math>\\text{P}</math> be joined to two umbilics <math>\\text{S}</math> and <math>\\text{H}</math> by geodetics, either the product or the ratio of the tangents of <math>\\tfrac{1}{2}\\text{PSH}</math> and <math>\\tfrac{1}{2}\\text{PHS}</math> will be constant.\n\nChasles proved that if an ellipse be intersected in the point <math>\\text{A}</math> by a confocal hyperbola, and from any point <math>\\text{P}</math> on the hyperbola tangents <math>\\text{PT}</math>, <math>\\text{PT}'</math> be drawn to the ellipse, then the difference of the arcs of the ellipse <math>\\text{TA}</math>, <math>\\text{T}'\\text{A}</math> = the difference of the tangents <math>\\text{PT}</math>, <math>\\text{PT}'</math>; and subsequently Graves showed that if from any point <math>\\text{P}</math> on the outer of two confocal ellipses tangents be drawn to the inner, then the excess of the sum of the tangents <math>\\text{PT}</math>, <math>\\text{PT}'</math> over the intercepted arc <math>\\text{TT}'</math> is constant. Precisely the same theorems hold for a quadric replacing the confocals by lines of curvature and the rectilineal tangents by geodetic tangents. Hart still further developed the analogies with confocal conics, and established the following : If a geodetic polygon circumscribe a line of curvature, and all its vertices but one move on lines of curvature, this vertex will also describe a line of curvature, and when the lines of curvature all belong to the same system the perimeter of the polygon will be constant.\n\n2. ''Geodetics on Developable Surfaces.''—On these the geodetics are the curves which become right lines when the surface is unrolled into a plane. From this property a first integral can be immediately deduced.\n\n3. ''Geodetics on Surfaces of Revolution.''—In all such the geodetics are the curves given by the equation <math>r \\sin \\phi = \\text{const}</math>, <math>r</math> being the perpendicular on the axis of revolution, <math>\\phi</math> the angle at which the curve crosses the meridian.\n\nThe general problem of the determination of geodetics on any surface may be advantageously treated in connexion with that of “parallel” curves. By “parallel” curves are meant curves whose geodetic distances from one another are constant—in other words, the orthogonal trajectories of a system of geodetics. In applying this method the determination of a system of parallel curves comes first, and the determination of the geodetics to which they are orthogonal follows as a deduction. If <math>\\phi\\ (u, v) = \\text{const}</math> be a system of parallel curves, it is shown that <math>\\phi</math> must satisfy the partial differential equation\n{{block center|<math>\\text{E} \\left(\\frac{d\\phi}{dv}\\right)^2 - 2\\text{F} \\left(\\frac{d\\phi}{du}\\right) \\left(\\frac{d\\phi}{dv}\\right) + \\text{G} \\left(\\frac{d\\phi}{dv}\\right)^2 = \\text{EG} - \\text{F}^2.</math>}} arallel curves satisfying this o represent the orthogonal s to establish a result first st integral of the differential he final integral is always thod <math>\\phi</math> corresponds to the an dynamics, the geodetics d to the surface when no\n\n[[File:eb1911 v26 p0140 c1f1.png|center|214px]]\n{{c|{{sc|Fig.}} 1.}}\n\nt on a quadric in elliptic consideration of the class kes the more general form <math>\\text{U}_1</math> are functions of <math>u</math>, and this class, the first integral iately obtainable, and hence is to be remarked that for orems of Chasles and Graves\n\no right lines on a plane, the ce should be considered to two claimants for the posi- int whose geodetic distance ond, the curves of constant\n\ntisfy one of these conditions wo curves must be carefully distinguished. The property involved in the second definition is more intrinsic, and we shall therefore, following Liouville, call the curves possessing it geodetic circles. It may be noted that geodetic circles, except on surfaces of constant specific curvature, do not return back upon themselves like circles ''in plano.'' As a particular instance, a geodetic on an ellipsoid (which is, of course, a geodetic circle of zero curvature), starting from an umbilic, when it returns again, as it does to that umbilic, makes a finite angle with its original starting position. As to the curve described by a point whose geodetic distance from a given centre is constant, Gauss showed from the fundamental property of a geodetic that this curve res where perpendicular to its that the curve described by a point the sum (or difference) of whose geodetic distances from two given points (foci) is constant, resembles the plane ellipse (or hyperbola) in the property that it bisects at every point the external (or internal) angle between the geodetic focal radii, and, as a consequence, that the curves on any surface answering to confocal ellipses and hyperbolas intersect at right angles. The equation for the lineal element enables us to discuss geodetic circles on surfaces of constant specific curvature; for we have seen that if we choose as parameters geodetics and their orthogonal trajectories, the equation becomes <math>ds^2 = du^2 + \\text{P}^2du^2</math>; and since <math>(\\text{RR}')^{-1} = -\\text{P}^{-1}d^2\\text{P}/du^2</math>, and here <math>(\\text{RR}')^{-1} = \\pm a^{-2}</math>, it follows <math>\\text{P} = \\text{A}\\cos ua^{-1} + \\text{B}\\sin ua^{-1}</math>, or <math>\\text{P}=\\text{A}\\cosh</math> surface is synclastic or a ature <math>k^{-1}</math>) be chosen for the starting curve <math>u=0</math>, and if <math>v</math> be made the length of the arc OY, intercepted on this circle by the curve <math>v=\\text{const}</math> (see fig. 1), then A and B can be proved to be independent of <math>u</math> and <math>\\text{P}=\\cos ua^{-1}+ak^{-1}\\sin ua^{-1}</math> for a synclastic surface, <math>\\text{P}=\\cosh ua^{-1}+ak^{-1}\\sinh ua^{-1}</math> for an anticlastic surface. It follows from the expression for the geodetic curvature <math>\\rho^{-1}=\\text{P}^{-1}d\\text{P}/du</math> that in both classes of surfaces all the other orthogonal curves <math>u=\\text{const}</math> will be geodetic circles. It also appears that on a synclastic surface of constant specific curvature to a geodetic circle converge and can be described with points as centre, the lengt fig. 2). These normals will that is, by a geodetic circle of zero curvature.\n\n[[File:eb1911 v26 p0140 c2f1.png|center|243px]]\n{{c|{{sc|Fig.}} 2.}}\n\n[[File:eb1911 v26 p0140 c2f2.png|center|246px]]\n{{c|{{sc|Fig.}} 3.}}\n\n[[File:eb1911 v26 p0140 c2f3.png|center|245px]]\n{{c|{{sc|Fig.}} 4.}}\n\nFor anticlastic surfaces, however, we must distinguish two cases. If the curvature <math>k^{-1}</math> of the geodetic circle <math>>a^{-1}</math> the geodetic normals meet in a point on the concave side of the geodetic circle, and can be described as on the synclastic by a stretched string, the length of the string being <math>a \\tanh^{-1} ak^{-1}</math>, but in this case the geodetic normals have no equator (see fig. 3). If on the other hand the curvature of the geodetic circle be <math><a^{-1}</math> the normals do not meet on either side, but do possess an equator, and at this equafor the geodetic normals come nearer together than they do anywhere else (see fig. 4).\n\nOn a synclastic surface of constant specific curvature <math>a^{-2}</math> two near geodetics proceeding from a point always meet again at the geodetic<noinclude><references/></noinclude>"
+}

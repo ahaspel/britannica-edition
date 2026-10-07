@@ -1,0 +1,192 @@
+{
+ "volume": 25,
+ "page_number": 220,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n228",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n228",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1080,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     135,
+     129,
+     2275,
+     197
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     135,
+     197,
+     1203,
+     1294
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     135,
+     1294,
+     1203,
+     2342
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     135,
+     2342,
+     1203,
+     3122
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1203,
+     197,
+     2275,
+     605
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1813,
+     605,
+     2275,
+     1050
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1813,
+     1050,
+     2275,
+     1052
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1203,
+     605,
+     1813,
+     1052
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1203,
+     1052,
+     2275,
+     2082
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1203,
+     2082,
+     2275,
+     3122
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|204|SKY|}}",
+   "c1s1": "necessarily more complicated; but, on the supposition that the changes of rigidity (<math>\\Delta\\text{N}</math>) and of density (<math>\\Delta\\text{D}</math>) are relatively small, the results are fairly simple. If the primary wave be represented by\n{{block center|<math>\\zeta=e^{-ikx}</math> . . . . . . (4)}}\nthe component rotations in the secondary wave are\n{{block center|<math>\\left.\\begin{array}{l}\\tilde\\omega_3=\\text{P}\\left(-\\frac{\\Delta\\text{N}}{\\text{N}}\\frac{yz}{r^2}\\right),\\\\ \\tilde\\omega_1=\\text{P}\\left(\\frac{\\Delta\\text{D}}{\\text{D}}\\frac{y}{r}+\\frac{\\Delta\\text{N}}{\\text{N}}.\\frac{xy}{r^2}\\right),\\\\ \\tilde\\omega_2=\\text{P}\\left(-\\frac{\\Delta\\text{D}}{\\text{D}}.\\frac{x}{r}+\\frac{\\Delta\\text{N}}{\\text{N}}\\frac{z^2-x^2}{r^2}\\right)\\end{array}\\right\\}</math> . . (5)}}\nwhere\n{{block center|<math>\\text{P}=\\frac{ik^3\\text{T}}{4\\pi}\\frac{e^{-ikr}}{r}</math> . . . . (6)}}\nThe expression for the resultant rotation in the general case would be rather complicated, and is not needed for our purpose. It is easily seen to be about an axis perpendicular to the scattered ray (<math>x</math>, <math>y</math>, <math>z</math>), inasmuch as\n{{block center|<math>x\\tilde\\omega_1+y\\tilde\\omega_2+z\\tilde\\omega_3=0.</math>}}\nLet us consider the more special case of a ray scattered normally to the incident ray, so that <math>x=0</math>. We have\n{{block center|<math>\\tilde\\omega^2=\\tilde\\omega_1{}^2+\\tilde\\omega_2{}^2+\\tilde\\omega_3{}^2=\\text{P}^2\\left(\\frac{\\Delta\\text{N}}{\\text{N}}\\right)^2\\frac{z^2}{r^2}+\\text{P}^2\\left(\\frac{\\Delta\\text{D}}{\\text{D}}\\right)^2\\frac{y^2}{r^2}</math> . (7).}}\n\nIf <math>\\Delta\\text{N}</math>, <math>\\Delta\\text{D}</math> be both finite, we learn from (7) that there is no direction perpendicular to the primary (polarized) ray in which the secondary light vanishes. Now experiment tells us plainly that there is such a direction, and therefore we are driven to the conclusion that either",
+   "c1s2": "<math>\\Delta\\text{N}</math> or <math>\\Delta\\text{D}</math> must vanish.\n\nThe consequences of supposing <math>\\Delta\\text{N}</math> to be zero have already been traced. They agree very well with experiment, and require us to suppose that the vibrations are perpendicular to the plane of polarization. So far as (7) is concerned the alternative supposition that <math>\\Delta\\text{D}</math> vanishes would answer equally well, if we suppose the vibrations to be executed in the plane of polarization; but let us now revert to (5), which gives\n{{block center|<math>\\tilde\\omega_3 = -\\frac{\\text{P}\\Delta\\text{N}}{\\text{N}}\\frac{yz}{r^2},\\quad \\tilde\\omega_1 = +\\frac{\\text{P}\\Delta\\text{N}}{\\text{N}}\\frac{xy}{r^2},\\quad \\tilde\\omega_2 = +\\frac{\\text{P}\\Delta\\text{N}}{\\text{N}}\\frac{z^2-x^2}{r^2}</math> . (8)}}\n\nAccording to these equations there would be, in all, six directions from <math>\\text{O}</math> along which there is no scattered light,—two along the axis of <math>y</math> normal to the original ray, and four (<math>y=0,\\ z=\\pm x</math>) at angles of 45° with that ray. So long as the particles are small no such vanishing of light in oblique directions is observed, and we are thus led to the conclusion that the hypothesis of a finite <math>\\Delta\\text{N}</math> and of vibrations in the plane of polarization cannot be reconciled with the facts. No form of the elastic solid theory is admissible except that in which the vibrations are supposed to be perpendicular to the plane of polarization, and the difference between one medium and another to be a difference of density only (''Phil. Mag.'', 1871, 41, p. 447).\n\nIt is of interest to pursue the applications of equation (3) so as to connect the intensity of the scattered and transmitted light with the number and size of the particles (see ''Phil. Mag.'', 1899, 47, p. 375). In order to find the whole emission of energy from one particle (<math>\\text{T}</math>), we have to integrate the square of (3) over the surface of a sphere of radius <math>r</math>. The element of area being <math>2\\pi r^2 \\sin\\phi d\\phi</math>, we have\n{{block center|<math>\\int_0^\\pi \\frac{\\sin^2\\phi}{r^2} 2\\pi r^2 \\sin^2\\phi d\\phi = \\frac{8\\pi}{3};</math>}}",
+   "c1s3": "so that the energy emitted from <math>\\text{T}</math> is represented by\n\n{{block center|<math>\\frac{8\\pi^3}{3}\\frac{(\\text{D}'-\\text{D})^2}{\\text{D}^2}\\frac{\\text{T}^2}{\\lambda^4},</math> . . . . (9)}}\n\non such a scale that the energy of the primary wave is unity per unit of wave-front area.\n\nThe above relates to a single particle. If there be <math>n</math> similar particles per unit volume, the energy emitted from a stratum of thickness <math>dx</math> and of unit area is found from (9) by the introduction of the factor <math>ndx</math>. Since there is no waste of energy upon the whole, this represents the loss of energy in the primary wave. Accordingly, if <math>\\text{E}</math> be the energy of the primary wave,\n\n{{block center|<math>\\frac{1}{\\text{E}}\\frac{d\\text{E}}{dx} = -\\frac{8\\pi^2n}{3}\\frac{(\\text{D}'-\\text{D})^2}{\\text{D}^2}\\frac{\\text{T}^2}{\\lambda^4},</math> . . . . (10)}}\n\nwhence\n\n{{block center|<math>\\text{E} = \\text{E}_0e^{-hx}</math> . . . . . (11)}}\n\nwhere\n\n{{block center|<math>h = \\frac{8\\pi^2n}{3}\\frac{(\\text{D}'-\\text{D})^2}{\\text{D}^2}\\frac{\\text{T}^2}{\\lambda^4},</math> . . . . (12)}}\n\nIf we had a sufficiently complete expression for the scattered light, we might investigate (12) somewhat more directly by considering the",
+   "c2s1": "resultant of the primary vibration and of the secondary vibrations which travel in the same direction. If, however, we apply this process to (3), we find that it fails to lead us to (12), though it furnishes another result of interest. The combination of the secondary waves which travel in the direction in question have this peculiarity: that the phases are no more distributed at random. The intensity of the secondary light is no longer to be arrived at by addition of individual intensities, but must be calculated with consideration of the particular phases involved. If we consider a number of particles which all lie upon a primary ray, we see that the phases of the secondary vibrations which issue along this line are all the same.",
+   "c2s2": "",
+   "c2s3": "¶\nThe actual calculation follows a sin Huygens's conception of the resolutio corresponding to the various parts verified (see {{sc|Diffraction of Light}}). occupy a thin stratum <math>dx</math> perpendicular to the primary ray <math>x</math>. Let AP (fig. 1) be this stratum, and O the point where the vibration is to be estimated. If <math>\\text{AP} = \\rho</math>, the element of volume is <math>dx 2\\pi\\rho d\\rho</math>, and the number of particles to be found in it is deduced by the introduction of the factor <math>n</math>. Moreover, if <math>\\text{OP} = r</math>, and <math>\\text{AO} = x</math>, then <math>r^2 = x^2 + \\rho^2</math>, and <math>\\rho d\\rho = rdr</math>.",
+   "c2s4": "The resultant at O of all the secondary vibrations which issue from the stratum <math>dx</math> is by (3), with <math>\\sin\\phi</math> equal to unity,\n\n{{block center|<math>ndx\\int_x^\\infty \\frac{\\text{D}'-\\text{D}}{\\text{D}}\\,\\frac{\\pi\\text{T}}{r\\lambda^3}\\cos\\frac{2\\pi}{\\lambda}(bt-r)2\\pi rdr,</math>}}\n\nor\n\n{{block center|<math>ndx\\frac{\\text{D}'-\\text{D}}{\\text{D}}\\,\\frac{\\pi\\text{T}}{\\lambda}\\sin\\frac{2\\pi}{\\lambda}(bt-x)</math> . . . (13)}}\n\nTo this is to be added the expression for the primary wave itself, supposed to advance undisturbed, viz. <math>\\cos(2\\pi/\\lambda)(bt-x)</math>, and the resultant will then represent the whole actual disturbance at O as modified by the particles in the stratum <math>dx</math>.\n\nIt appears, therefore, that to the order of approximation afforded by (3), the effect of the particles in <math>dx</math> is to modify the phase, but not the intensity, of the light which passes them. If this be represented by\n\n{{block center|<math>\\cos\\frac{2\\pi}{\\lambda}(bt-x-\\delta),</math> . . . . . (14)}}\n\n<math>\\delta</math> is the ''retardation'' due to the particles, and we have\n\n{{block center|<math>\\delta=n\\text{T}dx(\\text{D}'-\\text{D})/2\\text{D}</math> . . . . (15)}}\n\nIf <math>\\mu</math> be the refractive index of the medium as modified by the particles, that of the original medium being taken as unity, then <math>\\delta=(\\mu-1)dx</math>, and\n\n{{block center|<math>\\mu-1=n\\text{T}(\\text{D}'-\\text{D})/2\\text{D}</math> . . . . (16)}}\n\nIf <math>\\mu'</math> denote the refractive index of the material composing the particles regarded as continuous, <math>\\text{D}'/\\text{D}=\\mu'^2</math>, and",
+   "c2s5": "{{block center|<math>\\mu-1=\\tfrac{1}{2}n\\text{T}(\\mu'^2-1),</math> . . . . (17)}}\nreducing to\n{{block center|<math>\\mu-1=n\\text{T}(\\mu'-1),</math>. . . . . (18)}}\nin the case when <math>(\\mu'-1)</math> can be regarded as small.\n\nIt is only in the latter case that the formulae of the elastic solid theory are applicable to light. On the electric theory, now generally accepted, the results are more complicated, in that when <math>(\\mu'-1)</math> is not small, the scattered ray depends upon the shape and not merely upon the volume of the small obstacle. In the case of ''spheres'', we are to replace <math>(\\text{D}'-\\text{D})/\\text{D}</math> by <math>3(\\text{K}'-\\text{K})/(\\text{K}'+2\\text{K})</math>, where <math>\\text{K}</math>, <math>\\text{K}'</math> are the dielectric constants proper to the medium and to the obstacle respectively (''Phil. Mag.'', 1881, 12, p. 98); so that instead of (17)\n{{block center|<math>\\mu-1=\\frac{3n\\text{T}}{12}\\,\\frac{\\mu'^2-1}{\\mu'^2+1}</math> . . . . (19)}}\nOn the same suppositions (12) is replaced by\n{{block center|<math>h=24\\pi^2n\\left(\\frac{\\mu'^2-1}{\\mu^2+1}\\right)^2\\frac{\\text{T}^2}{\\lambda^4}</math>. . . . . (20)}}\nOn either theory\n{{block center|<math>h=32\\pi^3(\\mu-1)^2/3n\\lambda^4,</math> . . . (21)}}\na formula giving the coefficient of transmission in terms of the refraction, and of the ''number of particles per unit volume''. As Lord Kelvin has shown (''Baltimore Lectures'', p. 304, 1904) (16) may also be obtained by the consideration of the mean density of the altered medium.\n\nLet us now imagine what degree of transparency of air is admitted by its molecular constituents, viz. in the absence of all foreign"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v25 p0220 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1821,
+     766,
+     2263,
+     1039
+    ],
+    "caption": [
+     1971,
+     1021,
+     2091,
+     1052
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1824,
+     764,
+     2262,
+     941
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4292,
+    "output_tokens": 89,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 8475,
+    "output_tokens": 6235,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|204|SKY|}}</noinclude>necessarily more complicated; but, on the supposition that the changes of rigidity (<math>\\Delta\\text{N}</math>) and of density (<math>\\Delta\\text{D}</math>) are relatively small, the results are fairly simple. If the primary wave be represented by\n{{block center|<math>\\zeta=e^{-ikx}</math> . . . . . . (4)}}\nthe component rotations in the secondary wave are\n{{block center|<math>\\left.\\begin{array}{l}\\tilde\\omega_3=\\text{P}\\left(-\\frac{\\Delta\\text{N}}{\\text{N}}\\frac{yz}{r^2}\\right),\\\\ \\tilde\\omega_1=\\text{P}\\left(\\frac{\\Delta\\text{D}}{\\text{D}}\\frac{y}{r}+\\frac{\\Delta\\text{N}}{\\text{N}}.\\frac{xy}{r^2}\\right),\\\\ \\tilde\\omega_2=\\text{P}\\left(-\\frac{\\Delta\\text{D}}{\\text{D}}.\\frac{x}{r}+\\frac{\\Delta\\text{N}}{\\text{N}}\\frac{z^2-x^2}{r^2}\\right)\\end{array}\\right\\}</math> . . (5)}}\nwhere\n{{block center|<math>\\text{P}=\\frac{ik^3\\text{T}}{4\\pi}\\frac{e^{-ikr}}{r}</math> . . . . (6)}}\nThe expression for the resultant rotation in the general case would be rather complicated, and is not needed for our purpose. It is easily seen to be about an axis perpendicular to the scattered ray (<math>x</math>, <math>y</math>, <math>z</math>), inasmuch as\n{{block center|<math>x\\tilde\\omega_1+y\\tilde\\omega_2+z\\tilde\\omega_3=0.</math>}}\nLet us consider the more special case of a ray scattered normally to the incident ray, so that <math>x=0</math>. We have\n{{block center|<math>\\tilde\\omega^2=\\tilde\\omega_1{}^2+\\tilde\\omega_2{}^2+\\tilde\\omega_3{}^2=\\text{P}^2\\left(\\frac{\\Delta\\text{N}}{\\text{N}}\\right)^2\\frac{z^2}{r^2}+\\text{P}^2\\left(\\frac{\\Delta\\text{D}}{\\text{D}}\\right)^2\\frac{y^2}{r^2}</math> . (7).}}\n\nIf <math>\\Delta\\text{N}</math>, <math>\\Delta\\text{D}</math> be both finite, we learn from (7) that there is no direction perpendicular to the primary (polarized) ray in which the secondary light vanishes. Now experiment tells us plainly that there is such a direction, and therefore we are driven to the conclusion that either <math>\\Delta\\text{N}</math> or <math>\\Delta\\text{D}</math> must vanish.\n\nThe consequences of supposing <math>\\Delta\\text{N}</math> to be zero have already been traced. They agree very well with experiment, and require us to suppose that the vibrations are perpendicular to the plane of polarization. So far as (7) is concerned the alternative supposition that <math>\\Delta\\text{D}</math> vanishes would answer equally well, if we suppose the vibrations to be executed in the plane of polarization; but let us now revert to (5), which gives\n{{block center|<math>\\tilde\\omega_3 = -\\frac{\\text{P}\\Delta\\text{N}}{\\text{N}}\\frac{yz}{r^2},\\quad \\tilde\\omega_1 = +\\frac{\\text{P}\\Delta\\text{N}}{\\text{N}}\\frac{xy}{r^2},\\quad \\tilde\\omega_2 = +\\frac{\\text{P}\\Delta\\text{N}}{\\text{N}}\\frac{z^2-x^2}{r^2}</math> . (8)}}\n\nAccording to these equations there would be, in all, six directions from <math>\\text{O}</math> along which there is no scattered light,—two along the axis of <math>y</math> normal to the original ray, and four (<math>y=0,\\ z=\\pm x</math>) at angles of 45° with that ray. So long as the particles are small no such vanishing of light in oblique directions is observed, and we are thus led to the conclusion that the hypothesis of a finite <math>\\Delta\\text{N}</math> and of vibrations in the plane of polarization cannot be reconciled with the facts. No form of the elastic solid theory is admissible except that in which the vibrations are supposed to be perpendicular to the plane of polarization, and the difference between one medium and another to be a difference of density only (''Phil. Mag.'', 1871, 41, p. 447).\n\nIt is of interest to pursue the applications of equation (3) so as to connect the intensity of the scattered and transmitted light with the number and size of the particles (see ''Phil. Mag.'', 1899, 47, p. 375). In order to find the whole emission of energy from one particle (<math>\\text{T}</math>), we have to integrate the square of (3) over the surface of a sphere of radius <math>r</math>. The element of area being <math>2\\pi r^2 \\sin\\phi d\\phi</math>, we have\n{{block center|<math>\\int_0^\\pi \\frac{\\sin^2\\phi}{r^2} 2\\pi r^2 \\sin^2\\phi d\\phi = \\frac{8\\pi}{3};</math>}} so that the energy emitted from <math>\\text{T}</math> is represented by\n\n{{block center|<math>\\frac{8\\pi^3}{3}\\frac{(\\text{D}'-\\text{D})^2}{\\text{D}^2}\\frac{\\text{T}^2}{\\lambda^4},</math> . . . . (9)}}\n\non such a scale that the energy of the primary wave is unity per unit of wave-front area.\n\nThe above relates to a single particle. If there be <math>n</math> similar particles per unit volume, the energy emitted from a stratum of thickness <math>dx</math> and of unit area is found from (9) by the introduction of the factor <math>ndx</math>. Since there is no waste of energy upon the whole, this represents the loss of energy in the primary wave. Accordingly, if <math>\\text{E}</math> be the energy of the primary wave,\n\n{{block center|<math>\\frac{1}{\\text{E}}\\frac{d\\text{E}}{dx} = -\\frac{8\\pi^2n}{3}\\frac{(\\text{D}'-\\text{D})^2}{\\text{D}^2}\\frac{\\text{T}^2}{\\lambda^4},</math> . . . . (10)}}\n\nwhence\n\n{{block center|<math>\\text{E} = \\text{E}_0e^{-hx}</math> . . . . . (11)}}\n\nwhere\n\n{{block center|<math>h = \\frac{8\\pi^2n}{3}\\frac{(\\text{D}'-\\text{D})^2}{\\text{D}^2}\\frac{\\text{T}^2}{\\lambda^4},</math> . . . . (12)}}\n\nIf we had a sufficiently complete expression for the scattered light, we might investigate (12) somewhat more directly by considering the resultant of the primary vibration and of the secondary vibrations which travel in the same direction. If, however, we apply this process to (3), we find that it fails to lead us to (12), though it furnishes another result of interest. The combination of the secondary waves which travel in the direction in question have this peculiarity: that the phases are no more distributed at random. The intensity of the secondary light is no longer to be arrived at by addition of individual intensities, but must be calculated with consideration of the particular phases involved. If we consider a number of particles which all lie upon a primary ray, we see that the phases of the secondary vibrations which issue along this line are all the same.\n\n[[File:eb1911 v25 p0220 c2f1.png|center|154px]]\n\n\nThe actual calculation follows a sin Huygens's conception of the resolutio corresponding to the various parts verified (see {{sc|Diffraction of Light}}). occupy a thin stratum <math>dx</math> perpendicular to the primary ray <math>x</math>. Let AP (fig. 1) be this stratum, and O the point where the vibration is to be estimated. If <math>\\text{AP} = \\rho</math>, the element of volume is <math>dx 2\\pi\\rho d\\rho</math>, and the number of particles to be found in it is deduced by the introduction of the factor <math>n</math>. Moreover, if <math>\\text{OP} = r</math>, and <math>\\text{AO} = x</math>, then <math>r^2 = x^2 + \\rho^2</math>, and <math>\\rho d\\rho = rdr</math>. The resultant at O of all the secondary vibrations which issue from the stratum <math>dx</math> is by (3), with <math>\\sin\\phi</math> equal to unity,\n\n{{block center|<math>ndx\\int_x^\\infty \\frac{\\text{D}'-\\text{D}}{\\text{D}}\\,\\frac{\\pi\\text{T}}{r\\lambda^3}\\cos\\frac{2\\pi}{\\lambda}(bt-r)2\\pi rdr,</math>}}\n\nor\n\n{{block center|<math>ndx\\frac{\\text{D}'-\\text{D}}{\\text{D}}\\,\\frac{\\pi\\text{T}}{\\lambda}\\sin\\frac{2\\pi}{\\lambda}(bt-x)</math> . . . (13)}}\n\nTo this is to be added the expression for the primary wave itself, supposed to advance undisturbed, viz. <math>\\cos(2\\pi/\\lambda)(bt-x)</math>, and the resultant will then represent the whole actual disturbance at O as modified by the particles in the stratum <math>dx</math>.\n\nIt appears, therefore, that to the order of approximation afforded by (3), the effect of the particles in <math>dx</math> is to modify the phase, but not the intensity, of the light which passes them. If this be represented by\n\n{{block center|<math>\\cos\\frac{2\\pi}{\\lambda}(bt-x-\\delta),</math> . . . . . (14)}}\n\n<math>\\delta</math> is the ''retardation'' due to the particles, and we have\n\n{{block center|<math>\\delta=n\\text{T}dx(\\text{D}'-\\text{D})/2\\text{D}</math> . . . . (15)}}\n\nIf <math>\\mu</math> be the refractive index of the medium as modified by the particles, that of the original medium being taken as unity, then <math>\\delta=(\\mu-1)dx</math>, and\n\n{{block center|<math>\\mu-1=n\\text{T}(\\text{D}'-\\text{D})/2\\text{D}</math> . . . . (16)}}\n\nIf <math>\\mu'</math> denote the refractive index of the material composing the particles regarded as continuous, <math>\\text{D}'/\\text{D}=\\mu'^2</math>, and {{block center|<math>\\mu-1=\\tfrac{1}{2}n\\text{T}(\\mu'^2-1),</math> . . . . (17)}}\nreducing to\n{{block center|<math>\\mu-1=n\\text{T}(\\mu'-1),</math>. . . . . (18)}}\nin the case when <math>(\\mu'-1)</math> can be regarded as small.\n\nIt is only in the latter case that the formulae of the elastic solid theory are applicable to light. On the electric theory, now generally accepted, the results are more complicated, in that when <math>(\\mu'-1)</math> is not small, the scattered ray depends upon the shape and not merely upon the volume of the small obstacle. In the case of ''spheres'', we are to replace <math>(\\text{D}'-\\text{D})/\\text{D}</math> by <math>3(\\text{K}'-\\text{K})/(\\text{K}'+2\\text{K})</math>, where <math>\\text{K}</math>, <math>\\text{K}'</math> are the dielectric constants proper to the medium and to the obstacle respectively (''Phil. Mag.'', 1881, 12, p. 98); so that instead of (17)\n{{block center|<math>\\mu-1=\\frac{3n\\text{T}}{12}\\,\\frac{\\mu'^2-1}{\\mu'^2+1}</math> . . . . (19)}}\nOn the same suppositions (12) is replaced by\n{{block center|<math>h=24\\pi^2n\\left(\\frac{\\mu'^2-1}{\\mu^2+1}\\right)^2\\frac{\\text{T}^2}{\\lambda^4}</math>. . . . . (20)}}\nOn either theory\n{{block center|<math>h=32\\pi^3(\\mu-1)^2/3n\\lambda^4,</math> . . . (21)}}\na formula giving the coefficient of transmission in terms of the refraction, and of the ''number of particles per unit volume''. As Lord Kelvin has shown (''Baltimore Lectures'', p. 304, 1904) (16) may also be obtained by the consideration of the mean density of the altered medium.\n\nLet us now imagine what degree of transparency of air is admitted by its molecular constituents, viz. in the absence of all foreign<noinclude><references/></noinclude>"
+}

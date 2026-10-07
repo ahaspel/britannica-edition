@@ -1,0 +1,132 @@
+{
+ "volume": 24,
+ "page_number": 1005,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1015",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1015",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.3,
+  "column_width": 1081,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     110,
+     103,
+     2255,
+     172
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     110,
+     172,
+     1179,
+     1093
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     110,
+     1093,
+     1179,
+     2013
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     110,
+     2013,
+     1179,
+     3110
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1179,
+     172,
+     2255,
+     1237
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1179,
+     1237,
+     2255,
+     2326
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1179,
+     2326,
+     2255,
+     3110
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|RESISTANCE]|SHIPBUILDING|943}}",
+   "c1s1": "required for ships of ordinary types is from curves of resistance drawn on a base of simple functions of the speed, length and displacement, the curves being faired through the spots obtained from a large number of results of model experiments with different classes of ships. Curves of this character have been constructed by Mr D. W. Taylor and Mr A. W. Johns (''Trans. I.N.A.'', 1907); the former series expresses the residuary resistance per ton of displacement in terms of <math>\\frac{\\text{V}^2}{\\text{L}}</math> and <math>\\frac{\\text{W}}{\\text{L}^3}</math>; the latter gives the residuary horse-power divided by <math>\\text{W}^{\\frac{7}{6}}</math> in terms of <math>\\frac{\\text{V}^2}{\\text{L}}</math> and the prismatic coefficient <math>\\frac{\\text{Volume of Displacement}}{\\text{Area of Immersed Midship Section} \\times \\text{Length}}</math>; the frictional resistance is calculated independently by Froude's or Tideman's tables.\n\nTo furnish data for estimating the I.H.P. of vessels covering a considerable range of type, a series of experiments on systematically varied forms of hull were made by Mr R. E. Froude. The results were published by him in the ''Trans. I.N.A.'', 1904; and are given in figs. 40 to 51.\n\nThe forms of hull dealt with may be primarily divided into two groups, A and B, differing in Beam and Draught ratio; <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> being equal to 2·59 and 3·48 for A and B respectively. Each group is further divided into 6 types, differing in block coefficients, and the table following gives particulars of the coefficients for the models tried:—",
+   "c1s2": "Stern snubbed, forward body as Type 1. — Bow snubbed, after body as Type 3.\n\nType. — 1. — 2. — 3. — 4. — 5. — 6.\n\nBlock coefficients or <math>\\frac{\\text{Volume of Displacement}}{\\text{Length} \\times \\text{Breadth} \\times \\text{Draught}}</math> — ·495 — ·505 — ·516 — ·522 — ·529 — ·542\n\nLargest section coefficient or <math>\\frac{\\text{Area of immersed midship section}}{\\text{Breadth} \\times \\text{Draught}}</math> — ·951\n\nThe hull characteristics for A are shown in figs. 33 and 34,<sup>1</sup> and the mode of presenting these indicates the way in which the several types were formed, each being obtained from the type 1 model by successively cutting back its stern and bow. This cutting back is termed snubbing. A curve of areas of transverse sections is given (fig. 35, Plate I.) as well as the sheer draught. The lines of group B can be derived from A, by altering beam and draught scales in the ratio of <math>\\frac{66}{57}</math> and <math>\\frac{17\\cdot 6}{20\\cdot 4}</math> respectively. Each of the 12 forms which embodied these lines was the generator of a series, differing only in length",
+   "c1s3": "proportion.\n\nThe curve of areas is an important item in the hull characteristics. Experiment shows that the resistance of a hull of given curve of areas, beam and water-line entrance, is practically unaltered however the lines are varied (so long as they are kept ship-shape, and no unfair features are introduced). It follows, therefore, that although the data correspond to a given type of lines, yet (consistently with the preceding conditions) they are capable of application over a wider field than at first sight seems likely, covering variations of draught, form of profile and transverse sections.\n\nRegarding the foregoing statement of permissible variations of lines, alteration in <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> ratio has some effect. Comparison of the two groups A and B gives the effect of the variation in the <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> ratio tried; and it is found that (''caeteris paribus'') increasing <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> by 34% (''i.e.'' from 2·59 to 3·48) increases the E.H.P. by about 4%. A brief and approximate statement of the results of some experiments with models of varying <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> ratio, by Lieut.-Colonel G. Rota, R.I.N. (see ''Trans. I.N.A.'', 1905), is that beyond a value of <math>\\frac{\\text{Beam}}{\\text{Draught}}=2{\\cdot}5</math> an increase of 10% in <math>\\frac{\\text{Beam}}{\\text{Draught}}</math>\n\n{{smaller block|<sup>1</sup> These lines differ from those tried in the models which are given in ''Trans. I.N.A.'', 1904 (''q.v.''). Those now given have the same curve of areas and beam, but are modified in respect of draught, profile and shape of transverse sections, these latter being filled out so as more closely to represent modern forms. However, a model has been tried recently, embodying the modifications, and the results found to be practically identical with those obtained for the original lines.}}",
+   "c2s1": "causes about 1% to 2·5% increase in resistance (the lower value being appropriate to the higher speeds, and vice versa). This result accords with that deduced from the A and B groups.\n\nBy the aid of the law of comparison (and a correction for skin friction), the information provided can be used to obtain the E.H.P. for any size of ship of form included in the experiments (or covered by the possible extensions, ''vide supra''). The I.H.P. follows by using a suitable propulsive coefficient. An example is given below as an illustration. In practical application it is important to notice that the lengths used in reckoning the proportions must be the total length of immersed form (''i.e.'' of the curve of areas) and not the distance between perpendiculars arbitrarily placed.\n\nThe data are here given (figs. 40-51, Plates III.-VI.) in the form of curves of E.H.P. for ships of 1000 tons displacement, plotted for a given speed on a base of immersed length. The range in abscissae shows the amount of variation in length proportion tried in the experiments; and as regards speed range the group B is for generally higher speeds than group A. The curves may be termed standard E.H.P. curves.\n\nThe block coefficients of the forms dealt with are lower than those of the greater proportion of merchant ships, and hence the data are not directly applicable to these. At higher speeds, however, the E.H.P. might be approximately estimated from these curves, by assuming a further degree of snubbing appropriate to the required block coefficient; but at speeds which correspond to those of ordinary merchant ships (which are the lower speeds given in the diagrams) the effect of snubbing is variable, and depends really upon the actual speed-length ratio <math>\\left(i.e. \\frac{\\text{V}}{\\sqrt{\\text{L}}}\\right)</math> of the ship we are dealing with.\n\nIn this connexion it may be noted that the diagrams not only afford",
+   "c2s2": "a means of determining the I.H.P. of a given ship, but they may also be used in designing, and so enable the best form to be chosen, to fulfil the given conditions of displacement and speed, &c. For example, suppose a ship of given displacement is required to obtain a given speed, with a given maximum E.H.P. (or I.H.P. assuming an appropriate propulsive coefficient). First bring the given particulars to the proper scale for 1000 tons displacement (<math>n</math>, the ratio of the linear dimensions, is equal to <math>\\left(\\frac{1000}{\\text{Dispt.}}\\right)^{\\frac{1}{3}}</math> and hence E.H.P. becomes <math>\\left(\\frac{1000}{\\text{Dispt.}}\\right)^{\\frac{7}{6}}</math> and speed <math>\\left(\\frac{1000}{\\text{Dispt.}}\\right)^{\\frac{1}{6}}</math> times the given values). An E.H.P. curve for the given speed is easily interpolated on the diagrams, and we can at once obtain for the given E.H.P. (1) the length for each type, (2) the type which gives the most suitable length, (3) the economy resulting from any additional length, (4) the type for a given fixed length which gives the speed with least E.H.P., and (5) by inspection at lower speeds, how alternative forms compare at these speeds. The following points may commend themselves, from consideration of an instructive comparison shown in fig. 4, where for the B group, E.H.P. curves for types 1, 3 and 6 are drawn together. In drawing conclusions, it must be clearly remembered that the E.H.P.'s, speeds and lengths are for a standard displacement, viz. 1000 tons; and so in applications for different displacements, these quantities all undergo a numerical change, dependent upon the change in displacement. The first point is the effect of length on E.H.P.; this is most marked at high speeds; and even at low speeds, for the shorter lengths the E.H.P. begins to increase rapidly with decrease in length. At these low speeds if, on the other hand, the length be increased beyond a certain point, no economy at all results, but the reverse. The reason for this is clear. At the low speed-length ratio we are considering, the wave-making resistance is practically nil, the resistance being almost entirely due to skin friction and eddy making, &c. It is obvious that by continually reducing the transverse",
+   "c2s3": "dimensions of a ship of constant displacement, we increase the wetted skin (in the limit when the transverse scale is zero the surface is infinite); hence the resistance due to skin friction increases, and so therefore does the total resistance. This point would be more evident if the diagrams had been continued to a greater length and lower speed. A second point is the effect of alteration in block coefficient. At all speeds above 20 knots, snubbing within the limits shown is beneficial as regards performance. At lower speeds the effect depends on the length. Since it is at these lower speeds the ordinary type of merchant ship works, we may say that the effect of snubbing is doubtful for these, and depends upon the speed-length ratio. A better result might be obtained in such cases if the method of increasing the block coefficient were by the insertion of parallel middle body and not by an extension of snubbing. (For fuller information on this point see Mr R. E. Froude's 1904 I.N.A. paper.) A third point is the effect of change in speed. For a given length, the rate of increase of E.H.P. with speed grows with the speed, but increases least for the more snubbed type. As an instance consider group B, types 1 and 6 at a length of 300 ft. (see fig. 36, Plate I.). The following table gives the increase in E.H.P. for the corresponding changes in speed, and the index of the speed, representing the variation of E.H.P. with speed. The figures in columns (4) and (5) are the means obtained from the individual pairs of speeds; at intermediate speeds these may have different and constantly changing values:—"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8679,
+    "output_tokens": 5030,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|RESISTANCE]|SHIPBUILDING|943}}</noinclude>required for ships of ordinary types is from curves of resistance drawn on a base of simple functions of the speed, length and displacement, the curves being faired through the spots obtained from a large number of results of model experiments with different classes of ships. Curves of this character have been constructed by Mr D. W. Taylor and Mr A. W. Johns (''Trans. I.N.A.'', 1907); the former series expresses the residuary resistance per ton of displacement in terms of <math>\\frac{\\text{V}^2}{\\text{L}}</math> and <math>\\frac{\\text{W}}{\\text{L}^3}</math>; the latter gives the residuary horse-power divided by <math>\\text{W}^{\\frac{7}{6}}</math> in terms of <math>\\frac{\\text{V}^2}{\\text{L}}</math> and the prismatic coefficient <math>\\frac{\\text{Volume of Displacement}}{\\text{Area of Immersed Midship Section} \\times \\text{Length}}</math>; the frictional resistance is calculated independently by Froude's or Tideman's tables.\n\nTo furnish data for estimating the I.H.P. of vessels covering a considerable range of type, a series of experiments on systematically varied forms of hull were made by Mr R. E. Froude. The results were published by him in the ''Trans. I.N.A.'', 1904; and are given in figs. 40 to 51.\n\nThe forms of hull dealt with may be primarily divided into two groups, A and B, differing in Beam and Draught ratio; <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> being equal to 2·59 and 3·48 for A and B respectively. Each group is further divided into 6 types, differing in block coefficients, and the table following gives particulars of the coefficients for the models tried:— Stern snubbed, forward body as Type 1. — Bow snubbed, after body as Type 3.\n\nType. — 1. — 2. — 3. — 4. — 5. — 6.\n\nBlock coefficients or <math>\\frac{\\text{Volume of Displacement}}{\\text{Length} \\times \\text{Breadth} \\times \\text{Draught}}</math> — ·495 — ·505 — ·516 — ·522 — ·529 — ·542\n\nLargest section coefficient or <math>\\frac{\\text{Area of immersed midship section}}{\\text{Breadth} \\times \\text{Draught}}</math> — ·951\n\nThe hull characteristics for A are shown in figs. 33 and 34,<sup>1</sup> and the mode of presenting these indicates the way in which the several types were formed, each being obtained from the type 1 model by successively cutting back its stern and bow. This cutting back is termed snubbing. A curve of areas of transverse sections is given (fig. 35, Plate I.) as well as the sheer draught. The lines of group B can be derived from A, by altering beam and draught scales in the ratio of <math>\\frac{66}{57}</math> and <math>\\frac{17\\cdot 6}{20\\cdot 4}</math> respectively. Each of the 12 forms which embodied these lines was the generator of a series, differing only in length proportion.\n\nThe curve of areas is an important item in the hull characteristics. Experiment shows that the resistance of a hull of given curve of areas, beam and water-line entrance, is practically unaltered however the lines are varied (so long as they are kept ship-shape, and no unfair features are introduced). It follows, therefore, that although the data correspond to a given type of lines, yet (consistently with the preceding conditions) they are capable of application over a wider field than at first sight seems likely, covering variations of draught, form of profile and transverse sections.\n\nRegarding the foregoing statement of permissible variations of lines, alteration in <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> ratio has some effect. Comparison of the two groups A and B gives the effect of the variation in the <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> ratio tried; and it is found that (''caeteris paribus'') increasing <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> by 34% (''i.e.'' from 2·59 to 3·48) increases the E.H.P. by about 4%. A brief and approximate statement of the results of some experiments with models of varying <math>\\frac{\\text{Beam}}{\\text{Draught}}</math> ratio, by Lieut.-Colonel G. Rota, R.I.N. (see ''Trans. I.N.A.'', 1905), is that beyond a value of <math>\\frac{\\text{Beam}}{\\text{Draught}}=2{\\cdot}5</math> an increase of 10% in <math>\\frac{\\text{Beam}}{\\text{Draught}}</math>\n\n{{smaller block|<sup>1</sup> These lines differ from those tried in the models which are given in ''Trans. I.N.A.'', 1904 (''q.v.''). Those now given have the same curve of areas and beam, but are modified in respect of draught, profile and shape of transverse sections, these latter being filled out so as more closely to represent modern forms. However, a model has been tried recently, embodying the modifications, and the results found to be practically identical with those obtained for the original lines.}} causes about 1% to 2·5% increase in resistance (the lower value being appropriate to the higher speeds, and vice versa). This result accords with that deduced from the A and B groups.\n\nBy the aid of the law of comparison (and a correction for skin friction), the information provided can be used to obtain the E.H.P. for any size of ship of form included in the experiments (or covered by the possible extensions, ''vide supra''). The I.H.P. follows by using a suitable propulsive coefficient. An example is given below as an illustration. In practical application it is important to notice that the lengths used in reckoning the proportions must be the total length of immersed form (''i.e.'' of the curve of areas) and not the distance between perpendiculars arbitrarily placed.\n\nThe data are here given (figs. 40-51, Plates III.-VI.) in the form of curves of E.H.P. for ships of 1000 tons displacement, plotted for a given speed on a base of immersed length. The range in abscissae shows the amount of variation in length proportion tried in the experiments; and as regards speed range the group B is for generally higher speeds than group A. The curves may be termed standard E.H.P. curves.\n\nThe block coefficients of the forms dealt with are lower than those of the greater proportion of merchant ships, and hence the data are not directly applicable to these. At higher speeds, however, the E.H.P. might be approximately estimated from these curves, by assuming a further degree of snubbing appropriate to the required block coefficient; but at speeds which correspond to those of ordinary merchant ships (which are the lower speeds given in the diagrams) the effect of snubbing is variable, and depends really upon the actual speed-length ratio <math>\\left(i.e. \\frac{\\text{V}}{\\sqrt{\\text{L}}}\\right)</math> of the ship we are dealing with.\n\nIn this connexion it may be noted that the diagrams not only afford a means of determining the I.H.P. of a given ship, but they may also be used in designing, and so enable the best form to be chosen, to fulfil the given conditions of displacement and speed, &c. For example, suppose a ship of given displacement is required to obtain a given speed, with a given maximum E.H.P. (or I.H.P. assuming an appropriate propulsive coefficient). First bring the given particulars to the proper scale for 1000 tons displacement (<math>n</math>, the ratio of the linear dimensions, is equal to <math>\\left(\\frac{1000}{\\text{Dispt.}}\\right)^{\\frac{1}{3}}</math> and hence E.H.P. becomes <math>\\left(\\frac{1000}{\\text{Dispt.}}\\right)^{\\frac{7}{6}}</math> and speed <math>\\left(\\frac{1000}{\\text{Dispt.}}\\right)^{\\frac{1}{6}}</math> times the given values). An E.H.P. curve for the given speed is easily interpolated on the diagrams, and we can at once obtain for the given E.H.P. (1) the length for each type, (2) the type which gives the most suitable length, (3) the economy resulting from any additional length, (4) the type for a given fixed length which gives the speed with least E.H.P., and (5) by inspection at lower speeds, how alternative forms compare at these speeds. The following points may commend themselves, from consideration of an instructive comparison shown in fig. 4, where for the B group, E.H.P. curves for types 1, 3 and 6 are drawn together. In drawing conclusions, it must be clearly remembered that the E.H.P.'s, speeds and lengths are for a standard displacement, viz. 1000 tons; and so in applications for different displacements, these quantities all undergo a numerical change, dependent upon the change in displacement. The first point is the effect of length on E.H.P.; this is most marked at high speeds; and even at low speeds, for the shorter lengths the E.H.P. begins to increase rapidly with decrease in length. At these low speeds if, on the other hand, the length be increased beyond a certain point, no economy at all results, but the reverse. The reason for this is clear. At the low speed-length ratio we are considering, the wave-making resistance is practically nil, the resistance being almost entirely due to skin friction and eddy making, &c. It is obvious that by continually reducing the transverse dimensions of a ship of constant displacement, we increase the wetted skin (in the limit when the transverse scale is zero the surface is infinite); hence the resistance due to skin friction increases, and so therefore does the total resistance. This point would be more evident if the diagrams had been continued to a greater length and lower speed. A second point is the effect of alteration in block coefficient. At all speeds above 20 knots, snubbing within the limits shown is beneficial as regards performance. At lower speeds the effect depends on the length. Since it is at these lower speeds the ordinary type of merchant ship works, we may say that the effect of snubbing is doubtful for these, and depends upon the speed-length ratio. A better result might be obtained in such cases if the method of increasing the block coefficient were by the insertion of parallel middle body and not by an extension of snubbing. (For fuller information on this point see Mr R. E. Froude's 1904 I.N.A. paper.) A third point is the effect of change in speed. For a given length, the rate of increase of E.H.P. with speed grows with the speed, but increases least for the more snubbed type. As an instance consider group B, types 1 and 6 at a length of 300 ft. (see fig. 36, Plate I.). The following table gives the increase in E.H.P. for the corresponding changes in speed, and the index of the speed, representing the variation of E.H.P. with speed. The figures in columns (4) and (5) are the means obtained from the individual pairs of speeds; at intermediate speeds these may have different and constantly changing values:—<noinclude><references/></noinclude>"
+}

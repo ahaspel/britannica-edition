@@ -1,0 +1,225 @@
+{
+ "volume": 20,
+ "page_number": 257,
+ "source": "scan",
+ "title": "https://archive.org/details/10689.10192/page/n258",
+ "provenance": {
+  "scan": "https://archive.org/details/10689.10192/page/n258",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.35,
+  "column_width": 1740,
+  "items": [
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     371,
+     395,
+     1078,
+     2930
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     371,
+     2930,
+     1078,
+     2981
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1078,
+     395,
+     2111,
+     455
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1078,
+     455,
+     2111,
+     1608
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1078,
+     1645,
+     2111,
+     1684
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1078,
+     1684,
+     2111,
+     1714
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1078,
+     1714,
+     2111,
+     2849
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1078,
+     2896,
+     2111,
+     2931
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1078,
+     2931,
+     2111,
+     2981
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     371,
+     2981,
+     2111,
+     3002
+    ]
+   }
+  ],
+  "readings": {
+   "c1s1": "From Lieut.-Col. Ormond M. Lissak's ''Ordnance and Gunnery''\n\n{{c|{{sc|Fig.}} 69.—4·7-IN SI}}\n\nFrom Lieut.-Col. Ormond M. Lissak's ''Ordnance and Gunnery.''\n\n{{c|{{sc|Fig.}} 70. 4·7-IN}}",
+   "c1s2": "",
+   "c2s1": "ORDNANCE {{sc|Plate V.}}",
+   "c2s2": "{{c|EGE GUN, TRAVELLING POSITION (U.S.A.).}}",
+   "c2s3": "",
+   "c2s4": "{{c|. SIEGE GUN, IN ACTION (U.S.A.).}}",
+   "c2s5": "",
+   "c0s1": "xx. 220."
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v20 p0257 c2f1.png",
+   "c2f2": "eb1911 v20 p0257 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1058,
+     458,
+     2113,
+     1606
+    ],
+    "caption": [
+     1058,
+     1645,
+     1737,
+     1684
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     389,
+     447,
+     2112,
+     1604
+    ]
+   },
+   {
+    "box": [
+     1058,
+     1713,
+     2107,
+     2846
+    ],
+    "caption": [
+     1058,
+     2896,
+     1597,
+     2931
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     387,
+     1718,
+     2107,
+     2846
+    ]
+   }
+  ],
+  "across": [
+   [
+    367,
+    2978,
+    485,
+    3009
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    1,
+    1
+   ],
+   "1": [
+    0,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6383,
+    "output_tokens": 202,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 3090,
+    "output_tokens": 1105,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" /></noinclude>From Lieut.-Col. Ormond M. Lissak's ''Ordnance and Gunnery''\n\n{{c|{{sc|Fig.}} 69.—4·7-IN SI}}\n\nFrom Lieut.-Col. Ormond M. Lissak's ''Ordnance and Gunnery.''\n\n{{c|{{sc|Fig.}} 70. 4·7-IN}} ORDNANCE {{sc|Plate V.}}\n\n[[File:eb1911 v20 p0257 c2f1.png|center|214px]]\n{{c|EGE GUN, TRAVELLING POSITION (U.S.A.).}}\n\n[[File:eb1911 v20 p0257 c2f2.png|center|214px]]\n{{c|. SIEGE GUN, IN ACTION (U.S.A.).}}\n\nxx. 220.<noinclude><references/></noinclude>"
+}

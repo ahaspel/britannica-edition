@@ -1,0 +1,226 @@
+{
+ "volume": 27,
+ "page_number": 991,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n1009",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n1009",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1170,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     123,
+     2226,
+     193
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     193,
+     1157,
+     1267
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1267,
+     1157,
+     2101
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     136,
+     2101,
+     1157,
+     2467
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     136,
+     2467,
+     1157,
+     2493
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2101,
+     136,
+     2523
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     136,
+     2460,
+     1157,
+     2495
+    ]
+   },
+   {
+    "name": "c1s7",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2523,
+     1157,
+     3250
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1157,
+     193,
+     2226,
+     1278
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1157,
+     1278,
+     2226,
+     2345
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1157,
+     2345,
+     2226,
+     3250
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||VECTOR ANALYSIS|963}}",
+   "c1s1": "and with scalars, which have important geometrical or physical significance. Various systems of “vector analysis” have been devised for the purpose of dealing methodically with these; we shall here confine ourselves to the one which is at present in most general use. Any such calculus must of course begin with definitions of the fundamental symbols and operations; these are in the first instance quite arbitrary conventions, but it is convenient so to frame them that the analogy with the processes of ordinary algebra may as far as possible be maintained.\n\n{{smaller block|As already explained, two vectors which are represented by equal and parallel straight lines drawn in the same sense are regarded as identical. Again, the product of a scalar <math>m</math> into a vector <math>\\mathbf{A}</math> is naturally defined as the vector whose direction is the same as that of <math>\\mathbf{A}</math>, but whose length is to that of <math>\\mathbf{A}</math> in the ratio <math>m</math>, the sense (moreover) being the same as that of <math>\\mathbf{A}</math> or the reverse, according as <math>m</math> is positive or negative. We denote it by <math>m\\mathbf{A}</math>. The particular case where <math>m=-1</math> is denoted by <math>-\\mathbf{A}</math>, so that a change of sign simply reverses the sense of a vector.}}\n\n{{smaller block|As regards combinations of two vectors, we have in the first place the one suggested by composition of displacements in kinematics, or of forces or couples in statics. Thus if a rigid body receive in succession two translations represented by <math>\\overrightarrow{\\text{AB}}</math> and <math>\\overrightarrow{\\text{BC}}</math>, the final result is equivalent to the translation represented by <math>\\overrightarrow{\\text{AC}}</math>. It is convenient, therefore, to regard <math>\\overrightarrow{\\text{AC}}</math> as in a sense the “geometric sum” of <math>\\overrightarrow{\\text{AB}}</math> and <math>\\overrightarrow{\\text{BC}}</math>, and to write\n{{block center|<math>\\overrightarrow{\\text{AB}}+\\overrightarrow{\\text{BC}}=\\overrightarrow{\\text{AC}}.</math>}}}}",
+   "c1s2": "This constitutes the definition of vector ''addition''; and it is evident at once from fig. 1 that\n\n{{block center|<math>\\overrightarrow{\\text{BC}}+\\overrightarrow{\\text{AB}}=\\overrightarrow{\\text{AD}}+\\overrightarrow{\\text{DC}}=\\overrightarrow{\\text{AC}}=\\overrightarrow{\\text{AB}}+\\overrightarrow{\\text{BC}}.</math>}}\n\nHence, <math>\\mathbf{A}</math> and <math>\\mathbf{B}</math> being any two vectors, we have\n\n{{block center|<math>\\mathbf{A}+\\mathbf{B}=\\mathbf{B}+\\mathbf{A},</math> (1)}}\n\n''i.e.'' addition of vectors, like ordinary arithmetical addition, is subject to the “commutative law.” As regards subtraction, we define <math>\\mathbf{A}-\\mathbf{B}</math> as the equivalent of <math>\\mathbf{A}+(-\\mathbf{B})</math>; thus in fig. 1, if <math>\\overrightarrow{\\text{AB}}=\\mathbf{A}</math>, <math>\\overrightarrow{\\text{BC}}=\\mathbf{B}</math>, we have\n\n{{block center|<math>\\mathbf{A}+\\mathbf{B}=\\overrightarrow{\\text{AC}},\\ \\mathbf{A}-\\mathbf{B}=\\overrightarrow{\\text{DB}}.</math>}}\n\nWhen the sum (or difference) of two vectors is to be further dealt with as a single vector, this may be indicated by the use of curved brackets, ''e.g.'' <math>(\\mathbf{A}+\\mathbf{B})</math>. It is easily seen from a figure that\n\n{{block center|<math>(\\mathbf{A}+\\mathbf{B})+\\mathbf{C}=\\mathbf{A}+(\\mathbf{B}+\\mathbf{C}),</math> (2)}}\n\nand so on; ''i.e.'' the “associative law” of addition also holds.\n\nAgain, if <math>m</math> be any scalar quantity, we have\n\n{{block center|<math>m(\\mathbf{A}+\\mathbf{B})=m\\mathbf{A}+m\\mathbf{B},</math> (3)}}\n\nor, in words, the multiplication of a vector sum by a scalar follows the “distributive law.” The truth of (3) is obvious on reference to the similar triangles in fig. 2, where\n\n{{block center|<math>\\overrightarrow{\\text{OP}}=\\mathbf{A},\\ \\overrightarrow{\\text{PQ}}=\\mathbf{B},\\ \\text{OP}'=m\\mathbf{A},\\ \\text{P}'\\text{Q}'=m\\mathbf{B}.</math>}}",
+   "c1s3": "{{c|{{sc|Fig. 1.}}                    {{sc|Fig. 2.}}}}",
+   "c1s4": "",
+   "c1s5": "{{sc|Fig. 1.}} {{sc|Fig. 2.}}",
+   "c1s7": "It will be noticed that the proofs of (1) and (3) involve the fundamental postulate of the Euclidean geometry.\n\nThe definition of “ work ” in mechanics gives us another important mode of combination of vectors. The product of the absolute magnitudes <math>A</math>, <math>B</math> (say) of two vectors <math>\\mathbf{A}</math>, <math>\\mathbf{B}</math> into the cosine of the angle <math>\\theta</math> between their directions is called the ''scalar product'' of the two vectors, and is denoted by <math>\\mathbf{A}\\,.\\,\\mathbf{B}</math> or simply <math>\\mathbf{AB}</math>. Thus\n{{block center|<math>\\mathbf{AB} = AB \\cos\\theta = \\mathbf{BA},</math> . . . . (4)}}\nso that the “ commutative law of multiplication ” holds here as in ordinary algebra. The “ distributive law ” is also valid, for we have\n{{block center|<math>\\mathbf{A}(\\mathbf{B}+\\mathbf{C}) = \\mathbf{AB}+\\mathbf{AC},</math> . . . . (5)}}\nthe proof of this statement being identical with that of the statical theorem that the sum of the works of two forces in any displacement of a particle is equal to the work of their resultant.\n\nFor an illustration of the next mode of combination of vectors we may have recourse to the geometrical theory of the rotation of a",
+   "c2s1": "rigid body about a fixed point <math>\\text{O}</math>. As explained under {{sc|Mechanics}}, the state of motion at any instant is specified by a vector <math>\\overrightarrow{\\text{OI}}</math> representing the angular velocity. The instantaneous velocity of any other point <math>\\text{P}</math> of the body is completely determined by the two vectors <math>\\overrightarrow{\\text{OI}}</math> and <math>\\overrightarrow{\\text{OP}}</math>, viz. it is a vector normal to the plane of <math>\\text{OI}</math> and <math>\\text{OP}</math>, whose absolute magnitude is <math>\\text{OI}\\,.\\,\\text{OP}\\,.\\,\\sin\\theta</math>, where <math>\\theta</math> denotes the inclination of <math>\\text{OP}</math> to <math>\\text{OI}</math>, and its sense is that due to a right-handed rotation about <math>\\text{OI}</math>. A vector derived according to this rule from any two given vectors <math>\\mathbf{A}</math>, <math>\\mathbf{B}</math> is called their ''vector product'', and is denoted by <math>\\mathbf{A}\\times\\mathbf{B}</math> or by <math>[\\mathbf{AB}]</math>. This type of combination is frequent in electro-magnetism; thus if <math>\\mathbf{C}</math> be the current and <math>\\mathbf{B}</math> the magnetic induction, at any point of a conductor, the mechanical force on the latter is represented by the vector <math>[\\mathbf{CB}]</math>. It will be noticed in the above kinematical example that if the rôles of the two vectors <math>\\text{OI}</math>, <math>\\text{OP}</math> were interchanged, the resulting vector would have the same absolute magnitude as before, but its sense would be reversed. Hence\n{{block center|<math>[\\mathbf{AB}] = -[\\mathbf{BA}]</math>, . . . . . . (6)}}\nso that the commutative law does ''not'' hold with respect to vector products. On the other hand, the distributive law applies, for we have\n{{block center|<math>[\\mathbf{A}(\\mathbf{B}+\\mathbf{C})] = [\\mathbf{AB}]+[\\mathbf{AC}]</math>, . . . . . (7)}}\nas may be proved without difficulty by considering the kinematical interpretation.\n\nVarious types of triple products may also present themselves, the most important being the scalar product of two vectors, one of which is itself given as a vector product. Thus <math>\\mathbf{A}[\\mathbf{BC}]</math> is equal in absolute value to the volume of the parallelepiped constructed on three edges <math>\\text{OA}</math>, <math>\\text{OB}</math>, <math>\\text{OC}</math> drawn from a point <math>\\text{O}</math> to represent the vectors <math>\\mathbf{A}</math>, <math>\\mathbf{B}</math>, <math>\\mathbf{C}</math> respectively, and it is positive or negative according as the lines <math>\\text{OA}</math>, <math>\\text{OB}</math>, <math>\\text{OC}</math> follow one another in right- or left-handed cyclical order. It follows that",
+   "c2s2": "{{block center|<math>\\mathbf{A}[\\mathbf{BC}] = \\mathbf{B}[\\mathbf{CA}] = -\\mathbf{B}[\\mathbf{AC}] = \\&\\text{c}.</math> (8)}}\n\nIn order to exhibit the correspondence between the shorthand methods of vector analysis and the more familiar formulae of Cartesian geometry, we take a right-handed system of three mutually perpendicular axes <math>\\text{O}x</math>, <math>\\text{O}y</math>, <math>\\text{O}z</math>, and adopt three fundamental ''unit-vectors'' <math>i, j, k</math>, having the positive directions of these axes respectively. As regards the scalar products of these unit-vectors, we have, by (4),\n\n{{block center|<math>i^2 = j^2 = k^2 = 1,\\ jk = kj = ji = 0.</math> (9)}}\n\nAny other vector <math>\\mathbf{A}</math> is expressed in terms of its scalar projections <math>\\text{A}_1</math>, <math>\\text{A}_2</math>, <math>\\text{A}_3</math> on the co-ordinate axes by the formula\n\n{{block center|<math>\\mathbf{A} = i\\text{A}_1 + j\\text{A}_2 + k\\text{A}_3.</math> (10)}}\n\nFor the scalar product of any two vectors we have\n\n{{block center|<math>\\mathbf{AB} = (i\\text{A}_1 + j\\text{A}_2 + k\\text{A}_3)(i\\text{B}_1 + j\\text{B}_2 + k\\text{B}_3) = \\text{A}_1\\text{B}_1 + \\text{A}_2\\text{B}_2 + \\text{A}_3\\text{B}_3,</math>(11)}}\n\nas appears on developing the product and making use of (9). In particular, forming the scalar square of <math>\\mathbf{A}</math> we have\n\n{{block center|<math>A^2 = \\text{A}_1{}^2 + \\text{A}_2{}^2 + \\text{A}_3{}^2,</math> (12)}}\n\nwhere <math>A</math> denotes the absolute value of <math>\\mathbf{A}</math>.\n\nAgain, the rule for vector products, applied to the fundamental units, gives\n\n{{block center|<math>\\left.\\begin{array}{c} [i^2] = [j^2] = [k^2] = 0, \\\\ {[jk]} = -[kj] = i,\\ [ki] = -[ik] = j,\\ [ij] = -[ji] = k. \\end{array}\\right\\}</math> (13)}}\n\nHence\n\n{{block center|<math>[\\mathbf{AB}] = [(i\\text{A}_1 + j\\text{A}_2 + k\\text{A}_3)(i\\text{B}_1 + j\\text{B}_2 + k\\text{B}_3)]</math>}}\n\n{{block center|<math>= i(\\text{A}_2\\text{B}_3 - \\text{A}_3\\text{B}_2) + j(\\text{A}_3\\text{B}_1 - \\text{A}_1\\text{B}_3) + k(\\text{A}_1\\text{B}_2 - \\text{A}_2\\text{B}_1)</math>}}\n\n{{block center|<math>= -[\\mathbf{BA}].</math> (14)}}\n\nThe correspondence with the formulae which occur in the analytical theory of rotations, &c., will be manifest. If we form the scalar product of a third vector <math>\\mathbf{C}</math> into <math>[\\mathbf{AB}]</math>, we obtain\n\n{{block center|<math>\\mathbf{C}[\\mathbf{AB}] = \\begin{vmatrix} \\text{A}_1, & \\text{B}_1, & \\text{C}_1 \\\\ \\text{A}_2, & \\text{B}_2, & \\text{C}_2 \\\\ \\text{A}_3, & \\text{B}_3, & \\text{C}_3 \\end{vmatrix}</math> (15)}}",
+   "c2s3": "in agreement with the geometrical interpretation already given.\n\nIn such subjects as hydrodynamics and electricity we are introduced to the notion of scalar and vector ''fields''. With every point <math>\\text{P}</math> of the region under consideration there are associated certain scalars (''e.g.'' density, electric or magnetic potential) and vectors (''e.g.'' fluid velocity, electric or magnetic force) which are regarded as functions of the position of <math>\\text{P}</math>. If we treat the partial-differential operators <math>\\partial/\\partial x</math>, <math>\\partial/\\partial y</math>, <math>\\partial/\\partial z</math>, where <math>x</math>, <math>y</math>, <math>z</math> are the co-ordinates of <math>\\text{P}</math>, as if they were scalar quantities, we are led to some remarkable and significant expressions. Thus if we write\n{{block center|<math>\\nabla = \\left(i\\frac{\\partial}{\\partial x} + j\\frac{\\partial}{\\partial y} + k\\frac{\\partial}{\\partial z}\\right)</math>, . . . . (16)}}\nand operate on a scalar function <math>\\phi</math>, we obtain the vector\n{{block center|<math>\\nabla\\phi = i\\frac{\\partial\\phi}{\\partial x} + j\\frac{\\partial\\phi}{\\partial y} + k\\frac{\\partial\\phi}{\\partial z}</math>. . . . . (17)}}\nThis is called the ''gradient'' of <math>\\phi</math> and sometimes denoted by \"grad <math>\\phi</math>\"; its direction is that in which <math>\\phi</math> most rapidly increases, and its magnitude is equal to the corresponding rate of increase. Thus\n{{block center|<math>(\\nabla\\phi)^2 = \\left(\\frac{\\partial\\phi}{\\partial x}\\right)^2 + \\left(\\frac{\\partial\\phi}{\\partial y}\\right)^2 + \\left(\\frac{\\partial\\phi}{\\partial z}\\right)^2</math>. . . . (18)}}\nA repetition of the operation <math>\\nabla</math> gives\n{{block center|<math>\\nabla^2\\phi = \\frac{\\partial^2\\phi}{\\partial x^2} + \\frac{\\partial^2\\phi}{\\partial y^2} + \\frac{\\partial^2\\phi}{\\partial z^2}</math>. . . . . (19)}}"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0991 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     150,
+     2103,
+     1062,
+     2453
+    ],
+    "caption": [
+     282,
+     2466,
+     916,
+     2493
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     147,
+     2171,
+     537,
+     2452
+    ]
+   },
+   {
+    "box": [
+     150,
+     2107,
+     1062,
+     2453
+    ],
+    "caption": [
+     280,
+     2460,
+     916,
+     2495
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     611,
+     2097,
+     1087,
+     2443
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6456,
+    "output_tokens": 504,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 10,
+    "input_tokens": 9006,
+    "output_tokens": 7790,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 19240
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||VECTOR ANALYSIS|963}}</noinclude>and with scalars, which have important geometrical or physical significance. Various systems of “vector analysis” have been devised for the purpose of dealing methodically with these; we shall here confine ourselves to the one which is at present in most general use. Any such calculus must of course begin with definitions of the fundamental symbols and operations; these are in the first instance quite arbitrary conventions, but it is convenient so to frame them that the analogy with the processes of ordinary algebra may as far as possible be maintained.\n\n{{smaller block|As already explained, two vectors which are represented by equal and parallel straight lines drawn in the same sense are regarded as identical. Again, the product of a scalar <math>m</math> into a vector <math>\\mathbf{A}</math> is naturally defined as the vector whose direction is the same as that of <math>\\mathbf{A}</math>, but whose length is to that of <math>\\mathbf{A}</math> in the ratio <math>m</math>, the sense (moreover) being the same as that of <math>\\mathbf{A}</math> or the reverse, according as <math>m</math> is positive or negative. We denote it by <math>m\\mathbf{A}</math>. The particular case where <math>m=-1</math> is denoted by <math>-\\mathbf{A}</math>, so that a change of sign simply reverses the sense of a vector.}}\n\n{{smaller block|As regards combinations of two vectors, we have in the first place the one suggested by composition of displacements in kinematics, or of forces or couples in statics. Thus if a rigid body receive in succession two translations represented by <math>\\overrightarrow{\\text{AB}}</math> and <math>\\overrightarrow{\\text{BC}}</math>, the final result is equivalent to the translation represented by <math>\\overrightarrow{\\text{AC}}</math>. It is convenient, therefore, to regard <math>\\overrightarrow{\\text{AC}}</math> as in a sense the “geometric sum” of <math>\\overrightarrow{\\text{AB}}</math> and <math>\\overrightarrow{\\text{BC}}</math>, and to write\n{{block center|<math>\\overrightarrow{\\text{AB}}+\\overrightarrow{\\text{BC}}=\\overrightarrow{\\text{AC}}.</math>}}}} This constitutes the definition of vector ''addition''; and it is evident at once from fig. 1 that\n\n{{block center|<math>\\overrightarrow{\\text{BC}}+\\overrightarrow{\\text{AB}}=\\overrightarrow{\\text{AD}}+\\overrightarrow{\\text{DC}}=\\overrightarrow{\\text{AC}}=\\overrightarrow{\\text{AB}}+\\overrightarrow{\\text{BC}}.</math>}}\n\nHence, <math>\\mathbf{A}</math> and <math>\\mathbf{B}</math> being any two vectors, we have\n\n{{block center|<math>\\mathbf{A}+\\mathbf{B}=\\mathbf{B}+\\mathbf{A},</math> (1)}}\n\n''i.e.'' addition of vectors, like ordinary arithmetical addition, is subject to the “commutative law.” As regards subtraction, we define <math>\\mathbf{A}-\\mathbf{B}</math> as the equivalent of <math>\\mathbf{A}+(-\\mathbf{B})</math>; thus in fig. 1, if <math>\\overrightarrow{\\text{AB}}=\\mathbf{A}</math>, <math>\\overrightarrow{\\text{BC}}=\\mathbf{B}</math>, we have\n\n{{block center|<math>\\mathbf{A}+\\mathbf{B}=\\overrightarrow{\\text{AC}},\\ \\mathbf{A}-\\mathbf{B}=\\overrightarrow{\\text{DB}}.</math>}}\n\nWhen the sum (or difference) of two vectors is to be further dealt with as a single vector, this may be indicated by the use of curved brackets, ''e.g.'' <math>(\\mathbf{A}+\\mathbf{B})</math>. It is easily seen from a figure that\n\n{{block center|<math>(\\mathbf{A}+\\mathbf{B})+\\mathbf{C}=\\mathbf{A}+(\\mathbf{B}+\\mathbf{C}),</math> (2)}}\n\nand so on; ''i.e.'' the “associative law” of addition also holds.\n\nAgain, if <math>m</math> be any scalar quantity, we have\n\n{{block center|<math>m(\\mathbf{A}+\\mathbf{B})=m\\mathbf{A}+m\\mathbf{B},</math> (3)}}\n\nor, in words, the multiplication of a vector sum by a scalar follows the “distributive law.” The truth of (3) is obvious on reference to the similar triangles in fig. 2, where\n\n{{block center|<math>\\overrightarrow{\\text{OP}}=\\mathbf{A},\\ \\overrightarrow{\\text{PQ}}=\\mathbf{B},\\ \\text{OP}'=m\\mathbf{A},\\ \\text{P}'\\text{Q}'=m\\mathbf{B}.</math> Fig. 1.}} {{sc|Fig. 2.}} It will be noticed that the proofs of (1) and (3) involve the fundamental postulate of the Euclidean geometry.\n\n[[File:eb1911 v27 p0991 c1f1.png|center|314px]]\n{{c|{{sc|Fig. 1.}}                    {{sc|Fig. 2.}}}}\n\nThe definition of “ work ” in mechanics gives us another important mode of combination of vectors. The product of the absolute magnitudes <math>A</math>, <math>B</math> (say) of two vectors <math>\\mathbf{A}</math>, <math>\\mathbf{B}</math> into the cosine of the angle <math>\\theta</math> between their directions is called the ''scalar product'' of the two vectors, and is denoted by <math>\\mathbf{A}\\,.\\,\\mathbf{B}</math> or simply <math>\\mathbf{AB}</math>. Thus\n{{block center|<math>\\mathbf{AB} = AB \\cos\\theta = \\mathbf{BA},</math> . . . . (4)}}\nso that the “ commutative law of multiplication ” holds here as in ordinary algebra. The “ distributive law ” is also valid, for we have\n{{block center|<math>\\mathbf{A}(\\mathbf{B}+\\mathbf{C}) = \\mathbf{AB}+\\mathbf{AC},</math> . . . . (5)}}\nthe proof of this statement being identical with that of the statical theorem that the sum of the works of two forces in any displacement of a particle is equal to the work of their resultant.\n\nFor an illustration of the next mode of combination of vectors we may have recourse to the geometrical theory of the rotation of a rigid body about a fixed point <math>\\text{O}</math>. As explained under {{sc|Mechanics}}, the state of motion at any instant is specified by a vector <math>\\overrightarrow{\\text{OI}}</math> representing the angular velocity. The instantaneous velocity of any other point <math>\\text{P}</math> of the body is completely determined by the two vectors <math>\\overrightarrow{\\text{OI}}</math> and <math>\\overrightarrow{\\text{OP}}</math>, viz. it is a vector normal to the plane of <math>\\text{OI}</math> and <math>\\text{OP}</math>, whose absolute magnitude is <math>\\text{OI}\\,.\\,\\text{OP}\\,.\\,\\sin\\theta</math>, where <math>\\theta</math> denotes the inclination of <math>\\text{OP}</math> to <math>\\text{OI}</math>, and its sense is that due to a right-handed rotation about <math>\\text{OI}</math>. A vector derived according to this rule from any two given vectors <math>\\mathbf{A}</math>, <math>\\mathbf{B}</math> is called their ''vector product'', and is denoted by <math>\\mathbf{A}\\times\\mathbf{B}</math> or by <math>[\\mathbf{AB}]</math>. This type of combination is frequent in electro-magnetism; thus if <math>\\mathbf{C}</math> be the current and <math>\\mathbf{B}</math> the magnetic induction, at any point of a conductor, the mechanical force on the latter is represented by the vector <math>[\\mathbf{CB}]</math>. It will be noticed in the above kinematical example that if the rôles of the two vectors <math>\\text{OI}</math>, <math>\\text{OP}</math> were interchanged, the resulting vector would have the same absolute magnitude as before, but its sense would be reversed. Hence\n{{block center|<math>[\\mathbf{AB}] = -[\\mathbf{BA}]</math>, . . . . . . (6)}}\nso that the commutative law does ''not'' hold with respect to vector products. On the other hand, the distributive law applies, for we have\n{{block center|<math>[\\mathbf{A}(\\mathbf{B}+\\mathbf{C})] = [\\mathbf{AB}]+[\\mathbf{AC}]</math>, . . . . . (7)}}\nas may be proved without difficulty by considering the kinematical interpretation.\n\nVarious types of triple products may also present themselves, the most important being the scalar product of two vectors, one of which is itself given as a vector product. Thus <math>\\mathbf{A}[\\mathbf{BC}]</math> is equal in absolute value to the volume of the parallelepiped constructed on three edges <math>\\text{OA}</math>, <math>\\text{OB}</math>, <math>\\text{OC}</math> drawn from a point <math>\\text{O}</math> to represent the vectors <math>\\mathbf{A}</math>, <math>\\mathbf{B}</math>, <math>\\mathbf{C}</math> respectively, and it is positive or negative according as the lines <math>\\text{OA}</math>, <math>\\text{OB}</math>, <math>\\text{OC}</math> follow one another in right- or left-handed cyclical order. It follows that {{block center|<math>\\mathbf{A}[\\mathbf{BC}] = \\mathbf{B}[\\mathbf{CA}] = -\\mathbf{B}[\\mathbf{AC}] = \\&\\text{c}.</math> (8)}}\n\nIn order to exhibit the correspondence between the shorthand methods of vector analysis and the more familiar formulae of Cartesian geometry, we take a right-handed system of three mutually perpendicular axes <math>\\text{O}x</math>, <math>\\text{O}y</math>, <math>\\text{O}z</math>, and adopt three fundamental ''unit-vectors'' <math>i, j, k</math>, having the positive directions of these axes respectively. As regards the scalar products of these unit-vectors, we have, by (4),\n\n{{block center|<math>i^2 = j^2 = k^2 = 1,\\ jk = kj = ji = 0.</math> (9)}}\n\nAny other vector <math>\\mathbf{A}</math> is expressed in terms of its scalar projections <math>\\text{A}_1</math>, <math>\\text{A}_2</math>, <math>\\text{A}_3</math> on the co-ordinate axes by the formula\n\n{{block center|<math>\\mathbf{A} = i\\text{A}_1 + j\\text{A}_2 + k\\text{A}_3.</math> (10)}}\n\nFor the scalar product of any two vectors we have\n\n{{block center|<math>\\mathbf{AB} = (i\\text{A}_1 + j\\text{A}_2 + k\\text{A}_3)(i\\text{B}_1 + j\\text{B}_2 + k\\text{B}_3) = \\text{A}_1\\text{B}_1 + \\text{A}_2\\text{B}_2 + \\text{A}_3\\text{B}_3,</math>(11)}}\n\nas appears on developing the product and making use of (9). In particular, forming the scalar square of <math>\\mathbf{A}</math> we have\n\n{{block center|<math>A^2 = \\text{A}_1{}^2 + \\text{A}_2{}^2 + \\text{A}_3{}^2,</math> (12)}}\n\nwhere <math>A</math> denotes the absolute value of <math>\\mathbf{A}</math>.\n\nAgain, the rule for vector products, applied to the fundamental units, gives\n\n{{block center|<math>\\left.\\begin{array}{c} [i^2] = [j^2] = [k^2] = 0, \\\\ {[jk]} = -[kj] = i,\\ [ki] = -[ik] = j,\\ [ij] = -[ji] = k. \\end{array}\\right\\}</math> (13)}}\n\nHence\n\n{{block center|<math>[\\mathbf{AB}] = [(i\\text{A}_1 + j\\text{A}_2 + k\\text{A}_3)(i\\text{B}_1 + j\\text{B}_2 + k\\text{B}_3)]</math>}}\n\n{{block center|<math>= i(\\text{A}_2\\text{B}_3 - \\text{A}_3\\text{B}_2) + j(\\text{A}_3\\text{B}_1 - \\text{A}_1\\text{B}_3) + k(\\text{A}_1\\text{B}_2 - \\text{A}_2\\text{B}_1)</math>}}\n\n{{block center|<math>= -[\\mathbf{BA}].</math> (14)}}\n\nThe correspondence with the formulae which occur in the analytical theory of rotations, &c., will be manifest. If we form the scalar product of a third vector <math>\\mathbf{C}</math> into <math>[\\mathbf{AB}]</math>, we obtain\n\n{{block center|<math>\\mathbf{C}[\\mathbf{AB}] = \\begin{vmatrix} \\text{A}_1, & \\text{B}_1, & \\text{C}_1 \\\\ \\text{A}_2, & \\text{B}_2, & \\text{C}_2 \\\\ \\text{A}_3, & \\text{B}_3, & \\text{C}_3 \\end{vmatrix}</math> (15)}} in agreement with the geometrical interpretation already given.\n\nIn such subjects as hydrodynamics and electricity we are introduced to the notion of scalar and vector ''fields''. With every point <math>\\text{P}</math> of the region under consideration there are associated certain scalars (''e.g.'' density, electric or magnetic potential) and vectors (''e.g.'' fluid velocity, electric or magnetic force) which are regarded as functions of the position of <math>\\text{P}</math>. If we treat the partial-differential operators <math>\\partial/\\partial x</math>, <math>\\partial/\\partial y</math>, <math>\\partial/\\partial z</math>, where <math>x</math>, <math>y</math>, <math>z</math> are the co-ordinates of <math>\\text{P}</math>, as if they were scalar quantities, we are led to some remarkable and significant expressions. Thus if we write\n{{block center|<math>\\nabla = \\left(i\\frac{\\partial}{\\partial x} + j\\frac{\\partial}{\\partial y} + k\\frac{\\partial}{\\partial z}\\right)</math>, . . . . (16)}}\nand operate on a scalar function <math>\\phi</math>, we obtain the vector\n{{block center|<math>\\nabla\\phi = i\\frac{\\partial\\phi}{\\partial x} + j\\frac{\\partial\\phi}{\\partial y} + k\\frac{\\partial\\phi}{\\partial z}</math>. . . . . (17)}}\nThis is called the ''gradient'' of <math>\\phi</math> and sometimes denoted by \"grad <math>\\phi</math>\"; its direction is that in which <math>\\phi</math> most rapidly increases, and its magnitude is equal to the corresponding rate of increase. Thus\n{{block center|<math>(\\nabla\\phi)^2 = \\left(\\frac{\\partial\\phi}{\\partial x}\\right)^2 + \\left(\\frac{\\partial\\phi}{\\partial y}\\right)^2 + \\left(\\frac{\\partial\\phi}{\\partial z}\\right)^2</math>. . . . (18)}}\nA repetition of the operation <math>\\nabla</math> gives\n{{block center|<math>\\nabla^2\\phi = \\frac{\\partial^2\\phi}{\\partial x^2} + \\frac{\\partial^2\\phi}{\\partial y^2} + \\frac{\\partial^2\\phi}{\\partial z^2}</math>. . . . . (19)}}<noinclude><references/></noinclude>"
+}

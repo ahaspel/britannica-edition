@@ -1,0 +1,148 @@
+{
+ "volume": 28,
+ "page_number": 492,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri28chisrich/page/n500",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri28chisrich/page/n500",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1110,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     174,
+     0,
+     2366,
+     226
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     166,
+     242,
+     1269,
+     2522
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     166,
+     2522,
+     1269,
+     2594
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     174,
+     3170,
+     1269,
+     3333
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1269,
+     226,
+     2366,
+     3068
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1269,
+     3068,
+     2366,
+     3333
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|474|WEIGHING MACHINES|[AUTOMATIC}}",
+   "c1s1": "{{c|From the Notice issued by the Standards Department of the Board o}}\n{{c|{{sc|Fig.}} 14.—Price-computin}}",
+   "c1s3": "",
+   "c2s1": "values are indicated on the chart by the toothed edge of the index arm. On the customer's side of the machine the weight of the goods is indicated on a pair of arcs by a separate index arm precisely in the same manner as on the seller's side.\n\nIn weighing, the goods are placed in the pan of an ordinary lever machine (see fig. 14), and the end of the lever rests on the stirrup end of a short vertical rod. The upper end of this rod is formed into a loop, and this loop pulls upon a knife-edge which is fixed to a short lateral arm rigidly attached to a vertical disk, and this disk turns in bearings formed in the frame of the machine. The same disk carries the index arm, which is rigidly fixed to it and indicates the weight and value of the goods, and also carries the pendulum, which is rigidly attached to it, and regulates the position of the index arm according to the position which it takes up and the leverage which it exerts when swayed out of the vertical position by the action of the lever of the lever machine. This lever is so counterbalanced that when there is no weight in the pan the pendulum is vertical, and the index arm should then stand at zero. The zero adjustment is effected by means of levelling screws in the base of the frame. In order to deaden the vibrations of the index arm when weighing goods a vertical rod is attached to the lever from the lever machine near its left-hand end, and this rod carries on its lower end a plunger which works in a closed cylindrical dash-pot containing oil or glycerin.\n\n''Automatic Computing Weighing Machine'' (''even balance and pendulum'') ''for Retail Purposes'' (fig. 15).—This is an equal-armed inverted counter machine (see fig. 5) arranged to weigh up to 14 ℔ with great accuracy. Up to 2 ℔ the weight of the load is registered automatically on the chart in much the same manner as in the case of the automatic computing weighing machine already described. When the load exceeds 2 ℔ one or more 2-℔ weights are placed in the weights-pan, and the value of the portion of the goods corresponding to these 2-℔ weights is computed, at the rate per ℔, in the ordinary manner; and the value of the balance of the weight of the goods is read off the chart, and the two are added together. The advantage of this is that a very open scale is obtained for reading the value of the balance of the load. Thus, for weighing up to the full load of 14 ℔, six 2-℔ weights are required and no others.\n\nThe manner in which the balance of the load is weighed is as follows: Near the bottom of the vertical leg from the goods-pan, a projecting piece is rigidly attached to it, and as the pan descends with the balance of the load this piece pulls by a hook on a thin band of steel, which\n\n{{c|{{smaller|f Trade, by permission of the Controller of H. M. Stationery Office.}}}}\n{{c|ng Weighing Machine.}}\n\nis led upwards and wraps round the surface of a disk to which it is firmly secured. This disk rotates by rocking on a pair of knife-edges whose bearings are rigidly attached to the frame. The disk carries a weighted brass cylinder rigidly attached to it, which is pulled into an oblique position by the steel band until equilibrium is established. And the disk also carries the index arm which plays past the vertical face of the chart, and indicates the weight and price up to 2-℔ weight. The disk also carries a second and corresponding index arm which indicates the weight on the purchaser's side of the machine. At the bottom of the vertical leg from the goods-pan there is also a projecting piece which is attached to the top of a vertical piston rod, the piston of which plays in a dash-pot of glycerin as the beam sways, and deadens the vibrations of the index arm.",
+   "c2s2": "¶\n''Automatic Tea Weighing Machine'' (fig. 16).—This machine is designed to weigh out tea in quantities of <math>\\frac{1}{4}</math> ℔ each, which are done up in separate packets by hand. A large number of movements"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v28 p0492 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     193,
+     620,
+     1288,
+     2519
+    ],
+    "caption": [
+     478,
+     2519,
+     1288,
+     2593
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     173,
+     632,
+     2295,
+     2517
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    0,
+    2
+   ],
+   "1": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4040,
+    "output_tokens": 94,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 4914,
+    "output_tokens": 2069,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 9620
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|474|WEIGHING MACHINES|[AUTOMATIC}}</noinclude>[[File:eb1911 v28 p0492 c1f1.png|center|358px]]\n{{c|From the Notice issued by the Standards Department of the Board o}}\n{{c|{{sc|Fig.}} 14.—Price-computin}}\n\nvalues are indicated on the chart by the toothed edge of the index arm. On the customer's side of the machine the weight of the goods is indicated on a pair of arcs by a separate index arm precisely in the same manner as on the seller's side.\n\nIn weighing, the goods are placed in the pan of an ordinary lever machine (see fig. 14), and the end of the lever rests on the stirrup end of a short vertical rod. The upper end of this rod is formed into a loop, and this loop pulls upon a knife-edge which is fixed to a short lateral arm rigidly attached to a vertical disk, and this disk turns in bearings formed in the frame of the machine. The same disk carries the index arm, which is rigidly fixed to it and indicates the weight and value of the goods, and also carries the pendulum, which is rigidly attached to it, and regulates the position of the index arm according to the position which it takes up and the leverage which it exerts when swayed out of the vertical position by the action of the lever of the lever machine. This lever is so counterbalanced that when there is no weight in the pan the pendulum is vertical, and the index arm should then stand at zero. The zero adjustment is effected by means of levelling screws in the base of the frame. In order to deaden the vibrations of the index arm when weighing goods a vertical rod is attached to the lever from the lever machine near its left-hand end, and this rod carries on its lower end a plunger which works in a closed cylindrical dash-pot containing oil or glycerin.\n\n''Automatic Computing Weighing Machine'' (''even balance and pendulum'') ''for Retail Purposes'' (fig. 15).—This is an equal-armed inverted counter machine (see fig. 5) arranged to weigh up to 14 ℔ with great accuracy. Up to 2 ℔ the weight of the load is registered automatically on the chart in much the same manner as in the case of the automatic computing weighing machine already described. When the load exceeds 2 ℔ one or more 2-℔ weights are placed in the weights-pan, and the value of the portion of the goods corresponding to these 2-℔ weights is computed, at the rate per ℔, in the ordinary manner; and the value of the balance of the weight of the goods is read off the chart, and the two are added together. The advantage of this is that a very open scale is obtained for reading the value of the balance of the load. Thus, for weighing up to the full load of 14 ℔, six 2-℔ weights are required and no others.\n\nThe manner in which the balance of the load is weighed is as follows: Near the bottom of the vertical leg from the goods-pan, a projecting piece is rigidly attached to it, and as the pan descends with the balance of the load this piece pulls by a hook on a thin band of steel, which\n\n{{c|{{smaller|f Trade, by permission of the Controller of H. M. Stationery Office.}}}}\n{{c|ng Weighing Machine.}}\n\nis led upwards and wraps round the surface of a disk to which it is firmly secured. This disk rotates by rocking on a pair of knife-edges whose bearings are rigidly attached to the frame. The disk carries a weighted brass cylinder rigidly attached to it, which is pulled into an oblique position by the steel band until equilibrium is established. And the disk also carries the index arm which plays past the vertical face of the chart, and indicates the weight and price up to 2-℔ weight. The disk also carries a second and corresponding index arm which indicates the weight on the purchaser's side of the machine. At the bottom of the vertical leg from the goods-pan there is also a projecting piece which is attached to the top of a vertical piston rod, the piston of which plays in a dash-pot of glycerin as the beam sways, and deadens the vibrations of the index arm.\n\n''Automatic Tea Weighing Machine'' (fig. 16).—This machine is designed to weigh out tea in quantities of <math>\\frac{1}{4}</math> ℔ each, which are done up in separate packets by hand. A large number of movements<noinclude><references/></noinclude>"
+}

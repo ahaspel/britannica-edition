@@ -1,0 +1,299 @@
+{
+ "volume": 20,
+ "page_number": 247,
+ "source": "scan",
+ "title": "https://archive.org/details/10689.10192/page/n248",
+ "provenance": {
+  "scan": "https://archive.org/details/10689.10192/page/n248",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.15,
+  "column_width": 1755,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     360,
+     351,
+     2115,
+     477
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     360,
+     477,
+     1356,
+     1221
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     360,
+     1234,
+     1356,
+     1265
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     360,
+     1265,
+     1356,
+     1345
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     360,
+     1345,
+     1356,
+     1879
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     360,
+     1894,
+     1356,
+     1921
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     360,
+     1921,
+     1356,
+     2022
+    ]
+   },
+   {
+    "name": "c1f3",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     360,
+     2022,
+     1356,
+     2830
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     360,
+     2846,
+     1356,
+     2884
+    ]
+   },
+   {
+    "name": "c1s6",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     360,
+     2884,
+     1356,
+     2972
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1356,
+     477,
+     2115,
+     1255
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1356,
+     1255,
+     2115,
+     1914
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1356,
+     1914,
+     2115,
+     2972
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     360,
+     2972,
+     2115,
+     2995
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "{{c|{{sc|Fig.}} 60.—{{sc|British 18-pr. Quick}}}}",
+   "c1s2": "",
+   "c1s3": "{{c|{{sc|Fig.}} 61 BRITISH 18-PR. QUICK FIRIN}}",
+   "c1s4": "",
+   "c1s5": "{{c|{{sc|Fig.}} 62.—FRENCH 75-MM. QUICK-FIRING GUN}}",
+   "c1s6": "",
+   "c2s1": "K-FIRING GUN",
+   "c2s2": "{{c|G GUN AND LIMBER.}}",
+   "c2s3": "{{c|AND WAGON BODY IN ACTION.}}",
+   "c0s1": "XX, 220,"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v20 p0247 c1f1.png",
+   "c1f2": "eb1911 v20 p0247 c1f2.png",
+   "c1f3": "eb1911 v20 p0247 c1f3.png"
+  },
+  "figures": [
+   {
+    "box": [
+     360,
+     446,
+     1376,
+     1219
+    ],
+    "caption": [
+     895,
+     1234,
+     1376,
+     1265
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     362,
+     447,
+     2078,
+     1219
+    ]
+   },
+   {
+    "box": [
+     376,
+     1347,
+     1376,
+     1877
+    ],
+    "caption": [
+     792,
+     1894,
+     1376,
+     1921
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     374,
+     1345,
+     2081,
+     1868
+    ]
+   },
+   {
+    "box": [
+     411,
+     2024,
+     1376,
+     2827
+    ],
+    "caption": [
+     651,
+     2848,
+     1376,
+     2884
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     409,
+     2025,
+     2116,
+     2823
+    ]
+   }
+  ],
+  "across": [
+   [
+    394,
+    2969,
+    515,
+    3000
+   ]
+  ],
+  "refused": [],
+  "unread": {
+   "head": "a malformed running head"
+  },
+  "rejected": {
+   "head": "{{RunningHeader||ORDNANCE|{{sc|Plate}} III.}}"
+  },
+  "disagreements": {
+   "0": [
+    1,
+    1
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 4,
+    "input_tokens": 9026,
+    "output_tokens": 286,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 12,
+    "input_tokens": 4102,
+    "output_tokens": 1911,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 23088
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" /></noinclude>[[File:eb1911 v20 p0247 c1f1.png|center|204px]]\n{{c|{{sc|Fig.}} 60.—{{sc|British 18-pr. Quick}}}}\n\n[[File:eb1911 v20 p0247 c1f2.png|center|204px]]\n{{c|{{sc|Fig.}} 61 BRITISH 18-PR. QUICK FIRIN}}\n\n[[File:eb1911 v20 p0247 c1f3.png|center|204px]]\n{{c|{{sc|Fig.}} 62.—FRENCH 75-MM. QUICK-FIRING GUN}}\n\nK-FIRING GUN {{c|G GUN AND LIMBER. AND WAGON BODY IN ACTION.}}\n\nXX, 220,<noinclude><references/></noinclude>"
+}

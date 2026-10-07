@@ -1,0 +1,297 @@
+{
+ "volume": 24,
+ "page_number": 1017,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1027",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1027",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.35,
+  "column_width": 1063,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     107,
+     125,
+     2254,
+     195
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     107,
+     195,
+     2254,
+     876
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     107,
+     876,
+     1181,
+     1698
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     107,
+     1698,
+     769,
+     2995
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     107,
+     2997,
+     769,
+     3033
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     769,
+     1698,
+     1181,
+     3033
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     107,
+     3033,
+     1181,
+     3243
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1604,
+     876,
+     2254,
+     1483
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1604,
+     1493,
+     2254,
+     1559
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1181,
+     876,
+     1604,
+     1559
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1595,
+     1573,
+     2254,
+     2133
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1595,
+     2137,
+     2254,
+     2201
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1181,
+     1573,
+     1595,
+     2201
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1181,
+     2201,
+     2254,
+     3243
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|STRENGTH]|SHIPBUILDING|949}}",
+   "c0s1": "Type of Ship. — Number of Screws. — Propulsive Coefficient, <math>p</math>. — Wake Value, <math>w</math>. — Thrust Deduction, <math>t</math>. — Hull Efficiency. — Remarks.\n\nBattleship (turbine driven) — 4 — ·47<sup>1</sup> — ·15, ·20 — ·12, ·16 — 1·01, 1·01 — Inner screws, Outer screws\n\nBattleship (older types) — 2 — ·47 — ·14 — ·17 — ·95\n\nFirst-ciass cruiser — 2 — ·53 — ·10 — ·10 — ·99 — . .\n\nSecond „ — 2 — ·48 — ·06 — ·10 — ·95 — . .\n\nThird „ — 2 — ·48 — ·05 — ·08 — ·97 — . .\n\nTorpedo-boat destroyer — 2 — ·62 — ·01 — ·02 — ·97 — . .\n\nMail steamer (turbine), „ „ — 4 — ·46 — ·30, ·22 — ·17, ·20 — 1·08, ·98 — Inner screws, Outer screws\n\nCargo vessel — 2 — . . — ·20 — ·14 — 1·03 — . .\n\nSloop — 1 — ·45 — ·21 — ·17 — 1·00 — . .\n\nSubmarine (on surface) — 2 — . . — ·16 — ·10 — 1·04 — . .\n\n„ (diving) — 2 — . . — ·20 — ·12 — 1·05 — . .\n\n{{c|The above figures refer to full speed and are affected by alteration of speed.}}\n\n{{smaller|<sup>1</sup> Higher values have been obtained for the propulsive coefficients of the most recent turbine-driven ships.}}\n\nMMM is obtained which gives the bending moment at any section. Symbolically, if <math>w</math>, <math>\\text{F}</math>, <math>\\text{M}</math> represent the load, shearing force, and bending moment, and <math>x</math> the co-ordinate of length,\n{{block center|<math>w=\\frac{d\\text{F}}{dx}</math> and <math>\\text{F}=\\frac{d\\text{M}}{dx}</math>.}}\nThe conditions of equilibrium, viz. (''a'') that the total weight and buoyancy are equal, and (''b'') that the centre of gravity and the centre of buoyancy are in the same vertical",
+   "c1s1": "¶\n{{c|''Strength.''}}\n\nThe forces tending to strain a ship's structure include (1) the static forces arising from the distribution of the weight and buoyancy when afloat, and the weight and supporting forces when in dock or ashore; (2) the dynamic forces arising from the inertia of the ship and its lading under the accelerations experienced in the various motions to which the ship is liable, such as rolling and pitching in a sea way; and (3) local forces and water pressures incidental to (''a'') propulsion and steering, and (''b'') the operation of the various mechanical contrivances which it carries.\n\nThe straining actions of the forces, due to the distribution of the weight and buoyancy of the ship at rest and to the inertia of the ship in motion, constitute the only part of the problem of the strength of the structure which can be considered theoretically with any generality; the character of the internal reactions arising in the structure is so complex, that simplifying assumptions have always to be made in order to enable them to be calculated.",
+   "c1s2": "{{c|{{sc|Fig.}} 54.}}",
+   "c1s3": "s to the general structural or comparative purposes e estimation of stresses The comparison of the of experience forms an bution of material. In of providing sufficient ng down the weight, on l; the latter point being economical performance etween the weight of the ement.\n\nvessels of ordinary forms ualities in the longitudinal he buoyancy. Let WWW nd BBB...the buoyancy long the length AC; over ht is in excess of the buoyefect. A curve LLL, whose veen those of WWW and BBB, is termed a curve of loads, and represents the net load of the ship regarded as a beam subject to longitudinal bending. Shearing forces are produced whose resultant at any transverse section is equal to the total net load on either side of the section; they are represented by the “shearing force” curve FFF ..., whose ordinate at any transverse section is proportional to the area of the “loads” curve",
+   "c1s4": "of the loads curve LLL...up to that section. Similarly, on plotting the areas of the shearing force curve as ordinates, a “bending moment” curve",
+   "c2s1": "{{c|{{sc|Fig.}} 55.—Cruiser of 14,000 Tons on Wave Crest.}}",
+   "c2s2": "sure that the end ordin moment curves are zero.\n\nThese curves are usually of a ship, viz. (i.) in still equal to that of the ship and height <math>\\tfrac{1}{20}</math>th of the length, with the crest amidships; and (iii.) on a similar wave with the trough amidships. The curve of weight is obtained by distributing each item of weight over the length of the ship occupied by it and summing for the whole ship. Such a condition of the ship as regards stores, coal, cargo, &c., is selected, which will produce the greatest bending",
+   "c2s3": "{{c|{{sc|Fig.}} 56.—Torpedo Boat Destroyer on Wave Crest.}}",
+   "c2s4": "moment in each case. The calculated from the areas balanced longitudinally o ditions. The shearing fo drawn by successive integration of the curve of loads. Typical curves are shown in figs. 55 to 59 for a first-class cruiser on wave crest, a torpedo-boat destroyer on wave crest (bunkers empty) and in trough (bunkers full), and a cargo vessel on wave crest (hold and bunkers empty) and in trough (hold and bunkers full). From these curves it is seen that the maxi-",
+   "c2s5": "mum bending moment occurs near amidships; its effect in figs. 55, 56 and 58 is to cause the ends to fall relatively to the middle, such a moment being termed “hogging”; the reverse or a “sagging” moment is illustrated in figs. 57 and 59. Curves of a similar character are obtained in the still-water condition, but the bending moments and shearing forces are then generally reduced in amount.\n\nThe maximum bending moment is frequently expressed as a ratio of the product of the ship’s length and the displacement; average values for various types of ships are tabulated below:—\n\nClass of Ship. — <math>\\frac{\\text{W}\\times\\text{L}}{\\text{Maximum B.M.}}</math> — Whether Hogging (on Wave Crest) or Sagging (in Wave Hollow).\n\nMail steamer . . . . From 25 to 30 — H\n\nCargo vessel . . . . From 30 to 35 — H\n\nBattleship (modern) . . About 30 — H\n\nBattleship (older types) . About 40 — H\n\nFirst-class cruiser . . . About 32 — H\n\nSecond-class cruiser . . About 25 — S\n\nScout . . . . . . About 22 — H\n\nTorpedo-boat destroyer . About 22 — H; From 17 to 25 — S\n\nTorpedo boat . . . . About 23 — H; About 23 — S"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1017 c1f1.png",
+   "c2f1": "eb1911 v24 p1017 c2f1.png",
+   "c2f2": "eb1911 v24 p1017 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     121,
+     2487,
+     759,
+     2993
+    ],
+    "caption": [
+     371,
+     2997,
+     495,
+     3032
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     106,
+     2485,
+     760,
+     3025
+    ]
+   },
+   {
+    "box": [
+     1613,
+     1055,
+     2227,
+     1480
+    ],
+    "caption": [
+     1649,
+     1493,
+     2211,
+     1559
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1612,
+     1045,
+     2259,
+     1479
+    ]
+   },
+   {
+    "box": [
+     1608,
+     1714,
+     2241,
+     2129
+    ],
+    "caption": [
+     1629,
+     2137,
+     2219,
+     2201
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1599,
+     1709,
+     2259,
+     2119
+    ]
+   }
+  ],
+  "across": [
+   [
+    124,
+    217,
+    1851,
+    791
+   ],
+   [
+    164,
+    795,
+    1809,
+    879
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 4,
+    "input_tokens": 8475,
+    "output_tokens": 306,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 11,
+    "input_tokens": 7060,
+    "output_tokens": 4415,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 21164
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|STRENGTH]|SHIPBUILDING|949}}</noinclude>Type of Ship. — Number of Screws. — Propulsive Coefficient, <math>p</math>. — Wake Value, <math>w</math>. — Thrust Deduction, <math>t</math>. — Hull Efficiency. — Remarks.\n\nBattleship (turbine driven) — 4 — ·47<sup>1</sup> — ·15, ·20 — ·12, ·16 — 1·01, 1·01 — Inner screws, Outer screws\n\nBattleship (older types) — 2 — ·47 — ·14 — ·17 — ·95\n\nFirst-ciass cruiser — 2 — ·53 — ·10 — ·10 — ·99 — . .\n\nSecond „ — 2 — ·48 — ·06 — ·10 — ·95 — . .\n\nThird „ — 2 — ·48 — ·05 — ·08 — ·97 — . .\n\nTorpedo-boat destroyer — 2 — ·62 — ·01 — ·02 — ·97 — . .\n\nMail steamer (turbine), „ „ — 4 — ·46 — ·30, ·22 — ·17, ·20 — 1·08, ·98 — Inner screws, Outer screws\n\nCargo vessel — 2 — . . — ·20 — ·14 — 1·03 — . .\n\nSloop — 1 — ·45 — ·21 — ·17 — 1·00 — . .\n\nSubmarine (on surface) — 2 — . . — ·16 — ·10 — 1·04 — . .\n\n„ (diving) — 2 — . . — ·20 — ·12 — 1·05 — . .\n\n{{c|The above figures refer to full speed and are affected by alteration of speed.}}\n\n{{smaller|<sup>1</sup> Higher values have been obtained for the propulsive coefficients of the most recent turbine-driven ships.}}\n\nMMM is obtained which gives the bending moment at any section. Symbolically, if <math>w</math>, <math>\\text{F}</math>, <math>\\text{M}</math> represent the load, shearing force, and bending moment, and <math>x</math> the co-ordinate of length,\n{{block center|<math>w=\\frac{d\\text{F}}{dx}</math> and <math>\\text{F}=\\frac{d\\text{M}}{dx}</math>.}}\nThe conditions of equilibrium, viz. (''a'') that the total weight and buoyancy are equal, and (''b'') that the centre of gravity and the centre of buoyancy are in the same vertical\n\n{{c|''Strength.''}}\n\nThe forces tending to strain a ship's structure include (1) the static forces arising from the distribution of the weight and buoyancy when afloat, and the weight and supporting forces when in dock or ashore; (2) the dynamic forces arising from the inertia of the ship and its lading under the accelerations experienced in the various motions to which the ship is liable, such as rolling and pitching in a sea way; and (3) local forces and water pressures incidental to (''a'') propulsion and steering, and (''b'') the operation of the various mechanical contrivances which it carries.\n\nThe straining actions of the forces, due to the distribution of the weight and buoyancy of the ship at rest and to the inertia of the ship in motion, constitute the only part of the problem of the strength of the structure which can be considered theoretically with any generality; the character of the internal reactions arising in the structure is so complex, that simplifying assumptions have always to be made in order to enable them to be calculated. s to the general structural or comparative purposes e estimation of stresses The comparison of the of experience forms an bution of material. In of providing sufficient ng down the weight, on l; the latter point being economical performance etween the weight of the ement.\n\n[[File:eb1911 v24 p1017 c1f1.png|center|224px]]\n{{c|{{sc|Fig.}} 54.}}\n\nvessels of ordinary forms ualities in the longitudinal he buoyancy. Let WWW nd BBB...the buoyancy long the length AC; over ht is in excess of the buoyefect. A curve LLL, whose veen those of WWW and BBB, is termed a curve of loads, and represents the net load of the ship regarded as a beam subject to longitudinal bending. Shearing forces are produced whose resultant at any transverse section is equal to the total net load on either side of the section; they are represented by the “shearing force” curve FFF ..., whose ordinate at any transverse section is proportional to the area of the “loads” curve of the loads curve LLL...up to that section. Similarly, on plotting the areas of the shearing force curve as ordinates, a “bending moment” curve sure that the end ordin moment curves are zero.\n\n[[File:eb1911 v24 p1017 c2f1.png|center|220px]]\n{{c|{{sc|Fig.}} 55.—Cruiser of 14,000 Tons on Wave Crest.}}\n\nThese curves are usually of a ship, viz. (i.) in still equal to that of the ship and height <math>\\tfrac{1}{20}</math>th of the length, with the crest amidships; and (iii.) on a similar wave with the trough amidships. The curve of weight is obtained by distributing each item of weight over the length of the ship occupied by it and summing for the whole ship. Such a condition of the ship as regards stores, coal, cargo, &c., is selected, which will produce the greatest bending moment in each case. The calculated from the areas balanced longitudinally o ditions. The shearing fo drawn by successive integration of the curve of loads. Typical curves are shown in figs. 55 to 59 for a first-class cruiser on wave crest, a torpedo-boat destroyer on wave crest (bunkers empty) and in trough (bunkers full), and a cargo vessel on wave crest (hold and bunkers empty) and in trough (hold and bunkers full). From these curves it is seen that the maximum bending moment occurs near amidships; its effect in figs. 55, 56 and 58 is to cause the ends to fall relatively to the middle, such a moment being termed “hogging”; the reverse or a “sagging” moment is illustrated in figs. 57 and 59. Curves of a similar character are obtained in the still-water condition, but the bending moments and shearing forces are then generally reduced in amount.\n\n[[File:eb1911 v24 p1017 c2f2.png|center|223px]]\n{{c|{{sc|Fig.}} 56.—Torpedo Boat Destroyer on Wave Crest.}}\n\nThe maximum bending moment is frequently expressed as a ratio of the product of the ship’s length and the displacement; average values for various types of ships are tabulated below:—\n\nClass of Ship. — <math>\\frac{\\text{W}\\times\\text{L}}{\\text{Maximum B.M.}}</math> — Whether Hogging (on Wave Crest) or Sagging (in Wave Hollow).\n\nMail steamer . . . . From 25 to 30 — H\n\nCargo vessel . . . . From 30 to 35 — H\n\nBattleship (modern) . . About 30 — H\n\nBattleship (older types) . About 40 — H\n\nFirst-class cruiser . . . About 32 — H\n\nSecond-class cruiser . . About 25 — S\n\nScout . . . . . . About 22 — H\n\nTorpedo-boat destroyer . About 22 — H; From 17 to 25 — S\n\nTorpedo boat . . . . About 23 — H; About 23 — S<noinclude><references/></noinclude>"
+}

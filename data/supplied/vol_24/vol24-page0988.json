@@ -1,0 +1,242 @@
+{
+ "volume": 24,
+ "page_number": 988,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n998",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n998",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1082,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     104,
+     125,
+     2243,
+     197
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     104,
+     197,
+     1170,
+     1252
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     104,
+     1252,
+     1170,
+     1915
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     104,
+     1915,
+     1170,
+     2994
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     104,
+     2994,
+     1170,
+     3123
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1170,
+     197,
+     2243,
+     455
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1170,
+     455,
+     2243,
+     1106
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1170,
+     1120,
+     2243,
+     1160
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1170,
+     1160,
+     2243,
+     1740
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1170,
+     1740,
+     2243,
+     2797
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1170,
+     2800,
+     2243,
+     2836
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1170,
+     2836,
+     2243,
+     3123
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|926|SHIPBUILDING|[THEORETICAL}}",
+   "c1s1": "investigated by Bouguer in his ''Traité du Navire.'' The points <math>\\text{M}'\\text{M}''</math>, . . . on the curve are now termed ''pro-metacentres.''\n\nIf <math>\\rho</math> represent the length of the normal <math>\\text{B}'\\text{M}'</math> or the radius of curvature of the curve of buoyancy at an angle <math>\\theta</math>, then <math>\\rho . d\\theta = ds</math> the length of an element of arc of the <math>\\text{B}</math> curve. In the limit when <math>d\\theta</math> is indefinitely small, <math>\\frac{ds}{d\\theta} = \\rho</math>. Using Cartesian co-ordinates with <math>\\text{B}</math> as origin and <math>\\text{B}y</math>, <math>\\text{B}z</math>, as horizontal and vertical axes, we have—\n{{block center|<math>\\frac{dy}{d\\theta} = \\frac{ds}{d\\theta}\\cos\\theta = \\rho\\cos\\theta</math>, . . . . . (1)}}\n{{block center|<math>\\frac{dz}{d\\theta} = \\frac{ds}{d\\theta}\\sin\\theta = \\rho\\sin\\theta</math>; . . . . . (2)}}\nwhence\n{{block center|<math>y = \\int_0^\\theta \\rho . \\cos\\theta . d\\theta;\\ z = \\int_0^\\theta \\rho . \\sin\\theta . d\\theta</math>,}}\nand the righting lever <math>\\text{GZ} = y\\cos\\theta + (z - \\text{BG})\\sin\\theta</math>.\n\nThe radius <math>\\rho</math> is (as for the upright position) equal to the moment of inertia of the corresponding water-plane about a longitudinal axis through its centre of gravity divided by the volume of displacement; the integration may be directly performed in the case of bodies of simple geometrical form, while a convenient method of approximation such as Simpson's Rules is employed with vessels of the usual ship-shaped type. As an example in the case of a box, or a ship with upright sides in the neighbourhood of the water-line, if <math>\\text{BG} = a</math> and <math>\\text{BM} = \\rho_0</math>, then <math>\\rho = \\rho_0\\sec^3\\theta</math>; whence\n{{block center|<math>y = \\int_0^\\theta \\rho\\cos\\theta . d\\theta = \\rho_0\\tan\\theta</math>,}}",
+   "c1s2": "{{block center|<math>z = \\int_0^\\theta \\rho \\sin\\theta . d\\theta = \\tfrac{1}{2}\\rho_0 \\tan^2\\theta,</math>}}\nand\n{{block center|<math>\\text{GZ} = (\\rho_0 - a)\\sin\\theta + \\tfrac{1}{2}\\rho_0 \\tan^2\\theta . \\sin\\theta;</math>}}\nwhich relations will also hold for a prismatic vessel of parabolic section. It is interesting to note that in these cases if the stability for infinitely small inclinations is neutral, ''i.e.'' if <math>\\rho_0 = a</math>, the vessel is stable for small finite inclinations, the righting lever varying approximately as the cube of the angle of heel.\n\nThe application of the preceding formulae to actual ships is troublesome and laborious on account of the necessity for finding by trial the positions of the inclined water-lines which cut off a constant volume of displacement. To avoid this difficulty the process was modified by Reech and Risbec in the following manner:—Multiply equations (1) and (2) by <math>\\text{V}.d\\theta</math>, <math>\\text{V}</math> being the volume of displacement; we then have—\n{{block center|<math>d(\\text{V}y) = \\text{I} \\cos\\theta . d\\theta,</math> . . . . . (3)}}\n{{block center|<math>d(\\text{V}z) = \\text{I} \\sin\\theta . d\\theta,</math> . . . . . (4)}}",
+   "c1s3": "where <math>\\text{I}</math> is the moment of inertia of the inclined water-line about a longitudinal axis passing through its centre of gravity. These formulae have been obtained on the supposition that the volume <math>\\text{V}</math> is constant while <math>\\theta</math> is varying; but by regarding the above equations as representing the moments of transference horizontally and vertically due to the wedges, it is evident that <math>\\text{V}</math> may be allowed to vary in any manner provided that the moment of inertia <math>\\text{I}</math> is taken about the longitudinal axis passing through the intersection of consecutive water-lines. In particular the water-lines may all be drawn through the point of intersection of the upright water-line with the middle line, and the moments of inertia are then equal to <math>\\tfrac{1}{3}\\int r^3dx</math> for both sides of the ship, <math>r</math> being the half-breadth along the inclined water-line; the increase in volume is the difference between the quantity <math>\\int d\\theta \\int \\tfrac{1}{2}r^2dx</math> for the two sides of the ship.\n\nIf <math>\\text{V}_\\alpha</math>, <math>\\text{V}_0</math> be the volumes of displacement at angles <math>\\alpha</math> and <math>{}_0</math> respectively,\n{{block center|<math>\\text{V}_\\alpha - \\text{V}_0 = \\int_0^\\alpha d\\theta \\left[ \\int_{\\text{difference}} \\tfrac{1}{2}r^2dx \\right]</math>, . . . (5)}}\nand substituting in (3) and (4) and integrating,\n{{block center|<math>\\text{V}_\\alpha y = \\int_0 d\\theta \\left[ \\int_{\\text{sum}}^{\\frac{1}{3}r^3dx} \\right] \\cos\\theta</math>, . . . (6)}}\n{{block center|<math>\\text{V}_\\alpha z = \\int_0^\\alpha d\\theta \\left[ \\int_{\\text{sum}}^{\\frac{1}{3}r^3dx} \\right] \\sin\\theta</math>. . . . (7)}}\n\nOn eliminating <math>\\text{V}_\\alpha</math> in (5), (6) and (7), <math>y</math> and <math>z</math> can be found.\n\nThis is repeated at different draughts, and thus <math>\\text{V}_\\alpha</math>, <math>y</math> and <math>z</math> are determined at a number of draughts at the same angle, enabling curves of <math>y</math> and <math>z</math> to be drawn at various constant angles with <math>\\text{V}</math> for an abscissa; from these, curves may be obtained for <math>y</math> and <math>z</math> with the angle <math>\\alpha</math> as abscissa for various constant displacements; <math>\\text{GZ}</math> being equal to",
+   "c1s4": "{{block center|<math>y\\cos\\alpha+(z-a)\\sin\\alpha.</math>}}\n\nFrom the foregoing it is evident that the elements of transverse stability, including the co-ordinates of the centre of buoyancy, position",
+   "c2s1": "of pro-metacentre, values of righting lever and righting moment, depend on two variable quantities—the displacement and the angle of heel. '''''Curve of stability.''''' The righting lever <math>\\text{GZ}</math> is in England selected as the most useful criterion of the stability, and, after being evaluated for the various conditions, is plotted in a form of curves—(''a'') for various constant displacements on an abscissa of angle of inclination, (''b'') for a number of constant",
+   "c2s2": "{{c|{{sc|Fig.}} 9.—Cross Curves of Stability of a Battleship.}}",
+   "c2s3": "angles on an abscissa of displacement. These are known as ''curves of stability'' and ''cross curves of stability'' respectively; either of these can be readily constructed when the other has been obtained; which process is utilized in the method now almost universally adopted for obtaining <math>\\text{GZ}</math> at large angles of inclination, a full description being given in papers by Merrifield and Amsler in ''Trans. I.N.A.'' (1880 and 1884). The procedure is as follows:\n\n1. The substitution of calculations at constant angle for those at constant volume. A number of water-lines at inclinations having a constant angular interval (generally 15°) are drawn passing through the intersection <math>\\text{S}'</math> of the load water-line with the middle line on the body plan. Other water-lines are set off parallel to these at fixed distances above or below the original water-line passing through <math>\\text{S}'</math>.\n\n2. The volumes of displacement and the moments about an axis through <math>\\text{S}'</math> perpendicular to the water-line are determined for each draught and inclination by means of the Amsler-Laffon integrator,",
+   "c2s4": "{{c|{{sc|Fig.}} 10.—Curves of Stability of a Battleship.}}",
+   "c2s5": "the pointer of this instrument being taken in turn round the immersed part of each section.\n\n3. On dividing the moments by the corresponding volumes, the perpendicular distance of the centre of buoyancy from the vertical through <math>\\text{S}'</math> is obtained, ''i.e.'' the value of <math>\\text{GZ}</math>, assuming <math>\\text{G}</math> and <math>\\text{S}'</math> to coincide.\n\n4. For each angle in turn “cross curves” of <math>\\text{GZ}</math> are drawn on a base of displacement."
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v24 p0988 c2f1.png",
+   "c2f2": "eb1911 v24 p0988 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1268,
+     458,
+     2162,
+     1103
+    ],
+    "caption": [
+     1326,
+     1120,
+     2106,
+     1160
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1240,
+     450,
+     2248,
+     1107
+    ]
+   },
+   {
+    "box": [
+     1205,
+     1743,
+     2232,
+     2794
+    ],
+    "caption": [
+     1363,
+     2800,
+     2067,
+     2836
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1229,
+     1738,
+     2248,
+     2768
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    4
+   ],
+   "2": [
+    2,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6912,
+    "output_tokens": 172,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 10,
+    "input_tokens": 6416,
+    "output_tokens": 4406,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 19240
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|926|SHIPBUILDING|[THEORETICAL}}</noinclude>investigated by Bouguer in his ''Traité du Navire.'' The points <math>\\text{M}'\\text{M}''</math>, . . . on the curve are now termed ''pro-metacentres.''\n\nIf <math>\\rho</math> represent the length of the normal <math>\\text{B}'\\text{M}'</math> or the radius of curvature of the curve of buoyancy at an angle <math>\\theta</math>, then <math>\\rho . d\\theta = ds</math> the length of an element of arc of the <math>\\text{B}</math> curve. In the limit when <math>d\\theta</math> is indefinitely small, <math>\\frac{ds}{d\\theta} = \\rho</math>. Using Cartesian co-ordinates with <math>\\text{B}</math> as origin and <math>\\text{B}y</math>, <math>\\text{B}z</math>, as horizontal and vertical axes, we have—\n{{block center|<math>\\frac{dy}{d\\theta} = \\frac{ds}{d\\theta}\\cos\\theta = \\rho\\cos\\theta</math>, . . . . . (1)}}\n{{block center|<math>\\frac{dz}{d\\theta} = \\frac{ds}{d\\theta}\\sin\\theta = \\rho\\sin\\theta</math>; . . . . . (2)}}\nwhence\n{{block center|<math>y = \\int_0^\\theta \\rho . \\cos\\theta . d\\theta;\\ z = \\int_0^\\theta \\rho . \\sin\\theta . d\\theta</math>,}}\nand the righting lever <math>\\text{GZ} = y\\cos\\theta + (z - \\text{BG})\\sin\\theta</math>.\n\nThe radius <math>\\rho</math> is (as for the upright position) equal to the moment of inertia of the corresponding water-plane about a longitudinal axis through its centre of gravity divided by the volume of displacement; the integration may be directly performed in the case of bodies of simple geometrical form, while a convenient method of approximation such as Simpson's Rules is employed with vessels of the usual ship-shaped type. As an example in the case of a box, or a ship with upright sides in the neighbourhood of the water-line, if <math>\\text{BG} = a</math> and <math>\\text{BM} = \\rho_0</math>, then <math>\\rho = \\rho_0\\sec^3\\theta</math>; whence\n{{block center|<math>y = \\int_0^\\theta \\rho\\cos\\theta . d\\theta = \\rho_0\\tan\\theta</math>, <math>z = \\int_0^\\theta \\rho \\sin\\theta . d\\theta = \\tfrac{1}{2}\\rho_0 \\tan^2\\theta,</math>}}\nand\n{{block center|<math>\\text{GZ} = (\\rho_0 - a)\\sin\\theta + \\tfrac{1}{2}\\rho_0 \\tan^2\\theta . \\sin\\theta;</math>}}\nwhich relations will also hold for a prismatic vessel of parabolic section. It is interesting to note that in these cases if the stability for infinitely small inclinations is neutral, ''i.e.'' if <math>\\rho_0 = a</math>, the vessel is stable for small finite inclinations, the righting lever varying approximately as the cube of the angle of heel.\n\nThe application of the preceding formulae to actual ships is troublesome and laborious on account of the necessity for finding by trial the positions of the inclined water-lines which cut off a constant volume of displacement. To avoid this difficulty the process was modified by Reech and Risbec in the following manner:—Multiply equations (1) and (2) by <math>\\text{V}.d\\theta</math>, <math>\\text{V}</math> being the volume of displacement; we then have—\n{{block center|<math>d(\\text{V}y) = \\text{I} \\cos\\theta . d\\theta,</math> . . . . . (3)}}\n{{block center|<math>d(\\text{V}z) = \\text{I} \\sin\\theta . d\\theta,</math> . . . . . (4)}} where <math>\\text{I}</math> is the moment of inertia of the inclined water-line about a longitudinal axis passing through its centre of gravity. These formulae have been obtained on the supposition that the volume <math>\\text{V}</math> is constant while <math>\\theta</math> is varying; but by regarding the above equations as representing the moments of transference horizontally and vertically due to the wedges, it is evident that <math>\\text{V}</math> may be allowed to vary in any manner provided that the moment of inertia <math>\\text{I}</math> is taken about the longitudinal axis passing through the intersection of consecutive water-lines. In particular the water-lines may all be drawn through the point of intersection of the upright water-line with the middle line, and the moments of inertia are then equal to <math>\\tfrac{1}{3}\\int r^3dx</math> for both sides of the ship, <math>r</math> being the half-breadth along the inclined water-line; the increase in volume is the difference between the quantity <math>\\int d\\theta \\int \\tfrac{1}{2}r^2dx</math> for the two sides of the ship.\n\nIf <math>\\text{V}_\\alpha</math>, <math>\\text{V}_0</math> be the volumes of displacement at angles <math>\\alpha</math> and <math>{}_0</math> respectively,\n{{block center|<math>\\text{V}_\\alpha - \\text{V}_0 = \\int_0^\\alpha d\\theta \\left[ \\int_{\\text{difference}} \\tfrac{1}{2}r^2dx \\right]</math>, . . . (5)}}\nand substituting in (3) and (4) and integrating,\n{{block center|<math>\\text{V}_\\alpha y = \\int_0 d\\theta \\left[ \\int_{\\text{sum}}^{\\frac{1}{3}r^3dx} \\right] \\cos\\theta</math>, . . . (6)}}\n{{block center|<math>\\text{V}_\\alpha z = \\int_0^\\alpha d\\theta \\left[ \\int_{\\text{sum}}^{\\frac{1}{3}r^3dx} \\right] \\sin\\theta</math>. . . . (7)}}\n\nOn eliminating <math>\\text{V}_\\alpha</math> in (5), (6) and (7), <math>y</math> and <math>z</math> can be found.\n\nThis is repeated at different draughts, and thus <math>\\text{V}_\\alpha</math>, <math>y</math> and <math>z</math> are determined at a number of draughts at the same angle, enabling curves of <math>y</math> and <math>z</math> to be drawn at various constant angles with <math>\\text{V}</math> for an abscissa; from these, curves may be obtained for <math>y</math> and <math>z</math> with the angle <math>\\alpha</math> as abscissa for various constant displacements; <math>\\text{GZ}</math> being equal to {{block center|<math>y\\cos\\alpha+(z-a)\\sin\\alpha.</math>}}\n\nFrom the foregoing it is evident that the elements of transverse stability, including the co-ordinates of the centre of buoyancy, position of pro-metacentre, values of righting lever and righting moment, depend on two variable quantities—the displacement and the angle of heel. '''''Curve of stability.''''' The righting lever <math>\\text{GZ}</math> is in England selected as the most useful criterion of the stability, and, after being evaluated for the various conditions, is plotted in a form of curves—(''a'') for various constant displacements on an abscissa of angle of inclination, (''b'') for a number of constant angles on an abscissa of displacement. These are known as ''curves of stability'' and ''cross curves of stability'' respectively; either of these can be readily constructed when the other has been obtained; which process is utilized in the method now almost universally adopted for obtaining <math>\\text{GZ}</math> at large angles of inclination, a full description being given in papers by Merrifield and Amsler in ''Trans. I.N.A.'' (1880 and 1884). The procedure is as follows:\n\n[[File:eb1911 v24 p0988 c2f1.png|center|357px]]\n{{c|{{sc|Fig.}} 9.—Cross Curves of Stability of a Battleship.}}\n\n1. The substitution of calculations at constant angle for those at constant volume. A number of water-lines at inclinations having a constant angular interval (generally 15°) are drawn passing through the intersection <math>\\text{S}'</math> of the load water-line with the middle line on the body plan. Other water-lines are set off parallel to these at fixed distances above or below the original water-line passing through <math>\\text{S}'</math>.\n\n2. The volumes of displacement and the moments about an axis through <math>\\text{S}'</math> perpendicular to the water-line are determined for each draught and inclination by means of the Amsler-Laffon integrator, the pointer of this instrument being taken in turn round the immersed part of each section.\n\n[[File:eb1911 v24 p0988 c2f2.png|center|357px]]\n{{c|{{sc|Fig.}} 10.—Curves of Stability of a Battleship.}}\n\n3. On dividing the moments by the corresponding volumes, the perpendicular distance of the centre of buoyancy from the vertical through <math>\\text{S}'</math> is obtained, ''i.e.'' the value of <math>\\text{GZ}</math>, assuming <math>\\text{G}</math> and <math>\\text{S}'</math> to coincide.\n\n4. For each angle in turn “cross curves” of <math>\\text{GZ}</math> are drawn on a base of displacement.<noinclude><references/></noinclude>"
+}

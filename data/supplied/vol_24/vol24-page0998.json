@@ -1,0 +1,180 @@
+{
+ "volume": 24,
+ "page_number": 998,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1008",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1008",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1080,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     122,
+     136,
+     2260,
+     207
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     122,
+     207,
+     1189,
+     1304
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     122,
+     1304,
+     1189,
+     2287
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     122,
+     2287,
+     1189,
+     3153
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     207,
+     2260,
+     1046
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     1046,
+     2260,
+     1976
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1189,
+     1976,
+     2260,
+     2572
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2587,
+     2260,
+     2657
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2657,
+     2260,
+     3153
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|936|SHIPBUILDING|[ROLLING OF SHIPS}}",
+   "c1s1": "recommence an identical repetition of the movements she has just completed.\n\n“For the benefit of those who may glance at the appendix before they read the paper, I will mention that <math>\\text{T}</math> is the number of seconds occupied by the ship in performing a single oscillation in still water, starboard to port, or vice versa. <math>\\text{T}_1</math> is the number of seconds occupied by the wave in passing from hollow to crest, or crest to hollow. <math>\\Theta_1</math> is the number of degrees in slope of the steepest part of the wave; and <math>p/q</math> is the ratio <math>\\text{T}/\\text{T}_1</math>, with the numerator and denominator converted into the lowest whole numbers that will express the ratio, where, however, it must be noticed that for <math>\\text{T}/\\text{T}_1 = 1</math>, <math>p/q</math> must be taken as the limit of such a form as <math>\\tfrac{999999}{1000000}</math>. Then—\n\n“(i.) The ship will complete the phase in the time <math>= 2q\\text{T}</math>.\n\n“(ii.) In completing the phase the ship will pass through the vertical position <math>2\\ p</math> times, or <math>2\\ q</math> times, according as <math>p</math> or <math>q</math> is the smaller number.\n\n“(iii.) The ship will pass through the vertical position at the middle of the phase.\n\n“(iv.) On either side of the middle of the phase there must occur, as equal maximum oscillation, the maximum in the phase, say <math>\\Theta</math>, which will approximately (but never in excess) <math>= \\pm\\Theta_1\\frac{q}{q-p}</math>.\n\n“(v.) From these propositions it appears that if we compare two cases, in one of which the value of <math>\\text{T}/\\text{T}_1</math> is the reciprocal of its value in the other, the phase will in each case consist of the same number of oscillations similarly placed; but in that one in which the period of the wave is slower than the period of the ship, the angles of oscillation will be the larger in the ratio <math>p/q</math> or <math>q/p</math>, whichever is the greater. The following table expresses the results of the above propositions, as exhibited in the diagrams, based on the assumption that the period of the ship is in every case <math>\\text{T} = 5''</math>, and that the maximum slope of the wave <math>\\Theta_1 = 9</math> degrees:",
+   "c1s2": "{{block center|<math>\\begin{array}{|c|c|c|c|c|c|c|}\n\\hline\n\\text{Ship's Period, or T.} & \\text{Wave's Period, or T}_1. & \\text{T/T}_1. & \\text{T/T}_1\\text{, reduced to Lowest Whole Numbers} = p/q. & \\text{Time of Complete Phase} = 2q\\text{T}. & \\text{No. of Times Ship passes Vertical Position during Phase.} & \\text{Approx. Outside Value of }\\Theta\\text{, the Maximum Angle reached during Phase.} \\\\\n\\hline\n5'' & 5'' & 1 & \\frac{999999}{1000000} & \\text{Infinite.} & \\text{Infinite.} & \\text{Infinite.} \\\\\n5'' & 6{\\cdot}25'' & 0{\\cdot}8 & \\frac{4}{5} & 50'' & 8 & 45\\ \\text{deg.} \\\\\n5'' & 4'' & 1{\\cdot}25 & \\frac{5}{4} & 40'' & 8 & 36\\ ,, \\\\\n5'' & 10'' & 0{\\cdot}5 & \\frac{1}{2} & 20'' & 2 & 18\\ ,, \\\\\n5'' & 2{\\cdot}5'' & 2 & \\frac{2}{1} & 10'' & 2 & 9\\ ,, \\\\\n5'' & 9'' & 0{\\cdot}55 & \\frac{5}{9} & 90'' & 10 & 20\\ ,, \\\\\n5'' & 2{\\cdot}77'' & 1{\\cdot}8 & \\frac{9}{5} & 50'' & 10 & 11\\ ,, \\\\\n\\hline\n\\end{array}</math>}}\n\nThe assumption made in equation (1) that\n{{block center|<math>\\text{G}z = m\\,.\\,\\theta</math>}}\nis true if the sections of the ship in the vicinity of the water-line are concentric circular arcs; and is approximately true generally for small angles of inclination as long as <math>m</math> is not small. If <math>m</math> be small, the relation does not generally hold.\n\nIn a wall-sided ship,\n{{block center|<math>\\text{GZ} = \\sin\\theta(m + \\tfrac{1}{2}a\\tan^2\\theta),</math>}}\nwhere the BM is denoted by <math>a</math>; whence the equation for rolling through small angles becomes—\n{{block center|<math>\\frac{d^2\\theta}{dt^2} + \\frac{mg}{\\epsilon^2}\\theta + \\frac{ag}{2\\epsilon^2}\\quad\\theta^3 = 0,</math>}}",
+   "c1s3": "where <math>\\theta^5</math> and higher powers of <math>\\theta</math> are neglected.\n\nSections of other forms lead to a similar equation, but with different coefficients of <math>\\theta^3</math>; the above equation is therefore typical of all others. This condition has been worked out fully by Professor Scribanti,<sup>1</sup> who obtained a solution in the following form:\n{{block center|<math>\\text{T} = \\frac{2\\pi}{\\Theta}\\sqrt{\\frac{\\text{I}}{\\text{J}}}\\cdot\\left[l - \\left(\\frac{1}{2}\\right)^2.l^3 + \\left(\\frac{1.3}{2.4}\\right)^2 l^5 - \\dots\\ \\right],</math>}}\nwhere <math>\\Theta</math>* is the maximum angle of roll. <math>\\text{J}</math> is defined as the moment of inertia of the water-plane expressed in foot-ton units, ''i.e.'' is equal to <math>\\text{W}.a</math>, where <math>\\text{W}</math> is the displacement in tons. <math>\\text{I}</math> is the mass moment of inertia of the ship about its axis of oscillation, and <math>l^2 = \\frac{\\Theta^2}{\\Theta^2 + 4\\frac{m}{a}}</math>. Some numerical results for <math>\\frac{\\text{T}_m}{\\text{T}}</math>, where <math>\\text{T}_m</math> is the period found by the usual “ metacentric ” formula and <math>\\Theta</math> is 12°, are:\n{{block center|<math>\\begin{array}{|c|c|c|c|}\\hline a & \\text{16 ft.} & \\text{16 ft.} & \\text{16 ft.} \\\\ \\hline m & \\text{3 ft.} & \\text{4 in.} & \\tfrac{3}{8}\\ \\text{in.} \\\\ \\hline \\frac{\\text{T}_m}{\\text{T}} & 1\\cdot04 & 1\\cdot31 & 2\\cdot98 \\\\ \\hline\\end{array}</math>}}\n\n{{smaller|<sup>1</sup> ''Trans. Inst. Naval Arch.'', 1904.}}",
+   "c2s1": "When the metacentric height is zero, the formula becomes—\n\n{{block center|<math>\\text{T} = 1{\\cdot}67\\frac{\\pi}{\\Theta}\\sqrt{\\frac{\\text{I}}{\\text{J}}} = \\frac{5{\\cdot}25}{\\Theta}\\cdot\\sqrt{\\frac{\\epsilon^2}{ga}}.</math>}}\n\n'''''Resisted rolling.''''' It has been assumed in the foregoing that the rolling in still water and among waves is unresisted; it remains to take into account the resistances which always operate during rolling. In still water these cause a degradation of the amplitude until the ship finally comes to a position of rest; and when a vessel is rolling among waves they cause a similar degradation of amplitude.\n\nThe earliest investigations of resisted rolling in ''still'' water were made by Froude in England, and by Bertin, Duhil de Bénazé, Risbec and Antoine in France. The method adopted was actually to roll the ship in still water and observe how the amplitude decreased roll by roll. Men were caused to run from side to side of the ship, their runs being so timed as to add to the angle of roll on each successive swing until the maximum angle obtainable was reached, when all movement on board was stopped, and the ship allowed to roll freely of herself until she came to rest. During this free movement a complete record of her angular motion was registered by means of a short-period pendulum and an electric timer, and from this a curve of “declining angles” was constructed, in which abscissae represented number of rolls and ordinates extreme angles of roll to one side of the vertical. From this curve another curve was constructed, which was termed a “curve of extinction,” in which the abscissae",
+   "c2s2": "represented angles of roll and the ordinates the angle lost per swing. Figs. 28 and 29 give examples of these curves obtained from experiments with H.M.S. “Revenge.”<sup>2</sup> Having obtained such curves, Froude proceeded to investigate the relation between the degradation of the amplitude and the resistances which cause it. He assumed that the resistance to rolling varied partly as the angular velocity, and partly as the square of the angular velocity, thus obtaining the following equation for the angular motion of the ship:\n{{block center|<math>\\frac{\\text{W}\\epsilon^2}{g}\\cdot\\frac{d^2\\theta}{dt^2}+\\text{K}_1\\frac{d\\theta}{dt}+\\text{K}_2\\left(\\frac{d\\theta}{dt}\\right)^2+\\text{W}\\ .\\ m\\ .\\ \\theta=0.</math>}}\nIf <math>\\text{K}_2</math> is zero, a complete solution is—\n{{block center|<math>\\theta=\\text{A}_e^{\\frac{-\\text{K}_1g}{2\\text{W}\\epsilon^2}t}\\sin\\left(t\\sqrt{\\frac{mg}{\\epsilon^2}-\\frac{\\text{K}_1{}^2g^2}{4\\text{W}^2\\epsilon^4}}+\\beta\\right),</math> . . (7)}}\nwhere A and B are arbitrary, and the period <math>\\text{T}r</math> of resisted rolling is given by\n{{block center|<math>\\text{T}_r=\\frac{\\pi}{\\sqrt{\\frac{mg}{\\epsilon^2}-\\frac{\\text{K}_1{}^2g^2}{4\\text{W}^2\\epsilon^4}}}=\\frac{\\text{T}}{\\sqrt{1-\\frac{\\text{K}_1{}^2g}{4\\text{W}^2\\epsilon^2m}}}.</math>}}\nIt appears, therefore, that the period is slightly increased and the amplitude progressively diminished by the resistance. In actual cases where <math>\\text{K}_2</math> is necessarily included in the differential equation, the complete solution cannot be conveniently expressed analytically, but it can be determined in effect either by any method of approximate quadrature or by a process of “graphic integration.” The diminution of amplitude can also be approximately obtained by",
+   "c2s3": "{{c|{{sc|Fig.}} 28.—Curves of declining angles. C, light, and D, deep draught, no bilge keels; E, light, and F, deep draught, with bilge keels.}}",
+   "c2s4": "assuming the motion to be simple harmonic with amplitude <math>\\Theta</math> and by equating the work done by the resistances during the roll to the loss of dynamical stability—<math>\\text{W}.\\ m.\\ \\Theta\\times</math>decrement. The differential equation for the curve of extinction is thus obtained, and is—\n{{block center|<math>-\\frac{d\\Theta}{dn} = a\\,.\\,\\Theta + b\\,.\\,\\Theta^2,</math>}}\nwhere <math>\\Theta =</math> extreme angle (in degrees) reached at any particular oscillation, <math>n</math> the number of oscillations, and <math>a</math> and <math>b</math> are coefficients equal to\n{{block center|<math>\\frac{\\text{K}_1\\pi^2}{2\\text{W}m\\text{T}}</math> and <math>\\frac{4}{3}\\cdot\\frac{\\pi}{180}\\,\\frac{\\text{K}_2\\pi^2}{\\text{W}m\\text{T}^2}</math>}}\n\n{{smaller block|<sup>2</sup> Given by Sir W. H. White, F.R.S., in a paper read before the Institution of Naval Architects in 1895.}}"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v24 p0998 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1227,
+     1979,
+     2195,
+     2569
+    ],
+    "caption": [
+     1211,
+     2587,
+     2261,
+     2657
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1225,
+     1977,
+     2263,
+     2569
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4799,
+    "output_tokens": 101,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 7925,
+    "output_tokens": 7503,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|936|SHIPBUILDING|[ROLLING OF SHIPS}}</noinclude>recommence an identical repetition of the movements she has just completed.\n\n“For the benefit of those who may glance at the appendix before they read the paper, I will mention that <math>\\text{T}</math> is the number of seconds occupied by the ship in performing a single oscillation in still water, starboard to port, or vice versa. <math>\\text{T}_1</math> is the number of seconds occupied by the wave in passing from hollow to crest, or crest to hollow. <math>\\Theta_1</math> is the number of degrees in slope of the steepest part of the wave; and <math>p/q</math> is the ratio <math>\\text{T}/\\text{T}_1</math>, with the numerator and denominator converted into the lowest whole numbers that will express the ratio, where, however, it must be noticed that for <math>\\text{T}/\\text{T}_1 = 1</math>, <math>p/q</math> must be taken as the limit of such a form as <math>\\tfrac{999999}{1000000}</math>. Then—\n\n“(i.) The ship will complete the phase in the time <math>= 2q\\text{T}</math>.\n\n“(ii.) In completing the phase the ship will pass through the vertical position <math>2\\ p</math> times, or <math>2\\ q</math> times, according as <math>p</math> or <math>q</math> is the smaller number.\n\n“(iii.) The ship will pass through the vertical position at the middle of the phase.\n\n“(iv.) On either side of the middle of the phase there must occur, as equal maximum oscillation, the maximum in the phase, say <math>\\Theta</math>, which will approximately (but never in excess) <math>= \\pm\\Theta_1\\frac{q}{q-p}</math>.\n\n“(v.) From these propositions it appears that if we compare two cases, in one of which the value of <math>\\text{T}/\\text{T}_1</math> is the reciprocal of its value in the other, the phase will in each case consist of the same number of oscillations similarly placed; but in that one in which the period of the wave is slower than the period of the ship, the angles of oscillation will be the larger in the ratio <math>p/q</math> or <math>q/p</math>, whichever is the greater. The following table expresses the results of the above propositions, as exhibited in the diagrams, based on the assumption that the period of the ship is in every case <math>\\text{T} = 5''</math>, and that the maximum slope of the wave <math>\\Theta_1 = 9</math> degrees: {{block center|<math>\\begin{array}{|c|c|c|c|c|c|c|}\n\\hline\n\\text{Ship's Period, or T.} & \\text{Wave's Period, or T}_1. & \\text{T/T}_1. & \\text{T/T}_1\\text{, reduced to Lowest Whole Numbers} = p/q. & \\text{Time of Complete Phase} = 2q\\text{T}. & \\text{No. of Times Ship passes Vertical Position during Phase.} & \\text{Approx. Outside Value of }\\Theta\\text{, the Maximum Angle reached during Phase.} \\\\\n\\hline\n5'' & 5'' & 1 & \\frac{999999}{1000000} & \\text{Infinite.} & \\text{Infinite.} & \\text{Infinite.} \\\\\n5'' & 6{\\cdot}25'' & 0{\\cdot}8 & \\frac{4}{5} & 50'' & 8 & 45\\ \\text{deg.} \\\\\n5'' & 4'' & 1{\\cdot}25 & \\frac{5}{4} & 40'' & 8 & 36\\ ,, \\\\\n5'' & 10'' & 0{\\cdot}5 & \\frac{1}{2} & 20'' & 2 & 18\\ ,, \\\\\n5'' & 2{\\cdot}5'' & 2 & \\frac{2}{1} & 10'' & 2 & 9\\ ,, \\\\\n5'' & 9'' & 0{\\cdot}55 & \\frac{5}{9} & 90'' & 10 & 20\\ ,, \\\\\n5'' & 2{\\cdot}77'' & 1{\\cdot}8 & \\frac{9}{5} & 50'' & 10 & 11\\ ,, \\\\\n\\hline\n\\end{array}</math>}}\n\nThe assumption made in equation (1) that\n{{block center|<math>\\text{G}z = m\\,.\\,\\theta</math>}}\nis true if the sections of the ship in the vicinity of the water-line are concentric circular arcs; and is approximately true generally for small angles of inclination as long as <math>m</math> is not small. If <math>m</math> be small, the relation does not generally hold.\n\nIn a wall-sided ship,\n{{block center|<math>\\text{GZ} = \\sin\\theta(m + \\tfrac{1}{2}a\\tan^2\\theta),</math>}}\nwhere the BM is denoted by <math>a</math>; whence the equation for rolling through small angles becomes—\n{{block center|<math>\\frac{d^2\\theta}{dt^2} + \\frac{mg}{\\epsilon^2}\\theta + \\frac{ag}{2\\epsilon^2}\\quad\\theta^3 = 0,</math>}} where <math>\\theta^5</math> and higher powers of <math>\\theta</math> are neglected.\n\nSections of other forms lead to a similar equation, but with different coefficients of <math>\\theta^3</math>; the above equation is therefore typical of all others. This condition has been worked out fully by Professor Scribanti,<sup>1</sup> who obtained a solution in the following form:\n{{block center|<math>\\text{T} = \\frac{2\\pi}{\\Theta}\\sqrt{\\frac{\\text{I}}{\\text{J}}}\\cdot\\left[l - \\left(\\frac{1}{2}\\right)^2.l^3 + \\left(\\frac{1.3}{2.4}\\right)^2 l^5 - \\dots\\ \\right],</math>}}\nwhere <math>\\Theta</math>* is the maximum angle of roll. <math>\\text{J}</math> is defined as the moment of inertia of the water-plane expressed in foot-ton units, ''i.e.'' is equal to <math>\\text{W}.a</math>, where <math>\\text{W}</math> is the displacement in tons. <math>\\text{I}</math> is the mass moment of inertia of the ship about its axis of oscillation, and <math>l^2 = \\frac{\\Theta^2}{\\Theta^2 + 4\\frac{m}{a}}</math>. Some numerical results for <math>\\frac{\\text{T}_m}{\\text{T}}</math>, where <math>\\text{T}_m</math> is the period found by the usual “ metacentric ” formula and <math>\\Theta</math> is 12°, are:\n{{block center|<math>\\begin{array}{|c|c|c|c|}\\hline a & \\text{16 ft.} & \\text{16 ft.} & \\text{16 ft.} \\\\ \\hline m & \\text{3 ft.} & \\text{4 in.} & \\tfrac{3}{8}\\ \\text{in.} \\\\ \\hline \\frac{\\text{T}_m}{\\text{T}} & 1\\cdot04 & 1\\cdot31 & 2\\cdot98 \\\\ \\hline\\end{array}</math>}}\n\n{{smaller|<sup>1</sup> ''Trans. Inst. Naval Arch.'', 1904.}} When the metacentric height is zero, the formula becomes—\n\n{{block center|<math>\\text{T} = 1{\\cdot}67\\frac{\\pi}{\\Theta}\\sqrt{\\frac{\\text{I}}{\\text{J}}} = \\frac{5{\\cdot}25}{\\Theta}\\cdot\\sqrt{\\frac{\\epsilon^2}{ga}}.</math>}}\n\n'''''Resisted rolling.''''' It has been assumed in the foregoing that the rolling in still water and among waves is unresisted; it remains to take into account the resistances which always operate during rolling. In still water these cause a degradation of the amplitude until the ship finally comes to a position of rest; and when a vessel is rolling among waves they cause a similar degradation of amplitude.\n\nThe earliest investigations of resisted rolling in ''still'' water were made by Froude in England, and by Bertin, Duhil de Bénazé, Risbec and Antoine in France. The method adopted was actually to roll the ship in still water and observe how the amplitude decreased roll by roll. Men were caused to run from side to side of the ship, their runs being so timed as to add to the angle of roll on each successive swing until the maximum angle obtainable was reached, when all movement on board was stopped, and the ship allowed to roll freely of herself until she came to rest. During this free movement a complete record of her angular motion was registered by means of a short-period pendulum and an electric timer, and from this a curve of “declining angles” was constructed, in which abscissae represented number of rolls and ordinates extreme angles of roll to one side of the vertical. From this curve another curve was constructed, which was termed a “curve of extinction,” in which the abscissae represented angles of roll and the ordinates the angle lost per swing. Figs. 28 and 29 give examples of these curves obtained from experiments with H.M.S. “Revenge.”<sup>2</sup> Having obtained such curves, Froude proceeded to investigate the relation between the degradation of the amplitude and the resistances which cause it. He assumed that the resistance to rolling varied partly as the angular velocity, and partly as the square of the angular velocity, thus obtaining the following equation for the angular motion of the ship:\n{{block center|<math>\\frac{\\text{W}\\epsilon^2}{g}\\cdot\\frac{d^2\\theta}{dt^2}+\\text{K}_1\\frac{d\\theta}{dt}+\\text{K}_2\\left(\\frac{d\\theta}{dt}\\right)^2+\\text{W}\\ .\\ m\\ .\\ \\theta=0.</math>}}\nIf <math>\\text{K}_2</math> is zero, a complete solution is—\n{{block center|<math>\\theta=\\text{A}_e^{\\frac{-\\text{K}_1g}{2\\text{W}\\epsilon^2}t}\\sin\\left(t\\sqrt{\\frac{mg}{\\epsilon^2}-\\frac{\\text{K}_1{}^2g^2}{4\\text{W}^2\\epsilon^4}}+\\beta\\right),</math> . . (7)}}\nwhere A and B are arbitrary, and the period <math>\\text{T}r</math> of resisted rolling is given by\n{{block center|<math>\\text{T}_r=\\frac{\\pi}{\\sqrt{\\frac{mg}{\\epsilon^2}-\\frac{\\text{K}_1{}^2g^2}{4\\text{W}^2\\epsilon^4}}}=\\frac{\\text{T}}{\\sqrt{1-\\frac{\\text{K}_1{}^2g}{4\\text{W}^2\\epsilon^2m}}}.</math>}}\nIt appears, therefore, that the period is slightly increased and the amplitude progressively diminished by the resistance. In actual cases where <math>\\text{K}_2</math> is necessarily included in the differential equation, the complete solution cannot be conveniently expressed analytically, but it can be determined in effect either by any method of approximate quadrature or by a process of “graphic integration.” The diminution of amplitude can also be approximately obtained by assuming the motion to be simple harmonic with amplitude <math>\\Theta</math> and by equating the work done by the resistances during the roll to the loss of dynamical stability—<math>\\text{W}.\\ m.\\ \\Theta\\times</math>decrement. The differential equation for the curve of extinction is thus obtained, and is—\n{{block center|<math>-\\frac{d\\Theta}{dn} = a\\,.\\,\\Theta + b\\,.\\,\\Theta^2,</math>}}\nwhere <math>\\Theta =</math> extreme angle (in degrees) reached at any particular oscillation, <math>n</math> the number of oscillations, and <math>a</math> and <math>b</math> are coefficients equal to\n{{block center|<math>\\frac{\\text{K}_1\\pi^2}{2\\text{W}m\\text{T}}</math> and <math>\\frac{4}{3}\\cdot\\frac{\\pi}{180}\\,\\frac{\\text{K}_2\\pi^2}{\\text{W}m\\text{T}^2}</math>}}\n\n[[File:eb1911 v24 p0998 c2f1.png|center|357px]]\n{{c|{{sc|Fig.}} 28.—Curves of declining angles. C, light, and D, deep draught, no bilge keels; E, light, and F, deep draught, with bilge keels.}}\n\n{{smaller block|<sup>2</sup> Given by Sir W. H. White, F.R.S., in a paper read before the Institution of Naval Architects in 1895.}}<noinclude><references/></noinclude>"
+}

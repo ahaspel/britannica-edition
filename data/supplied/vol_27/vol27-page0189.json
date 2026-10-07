@@ -1,0 +1,233 @@
+{
+ "volume": 27,
+ "page_number": 189,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n196",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n196",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1095,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     130,
+     123,
+     2281,
+     192
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     130,
+     192,
+     1197,
+     891
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     130,
+     891,
+     1197,
+     1721
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     130,
+     1721,
+     1197,
+     1826
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     130,
+     1826,
+     1197,
+     2730
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     130,
+     2730,
+     1197,
+     3139
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1197,
+     192,
+     2281,
+     1240
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1614,
+     1240,
+     2281,
+     1826
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1614,
+     1834,
+     2281,
+     1902
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1197,
+     1240,
+     1614,
+     1902
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1197,
+     1902,
+     2281,
+     2970
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1197,
+     2970,
+     2281,
+     3139
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|174|TRANSFORMERS|}}",
+   "c1s1": "produced by an electromotive force of 2000 volts, an insulation test must be applied with double this voltage between the primary and the secondary, the primary and the case, and the primary and the core, to ascertain whether the insulation is sufficient. To prevent electric discharges from breaking down the machine in ordinary work, this extra pressure ought to be applied for at least a quarter of an hour. In some cases three or four times the working pressure is applied for one minute between the primary and secondary circuits. When such an alternating current transformer has an alternating current passed through its primary circuit, an alternating magnetization is produced in the core, and this again induces an alternating secondary current. The secondary current has a greater or less electromotive force than the primary current according as the number of windings or turns on the secondary circuit is greater or less than those on the primary. Of the power thus imparted to the primary circuit one portion is dissipated by the heat generated in the primary and secondary circuits by the currents, and another portion by ''the iron core losses'' due to the energy wasted in the cyclical magnetization of the core; the latter are partly eddy current losses and partly hysteresis losses.\n\nIn open magnetic circuit transformers the core takes the form of",
+   "c1s2": "{{c|{{sc|Fig.}} 3.—Diagrams of (A) Mordey (in section), (B) Kapp and (C) Ganz Transformers.}}\n{{c|1, 1 Primary circuit; 2, 2 Secondary circuit.}}",
+   "c1s3": "¶\nAlternating current transformers are classified into (i.) ''Core'' and (ii.) ''Shell'' transformers, depending upon the arrangements of the iron and copper circuits. If the copper circuits are wound on the outside of what is virtually an iron ring, the transformer is a core transformer; if the iron encloses the copper circuits, it is a shell transformer. Shell transformers have the disadvantage generally of poor ventilaton for the copper circuits. Berry, however, has overcome this difficulty by making the iron circuit in the form of a number of bunches of rectangular frames which are set in radial fashion and the adjacent legs all embraced by the two copper circuits in the form of a pair of concentric cylinders. In this manner he secures good ventilation and a minimum expenditure in copper and iron, as well as the possibility of insulating the two copper circuits well from each other and from the core. An important matter is the cooling of the core. This may be effected either by ordinary radiation, or by a forced draught of air made by a fan or else by immersing the transformer in oil, the oil being kept cool by pipes through which cold water circulates immersed in it. This last method is adopted for large high-tension transformers.\n\nThe ratio between the power given out by a transformer and the power taken up by it is called its ''efficiency'', and is best",
+   "c1s4": "'''''Efficiency.''''' represented by a curve, of which the ordinate is the efficiency expressed as a percentage, and the corresponding abscissae represent the fractions of the full load as decimal fractions. The output of the transformer is generally reckoned in kilowatts, and the load is conveniently expressed in decimal fractions of the full load taken as unity. The efficiency on one-tenth of full load is generally a fairly good criterion of the economy of the transformer as a transforming agency. In large transformers the one-tenth load efficiency will reach 90% or more, and in small transformers 75 to 80%.",
+   "c2s1": "The general form of the efficiency curve for a closed circuit transformer is shown in fig. 4. The horizontal distances represent fractions of full secondary load (represented by unity), and the vertical distances efficiency in percentages. The efficiency curve has a maximum value corresponding to that degree of load at which the copper losses in the transformer are equal to the iron losses.\n\n{{smaller block|In the case of modern closed magnetic circuit transformers the copper losses are proportional to the square of the secondary current <math>(\\text{I}_2)</math> or to <math>q\\text{I}_2^2</math>, where <math>q = \\text{R}_1\\alpha^2+\\text{R}_2</math>; <math>\\text{R}_1</math> being the resistance of the primary and <math>\\text{R}_2</math> that of the secondary circuit, while <math>\\alpha</math> is the ratio of the number of secondary and primary windings of the transformer. Let <math>\\text{C}</math> stand for the core loss, and <math>\\text{V}_2</math> for the secondary terminal potential difference (R.M.S. value). We can then write as an expression for the efficiency <math>(\\eta)</math> of the transformer <math>(\\eta = \\text{I}_2\\text{V}_2/ (\\text{C} + q\\text{I}_2^2+\\text{I}_2\\text{V}_2)</math>. It is easy to show that if <math>\\text{C}_1</math>, <math>\\text{V}_2</math> and <math>q</math> are constants, but <math>\\text{I}_2</math> is variable, the above expression for <math>\\eta</math> has a maximum value when <math>\\text{C} - q\\text{I}_2^2 = \\text{O}</math>, that is, when the iron core loss <math>\\text{C} =</math> the total copper losses <math>q\\text{I}_2^2</math>.}}\n\n''Iron and Copper Losses.''—The iron core energy-waste, due to the hysteresis and eddy currents, may be stated in watts, or expressed as a fraction of the full load secondary output. In small transformers of 1 to 3 kilowatts output it may amount to 2 or 3%, and in large transformers of 10 to 50 kilowatts and upwards it should be 1 or less than 1%. Thus the core loss of a 30-kilowatt transformer (one having a secondary output of 30,000 watts) should not exceed 250 watts.",
+   "c2s2": "{{c|{{sc|Fig.}} 4.—Typical Efficiency Curve of Closed Circuit Transformer.}}",
+   "c2s3": "It has been shown that for the constant potential transformer the iron core loss is constant at all loads, but diminishes slightly as the core temperature rises. On the other hand, the copper losses due to the resistance of the copper circuits increase about 0·4% per degree C. with rise of temperature. The current taken in at the primary side of the transformer, when the secondary circuit is",
+   "c2s4": "unclosed, is called the ''magnetizing current'', and the power then absorbed by the transformer is called the ''open circuit loss'' or magnetizing watts. The ratio of the terminal potential difference at the primary and secondary terminals is called the ''transformation ratio'' of the transformer. Every transformer is designed to give a certain transformation ratio, corresponding to some particular primary voltage. In some cases transformers are designed to transform, not potential difference, but current in a constant ratio. The product of the root-mean-square (R.M.S.), effective or virtual, values of the primary current, and the primary terminal potential difference, is called the ''apparent power'' or apparent watts given to the transformer. The true electrical power may be numerically equal to this product, but it is never greater, and is sometimes less. The ratio of the true power to the apparent power is called the ''power factor'' of the transformer. The power factor approaches unity in the case of a closed circuit transformer, which is loaded non-inductively on the secondary circuit to any considerable fraction of its full load, but in the case of an open circuit transformer the power factor is always much less than unity at all loads. Power factor curves show the variation of power factor with load. Examples of these curves were first given by J. A. Fleming, who suggested the term itself (see ''Jour. Inst. Elec. Eng. Lond.'', 1892, 21, p. 606). A low power factor always implies a magnetic circuit of large reluctance.",
+   "c2s5": "¶\nThe operation of the alternating current is then as follows: the periodic magnetizing force of the primary circuit creates a periodic magnetic flux in the core, and this being linked with the primary circuit creates by its variation what is called the back electromotive force in the primary circuit. The variation of the particular portion"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0189 c1f1.png",
+   "c2f1": "eb1911 v27 p0189 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     194,
+     1234,
+     1128,
+     1718
+    ],
+    "caption": [
+     136,
+     1714,
+     1188,
+     1826
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     223,
+     1230,
+     1152,
+     1711
+    ]
+   },
+   {
+    "box": [
+     1624,
+     1241,
+     2255,
+     1823
+    ],
+    "caption": [
+     1677,
+     1834,
+     2254,
+     1902
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1679,
+     1239,
+     2253,
+     1770
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 7034,
+    "output_tokens": 180,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 10,
+    "input_tokens": 7199,
+    "output_tokens": 3860,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 19240
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|174|TRANSFORMERS|}}</noinclude>produced by an electromotive force of 2000 volts, an insulation test must be applied with double this voltage between the primary and the secondary, the primary and the case, and the primary and the core, to ascertain whether the insulation is sufficient. To prevent electric discharges from breaking down the machine in ordinary work, this extra pressure ought to be applied for at least a quarter of an hour. In some cases three or four times the working pressure is applied for one minute between the primary and secondary circuits. When such an alternating current transformer has an alternating current passed through its primary circuit, an alternating magnetization is produced in the core, and this again induces an alternating secondary current. The secondary current has a greater or less electromotive force than the primary current according as the number of windings or turns on the secondary circuit is greater or less than those on the primary. Of the power thus imparted to the primary circuit one portion is dissipated by the heat generated in the primary and secondary circuits by the currents, and another portion by ''the iron core losses'' due to the energy wasted in the cyclical magnetization of the core; the latter are partly eddy current losses and partly hysteresis losses.\n\nIn open magnetic circuit transformers the core takes the form of\n\n[[File:eb1911 v27 p0189 c1f1.png|center|351px]]\n{{c|{{sc|Fig.}} 3.—Diagrams of (A) Mordey (in section), (B) Kapp and (C) Ganz Transformers.}}\n{{c|1, 1 Primary circuit; 2, 2 Secondary circuit.}}\n\nAlternating current transformers are classified into (i.) ''Core'' and (ii.) ''Shell'' transformers, depending upon the arrangements of the iron and copper circuits. If the copper circuits are wound on the outside of what is virtually an iron ring, the transformer is a core transformer; if the iron encloses the copper circuits, it is a shell transformer. Shell transformers have the disadvantage generally of poor ventilaton for the copper circuits. Berry, however, has overcome this difficulty by making the iron circuit in the form of a number of bunches of rectangular frames which are set in radial fashion and the adjacent legs all embraced by the two copper circuits in the form of a pair of concentric cylinders. In this manner he secures good ventilation and a minimum expenditure in copper and iron, as well as the possibility of insulating the two copper circuits well from each other and from the core. An important matter is the cooling of the core. This may be effected either by ordinary radiation, or by a forced draught of air made by a fan or else by immersing the transformer in oil, the oil being kept cool by pipes through which cold water circulates immersed in it. This last method is adopted for large high-tension transformers.\n\nThe ratio between the power given out by a transformer and the power taken up by it is called its ''efficiency'', and is best '''''Efficiency.''''' represented by a curve, of which the ordinate is the efficiency expressed as a percentage, and the corresponding abscissae represent the fractions of the full load as decimal fractions. The output of the transformer is generally reckoned in kilowatts, and the load is conveniently expressed in decimal fractions of the full load taken as unity. The efficiency on one-tenth of full load is generally a fairly good criterion of the economy of the transformer as a transforming agency. In large transformers the one-tenth load efficiency will reach 90% or more, and in small transformers 75 to 80%. The general form of the efficiency curve for a closed circuit transformer is shown in fig. 4. The horizontal distances represent fractions of full secondary load (represented by unity), and the vertical distances efficiency in percentages. The efficiency curve has a maximum value corresponding to that degree of load at which the copper losses in the transformer are equal to the iron losses.\n\n{{smaller block|In the case of modern closed magnetic circuit transformers the copper losses are proportional to the square of the secondary current <math>(\\text{I}_2)</math> or to <math>q\\text{I}_2^2</math>, where <math>q = \\text{R}_1\\alpha^2+\\text{R}_2</math>; <math>\\text{R}_1</math> being the resistance of the primary and <math>\\text{R}_2</math> that of the secondary circuit, while <math>\\alpha</math> is the ratio of the number of secondary and primary windings of the transformer. Let <math>\\text{C}</math> stand for the core loss, and <math>\\text{V}_2</math> for the secondary terminal potential difference (R.M.S. value). We can then write as an expression for the efficiency <math>(\\eta)</math> of the transformer <math>(\\eta = \\text{I}_2\\text{V}_2/ (\\text{C} + q\\text{I}_2^2+\\text{I}_2\\text{V}_2)</math>. It is easy to show that if <math>\\text{C}_1</math>, <math>\\text{V}_2</math> and <math>q</math> are constants, but <math>\\text{I}_2</math> is variable, the above expression for <math>\\eta</math> has a maximum value when <math>\\text{C} - q\\text{I}_2^2 = \\text{O}</math>, that is, when the iron core loss <math>\\text{C} =</math> the total copper losses <math>q\\text{I}_2^2</math>.}}\n\n''Iron and Copper Losses.''—The iron core energy-waste, due to the hysteresis and eddy currents, may be stated in watts, or expressed as a fraction of the full load secondary output. In small transformers of 1 to 3 kilowatts output it may amount to 2 or 3%, and in large transformers of 10 to 50 kilowatts and upwards it should be 1 or less than 1%. Thus the core loss of a 30-kilowatt transformer (one having a secondary output of 30,000 watts) should not exceed 250 watts. It has been shown that for the constant potential transformer the iron core loss is constant at all loads, but diminishes slightly as the core temperature rises. On the other hand, the copper losses due to the resistance of the copper circuits increase about 0·4% per degree C. with rise of temperature. The current taken in at the primary side of the transformer, when the secondary circuit is unclosed, is called the ''magnetizing current'', and the power then absorbed by the transformer is called the ''open circuit loss'' or magnetizing watts. The ratio of the terminal potential difference at the primary and secondary terminals is called the ''transformation ratio'' of the transformer. Every transformer is designed to give a certain transformation ratio, corresponding to some particular primary voltage. In some cases transformers are designed to transform, not potential difference, but current in a constant ratio. The product of the root-mean-square (R.M.S.), effective or virtual, values of the primary current, and the primary terminal potential difference, is called the ''apparent power'' or apparent watts given to the transformer. The true electrical power may be numerically equal to this product, but it is never greater, and is sometimes less. The ratio of the true power to the apparent power is called the ''power factor'' of the transformer. The power factor approaches unity in the case of a closed circuit transformer, which is loaded non-inductively on the secondary circuit to any considerable fraction of its full load, but in the case of an open circuit transformer the power factor is always much less than unity at all loads. Power factor curves show the variation of power factor with load. Examples of these curves were first given by J. A. Fleming, who suggested the term itself (see ''Jour. Inst. Elec. Eng. Lond.'', 1892, 21, p. 606). A low power factor always implies a magnetic circuit of large reluctance.\n\n[[File:eb1911 v27 p0189 c2f1.png|center|219px]]\n{{c|{{sc|Fig.}} 4.—Typical Efficiency Curve of Closed Circuit Transformer.}}\n\nThe operation of the alternating current is then as follows: the periodic magnetizing force of the primary circuit creates a periodic magnetic flux in the core, and this being linked with the primary circuit creates by its variation what is called the back electromotive force in the primary circuit. The variation of the particular portion<noinclude><references/></noinclude>"
+}

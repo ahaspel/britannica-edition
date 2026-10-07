@@ -1,0 +1,172 @@
+{
+ "volume": 26,
+ "page_number": 859,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n873",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n873",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1077,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     83,
+     142,
+     2218,
+     208
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     83,
+     223,
+     1147,
+     2019
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     83,
+     2033,
+     1147,
+     2102
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     83,
+     2102,
+     1147,
+     3150
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1147,
+     208,
+     2218,
+     878
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1147,
+     878,
+     2218,
+     1976
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1147,
+     1976,
+     2218,
+     3071
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1147,
+     3071,
+     2218,
+     3150
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||THERMOELECTRICITY|819}}",
+   "c1s1": "{{c|{{sc|Fig.}} 4.—Potential Diagrams of Thermocouple on the Contact Theory.}}",
+   "c1s2": "appears to diminish with rise of temperature to a slight extent in copper, but the diminution is so small that he does not regard it as established with certainty. The value found at a temperature of 150° C. was +2·5 microjoules per ampere-second per degree, or +2·5 microvolts per degree in the case of copper, which agrees very fairly with the value deduced from thermoelectric tests. The value found by Batelli for iron was −5·0 microvolts per degree at 108° C., which appears too small in comparison. These measurements, though subject to some uncertainty on account of the great experimental difficulties, are a very valuable confirmation of the accuracy of Thomson's theory, because they show that the magnitude of the effect is of the required order, but they cannot be said to be strongly in support of Tait's hypothesis. A comparison of the results of different observers would also suggest that the law of variation may be different in different metals, although the differences in the values of <math>d^2E/dT^2</math> may be due in part to differences of purity or errors of observation. It would appear, for instance, according to the observations of Dewar and Fleming, that the value of <math>s</math> for iron is positive below −150° C., at which point it vanishes. At ordinary temperatures the value is negative, increasing rapidly in the negative direction as the temperature rises. This might be appropriately represented, as already suggested, by a linear formula <math>s=s_0-cT</math>.\n\n18. ''Potential Diagrams on the Contact Theory''.—It is instructive to consider the distribution of potential in a thermoelectric circuit, and its relation to the resultant E.M.F. and to the seat of the E.M.F. In fig. 4, which is given as an illustration, the cold junctions are supposed to be at 0° C. and the hot junctions at 100° C. Noll's values (Table I.) are taken for the E.M.F., and it is supposed that the coefficient of the Thomson effect is zero in lead, ''i.e.'' that there is no E.M.F. and that the potential is uniform throughout",
+   "c2s1": "the length of the lead wire. Taking the lead-iron couple as an example, the value of <math>dE/dt</math> at the hot junction 100° C. is 10·305 microvolts per degree, and the value of the Peltier coefficient <math>P = TdE/dT</math> is <math>+3844</math> microvolts. In other words, we may suppose that there is an E.M.F. of that magnitude situated at the junction which causes positive electricity to flow from the lead to the iron. If the circuit is open, as represented in the diagram, the flow will cease as soon as it has raised the potential of the iron 3844 microvolts above that of the lead. In the substance of the iron itself there is an E.M.F. due to the Thomson effect of about 10 microvolts per degree tending to drive positive electricity from hot to cold, and raising the cold end of the iron 989 microvolts in potential above the hot end on open circuit. At the cold junction the iron is supposed to be connected to a piece of lead at 0° C., and there is a sudden drop of potential due to the Peltier effect of 3648 microvolts. If the circuit is cut at this point, there remains a difference of potential <math>E = 1184</math> microvolts, the resultant E.M.F. of the circuit, tending to drive positive electricity from the iron to the lead across the cold junction. If the circuit is closed, there will be a current <math>C = E/R</math>, where <math>R = R' + R''</math>, the sum of the resistances of the lead",
+   "c2s2": "and iron. The flow of the current will produce a fall of potential <math>ER'/R</math> in the lead from cold to hot, and <math>ER''/R</math> in the iron from hot to cold, but the potential difference due to the Peltier effect at either junction will not be affected. For simplicity in the diagram the temperature gradient has been taken as uniform, and the specific heat <math>s = \\text{constant}</math>, but the total P.D. would be the same whatever the gradient.\n\nSimilar diagrams are given in fig. 4 for cadmium in which both the specific heat and the Peltier effect are positive, and also for platinum and nickel in which both coefficients are negative. The metals are supposed to be all joined together at the hot junction, and the circuit cut in the lead near the cold junction. The diagram will serve for any selected couple, such as iron-nickel, and is not restricted to combinations with lead. The following table shows the component parts of the E.M.F. in each case:—\n\n{{c|{{sc|Table III.}}}}\n\n{{block center|{{smaller|Thermocouple.}} <math>\\text{P}_{100} \\quad - \\quad -\\text{P}_0 \\quad -100\\times s_{50} \\quad = \\quad \\text{E}_{0-100}</math>}}\n\n{{block center|Iron-lead . <math>+3844- \\quad +3648- \\quad -988= \\quad +1184</math>}}\n\n{{block center|Cadmium-lead. <math>+2389- \\quad +823- \\quad +1095= \\quad +471</math>}}\n\n{{block center|Platinum-lead . <math>-1919- \\quad -828- \\quad -682= \\quad -409</math>}}\n\n{{block center|Nickel-lead . <math>-8239- \\quad -5206- \\quad -975= \\quad -2058</math>}}\n\nThe components for any other combination of two are found by taking the algebraic difference of the values with respect to lead.\n\n19. ''Relation to the Volta Effect.''—It is now generally conceded that the relatively large differences of potential observable with an electrometer between metals on open circuit, as discovered by Volta, are due to the ''chemical'' affinities of the metals, and have no direct relation to thermoelectric phenomena or to the Peltier effect. The order of the metals in respect of the two",
+   "c2s3": "effects is quite different. The potential difference, due to the Volta effect in air, has been shown by Thomson (Lord Kelvin) and his pupils to be of the same order of magnitude, if not absolutely the same, as that produced in a dilute electrolyte in which two metallically connected plates (''e.g.'' zinc and copper) are immersed. (On this hypothesis, it may be explained by regarding the air as an electrolyte of infinite specific resistance.) It is also profoundly modified by the state of the exposed surfaces, a coating of oxide on the copper greatly increasing the effect, as it would in a voltaic cell. The Peltier effect and the thermo-E.M.F., on the other hand, do not depend on the state of the surfaces, but only on the state of the substance. An attempt has been made to explain the Volta effect as due to the affinity of the metals ''for each other'', but that would not account for the variation of the effect with the state of the surface, except as affecting the actual surface of contact. It is equally evident that chemical affinity between the metals cannot be the explanation of the Peltier E.M.F. This would necessitate chemical action at the junction when a current passed through it, as in an electrolytic cell, whereas the action appears to be purely thermal, and leads to a consistent theory on that hypothesis. The chemical action between metals in the solid state must be infinitesimal, and could only suffice to produce small charges analogous to those of frictional electricity; it could not maintain a permanent difference of potential at a metallic junction through which a current was passing. Although it is possible that differences of potential larger than the Peltier",
+   "c2s4": "effect might exist between two metals in contact on open circuit, it is certain that the only effective E.M.F. in practice is the"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0859 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     175,
+     994,
+     1037,
+     2019
+    ],
+    "caption": [
+     175,
+     2033,
+     1005,
+     2101
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     181,
+     994,
+     1078,
+     2021
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    3
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4580,
+    "output_tokens": 96,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 6143,
+    "output_tokens": 2967,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||THERMOELECTRICITY|819}}</noinclude>[[File:eb1911 v26 p0859 c1f1.png|center|356px]]\n{{c|{{sc|Fig.}} 4.—Potential Diagrams of Thermocouple on the Contact Theory.}}\n\nappears to diminish with rise of temperature to a slight extent in copper, but the diminution is so small that he does not regard it as established with certainty. The value found at a temperature of 150° C. was +2·5 microjoules per ampere-second per degree, or +2·5 microvolts per degree in the case of copper, which agrees very fairly with the value deduced from thermoelectric tests. The value found by Batelli for iron was −5·0 microvolts per degree at 108° C., which appears too small in comparison. These measurements, though subject to some uncertainty on account of the great experimental difficulties, are a very valuable confirmation of the accuracy of Thomson's theory, because they show that the magnitude of the effect is of the required order, but they cannot be said to be strongly in support of Tait's hypothesis. A comparison of the results of different observers would also suggest that the law of variation may be different in different metals, although the differences in the values of <math>d^2E/dT^2</math> may be due in part to differences of purity or errors of observation. It would appear, for instance, according to the observations of Dewar and Fleming, that the value of <math>s</math> for iron is positive below −150° C., at which point it vanishes. At ordinary temperatures the value is negative, increasing rapidly in the negative direction as the temperature rises. This might be appropriately represented, as already suggested, by a linear formula <math>s=s_0-cT</math>.\n\n18. ''Potential Diagrams on the Contact Theory''.—It is instructive to consider the distribution of potential in a thermoelectric circuit, and its relation to the resultant E.M.F. and to the seat of the E.M.F. In fig. 4, which is given as an illustration, the cold junctions are supposed to be at 0° C. and the hot junctions at 100° C. Noll's values (Table I.) are taken for the E.M.F., and it is supposed that the coefficient of the Thomson effect is zero in lead, ''i.e.'' that there is no E.M.F. and that the potential is uniform throughout the length of the lead wire. Taking the lead-iron couple as an example, the value of <math>dE/dt</math> at the hot junction 100° C. is 10·305 microvolts per degree, and the value of the Peltier coefficient <math>P = TdE/dT</math> is <math>+3844</math> microvolts. In other words, we may suppose that there is an E.M.F. of that magnitude situated at the junction which causes positive electricity to flow from the lead to the iron. If the circuit is open, as represented in the diagram, the flow will cease as soon as it has raised the potential of the iron 3844 microvolts above that of the lead. In the substance of the iron itself there is an E.M.F. due to the Thomson effect of about 10 microvolts per degree tending to drive positive electricity from hot to cold, and raising the cold end of the iron 989 microvolts in potential above the hot end on open circuit. At the cold junction the iron is supposed to be connected to a piece of lead at 0° C., and there is a sudden drop of potential due to the Peltier effect of 3648 microvolts. If the circuit is cut at this point, there remains a difference of potential <math>E = 1184</math> microvolts, the resultant E.M.F. of the circuit, tending to drive positive electricity from the iron to the lead across the cold junction. If the circuit is closed, there will be a current <math>C = E/R</math>, where <math>R = R' + R''</math>, the sum of the resistances of the lead and iron. The flow of the current will produce a fall of potential <math>ER'/R</math> in the lead from cold to hot, and <math>ER''/R</math> in the iron from hot to cold, but the potential difference due to the Peltier effect at either junction will not be affected. For simplicity in the diagram the temperature gradient has been taken as uniform, and the specific heat <math>s = \\text{constant}</math>, but the total P.D. would be the same whatever the gradient.\n\nSimilar diagrams are given in fig. 4 for cadmium in which both the specific heat and the Peltier effect are positive, and also for platinum and nickel in which both coefficients are negative. The metals are supposed to be all joined together at the hot junction, and the circuit cut in the lead near the cold junction. The diagram will serve for any selected couple, such as iron-nickel, and is not restricted to combinations with lead. The following table shows the component parts of the E.M.F. in each case:—\n\n{{c|{{sc|Table III.}}}}\n\n{{block center|{{smaller|Thermocouple.}} <math>\\text{P}_{100} \\quad - \\quad -\\text{P}_0 \\quad -100\\times s_{50} \\quad = \\quad \\text{E}_{0-100}</math>}}\n\n{{block center|Iron-lead . <math>+3844- \\quad +3648- \\quad -988= \\quad +1184</math>}}\n\n{{block center|Cadmium-lead. <math>+2389- \\quad +823- \\quad +1095= \\quad +471</math>}}\n\n{{block center|Platinum-lead . <math>-1919- \\quad -828- \\quad -682= \\quad -409</math>}}\n\n{{block center|Nickel-lead . <math>-8239- \\quad -5206- \\quad -975= \\quad -2058</math>}}\n\nThe components for any other combination of two are found by taking the algebraic difference of the values with respect to lead.\n\n19. ''Relation to the Volta Effect.''—It is now generally conceded that the relatively large differences of potential observable with an electrometer between metals on open circuit, as discovered by Volta, are due to the ''chemical'' affinities of the metals, and have no direct relation to thermoelectric phenomena or to the Peltier effect. The order of the metals in respect of the two effects is quite different. The potential difference, due to the Volta effect in air, has been shown by Thomson (Lord Kelvin) and his pupils to be of the same order of magnitude, if not absolutely the same, as that produced in a dilute electrolyte in which two metallically connected plates (''e.g.'' zinc and copper) are immersed. (On this hypothesis, it may be explained by regarding the air as an electrolyte of infinite specific resistance.) It is also profoundly modified by the state of the exposed surfaces, a coating of oxide on the copper greatly increasing the effect, as it would in a voltaic cell. The Peltier effect and the thermo-E.M.F., on the other hand, do not depend on the state of the surfaces, but only on the state of the substance. An attempt has been made to explain the Volta effect as due to the affinity of the metals ''for each other'', but that would not account for the variation of the effect with the state of the surface, except as affecting the actual surface of contact. It is equally evident that chemical affinity between the metals cannot be the explanation of the Peltier E.M.F. This would necessitate chemical action at the junction when a current passed through it, as in an electrolytic cell, whereas the action appears to be purely thermal, and leads to a consistent theory on that hypothesis. The chemical action between metals in the solid state must be infinitesimal, and could only suffice to produce small charges analogous to those of frictional electricity; it could not maintain a permanent difference of potential at a metallic junction through which a current was passing. Although it is possible that differences of potential larger than the Peltier effect might exist between two metals in contact on open circuit, it is certain that the only effective E.M.F. in practice is the<noinclude><references/></noinclude>"
+}

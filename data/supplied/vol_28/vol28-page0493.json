@@ -1,0 +1,167 @@
+{
+ "volume": 28,
+ "page_number": 493,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri28chisrich/page/n501",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri28chisrich/page/n501",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 971,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     0,
+     2204,
+     239
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     239,
+     1209,
+     454
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     454,
+     1209,
+     1889
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1889,
+     1209,
+     2914
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1209,
+     254,
+     2213,
+     2813
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1209,
+     2817,
+     2213,
+     2898
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     0,
+     2914,
+     2204,
+     3333
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|AUTOMATIC]|WEIGHING MACHINES|475}}",
+   "c1s1": "have to be provided for, and the machinery is complicated, so that a general description of the action of the machine is all that will be here given.\n\nThe tea is fed into a hopper, which has a large opening at the bottom, and this opening is entirely closed by two cylindrical brushes, which are mounted end to end",
+   "c1s2": "on a horizontal shaft. As they revolve these brushes engage the tea in the hopper, draw it out by degrees, and drop it into a compartment of a circular drum which hangs on one end of a scale-beam. The brushes have the same diameter, but one is much longer than the other, and they move independently of one another. For the bulk of the filling both brushes are in operation, but when the load is nearly complete the longer brush is stopped and the filling is completed by the shorter brush only. When the load is complete the shorter brush also is stopped while the compartment of the drum is emptied. And the action is then renewed. All these operations are effected automatically.\n\nThe circular drum is divided into four equal compartments by radial diaphragms. And in a pan at the other end of the beam (which is counterbalanced for the weight of the drum) is a ¼-℔ weight to weigh the tea. As the uppermost compartment fills, the weights end of the beam rises, and by means of a vertical rod successively operates on detents connected with the rotation of the two brushes, and stops them in turn. And when the short brush is stopped a rod from the shaft frees a spring detent which keeps the drum in position and tips it over. The tea is shot out and falls into a receptacle below, and the drum makes a quarter of a revolution, and is again held in position by the detent with an empty compartment at top ready for the next filling.\n\nThe power is applied by a belt round a pulley, which is mounted on the end of the horizontal shaft which carries the brushes. The brushes are carried",
+   "c1s3": "by sleeves which run loosely on the shaft, and to each sleeve is rigidly fixed a ratchet wheel. Next the ratchet wheel is a disk which is keyed on to the shaft. The ratchet wheel and the disk are automatically connected by clutch mechanism in order to effect the rotation of the brushes. The clutch mechanism is freed at the proper time by the action of the vertical rod at the end of the beam, and the brushes then\n\n{{c|{{smaller|From the Notice issued by the Standards Department of the Board of Trade, by permission o}}}}\n{{c|{{sc|Fig.}} 15.—Price-computing Weighing Machi}}",
+   "c2s1": "{{c|{{smaller|f the Controller of H. M. Stationery Office.}}}}\n{{c|ine—even Balance and Pendulum.}}",
+   "c0s1": "stand still while the load is discharged. The beam then recovers its original position and the action of the machine is renewed.\n\n''Automatic Sugar Weighing Machine'' (fig. 17).—This machine is adapted for weighing out granulated white sugar in parcels of 1-℔, 2-℔ and 4-℔ weight. The sugar is run into a conical hopper and is delivered into the open mouth of a bag which is placed on the goods-pan of a balance. The balance consists of a pair of equal-armed beams rigidly connected together and acting as a single beam. A 4-℔ weight lodges the detent of the cut-off slide. The slide springs forward and cuts off the flow. The filled bag is then removed and replaced by an empty bag and the action is renewed.\n\nIn order to ensure the correct weight of the bag it is necessary to consider that when the cut-off slide acts, a certain quantity of sugar is ''in transitu'' and has not at that moment taken its place in the bag. This is allowed for by means of a rider weight, which is arranged so as automatically to add its weight to that of the sugar in the bag while"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v28 p0493 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1102,
+     440,
+     2193,
+     2788
+    ],
+    "caption": [
+     1102,
+     2817,
+     1734,
+     2898
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     62,
+     436,
+     2224,
+     2797
+    ]
+   }
+  ],
+  "across": [
+   [
+    58,
+    2915,
+    2224,
+    3184
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    1,
+    2
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 3878,
+    "output_tokens": 121,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 6,
+    "input_tokens": 6428,
+    "output_tokens": 1917,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 11544
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|AUTOMATIC]|WEIGHING MACHINES|475}}</noinclude>have to be provided for, and the machinery is complicated, so that a general description of the action of the machine is all that will be here given.\n\nThe tea is fed into a hopper, which has a large opening at the bottom, and this opening is entirely closed by two cylindrical brushes, which are mounted end to end on a horizontal shaft. As they revolve these brushes engage the tea in the hopper, draw it out by degrees, and drop it into a compartment of a circular drum which hangs on one end of a scale-beam. The brushes have the same diameter, but one is much longer than the other, and they move independently of one another. For the bulk of the filling both brushes are in operation, but when the load is nearly complete the longer brush is stopped and the filling is completed by the shorter brush only. When the load is complete the shorter brush also is stopped while the compartment of the drum is emptied. And the action is then renewed. All these operations are effected automatically.\n\nThe circular drum is divided into four equal compartments by radial diaphragms. And in a pan at the other end of the beam (which is counterbalanced for the weight of the drum) is a ¼-℔ weight to weigh the tea. As the uppermost compartment fills, the weights end of the beam rises, and by means of a vertical rod successively operates on detents connected with the rotation of the two brushes, and stops them in turn. And when the short brush is stopped a rod from the shaft frees a spring detent which keeps the drum in position and tips it over. The tea is shot out and falls into a receptacle below, and the drum makes a quarter of a revolution, and is again held in position by the detent with an empty compartment at top ready for the next filling.\n\nThe power is applied by a belt round a pulley, which is mounted on the end of the horizontal shaft which carries the brushes. The brushes are carried by sleeves which run loosely on the shaft, and to each sleeve is rigidly fixed a ratchet wheel. Next the ratchet wheel is a disk which is keyed on to the shaft. The ratchet wheel and the disk are automatically connected by clutch mechanism in order to effect the rotation of the brushes. The clutch mechanism is freed at the proper time by the action of the vertical rod at the end of the beam, and the brushes then\n\n{{c|{{smaller|From the Notice issued by the Standards Department of the Board of Trade, by permission o}}}}\n{{c|{{sc|Fig.}} 15.—Price-computing Weighing Machi}}\n\n[[File:eb1911 v28 p0493 c2f1.png|center|372px]]\n{{c|{{smaller|f the Controller of H. M. Stationery Office.}}}}\n{{c|ine—even Balance and Pendulum.}}\n\nstand still while the load is discharged. The beam then recovers its original position and the action of the machine is renewed.\n\n''Automatic Sugar Weighing Machine'' (fig. 17).—This machine is adapted for weighing out granulated white sugar in parcels of 1-℔, 2-℔ and 4-℔ weight. The sugar is run into a conical hopper and is delivered into the open mouth of a bag which is placed on the goods-pan of a balance. The balance consists of a pair of equal-armed beams rigidly connected together and acting as a single beam. A 4-℔ weight lodges the detent of the cut-off slide. The slide springs forward and cuts off the flow. The filled bag is then removed and replaced by an empty bag and the action is renewed.\n\nIn order to ensure the correct weight of the bag it is necessary to consider that when the cut-off slide acts, a certain quantity of sugar is ''in transitu'' and has not at that moment taken its place in the bag. This is allowed for by means of a rider weight, which is arranged so as automatically to add its weight to that of the sugar in the bag while<noinclude><references/></noinclude>"
+}

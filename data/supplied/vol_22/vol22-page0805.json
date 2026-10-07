@@ -1,0 +1,136 @@
+{
+ "volume": 22,
+ "page_number": 805,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri22chisrich/page/n814",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri22chisrich/page/n814",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1180,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     116,
+     0,
+     2358,
+     171
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     116,
+     171,
+     1188,
+     1251
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     116,
+     1251,
+     1188,
+     2320
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     116,
+     2320,
+     1188,
+     3301
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1188,
+     171,
+     2358,
+     1249
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1188,
+     1249,
+     2358,
+     2343
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1188,
+     2343,
+     2358,
+     3301
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|788|RADIATION|}}",
+   "c1s1": "distributed as regards wave-length so as to be of uniform temperature—the performance of this mechanical work <math>\\tfrac{1}{3}\\text{E}\\delta\\text{V}</math> has changed the energy of radiation <math>\\text{EV}</math> from the state that is in equilibrium of absorption and emission with a thermal source at temperature <math>\\text{T}</math> to the state in equilibrium with an absorber of some other temperature <math>\\text{T}-\\delta\\text{T}</math>, and that in a reversible manner; thus by Carnot's principle\n{{block center|<math>\\tfrac{1}{3}\\text{E}\\delta\\text{V}/\\text{EV} = -\\delta\\text{T}/\\text{T},</math>}}\nso that <math>\\text{T}</math> varies as <math>\\text{V}^{-\\frac{1}{3}}</math>, or inversely as the linear dimensions when the enclosure is shrunk uniformly.\n\nCombining these results, it appears that <math>\\text{E}</math> varies as <math>\\text{T}^4</math>; this is Stefan's empirical law for the complete radiation corresponding to the temperature, first established on these lines by Boltzmann. Starting from the principle that this radiation must be a function of the temperature alone, this adiabatic process has in fact given us the form of the function. These results cannot, however, be extended without modification to each separate constituent of the complete radiation, because the shrinkage of the enclosure alters its wave-length and so transforms it into a different constituent.\n\n6. ''Law of Distribution of Energy.''—The effect of compressing the complete radiation is thus to change it to the constitution belonging to a certain higher temperature, by shortening all its wave-lengths by the proportion of one-third of the compression by volume, the temperature being in fact raised by the same proportion; at the same time increasing in a uniform",
+   "c1s2": "ratio the amounts corresponding to each interval <math>\\delta\\lambda</math>, so as to get the correct total amount of energy for the new temperature. In the compression each constituent alters so that <math>\\text{T}\\lambda</math> remains constant, and the energy <math>\\text{E}_\\lambda\\delta\\lambda</math> in the range <math>\\delta\\lambda</math> in other respects changes as a function of <math>\\text{T}</math> alone. Hence generally <math>\\text{E}_\\lambda\\delta\\lambda</math> must be of form <math>\\text{F}(\\text{T})f(\\text{T}\\lambda)\\delta\\lambda</math>. But for each temperature <math>\\int_0^\\infty \\text{E}_\\lambda\\delta\\lambda</math> is equal to <math>\\text{E}</math> and so varies as <math>\\text{T}^4</math>, by Stefan's law; that is,\n{{block center|<math>\\text{T}^{-1}\\text{F}(\\text{T})\\int_0^\\infty f(\\text{T}\\lambda)d(\\text{T}\\lambda) \\propto \\text{T}^4</math>,}}\nso that <math>\\text{T}^{-1}\\text{F}(\\text{T}) \\propto \\text{T}^4</math>. Thus, finally, <math>\\text{E}_\\lambda\\delta\\lambda</math> is of form <math>\\text{AT}^5 f(\\text{T}\\lambda)\\delta\\lambda</math> or <math>\\text{A}\\lambda^{-5}\\phi(\\text{T}\\lambda)\\delta\\lambda</math>, which is Wien's general formula.\n\n7. ''Transformation of a Single Constituent.''—It is of interest to follow out this adiabatic process for each separate constituent of the radiation, as a verification, and also in order to ascertain whether anything new is thereby gained. To this end let now <math>\\text{E}(\\lambda,\\text{T})\\delta\\lambda</math> represent the intensity of the radiation between <math>\\lambda</math> and <math>\\lambda+\\delta\\lambda</math> which corresponds to the temperature <math>\\text{T}</math>. The pressure of this radiation, when it is without special direction, is in intensity one-third of this; thus the application of Carnot's principle shows, as before, that in adiabatic compression <math>\\text{T} \\propto \\text{V}^{-\\frac{1}{3}}</math>, so that a small linear shrinkage in the ratio <math>1-x</math> raises <math>\\text{T}</math> in the ratio <math>1+x</math>. We have still to express the equation of energy. The vibratory energy <math>\\text{E}(\\lambda,\\text{T})\\delta\\lambda\\,.\\,\\text{V}</math> in volume <math>\\text{V}</math>, together with the mechanical work <math>\\tfrac{1}{3}\\text{E}(\\lambda,\\text{T})\\delta\\lambda\\,.\\,3x\\text{V}</math>, yields the vibratory energy\n{{block center|<math>\\text{E}\\{\\lambda(1-x),\\ \\text{T}(1+x)\\}\\delta\\lambda(1-x)\\,.\\,\\text{V}(1-3x)</math>;}}",
+   "c1s3": "thus, writing <math>\\text{E}</math> and <math>\\text{E}_\\lambda</math> or <math>\\text{E}\\ (\\lambda,\\text{T})</math> we have, neglecting <math>x^2</math>,\n\n{{block center|<math>\\text{E}(1+x) = (\\text{E}-x\\lambda\\frac{d\\text{E}}{d\\lambda}+x\\text{T}\\frac{d\\text{E}}{d\\text{T}})(1-4x),</math>}}\n\nso that\n\n{{block center|<math>5\\text{E}+\\lambda\\frac{d\\text{E}}{d\\lambda}-\\text{T}\\frac{d\\text{E}}{d\\text{T}}=0,</math>}}\n\na partial differential equation of which the integral is\n\n{{block center|<math>\\text{E}=\\text{A}\\lambda^{-5}\\phi(\\text{T}\\lambda),</math>}}\n\nthe same formula as was before obtained.\n\nThis method, treating each constituent of the radiation separately, has in one respect some advantage, in that it is necessary only to postulate an enclosure which totally reflects that constituent, this being a more restricted hypothesis than an absolutely complete reflector.\n\nTo determine theoretically the form of the function <math>\\phi</math> we must have some means of transforming one type of radiation into another, different in essence from the adiabatic compression already utilized. The condition that the entropy of the independent radiations in an enclosure is a minimum when they are all transformed to the same temperature with total",
+   "c2s1": "energy unaltered, is already implicitly fulfilled; it would thus appear that any further advance must involve (§ 11) the dynamics of the radiation and absorption of material bodies.\n\n8. ''Temperature of an Isolated Ray.''—The temperature of each independent constituent of a radiation has here been taken to be a function of the intensity <math>\\text{E}_\\lambda</math>, where <math>\\text{E}_\\lambda\\delta\\lambda</math> is the energy per unit volume in the range between wave-lengths <math>\\lambda</math> and <math>\\lambda+\\delta\\lambda</math>; the condition is, however, imposed that this radiation is indifferent as to direction. When a beam of radiation travels without loss in a definite direction across a medium, its form varies as it progresses; but it is reversible inasmuch as it can be turned back at any stage, or concentrated without loss, by perfect reflectors. If the energy of the beam has a temperature, its value must therefore remain constant throughout the progress of the beam, by the principle of Carnot. Now by virtue of a relation in geometrical optics, which on a corpuscular theory would be one aspect of the fundamental dynamical principle of Action, the cross-section <math>\\delta\\text{S}</math> at any place on the beam, and the conical angle <math>\\delta\\omega</math> within which the directions of its rays are there included, are such that the value of <math>\\text{V}^{-2}\\delta\\text{S}\\delta\\omega</math> is conserved along the beam, <math>\\text{V}</math> being the velocity of propagation of the undulations. If we represent the amount of radiant energy transmitted per unit time across the section <math>\\delta\\text{S}</math> of the beam by <math>\\text{I}\\delta\\text{S}\\delta\\omega</math>, it will follow that in passing along the beam its intensity of illumination <math>\\text{I}</math> varies as <math>\\text{V}^{-2}</math>, or as the square of the index of refraction, provided there is no loss of energy in trans-",
+   "c2s2": "mission. This condition requires that changes of index shall be gradual, otherwise there would be loss of energy by partial reflexions; in free aether <math>\\text{I}</math> is itself constant along the beam. The volume-density of the energy in any part of the directed beam is <math>\\text{V}^{-1}\\text{I}\\delta\\omega</math>; it is thus inversely as the solid angular concentration of the rays and directly as the cube of the index of refraction. Now we may consider this beam, of aggregate intensity <math>\\text{I}\\delta\\text{S}\\delta\\omega</math>, to form an elementary filament of the radiation issuing in the direction of the normal from a perfect radiator. As such a body absorbs completely and therefore radiates equally in all directions in front of it, the total intensity of radiation from its element of surface <math>\\delta s</math> is <math>\\delta s\\int\\text{I}\\cos\\theta\\delta\\omega</math>, or <math>\\delta s\\,.\\,\\pi\\text{I}</math>, while the volume-density of the total advancing and receding radiation in front of it is <math>2\\text{V}^{-1}\\int\\text{I}d\\omega</math>, and therefore <math>4\\pi\\text{V}^{-1}\\text{I}</math>. If we take here <math>\\text{I}\\delta\\lambda</math> to represent the intensity between wave-lengths <math>\\lambda</math> and <math>\\lambda+\\delta\\lambda</math>, this density is the quantity <math>\\text{E}_\\lambda</math> of which the temperature of the radiator is a function. Thus the quantity <math>\\text{I}</math>—which optically is a measure of the brightness of the beam, and is conserved along it to the extent that <math>\\mu^2\\text{I}</math> is the same from whichever of its cross-sections the beam is supposed to be emitted—also determines its temperature, the latter being that of an enclosure containing undirected radiation of the same range <math>\\delta\\lambda</math> which is density <math>\\text{E}_\\lambda\\delta\\lambda</math> given by <math>\\text{E}_\\lambda=4\\pi\\text{V}^{-1}\\text{I}</math>, where <math>\\text{V}</math> is the velocity of radiation in the enclosure. When a beam of radiation travels without suffering absorption, its temperature thus continues to be that of its source multiplied",
+   "c2s3": "by the coefficient of emission of the source for that kind of radiation, this coefficient being less than unity except in the case of a perfect radiator; but when its intensity <math>\\text{I}</math> falls by <math>\\delta\\text{I}</math> in any part of its path owing to absorption or other irreversible process, this involves a further fall of temperature of the energy of the beam and a rise of entropy which can be completely determined when the relation connecting <math>\\mu^{-3}\\text{E}_\\lambda</math> with <math>\\text{T}</math> and <math>\\lambda</math> is known. Any directed quality in radiant energy increases its effective temperature. Splitting a beam into two at a reflecting and refracting surface diminishes the temperature of each part; it is true that if the reflecting surface were non-molecular the operation could be reversed, but actually the reversed rays would encounter the reflecting molecules in different collocations, and could not (§ 11) recombine into the same detailed phase-relations as before. The direct solar radiation falling on the Earth is almost completely convertible into mechanical effect on account of its very high temperature; there seems ground for believing that certain constituents of it can actually be almost wholly turned to account by the"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 9981,
+    "output_tokens": 4893,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|788|RADIATION|}}</noinclude>distributed as regards wave-length so as to be of uniform temperature—the performance of this mechanical work <math>\\tfrac{1}{3}\\text{E}\\delta\\text{V}</math> has changed the energy of radiation <math>\\text{EV}</math> from the state that is in equilibrium of absorption and emission with a thermal source at temperature <math>\\text{T}</math> to the state in equilibrium with an absorber of some other temperature <math>\\text{T}-\\delta\\text{T}</math>, and that in a reversible manner; thus by Carnot's principle\n{{block center|<math>\\tfrac{1}{3}\\text{E}\\delta\\text{V}/\\text{EV} = -\\delta\\text{T}/\\text{T},</math>}}\nso that <math>\\text{T}</math> varies as <math>\\text{V}^{-\\frac{1}{3}}</math>, or inversely as the linear dimensions when the enclosure is shrunk uniformly.\n\nCombining these results, it appears that <math>\\text{E}</math> varies as <math>\\text{T}^4</math>; this is Stefan's empirical law for the complete radiation corresponding to the temperature, first established on these lines by Boltzmann. Starting from the principle that this radiation must be a function of the temperature alone, this adiabatic process has in fact given us the form of the function. These results cannot, however, be extended without modification to each separate constituent of the complete radiation, because the shrinkage of the enclosure alters its wave-length and so transforms it into a different constituent.\n\n6. ''Law of Distribution of Energy.''—The effect of compressing the complete radiation is thus to change it to the constitution belonging to a certain higher temperature, by shortening all its wave-lengths by the proportion of one-third of the compression by volume, the temperature being in fact raised by the same proportion; at the same time increasing in a uniform ratio the amounts corresponding to each interval <math>\\delta\\lambda</math>, so as to get the correct total amount of energy for the new temperature. In the compression each constituent alters so that <math>\\text{T}\\lambda</math> remains constant, and the energy <math>\\text{E}_\\lambda\\delta\\lambda</math> in the range <math>\\delta\\lambda</math> in other respects changes as a function of <math>\\text{T}</math> alone. Hence generally <math>\\text{E}_\\lambda\\delta\\lambda</math> must be of form <math>\\text{F}(\\text{T})f(\\text{T}\\lambda)\\delta\\lambda</math>. But for each temperature <math>\\int_0^\\infty \\text{E}_\\lambda\\delta\\lambda</math> is equal to <math>\\text{E}</math> and so varies as <math>\\text{T}^4</math>, by Stefan's law; that is,\n{{block center|<math>\\text{T}^{-1}\\text{F}(\\text{T})\\int_0^\\infty f(\\text{T}\\lambda)d(\\text{T}\\lambda) \\propto \\text{T}^4</math>,}}\nso that <math>\\text{T}^{-1}\\text{F}(\\text{T}) \\propto \\text{T}^4</math>. Thus, finally, <math>\\text{E}_\\lambda\\delta\\lambda</math> is of form <math>\\text{AT}^5 f(\\text{T}\\lambda)\\delta\\lambda</math> or <math>\\text{A}\\lambda^{-5}\\phi(\\text{T}\\lambda)\\delta\\lambda</math>, which is Wien's general formula.\n\n7. ''Transformation of a Single Constituent.''—It is of interest to follow out this adiabatic process for each separate constituent of the radiation, as a verification, and also in order to ascertain whether anything new is thereby gained. To this end let now <math>\\text{E}(\\lambda,\\text{T})\\delta\\lambda</math> represent the intensity of the radiation between <math>\\lambda</math> and <math>\\lambda+\\delta\\lambda</math> which corresponds to the temperature <math>\\text{T}</math>. The pressure of this radiation, when it is without special direction, is in intensity one-third of this; thus the application of Carnot's principle shows, as before, that in adiabatic compression <math>\\text{T} \\propto \\text{V}^{-\\frac{1}{3}}</math>, so that a small linear shrinkage in the ratio <math>1-x</math> raises <math>\\text{T}</math> in the ratio <math>1+x</math>. We have still to express the equation of energy. The vibratory energy <math>\\text{E}(\\lambda,\\text{T})\\delta\\lambda\\,.\\,\\text{V}</math> in volume <math>\\text{V}</math>, together with the mechanical work <math>\\tfrac{1}{3}\\text{E}(\\lambda,\\text{T})\\delta\\lambda\\,.\\,3x\\text{V}</math>, yields the vibratory energy\n{{block center|<math>\\text{E}\\{\\lambda(1-x),\\ \\text{T}(1+x)\\}\\delta\\lambda(1-x)\\,.\\,\\text{V}(1-3x)</math>;}} thus, writing <math>\\text{E}</math> and <math>\\text{E}_\\lambda</math> or <math>\\text{E}\\ (\\lambda,\\text{T})</math> we have, neglecting <math>x^2</math>,\n\n{{block center|<math>\\text{E}(1+x) = (\\text{E}-x\\lambda\\frac{d\\text{E}}{d\\lambda}+x\\text{T}\\frac{d\\text{E}}{d\\text{T}})(1-4x),</math>}}\n\nso that\n\n{{block center|<math>5\\text{E}+\\lambda\\frac{d\\text{E}}{d\\lambda}-\\text{T}\\frac{d\\text{E}}{d\\text{T}}=0,</math>}}\n\na partial differential equation of which the integral is\n\n{{block center|<math>\\text{E}=\\text{A}\\lambda^{-5}\\phi(\\text{T}\\lambda),</math>}}\n\nthe same formula as was before obtained.\n\nThis method, treating each constituent of the radiation separately, has in one respect some advantage, in that it is necessary only to postulate an enclosure which totally reflects that constituent, this being a more restricted hypothesis than an absolutely complete reflector.\n\nTo determine theoretically the form of the function <math>\\phi</math> we must have some means of transforming one type of radiation into another, different in essence from the adiabatic compression already utilized. The condition that the entropy of the independent radiations in an enclosure is a minimum when they are all transformed to the same temperature with total energy unaltered, is already implicitly fulfilled; it would thus appear that any further advance must involve (§ 11) the dynamics of the radiation and absorption of material bodies.\n\n8. ''Temperature of an Isolated Ray.''—The temperature of each independent constituent of a radiation has here been taken to be a function of the intensity <math>\\text{E}_\\lambda</math>, where <math>\\text{E}_\\lambda\\delta\\lambda</math> is the energy per unit volume in the range between wave-lengths <math>\\lambda</math> and <math>\\lambda+\\delta\\lambda</math>; the condition is, however, imposed that this radiation is indifferent as to direction. When a beam of radiation travels without loss in a definite direction across a medium, its form varies as it progresses; but it is reversible inasmuch as it can be turned back at any stage, or concentrated without loss, by perfect reflectors. If the energy of the beam has a temperature, its value must therefore remain constant throughout the progress of the beam, by the principle of Carnot. Now by virtue of a relation in geometrical optics, which on a corpuscular theory would be one aspect of the fundamental dynamical principle of Action, the cross-section <math>\\delta\\text{S}</math> at any place on the beam, and the conical angle <math>\\delta\\omega</math> within which the directions of its rays are there included, are such that the value of <math>\\text{V}^{-2}\\delta\\text{S}\\delta\\omega</math> is conserved along the beam, <math>\\text{V}</math> being the velocity of propagation of the undulations. If we represent the amount of radiant energy transmitted per unit time across the section <math>\\delta\\text{S}</math> of the beam by <math>\\text{I}\\delta\\text{S}\\delta\\omega</math>, it will follow that in passing along the beam its intensity of illumination <math>\\text{I}</math> varies as <math>\\text{V}^{-2}</math>, or as the square of the index of refraction, provided there is no loss of energy in transmission. This condition requires that changes of index shall be gradual, otherwise there would be loss of energy by partial reflexions; in free aether <math>\\text{I}</math> is itself constant along the beam. The volume-density of the energy in any part of the directed beam is <math>\\text{V}^{-1}\\text{I}\\delta\\omega</math>; it is thus inversely as the solid angular concentration of the rays and directly as the cube of the index of refraction. Now we may consider this beam, of aggregate intensity <math>\\text{I}\\delta\\text{S}\\delta\\omega</math>, to form an elementary filament of the radiation issuing in the direction of the normal from a perfect radiator. As such a body absorbs completely and therefore radiates equally in all directions in front of it, the total intensity of radiation from its element of surface <math>\\delta s</math> is <math>\\delta s\\int\\text{I}\\cos\\theta\\delta\\omega</math>, or <math>\\delta s\\,.\\,\\pi\\text{I}</math>, while the volume-density of the total advancing and receding radiation in front of it is <math>2\\text{V}^{-1}\\int\\text{I}d\\omega</math>, and therefore <math>4\\pi\\text{V}^{-1}\\text{I}</math>. If we take here <math>\\text{I}\\delta\\lambda</math> to represent the intensity between wave-lengths <math>\\lambda</math> and <math>\\lambda+\\delta\\lambda</math>, this density is the quantity <math>\\text{E}_\\lambda</math> of which the temperature of the radiator is a function. Thus the quantity <math>\\text{I}</math>—which optically is a measure of the brightness of the beam, and is conserved along it to the extent that <math>\\mu^2\\text{I}</math> is the same from whichever of its cross-sections the beam is supposed to be emitted—also determines its temperature, the latter being that of an enclosure containing undirected radiation of the same range <math>\\delta\\lambda</math> which is density <math>\\text{E}_\\lambda\\delta\\lambda</math> given by <math>\\text{E}_\\lambda=4\\pi\\text{V}^{-1}\\text{I}</math>, where <math>\\text{V}</math> is the velocity of radiation in the enclosure. When a beam of radiation travels without suffering absorption, its temperature thus continues to be that of its source multiplied by the coefficient of emission of the source for that kind of radiation, this coefficient being less than unity except in the case of a perfect radiator; but when its intensity <math>\\text{I}</math> falls by <math>\\delta\\text{I}</math> in any part of its path owing to absorption or other irreversible process, this involves a further fall of temperature of the energy of the beam and a rise of entropy which can be completely determined when the relation connecting <math>\\mu^{-3}\\text{E}_\\lambda</math> with <math>\\text{T}</math> and <math>\\lambda</math> is known. Any directed quality in radiant energy increases its effective temperature. Splitting a beam into two at a reflecting and refracting surface diminishes the temperature of each part; it is true that if the reflecting surface were non-molecular the operation could be reversed, but actually the reversed rays would encounter the reflecting molecules in different collocations, and could not (§ 11) recombine into the same detailed phase-relations as before. The direct solar radiation falling on the Earth is almost completely convertible into mechanical effect on account of its very high temperature; there seems ground for believing that certain constituents of it can actually be almost wholly turned to account by the<noinclude><references/></noinclude>"
+}

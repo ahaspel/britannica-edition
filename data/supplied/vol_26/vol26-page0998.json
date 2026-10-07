@@ -1,0 +1,160 @@
+{
+ "volume": 26,
+ "page_number": 998,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n1012",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n1012",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.1,
+  "column_width": 1180,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     105,
+     2,
+     2346,
+     157
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     105,
+     157,
+     1178,
+     849
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     105,
+     849,
+     1178,
+     1942
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     105,
+     1942,
+     1178,
+     2828
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     105,
+     2828,
+     1178,
+     3106
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     157,
+     2346,
+     1133
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     1133,
+     2346,
+     1616
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     1616,
+     2346,
+     2702
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     2702,
+     2346,
+     3106
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|958|TIDE|}}",
+   "c1s1": "that the existence in the ocean of continental barriers would have the same effect as that attributed by Laplace to friction, and thus he re-established the soundness of the result.<sup>1</sup>\n\nA wholly independent estimate derived from what is called the variation of latitude also leads to the same conclusion, namely that the earth is about as stiff as steel.<sup>2</sup>\n\nThe theory of the tides of an elastic planet gives, ''mutatis mutandis'', that of the tides of a viscous spheroid. The reader who desires to know more of this subject and to obtain references to original memoirs may refer to G. H. Darwin's ''Tides''.\n\n{{c|VII.—{{sc|Tidal Friction}}}}\n\n§ 35. ''Investigation of the Secular Effects of Tidal Friction''.—We have indicated in general terms in § 9 that the theory of tidal friction leads to an interesting speculation as to the origin of the moon. We shall therefore investigate the theory mathematically in the case where a planet is attended by a single satellite moving in a circular orbit, and rotates about an axis perpendicular to that orbit. In order, however, to abridge the investigation we shall only consider the case where the planetary rotation is more rapid than the satellite's orbital motion.",
+   "c1s2": "¶\nSuppose an attractive particle or satellite of mass <math>m</math> to be moving in a circular orbit, with an angular velocity <math>\\omega</math>, round a planet of mass <math>M</math> and suppose the planet to be rotating about an axis perpendicular to the plane of the orbit, with an angular velocity <math>n</math>; suppose, also, the mass of the planet to be partially or wholly imperfectly elastic or viscous, or that there are oceans on the surface of the planet; then the attraction of the satellite must produce a relative motion in the parts of the planet, and that motion must be subject to friction, or, in other words, there must be frictional tides of some sort or other. '''''Energy Diminished by Friction.''''' The system must accordingly be losing energy by friction, and its configuration must change in such a way that its whole energy diminishes. Such a system does not differ much from those of actual planets and satellites, and, therefore, the results deduced in this hypothetical case must agree pretty closely with the actual course of evolution, provided that time enough has been and will be given for such changes. Let <math>C</math> be the moment of inertia of the planet about its axis of rotation, <math>r</math> the distance of the satellite from the centre of the planet, <math>h</math> the resultant moment of momentum of the whole system, <math>e</math> the whole energy, both kinetic and potential, of the system. It is assumed that the figure of the planet and the distribution of its internal density are such that the attraction of the satellite causes no couple about any axis perpendicular to that of rotation. A special system of units of mass, length and time will now be adopted such that the analytical results may be reduced to their simplest forms. Let the unit of mass be <math>Mm/(M+m)</math>. Let the unit of length <math>\\gamma</math> be such a distance that the moment of inertia of the planet about its axis of rotation may be equal to the moment of inertia of the planet and satellite, treated as particles, about their centre of inertia, when distant <math>\\gamma</math> apart from one another. This condition gives\n{{block center|<math>M\\left(\\frac{m\\gamma}{M+m}\\right)^2 + m\\left(\\frac{M\\gamma}{M+m}\\right)^2 = C</math>;}}",
+   "c1s3": "Let the unit of time <math>\\tau</math> be the time in which the satellite revolves through 57·3° about the planet, when the satellite's radius vector is equal to <math>\\gamma</math>. This system of units will be found to make the '''''Special Units.''''' three following functions each equal to unity, viz. <math>\\mu^{\\frac{1}{2}}Mm(M+m)^{-\\frac{1}{2}}</math>, <math>\\mu Mm</math>, and <math>C</math>, where <math>\\mu</math> is the attractional constant. The units are in fact derived from the consideration that these functions shall each be unity. In the case of the earth and moon, if we take the moon's mass as <math>\\tfrac{1}{82}</math> of the earth's and the earth's moment of inertia as <math>\\tfrac{1}{3}Ma^2</math> (as is very nearly the case), it may easily be shown that the unit of mass is <math>\\tfrac{1}{83}</math> of the earth's mass, the unit of length 5·26 earth's radii or 33,506 kilometres (20,807 miles), and the unit of time 2 hrs. 41 mins. '''''Moment of Momentum.''''' In these units the present angular velocity of the earth's diurnal rotation is expressed by 0·7044, and the moon's present radius vector by 11·454. The two bodies being supposed to revolve in circles about their common centre of inertia with an angular velocity <math>\\omega</math>, the moment of momentum of orbital motion is\n{{block center|<math>M\\left(\\frac{mr}{M+m}\\right)^2\\omega + M\\left(\\frac{Mr}{M+m}\\right)^2\\omega = \\frac{Mm}{M+m}r^2\\omega.</math>}}\nThen, by the law of periodic times in a circular orbit,\n{{block center|<math>\\omega^2r^3 = \\mu(M+m);</math>}}\n{{block center|whence <math>\\omega r^2 = \\mu^{\\frac{1}{2}}(M+m)^{\\frac{1}{2}}r^{\\frac{1}{2}}.</math>}}\nThus the moment of momentum of orbital motion\n{{block center|<math>= \\mu^{\\frac{1}{2}}Mm(M+m)^{-\\frac{1}{2}}r^{\\frac{1}{2}},</math>}}",
+   "c1s4": "and in the special units this is equal to <math>r^{\\frac{1}{2}}</math>. The moment of momentum of the planet's rotation is <math>\\text{C}n</math>, and <math>\\text{C} = 1</math> in the special units. Therefore\n{{block center|<math>h = n + r^{\\frac{1}{2}}</math>. (62)}}\nSince the moon's present radius vector is 11·454, it follows that the orbital momentum of the moon is 3·384. Adding to this the\n\n{{smaller block|<sup>1</sup> ''Phil. Mag.'' (1903), v. 136.\n\n<sup>2</sup> Hough, ''Phil. Trans.'' (1897), 187 A, p. 319.}}",
+   "c2s1": "rotational momentum of the earth, which is 0·704, we obtain 4·088 for the total moment of momentum of the moon and earth. The ratio of the orbital to the rotational momentum is 4·80, so that the total moment of momentum of the system would, but for the obliquity of the ecliptic, be 5·80 times that of the earth's rotation. Again, the kinetic energy of orbital motion is\n{{block center|<math>\\tfrac{1}{2}M\\left(\\frac{mr}{M+m}\\right)^2\\omega^2 + \\tfrac{1}{2}m\\left(\\frac{Mr}{M+m}\\right)^2\\omega^2 = \\tfrac{1}{2}\\frac{Mm}{M+m}r^2\\omega^2 = \\tfrac{1}{2}\\frac{\\mu Mm}{r}.</math>}}\nThe kinetic energy of the planet's rotation is <math>\\tfrac{1}{2}Cn^2</math>. The potential energy of the system is <math>-\\mu Mm/r</math>. Adding the three energies together, and transforming into the special units, we have\n{{block center|<math>2e = n^2 - 1/r.</math> (63)}}\n{{block center|Now let <math>x = r^{\\frac{1}{2}},\\qquad y = n,\\qquad Y = 2e.</math>}}\nIt will be noticed that <math>x</math>, the moment of momentum of orbital motion is equal to the square root of the satellite's distance from the planet. Then equations (62) and (63) become\n{{block center|<math>h = y + x</math> (64)}}\n{{block center|<math>Y = y^2 - 1/x^2 = (h - x)^2 - 1/x^2</math> (65)}}\n(64) is the equation of conservation of moment of momentum, or, shortly, the equation of momentum; (65) is the equation of energy.\n\n'''''Maximum and Minimum Energy.''''' Now consider a system started with given positive moment of momentum <math>h</math>; and we have all sorts of ways in which it may be started. If the two rotations be of opposite kinds, it is clear that we may start the system with any amount of energy, however great, but the true maxima and minima of energy compatible with the given moment of momentum are supplied by <math>dY/dx = 0</math>,",
+   "c2s2": "{{block center|or <math>x - h + 1/x^3 = 0,</math>}}\n{{block center|that is to say, <math>x^4 - hx^3 + 1 = 0.</math> (66)}}\nWe shall presently see that this quartic has either two real roots and two imaginary, or all imaginary roots. '''''No Relative Motion between Satellite and Planet when Energy Maximum or Minimum.''''' The quartic may be derived from quite a different consideration, viz. by finding the condition under which the satellite may move round the planet so that the planet shall always show the same face to the satellite—in fact, so that they move as parts of one rigid body. The condition is simply that the satellite's orbital angular velocity <math>\\omega = n</math>, the planet's angular velocity of rotation, or <math>y = 1/x^3</math>, since <math>n = y</math> and <math>r^{\\frac{1}{2}} = \\omega^{-\\frac{1}{3}} = x</math>. By substituting this value of <math>y</math> in the equation of momentum (64), we get as before\n{{block center|<math>x^4 - hx^3 + 1 = 0.</math>}}",
+   "c2s3": "At present we have only obtained one result, viz. that, if with given moment of momentum it is possible to set the satellite and planet moving as a rigid body, it is possible to do so in two ways, and one of these ways requires a maximum amount of energy and the other a minimum; from this it is clear that one must be a rapid rotation with the satellite near the planet and the other a slow one with the satellite remote from the planet. Of the three equations\n\n{{block center|<math>h=y+x,</math> (67)}}\n\n{{block center|<math>Y=(h-x)^2-1/x^2,</math> (68)}}\n\n{{block center|<math>x^3y=1,</math> (69)}}\n\n(67) is the equation of momentum, (68) that of energy, and (69) may be called the equation of rigidity, since it indicates that the two bodies move as though parts of one rigid body.\n\n'''''Equations of Momentum, Energy, and no Relative Motion.''''' To illustrate these equations geometrically, we may take as abscissa <math>x</math>, which is the moment of momentum of orbital motion, so that the axis of <math>x</math> may be called the axis of orbital momentum. Also, for equations (67) and (69) we may take as ordinate <math>y</math>, which is the moment of momentum of the planet's rotation, so that the axis of <math>y</math> may be called the axis of rotational momentum. For (68) we may take as ordinate <math>Y</math>, which is twice the energy of the system, so that the axis of <math>Y</math> may be called the axis of energy. Then, as it will be convenient to exhibit all three curves in the same figure, with a parallel axis of <math>x</math>, we must have the axis of energy identical with that of rotational momentum. It will not be necessary to consider the case where the resultant moment of momentum <math>h</math> is negative, because this would only be equivalent to reversing all the rotations; <math>h</math> is therefore to be taken as essentially positive. The line of momentum whose equation is (67) is a straight line inclined at 45° to either axis, having positive intercepts on both axes. The curve of rigidity whose equation is (69) is clearly of the same nature as a rectangular hyperbola, but it has a much more rapid rate of approach to the axis of orbital momentum than to that of rotational momentum.",
+   "c2s4": "The intersections (if any) of the curve of rigidity with the line of momentum have abscissae which are the two roots of the quartic <math>x^4-hx^3+1=0</math>. The quartic has, therefore, two real roots or all imaginary roots. Then, since <math>x=r^{\\frac{1}{2}}</math>, the intersection which is more remote from the origin indicates a configuration where the satellite is remote from the planet; the other gives the configuration where the satellite is closer to the planet. We have already learnt that these two correspond respectively to minimum and maximum energy. When <math>x</math> is very large the equation to the curve of energy is <math>Y=(h-x)^2</math>, which is the equation to a parabola with a vertical axis parallel to <math>Y</math> and distant <math>h</math> from the origin, so that the axis of the parabola passes through the intersection of the line of momentum"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    3
+   ],
+   "2": [
+    0,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 9383,
+    "output_tokens": 7219,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|958|TIDE|}}</noinclude>that the existence in the ocean of continental barriers would have the same effect as that attributed by Laplace to friction, and thus he re-established the soundness of the result.<sup>1</sup>\n\nA wholly independent estimate derived from what is called the variation of latitude also leads to the same conclusion, namely that the earth is about as stiff as steel.<sup>2</sup>\n\nThe theory of the tides of an elastic planet gives, ''mutatis mutandis'', that of the tides of a viscous spheroid. The reader who desires to know more of this subject and to obtain references to original memoirs may refer to G. H. Darwin's ''Tides''.\n\n{{c|VII.—{{sc|Tidal Friction}}}}\n\n§ 35. ''Investigation of the Secular Effects of Tidal Friction''.—We have indicated in general terms in § 9 that the theory of tidal friction leads to an interesting speculation as to the origin of the moon. We shall therefore investigate the theory mathematically in the case where a planet is attended by a single satellite moving in a circular orbit, and rotates about an axis perpendicular to that orbit. In order, however, to abridge the investigation we shall only consider the case where the planetary rotation is more rapid than the satellite's orbital motion.\n\nSuppose an attractive particle or satellite of mass <math>m</math> to be moving in a circular orbit, with an angular velocity <math>\\omega</math>, round a planet of mass <math>M</math> and suppose the planet to be rotating about an axis perpendicular to the plane of the orbit, with an angular velocity <math>n</math>; suppose, also, the mass of the planet to be partially or wholly imperfectly elastic or viscous, or that there are oceans on the surface of the planet; then the attraction of the satellite must produce a relative motion in the parts of the planet, and that motion must be subject to friction, or, in other words, there must be frictional tides of some sort or other. '''''Energy Diminished by Friction.''''' The system must accordingly be losing energy by friction, and its configuration must change in such a way that its whole energy diminishes. Such a system does not differ much from those of actual planets and satellites, and, therefore, the results deduced in this hypothetical case must agree pretty closely with the actual course of evolution, provided that time enough has been and will be given for such changes. Let <math>C</math> be the moment of inertia of the planet about its axis of rotation, <math>r</math> the distance of the satellite from the centre of the planet, <math>h</math> the resultant moment of momentum of the whole system, <math>e</math> the whole energy, both kinetic and potential, of the system. It is assumed that the figure of the planet and the distribution of its internal density are such that the attraction of the satellite causes no couple about any axis perpendicular to that of rotation. A special system of units of mass, length and time will now be adopted such that the analytical results may be reduced to their simplest forms. Let the unit of mass be <math>Mm/(M+m)</math>. Let the unit of length <math>\\gamma</math> be such a distance that the moment of inertia of the planet about its axis of rotation may be equal to the moment of inertia of the planet and satellite, treated as particles, about their centre of inertia, when distant <math>\\gamma</math> apart from one another. This condition gives\n{{block center|<math>M\\left(\\frac{m\\gamma}{M+m}\\right)^2 + m\\left(\\frac{M\\gamma}{M+m}\\right)^2 = C</math>;}} Let the unit of time <math>\\tau</math> be the time in which the satellite revolves through 57·3° about the planet, when the satellite's radius vector is equal to <math>\\gamma</math>. This system of units will be found to make the '''''Special Units.''''' three following functions each equal to unity, viz. <math>\\mu^{\\frac{1}{2}}Mm(M+m)^{-\\frac{1}{2}}</math>, <math>\\mu Mm</math>, and <math>C</math>, where <math>\\mu</math> is the attractional constant. The units are in fact derived from the consideration that these functions shall each be unity. In the case of the earth and moon, if we take the moon's mass as <math>\\tfrac{1}{82}</math> of the earth's and the earth's moment of inertia as <math>\\tfrac{1}{3}Ma^2</math> (as is very nearly the case), it may easily be shown that the unit of mass is <math>\\tfrac{1}{83}</math> of the earth's mass, the unit of length 5·26 earth's radii or 33,506 kilometres (20,807 miles), and the unit of time 2 hrs. 41 mins. '''''Moment of Momentum.''''' In these units the present angular velocity of the earth's diurnal rotation is expressed by 0·7044, and the moon's present radius vector by 11·454. The two bodies being supposed to revolve in circles about their common centre of inertia with an angular velocity <math>\\omega</math>, the moment of momentum of orbital motion is\n{{block center|<math>M\\left(\\frac{mr}{M+m}\\right)^2\\omega + M\\left(\\frac{Mr}{M+m}\\right)^2\\omega = \\frac{Mm}{M+m}r^2\\omega.</math>}}\nThen, by the law of periodic times in a circular orbit,\n{{block center|<math>\\omega^2r^3 = \\mu(M+m);</math>}}\n{{block center|whence <math>\\omega r^2 = \\mu^{\\frac{1}{2}}(M+m)^{\\frac{1}{2}}r^{\\frac{1}{2}}.</math>}}\nThus the moment of momentum of orbital motion\n{{block center|<math>= \\mu^{\\frac{1}{2}}Mm(M+m)^{-\\frac{1}{2}}r^{\\frac{1}{2}},</math>}} and in the special units this is equal to <math>r^{\\frac{1}{2}}</math>. The moment of momentum of the planet's rotation is <math>\\text{C}n</math>, and <math>\\text{C} = 1</math> in the special units. Therefore\n{{block center|<math>h = n + r^{\\frac{1}{2}}</math>. (62)}}\nSince the moon's present radius vector is 11·454, it follows that the orbital momentum of the moon is 3·384. Adding to this the\n\n{{smaller block|<sup>1</sup> ''Phil. Mag.'' (1903), v. 136.\n\n<sup>2</sup> Hough, ''Phil. Trans.'' (1897), 187 A, p. 319.}} rotational momentum of the earth, which is 0·704, we obtain 4·088 for the total moment of momentum of the moon and earth. The ratio of the orbital to the rotational momentum is 4·80, so that the total moment of momentum of the system would, but for the obliquity of the ecliptic, be 5·80 times that of the earth's rotation. Again, the kinetic energy of orbital motion is\n{{block center|<math>\\tfrac{1}{2}M\\left(\\frac{mr}{M+m}\\right)^2\\omega^2 + \\tfrac{1}{2}m\\left(\\frac{Mr}{M+m}\\right)^2\\omega^2 = \\tfrac{1}{2}\\frac{Mm}{M+m}r^2\\omega^2 = \\tfrac{1}{2}\\frac{\\mu Mm}{r}.</math>}}\nThe kinetic energy of the planet's rotation is <math>\\tfrac{1}{2}Cn^2</math>. The potential energy of the system is <math>-\\mu Mm/r</math>. Adding the three energies together, and transforming into the special units, we have\n{{block center|<math>2e = n^2 - 1/r.</math> (63)}}\n{{block center|Now let <math>x = r^{\\frac{1}{2}},\\qquad y = n,\\qquad Y = 2e.</math>}}\nIt will be noticed that <math>x</math>, the moment of momentum of orbital motion is equal to the square root of the satellite's distance from the planet. Then equations (62) and (63) become\n{{block center|<math>h = y + x</math> (64)}}\n{{block center|<math>Y = y^2 - 1/x^2 = (h - x)^2 - 1/x^2</math> (65)}}\n(64) is the equation of conservation of moment of momentum, or, shortly, the equation of momentum; (65) is the equation of energy.\n\n'''''Maximum and Minimum Energy.''''' Now consider a system started with given positive moment of momentum <math>h</math>; and we have all sorts of ways in which it may be started. If the two rotations be of opposite kinds, it is clear that we may start the system with any amount of energy, however great, but the true maxima and minima of energy compatible with the given moment of momentum are supplied by <math>dY/dx = 0</math>, {{block center|or <math>x - h + 1/x^3 = 0,</math>}}\n{{block center|that is to say, <math>x^4 - hx^3 + 1 = 0.</math> (66)}}\nWe shall presently see that this quartic has either two real roots and two imaginary, or all imaginary roots. '''''No Relative Motion between Satellite and Planet when Energy Maximum or Minimum.''''' The quartic may be derived from quite a different consideration, viz. by finding the condition under which the satellite may move round the planet so that the planet shall always show the same face to the satellite—in fact, so that they move as parts of one rigid body. The condition is simply that the satellite's orbital angular velocity <math>\\omega = n</math>, the planet's angular velocity of rotation, or <math>y = 1/x^3</math>, since <math>n = y</math> and <math>r^{\\frac{1}{2}} = \\omega^{-\\frac{1}{3}} = x</math>. By substituting this value of <math>y</math> in the equation of momentum (64), we get as before\n{{block center|<math>x^4 - hx^3 + 1 = 0.</math>}} At present we have only obtained one result, viz. that, if with given moment of momentum it is possible to set the satellite and planet moving as a rigid body, it is possible to do so in two ways, and one of these ways requires a maximum amount of energy and the other a minimum; from this it is clear that one must be a rapid rotation with the satellite near the planet and the other a slow one with the satellite remote from the planet. Of the three equations\n\n{{block center|<math>h=y+x,</math> (67)}}\n\n{{block center|<math>Y=(h-x)^2-1/x^2,</math> (68)}}\n\n{{block center|<math>x^3y=1,</math> (69)}}\n\n(67) is the equation of momentum, (68) that of energy, and (69) may be called the equation of rigidity, since it indicates that the two bodies move as though parts of one rigid body.\n\n'''''Equations of Momentum, Energy, and no Relative Motion.''''' To illustrate these equations geometrically, we may take as abscissa <math>x</math>, which is the moment of momentum of orbital motion, so that the axis of <math>x</math> may be called the axis of orbital momentum. Also, for equations (67) and (69) we may take as ordinate <math>y</math>, which is the moment of momentum of the planet's rotation, so that the axis of <math>y</math> may be called the axis of rotational momentum. For (68) we may take as ordinate <math>Y</math>, which is twice the energy of the system, so that the axis of <math>Y</math> may be called the axis of energy. Then, as it will be convenient to exhibit all three curves in the same figure, with a parallel axis of <math>x</math>, we must have the axis of energy identical with that of rotational momentum. It will not be necessary to consider the case where the resultant moment of momentum <math>h</math> is negative, because this would only be equivalent to reversing all the rotations; <math>h</math> is therefore to be taken as essentially positive. The line of momentum whose equation is (67) is a straight line inclined at 45° to either axis, having positive intercepts on both axes. The curve of rigidity whose equation is (69) is clearly of the same nature as a rectangular hyperbola, but it has a much more rapid rate of approach to the axis of orbital momentum than to that of rotational momentum. The intersections (if any) of the curve of rigidity with the line of momentum have abscissae which are the two roots of the quartic <math>x^4-hx^3+1=0</math>. The quartic has, therefore, two real roots or all imaginary roots. Then, since <math>x=r^{\\frac{1}{2}}</math>, the intersection which is more remote from the origin indicates a configuration where the satellite is remote from the planet; the other gives the configuration where the satellite is closer to the planet. We have already learnt that these two correspond respectively to minimum and maximum energy. When <math>x</math> is very large the equation to the curve of energy is <math>Y=(h-x)^2</math>, which is the equation to a parabola with a vertical axis parallel to <math>Y</math> and distant <math>h</math> from the origin, so that the axis of the parabola passes through the intersection of the line of momentum<noinclude><references/></noinclude>"
+}

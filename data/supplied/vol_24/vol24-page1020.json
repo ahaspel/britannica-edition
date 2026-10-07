@@ -1,0 +1,144 @@
+{
+ "volume": 24,
+ "page_number": 1020,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1030",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1030",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.3,
+  "column_width": 1172,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     61,
+     0,
+     2312,
+     205
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     205,
+     1126,
+     1146
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     1146,
+     1126,
+     2224
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     2224,
+     1126,
+     3130
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1126,
+     205,
+     2312,
+     902
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1126,
+     902,
+     2312,
+     1967
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1126,
+     1967,
+     2312,
+     2895
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1126,
+     2895,
+     2312,
+     3130
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|952|SHIPBUILDING|[STRENGTH}}",
+   "c1s1": "equilibrium, the tension <math>\\text{T}</math>, shearing force <math>\\text{F}</math>, and bending moment <math>\\text{M}</math>, at <math>\\text{Q}</math> can be algebraically expressed in terms of its coordinates <math>(x, y,)</math>, the water or other external pressures on <math>\\text{OQ}</math>, and the values of <math>\\text{T}</math>, <math>\\text{F}</math> and <math>\\text{M}</math> at <math>\\text{O}</math> <math>(\\text{T}_0, \\text{F}_0, \\text{M}_0,)</math>.\n\nNeglecting the effects of <math>\\text{T}</math> and <math>\\text{F}</math> on the element <math>\\text{QR}</math>, it follows from the equations of bending that\n{{block center|<math>\\text{M} = \\text{EI}\\left(\\frac{d\\phi'}{ds} - \\frac{d\\phi}{ds}\\right)</math>}}\nwhere <math>\\phi</math> and <math>\\phi'</math> are the respective inclinations of the element <math>\\text{QR}</math> to <math>\\text{O}x</math> before and after the strain caused by bending, and <math>ds</math> is the length of <math>\\text{QR}</math>. Due to the effect of <math>\\text{M}</math> on <math>\\text{QR}</math>, the bar at the point <math>\\text{P}</math> <math>(x_1, y_1)</math> is rotated through an angle <math>d\\phi' - d\\phi</math> and moved through distances—\n{{block center|<math>(y_1 - y)\\ (d\\phi' - d\\phi)</math> and <math>(x_1 - x)\\ (d\\phi' - d\\phi)</math>}}\nin directions parallel to <math>\\text{O}x</math> and <math>\\text{O}y</math> respectively. On integrating along <math>\\text{OP}</math> the total movement of <math>\\text{P}</math> due to the bending of all such elements as <math>\\text{QR}</math> in <math>\\text{OP}</math> is obtained; when <math>\\text{P}</math> is moved round the complete section so as to return to <math>\\text{O}</math>, where the total movement is zero, it follows, on subtraction and reduction, that\n{{block center|<math>\\int\\frac{\\text{M}}{\\text{I}}\\,ds = 0; \\int\\frac{\\text{M}x}{\\text{I}}\\,ds = 0; \\int\\frac{\\text{M}y}{\\text{I}}\\,ds = 0;</math>}}\nthe integrations being taken completely round the section. It is assumed in the foregoing that rigid connexions are made at discontinuities, such as deck edges, in order to prevent any alteration in the angle due to strain.\n\nThe values of <math>\\frac{\\text{M}}{\\text{I}}, \\frac{\\text{M}x}{\\text{I}}, \\frac{\\text{M}y}{\\text{I}}</math> can be calculated at varying points and",
+   "c1s2": "expressed in terms of <math>\\text{T}_0</math>, <math>\\text{F}_0</math>, <math>\\text{M}_0</math>; by using a method of approximate quadrature, <math>\\text{T}_0</math>, <math>\\text{F}_0</math>, <math>\\text{M}_0</math> are found by solving the 3 equations obtained, and <math>\\text{M}</math> is deduced giving the corresponding stress at any point. In applying this method to the determination of the stresses caused by rolling, the centrifugal forces on each element are included in the external forces when estimating <math>\\text{M}</math>.\n\nThis method of estimating the transverse strength of ships is due to Dr Bruhn, who in ''Trans. I.N.A.'', 1901, 1904 and 1905, gives illustrations of its application.\n\n'''''Local stresses.''''' In addition to the stresses due to longitudinal and transverse bending, which are distributed over the whole or a considerable part of the structure, local stresses are experienced including those caused by water-pressure; forces on sails, masts and rigging; reactions of moving parts of machinery; heavy blows from the sea on side, deck and upper works; anchor, cable and mooring gear, and blast from gun-fire. General methods are usually inapplicable to such cases; the support provided is determined by experience and by the particular requirements. The stresses in bottom plating due to water-pressure are of small amount where the curvature is appreciable, since the plating, by compression, directly resists any tendency towards change of curvature; in a deep flat-bottomed ship, on the other hand, resistance to water-pressure is chiefly due to the bending of the plating, the slight extension having little influence. The plating is supported at the transverse and longitudinal frames, and, to some extent, at the edges. The close spacing of transverse frames usually adopted in merchant ships reduces the stress to a small amount; but in large warships, whose frame spacing varies from 3 to 4 ft., it is probable that the flat plating near the keel amidships is subjected to considerable stress, although, as experience shows, not beyond the limits of safety. In fine ships special provision is frequently made to prevent the side plating near the bow from panting due to the great and rapid fluctuation of water-pressure when pitching.",
+   "c1s3": "¶\n''Uniformity of stress.'' The material of the structure is arranged so that the distribution of stress over any localized section of material is maintained as uniform as possible in order that the ratio of maximum to mean stress may not be unduly large. For this reason abrupt discontinuities and sudden changes of section are avoided, and “ compensation ” is introduced where large openings are cut in plating. The corners of hatchways in ships whose upper decks are subjected to considerable tension are frequently rounded, since failure of the material near the square corners of such hatchways has been known to take place, pointing to the existence of abnormal stress intensities, which are also evident from theoretical considerations. Similarly, local stiffening required for the support of a heavy weight or for resisting the blast of gun-fire is reduced in sectional area at the ends, or continued for a length greater than absolutely necessary, to ensure an even distribution of stress.\n\n''Vibration.'' Among the stresses to which a ship is subjected are those caused by its mode of propulsion. The stresses due to the reactions of the moving parts of the machinery are, in general, of small amount, but owing to their periodic character vibrations are induced in the structure which are frequently of sufficient magnitude to cause considerable inconvenience and even damage.\n\nIt is known that when a periodic force of frequency <math>n</math> is applied to a structure capable of vibrating naturally with frequency <math>p</math>, the amplitude of the forced vibrations assumed by the structure is inversely proportional to <math>\\frac{1}{\\sqrt{(p^2-n^2)^2+\\text{K}^2}}</math>, where <math>\\text{K}</math> is a coefficient depending on the resistance to vibration.",
+   "c2s1": "If the period of the force synchronizes or nearly synchronizes with the natural period of the structure, the amplitude is considerable, but otherwise it is of relatively small amount. If, therefore, the natural period of vibration has been found for a ship, the causes of vibration at various speeds can be readily traced, since marked vibration is usually attributable to a synchronizing source.\n\nVibration in a steamship is due to various causes, the principal of which are:—\n\n1. The reciprocating parts of the engines, if unbalanced, cause vibrating forces and couples in a vertical plane and of two frequencies, one equal to, and the other twice, the speed of revolution, the latter being due to the secondary action introduced by the connecting rod. In twin-screw ships torsional oscillations in transverse planes may also result when the engines are working in opposite phase.\n\n2. The rotating parts of the engines cause vertical and horizontal oscillations of frequency equal to the speed of revolution.\n\n3. The variation in the crank effort tends to cause torsional oscillation of the same frequency, particularly in single or two-cylinder engines.\n\n4. Vibrations, principally at the stern, may result from an unbalanced screw; these are similar to those caused by the rotating",
+   "c2s2": "parts of the machinery.\n\n5. A screw propeller which experiences uneven resistance during its revolution is the cause of vibrations, whose frequency is the product of the revolution and the number of blades. Such resistances occur when (1) the blades pass too close to the hull; (2) when the screw breaks the surface of the water; and (3) when the supply of water to the propeller is imperfect, due either to “cavitation” or to the screening effect of shaft and propeller supports.\n\nThe natural vibration of a ship’s structure (irrespective of local vibrations) is analogous to that of an unsupported rod of suitable dimensions, the principal difference being that the vibrations in the rod are undamped and those in the ship are damped rapidly through the communication of the motion at the hull surface to the surrounding water. A thin uniform rod vibrating laterally has a minimum frequency (per minute) equal to <math>1210\\sqrt{\\frac{\\text{EI}}{\\text{WL}^3}}</math>; in this mode of vibration there are two nodes situated at a distance <math>\\cdot224\\,\\text{L}</math> from either end. Vibrations of a higher order having three, four or more nodes are also possible, the frequencies increasing approximately in the ratio 1 : 2·8 : 5·4, &c. The complex variation of the weight, inertia and modulus in a ship prevent a corresponding result being obtained by direct mathematical investigation; recourse is therefore made either to direct experiments on ships, or to a “dynamic model.” The instrument used for measuring and recording vibrations consists of a weight suspended, and held laterally in position, by springs, so as to have a long period of oscillation; pens or pencils attached to the weight record the vibrations upon revolving cylinders fixed to the vessel and fitted with time records. The formula (of the same form as that for a rod)\n{{block center|<math>\\text{N}=c\\sqrt{\\frac{\\text{EI}}{\\text{WL}^3}}</math>,}}",
+   "c2s3": "where <math>\\text{N}</math> is the frequency per minute, was used by Dr Schlick for the vibration of ships; the value of <math>c</math> found by him for vertical vibrations varied from 1600 in very fine vessels to 1300 in those having moderately full lines. The nodes were found to be at about a third of the length from the stem and about a quarter of the length from the after perpendicular. The frequency with three nodes was slightly more than twice that of the primary vibrations. Horizontal and torsional vibrations were also observed; their minimum frequency is, however, generally considerably more than that of the vertical vibrations, and they are therefore generally of much smaller amplitude. (See papers in ''Trans. Inst. Nav. Archs.'' from 1884 to 1901, by Dr O. Schlick, and in 1895 by Mr A. Mallock.) The \"dynamic model,\" suggested by Mr Mallock, forms a convenient means of approximately investigating the positions of the nodes and the frequencies of vibration of a ship. The formula given above suggests that by making a model of material whose modulus <math>\\text{E}</math> and density <math>\\rho</math> are known, and on a linear scale of <math>\\frac{1}{n}</math>, then if <math>\\text{N}_s</math>, <math>\\text{N}_m</math> refer to ship and model,\n{{block center|<math>\\frac{\\text{N}_s}{\\text{N}_m}=\\frac{1}{n}\\sqrt{\\frac{\\text{E}_s}{\\text{E}_m}\\cdot\\frac{\\rho_m}{\\rho_s}}</math>.}}\nThis relation is unaffected if the lateral distribution of material is changed in the model, provided that <math>\\text{I}_m</math> and the weight of the model per foot run are unaltered at each point in the length; the model is therefore made solid and of rectangular or other convenient section, so that\n{{block center|<math>\\text{I}_m=\\frac{1}{n^4}\\cdot\\text{I}_s</math> and <math>\\text{W}_m=\\frac{1}{n^3}\\cdot\\frac{\\rho_m}{\\rho_s}\\cdot\\text{W}_s</math>;}}",
+   "c2s4": "the weight being also similarly distributed in a longitudinal direction to that in the ship. The model is supported at points, whose positions are obtained by trial, giving the highest frequency for the mode of vibration considered; these points are the nodes corresponding to the free vibrations when the model is unsupported, and the influence of the supports is thus eliminated. On comparison with the results obtained in a ship, the reliability of such model experiments has"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 9588,
+    "output_tokens": 5855,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|952|SHIPBUILDING|[STRENGTH}}</noinclude>equilibrium, the tension <math>\\text{T}</math>, shearing force <math>\\text{F}</math>, and bending moment <math>\\text{M}</math>, at <math>\\text{Q}</math> can be algebraically expressed in terms of its coordinates <math>(x, y,)</math>, the water or other external pressures on <math>\\text{OQ}</math>, and the values of <math>\\text{T}</math>, <math>\\text{F}</math> and <math>\\text{M}</math> at <math>\\text{O}</math> <math>(\\text{T}_0, \\text{F}_0, \\text{M}_0,)</math>.\n\nNeglecting the effects of <math>\\text{T}</math> and <math>\\text{F}</math> on the element <math>\\text{QR}</math>, it follows from the equations of bending that\n{{block center|<math>\\text{M} = \\text{EI}\\left(\\frac{d\\phi'}{ds} - \\frac{d\\phi}{ds}\\right)</math>}}\nwhere <math>\\phi</math> and <math>\\phi'</math> are the respective inclinations of the element <math>\\text{QR}</math> to <math>\\text{O}x</math> before and after the strain caused by bending, and <math>ds</math> is the length of <math>\\text{QR}</math>. Due to the effect of <math>\\text{M}</math> on <math>\\text{QR}</math>, the bar at the point <math>\\text{P}</math> <math>(x_1, y_1)</math> is rotated through an angle <math>d\\phi' - d\\phi</math> and moved through distances—\n{{block center|<math>(y_1 - y)\\ (d\\phi' - d\\phi)</math> and <math>(x_1 - x)\\ (d\\phi' - d\\phi)</math>}}\nin directions parallel to <math>\\text{O}x</math> and <math>\\text{O}y</math> respectively. On integrating along <math>\\text{OP}</math> the total movement of <math>\\text{P}</math> due to the bending of all such elements as <math>\\text{QR}</math> in <math>\\text{OP}</math> is obtained; when <math>\\text{P}</math> is moved round the complete section so as to return to <math>\\text{O}</math>, where the total movement is zero, it follows, on subtraction and reduction, that\n{{block center|<math>\\int\\frac{\\text{M}}{\\text{I}}\\,ds = 0; \\int\\frac{\\text{M}x}{\\text{I}}\\,ds = 0; \\int\\frac{\\text{M}y}{\\text{I}}\\,ds = 0;</math>}}\nthe integrations being taken completely round the section. It is assumed in the foregoing that rigid connexions are made at discontinuities, such as deck edges, in order to prevent any alteration in the angle due to strain.\n\nThe values of <math>\\frac{\\text{M}}{\\text{I}}, \\frac{\\text{M}x}{\\text{I}}, \\frac{\\text{M}y}{\\text{I}}</math> can be calculated at varying points and expressed in terms of <math>\\text{T}_0</math>, <math>\\text{F}_0</math>, <math>\\text{M}_0</math>; by using a method of approximate quadrature, <math>\\text{T}_0</math>, <math>\\text{F}_0</math>, <math>\\text{M}_0</math> are found by solving the 3 equations obtained, and <math>\\text{M}</math> is deduced giving the corresponding stress at any point. In applying this method to the determination of the stresses caused by rolling, the centrifugal forces on each element are included in the external forces when estimating <math>\\text{M}</math>.\n\nThis method of estimating the transverse strength of ships is due to Dr Bruhn, who in ''Trans. I.N.A.'', 1901, 1904 and 1905, gives illustrations of its application.\n\n'''''Local stresses.''''' In addition to the stresses due to longitudinal and transverse bending, which are distributed over the whole or a considerable part of the structure, local stresses are experienced including those caused by water-pressure; forces on sails, masts and rigging; reactions of moving parts of machinery; heavy blows from the sea on side, deck and upper works; anchor, cable and mooring gear, and blast from gun-fire. General methods are usually inapplicable to such cases; the support provided is determined by experience and by the particular requirements. The stresses in bottom plating due to water-pressure are of small amount where the curvature is appreciable, since the plating, by compression, directly resists any tendency towards change of curvature; in a deep flat-bottomed ship, on the other hand, resistance to water-pressure is chiefly due to the bending of the plating, the slight extension having little influence. The plating is supported at the transverse and longitudinal frames, and, to some extent, at the edges. The close spacing of transverse frames usually adopted in merchant ships reduces the stress to a small amount; but in large warships, whose frame spacing varies from 3 to 4 ft., it is probable that the flat plating near the keel amidships is subjected to considerable stress, although, as experience shows, not beyond the limits of safety. In fine ships special provision is frequently made to prevent the side plating near the bow from panting due to the great and rapid fluctuation of water-pressure when pitching.\n\n''Uniformity of stress.'' The material of the structure is arranged so that the distribution of stress over any localized section of material is maintained as uniform as possible in order that the ratio of maximum to mean stress may not be unduly large. For this reason abrupt discontinuities and sudden changes of section are avoided, and “ compensation ” is introduced where large openings are cut in plating. The corners of hatchways in ships whose upper decks are subjected to considerable tension are frequently rounded, since failure of the material near the square corners of such hatchways has been known to take place, pointing to the existence of abnormal stress intensities, which are also evident from theoretical considerations. Similarly, local stiffening required for the support of a heavy weight or for resisting the blast of gun-fire is reduced in sectional area at the ends, or continued for a length greater than absolutely necessary, to ensure an even distribution of stress.\n\n''Vibration.'' Among the stresses to which a ship is subjected are those caused by its mode of propulsion. The stresses due to the reactions of the moving parts of the machinery are, in general, of small amount, but owing to their periodic character vibrations are induced in the structure which are frequently of sufficient magnitude to cause considerable inconvenience and even damage.\n\nIt is known that when a periodic force of frequency <math>n</math> is applied to a structure capable of vibrating naturally with frequency <math>p</math>, the amplitude of the forced vibrations assumed by the structure is inversely proportional to <math>\\frac{1}{\\sqrt{(p^2-n^2)^2+\\text{K}^2}}</math>, where <math>\\text{K}</math> is a coefficient depending on the resistance to vibration. If the period of the force synchronizes or nearly synchronizes with the natural period of the structure, the amplitude is considerable, but otherwise it is of relatively small amount. If, therefore, the natural period of vibration has been found for a ship, the causes of vibration at various speeds can be readily traced, since marked vibration is usually attributable to a synchronizing source.\n\nVibration in a steamship is due to various causes, the principal of which are:—\n\n1. The reciprocating parts of the engines, if unbalanced, cause vibrating forces and couples in a vertical plane and of two frequencies, one equal to, and the other twice, the speed of revolution, the latter being due to the secondary action introduced by the connecting rod. In twin-screw ships torsional oscillations in transverse planes may also result when the engines are working in opposite phase.\n\n2. The rotating parts of the engines cause vertical and horizontal oscillations of frequency equal to the speed of revolution.\n\n3. The variation in the crank effort tends to cause torsional oscillation of the same frequency, particularly in single or two-cylinder engines.\n\n4. Vibrations, principally at the stern, may result from an unbalanced screw; these are similar to those caused by the rotating parts of the machinery.\n\n5. A screw propeller which experiences uneven resistance during its revolution is the cause of vibrations, whose frequency is the product of the revolution and the number of blades. Such resistances occur when (1) the blades pass too close to the hull; (2) when the screw breaks the surface of the water; and (3) when the supply of water to the propeller is imperfect, due either to “cavitation” or to the screening effect of shaft and propeller supports.\n\nThe natural vibration of a ship’s structure (irrespective of local vibrations) is analogous to that of an unsupported rod of suitable dimensions, the principal difference being that the vibrations in the rod are undamped and those in the ship are damped rapidly through the communication of the motion at the hull surface to the surrounding water. A thin uniform rod vibrating laterally has a minimum frequency (per minute) equal to <math>1210\\sqrt{\\frac{\\text{EI}}{\\text{WL}^3}}</math>; in this mode of vibration there are two nodes situated at a distance <math>\\cdot224\\,\\text{L}</math> from either end. Vibrations of a higher order having three, four or more nodes are also possible, the frequencies increasing approximately in the ratio 1 : 2·8 : 5·4, &c. The complex variation of the weight, inertia and modulus in a ship prevent a corresponding result being obtained by direct mathematical investigation; recourse is therefore made either to direct experiments on ships, or to a “dynamic model.” The instrument used for measuring and recording vibrations consists of a weight suspended, and held laterally in position, by springs, so as to have a long period of oscillation; pens or pencils attached to the weight record the vibrations upon revolving cylinders fixed to the vessel and fitted with time records. The formula (of the same form as that for a rod)\n{{block center|<math>\\text{N}=c\\sqrt{\\frac{\\text{EI}}{\\text{WL}^3}}</math>,}} where <math>\\text{N}</math> is the frequency per minute, was used by Dr Schlick for the vibration of ships; the value of <math>c</math> found by him for vertical vibrations varied from 1600 in very fine vessels to 1300 in those having moderately full lines. The nodes were found to be at about a third of the length from the stem and about a quarter of the length from the after perpendicular. The frequency with three nodes was slightly more than twice that of the primary vibrations. Horizontal and torsional vibrations were also observed; their minimum frequency is, however, generally considerably more than that of the vertical vibrations, and they are therefore generally of much smaller amplitude. (See papers in ''Trans. Inst. Nav. Archs.'' from 1884 to 1901, by Dr O. Schlick, and in 1895 by Mr A. Mallock.) The \"dynamic model,\" suggested by Mr Mallock, forms a convenient means of approximately investigating the positions of the nodes and the frequencies of vibration of a ship. The formula given above suggests that by making a model of material whose modulus <math>\\text{E}</math> and density <math>\\rho</math> are known, and on a linear scale of <math>\\frac{1}{n}</math>, then if <math>\\text{N}_s</math>, <math>\\text{N}_m</math> refer to ship and model,\n{{block center|<math>\\frac{\\text{N}_s}{\\text{N}_m}=\\frac{1}{n}\\sqrt{\\frac{\\text{E}_s}{\\text{E}_m}\\cdot\\frac{\\rho_m}{\\rho_s}}</math>.}}\nThis relation is unaffected if the lateral distribution of material is changed in the model, provided that <math>\\text{I}_m</math> and the weight of the model per foot run are unaltered at each point in the length; the model is therefore made solid and of rectangular or other convenient section, so that\n{{block center|<math>\\text{I}_m=\\frac{1}{n^4}\\cdot\\text{I}_s</math> and <math>\\text{W}_m=\\frac{1}{n^3}\\cdot\\frac{\\rho_m}{\\rho_s}\\cdot\\text{W}_s</math>;}} the weight being also similarly distributed in a longitudinal direction to that in the ship. The model is supported at points, whose positions are obtained by trial, giving the highest frequency for the mode of vibration considered; these points are the nodes corresponding to the free vibrations when the model is unsupported, and the influence of the supports is thus eliminated. On comparison with the results obtained in a ship, the reliability of such model experiments has<noinclude><references/></noinclude>"
+}

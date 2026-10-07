@@ -1,0 +1,138 @@
+{
+ "volume": 24,
+ "page_number": 1021,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1031",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1031",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 1.1,
+  "column_width": 1269,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     16,
+     94,
+     2294,
+     176
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     16,
+     193,
+     1377,
+     3034
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1377,
+     176,
+     2294,
+     1105
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1377,
+     1105,
+     2294,
+     2147
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1377,
+     2147,
+     2294,
+     3034
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|STEERING]|SHIPBUILDING|953}}",
+   "c2s1": "12·40\n\n12·35\n\nUNDER THE ACTION OF 31° OF HELM OF 10·5 KNOTS.\n\nB. H M S 12·35·23·4\n\nD H M S 12·40·46\n\nECTION OF WIND.",
+   "c2s2": "",
+   "c2s3": "600 700 800 900 1000\n\nting point. The first time und in a dotted line.\n\nh. m. s.\n\nis half over . 12 32 52\n\nturned through . . . . . . . 12 35 23·4\n\nturned through . . . . . . . 12 38 4\n\nturned through . . . . . . . 12 40 46\n\nturned through . . . . . . . 12 43 28"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1021 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     62,
+     195,
+     1397,
+     3116
+    ],
+    "caption": [
+     598,
+     2461,
+     1397,
+     3028
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     78,
+     188,
+     2303,
+     3118
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {
+   "c2s2": "empty"
+  },
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    0,
+    1
+   ],
+   "1": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4040,
+    "output_tokens": 94,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 5062,
+    "output_tokens": 1582,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 9620
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|STEERING]|SHIPBUILDING|953}}</noinclude>[[File:eb1911 v24 p1021 c1f1.png|center|386px]]\n\n12·40\n\n12·35\n\nUNDER THE ACTION OF 31° OF HELM OF 10·5 KNOTS.\n\nB. H M S 12·35·23·4\n\nD H M S 12·40·46\n\nECTION OF WIND. 600 700 800 900 1000\n\nting point. The first time und in a dotted line.\n\nh. m. s.\n\nis half over . 12 32 52\n\nturned through . . . . . . . 12 35 23·4\n\nturned through . . . . . . . 12 38 4\n\nturned through . . . . . . . 12 40 46\n\nturned through . . . . . . . 12 43 28<noinclude><references/></noinclude>"
+}

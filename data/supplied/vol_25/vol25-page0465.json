@@ -1,0 +1,310 @@
+{
+ "volume": 25,
+ "page_number": 465,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n473",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n473",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1089,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     84,
+     127,
+     2234,
+     198
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     84,
+     215,
+     1156,
+     528
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     534,
+     1156,
+     567
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     567,
+     1156,
+     943
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     943,
+     1156,
+     1938
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     84,
+     1938,
+     1156,
+     2170
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     2179,
+     1156,
+     2212
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     84,
+     2212,
+     1156,
+     3174
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1156,
+     198,
+     2234,
+     841
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1156,
+     841,
+     2234,
+     1027
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1156,
+     1034,
+     2234,
+     1062
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1156,
+     1062,
+     2234,
+     2765
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1156,
+     2785,
+     2234,
+     2821
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1156,
+     2821,
+     2234,
+     3174
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|MUSICAL QUALITY]|SOUND|449}}",
+   "c1s1": "{{c|{{sc|Fig.}} 20.}}",
+   "c1s2": "If all were still, the <math>n</math> waves emitted by <math>\\text{S}</math> in one second would spread over a length <math>\\text{U}</math>. But through the wind velocity the first wave is carried to a distance <math>\\text{U} + w</math> from <math>\\text{S}</math>, while through the motion of the source the last wave is a distance <math>u</math> from <math>\\text{S}</math>. Then the <math>n</math> waves occupy a space <math>\\text{U} + w - u</math>. Now turning to the receiver, let us consider what length is occupied by the waves which pass him in one second. If he were at rest, it would be the waves in length <math>\\text{U} + w</math>, for the wave passing him at the beginning of a second would be so far distant at the end of the second. But through his motion <math>v</math> in the second, he receives only the waves in distance <math>\\text{U} + w - v</math>. Since there are <math>n</math> waves in distance <math>\\text{U} + w - u</math> the number he actu-",
+   "c1s3": "ally receives is <math>n(\\text{U}+w-v)/(\\text{U}+w-u)</math>. If the velocities of source and receiver are equal then the frequency is not affected by their motion or by the wind. But if their velocities are different, the frequency of the waves received is affected both by these velocities and by that of the wind.\n\nThe change in pitch through motion of the source may be illustrated by putting a pitch-pipe in one end of a few feet of rubber tubing and blowing through the other end while the tubing is whirled round the head. An observer in the plane of the motion can easily hear a change in the pitch as the pitch-pipe moves to and from him.\n\n''Musical Quality or Timbre.''—Though a musical note has definite pitch or frequency, notes of the same pitch emitted by different instruments have quite different quality or timbre. The three characteristics of a longitudinal periodic disturbance are its amplitude, the length after which it repeats itself, and its form, which may be represented by the shape of the displacement curve. Now the amplitude evidently corresponds to the loudness, and the length of period corresponds to the pitch or frequency. Hence we must put down the quality or timbre as depending on the form.\n\nThe simplest form of wave, so far as our sensation goes—that is, the one giving rise to a pure tone—is, we have every reason to suppose, one in which the displacement is represented by a harmonic curve or a curve of sines, <math>y=a \\sin m(x-e)</math>. If we put this in the form <math>y=a \\sin \\frac{2\\pi}{\\lambda}(x-e)</math>, we see that <math>y=0</math>, for <math>x=e</math>, <math>e+\\tfrac{1}{2}\\lambda</math>, <math>e+\\tfrac{2}{2}\\lambda</math>, <math>e+\\tfrac{3}{2}\\lambda</math>, and so on, that <math>y</math> is <math>+</math> from <math>x=e</math> to <math>x=e+\\tfrac{1}{2}\\lambda</math>, <math>-</math>from <math>e+\\tfrac{1}{2}\\lambda</math> to <math>e+\\tfrac{2}{2}\\lambda</math>, and so on, and that it alternates between the values <math>+a</math> and <math>-a</math>.\n\nThe form of the curve is evidently as represented in fig. 21, and it may easily be drawn to exact scale from a table of sines.",
+   "c1s4": "{{c|{{sc|Fig.}} 21.}}",
+   "c1s5": "¶\nIn this curve <math>\\text{ABCD}</math> are nodes. <math>\\text{OA}=e</math> is termed the epoch, being the distance from <math>\\text{O}</math> of the first ascending node. <math>\\text{AC}</math> is the shortest distance after which the curve begins to repeat itself; this length <math>\\lambda</math> is termed the wave-length. The maximum height of the curve <math>\\text{HM}=a</math> is the amplitude. If we transfer <math>\\text{O}</math> to <math>\\text{A}</math>, <math>e=0</math>, and the curve may be represented by <math>y=a\\sin\\frac{2\\pi}{\\lambda}x</math>.\n\nIf now the curve moves along unchanged in form in the direction <math>\\text{ABC}</math> with uniform velocity <math>\\text{U}</math>, the epoch <math>e=\\text{OA}</math> at any time <math>t</math> will be <math>\\text{U}t</math>, so that the value of <math>y</math> may be represented as\n{{block center|<math>y=a\\sin\\frac{2\\pi}{\\lambda}(x-\\text{U}t).</math> (16)}}\nThe velocity perpendicular to the axis of any point on the curve at a fixed distance <math>x</math> from <math>\\text{O}</math> is\n{{block center|<math>\\frac{dy}{dt}=-\\frac{2\\pi\\text{U}a}{\\lambda}\\cos\\frac{2\\pi}{\\lambda}(x-\\text{U}t).</math> (17)}}\nThe acceleration perpendicular to the axis is\n{{block center|<math>\\frac{d^2y}{dt^2}=-\\frac{4\\pi^2\\text{U}^2a}{\\lambda^2}\\sin\\frac{2\\pi}{\\lambda}(x-\\text{U}t)</math>}}\n{{block center|<math>=-\\frac{4\\pi^2\\text{U}^2}{\\lambda^2}y</math> (18)}}\nwhich is an equation characteristic of simple harmonic motion.\n\nThe maximum velocity of a particle in the wave-train is the amplitude of <math>dy/dt</math>. It is, therefore,\n{{block center|<math>u_m=2\\pi\\text{U}a/\\lambda=2\\pi na.</math> (19)}}\n\nXXV. 15",
+   "c2s1": "The maximum pressure excess is the amplitude of <math>\\hat{\\omega} = \\text{E}u/\\text{U} = (\\text{E}/\\text{U})dy/dt</math>. It is therefore\n{{block center|<math>\\hat{\\omega}_m = (\\text{E}/\\text{U})2\\pi\\text{U}a/\\lambda = 2\\pi n\\rho\\text{U}a.</math> (20)}}\nWe have already found the energy density in the train and the energy stream in equations (13) and (14).\n\nThe chief experimental basis for supposing that a train of longitudinal waves with displacement curve of this kind arouses the sensation of a pure tone is that the more nearly a source is made to vibrate with a single simple harmonic motion, and therefore, presumably, the more nearly it sends out such a harmonic train, the more nearly does the note heard approximate to a single pure tone.\n\nAny periodic curve may be resolved into sine or harmonic curves by Fourier's theorem.\n\n'''''Fourier's Theorem.''''' Suppose that any periodic sound disturbance, consisting of plane waves, is being propagated in the direction ABCD (fig. 22). Let it be represented by a displacement curve AHBKC. Its periodicity implies that after a certain distance the displacement curve exactly repeats itself. Let AC be the",
+   "c2s2": "{{c|{{sc|Fig.}} 22.}}",
+   "c2s3": "{{c|{{sc|Fig.}} 23.}}",
+   "c2s4": "us imagine it to form half a wave-length of the extended train ZGAHBKC, on an indefinitely extended stretched string, the values of <math>y</math> at equal distances from A (or from B) being equal and opposite. Then, as we shall prove later, the vibrations of the string may be represented by the travelling of two trains in opposite directions each with velocity\n{{block center|<math>\\sqrt{\\text{tension} \\div \\text{mass per unit length}}</math>}}\neach half the height of the train represented in fig. 23. For the superposition of these trains will give a stationary wave between A"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v25 p0465 c1f1.png",
+   "c1f2": "eb1911 v25 p0465 c1f2.png",
+   "c2f1": "eb1911 v25 p0465 c2f1.png",
+   "c2f2": "eb1911 v25 p0465 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     100,
+     467,
+     1126,
+     525
+    ],
+    "caption": [
+     550,
+     536,
+     676,
+     567
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     97,
+     459,
+     1135,
+     526
+    ]
+   },
+   {
+    "box": [
+     108,
+     1943,
+     1104,
+     2167
+    ],
+    "caption": [
+     549,
+     2179,
+     675,
+     2212
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     106,
+     1935,
+     1135,
+     2169
+    ]
+   },
+   {
+    "box": [
+     1191,
+     844,
+     2208,
+     1024
+    ],
+    "caption": [
+     1633,
+     1034,
+     1764,
+     1062
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1195,
+     839,
+     2217,
+     1025
+    ]
+   },
+   {
+    "box": [
+     1182,
+     2519,
+     2216,
+     2765
+    ],
+    "caption": [
+     1624,
+     2785,
+     1754,
+     2819
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1182,
+     2511,
+     2217,
+     2765
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    1
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 8924,
+    "output_tokens": 314,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 10,
+    "input_tokens": 5482,
+    "output_tokens": 3994,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 19240
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|MUSICAL QUALITY]|SOUND|449}}</noinclude>[[File:eb1911 v25 p0465 c1f1.png|center|354px]]\n{{c|{{sc|Fig.}} 20.}}\n\nIf all were still, the <math>n</math> waves emitted by <math>\\text{S}</math> in one second would spread over a length <math>\\text{U}</math>. But through the wind velocity the first wave is carried to a distance <math>\\text{U} + w</math> from <math>\\text{S}</math>, while through the motion of the source the last wave is a distance <math>u</math> from <math>\\text{S}</math>. Then the <math>n</math> waves occupy a space <math>\\text{U} + w - u</math>. Now turning to the receiver, let us consider what length is occupied by the waves which pass him in one second. If he were at rest, it would be the waves in length <math>\\text{U} + w</math>, for the wave passing him at the beginning of a second would be so far distant at the end of the second. But through his motion <math>v</math> in the second, he receives only the waves in distance <math>\\text{U} + w - v</math>. Since there are <math>n</math> waves in distance <math>\\text{U} + w - u</math> the number he actually receives is <math>n(\\text{U}+w-v)/(\\text{U}+w-u)</math>. If the velocities of source and receiver are equal then the frequency is not affected by their motion or by the wind. But if their velocities are different, the frequency of the waves received is affected both by these velocities and by that of the wind.\n\nThe change in pitch through motion of the source may be illustrated by putting a pitch-pipe in one end of a few feet of rubber tubing and blowing through the other end while the tubing is whirled round the head. An observer in the plane of the motion can easily hear a change in the pitch as the pitch-pipe moves to and from him.\n\n''Musical Quality or Timbre.''—Though a musical note has definite pitch or frequency, notes of the same pitch emitted by different instruments have quite different quality or timbre. The three characteristics of a longitudinal periodic disturbance are its amplitude, the length after which it repeats itself, and its form, which may be represented by the shape of the displacement curve. Now the amplitude evidently corresponds to the loudness, and the length of period corresponds to the pitch or frequency. Hence we must put down the quality or timbre as depending on the form.\n\nThe simplest form of wave, so far as our sensation goes—that is, the one giving rise to a pure tone—is, we have every reason to suppose, one in which the displacement is represented by a harmonic curve or a curve of sines, <math>y=a \\sin m(x-e)</math>. If we put this in the form <math>y=a \\sin \\frac{2\\pi}{\\lambda}(x-e)</math>, we see that <math>y=0</math>, for <math>x=e</math>, <math>e+\\tfrac{1}{2}\\lambda</math>, <math>e+\\tfrac{2}{2}\\lambda</math>, <math>e+\\tfrac{3}{2}\\lambda</math>, and so on, that <math>y</math> is <math>+</math> from <math>x=e</math> to <math>x=e+\\tfrac{1}{2}\\lambda</math>, <math>-</math>from <math>e+\\tfrac{1}{2}\\lambda</math> to <math>e+\\tfrac{2}{2}\\lambda</math>, and so on, and that it alternates between the values <math>+a</math> and <math>-a</math>.\n\nThe form of the curve is evidently as represented in fig. 21, and it may easily be drawn to exact scale from a table of sines.\n\n[[File:eb1911 v25 p0465 c1f2.png|center|354px]]\n{{c|{{sc|Fig.}} 21.}}\n\nIn this curve <math>\\text{ABCD}</math> are nodes. <math>\\text{OA}=e</math> is termed the epoch, being the distance from <math>\\text{O}</math> of the first ascending node. <math>\\text{AC}</math> is the shortest distance after which the curve begins to repeat itself; this length <math>\\lambda</math> is termed the wave-length. The maximum height of the curve <math>\\text{HM}=a</math> is the amplitude. If we transfer <math>\\text{O}</math> to <math>\\text{A}</math>, <math>e=0</math>, and the curve may be represented by <math>y=a\\sin\\frac{2\\pi}{\\lambda}x</math>.\n\nIf now the curve moves along unchanged in form in the direction <math>\\text{ABC}</math> with uniform velocity <math>\\text{U}</math>, the epoch <math>e=\\text{OA}</math> at any time <math>t</math> will be <math>\\text{U}t</math>, so that the value of <math>y</math> may be represented as\n{{block center|<math>y=a\\sin\\frac{2\\pi}{\\lambda}(x-\\text{U}t).</math> (16)}}\nThe velocity perpendicular to the axis of any point on the curve at a fixed distance <math>x</math> from <math>\\text{O}</math> is\n{{block center|<math>\\frac{dy}{dt}=-\\frac{2\\pi\\text{U}a}{\\lambda}\\cos\\frac{2\\pi}{\\lambda}(x-\\text{U}t).</math> (17)}}\nThe acceleration perpendicular to the axis is\n{{block center|<math>\\frac{d^2y}{dt^2}=-\\frac{4\\pi^2\\text{U}^2a}{\\lambda^2}\\sin\\frac{2\\pi}{\\lambda}(x-\\text{U}t)</math>}}\n{{block center|<math>=-\\frac{4\\pi^2\\text{U}^2}{\\lambda^2}y</math> (18)}}\nwhich is an equation characteristic of simple harmonic motion.\n\nThe maximum velocity of a particle in the wave-train is the amplitude of <math>dy/dt</math>. It is, therefore,\n{{block center|<math>u_m=2\\pi\\text{U}a/\\lambda=2\\pi na.</math> (19)}}\n\nXXV. 15 The maximum pressure excess is the amplitude of <math>\\hat{\\omega} = \\text{E}u/\\text{U} = (\\text{E}/\\text{U})dy/dt</math>. It is therefore\n{{block center|<math>\\hat{\\omega}_m = (\\text{E}/\\text{U})2\\pi\\text{U}a/\\lambda = 2\\pi n\\rho\\text{U}a.</math> (20)}}\nWe have already found the energy density in the train and the energy stream in equations (13) and (14).\n\nThe chief experimental basis for supposing that a train of longitudinal waves with displacement curve of this kind arouses the sensation of a pure tone is that the more nearly a source is made to vibrate with a single simple harmonic motion, and therefore, presumably, the more nearly it sends out such a harmonic train, the more nearly does the note heard approximate to a single pure tone.\n\nAny periodic curve may be resolved into sine or harmonic curves by Fourier's theorem.\n\n'''''Fourier's Theorem.''''' Suppose that any periodic sound disturbance, consisting of plane waves, is being propagated in the direction ABCD (fig. 22). Let it be represented by a displacement curve AHBKC. Its periodicity implies that after a certain distance the displacement curve exactly repeats itself. Let AC be the us imagine it to form half a wave-length of the extended train ZGAHBKC, on an indefinitely extended stretched string, the values of <math>y</math> at equal distances from A (or from B) being equal and opposite. Then, as we shall prove later, the vibrations of the string may be represented by the travelling of two trains in opposite directions each with velocity\n{{block center|<math>\\sqrt{\\text{tension} \\div \\text{mass per unit length}}</math>}}\neach half the height of the train represented in fig. 23. For the superposition of these trains will give a stationary wave between A\n\n[[File:eb1911 v25 p0465 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 22.}}\n\n[[File:eb1911 v25 p0465 c2f2.png|center|356px]]\n{{c|{{sc|Fig.}} 23.}}<noinclude><references/></noinclude>"
+}

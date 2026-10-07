@@ -1,0 +1,144 @@
+{
+ "volume": 25,
+ "page_number": 1035,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n1057",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n1057",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1080,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     127,
+     110,
+     2267,
+     178
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     127,
+     178,
+     1195,
+     1044
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     127,
+     1044,
+     1195,
+     1766
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     127,
+     1766,
+     1195,
+     2685
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     127,
+     2685,
+     1195,
+     3117
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1195,
+     178,
+     2267,
+     1267
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1195,
+     1267,
+     2267,
+     2347
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1195,
+     2347,
+     2267,
+     3117
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||STRENGTH OF MATERIALS|1009}}",
+   "c1s1": "limits of stress within which strain is wholly or almost wholly elastic are called limits of elasticity.\n\nFor any particular mode of stress the limit of elasticity is much more sharply defined in some materials than in others. When well defined it may readily be recognized in the testing of a sample from the fact that after the stress exceeds the limit of elasticity the strain begins to increase in a much more rapid ratio to the stress than before. This characteristic goes along with the one already mentioned, that up to the limit the strain is wholly or almost wholly elastic.\n\n''Hooke's Law.''—Within the limits of elasticity the strain produced by a stress of any one kind is proportional to the stress producing it. This is Hooke's law, enunciated by him in 1676.\n\nIn applying Hooke's law to the case of simple longitudinal stress—such as the case of a bar stretched by simple longitudinal pull—we may measure the state of strain by the change of length per unit of original length which the bar undergoes when stressed. Let the original length be <math>l</math>, and let the whole change of length be <math>\\delta l</math> when a stress is applied whose intensity <math>p</math> is within the elastic limit. Then the strain is measured by <math>\\delta l/l</math>, and this by Hooke's law is proportional to <math>p</math>. This may be written\n{{block center|<math>\\delta l/l = p/\\text{E},</math>}}",
+   "c1s2": "where <math>\\text{E}</math> is a constant for the particular material considered. The same value of <math>\\text{E}</math> applies to push and to pull, these modes of stress being essentially continuous, and differing only in sign.\n\n''Young's Modulus''.—This constant <math>\\text{E}</math> is called the modulus of longitudinal extensibility, or Young's modulus. Its value, which is expressed in the same units as are used to express intensity of stress, may be measured directly by exposing a sample of the material to longitudinal pull and noting the extension, or indirectly by measuring the flexure of a loaded beam of the material, or by experiments on the frequency of vibrations. It is frequently spoken of by engineers simply as the modulus of elasticity, but this name is too general, as there are other moduli applicable to other modes of stress. Since <math>\\text{E} = pl/\\delta l</math>, the modulus may be defined as the ratio of the intensity of stress <math>p</math> to the longitudinal strain <math>\\delta l/l</math>.\n\n''Modulus of Rigidity''.—In the case of simple shearing stress, the strain may be measured by the angle by which each of the four originally right angles in the square prism of fig. 3 is altered by the distortion of the prism. Let this angle be <math>\\phi</math> in radians; then by Hooke's law <math>p/\\phi = \\text{C}</math>, where <math>p</math> is the intensity of shearing stress and <math>\\text{C}</math> is a constant which measures the rigidity of the material. <math>\\text{C}</math> is called the modulus of rigidity, and is usually determined by experiments on torsion.",
+   "c1s3": "¶\n''Modulus of Cubic Compressibility''.—When three simple stresses of equal intensity <math>p</math> and of the same sign (all pulls or all pushes) are applied in three directions, the material (provided it be isotropic, that is to say, provided its properties are the same in all directions) suffers change of volume only, without distortion of form. If the volume is <math>\\text{V}</math> and the change of volume <math>\\delta\\text{V}</math>, the ratio of the stress <math>p</math> to the strain <math>\\delta\\text{V}/\\text{V}</math> is called the modulus of cubic compressibility, and will be denoted by <math>\\text{K}</math>.\n\nOf these three moduli the one of most importance in engineering applications is Young's modulus <math>\\text{E}</math>. When a simple longitudinal pull or push of intensity <math>p</math> is applied to a piece, the longitudinal strain of extension or compression is <math>p/\\text{E}</math>. This is accompanied by a lateral contraction or expansion, in each transverse direction, whose amount may be written <math>p/\\sigma\\text{E}</math>, where <math>\\sigma</math> is the ratio of longitudinal to lateral strain. It is shown in the article {{sc|Elasticity}}, that for an isotropic material\n{{block center|<math>\\text{E} = \\frac{9\\text{CK}}{3\\text{K}+\\text{C}}</math> and <math>\\sigma = \\frac{2(3\\text{K}+\\text{C})}{3\\text{K}-2\\text{C}}</math>.}}\n\n''Plastic Strain''.—Beyond the limits of elasticity the relation of strain to stress becomes very indefinite. Materials then exhibit, to a greater or less degree, the property of plasticity. The strain is much affected by the length of time during which the stress has been in operation, and reaches its maximum, for any assigned stress, only after a long (perhaps an indefinitely long) time. Finally, when the stress is sufficiently increased, the ratio of the increment of strain to the increment of stress becomes indefinitely great if time is given for the stress to take effect. In other words, the substance then",
+   "c1s4": "assumes what may be called a completely plastic state; it ''flows'' under the applied stress like a viscous liquid.\n\n''Ultimate Strength''.—The ultimate strength of a material with regard to any stated mode of stress is the stress required to produce rupture. In reckoning ultimate strength, however, engineers take, not the actual intensity of stress at which rupture occurs, but the value which this intensity would have reached had rupture ensued without previous alteration of shape. Thus, if a bar whose original cross-section is 2 sq. in. breaks under a uniformly distributed pull of 60 tons, the ultimate tensile strength of the material is reckoned to be 30 tons per square inch, although the actual intensity of stress which produced rupture may have been much greater than this, owing to the contraction of the section previous to fracture. The convenience",
+   "c2s1": "of this usage will be obvious from an example. Suppose that a piece of material of the same quality be used in a structure under conditions which cause it to bear a simple pull of 6 tons per square inch; we conclude at once that the actual load is one-fifth of that which would cause rupture, irrespective of the extent to which the material might contract in section if overstrained. The stresses which occur in engineering practice are, or ought to be, in all cases within the limits of elasticity, and within these limits the change of cross-section caused by longitudinal pull or push is so small that it may be neglected in reckoning the intensity of stress.\n\nUltimate tensile strength and ultimate shearing strength are well defined, since these modes of stress (simple pull and simple shearing stress) lead to distinct fracture if the stress is sufficiently increased. Under compression some materials yield so continuously that their ultimate strength to resist compression can scarcely be specified; others show so distinct a fracture by crushing that their compressive strength may be determined with some precision.\n\nSome of the materials used in engineering, notably timber and wrought iron, are so far from being isotropic that their strength is widely different for stresses in different directions. In the case of wrought iron the process of rolling develops a fibrous structure on account of the presence of streaks of slag which become interspersed with the metal in puddling; and the tensile strength of a rolled plate is found to be considerably greater in the direction of rolling than across the plate. Steel plates, being rolled from a nearly homogeneous ingot, have nearly the same strength in both directions, provided the process of rolling is completed at a temperature high enough to allow recrystallization to take place in cooling. Cold-rolled or cold-drawn metal is not isotropic because the crystals of which it is made up have been elongated in one direction by the process: but isotropy may be restored by heating the piece sufficiently to allow the crystals to re-form.",
+   "c2s2": "¶\n''Permissible Working Stress.''—In applying a knowledge of the strength of materials to determine the proper sizes of parts in an engineering structure we have to estimate a permissible working stress. This is based partly on special tests and partly on experience of the behaviour of the material when used in similar structures. The working stress is rarely so much as one-third of the ultimate strength; it is more commonly one-fourth or one-fifth and in some cases, especially where the loads to be borne are liable to reversal or to much change, it may be prudent to make the working stress even less than this.\n\n''Factor of Safety.''—The ratio of the ultimate strength to the working stress is called the factor of safety. The factor should in general be such as to bring the working stress within the limit of elasticity and even to leave within that limit a margin which will be ample enough to cover such contingencies as imperfection in the theory on which the calculation of the working stress is founded, lack of uniformity in the material itself, uncertainty in the estimation of loads, imperfections of workmanship which may cause the actual dimensions to fall short of those that have been specified, alterations arising from wear, rust and so forth. An important distinction has to be drawn in this connexion between steady or \"dead\" loads and loads which are subject to variation and especially to reversal. With the former the working stress may reach or pass the elastic limit without destroying the structure; but in a piece subject to reversals a stress of the same magnitude would lead inevitably to rupture,",
+   "c2s3": "and hence a larger margin should be left to ensure that in the latter case the elastic limit shall not even be approached.\n\nIt is in fact the elastic limit rather than the ultimate strength of the material on which the question mainly depends of how high the working stress may safely be allowed to rise in any particular conditions as to mode of loading, and accordingly it becomes a matter of much practical importance to determine by tests the amount of stress which can be borne without permanent strain. From an engineering point of view the structural merit of a material, especially when variable loads and possible shocks have to be sustained, depends not only on the strength but also on the extent to which the material will bear deformation without rupture. This characteristic is shown in tests made to determine tensile strength by the amount of ultimate elongation, and also by the contraction of the cross-section which occurs through the flow of the metal before rupture. It is often, tested in other ways, such as by bending and unbending bars in a circle of specified radius, or by examining the effect of repeated blows. Tests by impact are generally"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 8704,
+    "output_tokens": 3889,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||STRENGTH OF MATERIALS|1009}}</noinclude>limits of stress within which strain is wholly or almost wholly elastic are called limits of elasticity.\n\nFor any particular mode of stress the limit of elasticity is much more sharply defined in some materials than in others. When well defined it may readily be recognized in the testing of a sample from the fact that after the stress exceeds the limit of elasticity the strain begins to increase in a much more rapid ratio to the stress than before. This characteristic goes along with the one already mentioned, that up to the limit the strain is wholly or almost wholly elastic.\n\n''Hooke's Law.''—Within the limits of elasticity the strain produced by a stress of any one kind is proportional to the stress producing it. This is Hooke's law, enunciated by him in 1676.\n\nIn applying Hooke's law to the case of simple longitudinal stress—such as the case of a bar stretched by simple longitudinal pull—we may measure the state of strain by the change of length per unit of original length which the bar undergoes when stressed. Let the original length be <math>l</math>, and let the whole change of length be <math>\\delta l</math> when a stress is applied whose intensity <math>p</math> is within the elastic limit. Then the strain is measured by <math>\\delta l/l</math>, and this by Hooke's law is proportional to <math>p</math>. This may be written\n{{block center|<math>\\delta l/l = p/\\text{E},</math>}} where <math>\\text{E}</math> is a constant for the particular material considered. The same value of <math>\\text{E}</math> applies to push and to pull, these modes of stress being essentially continuous, and differing only in sign.\n\n''Young's Modulus''.—This constant <math>\\text{E}</math> is called the modulus of longitudinal extensibility, or Young's modulus. Its value, which is expressed in the same units as are used to express intensity of stress, may be measured directly by exposing a sample of the material to longitudinal pull and noting the extension, or indirectly by measuring the flexure of a loaded beam of the material, or by experiments on the frequency of vibrations. It is frequently spoken of by engineers simply as the modulus of elasticity, but this name is too general, as there are other moduli applicable to other modes of stress. Since <math>\\text{E} = pl/\\delta l</math>, the modulus may be defined as the ratio of the intensity of stress <math>p</math> to the longitudinal strain <math>\\delta l/l</math>.\n\n''Modulus of Rigidity''.—In the case of simple shearing stress, the strain may be measured by the angle by which each of the four originally right angles in the square prism of fig. 3 is altered by the distortion of the prism. Let this angle be <math>\\phi</math> in radians; then by Hooke's law <math>p/\\phi = \\text{C}</math>, where <math>p</math> is the intensity of shearing stress and <math>\\text{C}</math> is a constant which measures the rigidity of the material. <math>\\text{C}</math> is called the modulus of rigidity, and is usually determined by experiments on torsion.\n\n''Modulus of Cubic Compressibility''.—When three simple stresses of equal intensity <math>p</math> and of the same sign (all pulls or all pushes) are applied in three directions, the material (provided it be isotropic, that is to say, provided its properties are the same in all directions) suffers change of volume only, without distortion of form. If the volume is <math>\\text{V}</math> and the change of volume <math>\\delta\\text{V}</math>, the ratio of the stress <math>p</math> to the strain <math>\\delta\\text{V}/\\text{V}</math> is called the modulus of cubic compressibility, and will be denoted by <math>\\text{K}</math>.\n\nOf these three moduli the one of most importance in engineering applications is Young's modulus <math>\\text{E}</math>. When a simple longitudinal pull or push of intensity <math>p</math> is applied to a piece, the longitudinal strain of extension or compression is <math>p/\\text{E}</math>. This is accompanied by a lateral contraction or expansion, in each transverse direction, whose amount may be written <math>p/\\sigma\\text{E}</math>, where <math>\\sigma</math> is the ratio of longitudinal to lateral strain. It is shown in the article {{sc|Elasticity}}, that for an isotropic material\n{{block center|<math>\\text{E} = \\frac{9\\text{CK}}{3\\text{K}+\\text{C}}</math> and <math>\\sigma = \\frac{2(3\\text{K}+\\text{C})}{3\\text{K}-2\\text{C}}</math>.}}\n\n''Plastic Strain''.—Beyond the limits of elasticity the relation of strain to stress becomes very indefinite. Materials then exhibit, to a greater or less degree, the property of plasticity. The strain is much affected by the length of time during which the stress has been in operation, and reaches its maximum, for any assigned stress, only after a long (perhaps an indefinitely long) time. Finally, when the stress is sufficiently increased, the ratio of the increment of strain to the increment of stress becomes indefinitely great if time is given for the stress to take effect. In other words, the substance then assumes what may be called a completely plastic state; it ''flows'' under the applied stress like a viscous liquid.\n\n''Ultimate Strength''.—The ultimate strength of a material with regard to any stated mode of stress is the stress required to produce rupture. In reckoning ultimate strength, however, engineers take, not the actual intensity of stress at which rupture occurs, but the value which this intensity would have reached had rupture ensued without previous alteration of shape. Thus, if a bar whose original cross-section is 2 sq. in. breaks under a uniformly distributed pull of 60 tons, the ultimate tensile strength of the material is reckoned to be 30 tons per square inch, although the actual intensity of stress which produced rupture may have been much greater than this, owing to the contraction of the section previous to fracture. The convenience of this usage will be obvious from an example. Suppose that a piece of material of the same quality be used in a structure under conditions which cause it to bear a simple pull of 6 tons per square inch; we conclude at once that the actual load is one-fifth of that which would cause rupture, irrespective of the extent to which the material might contract in section if overstrained. The stresses which occur in engineering practice are, or ought to be, in all cases within the limits of elasticity, and within these limits the change of cross-section caused by longitudinal pull or push is so small that it may be neglected in reckoning the intensity of stress.\n\nUltimate tensile strength and ultimate shearing strength are well defined, since these modes of stress (simple pull and simple shearing stress) lead to distinct fracture if the stress is sufficiently increased. Under compression some materials yield so continuously that their ultimate strength to resist compression can scarcely be specified; others show so distinct a fracture by crushing that their compressive strength may be determined with some precision.\n\nSome of the materials used in engineering, notably timber and wrought iron, are so far from being isotropic that their strength is widely different for stresses in different directions. In the case of wrought iron the process of rolling develops a fibrous structure on account of the presence of streaks of slag which become interspersed with the metal in puddling; and the tensile strength of a rolled plate is found to be considerably greater in the direction of rolling than across the plate. Steel plates, being rolled from a nearly homogeneous ingot, have nearly the same strength in both directions, provided the process of rolling is completed at a temperature high enough to allow recrystallization to take place in cooling. Cold-rolled or cold-drawn metal is not isotropic because the crystals of which it is made up have been elongated in one direction by the process: but isotropy may be restored by heating the piece sufficiently to allow the crystals to re-form.\n\n''Permissible Working Stress.''—In applying a knowledge of the strength of materials to determine the proper sizes of parts in an engineering structure we have to estimate a permissible working stress. This is based partly on special tests and partly on experience of the behaviour of the material when used in similar structures. The working stress is rarely so much as one-third of the ultimate strength; it is more commonly one-fourth or one-fifth and in some cases, especially where the loads to be borne are liable to reversal or to much change, it may be prudent to make the working stress even less than this.\n\n''Factor of Safety.''—The ratio of the ultimate strength to the working stress is called the factor of safety. The factor should in general be such as to bring the working stress within the limit of elasticity and even to leave within that limit a margin which will be ample enough to cover such contingencies as imperfection in the theory on which the calculation of the working stress is founded, lack of uniformity in the material itself, uncertainty in the estimation of loads, imperfections of workmanship which may cause the actual dimensions to fall short of those that have been specified, alterations arising from wear, rust and so forth. An important distinction has to be drawn in this connexion between steady or \"dead\" loads and loads which are subject to variation and especially to reversal. With the former the working stress may reach or pass the elastic limit without destroying the structure; but in a piece subject to reversals a stress of the same magnitude would lead inevitably to rupture, and hence a larger margin should be left to ensure that in the latter case the elastic limit shall not even be approached.\n\nIt is in fact the elastic limit rather than the ultimate strength of the material on which the question mainly depends of how high the working stress may safely be allowed to rise in any particular conditions as to mode of loading, and accordingly it becomes a matter of much practical importance to determine by tests the amount of stress which can be borne without permanent strain. From an engineering point of view the structural merit of a material, especially when variable loads and possible shocks have to be sustained, depends not only on the strength but also on the extent to which the material will bear deformation without rupture. This characteristic is shown in tests made to determine tensile strength by the amount of ultimate elongation, and also by the contraction of the cross-section which occurs through the flow of the metal before rupture. It is often, tested in other ways, such as by bending and unbending bars in a circle of specified radius, or by examining the effect of repeated blows. Tests by impact are generally<noinclude><references/></noinclude>"
+}

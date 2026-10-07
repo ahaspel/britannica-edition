@@ -1,0 +1,136 @@
+{
+ "volume": 27,
+ "page_number": 763,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n780",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n780",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.2,
+  "column_width": 1081,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     177,
+     125,
+     2314,
+     201
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     177,
+     201,
+     1242,
+     1270
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     177,
+     1270,
+     1242,
+     2364
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     177,
+     2364,
+     1242,
+     3130
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1242,
+     201,
+     2314,
+     991
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1242,
+     991,
+     2314,
+     2080
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1242,
+     2080,
+     2314,
+     3130
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|738|UNITS, PHYSICAL|}}",
+   "c1s1": "{{smaller block|linear dimensions. ''A priori'', the resistance is a force which is determined by the density of the air <math>\\rho</math>, the linear dimensions <math>l</math> of the shot, the viscosity of the air <math>\\mu</math>, the velocity of the shot <math>v</math>, and the velocity of sound in air <math>c</math>, there being no other physical quantity sensibly involved. Five elements are thus concerned, and we can combine them in two ways so as to obtain quantities of no dimensions; for example, we may choose <math>\\rho vl/\\mu</math> and <math>v/c</math>. The resistance to the shot must therefore be of the form <math>\\mu^x\\rho^y v^z\\phi(\\rho vl/\\mu)f(v/c)</math>, this form being of sufficient generality, as it involves an undetermined function for each element beyond three. On equating dimensions we find <math>x=2</math>, <math>y=-1</math>, <math>z=0</math>. Now, Bashforth's result shows that <math>\\phi(\\chi)=\\chi^2</math>. Therefore the resistance is <math>\\rho v^2l^2f(v/c)</math>, and is thus to our degree of approximation independent of the viscosity. Moreover, we might have assumed this practical independence straight off, on known hydrodynamic grounds; and then the argument from dimensions could have predicted Bashforth's law, if the present application of the doctrine of dimensions to a case involving turbulent fluid motion not mathematically specifiable is valid. One of the important results drawn by Osborne Reynolds from his experiments on the ''régime'' of flow in pipes was a confirmation of its validity: we now see that the ballistic result furnishes another confirmation.}}\n\nIn electrical science two essentially distinct systems of measurement were arrived at according as the development began with the phenomena of electrostatics or those of electrokinetics. An electric charge appears as an entity having different dimensions in terms of the fundamental dynamical units in the two cases: the ratio of these dimensions proves to be the dimensions of a velocity. It was found, first by W. Weber, by measuring the same charge by its static and its kinetic effects, that the ratio of the two units is a velocity",
+   "c1s2": "sensibly identical with the velocity of light, so far as regards experiments conducted in space devoid of dense matter. The emergence of a definite absolute velocity such as this, out of a comparison of two different ways of approaching the same quantity, entitles us to assert that the two ways can be consolidated into a single dynamical theory only by some development in which this velocity comes to play an actual part. Thus the hypothesis of the mere existence of some complete dynamical theory was enough to show, in the stage which electrical science had reached under Gauss and Weber, that there is a definite physical velocity involved in and underlying electric phenomena, which it would have been hardly possible to imagine as other than a velocity of propagation of electrical effects of some kind. The time was thus ripe for the reconstruction of electric theory by Faraday and Maxwell.\n\nThe power of the method of dimensions in thus revealing general relations has its source in the hypothesis that, however complicated in appearance, the phenomena are really restricted within the narrow range of dependence on the three fundamental entities. The proposition is also therein involved, that if a changing physical system be compared with another system in which the scale is altered in different ratios as regards corresponding lengths, masses, and times, then if all quantities affecting the second system are altered from the corresponding quantities affecting the first in the ratios determined by their physical dimensions, the stage of progress of the second system will always correspond to that of the first; under this form",
+   "c1s3": "the application of the principle, to determine the correlations of the dynamics of similar systems, originated with Newton (''Principia'', lib. ii. prop. 32). For example, in comparing the behaviour of an animal with that of another animal of the same build but on a smaller scale, we may take the mass per unit volume and the muscular force per unit sectional area to be the same for both; thus <math>[\\text{L}]</math>, <math>[\\text{M}]</math>, . . . being now ratios of corresponding quantities, we have <math>[\\text{ML}^{-3}] = 1</math> and <math>[\\text{ML}^{-1}\\text{T}^{-2}] = 1</math>, giving <math>[\\text{L}] = [\\text{T}]</math>; thus the larger animal effects movements of his limbs more slowly in simple proportion to his linear dimensions, while the velocity of movement is the same for both at corresponding stages.\n\nBut this is only on the hypothesis that the extraneous force of gravity does not intervene, for that force does not vary in the same manner as the muscular forces. The result has thus application only to a case like that of fishes in which gravity is equilibrated by the buoyancy of the water. The effect of the inertia of the water, considered as a perfect fluid, is included in this comparison; but the forces arising",
+   "c2s1": "from viscosity do not correspond in the two systems, so that neither system may be so small that viscosity is an important agent in its motion. The limbs of a land animal have mainly to support his weight, which varies as the cube of his linear dimensions, while the sectional areas of his muscles and bones vary only as the square thereof. Thus the diameters of his limbs should increase in a greater ratio than that of his body—theoretically in the latter ratio raised to the power <math>\\tfrac{3}{2}</math>, if other things were the same. An application of this principle, which has become indispensable in modern naval architecture, permits the prediction of the behaviour of a large ship from that of a small-scale model. The principle is also of very wide utility in unravelling the fundamental relations in definite physical problems of such complexity that complete treatment is beyond the present powers of mathematical analysis; it has been applied, for example, to the motions of systems involving viscous fluids, in elucidation of wind and waves, by Helmholtz (''Akad. Berlin'', 1873 and 1889), and in the electrodynamics of material atomic systems in motion by Lorentz and by Larmor.",
+   "c2s2": "¶\n{{smaller block|As already stated, the essentials of the doctrine of dimensions in its most fundamental aspect, that relating to the comparison of the properties of correlated systems, originated with Newton. The explicit formulation of the idea of the ''dimensions'', or the ''exponents of dimension'', of physical quantities was first made by Fourier, ''Théorie de la chaleur'', 1822, ch. ii. sec. 9; the homogeneity in dimensions of all the terms of an equation is insisted on by him, much as explained above; and the use of this principle as a test of accuracy and precision is illustrated. (J. L.*)}}\n\n'''UNITS, PHYSICAL.''' In order that our acquaintance with any part of nature may become exact we must have not merely a qualitative but a quantitative knowledge of facts. Hence the moment that any branch of science begins to develop to any extent, attempts are made to measure and evaluate the quantities and effects found to exist. To do this we have to select for each measurable magnitude a ''unit'' or standard of reference (Latin, ''unitas'', unity), by comparison with which amounts of other like quantities may be numerically defined. There is nothing to prevent us from selecting these fundamental quantities, in terms of which other like quantities are to be expressed, in a perfectly arbitrary and independent manner, and as a matter of fact this is what is generally done in the early stages of every science. We may, for instance, choose a certain length, a certain volume, a certain mass, a certain force or power as our units of length, volume, mass, force or power, which have no simple or direct relation to each other. Similarly we may select for more special measurements any arbitrary electric current, electromotive force, or resistance, and call",
+   "c2s3": "them our units. The progress of knowledge, however, is greatly assisted if all the measurable quantities are brought into relation with each other by so selecting the units that they are related in the most simple manner, each to the other and to one common set of measurable magnitudes called the ''fundamental quantities.''\n\nThe progress of this co-ordination of units has been greatly aided by the discovery that forms of physical energy can be converted into one another, and that the conversion is by definite rule and amount (see {{sc|Energy}}). Thus the mechanical energy associated with moving masses can be converted into heat, hence heat can be measured in mechanical energy units. The amount of heat required to raise one gramme of water through 1° C. in the neighbourhood of 10° C. is equal to forty-two million ''ergs'', the ''erg'' being the kinetic energy or energy of motion associated with a mass of 2 grammes when moving uniformly, without rotation, with a velocity of 1 cm. per second. This number is commonly called the “mechanical equivalent of heat,” but would be more exactly described as the “mechanical equivalent of the specific heat of water at 10° C.” Again, the fact that the maintenance of an electric current requires energy, and that when produced its energy can be wholly utilized in heating a mass of water, enables us to make a similar statement about the energy required to maintain a current of one ampere through a resistance of one ohm for one second, and to define it by its equivalent in the energy of a moving mass. Physical units have therefore been selected with the object of"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    2
+   ],
+   "2": [
+    0,
+    5
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2669,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8718,
+    "output_tokens": 3629,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|738|UNITS, PHYSICAL|}}</noinclude>{{smaller block|linear dimensions. ''A priori'', the resistance is a force which is determined by the density of the air <math>\\rho</math>, the linear dimensions <math>l</math> of the shot, the viscosity of the air <math>\\mu</math>, the velocity of the shot <math>v</math>, and the velocity of sound in air <math>c</math>, there being no other physical quantity sensibly involved. Five elements are thus concerned, and we can combine them in two ways so as to obtain quantities of no dimensions; for example, we may choose <math>\\rho vl/\\mu</math> and <math>v/c</math>. The resistance to the shot must therefore be of the form <math>\\mu^x\\rho^y v^z\\phi(\\rho vl/\\mu)f(v/c)</math>, this form being of sufficient generality, as it involves an undetermined function for each element beyond three. On equating dimensions we find <math>x=2</math>, <math>y=-1</math>, <math>z=0</math>. Now, Bashforth's result shows that <math>\\phi(\\chi)=\\chi^2</math>. Therefore the resistance is <math>\\rho v^2l^2f(v/c)</math>, and is thus to our degree of approximation independent of the viscosity. Moreover, we might have assumed this practical independence straight off, on known hydrodynamic grounds; and then the argument from dimensions could have predicted Bashforth's law, if the present application of the doctrine of dimensions to a case involving turbulent fluid motion not mathematically specifiable is valid. One of the important results drawn by Osborne Reynolds from his experiments on the ''régime'' of flow in pipes was a confirmation of its validity: we now see that the ballistic result furnishes another confirmation.}}\n\nIn electrical science two essentially distinct systems of measurement were arrived at according as the development began with the phenomena of electrostatics or those of electrokinetics. An electric charge appears as an entity having different dimensions in terms of the fundamental dynamical units in the two cases: the ratio of these dimensions proves to be the dimensions of a velocity. It was found, first by W. Weber, by measuring the same charge by its static and its kinetic effects, that the ratio of the two units is a velocity sensibly identical with the velocity of light, so far as regards experiments conducted in space devoid of dense matter. The emergence of a definite absolute velocity such as this, out of a comparison of two different ways of approaching the same quantity, entitles us to assert that the two ways can be consolidated into a single dynamical theory only by some development in which this velocity comes to play an actual part. Thus the hypothesis of the mere existence of some complete dynamical theory was enough to show, in the stage which electrical science had reached under Gauss and Weber, that there is a definite physical velocity involved in and underlying electric phenomena, which it would have been hardly possible to imagine as other than a velocity of propagation of electrical effects of some kind. The time was thus ripe for the reconstruction of electric theory by Faraday and Maxwell.\n\nThe power of the method of dimensions in thus revealing general relations has its source in the hypothesis that, however complicated in appearance, the phenomena are really restricted within the narrow range of dependence on the three fundamental entities. The proposition is also therein involved, that if a changing physical system be compared with another system in which the scale is altered in different ratios as regards corresponding lengths, masses, and times, then if all quantities affecting the second system are altered from the corresponding quantities affecting the first in the ratios determined by their physical dimensions, the stage of progress of the second system will always correspond to that of the first; under this form the application of the principle, to determine the correlations of the dynamics of similar systems, originated with Newton (''Principia'', lib. ii. prop. 32). For example, in comparing the behaviour of an animal with that of another animal of the same build but on a smaller scale, we may take the mass per unit volume and the muscular force per unit sectional area to be the same for both; thus <math>[\\text{L}]</math>, <math>[\\text{M}]</math>, . . . being now ratios of corresponding quantities, we have <math>[\\text{ML}^{-3}] = 1</math> and <math>[\\text{ML}^{-1}\\text{T}^{-2}] = 1</math>, giving <math>[\\text{L}] = [\\text{T}]</math>; thus the larger animal effects movements of his limbs more slowly in simple proportion to his linear dimensions, while the velocity of movement is the same for both at corresponding stages.\n\nBut this is only on the hypothesis that the extraneous force of gravity does not intervene, for that force does not vary in the same manner as the muscular forces. The result has thus application only to a case like that of fishes in which gravity is equilibrated by the buoyancy of the water. The effect of the inertia of the water, considered as a perfect fluid, is included in this comparison; but the forces arising from viscosity do not correspond in the two systems, so that neither system may be so small that viscosity is an important agent in its motion. The limbs of a land animal have mainly to support his weight, which varies as the cube of his linear dimensions, while the sectional areas of his muscles and bones vary only as the square thereof. Thus the diameters of his limbs should increase in a greater ratio than that of his body—theoretically in the latter ratio raised to the power <math>\\tfrac{3}{2}</math>, if other things were the same. An application of this principle, which has become indispensable in modern naval architecture, permits the prediction of the behaviour of a large ship from that of a small-scale model. The principle is also of very wide utility in unravelling the fundamental relations in definite physical problems of such complexity that complete treatment is beyond the present powers of mathematical analysis; it has been applied, for example, to the motions of systems involving viscous fluids, in elucidation of wind and waves, by Helmholtz (''Akad. Berlin'', 1873 and 1889), and in the electrodynamics of material atomic systems in motion by Lorentz and by Larmor.\n\n{{smaller block|As already stated, the essentials of the doctrine of dimensions in its most fundamental aspect, that relating to the comparison of the properties of correlated systems, originated with Newton. The explicit formulation of the idea of the ''dimensions'', or the ''exponents of dimension'', of physical quantities was first made by Fourier, ''Théorie de la chaleur'', 1822, ch. ii. sec. 9; the homogeneity in dimensions of all the terms of an equation is insisted on by him, much as explained above; and the use of this principle as a test of accuracy and precision is illustrated. (J. L.*)}}\n\n'''UNITS, PHYSICAL.''' In order that our acquaintance with any part of nature may become exact we must have not merely a qualitative but a quantitative knowledge of facts. Hence the moment that any branch of science begins to develop to any extent, attempts are made to measure and evaluate the quantities and effects found to exist. To do this we have to select for each measurable magnitude a ''unit'' or standard of reference (Latin, ''unitas'', unity), by comparison with which amounts of other like quantities may be numerically defined. There is nothing to prevent us from selecting these fundamental quantities, in terms of which other like quantities are to be expressed, in a perfectly arbitrary and independent manner, and as a matter of fact this is what is generally done in the early stages of every science. We may, for instance, choose a certain length, a certain volume, a certain mass, a certain force or power as our units of length, volume, mass, force or power, which have no simple or direct relation to each other. Similarly we may select for more special measurements any arbitrary electric current, electromotive force, or resistance, and call them our units. The progress of knowledge, however, is greatly assisted if all the measurable quantities are brought into relation with each other by so selecting the units that they are related in the most simple manner, each to the other and to one common set of measurable magnitudes called the ''fundamental quantities.''\n\nThe progress of this co-ordination of units has been greatly aided by the discovery that forms of physical energy can be converted into one another, and that the conversion is by definite rule and amount (see {{sc|Energy}}). Thus the mechanical energy associated with moving masses can be converted into heat, hence heat can be measured in mechanical energy units. The amount of heat required to raise one gramme of water through 1° C. in the neighbourhood of 10° C. is equal to forty-two million ''ergs'', the ''erg'' being the kinetic energy or energy of motion associated with a mass of 2 grammes when moving uniformly, without rotation, with a velocity of 1 cm. per second. This number is commonly called the “mechanical equivalent of heat,” but would be more exactly described as the “mechanical equivalent of the specific heat of water at 10° C.” Again, the fact that the maintenance of an electric current requires energy, and that when produced its energy can be wholly utilized in heating a mass of water, enables us to make a similar statement about the energy required to maintain a current of one ampere through a resistance of one ohm for one second, and to define it by its equivalent in the energy of a moving mass. Physical units have therefore been selected with the object of<noinclude><references/></noinclude>"
+}

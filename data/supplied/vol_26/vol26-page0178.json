@@ -1,0 +1,158 @@
+{
+ "volume": 26,
+ "page_number": 178,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n182",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n182",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1193,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     74,
+     137,
+     2321,
+     206
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     74,
+     225,
+     1131,
+     1595
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     74,
+     1598,
+     1131,
+     1630
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     1131,
+     225,
+     1140,
+     3145
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1140,
+     206,
+     2321,
+     1281
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1140,
+     1281,
+     2321,
+     2373
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1140,
+     2373,
+     2321,
+     3145
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|160|SURVEYING|[NAUTICAL}}",
+   "c1s1": "{{c|{{sc|Fig.}} 12.}}",
+   "c1s2": "",
+   "c2s1": "whose height above high-water is known. As much of the ground as possible is walked over, and its shape is delineated by contour lines sketched by eye, assisted by an aneroid barometer. In wooded country much of the topography may have to be shot in from the ship; sketches made from different positions at anchor along the coast with angles to all prominent features, valleys, ravines, spurs of hills, &c., will give a very fair idea of the general lie of the country.\n\n''Latitudes.''—Circum-meridian altitudes of stars on opposite sides of the zenith observed by sextant in the artificial horizon is the method adopted wherever possible for observations for latitudes. Arranged in pairs of nearly the same altitude north and south of zenith, the mean of each pair should give a result from which instrumental and personal errors and errors due to atmospheric conditions are altogether eliminated. The mean of several such pairs should have a probable error of not more than ± 1″. As a rule the observations of each star should be confined to within 5 or 6 minutes on either side of the meridian, which will allow of from fifteen to twenty observations. Two stars selected to “ pair ” should pass the meridian within an hour of each other, and should not differ in altitude more than 2° or 3°. Artificial horizon roof error is eliminated by always keeping the same end of the roof towards the observer; when observing a single object, as the sun, the roof must be reversed when half way through the observations. The observations are reduced to the meridian by Raper’s method. When",
+   "c2s2": "pairs of stars are not observed, circum-meridian altitudes of the sun alone must be resorted to, but being observed on one side of the zenith only, none of the errors to which all observations are liable can be eliminated.\n\n'''''Chronometer Errors.''''' Sets of equal altitudes of sun or stars by sextant and artificial horizon are usually employed to discover chronometer errors. Six sets of eleven observations, a.m. and p.m., observing both limbs of the sun, should give a result which, under favourable conditions of latitude and declination, might be expected to vary less than two-tenths of a second from the normal personal equation of the observer. Stars give equally good results. In high latitudes sextant observations diminish in value owing to the slower movement in altitude. In the case of the sun all the chronometers are compared with the “standard” at apparent noon; the comparisons with the chronometer used for the observations on each occasion of landing and returning to the ship are worked up to noon. In the case of stars, the chronometer comparisons on leaving and again on returning are worked up to an intermediate time. A convenient system, which retains the advantage of the equal altitude method, whilst avoiding the necessity of waiting some hours for the p.m. observation, is to observe two stars at equal altitudes on opposite sides of the meridian, and, combining the observations, treat them as relating to an imaginary star having the mean R.A. and mean declination of the two stars selected, which should have nearly the same declination and should differ from <math>4^h</math> to <math>8^h</math> in R.A.",
+   "c2s3": "The error of chronometer on mean time of place being obtained, the local time is transferred from one observation spot to another by the ship carrying usually eight box chronometers. '''''Meridian Distances.''''' The best results are found by using travelling rates, which are deduced from the difference of the errors found on leaving an observation spot and returning to it; from this difference is eliminated that portion which may have accumulated during an interval between two determinations of error at the other, or any intermediate, observation spot. A travelling rate may also be obtained from observations at two places, the meridian distance between which is known; this rate may then be used for the meridian distance between places observed at during the passage. Failing travelling rates, the mean of the harbour rates at either end must be used. The same observer, using the same instrument, must be employed throughout the observations of a meridian distance.\n\nIf the telegraph is available, it should of course be used. The error on local time at each end of the wire is obtained, and a number of telegraphic signals are exchanged between the"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0178 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     80,
+     436,
+     1108,
+     1593
+    ],
+    "caption": [
+     535,
+     1598,
+     666,
+     1630
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     75,
+     404,
+     475,
+     1546
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {
+   "c1s2": "empty"
+  },
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4472,
+    "output_tokens": 96,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 5242,
+    "output_tokens": 2352,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|160|SURVEYING|[NAUTICAL}}</noinclude>[[File:eb1911 v26 p0178 c1f1.png|center|319px]]\n{{c|{{sc|Fig.}} 12.}}\n\nwhose height above high-water is known. As much of the ground as possible is walked over, and its shape is delineated by contour lines sketched by eye, assisted by an aneroid barometer. In wooded country much of the topography may have to be shot in from the ship; sketches made from different positions at anchor along the coast with angles to all prominent features, valleys, ravines, spurs of hills, &c., will give a very fair idea of the general lie of the country.\n\n''Latitudes.''—Circum-meridian altitudes of stars on opposite sides of the zenith observed by sextant in the artificial horizon is the method adopted wherever possible for observations for latitudes. Arranged in pairs of nearly the same altitude north and south of zenith, the mean of each pair should give a result from which instrumental and personal errors and errors due to atmospheric conditions are altogether eliminated. The mean of several such pairs should have a probable error of not more than ± 1″. As a rule the observations of each star should be confined to within 5 or 6 minutes on either side of the meridian, which will allow of from fifteen to twenty observations. Two stars selected to “ pair ” should pass the meridian within an hour of each other, and should not differ in altitude more than 2° or 3°. Artificial horizon roof error is eliminated by always keeping the same end of the roof towards the observer; when observing a single object, as the sun, the roof must be reversed when half way through the observations. The observations are reduced to the meridian by Raper’s method. When pairs of stars are not observed, circum-meridian altitudes of the sun alone must be resorted to, but being observed on one side of the zenith only, none of the errors to which all observations are liable can be eliminated.\n\n'''''Chronometer Errors.''''' Sets of equal altitudes of sun or stars by sextant and artificial horizon are usually employed to discover chronometer errors. Six sets of eleven observations, a.m. and p.m., observing both limbs of the sun, should give a result which, under favourable conditions of latitude and declination, might be expected to vary less than two-tenths of a second from the normal personal equation of the observer. Stars give equally good results. In high latitudes sextant observations diminish in value owing to the slower movement in altitude. In the case of the sun all the chronometers are compared with the “standard” at apparent noon; the comparisons with the chronometer used for the observations on each occasion of landing and returning to the ship are worked up to noon. In the case of stars, the chronometer comparisons on leaving and again on returning are worked up to an intermediate time. A convenient system, which retains the advantage of the equal altitude method, whilst avoiding the necessity of waiting some hours for the p.m. observation, is to observe two stars at equal altitudes on opposite sides of the meridian, and, combining the observations, treat them as relating to an imaginary star having the mean R.A. and mean declination of the two stars selected, which should have nearly the same declination and should differ from <math>4^h</math> to <math>8^h</math> in R.A. The error of chronometer on mean time of place being obtained, the local time is transferred from one observation spot to another by the ship carrying usually eight box chronometers. '''''Meridian Distances.''''' The best results are found by using travelling rates, which are deduced from the difference of the errors found on leaving an observation spot and returning to it; from this difference is eliminated that portion which may have accumulated during an interval between two determinations of error at the other, or any intermediate, observation spot. A travelling rate may also be obtained from observations at two places, the meridian distance between which is known; this rate may then be used for the meridian distance between places observed at during the passage. Failing travelling rates, the mean of the harbour rates at either end must be used. The same observer, using the same instrument, must be employed throughout the observations of a meridian distance.\n\nIf the telegraph is available, it should of course be used. The error on local time at each end of the wire is obtained, and a number of telegraphic signals are exchanged between the<noinclude><references/></noinclude>"
+}

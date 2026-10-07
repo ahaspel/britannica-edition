@@ -1,0 +1,196 @@
+{
+ "volume": 27,
+ "page_number": 291,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n298",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n298",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.3,
+  "column_width": 1178,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     134,
+     0,
+     2372,
+     181
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     181,
+     1205,
+     881
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     134,
+     881,
+     589,
+     1336
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     1336,
+     589,
+     1366
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     589,
+     881,
+     1205,
+     1366
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     1366,
+     1205,
+     2407
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     2407,
+     1205,
+     3101
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     181,
+     2372,
+     1235
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     1235,
+     2372,
+     2173
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     2173,
+     2372,
+     3101
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|276|TRIGONOMETRY|}}",
+   "c1s1": "By division we have\n\n{{block center|<math>\\tan\\frac{A}{2} = \\left\\{ \\frac{\\sin\\tfrac{1}{2}(a+c-b)\\, \\sin\\tfrac{1}{2}(a+b-c)}{\\sin\\tfrac{1}{2}(b+c-a)\\, \\sin\\tfrac{1}{2}(a+b+c)} \\right\\}^{\\frac{1}{2}}</math> (7)}}\n\nand by multiplication\n\n{{block center|<math>\\sin A = 2\\{\\sin(a+b+c)\\, \\sin\\tfrac{1}{2}(b+c-a) \\sin\\tfrac{1}{2}(c+a-b)\\, \\sin\\tfrac{1}{2}(a+b-c)\\}^{\\frac{1}{2}}</math>}}\n\n{{block center|<math>\\sin b \\sin c = \\{1-\\cos^2 a-\\cos^2 b-\\cos^2 c+2\\cos a \\cos b \\cos c\\}^{\\frac{1}{2}} \\sin b \\sin c.</math>}}\n\nHence the quantity <math>k</math> in (3) is\n\n{{block center|<math>\\{1-\\cos^2 a-\\cos^2 b-\\cos^2 c+2\\cos a \\cos b \\cos c\\}^{\\frac{1}{2}}/\\sin a \\sin b \\sin c.</math> (8)}}\n\n''Of Half-sides.'' Apply the polar triangle transformation to the formulae (5), (6), (7) (8) and we obtain\n\n{{block center|<math>\\cos\\frac{a}{2} = \\left\\{ \\frac{\\cos\\tfrac{1}{2}(A+C-B)\\, \\cos\\tfrac{1}{2}(A+B-C)}{\\sin B \\sin C} \\right\\}^{\\frac{1}{2}}</math> (9)}}\n\n{{block center|<math>\\sin\\frac{a}{2} = \\left\\{ \\frac{-\\cos\\tfrac{1}{2}(B+C-A)\\, \\cos\\tfrac{1}{2}(A+B+C)}{\\sin B \\sin C} \\right\\}^{\\frac{1}{2}}</math> (10)}}\n\n{{block center|<math>\\tan\\frac{a}{2} = \\left\\{ \\frac{-\\cos\\tfrac{1}{2}(B+C-A)\\, \\cos\\tfrac{1}{2}(A+B+C)}{\\cos\\tfrac{1}{2}(A+C-B)\\, \\cos\\tfrac{1}{2}(A+B-C)} \\right\\}^{\\frac{1}{2}}</math> (11)}}\n\nIf <math>k' = \\{1-\\cos^2 A-\\cos^2 B-\\cos^2 C-2\\cos A \\cos B \\cos C\\}^{\\frac{1}{2}}/\\sin A \\sin B \\sin C</math>, we have.\n\n{{block center|<math>kk' = 1</math> (12)}}",
+   "c1s2": "{{c|{{sc|Fig.}} 7.}}",
+   "c1s3": "point of <math>AB</math>; draw <math>ED</math> at right angles to <math>AB</math> to meet <math>AC</math> in <math>D</math>; then <math>DE</math> '''''Delambre's Formulae.''''' bisects the angle <math>ADB</math>. Let <math>CF</math> bisect the angle <math>DCB</math> and draw <math>FG</math> perpendicular to <math>BC</math>, then\n{{block center|<math>CG = \\tfrac{1}{2}(a - b, \\angle FBE = \\tfrac{1}{2}(A + B),</math>}}\n{{block center|<math>\\angle FCG = 90^\\circ - \\tfrac{1}{2}C.</math>}}\n\nFrom the triangle <math>CFG</math> we have <math>\\cos CFG = \\cos CG \\sin FCG</math>, and from the triangle <math>FEB</math> <math>\\cos EFB = \\cos EB \\sin FBE</math>. Now the angles <math>CFG</math>, <math>EFB</math> are each supplementary to the angle <math>DFB</math>, therefore",
+   "c1s4": "{{block center|<math>\\cos\\tfrac{1}{2}(a-b)\\cos\\tfrac{1}{2}C=\\sin\\tfrac{1}{2}(A+B)\\cos\\tfrac{1}{2}c.</math> (13)}}\nAlso <math>\\sin CG=\\sin CF \\sin CFG</math> and <math>\\sin EB=\\sin BF \\sin EFB</math>;\n{{block center|therefore <math>\\sin\\tfrac{1}{2}(a-b)\\cos\\tfrac{1}{2}C=\\sin\\tfrac{1}{2}(A-B)\\sin\\tfrac{1}{2}c.</math> (14)}}\n\nApply the formulae (13), (14) to the associated triangle of which <math>a</math>, <math>\\pi-b</math>, <math>\\pi-c</math>, <math>A</math>, <math>\\pi-B</math>, <math>\\pi-C</math> are the sides and angles, we then have\n{{block center|<math>\\sin\\tfrac{1}{2}(a+b)\\sin\\tfrac{1}{2}C=\\cos\\tfrac{1}{2}(A-B)\\sin\\tfrac{1}{2}c</math> (15)}}\n{{block center|<math>\\cos\\tfrac{1}{2}(a+b)\\sin\\tfrac{1}{2}C=\\cos\\tfrac{1}{2}(A+B)\\cos\\tfrac{1}{2}c.</math> (16)}}\nThe four formulae (13), (14), (15) (16) were first given by Delambre in the ''Connaissance des Temps'' for 1808. Formulae equivalent to these were given by Mollweide in Zach's ''Monatliche Correspondenz'' for November 1808. They were also given by Gauss (''Theoria motus'', 1809), and are usually called after him.\n\n'''''Napier's Analogies.''''' 11. From the same figure we have\n{{block center|<math>\\tan FG=\\tan FCG \\sin CG=\\tan FBG \\sin BG</math>;}}\n{{block center|therefore <math>\\cot\\tfrac{1}{2}C\\sin\\tfrac{1}{2}(a-b)\\tan\\tfrac{1}{2}(A-B)\\sin\\tfrac{1}{2}(a+b)</math>,}}\n{{block center|or <math>\\tan\\tfrac{1}{2}(A-B)=\\frac{\\sin\\tfrac{1}{2}(a-b)}{\\sin\\tfrac{1}{2}(a+b)}\\cot\\tfrac{1}{2}C.</math> (17)}}\nApply this formulae to the associated triangle (<math>\\pi-a</math>, <math>b</math>, <math>\\pi-c</math>, <math>\\pi-A</math>, <math>B</math>, <math>\\pi-C</math>), and we have\n{{block center|<math>\\cot\\tfrac{1}{2}(A+B)=\\frac{\\cos\\tfrac{1}{2}(a+b)}{\\cos\\tfrac{1}{2}(a-b)}\\tan\\tfrac{1}{2}C,</math>}}\n{{block center|or <math>\\tan\\tfrac{1}{2}(A+B)=\\frac{\\cos\\tfrac{1}{2}(a-b)}{\\cos\\tfrac{1}{2}(a+b)}\\cot\\tfrac{1}{2}C.</math> (18)}}\nIf we apply these formulae (17), (18) to the polar triangle, we have\n{{block center|<math>\\tan\\tfrac{1}{2}(a-b)=\\frac{\\sin\\tfrac{1}{2}(A-B)}{\\sin\\tfrac{1}{2}(A+B)}\\tan\\tfrac{1}{2}c</math> (19)}}",
+   "c1s5": "{{block center|<math>\\tan \\tfrac{1}{2}(A+B) = \\frac{\\cos \\frac{1}{2}(A-B)}{\\cos \\frac{1}{2}(A+B)} \\tan \\tfrac{1}{2}c.</math> (20)}}\n\nThe formulae (17), (18), (19), (20) are called Napier's “Analogies”; they were given in the ''Mirif. logar. canonis descriptio.''\n\n12. If we use the values of <math>\\sin \\tfrac{1}{2}a</math>, <math>\\sin \\tfrac{1}{2}b</math>, <math>\\sin \\tfrac{1}{2}c</math>, <math>\\cos \\tfrac{1}{2}a</math>, <math>\\cos \\tfrac{1}{2}b</math>, <math>\\cos \\tfrac{1}{2}c</math>, given by (9), (10) and the analogous formulae obtained by interchanging the letters we obtain by multiplication\n\n'''''Schmeisser's Formulae.'''''\n\n{{block center|<math>\\left.\\begin{array}{l} \\sin \\tfrac{1}{2}a \\cos \\tfrac{1}{2}b \\sin C = \\sin \\tfrac{1}{2}c \\cos \\tfrac{1}{2}(B+C-A) \\\\ \\cos \\tfrac{1}{2}a \\cos \\tfrac{1}{2}b \\sin C = \\cos \\tfrac{1}{2}c \\cos \\tfrac{1}{2}(A+B-C) \\\\ \\sin \\tfrac{1}{2}a \\sin \\tfrac{1}{2}b \\sin C = \\cos \\tfrac{1}{2}c \\cos \\tfrac{1}{2}(A+B+C) \\end{array}\\right\\}.</math>}}\n\nThese formulae were given by Schmiesser in ''Crelle's Journ.'', vol. x.\n\n'''''Cagnoli's Formulae.'''''\n\nThe relation <math>\\sin b \\sin c + \\cos b \\cos c \\cos A = \\sin B \\sin C - \\cos B \\cos C \\cos a</math> was given by Cagnoli in his ''Trigonometry'' (1786), and was rediscovered by Cayley (''Phil. Mag.'', 1859). It follows from (1), (2) and (3) thus: the right-hand side of the equation equals <math>\\sin B \\sin C + \\cos a\\ (\\cos A - \\sin B \\sin C \\cos a) = \\sin B \\sin C \\sin^2 a + \\cos a \\cos A</math>, and this is equal to <math>\\sin b \\sin c + \\cos A\\ (\\cos a - \\sin b \\sin c \\cos A)</math> or <math>\\sin b \\sin c + \\cos b \\cos c \\cos A</math>.",
+   "c2s1": "¶\n13. The formulae we have given are sufficient to determine three parts of a triangle when the other three parts are given; moreover such formulae may always be chosen as are adapted to logarithmic calculation. '''''Solution of Triangles.''''' The solutions will be unique except in the two cases (1) where two sides and the angle opposite one of them are the given parts, and (2) where two angles and the side opposite one of them are given.\n\nSuppose <math>a</math>, <math>b</math>, <math>A</math> are the given parts. We determine <math>B</math> from the formula <math>\\sin B = \\sin b \\sin A / \\sin a</math>; this gives two '''''Ambiguous Cases.''''' supplementary values of <math>B</math>, one acute and the other obtuse. Then <math>C</math> and <math>c</math> are determined from the equations\n{{block center|<math>\\tan \\tfrac{1}{2}C = \\frac{\\sin \\frac{1}{2}(a-b)}{\\sin \\frac{1}{2}(a+b)} \\cot \\tfrac{1}{2}(A-B),\\ \\tan \\tfrac{1}{2}c = \\frac{\\sin \\frac{1}{2}(A+B)}{\\sin \\frac{1}{2}(A-B)} \\tan \\tfrac{1}{2}(a-b).</math>}}\nNow <math>\\tan \\tfrac{1}{2}C</math>, <math>\\tan \\tfrac{1}{2}c</math>, must both be positive; hence <math>A-B</math> and <math>a-b</math> must have the same sign. We shall distinguish three cases. First, suppose <math>\\sin b < \\sin a</math>; then we have <math>\\sin B < \\sin A</math>. Hence <math>A</math> lies between the two values of <math>B</math>, and therefore only one of these values is admissible, the acute or the obtuse value according as <math>a</math> is greater or less than <math>b</math>; there is therefore in this case always one solution. Secondly, if <math>\\sin b > \\sin a</math>, there is no solution when <math>\\sin b \\sin A > \\sin a</math>; but if <math>\\sin b \\sin A < \\sin a</math> there are two values of <math>B</math>, both greater or both less than <math>A</math>. If <math>a</math> is acute, <math>a-b</math>, and therefore <math>A-B</math>, is negative; hence there are two solutions if <math>A</math> is acute and none if <math>A</math> is obtuse. These two solutions fall together if <math>\\sin b \\sin A = \\sin a</math>. If <math>a</math> is obtuse there is no solution unless <math>A</math> is obtuse, and in that case there are two, which coincide as before if <math>\\sin b \\sin A = \\sin a</math>. Hence in this case there are two solutions if <math>\\sin b \\sin A \\leqq \\sin a</math> and the two parts <math>A</math>, <math>a</math> are both acute or both obtuse, these being coincident in case <math>\\sin b \\sin A = \\sin a</math>; and there is no solution if one of the two <math>A</math>, <math>a</math>, is acute and the other obtuse, or if <math>\\sin b \\sin A > \\sin a</math>.",
+   "c2s2": "{{block center|<math>\\text{Thirdly, if } \\sin b = \\sin a</math>}}\n\nThirdly, if <math>\\sin b = \\sin a</math> then <math>B = A</math> or <math>\\pi = A</math>. If <math>a</math> is acute, <math>a - b</math> is zero or negative, hence <math>A - B</math> is zero or negative; thus there is no solution unless <math>A</math> is acute, and then there is one. Similarly, if <math>a</math> is obtuse, <math>A</math> must be so too in order that there may be a solution. If <math>a = b = \\tfrac{1}{2}\\pi</math>, there is no solution unless <math>A = \\tfrac{1}{2}\\pi</math>, and then there are an infinite number of solutions, since the values of <math>C</math> and <math>c</math> become indeterminate.\n\nThe other case of ambiguity may be discussed in a similar manner, or the different cases may be deduced from the above by the use of the polar triangle transformation. The method of classification according to the three cases <math>\\sin b \\gtreqless \\sin a</math> was given by Professor Lloyd Tanner (''Messenger of Math.'', vol. xiv.).\n\n'''''Radii of Circles Related to Triangles.'''''\n\n14. If <math>r</math> is the angular radius of the small circle inscribed in the triangle <math>ABC</math>, we have at once <math>\\tan r = \\tan \\tfrac{1}{2}A \\sin (s - a)</math>, where <math>2s = a + b + c</math>; from this we can derive the formulae\n{{block center|<math>\\tan r = n \\operatorname{cosec} s = \\tfrac{1}{2}N \\sec \\tfrac{1}{2}A \\sec \\tfrac{1}{2}B \\sec \\tfrac{1}{2}C =</math>}}\n{{block center|<math>\\sin a \\sin \\tfrac{1}{2}B \\sin \\tfrac{1}{2}C \\sec \\tfrac{1}{2}A</math> (21)}}\nwhere <math>n</math>, <math>N</math> denote the expressions\n{{block center|<math>\\{\\sin s \\sin (s - a) \\sin (s - b) \\sin (s - c)\\}^{\\frac{1}{2}},</math>}}\n{{block center|<math>\\{-\\cos S \\cos (S - A) \\cos (S - B) \\cos (S - C)\\}^{\\frac{1}{2}}.</math>}}\nThe escribed circles are the small circles inscribed in three of the associated triangles; thus, applying the above formulae to the triangle <math>(a, \\pi - b, \\pi - c,\\ A, \\pi - B, \\pi - C)</math>, we have for <math>r_1</math>, the radius of the escribed circle opposite to the angle <math>A</math>, the following formulae\n{{block center|<math>\\tan r_1 = \\tan \\tfrac{1}{2}A \\sin s = n \\operatorname{cosec} (s - a) = \\tfrac{1}{2}N \\sec \\tfrac{1}{2}A \\operatorname{cosec} \\tfrac{1}{2}B \\operatorname{cosec} \\tfrac{1}{2}C</math>}}\n{{block center|<math>= \\sin a \\cos \\tfrac{1}{2}B \\cos \\tfrac{1}{2}C \\sec \\tfrac{1}{2}A.</math> (22)}}",
+   "c2s3": "¶\nThe pole of the circle circumscribing a triangle is that of the circle inscribed in the polar triangle, and the radii of the two circles are complementary; hence, if <math>R</math> be the radius of the circumscribed circle of the triangle, and <math>R_1</math>, <math>R_2</math>, <math>R</math> the radii of the circles circumscribing the associated triangles, we have by writing <math>\\tfrac{1}{2}\\pi-R</math> for <math>r</math>, <math>\\tfrac{1}{2}\\pi-R_1</math> for <math>r_1</math>, <math>\\pi-a</math> for <math>A</math>, &c., in the above formulae\n{{block center|<math>\\cot R=\\cot \\tfrac{1}{2}a \\cos (S-A)=\\tfrac{1}{2}n \\operatorname{cosec} \\tfrac{1}{2}a \\operatorname{cosec} \\tfrac{1}{2}b \\operatorname{cosec} \\tfrac{1}{2}c=-N \\sec S</math>}}\n{{block center|<math>=\\sin A \\cos \\tfrac{1}{2}b \\cos \\tfrac{1}{2}c \\operatorname{cosec} \\tfrac{1}{2}a</math> (23)}}\n{{block center|<math>\\cot R_1=-\\cot \\tfrac{1}{2}a \\cos S=\\tfrac{1}{2}n \\operatorname{cosec} \\tfrac{1}{2}a \\sec \\tfrac{1}{2}b \\sec \\tfrac{1}{2}c=N \\sec (S-A)</math>}}\n{{block center|<math>=\\sin A \\sin \\tfrac{1}{2}b \\sin \\tfrac{1}{2}c \\operatorname{cosec} \\tfrac{1}{2}a.</math> (24)}}\n\nThe following relations follow from the formulae just given:—\n{{block center|<math>2\\tan R=\\cot r_1+\\cot r_2+\\cot r_3-\\cot r,</math>}}\n{{block center|<math>2\\tan R_1=\\cot r+\\cot r_2+\\cot r_3-\\cot r_1,</math>}}\n{{block center|<math>\\tan r \\tan r_1 \\tan r_2 \\tan r_3=n^2,\\ \\sin^2 s=\\cot r \\tan r_1 \\tan r_2 \\tan r_3,</math>}}\n{{block center|<math>\\sin^2 (s-a)=\\tan r \\cot r_1 \\tan r_2 \\tan r_3.</math>}}\n\n'''''Formulae for Spherical Excess.''''' 15. If <math>E=A+B+C-\\pi</math>, it may be shown that <math>E</math> multiplied by the square of the radius is the area of the triangle. We give some of the more important expressions for the quantity <math>E</math>, which is called the spherical excess. We have\n{{block center|<math>\\frac{\\cos \\frac{1}{2}(A+B)}{\\sin \\frac{1}{2}C}=\\frac{\\cos \\frac{1}{2}(a+b)}{\\cos \\frac{1}{2}c}</math> and <math>\\frac{\\sin \\frac{1}{2}(A+B)}{\\cos \\frac{1}{2}C}=\\frac{\\cos \\frac{1}{2}(a-b)}{\\cos \\frac{1}{2}c},</math>}}\n{{block center|or <math>\\frac{\\sin \\frac{1}{2}(C-E)}{\\sin \\frac{1}{2}C}=\\frac{\\cos \\frac{1}{2}(a+b)}{\\cos \\frac{1}{2}c}</math> and <math>\\frac{\\cos \\frac{1}{2}(C-E)}{\\cos \\frac{1}{2}C}=\\frac{\\cos \\frac{1}{2}(a-b)}{\\cos \\frac{1}{2}c};</math>}}\n{{block center|hence <math>\\frac{\\sin \\frac{1}{2}C-\\sin \\frac{1}{2}(C-E)}{\\sin \\frac{1}{2}C+\\sin \\frac{1}{2}(C-E)}=\\frac{\\cos \\frac{1}{2}c-\\cos \\frac{1}{2}(a+b)}{\\cos \\frac{1}{2}c+\\cos \\frac{1}{2}(a+b)};</math>}}"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0291 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     138,
+     919,
+     588,
+     1334
+    ],
+    "caption": [
+     297,
+     1328,
+     405,
+     1366
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     134,
+     914,
+     589,
+     1304
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4547,
+    "output_tokens": 93,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 9105,
+    "output_tokens": 10599,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|276|TRIGONOMETRY|}}</noinclude>By division we have\n\n{{block center|<math>\\tan\\frac{A}{2} = \\left\\{ \\frac{\\sin\\tfrac{1}{2}(a+c-b)\\, \\sin\\tfrac{1}{2}(a+b-c)}{\\sin\\tfrac{1}{2}(b+c-a)\\, \\sin\\tfrac{1}{2}(a+b+c)} \\right\\}^{\\frac{1}{2}}</math> (7)}}\n\nand by multiplication\n\n{{block center|<math>\\sin A = 2\\{\\sin(a+b+c)\\, \\sin\\tfrac{1}{2}(b+c-a) \\sin\\tfrac{1}{2}(c+a-b)\\, \\sin\\tfrac{1}{2}(a+b-c)\\}^{\\frac{1}{2}}</math>}}\n\n{{block center|<math>\\sin b \\sin c = \\{1-\\cos^2 a-\\cos^2 b-\\cos^2 c+2\\cos a \\cos b \\cos c\\}^{\\frac{1}{2}} \\sin b \\sin c.</math>}}\n\nHence the quantity <math>k</math> in (3) is\n\n{{block center|<math>\\{1-\\cos^2 a-\\cos^2 b-\\cos^2 c+2\\cos a \\cos b \\cos c\\}^{\\frac{1}{2}}/\\sin a \\sin b \\sin c.</math> (8)}}\n\n''Of Half-sides.'' Apply the polar triangle transformation to the formulae (5), (6), (7) (8) and we obtain\n\n{{block center|<math>\\cos\\frac{a}{2} = \\left\\{ \\frac{\\cos\\tfrac{1}{2}(A+C-B)\\, \\cos\\tfrac{1}{2}(A+B-C)}{\\sin B \\sin C} \\right\\}^{\\frac{1}{2}}</math> (9)}}\n\n{{block center|<math>\\sin\\frac{a}{2} = \\left\\{ \\frac{-\\cos\\tfrac{1}{2}(B+C-A)\\, \\cos\\tfrac{1}{2}(A+B+C)}{\\sin B \\sin C} \\right\\}^{\\frac{1}{2}}</math> (10)}}\n\n{{block center|<math>\\tan\\frac{a}{2} = \\left\\{ \\frac{-\\cos\\tfrac{1}{2}(B+C-A)\\, \\cos\\tfrac{1}{2}(A+B+C)}{\\cos\\tfrac{1}{2}(A+C-B)\\, \\cos\\tfrac{1}{2}(A+B-C)} \\right\\}^{\\frac{1}{2}}</math> (11)}}\n\nIf <math>k' = \\{1-\\cos^2 A-\\cos^2 B-\\cos^2 C-2\\cos A \\cos B \\cos C\\}^{\\frac{1}{2}}/\\sin A \\sin B \\sin C</math>, we have.\n\n{{block center|<math>kk' = 1</math> (12)}} point of <math>AB</math>; draw <math>ED</math> at right angles to <math>AB</math> to meet <math>AC</math> in <math>D</math>; then <math>DE</math> '''''Delambre's Formulae.''''' bisects the angle <math>ADB</math>. Let <math>CF</math> bisect the angle <math>DCB</math> and draw <math>FG</math> perpendicular to <math>BC</math>, then\n{{block center|<math>CG = \\tfrac{1}{2}(a - b, \\angle FBE = \\tfrac{1}{2}(A + B),</math>}}\n{{block center|<math>\\angle FCG = 90^\\circ - \\tfrac{1}{2}C.</math>}}\n\n[[File:eb1911 v27 p0291 c1f1.png|center|139px]]\n{{c|{{sc|Fig.}} 7.}}\n\nFrom the triangle <math>CFG</math> we have <math>\\cos CFG = \\cos CG \\sin FCG</math>, and from the triangle <math>FEB</math> <math>\\cos EFB = \\cos EB \\sin FBE</math>. Now the angles <math>CFG</math>, <math>EFB</math> are each supplementary to the angle <math>DFB</math>, therefore {{block center|<math>\\cos\\tfrac{1}{2}(a-b)\\cos\\tfrac{1}{2}C=\\sin\\tfrac{1}{2}(A+B)\\cos\\tfrac{1}{2}c.</math> (13)}}\nAlso <math>\\sin CG=\\sin CF \\sin CFG</math> and <math>\\sin EB=\\sin BF \\sin EFB</math>;\n{{block center|therefore <math>\\sin\\tfrac{1}{2}(a-b)\\cos\\tfrac{1}{2}C=\\sin\\tfrac{1}{2}(A-B)\\sin\\tfrac{1}{2}c.</math> (14)}}\n\nApply the formulae (13), (14) to the associated triangle of which <math>a</math>, <math>\\pi-b</math>, <math>\\pi-c</math>, <math>A</math>, <math>\\pi-B</math>, <math>\\pi-C</math> are the sides and angles, we then have\n{{block center|<math>\\sin\\tfrac{1}{2}(a+b)\\sin\\tfrac{1}{2}C=\\cos\\tfrac{1}{2}(A-B)\\sin\\tfrac{1}{2}c</math> (15)}}\n{{block center|<math>\\cos\\tfrac{1}{2}(a+b)\\sin\\tfrac{1}{2}C=\\cos\\tfrac{1}{2}(A+B)\\cos\\tfrac{1}{2}c.</math> (16)}}\nThe four formulae (13), (14), (15) (16) were first given by Delambre in the ''Connaissance des Temps'' for 1808. Formulae equivalent to these were given by Mollweide in Zach's ''Monatliche Correspondenz'' for November 1808. They were also given by Gauss (''Theoria motus'', 1809), and are usually called after him.\n\n'''''Napier's Analogies.''''' 11. From the same figure we have\n{{block center|<math>\\tan FG=\\tan FCG \\sin CG=\\tan FBG \\sin BG</math>;}}\n{{block center|therefore <math>\\cot\\tfrac{1}{2}C\\sin\\tfrac{1}{2}(a-b)\\tan\\tfrac{1}{2}(A-B)\\sin\\tfrac{1}{2}(a+b)</math>,}}\n{{block center|or <math>\\tan\\tfrac{1}{2}(A-B)=\\frac{\\sin\\tfrac{1}{2}(a-b)}{\\sin\\tfrac{1}{2}(a+b)}\\cot\\tfrac{1}{2}C.</math> (17)}}\nApply this formulae to the associated triangle (<math>\\pi-a</math>, <math>b</math>, <math>\\pi-c</math>, <math>\\pi-A</math>, <math>B</math>, <math>\\pi-C</math>), and we have\n{{block center|<math>\\cot\\tfrac{1}{2}(A+B)=\\frac{\\cos\\tfrac{1}{2}(a+b)}{\\cos\\tfrac{1}{2}(a-b)}\\tan\\tfrac{1}{2}C,</math>}}\n{{block center|or <math>\\tan\\tfrac{1}{2}(A+B)=\\frac{\\cos\\tfrac{1}{2}(a-b)}{\\cos\\tfrac{1}{2}(a+b)}\\cot\\tfrac{1}{2}C.</math> (18)}}\nIf we apply these formulae (17), (18) to the polar triangle, we have\n{{block center|<math>\\tan\\tfrac{1}{2}(a-b)=\\frac{\\sin\\tfrac{1}{2}(A-B)}{\\sin\\tfrac{1}{2}(A+B)}\\tan\\tfrac{1}{2}c</math> (19) <math>\\tan \\tfrac{1}{2}(A+B) = \\frac{\\cos \\frac{1}{2}(A-B)}{\\cos \\frac{1}{2}(A+B)} \\tan \\tfrac{1}{2}c.</math> (20)}}\n\nThe formulae (17), (18), (19), (20) are called Napier's “Analogies”; they were given in the ''Mirif. logar. canonis descriptio.''\n\n12. If we use the values of <math>\\sin \\tfrac{1}{2}a</math>, <math>\\sin \\tfrac{1}{2}b</math>, <math>\\sin \\tfrac{1}{2}c</math>, <math>\\cos \\tfrac{1}{2}a</math>, <math>\\cos \\tfrac{1}{2}b</math>, <math>\\cos \\tfrac{1}{2}c</math>, given by (9), (10) and the analogous formulae obtained by interchanging the letters we obtain by multiplication\n\n'''''Schmeisser's Formulae.'''''\n\n{{block center|<math>\\left.\\begin{array}{l} \\sin \\tfrac{1}{2}a \\cos \\tfrac{1}{2}b \\sin C = \\sin \\tfrac{1}{2}c \\cos \\tfrac{1}{2}(B+C-A) \\\\ \\cos \\tfrac{1}{2}a \\cos \\tfrac{1}{2}b \\sin C = \\cos \\tfrac{1}{2}c \\cos \\tfrac{1}{2}(A+B-C) \\\\ \\sin \\tfrac{1}{2}a \\sin \\tfrac{1}{2}b \\sin C = \\cos \\tfrac{1}{2}c \\cos \\tfrac{1}{2}(A+B+C) \\end{array}\\right\\}.</math>}}\n\nThese formulae were given by Schmiesser in ''Crelle's Journ.'', vol. x.\n\n'''''Cagnoli's Formulae.'''''\n\nThe relation <math>\\sin b \\sin c + \\cos b \\cos c \\cos A = \\sin B \\sin C - \\cos B \\cos C \\cos a</math> was given by Cagnoli in his ''Trigonometry'' (1786), and was rediscovered by Cayley (''Phil. Mag.'', 1859). It follows from (1), (2) and (3) thus: the right-hand side of the equation equals <math>\\sin B \\sin C + \\cos a\\ (\\cos A - \\sin B \\sin C \\cos a) = \\sin B \\sin C \\sin^2 a + \\cos a \\cos A</math>, and this is equal to <math>\\sin b \\sin c + \\cos A\\ (\\cos a - \\sin b \\sin c \\cos A)</math> or <math>\\sin b \\sin c + \\cos b \\cos c \\cos A</math>.\n\n13. The formulae we have given are sufficient to determine three parts of a triangle when the other three parts are given; moreover such formulae may always be chosen as are adapted to logarithmic calculation. '''''Solution of Triangles.''''' The solutions will be unique except in the two cases (1) where two sides and the angle opposite one of them are the given parts, and (2) where two angles and the side opposite one of them are given.\n\nSuppose <math>a</math>, <math>b</math>, <math>A</math> are the given parts. We determine <math>B</math> from the formula <math>\\sin B = \\sin b \\sin A / \\sin a</math>; this gives two '''''Ambiguous Cases.''''' supplementary values of <math>B</math>, one acute and the other obtuse. Then <math>C</math> and <math>c</math> are determined from the equations\n{{block center|<math>\\tan \\tfrac{1}{2}C = \\frac{\\sin \\frac{1}{2}(a-b)}{\\sin \\frac{1}{2}(a+b)} \\cot \\tfrac{1}{2}(A-B),\\ \\tan \\tfrac{1}{2}c = \\frac{\\sin \\frac{1}{2}(A+B)}{\\sin \\frac{1}{2}(A-B)} \\tan \\tfrac{1}{2}(a-b).</math>}}\nNow <math>\\tan \\tfrac{1}{2}C</math>, <math>\\tan \\tfrac{1}{2}c</math>, must both be positive; hence <math>A-B</math> and <math>a-b</math> must have the same sign. We shall distinguish three cases. First, suppose <math>\\sin b < \\sin a</math>; then we have <math>\\sin B < \\sin A</math>. Hence <math>A</math> lies between the two values of <math>B</math>, and therefore only one of these values is admissible, the acute or the obtuse value according as <math>a</math> is greater or less than <math>b</math>; there is therefore in this case always one solution. Secondly, if <math>\\sin b > \\sin a</math>, there is no solution when <math>\\sin b \\sin A > \\sin a</math>; but if <math>\\sin b \\sin A < \\sin a</math> there are two values of <math>B</math>, both greater or both less than <math>A</math>. If <math>a</math> is acute, <math>a-b</math>, and therefore <math>A-B</math>, is negative; hence there are two solutions if <math>A</math> is acute and none if <math>A</math> is obtuse. These two solutions fall together if <math>\\sin b \\sin A = \\sin a</math>. If <math>a</math> is obtuse there is no solution unless <math>A</math> is obtuse, and in that case there are two, which coincide as before if <math>\\sin b \\sin A = \\sin a</math>. Hence in this case there are two solutions if <math>\\sin b \\sin A \\leqq \\sin a</math> and the two parts <math>A</math>, <math>a</math> are both acute or both obtuse, these being coincident in case <math>\\sin b \\sin A = \\sin a</math>; and there is no solution if one of the two <math>A</math>, <math>a</math>, is acute and the other obtuse, or if <math>\\sin b \\sin A > \\sin a</math>. {{block center|<math>\\text{Thirdly, if } \\sin b = \\sin a</math>}}\n\nThirdly, if <math>\\sin b = \\sin a</math> then <math>B = A</math> or <math>\\pi = A</math>. If <math>a</math> is acute, <math>a - b</math> is zero or negative, hence <math>A - B</math> is zero or negative; thus there is no solution unless <math>A</math> is acute, and then there is one. Similarly, if <math>a</math> is obtuse, <math>A</math> must be so too in order that there may be a solution. If <math>a = b = \\tfrac{1}{2}\\pi</math>, there is no solution unless <math>A = \\tfrac{1}{2}\\pi</math>, and then there are an infinite number of solutions, since the values of <math>C</math> and <math>c</math> become indeterminate.\n\nThe other case of ambiguity may be discussed in a similar manner, or the different cases may be deduced from the above by the use of the polar triangle transformation. The method of classification according to the three cases <math>\\sin b \\gtreqless \\sin a</math> was given by Professor Lloyd Tanner (''Messenger of Math.'', vol. xiv.).\n\n'''''Radii of Circles Related to Triangles.'''''\n\n14. If <math>r</math> is the angular radius of the small circle inscribed in the triangle <math>ABC</math>, we have at once <math>\\tan r = \\tan \\tfrac{1}{2}A \\sin (s - a)</math>, where <math>2s = a + b + c</math>; from this we can derive the formulae\n{{block center|<math>\\tan r = n \\operatorname{cosec} s = \\tfrac{1}{2}N \\sec \\tfrac{1}{2}A \\sec \\tfrac{1}{2}B \\sec \\tfrac{1}{2}C =</math>}}\n{{block center|<math>\\sin a \\sin \\tfrac{1}{2}B \\sin \\tfrac{1}{2}C \\sec \\tfrac{1}{2}A</math> (21)}}\nwhere <math>n</math>, <math>N</math> denote the expressions\n{{block center|<math>\\{\\sin s \\sin (s - a) \\sin (s - b) \\sin (s - c)\\}^{\\frac{1}{2}},</math>}}\n{{block center|<math>\\{-\\cos S \\cos (S - A) \\cos (S - B) \\cos (S - C)\\}^{\\frac{1}{2}}.</math>}}\nThe escribed circles are the small circles inscribed in three of the associated triangles; thus, applying the above formulae to the triangle <math>(a, \\pi - b, \\pi - c,\\ A, \\pi - B, \\pi - C)</math>, we have for <math>r_1</math>, the radius of the escribed circle opposite to the angle <math>A</math>, the following formulae\n{{block center|<math>\\tan r_1 = \\tan \\tfrac{1}{2}A \\sin s = n \\operatorname{cosec} (s - a) = \\tfrac{1}{2}N \\sec \\tfrac{1}{2}A \\operatorname{cosec} \\tfrac{1}{2}B \\operatorname{cosec} \\tfrac{1}{2}C</math>}}\n{{block center|<math>= \\sin a \\cos \\tfrac{1}{2}B \\cos \\tfrac{1}{2}C \\sec \\tfrac{1}{2}A.</math> (22)}}\n\nThe pole of the circle circumscribing a triangle is that of the circle inscribed in the polar triangle, and the radii of the two circles are complementary; hence, if <math>R</math> be the radius of the circumscribed circle of the triangle, and <math>R_1</math>, <math>R_2</math>, <math>R</math> the radii of the circles circumscribing the associated triangles, we have by writing <math>\\tfrac{1}{2}\\pi-R</math> for <math>r</math>, <math>\\tfrac{1}{2}\\pi-R_1</math> for <math>r_1</math>, <math>\\pi-a</math> for <math>A</math>, &c., in the above formulae\n{{block center|<math>\\cot R=\\cot \\tfrac{1}{2}a \\cos (S-A)=\\tfrac{1}{2}n \\operatorname{cosec} \\tfrac{1}{2}a \\operatorname{cosec} \\tfrac{1}{2}b \\operatorname{cosec} \\tfrac{1}{2}c=-N \\sec S</math>}}\n{{block center|<math>=\\sin A \\cos \\tfrac{1}{2}b \\cos \\tfrac{1}{2}c \\operatorname{cosec} \\tfrac{1}{2}a</math> (23)}}\n{{block center|<math>\\cot R_1=-\\cot \\tfrac{1}{2}a \\cos S=\\tfrac{1}{2}n \\operatorname{cosec} \\tfrac{1}{2}a \\sec \\tfrac{1}{2}b \\sec \\tfrac{1}{2}c=N \\sec (S-A)</math>}}\n{{block center|<math>=\\sin A \\sin \\tfrac{1}{2}b \\sin \\tfrac{1}{2}c \\operatorname{cosec} \\tfrac{1}{2}a.</math> (24)}}\n\nThe following relations follow from the formulae just given:—\n{{block center|<math>2\\tan R=\\cot r_1+\\cot r_2+\\cot r_3-\\cot r,</math>}}\n{{block center|<math>2\\tan R_1=\\cot r+\\cot r_2+\\cot r_3-\\cot r_1,</math>}}\n{{block center|<math>\\tan r \\tan r_1 \\tan r_2 \\tan r_3=n^2,\\ \\sin^2 s=\\cot r \\tan r_1 \\tan r_2 \\tan r_3,</math>}}\n{{block center|<math>\\sin^2 (s-a)=\\tan r \\cot r_1 \\tan r_2 \\tan r_3.</math>}}\n\n'''''Formulae for Spherical Excess.''''' 15. If <math>E=A+B+C-\\pi</math>, it may be shown that <math>E</math> multiplied by the square of the radius is the area of the triangle. We give some of the more important expressions for the quantity <math>E</math>, which is called the spherical excess. We have\n{{block center|<math>\\frac{\\cos \\frac{1}{2}(A+B)}{\\sin \\frac{1}{2}C}=\\frac{\\cos \\frac{1}{2}(a+b)}{\\cos \\frac{1}{2}c}</math> and <math>\\frac{\\sin \\frac{1}{2}(A+B)}{\\cos \\frac{1}{2}C}=\\frac{\\cos \\frac{1}{2}(a-b)}{\\cos \\frac{1}{2}c},</math>}}\n{{block center|or <math>\\frac{\\sin \\frac{1}{2}(C-E)}{\\sin \\frac{1}{2}C}=\\frac{\\cos \\frac{1}{2}(a+b)}{\\cos \\frac{1}{2}c}</math> and <math>\\frac{\\cos \\frac{1}{2}(C-E)}{\\cos \\frac{1}{2}C}=\\frac{\\cos \\frac{1}{2}(a-b)}{\\cos \\frac{1}{2}c};</math>}}\n{{block center|hence <math>\\frac{\\sin \\frac{1}{2}C-\\sin \\frac{1}{2}(C-E)}{\\sin \\frac{1}{2}C+\\sin \\frac{1}{2}(C-E)}=\\frac{\\cos \\frac{1}{2}c-\\cos \\frac{1}{2}(a+b)}{\\cos \\frac{1}{2}c+\\cos \\frac{1}{2}(a+b)};</math>}}<noinclude><references/></noinclude>"
+}

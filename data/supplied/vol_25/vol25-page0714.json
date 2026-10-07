@@ -1,0 +1,221 @@
+{
+ "volume": 25,
+ "page_number": 714,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n734",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n734",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1087,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     112,
+     120,
+     2261,
+     190
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     190,
+     1186,
+     1262
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     1262,
+     1186,
+     1423
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     112,
+     1423,
+     1186,
+     1922
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     112,
+     1922,
+     1186,
+     3123
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     1925,
+     1186,
+     3004
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     3004,
+     1186,
+     3123
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1186,
+     190,
+     2261,
+     1264
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1186,
+     1264,
+     2261,
+     2357
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1186,
+     2357,
+     2261,
+     3123
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|692|SPION KOP—SPIRE|}}",
+   "c1s1": "North African ''X. getulus'' represents the sub-genus ''Atlantoxerus''. The more typical species are characterized by the coarse spiny hair, the small size, or even absence of the ears, and the long, nearly straight, claws. The skull is narrower and longer than in typical squirrels, and there are distinctive features in the cheek-teeth; but the more aberrant types come much closer to squirrels. Typical spiny squirrels differ from true squirrels in being completely terrestrial in their habits, and live either in clefts or holes of rocks, or in burrows which they dig themselves. (See {{sc|Rodentia}}.)\n\n'''SPION KOP,''' a mountain in Natal on the north side of the Tugela River, and 24 m. W.S.W. of Ladysmith. It is celebrated as the scene of a battle (Jan. 24, 1900) in the Transvaal War, in which the British forces under Sir Redvers Buller were defeated by the Boers (see {{sc|Transvaal}} and {{sc|Ladysmith}}). The Spion Kop incident led to much controversy; for an admirable elucidation of the facts see ''The Times History of the War in South Africa''. The name itself (Dutch for “ Look-out Hill ”) is fairly common as a place-name in South Africa.\n\n'''SPIRAL,''' in mathematics, the locus of the extremity of a line (or radius vector) which varies in length as it revolves about a fixed point (or origin). Here we consider some of the more important plane spirals. Obviously such curves are conveniently expressed by polar equations, ''i.e.'' equations which directly state a relation existing between the radius vector and the vector angle; another form is the “ <math>p</math>, <math>r</math> ” equation,",
+   "c1s2": "wherein <math>r</math> is the radius vector of a point, and <math>p</math> the length of the perpendicular from the origin to the tangent at that point.\n\nThe equiangular or logarithmic spiral (fig. 1) is such that as the vector angle increases arithmetically, the radius vector increases",
+   "c1s3": "geometrically; this definition leads to an equation of the form <math>r=\\text{A}e^{\\text{B}\\theta}</math>, where <math>e</math> is the base of natural logarithms and <math>\\text{A}</math>, <math>\\text{B}</math> are constants. Another definition is that the tangent makes a constant angle (<math>\\alpha</math>, say) with the radius vector; this leads to <math>p=r\\sin\\alpha</math>. This curve has the property that its positive pedals, inverse, polar reciprocal and evolutes are all equal equiangular spirals. A group of spirals are included in the \"parabolic spirals\" given by the equation <math>r=a\\theta^n</math>; the more important are the Archimedean spiral, <math>r=a\\theta</math> (fig. 2); the hyperbolic or reciprocal spiral, <math>r=a\\theta^{-1}</math> (fig. 3); and the lituus, <math>r=a\\theta^{-\\frac{1}{2}}</math> (fig. 4). The first-named was discovered by Conon, whose studies were completed by Archimedes. Its \"<math>p</math>, <math>r</math>\" equation is <math>p=r^2/\\sqrt{(a^2+r^2)}</math>, and the angle between the radius vector and the tangent equals the vector angle. The second, called hyperbolic on account of the analogy of its equation (polar) to that (Cartesian) of a hyperbola between the asymptotes, is the inverse of the Archimedean. Its <math>p</math>, <math>r</math> equation is <math>p^{-2}=r^{-2}+a^{-2}</math>, and it has an asymptote at the distance <math>a</math> above the initial line. The lituus has the initial line as asymptote. Another group of spirals—termed Cotes's spirals—appear as the path of a particle moving under the influence of a central force varying as the inverse cube of the distance (see {{sc|Mechanics}}). Their general equation is <math>p^{-2}=\\text{A}r^{-2}+\\text{B}</math>, in which <math>\\text{A}</math> and <math>\\text{B}</math> can have any values. If <math>\\text{B}=0</math>, we have <math>p=r\\sqrt{\\text{A}}</math>, and the locus is the equiangular spiral. If <math>\\text{A}=1</math> we have <math>p^{-2}=r^{-2}+\\text{B}</math>, which leads to the polar equation <math>r\\theta=1/\\sqrt{\\text{B}}</math>, ''i.e.'' the reciprocal spiral. The more general investigation is as follows: Writing <math>u=r^{-1}</math> we have <math>p^{-2}=\\text{A}u^2+\\text{B}</math>, and since <math>p^{-2}=u^2+(du/d\\theta)^2</math> (see {{sc|Infinitesimal Calculus}}), then <math>\\text{A}u^2+\\text{B}=u^2+(du/d\\theta)^2</math>, ''i.e.'' <math>(du/d\\theta)^2=(\\text{A}-1)u^2+\\text{B}</math>. The right-hand side may be written as <math>\\text{C}^2(u^2+\\text{D}^2)</math>, <math>\\text{C}^2(u^2-\\text{D}^2)</math>, <math>\\text{C}^2(\\text{D}^2-u^2)</math> according as <math>\\text{A}-1</math> and <math>\\text{B}</math> are both positive, <math>\\text{A}-1</math> positive and <math>\\text{B}</math> negative, and as <math>\\text{A}-1</math> negative and <math>\\text{B}</math> positive. On integration these three forms yield the polar equations <math>u=\\text{C}\\sin h\\text{D}\\theta</math>, <math>u=\\text{C}\\cos h\\text{D}\\theta</math>, and <math>u=\\text{C}\\sin\\text{D}\\theta</math>. Of interest is the spiral <math>r=a\\theta^2/(\\theta^2-1)</math>, which has the circle <math>r=a</math> as an asymptote in addition to a linear",
+   "c1s4": "asymptote.\n\n'''SPIRE''' (O. Eng. ''spir'', a blade of grass, and so anything tapering to a point), the architectural term (Fr. ''flèche'', Ital. ''guglia'', Ger.",
+   "c2s1": "''spitze'') given to the lofty roofs in stone or wood covered with lead or slate, which crown the towers of cathedrals, churches, &c. In their origin, as in the church of Thaon in Normandy, they were four-sided roofs of slight elevation, but soon began to be features of great importance, becoming lofty pyramids generally of octagonal form, and equal in height sometimes to the towers themselves. The junction, however, of an octagonal spire and a square tower involved a distinct architectural problem, and its solutions in English, French and German spires are of infinite variety. One of the earliest treatments is that of the south-west tower of Chartres Cathedral, where, on the four projecting angles are lofty spire lights which, with others on the four faces and the octagonal spire itself, form a fine composition; at the abbey of St Denis the spire light at each angle was carried on three columns which filled better the three-cornered space at the angles and gave greater lightness to the structure; long vertical slits in the spire lights and the spire increased this effect, leading eventually to the introduction of tracery throughout the spire; the ultimate results of this we see in the lace-work spires of Strassburg, Antwerp, St Stephen's at Vienna, Freiberg, Ulm and other examples, which in some cases must be looked upon as the ''tours de force'' of the masons employed. In England the spires were far less pretentious but of greater variety of form. The spire of the cathedral at Oxford (1220) is perhaps the earliest example; it is of comparatively low elevation, of octagonal form with marked",
+   "c2s2": "entasis, and is decorated with spire lights on each face and pinnacled turrets at the angles. Those which are peculiar to England are the broach-spires, in which the four angles of the tower are covered with a stone roof which penetrates the central, octagonal spire. In the best examples the spire comes down on the tower with dripping eaves, and is carried on a corbel table, of which the finest solution is St Mary's at Stamford. The angles of the octagonal spire have a projecting moulding which is stopped by a head just above the corbel table, and at the top of the broach is a small niche with a figure in it; the spire lights are in three stages alternately in the front and diagonal faces. At St Mary, Kelton, and St Nicholas, Walcot, are similar designs. Seen, however, on the diagonal, the void space at the angles of these broach-spires is noticeable, so that an octagonal pinnacle was erected, of which the earliest example is that of the cathedral at Oxford, where the broach was of very low pitch. Of later date St Mary's, Wollaston, All Saints, Leighton Buzzard, and St Mary's, Witney, are good examples. As a rule the broach penetrates the octagonal spire about one-sixth or one-seventh up its height, but there is one instance in St Nicholas, Cotsmere, in Rutlandshire, where it rises nearly half the way up the octagonal spire. When the parapet or battlement (the latter being purely decorative) took the place of the dripping eaves, the broach disappeared, and octagonal turrets occupy the corners, as in St Peter's at Kettering and Oundle, Northamptonshire, and in All Saints, Stamford, Lincolnshire. The next combination perhaps followed from this; in order to",
+   "c2s3": "connect the angle tower or pinnacle with the spire, a flying buttress was thrown across, thus filling the gap between them; of this St James's, at Louth, in Lincolnshire, may be taken as a fine type; it belongs to the Perpendicular period and is further enriched with crockets up each angle of the spire; the same is found in St Mary's, Whittlesea, Cambridgeshire. At St Michael's, Coventry, the lower part of the octagonal spire is made vertical with a battlemented cresting round it. In St Patrick's, Partington, Yorkshire, the lower part of the spire, which otherwise is plain, is enclosed with an open gallery like the cresting of a crown. Sometimes the upper storey of the tower is made octagonal, and is set back so as to allow of a passage round with parapet or battlement, as at St Mary's, Bloxham, St Peter and St Paul, Seton, and St Mary, Castlegate, York. The most important groupings are those which surmount the towers of the English cathedrals; at Lichfield square turrets of large size with richly crocketed pinnacles; at Peterborough, a peculiar but not happy arrangement where a lofty spire covers over the buttress between angle turret and spire; and at"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v25 p0714 c1f1.png",
+   "c1f2": "eb1911 v25 p0714 c1f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     156,
+     1435,
+     1125,
+     1922
+    ],
+    "caption": null,
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     221,
+     1431,
+     629,
+     1917
+    ]
+   },
+   {
+    "box": [
+     154,
+     1429,
+     1126,
+     1921
+    ],
+    "caption": null,
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     724,
+     1413,
+     1020,
+     1701
+    ]
+   },
+   {
+    "box": [
+     156,
+     1427,
+     1128,
+     1919
+    ],
+    "caption": null,
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     667,
+     1707,
+     1148,
+     1904
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    3,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 4,
+    "input_tokens": 7807,
+    "output_tokens": 799,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 8081,
+    "output_tokens": 4406,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|692|SPION KOP—SPIRE|}}</noinclude>North African ''X. getulus'' represents the sub-genus ''Atlantoxerus''. The more typical species are characterized by the coarse spiny hair, the small size, or even absence of the ears, and the long, nearly straight, claws. The skull is narrower and longer than in typical squirrels, and there are distinctive features in the cheek-teeth; but the more aberrant types come much closer to squirrels. Typical spiny squirrels differ from true squirrels in being completely terrestrial in their habits, and live either in clefts or holes of rocks, or in burrows which they dig themselves. (See {{sc|Rodentia}}.)\n\n'''SPION KOP,''' a mountain in Natal on the north side of the Tugela River, and 24 m. W.S.W. of Ladysmith. It is celebrated as the scene of a battle (Jan. 24, 1900) in the Transvaal War, in which the British forces under Sir Redvers Buller were defeated by the Boers (see {{sc|Transvaal}} and {{sc|Ladysmith}}). The Spion Kop incident led to much controversy; for an admirable elucidation of the facts see ''The Times History of the War in South Africa''. The name itself (Dutch for “ Look-out Hill ”) is fairly common as a place-name in South Africa.\n\n'''SPIRAL,''' in mathematics, the locus of the extremity of a line (or radius vector) which varies in length as it revolves about a fixed point (or origin). Here we consider some of the more important plane spirals. Obviously such curves are conveniently expressed by polar equations, ''i.e.'' equations which directly state a relation existing between the radius vector and the vector angle; another form is the “ <math>p</math>, <math>r</math> ” equation, wherein <math>r</math> is the radius vector of a point, and <math>p</math> the length of the perpendicular from the origin to the tangent at that point.\n\nThe equiangular or logarithmic spiral (fig. 1) is such that as the vector angle increases arithmetically, the radius vector increases asymptote.\n\n[[File:eb1911 v25 p0714 c1f1.png|center|356px]]\n\n[[File:eb1911 v25 p0714 c1f2.png|center|356px]]\ngeometrically; this definition leads to an equation of the form <math>r=\\text{A}e^{\\text{B}\\theta}</math>, where <math>e</math> is the base of natural logarithms and <math>\\text{A}</math>, <math>\\text{B}</math> are constants. Another definition is that the tangent makes a constant angle (<math>\\alpha</math>, say) with the radius vector; this leads to <math>p=r\\sin\\alpha</math>. This curve has the property that its positive pedals, inverse, polar reciprocal and evolutes are all equal equiangular spirals. A group of spirals are included in the \"parabolic spirals\" given by the equation <math>r=a\\theta^n</math>; the more important are the Archimedean spiral, <math>r=a\\theta</math> (fig. 2); the hyperbolic or reciprocal spiral, <math>r=a\\theta^{-1}</math> (fig. 3); and the lituus, <math>r=a\\theta^{-\\frac{1}{2}}</math> (fig. 4). The first-named was discovered by Conon, whose studies were completed by Archimedes. Its \"<math>p</math>, <math>r</math>\" equation is <math>p=r^2/\\sqrt{(a^2+r^2)}</math>, and the angle between the radius vector and the tangent equals the vector angle. The second, called hyperbolic on account of the analogy of its equation (polar) to that (Cartesian) of a hyperbola between the asymptotes, is the inverse of the Archimedean. Its <math>p</math>, <math>r</math> equation is <math>p^{-2}=r^{-2}+a^{-2}</math>, and it has an asymptote at the distance <math>a</math> above the initial line. The lituus has the initial line as asymptote. Another group of spirals—termed Cotes's spirals—appear as the path of a particle moving under the influence of a central force varying as the inverse cube of the distance (see {{sc|Mechanics}}). Their general equation is <math>p^{-2}=\\text{A}r^{-2}+\\text{B}</math>, in which <math>\\text{A}</math> and <math>\\text{B}</math> can have any values. If <math>\\text{B}=0</math>, we have <math>p=r\\sqrt{\\text{A}}</math>, and the locus is the equiangular spiral. If <math>\\text{A}=1</math> we have <math>p^{-2}=r^{-2}+\\text{B}</math>, which leads to the polar equation <math>r\\theta=1/\\sqrt{\\text{B}}</math>, ''i.e.'' the reciprocal spiral. The more general investigation is as follows: Writing <math>u=r^{-1}</math> we have <math>p^{-2}=\\text{A}u^2+\\text{B}</math>, and since <math>p^{-2}=u^2+(du/d\\theta)^2</math> (see {{sc|Infinitesimal Calculus}}), then <math>\\text{A}u^2+\\text{B}=u^2+(du/d\\theta)^2</math>, ''i.e.'' <math>(du/d\\theta)^2=(\\text{A}-1)u^2+\\text{B}</math>. The right-hand side may be written as <math>\\text{C}^2(u^2+\\text{D}^2)</math>, <math>\\text{C}^2(u^2-\\text{D}^2)</math>, <math>\\text{C}^2(\\text{D}^2-u^2)</math> according as <math>\\text{A}-1</math> and <math>\\text{B}</math> are both positive, <math>\\text{A}-1</math> positive and <math>\\text{B}</math> negative, and as <math>\\text{A}-1</math> negative and <math>\\text{B}</math> positive. On integration these three forms yield the polar equations <math>u=\\text{C}\\sin h\\text{D}\\theta</math>, <math>u=\\text{C}\\cos h\\text{D}\\theta</math>, and <math>u=\\text{C}\\sin\\text{D}\\theta</math>. Of interest is the spiral <math>r=a\\theta^2/(\\theta^2-1)</math>, which has the circle <math>r=a</math> as an asymptote in addition to a linear\n\n'''SPIRE''' (O. Eng. ''spir'', a blade of grass, and so anything tapering to a point), the architectural term (Fr. ''flèche'', Ital. ''guglia'', Ger. ''spitze'') given to the lofty roofs in stone or wood covered with lead or slate, which crown the towers of cathedrals, churches, &c. In their origin, as in the church of Thaon in Normandy, they were four-sided roofs of slight elevation, but soon began to be features of great importance, becoming lofty pyramids generally of octagonal form, and equal in height sometimes to the towers themselves. The junction, however, of an octagonal spire and a square tower involved a distinct architectural problem, and its solutions in English, French and German spires are of infinite variety. One of the earliest treatments is that of the south-west tower of Chartres Cathedral, where, on the four projecting angles are lofty spire lights which, with others on the four faces and the octagonal spire itself, form a fine composition; at the abbey of St Denis the spire light at each angle was carried on three columns which filled better the three-cornered space at the angles and gave greater lightness to the structure; long vertical slits in the spire lights and the spire increased this effect, leading eventually to the introduction of tracery throughout the spire; the ultimate results of this we see in the lace-work spires of Strassburg, Antwerp, St Stephen's at Vienna, Freiberg, Ulm and other examples, which in some cases must be looked upon as the ''tours de force'' of the masons employed. In England the spires were far less pretentious but of greater variety of form. The spire of the cathedral at Oxford (1220) is perhaps the earliest example; it is of comparatively low elevation, of octagonal form with marked entasis, and is decorated with spire lights on each face and pinnacled turrets at the angles. Those which are peculiar to England are the broach-spires, in which the four angles of the tower are covered with a stone roof which penetrates the central, octagonal spire. In the best examples the spire comes down on the tower with dripping eaves, and is carried on a corbel table, of which the finest solution is St Mary's at Stamford. The angles of the octagonal spire have a projecting moulding which is stopped by a head just above the corbel table, and at the top of the broach is a small niche with a figure in it; the spire lights are in three stages alternately in the front and diagonal faces. At St Mary, Kelton, and St Nicholas, Walcot, are similar designs. Seen, however, on the diagonal, the void space at the angles of these broach-spires is noticeable, so that an octagonal pinnacle was erected, of which the earliest example is that of the cathedral at Oxford, where the broach was of very low pitch. Of later date St Mary's, Wollaston, All Saints, Leighton Buzzard, and St Mary's, Witney, are good examples. As a rule the broach penetrates the octagonal spire about one-sixth or one-seventh up its height, but there is one instance in St Nicholas, Cotsmere, in Rutlandshire, where it rises nearly half the way up the octagonal spire. When the parapet or battlement (the latter being purely decorative) took the place of the dripping eaves, the broach disappeared, and octagonal turrets occupy the corners, as in St Peter's at Kettering and Oundle, Northamptonshire, and in All Saints, Stamford, Lincolnshire. The next combination perhaps followed from this; in order to connect the angle tower or pinnacle with the spire, a flying buttress was thrown across, thus filling the gap between them; of this St James's, at Louth, in Lincolnshire, may be taken as a fine type; it belongs to the Perpendicular period and is further enriched with crockets up each angle of the spire; the same is found in St Mary's, Whittlesea, Cambridgeshire. At St Michael's, Coventry, the lower part of the octagonal spire is made vertical with a battlemented cresting round it. In St Patrick's, Partington, Yorkshire, the lower part of the spire, which otherwise is plain, is enclosed with an open gallery like the cresting of a crown. Sometimes the upper storey of the tower is made octagonal, and is set back so as to allow of a passage round with parapet or battlement, as at St Mary's, Bloxham, St Peter and St Paul, Seton, and St Mary, Castlegate, York. The most important groupings are those which surmount the towers of the English cathedrals; at Lichfield square turrets of large size with richly crocketed pinnacles; at Peterborough, a peculiar but not happy arrangement where a lofty spire covers over the buttress between angle turret and spire; and at<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,216 @@
+{
+ "volume": 26,
+ "page_number": 164,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n168",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n168",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1122,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     112,
+     131,
+     2311,
+     199
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     199,
+     1178,
+     221
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     112,
+     222,
+     529,
+     891
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     892,
+     529,
+     925
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     529,
+     221,
+     1178,
+     934
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     934,
+     1178,
+     1785
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     1785,
+     1178,
+     2707
+    ]
+   },
+   {
+    "name": "c1s6",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     112,
+     2707,
+     1178,
+     3291
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     199,
+     2311,
+     933
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     933,
+     2311,
+     1813
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     1813,
+     2311,
+     2893
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     2893,
+     2311,
+     3291
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|146|SURVEYING|[GEODETIC TRIANGULATION}}",
+   "c1s1": "",
+   "c1s2": "{{c|{{sc|Fig.}} 3.}}",
+   "c1s3": "sent the errors in the length and azimuth of any side <math>c</math> which have been generated in the course of the triangulation up to it from the base-line and the azimuth station at the origin. The errors in the latitude and longitude of any station which are due to the triangulation are <math>d\\lambda</math>, <math>=[d\\,.\\,\\Delta\\lambda]</math>, and <math>dL</math>, <math>=[d\\,.\\,\\Delta L]</math>. Let station 1 be the origin, and let 2, 3, ... be the succeeding stations taken along a predetermined line of traverse, which may either run from vertex to vertex of the successive triangles, zigzagging between the flanks of the chain, as in fig. 3 (1), or be carried directly along one of the flanks, as in fig. 3 (2). For the general symbols of the differential equations substitute <math>\\Delta\\lambda_n</math>, <math>\\Delta L_n</math>, <math>\\Delta A_n</math>, <math>c_n</math>, <math>A_n</math>, and <math>B_n</math>, for the side between stations <math>n</math> and <math>n+1</math> of the traverse; and let <math>\\delta c_n</math> and <math>\\delta A_n</math> be the errors generated between the sides <math>c_{n-1}</math> and <math>c_n</math>; then",
+   "c1s4": "{{block center|<math>\\frac{dc_1}{c_1}=\\frac{\\delta c_1}{c_1};\\quad \\frac{dc_2}{c_2}=\\frac{\\delta c_1}{c_1}+\\frac{\\delta c_2}{c_2};\\dots\\quad \\frac{dc_n}{c_n}={}^n_1\\left[\\frac{\\delta c}{c}\\right];</math>}}\n{{block center|<math>dA_1=\\delta A_1;\\ dA_2=dB_1+\\delta A_2;\\ \\dots\\ dA_n=dB_{n-1}+\\delta A_n.</math>}}\n\nPerforming the necessary substitutions and summations, we get\n{{block center|<math>dB_n=\\begin{cases} {}^n_1[\\Delta A]\\frac{\\delta c_1}{c_1}+{}^n_2[\\Delta A]\\frac{\\delta c_2}{c_2}+\\dots+\\Delta A_n\\frac{\\delta c_n}{c_n} \\\\ +(1+{}^n_1[\\Delta A\\ \\cot A]\\sin 1'')\\delta A_1+(1+{}^n_2[\\Delta A\\ \\cot A]\\sin 1'')\\delta A_2 \\\\ \\qquad+\\dots+(1+\\Delta A_n\\cot A_n\\sin 1'')\\delta A_n. \\end{cases}</math>}}\n{{block center|<math>d\\lambda_{n+1}=\\begin{cases} {}^n_1[\\Delta\\lambda]\\frac{\\delta c_1}{c_1}+{}^n_2[\\Delta\\lambda]\\frac{\\delta c_2}{c_2}+\\dots+\\Delta\\lambda_n\\frac{\\delta c_n}{c_n} \\\\ -\\{{}^n_1[\\Delta\\lambda\\tan A]\\delta A_1+{}^n_2[\\Delta\\lambda\\tan A]\\delta A_2+\\dots \\\\ \\qquad+\\Delta\\lambda_n\\tan A_n\\delta A_n\\}\\sin 1'' \\end{cases}</math>}}\n{{block center|<math>dL_{n+1}=\\begin{cases} {}^n_1[\\Delta L]\\frac{\\delta c_1}{c_1}+{}^n_2[\\Delta L]\\frac{\\delta c_2}{c_2}+\\dots+\\Delta L_n\\frac{\\delta c_n}{c_n} \\\\ +\\{{}^n_1[\\Delta L\\cot A]\\delta A_1+{}^n_2[\\Delta L\\cot A]\\delta A_2+\\dots \\\\ \\qquad+\\Delta L_n\\cot A_n\\delta A_n\\}\\sin 1''. \\end{cases}</math>}}\n\nThus we have the following expression for any geodetic error:—\n{{block center|<math>\\mu_1\\frac{\\delta c_1}{c_1}+\\dots+\\mu_n\\frac{\\delta c_n}{c_n}+\\phi_1\\delta A_1+\\dots+\\phi_n\\delta A_n=E,</math> (8)}}\nwhere <math>\\mu</math> and <math>\\phi</math> represent the respective summations which are the coefficients of <math>\\delta c</math> and <math>\\delta A</math> in each instance but the first, in which 1",
+   "c1s5": "is added to the summation in forming the coefficient of <math>\\delta A</math>.\n\nThe angular errors <math>x</math>, <math>y</math> and <math>z</math> must now be introduced, in place of <math>\\delta c</math> and <math>\\delta A</math>, into the general expression, which will then take different forms, according as the route adopted for the line of traverse was the zigzag or the direct. In the former, the number of stations on the traverse is ordinarily the same as the number of triangles, and, whether or no, a common numerical notation may be adopted for both the traverse stations and the collateral triangles; thus the angular errors of every triangle enter the general expression in the form\n{{block center|<math>\\pm \\phi x + \\cot Y . \\mu' y - \\cot Z . \\mu' z</math>,}}\nin which <math>\\mu' = \\mu \\sin 1''</math>, and the upper sign of <math>\\phi</math> is taken if the triangle lies to the left, the lower if to the right, of the line of traverse. When the direct traverse is adopted, there are only half as many traverse stations as triangles, and therefore only half the number of <math>\\mu</math>'s and <math>\\phi</math>'s to determine; but it becomes necessary to adopt different numberings for the stations and the triangles, and the form of the coefficients of the angular errors alternates in successive triangles. Thus, if the <math>p</math>th triangle has no side on the line of the traverse but only an angle at the <math>l</math>th station, the form is\n{{block center|<math>+ \\phi_l . x_p + \\cot \\text{Y}_p . \\mu'_l . y_p - \\cot Z_p . \\mu'_l . z_p</math>.}}\nIf the <math>q</math>th triangle has a side between the <math>l</math>th and the <math>(l+1)</math>th stations of the traverse, the form is\n{{block center|<math>\\cot X_q(\\mu'_l - \\mu'_{l+1})x_q + (\\phi_l + \\mu'_{l+1} \\cot Y_q)y_q - (\\phi_{l+1} - \\mu'_l \\cot Z_q)z_q</math>.}}\n\nAs each circuit has a right-hand and a left-hand branch, the errors of the angles are finally arranged so as to present equations of the general form\n{{block center|<math>[ax+by+cz]_r - [ax+by+cz]_l = E</math>.}}",
+   "c1s6": "¶\nThe eleven circuit and base-line equations of condition having been duly constructed, the next step is to find values of the angular errors which will satisfy these equations, and be the most probable of any system of values that will do so, and at the same time will not disturb the existing harmony of the angles in each of the seventy-two triangles. Harmony is maintained by introducing the equation of condition <math>x+y+z=0</math> for every triangle. The most probable results are obtained by the method of minimum squares, which may be applied in two ways.\n\ni. A factor <math>\\lambda</math> may be obtained for each of the eighty-three equations under the condition that <math>\\left[\\frac{x^2}{u}+\\frac{y^2}{v}+\\frac{z^2}{w}\\right]</math> is made a minimum,",
+   "c2s1": "u, v and w being the ''reciprocals'' of the weights of the observed angles. This necessitates the simultaneous solution of eighty-three equations to obtain as many values of <math>\\lambda</math>. The resulting values of the errors of the angles in any, the <math>p</math>th, triangle, are\n\n{{block center|<math>x_p=u_p[a_p\\lambda];\\ y_p=v_p[b_p\\lambda];\\ z_p=w_p[c_p\\lambda].</math> (9)}}\n\nii. One of the unknown quantities in every triangle, as <math>x</math>, may be eliminated from each of the eleven circuit and base-line equations by substituting its equivalent <math>-(y+z)</math> for it, a similar substitution being made in the minimum. Then the equations take the form <math>[(b-a)y+(c-a)z]=E</math>, while the minimum becomes\n\n{{block center|<math>\\left[\\frac{(y+z)^2}{u}+\\frac{y^2}{v}+\\frac{z^2}{w}\\right].</math>}}\n\nThus we have now to find only eleven values of <math>\\lambda</math> by a simultaneous solution of as many equations, instead of eighty-three values from eighty-three equations; but we arrive at more complex expressions for the angular errors as follows:—\n\n{{block center|<math>\\left.\\begin{array}{l}y_p=\\frac{v_p}{u_p+v_p+w_p}\\{(u_p+w_p)[(b_p-a_p)\\lambda]-w_p[(c_p-a_p)\\lambda]\\}\\\\ z_p=\\frac{w_p}{u_p+v_p+w_p}\\{(u_p+v_p)[(c_p-a_p)\\lambda]-v_p[(b_p-a_p)\\lambda]\\}\\end{array}\\right\\}.</math> (10)}}",
+   "c2s2": "¶\nThe second method has invariably been adopted, originally because it was supposed that, the number of the factors <math>\\lambda</math> being reduced from the total number of equations to that of the circuit and base-line equations, a great saving of labour would be effected. But subsequently it was ascertained that in this respect there is little to choose between the two methods; for, when <math>x</math> is not eliminated, and as many factors are introduced as there are equations, the factors for the triangular equations may be readily eliminated at the outset. Then the really severe calculations will be restricted to the solution of the equations containing the factors for the circuit and base-line equations as in the second method.\n\nIn the preceding illustration it is assumed that the base-lines are errorless as compared with the triangulation. Strictly speaking, however, as base-lines are fallible quantities, presumably of different weight, their errors should be introduced as unknown quantities of which the most probable values are to be determined in a simultaneous investigation of the errors of all the facts of observation, whether linear or angular. When they are connected together by so few triangles that their ratios may be deduced as accurately, or nearly so, from the triangulation as from the measured lengths, this ought to be done; but, when the connecting triangles are so numerous that the direct ratios are of much greater weight than the trigonometrical, the errors of the base-lines may be neglected. In the reduction of the Indian triangulation it was decided, after examining the relative magnitudes of the probable errors of the linear and the angular measures and ratios, to assume the base-lines to be errorless.",
+   "c2s3": "¶\nThe chains of triangles being largely composed of polygons or other networks, and not merely of single triangles, as has been assumed for simplicity in the illustration, the geometrical harmony to be maintained involved the introduction of a large number of \"side,\" \"central\" and \"toto-partial\" equations of condition, as well as the triangular. Thus the problem for attack was the simultaneous solution of a number of equations of condition=that of all the geometrical conditions of every figure+four times the number of circuits formed by the chains of triangles+the number of base-lines−1, the number of unknown quantities contained in the equations being that of the whole of the observed angles; the method of procedure, if rigorous, would be precisely similar to that already indicated for \"harmonizing the angles of trigonometrical figures,\" of which it is merely an expansion from single figures to great groups.\n\nThe rigorous treatment would, however, have involved the simultaneous solution of about 4000 equations between 9230 unknown quantities, which was impracticable. The triangulation was therefore divided into sections for separate reduction, of which the most important were the five between the meridians of 67° and 92° (see fig. 1), consisting of four quadrilateral figures and a trigon, each comprising several chains of triangles and some base-lines. This arrangement had the advantage of enabling the final reductions to be taken in hand as soon as convenient after the completion of any section, instead of being postponed until all were completed. It was subject, however, to the condition that the sections containing the best chains of triangles were to be first reduced; for, as all chains bordering contiguous sections would necessarily be \"fixed\" as a part of the section first reduced, it was obviously desirable to run no risk of impairing the best chains by forcing them into adjustment with others of inferior quality. It happened that both the north-east and the south-west quadrilaterals contained several of the older chains; their reduction was therefore",
+   "c2s4": "made to follow that of the collateral sections containing the modern chains.\n\nBut the reduction of each of these great sections was in itself a very formidable undertaking, necessitating some departure from a purely rigorous treatment. For the chains were largely composed of polygonal networks and not of single triangles only as assumed in the illustration, and therefore cognizance had to be taken of a"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0164 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     128,
+     287,
+     517,
+     888
+    ],
+    "caption": [
+     275,
+     893,
+     382,
+     925
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     128,
+     278,
+     521,
+     888
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4639,
+    "output_tokens": 87,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 11,
+    "input_tokens": 9159,
+    "output_tokens": 6556,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 21164
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|146|SURVEYING|[GEODETIC TRIANGULATION}}</noinclude>[[File:eb1911 v26 p0164 c1f1.png|center|134px]]\n{{c|{{sc|Fig.}} 3.}}\n\nsent the errors in the length and azimuth of any side <math>c</math> which have been generated in the course of the triangulation up to it from the base-line and the azimuth station at the origin. The errors in the latitude and longitude of any station which are due to the triangulation are <math>d\\lambda</math>, <math>=[d\\,.\\,\\Delta\\lambda]</math>, and <math>dL</math>, <math>=[d\\,.\\,\\Delta L]</math>. Let station 1 be the origin, and let 2, 3, ... be the succeeding stations taken along a predetermined line of traverse, which may either run from vertex to vertex of the successive triangles, zigzagging between the flanks of the chain, as in fig. 3 (1), or be carried directly along one of the flanks, as in fig. 3 (2). For the general symbols of the differential equations substitute <math>\\Delta\\lambda_n</math>, <math>\\Delta L_n</math>, <math>\\Delta A_n</math>, <math>c_n</math>, <math>A_n</math>, and <math>B_n</math>, for the side between stations <math>n</math> and <math>n+1</math> of the traverse; and let <math>\\delta c_n</math> and <math>\\delta A_n</math> be the errors generated between the sides <math>c_{n-1}</math> and <math>c_n</math>; then {{block center|<math>\\frac{dc_1}{c_1}=\\frac{\\delta c_1}{c_1};\\quad \\frac{dc_2}{c_2}=\\frac{\\delta c_1}{c_1}+\\frac{\\delta c_2}{c_2};\\dots\\quad \\frac{dc_n}{c_n}={}^n_1\\left[\\frac{\\delta c}{c}\\right];</math>}}\n{{block center|<math>dA_1=\\delta A_1;\\ dA_2=dB_1+\\delta A_2;\\ \\dots\\ dA_n=dB_{n-1}+\\delta A_n.</math>}}\n\nPerforming the necessary substitutions and summations, we get\n{{block center|<math>dB_n=\\begin{cases} {}^n_1[\\Delta A]\\frac{\\delta c_1}{c_1}+{}^n_2[\\Delta A]\\frac{\\delta c_2}{c_2}+\\dots+\\Delta A_n\\frac{\\delta c_n}{c_n} \\\\ +(1+{}^n_1[\\Delta A\\ \\cot A]\\sin 1'')\\delta A_1+(1+{}^n_2[\\Delta A\\ \\cot A]\\sin 1'')\\delta A_2 \\\\ \\qquad+\\dots+(1+\\Delta A_n\\cot A_n\\sin 1'')\\delta A_n. \\end{cases}</math>}}\n{{block center|<math>d\\lambda_{n+1}=\\begin{cases} {}^n_1[\\Delta\\lambda]\\frac{\\delta c_1}{c_1}+{}^n_2[\\Delta\\lambda]\\frac{\\delta c_2}{c_2}+\\dots+\\Delta\\lambda_n\\frac{\\delta c_n}{c_n} \\\\ -\\{{}^n_1[\\Delta\\lambda\\tan A]\\delta A_1+{}^n_2[\\Delta\\lambda\\tan A]\\delta A_2+\\dots \\\\ \\qquad+\\Delta\\lambda_n\\tan A_n\\delta A_n\\}\\sin 1'' \\end{cases}</math>}}\n{{block center|<math>dL_{n+1}=\\begin{cases} {}^n_1[\\Delta L]\\frac{\\delta c_1}{c_1}+{}^n_2[\\Delta L]\\frac{\\delta c_2}{c_2}+\\dots+\\Delta L_n\\frac{\\delta c_n}{c_n} \\\\ +\\{{}^n_1[\\Delta L\\cot A]\\delta A_1+{}^n_2[\\Delta L\\cot A]\\delta A_2+\\dots \\\\ \\qquad+\\Delta L_n\\cot A_n\\delta A_n\\}\\sin 1''. \\end{cases}</math>}}\n\nThus we have the following expression for any geodetic error:—\n{{block center|<math>\\mu_1\\frac{\\delta c_1}{c_1}+\\dots+\\mu_n\\frac{\\delta c_n}{c_n}+\\phi_1\\delta A_1+\\dots+\\phi_n\\delta A_n=E,</math> (8)}}\nwhere <math>\\mu</math> and <math>\\phi</math> represent the respective summations which are the coefficients of <math>\\delta c</math> and <math>\\delta A</math> in each instance but the first, in which 1 is added to the summation in forming the coefficient of <math>\\delta A</math>.\n\nThe angular errors <math>x</math>, <math>y</math> and <math>z</math> must now be introduced, in place of <math>\\delta c</math> and <math>\\delta A</math>, into the general expression, which will then take different forms, according as the route adopted for the line of traverse was the zigzag or the direct. In the former, the number of stations on the traverse is ordinarily the same as the number of triangles, and, whether or no, a common numerical notation may be adopted for both the traverse stations and the collateral triangles; thus the angular errors of every triangle enter the general expression in the form\n{{block center|<math>\\pm \\phi x + \\cot Y . \\mu' y - \\cot Z . \\mu' z</math>,}}\nin which <math>\\mu' = \\mu \\sin 1''</math>, and the upper sign of <math>\\phi</math> is taken if the triangle lies to the left, the lower if to the right, of the line of traverse. When the direct traverse is adopted, there are only half as many traverse stations as triangles, and therefore only half the number of <math>\\mu</math>'s and <math>\\phi</math>'s to determine; but it becomes necessary to adopt different numberings for the stations and the triangles, and the form of the coefficients of the angular errors alternates in successive triangles. Thus, if the <math>p</math>th triangle has no side on the line of the traverse but only an angle at the <math>l</math>th station, the form is\n{{block center|<math>+ \\phi_l . x_p + \\cot \\text{Y}_p . \\mu'_l . y_p - \\cot Z_p . \\mu'_l . z_p</math>.}}\nIf the <math>q</math>th triangle has a side between the <math>l</math>th and the <math>(l+1)</math>th stations of the traverse, the form is\n{{block center|<math>\\cot X_q(\\mu'_l - \\mu'_{l+1})x_q + (\\phi_l + \\mu'_{l+1} \\cot Y_q)y_q - (\\phi_{l+1} - \\mu'_l \\cot Z_q)z_q</math>.}}\n\nAs each circuit has a right-hand and a left-hand branch, the errors of the angles are finally arranged so as to present equations of the general form\n{{block center|<math>[ax+by+cz]_r - [ax+by+cz]_l = E</math>.}}\n\nThe eleven circuit and base-line equations of condition having been duly constructed, the next step is to find values of the angular errors which will satisfy these equations, and be the most probable of any system of values that will do so, and at the same time will not disturb the existing harmony of the angles in each of the seventy-two triangles. Harmony is maintained by introducing the equation of condition <math>x+y+z=0</math> for every triangle. The most probable results are obtained by the method of minimum squares, which may be applied in two ways.\n\ni. A factor <math>\\lambda</math> may be obtained for each of the eighty-three equations under the condition that <math>\\left[\\frac{x^2}{u}+\\frac{y^2}{v}+\\frac{z^2}{w}\\right]</math> is made a minimum, u, v and w being the ''reciprocals'' of the weights of the observed angles. This necessitates the simultaneous solution of eighty-three equations to obtain as many values of <math>\\lambda</math>. The resulting values of the errors of the angles in any, the <math>p</math>th, triangle, are\n\n{{block center|<math>x_p=u_p[a_p\\lambda];\\ y_p=v_p[b_p\\lambda];\\ z_p=w_p[c_p\\lambda].</math> (9)}}\n\nii. One of the unknown quantities in every triangle, as <math>x</math>, may be eliminated from each of the eleven circuit and base-line equations by substituting its equivalent <math>-(y+z)</math> for it, a similar substitution being made in the minimum. Then the equations take the form <math>[(b-a)y+(c-a)z]=E</math>, while the minimum becomes\n\n{{block center|<math>\\left[\\frac{(y+z)^2}{u}+\\frac{y^2}{v}+\\frac{z^2}{w}\\right].</math>}}\n\nThus we have now to find only eleven values of <math>\\lambda</math> by a simultaneous solution of as many equations, instead of eighty-three values from eighty-three equations; but we arrive at more complex expressions for the angular errors as follows:—\n\n{{block center|<math>\\left.\\begin{array}{l}y_p=\\frac{v_p}{u_p+v_p+w_p}\\{(u_p+w_p)[(b_p-a_p)\\lambda]-w_p[(c_p-a_p)\\lambda]\\}\\\\ z_p=\\frac{w_p}{u_p+v_p+w_p}\\{(u_p+v_p)[(c_p-a_p)\\lambda]-v_p[(b_p-a_p)\\lambda]\\}\\end{array}\\right\\}.</math> (10)}}\n\nThe second method has invariably been adopted, originally because it was supposed that, the number of the factors <math>\\lambda</math> being reduced from the total number of equations to that of the circuit and base-line equations, a great saving of labour would be effected. But subsequently it was ascertained that in this respect there is little to choose between the two methods; for, when <math>x</math> is not eliminated, and as many factors are introduced as there are equations, the factors for the triangular equations may be readily eliminated at the outset. Then the really severe calculations will be restricted to the solution of the equations containing the factors for the circuit and base-line equations as in the second method.\n\nIn the preceding illustration it is assumed that the base-lines are errorless as compared with the triangulation. Strictly speaking, however, as base-lines are fallible quantities, presumably of different weight, their errors should be introduced as unknown quantities of which the most probable values are to be determined in a simultaneous investigation of the errors of all the facts of observation, whether linear or angular. When they are connected together by so few triangles that their ratios may be deduced as accurately, or nearly so, from the triangulation as from the measured lengths, this ought to be done; but, when the connecting triangles are so numerous that the direct ratios are of much greater weight than the trigonometrical, the errors of the base-lines may be neglected. In the reduction of the Indian triangulation it was decided, after examining the relative magnitudes of the probable errors of the linear and the angular measures and ratios, to assume the base-lines to be errorless.\n\nThe chains of triangles being largely composed of polygons or other networks, and not merely of single triangles, as has been assumed for simplicity in the illustration, the geometrical harmony to be maintained involved the introduction of a large number of \"side,\" \"central\" and \"toto-partial\" equations of condition, as well as the triangular. Thus the problem for attack was the simultaneous solution of a number of equations of condition=that of all the geometrical conditions of every figure+four times the number of circuits formed by the chains of triangles+the number of base-lines−1, the number of unknown quantities contained in the equations being that of the whole of the observed angles; the method of procedure, if rigorous, would be precisely similar to that already indicated for \"harmonizing the angles of trigonometrical figures,\" of which it is merely an expansion from single figures to great groups.\n\nThe rigorous treatment would, however, have involved the simultaneous solution of about 4000 equations between 9230 unknown quantities, which was impracticable. The triangulation was therefore divided into sections for separate reduction, of which the most important were the five between the meridians of 67° and 92° (see fig. 1), consisting of four quadrilateral figures and a trigon, each comprising several chains of triangles and some base-lines. This arrangement had the advantage of enabling the final reductions to be taken in hand as soon as convenient after the completion of any section, instead of being postponed until all were completed. It was subject, however, to the condition that the sections containing the best chains of triangles were to be first reduced; for, as all chains bordering contiguous sections would necessarily be \"fixed\" as a part of the section first reduced, it was obviously desirable to run no risk of impairing the best chains by forcing them into adjustment with others of inferior quality. It happened that both the north-east and the south-west quadrilaterals contained several of the older chains; their reduction was therefore made to follow that of the collateral sections containing the modern chains.\n\nBut the reduction of each of these great sections was in itself a very formidable undertaking, necessitating some departure from a purely rigorous treatment. For the chains were largely composed of polygonal networks and not of single triangles only as assumed in the illustration, and therefore cognizance had to be taken of a<noinclude><references/></noinclude>"
+}

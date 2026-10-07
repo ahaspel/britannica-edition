@@ -1,0 +1,214 @@
+{
+ "volume": 21,
+ "page_number": 275,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri21chisrich/page/n284",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri21chisrich/page/n284",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.1,
+  "column_width": 1080,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     156,
+     123,
+     2291,
+     194
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     156,
+     213,
+     1222,
+     1143
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     156,
+     1149,
+     1222,
+     1184
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     156,
+     1184,
+     1222,
+     2267
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     156,
+     2267,
+     1222,
+     3146
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1222,
+     194,
+     2291,
+     1259
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1222,
+     1259,
+     2291,
+     1733
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1222,
+     1736,
+     2291,
+     1772
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1222,
+     1772,
+     2291,
+     2755
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1222,
+     2755,
+     2291,
+     3146
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|258|PERSPECTIVE|}}",
+   "c1s1": "{{c|{{sc|Fig.}} 3.}}",
+   "c1s2": "then the point <math>\\text{A}_2</math> is the elevation of <math>\\text{A}</math> and hence the line <math>\\text{A}_2\\text{V}</math> will pass through the point <math>\\text{A}</math>. The latter thus is determined by the intersection of the vertical line through <math>\\text{A}_1</math> and the line <math>\\text{A}_2\\text{V}</math>.\n\nThis process differs from the one mentioned before in this that the construction for finding the point is not made in the horizontal plane in which it lies, but that its plan is constructed in the ground plane. But this has a great advantage. The perspective of a horizontal plane from the picture to the line at infinity occupies in the picture the space between the line where the plane cuts the picture and the horizon, and this space is the greater the farther the plane is from the eye, that is, the farther its trace on the picture plane lies from the horizon. The horizontal plane through the eye is projected into a line, the horizon; hence no construction can be performed in it. The ground plane on the other hand is the lowest horizontal plane used. Hence it offers most space for constructions, which consequently will allow of greater accuracy.\n\n§ 5. The process is the same if we know the co-ordinates of the point, viz. we take in the base line a point <math>\\text{O}</math> as origin, and we take the base line, the line <math>\\text{OV}</math>, and the perpendicular <math>\\text{OZ}</math> as axes of co-ordinates. If we then know the co-ordinates <math>x</math>, <math>y</math>, <math>z</math> measured in these directions, we make <math>\\text{OQ}=x</math>, set off on <math>\\text{QV}</math> a distance <math>\\text{QA}</math> such that its real length <math>\\text{QR}=y</math>, make <math>\\text{QA}_2=z</math>, and we find <math>\\text{A}</math> as before. This process might be simplified by setting off to begin with along <math>\\text{OQ}</math> and <math>\\text{OZ}</math> scales in their true dimensions and along <math>\\text{OV}</math> a scale obtained by projecting the scale on <math>\\text{OQ}</math> from <math>\\text{D}</math> to the line <math>\\text{OV}</math>.\n\n§ 6. The methods explained give the perspective of any point in space. If lines have to be found, we may determine the perspective of two points in them and join these, and this is in many cases the most convenient process. Often, however, it will be advantageous to determine the projection of a line directly by finding its vanishing point. This is especially to be recommended when a number of parallel lines have to be drawn.\n\nThe perspective of any curve is in general a curve. The projec-",
+   "c1s3": "tion of a conic is a conic, or in special cases a line. The perspective of a circle may be any conic, not necessarily an ellipse. Similarly the perspective of the shadow of a circle on a plane is some conic.\n\n§ 7. A few words must be said about the determination of shadows in perspective. The theory of their construction is very simple. We have given, say, a figure and a point <math>\\text{L}</math> as source of light. We join the point <math>\\text{L}</math> to any point of which we want to find the shadow and produce this line till it cuts the surface on which the shadow falls. These constructions must in many cases first be performed in plan and elevation, and then the point in the shadow has to be found in perspective. The constructions are different according as we take as the source of light a finite point (say, the flame of a lamp), or the sun, which we may suppose to be at an infinite distance.\n\nIf, for instance, in fig. 3, <math>\\text{A}</math> is a source of light, <math>\\text{EHGF}</math> a vertical wall, and <math>\\text{C}</math> a point whose shadow has to be determined, then the shadow must lie on the line joining <math>\\text{A}</math> to <math>\\text{C}</math>. To see where this ray meets the floor we draw through the source of light and the point <math>\\text{C}</math> a vertical plane. This will cut the floor in a line which contains the feet <math>\\text{A}_1</math>, <math>\\text{C}_1</math> of the perpendiculars drawn from the points <math>\\text{A}</math>, <math>\\text{C}</math> to the floor, or the plans of these points. At <math>\\text{C}'</math>, where the line <math>\\text{A}_1\\text{C}_1</math> cuts <math>\\text{AC}</math>, will be the shadow of <math>\\text{C}</math> on the floor. If the wall <math>\\text{EHGF}</math> prevents the shadow from falling on the floor, we determine the intersection <math>\\text{K}</math> of the line <math>\\text{A}_1\\text{C}_1</math> with the base <math>\\text{EF}</math> of the wall and draw a vertical through it, this gives the intersection of the wall with the vertical plane through <math>\\text{A}</math> and <math>\\text{C}</math>. Where it cuts <math>\\text{AC}</math> is the shadow <math>\\text{C}''</math> of <math>\\text{C}</math> on the wall.",
+   "c2s1": "¶\nIf the shadow of a screen <math>\\text{CDD}_1\\text{C}_1</math> has to be found we find the shadow <math>\\text{D}'</math> of <math>\\text{D}</math> which falls on the floor; then <math>\\text{D}_1\\text{D}'</math> is the shadow of <math>\\text{D}_1\\text{D}</math> and <math>\\text{D}'\\text{C}'</math> is the shadow on the floor of the line <math>\\text{DC}</math>. The shadow of <math>\\text{D}_1\\text{D}</math>, however, is intercepted by the wall at <math>\\text{L}</math>. Here then the wall takes up the shadow, which must extend to <math>\\text{D}''</math> as the shadow of a line on a plane is a line. Thus the shadow of the screen is found in the shaded part in the figure.\n\n§ 8. If the shadows are due to the sun, we have to find first the perspective of the sun, that is, the vanishing point of its rays. This will always be a point in the picture plane; but we have to distinguish between the cases where the sun is in the front of the picture, and so behind the spectator, or behind the picture plane, and so in front of the spectator. In the second case only does the vanishing point of the rays of the sun actually represent the sun itself. It will be a point above the horizon. In the other case the vanishing point of the rays will lie below the horizon. It is the point where a ray of the sun through the centre of sight <math>\\text{S}</math> cuts the picture plane, or it will be the shadow of the eye on the picture. In either case the ray of the sun through any point is the line joining the perspective of that point to the vanishing point of the sun's rays. But in the one case the shadow falls away from the vanishing point, in the other it falls towards it. The direction of the sun's rays may be given by the plan and elevation of one ray.\n\nFor the construction of the shadow of points it is convenient first to draw a perpendicular from the point to the ground and to find its shadow on the ground. But the shadows of verticals from a point at infinity will be parallel; hence they have in perspective a vanishing point <math>\\text{L}_1</math> in the horizon. To find this point, we draw that vertical plane through the eye which contains a ray of the sun. This cuts the horizon in the required point <math>\\text{L}_1</math> and the picture plane in a vertical line which contains the vanishing point of the sun's rays themselves. Let then (fig. 4) <math>\\text{L}</math> be the vanishing point",
+   "c2s2": "{{c|{{sc|Fig.}} 4.}}",
+   "c2s3": "of the sun's rays, <math>\\text{L}_1</math> be that of their projection in a horizontal plane, and let it be required to find the shadow of the vertical column <math>\\text{AH}</math>. We draw <math>\\text{AL}_1</math> and <math>\\text{EL}</math>; they meet at <math>\\text{E}'</math>, which is the shadow of <math>\\text{E}</math>. Similarly we find the shadows of <math>\\text{F}</math>, <math>\\text{G}</math>, <math>\\text{H}</math>. Then <math>\\text{E}'\\text{F}'\\text{G}'\\text{H}'</math> will be the shadow of the quadrilateral <math>\\text{EFGH}</math>. For the shadow of the column itself we join <math>\\text{E}'</math> to <math>\\text{A}</math>, &c., but only mark the outlines; <math>\\text{F}'\\text{B}</math>, the shadow of <math>\\text{BF}</math>, does not appear as such in the figure.\n\nIf the shadow <math>\\text{E}</math> has to be found when falling on any other surface we use the vertical plane through <math>\\text{E}</math>, determine its intersection with the surface, and find the point where this intersection is cut by the line <math>\\text{EL}</math>. This will be the required shadow of <math>\\text{E}</math>.\n\n§ 9. If the picture is not to be drawn on a vertical but on another plane—say, the ceiling of a room—the rules given have to be slightly modified. The general principles will remain true. But if the picture is to be on a curved surface the constructions become somewhat more complicated. In the most general case conceivable it would be necessary to have a representation in plan and elevation of the figure required and of the surface on which the projection has to be made. A number of points might also be found by calculation, using co-ordinate geometry. But into this we do not enter. As an example we take the case of a panorama, where the surface is a vertical cylinder of revolution, the eye being in the axis. The ray projecting a point <math>\\text{A}</math> cuts the cylinder in two points on opposite sides of the eye, hence geometrically speaking every point has two projections; of these only the one lying on the half ray from the eye to the point can be used in the picture. But the other has sometimes to be used in constructions, as the projection of a line has to pass through both. Parallel lines have two vanishing points which are found by drawing a line of the given direction",
+   "c2s4": "through the eye; it cuts the cylinder in the vanishing points required. This operation may be performed by drawing on the ground the plan of the ray through the foot of the axis, and through the point where it cuts the cylinder a vertical, on which the point required must lie. Its height above is easily found by making a drawing of a vertical section on a reduced scale.\n\nParallel planes have in the same manner a vanishing curve. This will be for horizontal planes a horizontal circle of the height of the eye above the ground. For vertical planes it will be a pair of generators of the cylinder. For other planes the vanishing curves will be ellipses having their centre at the eye.\n\nThe projections of vertical lines will be vertical lines on the"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v21 p0275 c1f1.png",
+   "c2f1": "eb1911 v21 p0275 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     275,
+     684,
+     1112,
+     1138
+    ],
+    "caption": [
+     615,
+     1149,
+     721,
+     1183
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     277,
+     680,
+     1116,
+     1142
+    ]
+   },
+   {
+    "box": [
+     1348,
+     1262,
+     2208,
+     1730
+    ],
+    "caption": [
+     1709,
+     1736,
+     1815,
+     1772
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1408,
+     1260,
+     2192,
+     1728
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    3
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6571,
+    "output_tokens": 175,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 6834,
+    "output_tokens": 4341,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|258|PERSPECTIVE|}}</noinclude>[[File:eb1911 v21 p0275 c1f1.png|center|355px]]\n{{c|{{sc|Fig.}} 3.}}\n\nthen the point <math>\\text{A}_2</math> is the elevation of <math>\\text{A}</math> and hence the line <math>\\text{A}_2\\text{V}</math> will pass through the point <math>\\text{A}</math>. The latter thus is determined by the intersection of the vertical line through <math>\\text{A}_1</math> and the line <math>\\text{A}_2\\text{V}</math>.\n\nThis process differs from the one mentioned before in this that the construction for finding the point is not made in the horizontal plane in which it lies, but that its plan is constructed in the ground plane. But this has a great advantage. The perspective of a horizontal plane from the picture to the line at infinity occupies in the picture the space between the line where the plane cuts the picture and the horizon, and this space is the greater the farther the plane is from the eye, that is, the farther its trace on the picture plane lies from the horizon. The horizontal plane through the eye is projected into a line, the horizon; hence no construction can be performed in it. The ground plane on the other hand is the lowest horizontal plane used. Hence it offers most space for constructions, which consequently will allow of greater accuracy.\n\n§ 5. The process is the same if we know the co-ordinates of the point, viz. we take in the base line a point <math>\\text{O}</math> as origin, and we take the base line, the line <math>\\text{OV}</math>, and the perpendicular <math>\\text{OZ}</math> as axes of co-ordinates. If we then know the co-ordinates <math>x</math>, <math>y</math>, <math>z</math> measured in these directions, we make <math>\\text{OQ}=x</math>, set off on <math>\\text{QV}</math> a distance <math>\\text{QA}</math> such that its real length <math>\\text{QR}=y</math>, make <math>\\text{QA}_2=z</math>, and we find <math>\\text{A}</math> as before. This process might be simplified by setting off to begin with along <math>\\text{OQ}</math> and <math>\\text{OZ}</math> scales in their true dimensions and along <math>\\text{OV}</math> a scale obtained by projecting the scale on <math>\\text{OQ}</math> from <math>\\text{D}</math> to the line <math>\\text{OV}</math>.\n\n§ 6. The methods explained give the perspective of any point in space. If lines have to be found, we may determine the perspective of two points in them and join these, and this is in many cases the most convenient process. Often, however, it will be advantageous to determine the projection of a line directly by finding its vanishing point. This is especially to be recommended when a number of parallel lines have to be drawn.\n\nThe perspective of any curve is in general a curve. The projection of a conic is a conic, or in special cases a line. The perspective of a circle may be any conic, not necessarily an ellipse. Similarly the perspective of the shadow of a circle on a plane is some conic.\n\n§ 7. A few words must be said about the determination of shadows in perspective. The theory of their construction is very simple. We have given, say, a figure and a point <math>\\text{L}</math> as source of light. We join the point <math>\\text{L}</math> to any point of which we want to find the shadow and produce this line till it cuts the surface on which the shadow falls. These constructions must in many cases first be performed in plan and elevation, and then the point in the shadow has to be found in perspective. The constructions are different according as we take as the source of light a finite point (say, the flame of a lamp), or the sun, which we may suppose to be at an infinite distance.\n\nIf, for instance, in fig. 3, <math>\\text{A}</math> is a source of light, <math>\\text{EHGF}</math> a vertical wall, and <math>\\text{C}</math> a point whose shadow has to be determined, then the shadow must lie on the line joining <math>\\text{A}</math> to <math>\\text{C}</math>. To see where this ray meets the floor we draw through the source of light and the point <math>\\text{C}</math> a vertical plane. This will cut the floor in a line which contains the feet <math>\\text{A}_1</math>, <math>\\text{C}_1</math> of the perpendiculars drawn from the points <math>\\text{A}</math>, <math>\\text{C}</math> to the floor, or the plans of these points. At <math>\\text{C}'</math>, where the line <math>\\text{A}_1\\text{C}_1</math> cuts <math>\\text{AC}</math>, will be the shadow of <math>\\text{C}</math> on the floor. If the wall <math>\\text{EHGF}</math> prevents the shadow from falling on the floor, we determine the intersection <math>\\text{K}</math> of the line <math>\\text{A}_1\\text{C}_1</math> with the base <math>\\text{EF}</math> of the wall and draw a vertical through it, this gives the intersection of the wall with the vertical plane through <math>\\text{A}</math> and <math>\\text{C}</math>. Where it cuts <math>\\text{AC}</math> is the shadow <math>\\text{C}''</math> of <math>\\text{C}</math> on the wall.\n\nIf the shadow of a screen <math>\\text{CDD}_1\\text{C}_1</math> has to be found we find the shadow <math>\\text{D}'</math> of <math>\\text{D}</math> which falls on the floor; then <math>\\text{D}_1\\text{D}'</math> is the shadow of <math>\\text{D}_1\\text{D}</math> and <math>\\text{D}'\\text{C}'</math> is the shadow on the floor of the line <math>\\text{DC}</math>. The shadow of <math>\\text{D}_1\\text{D}</math>, however, is intercepted by the wall at <math>\\text{L}</math>. Here then the wall takes up the shadow, which must extend to <math>\\text{D}''</math> as the shadow of a line on a plane is a line. Thus the shadow of the screen is found in the shaded part in the figure.\n\n§ 8. If the shadows are due to the sun, we have to find first the perspective of the sun, that is, the vanishing point of its rays. This will always be a point in the picture plane; but we have to distinguish between the cases where the sun is in the front of the picture, and so behind the spectator, or behind the picture plane, and so in front of the spectator. In the second case only does the vanishing point of the rays of the sun actually represent the sun itself. It will be a point above the horizon. In the other case the vanishing point of the rays will lie below the horizon. It is the point where a ray of the sun through the centre of sight <math>\\text{S}</math> cuts the picture plane, or it will be the shadow of the eye on the picture. In either case the ray of the sun through any point is the line joining the perspective of that point to the vanishing point of the sun's rays. But in the one case the shadow falls away from the vanishing point, in the other it falls towards it. The direction of the sun's rays may be given by the plan and elevation of one ray.\n\nFor the construction of the shadow of points it is convenient first to draw a perpendicular from the point to the ground and to find its shadow on the ground. But the shadows of verticals from a point at infinity will be parallel; hence they have in perspective a vanishing point <math>\\text{L}_1</math> in the horizon. To find this point, we draw that vertical plane through the eye which contains a ray of the sun. This cuts the horizon in the required point <math>\\text{L}_1</math> and the picture plane in a vertical line which contains the vanishing point of the sun's rays themselves. Let then (fig. 4) <math>\\text{L}</math> be the vanishing point of the sun's rays, <math>\\text{L}_1</math> be that of their projection in a horizontal plane, and let it be required to find the shadow of the vertical column <math>\\text{AH}</math>. We draw <math>\\text{AL}_1</math> and <math>\\text{EL}</math>; they meet at <math>\\text{E}'</math>, which is the shadow of <math>\\text{E}</math>. Similarly we find the shadows of <math>\\text{F}</math>, <math>\\text{G}</math>, <math>\\text{H}</math>. Then <math>\\text{E}'\\text{F}'\\text{G}'\\text{H}'</math> will be the shadow of the quadrilateral <math>\\text{EFGH}</math>. For the shadow of the column itself we join <math>\\text{E}'</math> to <math>\\text{A}</math>, &c., but only mark the outlines; <math>\\text{F}'\\text{B}</math>, the shadow of <math>\\text{BF}</math>, does not appear as such in the figure.\n\n[[File:eb1911 v21 p0275 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 4.}}\n\nIf the shadow <math>\\text{E}</math> has to be found when falling on any other surface we use the vertical plane through <math>\\text{E}</math>, determine its intersection with the surface, and find the point where this intersection is cut by the line <math>\\text{EL}</math>. This will be the required shadow of <math>\\text{E}</math>.\n\n§ 9. If the picture is not to be drawn on a vertical but on another plane—say, the ceiling of a room—the rules given have to be slightly modified. The general principles will remain true. But if the picture is to be on a curved surface the constructions become somewhat more complicated. In the most general case conceivable it would be necessary to have a representation in plan and elevation of the figure required and of the surface on which the projection has to be made. A number of points might also be found by calculation, using co-ordinate geometry. But into this we do not enter. As an example we take the case of a panorama, where the surface is a vertical cylinder of revolution, the eye being in the axis. The ray projecting a point <math>\\text{A}</math> cuts the cylinder in two points on opposite sides of the eye, hence geometrically speaking every point has two projections; of these only the one lying on the half ray from the eye to the point can be used in the picture. But the other has sometimes to be used in constructions, as the projection of a line has to pass through both. Parallel lines have two vanishing points which are found by drawing a line of the given direction through the eye; it cuts the cylinder in the vanishing points required. This operation may be performed by drawing on the ground the plan of the ray through the foot of the axis, and through the point where it cuts the cylinder a vertical, on which the point required must lie. Its height above is easily found by making a drawing of a vertical section on a reduced scale.\n\nParallel planes have in the same manner a vanishing curve. This will be for horizontal planes a horizontal circle of the height of the eye above the ground. For vertical planes it will be a pair of generators of the cylinder. For other planes the vanishing curves will be ellipses having their centre at the eye.\n\nThe projections of vertical lines will be vertical lines on the<noinclude><references/></noinclude>"
+}

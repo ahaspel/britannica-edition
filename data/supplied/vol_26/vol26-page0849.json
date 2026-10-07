@@ -1,0 +1,208 @@
+{
+ "volume": 26,
+ "page_number": 849,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n863",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n863",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1085,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     61,
+     140,
+     2211,
+     207
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     207,
+     1132,
+     228
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     61,
+     228,
+     661,
+     1259
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     1279,
+     661,
+     1312
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     661,
+     228,
+     1132,
+     1312
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     1312,
+     1132,
+     1559
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     1559,
+     1132,
+     2541
+    ]
+   },
+   {
+    "name": "c1s6",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     2541,
+     1132,
+     3136
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1132,
+     207,
+     2211,
+     1099
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1132,
+     1099,
+     2211,
+     2179
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1132,
+     2179,
+     2211,
+     3136
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||THERMODYNAMICS|809}}",
+   "c1s1": "",
+   "c1s2": "{{c|{{sc|Fig.}} 1.}}",
+   "c1s3": "alytically represented by the a path. Any closed path or complete cycle or series of e substance is restored to its rature, intrinsic energy and under the return path (<math>v</math> ''n'' the substance, or against The area of the cycle, viz., esents the balance of external cycle, and is positive if the cycle is described clockwise as indicated by the arrows. The simplest types of process or operation are:—(1), heating or cooling ''at constant volume'', represented by vertical lines such as <math>\\text{B}b</math>, called ''Isometrics'', in which the pressure varies, but no external work is done. (2) Heating or cooling ''at constant pressure'', represented by horizontal lines such as NA, called ''Isopiestics'', in which the external work done is the product of the pressure <math>p</math> and the expansion <math>v'' - v'</math>. (3) Expansion or compression ''at constant temperature'', represented by curves called ''Isothermals'', such as BC, AD, the form of which depends on the nature of the working sub-",
+   "c1s4": "nature of the working substance. The isothermals are approximately equilateral hyperbolas (<math>pv = \\text{constant}</math>), with the axes of <math>p</math> and <math>v</math> for asymptotes, for a gas or unsaturated vapour, but coincide with the isopiestics for a saturated vapour in presence of its liquid. (4) Expansion or compression under the condition of ''heat-insulation'', represented by curves called ''Adiabatics'', such as <math>\\text{BAZ}</math> or <math>\\text{CDZ}'</math>, which are necessarily steeper than the isothermals.",
+   "c1s5": "¶\nA cycle such as <math>\\text{ABCD}</math> enclosed by parts of two isothermals, <math>\\text{BC}</math>, <math>\\text{AD}</math>, and two adiabatics, <math>\\text{AB}</math>, <math>\\text{CD}</math>, is the simplest form of cycle for theoretical purposes, since all the heat absorbed, <math>H'</math>, is taken in during the process represented by one isothermal at the temperature <math>\\theta'</math>, and all the heat rejected, <math>\\text{H}''</math>, is given out during the process represented by the other at the temperature <math>\\theta''</math>. This is the cycle employed by Carnot for the establishment of his fundamental principle of reversibility as the criterion of perfect efficiency in a heat engine. The area <math>\\text{ABCD}</math>, representing the work, <math>W</math>, per cycle, is the difference <math>(H'-H'')</math> of the quantities of heat absorbed and rejected at the temperatures <math>\\theta'</math> and <math>\\theta''</math>. As the temperature <math>\\theta''</math> is lowered, the area of the cycle increases, but since <math>W</math> can never exceed <math>H'</math>, there must be a zero limit of temperature at which the pressure would vanish and the area of the cycle become equal to the whole heat absorbed at the higher temperature. Taking this ideal limit as a theoretical or absolute zero, the value of <math>H'</math> may be represented on the diagram by the whole area included between the two adiabatics <math>\\text{BAZ}</math>, <math>\\text{CDZ}'</math> down to the points where they intersect the isothermal of absolute zero, or the zero isopiestic <math>\\text{OV}</math> asymptotically at infinity.\n\nIf the substance in any state such as <math>\\text{B}</math> were allowed to expand adiabatically <math>(dH=0)</math> down to the absolute zero, at which point it contains no heat and exerts no pressure, the whole of its available heat energy might theoretically be recovered in the form of external work, represented on the diagram by the whole area <math>\\text{BAZ}cb</math> under the adiabatic through the state-point <math>\\text{B}</math>, bounded by the isometric <math>\\text{B}b</math> and the zero isopiestic <math>b\\text{V}</math>. The change of the intrinsic energy in passing from one state to another, as from <math>\\text{B}</math> to <math>\\text{C}</math> is represented by the addition of the heat-area <math>H=\\text{BCZZ}'</math>, and the subtraction of the work-area <math>W=\\text{BC}cb</math>. It follows from",
+   "c1s6": "the first law that the intrinsic energy of a substance in a given state must always be the same, or that the change of <math>E</math> in any transformation must depend only on the initial and final states, and not on the path or process. It will be observed that the areas representing <math>H</math> and <math>W</math> both depend on the form of the path <math>\\text{BC}</math>, but that the difference of the areas representing the change of intrinsic energy <math>dE</math> is independent of <math>\\text{BC}</math>, which is a boundary common to both <math>H</math> and <math>W</math>. This is mathematically expressed by the statement that <math>dE</math> is an exact differential of a function of the co-ordinates defining the state of the body, which can be integrated between limits without reference to the relation representing the path along which the variations are taken.\n\n4. ''Application of Carnot's Principle''.—Carnot adopted as the analytical expression of his principle the statement that the efficiency <math>W/H</math>, or the work obtainable per unit of heat by means of a perfect engine taking in heat at a temperature <math>t^\\circ</math> C. and rejecting heat at <math>0^\\circ</math> C., must be some function <math>F(t)</math> of the temperature <math>t</math>, the lower limit <math>0^\\circ</math> C. being supposed constant. He was unable to",
+   "c2s1": "apply the principle directly in this form, as it would require an exact knowledge of the properties of substances through a wide range of temperature. He therefore employed the corresponding expression for a cycle of infinitesimal range <math>dt</math> at the temperature <math>t</math> in which the work <math>dW</math> obtainable from a quantity of heat <math>H</math> would be represented by the equation\n{{block center|<math>dW = HF'(t)dt,</math>}}\nwhere <math>F'(t)</math> is the derived function of <math>F(t)</math>, or <math>dF(t)/dt</math>, and represents the work obtainable per unit of heat per degree fall of temperature at a temperature <math>t</math>. The principle in this form is readily applicable to all cases, and is independent of any view with regard to the nature of the heat. It simply asserts that the efficiency function <math>F'(t)</math>, which is known as Carnot's function, is the same for all substances at the same temperature. Carnot verified this by calculating the values of <math>F'(t)</math> at various temperatures from the known properties of vapours and gases, and showed that the efficiency function diminished with rise of temperature, as measured on the scale of the mercury or gas thermometer, from about 1·40 kilogrammetres per kilo-calorie per degree C. at 0° C. to about 1·11 at 100° C., according to the imperfect data available in his time. Applying the above equation to a gas obeying the law <math>pv = RT</math>, for which the work done in isothermal expansion from a volume 1 to a volume <math>r</math> is <math>W = RT \\log_e r</math>, whence <math>dW = R \\log_e r dt</math>, he deduced the expression for the heat absorbed by a gas in isothermal expansion\n{{block center|<math>H = R \\log_e r/F'(t).</math>}}",
+   "c2s2": "He also showed that the difference of the specific heats at constant pressure and volume, <math>S-s</math>, must be the same for equal volumes of all gases at the same temperature and pressure, being represented by the expression <math>R/TF'(t)</math>. He remarks that \"the law according to which the motive power of heat varies at different points of the thermometric scale is intimately connected with that of the variations of the specific heats of gases at different temperatures—a law which experiment has not yet made known to us with sufficient exactness.\" If he had ventured to assume the difference of the specific heats constant, it would have followed that <math>F'(t)</math> must vary inversely as <math>T</math>. The same result follows if the work <math>W=RT \\log_e r</math> done by a gas in isothermal expansion is assumed to be equivalent or proportional to the heat absorbed, <math>H=R \\log_e r/F'(t)</math>. Mayer (1842) made this assumption in calculating the mechanical equivalent of heat. Joule (1845) was the first to prove it approximately by direct experiment, but did not see his way to reconcile Carnot's principle, as stated by Clapeyron, with the mechanical theory. Holtzmann (1845) by the same assumption deduced the value <math>J/T</math> for the function <math>F'(t)</math>, but obtained erroneous results by combining this assumption with the caloric theory. Clausius (1850), applying the same assumption, deduced the same value of <math>F'(t)</math>, and showed that it was consistent with the mechanical theory and Joule's experiments, but required that a vapour like steam should deviate more considerably from the gaseous laws than was at that time generally admitted. The values of <math>F'(t)</math> calculated previously by Sir W. Thomson (Lord Kelvin) from Regnault's tables of the properties of steam, assuming the gaseous laws, did not vary exactly as <math>J/T</math>. Joule's experiments on the equivalence of <math>W</math> and <math>H</math> were not sufficiently precise to decide the question. This most fundamental point was finally settled by a more delicate test, devised by Lord Kelvin, and carried out in conjunction with Joule (1854), which showed that the fundamental assumption <math>W=H</math> in isothermal expansion was very nearly true",
+   "c2s3": "for permanent gases, and that <math>F'(t)</math> must therefore vary very nearly as <math>J/T</math>. Kelvin had previously proposed to define an absolute scale of temperature independent of the properties of any particular substance in terms of Carnot's function by making <math>F'(t)</math> constant. He now proposed to define absolute temperature as proportional to the reciprocal of Carnot's function, so as to agree as closely as possible with the scale of the gas thermometer. With this definition of temperature <math>\\theta</math>, if the heat <math>H</math> is measured in work units, the expression of Carnot's principle for an infinitesimal cycle of range <math>d\\theta</math> reduces to the simple form <math>dW/d\\theta = H/\\theta</math>. Combining this with the first law, for a Carnot cycle of finite range, if <math>H'</math> is the heat taken in at <math>\\theta'</math>, and <math>H''</math> is the heat rejected at <math>\\theta''</math>, the work <math>W</math> done in the cycle is equal to the difference <math>H'-H''</math>, and we have the simple relations,\n\n{{block center|<math>W/(\\theta'-\\theta'') = H'/\\theta' = H''\\theta''</math> . . . (2)}}\n\n5. ''Thermodynamical Relations''.—The most important and most useful of the relations between the thermodynamical properties of a substance may be very simply deduced from a consideration of the indicator diagram by a geometrical method, which is in many respects more instructive than the analytical method generally employed. Referring to fig. 2, let BC be a small portion of any isothermal corresponding to the temperature <math>\\theta'</math>, and AD a neighbouring isothermal <math>\\theta''</math>. Let BE be an isometric through B meeting AD in E, and EC an isopiestic through E meeting BC in C. Let BA, CD be adiabatics through B and C meeting the isothermal <math>\\theta''</math> in A and D. Then by relations (2) the heat, <math>H</math>, absorbed in the isothermal change BC, is to the work, <math>W</math>, done in the cycle ABCD in the ratio of <math>\\theta'</math> to <math>(\\theta'-\\theta'')</math>. If the difference"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0849 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     63,
+     586,
+     653,
+     1232
+    ],
+    "caption": [
+     313,
+     1279,
+     417,
+     1312
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     66,
+     579,
+     663,
+     1228
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4839,
+    "output_tokens": 96,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 10,
+    "input_tokens": 7980,
+    "output_tokens": 5299,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 19240
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||THERMODYNAMICS|809}}</noinclude>[[File:eb1911 v26 p0849 c1f1.png|center|199px]]\n{{c|{{sc|Fig.}} 1.}}\n\nalytically represented by the a path. Any closed path or complete cycle or series of e substance is restored to its rature, intrinsic energy and under the return path (<math>v</math> ''n'' the substance, or against The area of the cycle, viz., esents the balance of external cycle, and is positive if the cycle is described clockwise as indicated by the arrows. The simplest types of process or operation are:—(1), heating or cooling ''at constant volume'', represented by vertical lines such as <math>\\text{B}b</math>, called ''Isometrics'', in which the pressure varies, but no external work is done. (2) Heating or cooling ''at constant pressure'', represented by horizontal lines such as NA, called ''Isopiestics'', in which the external work done is the product of the pressure <math>p</math> and the expansion <math>v'' - v'</math>. (3) Expansion or compression ''at constant temperature'', represented by curves called ''Isothermals'', such as BC, AD, the form of which depends on the nature of the working subnature of the working substance. The isothermals are approximately equilateral hyperbolas (<math>pv = \\text{constant}</math>), with the axes of <math>p</math> and <math>v</math> for asymptotes, for a gas or unsaturated vapour, but coincide with the isopiestics for a saturated vapour in presence of its liquid. (4) Expansion or compression under the condition of ''heat-insulation'', represented by curves called ''Adiabatics'', such as <math>\\text{BAZ}</math> or <math>\\text{CDZ}'</math>, which are necessarily steeper than the isothermals.\n\nA cycle such as <math>\\text{ABCD}</math> enclosed by parts of two isothermals, <math>\\text{BC}</math>, <math>\\text{AD}</math>, and two adiabatics, <math>\\text{AB}</math>, <math>\\text{CD}</math>, is the simplest form of cycle for theoretical purposes, since all the heat absorbed, <math>H'</math>, is taken in during the process represented by one isothermal at the temperature <math>\\theta'</math>, and all the heat rejected, <math>\\text{H}''</math>, is given out during the process represented by the other at the temperature <math>\\theta''</math>. This is the cycle employed by Carnot for the establishment of his fundamental principle of reversibility as the criterion of perfect efficiency in a heat engine. The area <math>\\text{ABCD}</math>, representing the work, <math>W</math>, per cycle, is the difference <math>(H'-H'')</math> of the quantities of heat absorbed and rejected at the temperatures <math>\\theta'</math> and <math>\\theta''</math>. As the temperature <math>\\theta''</math> is lowered, the area of the cycle increases, but since <math>W</math> can never exceed <math>H'</math>, there must be a zero limit of temperature at which the pressure would vanish and the area of the cycle become equal to the whole heat absorbed at the higher temperature. Taking this ideal limit as a theoretical or absolute zero, the value of <math>H'</math> may be represented on the diagram by the whole area included between the two adiabatics <math>\\text{BAZ}</math>, <math>\\text{CDZ}'</math> down to the points where they intersect the isothermal of absolute zero, or the zero isopiestic <math>\\text{OV}</math> asymptotically at infinity.\n\nIf the substance in any state such as <math>\\text{B}</math> were allowed to expand adiabatically <math>(dH=0)</math> down to the absolute zero, at which point it contains no heat and exerts no pressure, the whole of its available heat energy might theoretically be recovered in the form of external work, represented on the diagram by the whole area <math>\\text{BAZ}cb</math> under the adiabatic through the state-point <math>\\text{B}</math>, bounded by the isometric <math>\\text{B}b</math> and the zero isopiestic <math>b\\text{V}</math>. The change of the intrinsic energy in passing from one state to another, as from <math>\\text{B}</math> to <math>\\text{C}</math> is represented by the addition of the heat-area <math>H=\\text{BCZZ}'</math>, and the subtraction of the work-area <math>W=\\text{BC}cb</math>. It follows from the first law that the intrinsic energy of a substance in a given state must always be the same, or that the change of <math>E</math> in any transformation must depend only on the initial and final states, and not on the path or process. It will be observed that the areas representing <math>H</math> and <math>W</math> both depend on the form of the path <math>\\text{BC}</math>, but that the difference of the areas representing the change of intrinsic energy <math>dE</math> is independent of <math>\\text{BC}</math>, which is a boundary common to both <math>H</math> and <math>W</math>. This is mathematically expressed by the statement that <math>dE</math> is an exact differential of a function of the co-ordinates defining the state of the body, which can be integrated between limits without reference to the relation representing the path along which the variations are taken.\n\n4. ''Application of Carnot's Principle''.—Carnot adopted as the analytical expression of his principle the statement that the efficiency <math>W/H</math>, or the work obtainable per unit of heat by means of a perfect engine taking in heat at a temperature <math>t^\\circ</math> C. and rejecting heat at <math>0^\\circ</math> C., must be some function <math>F(t)</math> of the temperature <math>t</math>, the lower limit <math>0^\\circ</math> C. being supposed constant. He was unable to apply the principle directly in this form, as it would require an exact knowledge of the properties of substances through a wide range of temperature. He therefore employed the corresponding expression for a cycle of infinitesimal range <math>dt</math> at the temperature <math>t</math> in which the work <math>dW</math> obtainable from a quantity of heat <math>H</math> would be represented by the equation\n{{block center|<math>dW = HF'(t)dt,</math>}}\nwhere <math>F'(t)</math> is the derived function of <math>F(t)</math>, or <math>dF(t)/dt</math>, and represents the work obtainable per unit of heat per degree fall of temperature at a temperature <math>t</math>. The principle in this form is readily applicable to all cases, and is independent of any view with regard to the nature of the heat. It simply asserts that the efficiency function <math>F'(t)</math>, which is known as Carnot's function, is the same for all substances at the same temperature. Carnot verified this by calculating the values of <math>F'(t)</math> at various temperatures from the known properties of vapours and gases, and showed that the efficiency function diminished with rise of temperature, as measured on the scale of the mercury or gas thermometer, from about 1·40 kilogrammetres per kilo-calorie per degree C. at 0° C. to about 1·11 at 100° C., according to the imperfect data available in his time. Applying the above equation to a gas obeying the law <math>pv = RT</math>, for which the work done in isothermal expansion from a volume 1 to a volume <math>r</math> is <math>W = RT \\log_e r</math>, whence <math>dW = R \\log_e r dt</math>, he deduced the expression for the heat absorbed by a gas in isothermal expansion\n{{block center|<math>H = R \\log_e r/F'(t).</math>}} He also showed that the difference of the specific heats at constant pressure and volume, <math>S-s</math>, must be the same for equal volumes of all gases at the same temperature and pressure, being represented by the expression <math>R/TF'(t)</math>. He remarks that \"the law according to which the motive power of heat varies at different points of the thermometric scale is intimately connected with that of the variations of the specific heats of gases at different temperatures—a law which experiment has not yet made known to us with sufficient exactness.\" If he had ventured to assume the difference of the specific heats constant, it would have followed that <math>F'(t)</math> must vary inversely as <math>T</math>. The same result follows if the work <math>W=RT \\log_e r</math> done by a gas in isothermal expansion is assumed to be equivalent or proportional to the heat absorbed, <math>H=R \\log_e r/F'(t)</math>. Mayer (1842) made this assumption in calculating the mechanical equivalent of heat. Joule (1845) was the first to prove it approximately by direct experiment, but did not see his way to reconcile Carnot's principle, as stated by Clapeyron, with the mechanical theory. Holtzmann (1845) by the same assumption deduced the value <math>J/T</math> for the function <math>F'(t)</math>, but obtained erroneous results by combining this assumption with the caloric theory. Clausius (1850), applying the same assumption, deduced the same value of <math>F'(t)</math>, and showed that it was consistent with the mechanical theory and Joule's experiments, but required that a vapour like steam should deviate more considerably from the gaseous laws than was at that time generally admitted. The values of <math>F'(t)</math> calculated previously by Sir W. Thomson (Lord Kelvin) from Regnault's tables of the properties of steam, assuming the gaseous laws, did not vary exactly as <math>J/T</math>. Joule's experiments on the equivalence of <math>W</math> and <math>H</math> were not sufficiently precise to decide the question. This most fundamental point was finally settled by a more delicate test, devised by Lord Kelvin, and carried out in conjunction with Joule (1854), which showed that the fundamental assumption <math>W=H</math> in isothermal expansion was very nearly true for permanent gases, and that <math>F'(t)</math> must therefore vary very nearly as <math>J/T</math>. Kelvin had previously proposed to define an absolute scale of temperature independent of the properties of any particular substance in terms of Carnot's function by making <math>F'(t)</math> constant. He now proposed to define absolute temperature as proportional to the reciprocal of Carnot's function, so as to agree as closely as possible with the scale of the gas thermometer. With this definition of temperature <math>\\theta</math>, if the heat <math>H</math> is measured in work units, the expression of Carnot's principle for an infinitesimal cycle of range <math>d\\theta</math> reduces to the simple form <math>dW/d\\theta = H/\\theta</math>. Combining this with the first law, for a Carnot cycle of finite range, if <math>H'</math> is the heat taken in at <math>\\theta'</math>, and <math>H''</math> is the heat rejected at <math>\\theta''</math>, the work <math>W</math> done in the cycle is equal to the difference <math>H'-H''</math>, and we have the simple relations,\n\n{{block center|<math>W/(\\theta'-\\theta'') = H'/\\theta' = H''\\theta''</math> . . . (2)}}\n\n5. ''Thermodynamical Relations''.—The most important and most useful of the relations between the thermodynamical properties of a substance may be very simply deduced from a consideration of the indicator diagram by a geometrical method, which is in many respects more instructive than the analytical method generally employed. Referring to fig. 2, let BC be a small portion of any isothermal corresponding to the temperature <math>\\theta'</math>, and AD a neighbouring isothermal <math>\\theta''</math>. Let BE be an isometric through B meeting AD in E, and EC an isopiestic through E meeting BC in C. Let BA, CD be adiabatics through B and C meeting the isothermal <math>\\theta''</math> in A and D. Then by relations (2) the heat, <math>H</math>, absorbed in the isothermal change BC, is to the work, <math>W</math>, done in the cycle ABCD in the ratio of <math>\\theta'</math> to <math>(\\theta'-\\theta'')</math>. If the difference<noinclude><references/></noinclude>"
+}

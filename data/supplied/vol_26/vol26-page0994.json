@@ -1,0 +1,139 @@
+{
+ "volume": 26,
+ "page_number": 994,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n1008",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n1008",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1058,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     100,
+     0,
+     2345,
+     179
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     100,
+     179,
+     1169,
+     1172
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     100,
+     1172,
+     1169,
+     1709
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     100,
+     1709,
+     1169,
+     2669
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     100,
+     2669,
+     1169,
+     3100
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1169,
+     179,
+     2345,
+     1253
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1169,
+     1253,
+     2345,
+     2178
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1169,
+     2178,
+     2345,
+     3100
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|954|TIDE|}}",
+   "c1s1": "consentaneous in the equatorial belt, and of opposite meanings outside the critical latitudes. We here conceive the function always to be written <math>\\tfrac{1}{3}-\\sin^2\\lambda</math>, so that outside the critical latitudes high-tide is low-water. We may in continuing the development write the <math>\\mathfrak{X}</math>-<math>\\mathfrak{Y}</math>-<math>\\mathfrak{Z}</math> functions in the form appropriate to the equilibrium theory with water covering the whole earth, for the actual case it is only then necessary to multiply by the reducing factor, and to subtract the phase alteration <math>\\kappa</math>. As these are unknown constants for each place, they would only occur in the development as symbols of quantities to be deduced from observation. It will be understood, therefore, that in the following schedules the “argument” is that part of the argument which is derived from theory, the true complete argument being the “argument” <math>-\\kappa</math>, where <math>\\kappa</math> is derived from observation.\n\nUp to this point we have supposed the moon's longitude and the earth's position to be measured from the “intersection”; but in order to pass to the ordinary astronomical formulae we must measure the longitude and the earth's position from the vernal equinox. Hence we determine the longitude and right ascension of the “intersection” in terms of the longitude of the moon's node and the inclination of the lunar orbit, and introduce them into our formulae for the <math>\\mathfrak{X}</math>-<math>\\mathfrak{Y}</math>-<math>\\mathfrak{Z}</math> functions. The expressions for the functions corresponding to solar tides may be written down by symmetry, and in this case the intersection is actually the vernal equinox.\n\nThe final result of the process sketched is to obtain a series of terms each of which is a function of the elements of the moon's '''''Explanation of Schedules below.''''' or sun's orbit, and a function of the terrestrial latitude of the place of observation, multiplied by the cosine of an angle which increases uniformly with the time. We shall now write down the result in the form of a",
+   "c1s2": "schedule; but we must first state the notation employed: <math>e</math>, <math>e_{,}</math> = eccentricities of lunar and solar orbits; <math>I</math>, <math>\\omega</math> = obliquities of equator to lunar orbit and ecliptic; <math>p</math>, <math>p_{,}</math> = longitudes of lunar and solar perigees, <math>\\varpi</math>, <math>\\varpi_{,}</math> = hourly increments of <math>p</math>, <math>p_{,}</math>; <math>s</math>, <math>h</math> = moon's and sun's mean longitudes; <math>\\sigma</math>, <math>\\eta</math> = hourly increments of <math>s</math>, <math>h</math>; <math>t</math> = local mean solar time reduced to angle; <math>\\gamma-\\eta=15^\\circ</math> per hour; <math>\\lambda</math> = latitude of place of observation; <math>\\xi</math>, <math>\\nu</math> = longitude in lunar orbit, and R.A. of the intersection; <math>N</math> = longitude of moon's node; <math>i</math> = inclination of lunar orbit. '''''Speed Defined.''''' The \"speed\" of any tide is defined as the rate of increase of its argument, and is expressible, therefore, as a linear function of <math>\\gamma</math>, <math>\\eta</math>, <math>\\sigma</math>, <math>\\varpi</math>; for we may neglect <math>\\varpi_{,}</math> as being very small.\n\nThe following schedules, then, give <math>\\text{h}</math> the height of tide. The arrangement is as follows. First, there is a universal coefficient <math>\\frac{3}{2}\\frac{m}{M}\\left(\\frac{a}{c}\\right)^3a</math>, which multiplies every term of all the schedules. Secondly,",
+   "c1s3": "there are general coefficients, one for each schedule, viz. <math>\\cos^2\\lambda</math> for the semi-diurnal terms, <math>\\sin 2\\lambda</math> for the diurnal, and <math>\\frac{1}{2}-\\frac{3}{2}\\sin^2\\lambda</math> for the terms of long period. In each schedule the third column, headed “coefficient,” gives the functions of <math>I</math> and <math>e</math>. In the fourth column is given the mean semi-range of the corresponding term in numbers, which is approximately the value of the coefficient in the first column when <math>I=\\omega</math>; but we pass over the explanation of the mode of computing the values. The fifth column contains arguments, linear functions of <math>t</math>, <math>h</math>, <math>s</math>, <math>p</math>, <math>\\nu</math>, <math>\\xi</math>. In [A, i.] <math>2t+2(h-\\nu)</math> and in [A, ii.] <math>t+(h-\\nu)</math> are common to all the arguments. The arguments are grouped in a manner convenient for subsequent computation. Lastly, the sixth is a column of speeds, being the hourly increases of the arguments in the preceding column, estimated in degrees per hour. It has been found practically convenient to denote each of these partial tides by an initial letter, arbitrarily chosen. In the first column we give a descriptive name for the tide, and in the second the arbitrarily chosen initial.\n\nThe schedule for the solar tides is drawn up in precisely the same manner, the only difference being that the coefficients are absolute constants. In order that the comparison of the importance of the solar tides with the lunar may be complete, the same universal coefficient <math>\\frac{3m}{2M}\\left(\\frac{a}{c}\\right)^3 a</math> is retained, and the special coefficient for each term is made to involve the factor <math>\\frac{\\tau_{,}}{\\tau}</math>. Here <math>\\tau_{,}=\\frac{3}{2}\\frac{m_{,}}{c_{,}^3}</math>, <math>m_{,}</math> being the sun's mass. With\n{{block center|<math>\\frac{M}{m}=81\\cdot5,\\ \\frac{\\tau_{,}}{\\tau}=\\cdot46035=\\frac{1}{2\\cdot17226}</math>.}}",
+   "c1s4": "¶\n'''''Mode of Reading Schedules Explained.''''' To write down any term, take the universal coefficient, the general coefficient for the class of tides, the special coefficient, and multiply by the cosine of the argument. The result, taken with the positive sign, is a term in the equilibrium tide, with water covering the whole earth. The transition to the actual case by the introduction of a factor and a delay of phase (to be derived from observation) has been already explained. The sum of all the terms is the complete expression for the height of tide <math>h</math>.\n\nIt must be remarked that the schedule of tides is here largely abridged, and that the reader who desires fuller information must refer to the ''Brit. Assoc. Report'' for 1883, or vol. i. of G. H. Darwin's ''Scientific Papers'', or to Harris's ''Manual of Tides''.",
+   "c2s1": "{{c|A.—''Schedule of Lunar Tides.''}}\n\n{{block center|Universal Coefficient <math>= \\frac{3}{2}\\frac{m}{M}\\left(\\frac{a}{c}\\right)^3 a.</math>}}\n\n{{c|i.—Semi-diurnal Tides; General Coefficient <math>= \\cos^2\\lambda</math>.}}\n\nDescriptive Name. Initial. Coefficient. Mean Value of Coefficient. Argument <math>2t+2(h-\\nu.)</math> Speed in Degrees per m. s. Hour.\n\nPrincipal lunar. <math>\\text{M}_2</math> <math>\\frac{1}{2}(1-\\frac{5}{2}e^2)\\cos^4\\frac{1}{2}I</math> ·45426 <math>-2(s-\\xi)</math> 28·9841042°\n\nLuni-solar (lunar portion) <math>\\text{K}_2</math> <math>\\frac{1}{2}(1+\\frac{3}{2}e^2)\\frac{1}{2}\\sin^2 I</math> ·03929 — 30·0821372°\n\nLarger elliptic <math>\\text{N}</math> <math>\\frac{1}{2}\\cdot\\frac{7}{2}e\\cos^4\\frac{1}{2}I</math> ·08796 <math>-2(s-\\xi)-(s-p)</math> 28·4397296°\n\n{{c|ii.—Diurnal Tides; General Coefficient <math>= \\sin 2\\lambda</math>.}}\n\nDescriptive Name. Initial. Coefficient. Mean Value of Coefficient. Argument <math>t+(h-\\nu).</math> Speed in Degrees per m.s. Hour.\n\nLunar diurnal <math>\\text{O}</math> <math>(1-\\frac{5}{2}e^2)\\frac{1}{2}\\sin I\\cos^2\\frac{1}{2}I</math> ·18856 <math>-2(s-\\xi)+\\frac{1}{2}\\pi</math> 13·9430356°\n\nLuni-solar (lunar portion) <math>\\text{K}_1</math> <math>(1+\\frac{3}{2}e^2)\\frac{1}{2}\\sin I\\cos I</math> ·18115 <math>-\\frac{1}{2}\\pi</math> 15·0410686°\n\nLarger elliptic <math>\\text{Q}</math> <math>\\frac{7}{2}e\\cdot\\frac{1}{2}\\sin I\\cos^2\\frac{1}{2}I</math> ·03651 <math>\\left\\{\\begin{matrix}-2(s-\\xi)-(s-p)\\\\+\\frac{1}{2}\\pi\\end{matrix}\\right\\}</math> 13·3986609°\n\n{{c|iii.—Long Period Tides; General Coefficient <math>\\frac{1}{2}-\\frac{3}{2}\\sin^2\\lambda</math>.}}",
+   "c2s2": "Descriptive Name. Initial. Coefficient. Mean Value of Coefficient. Argument. Speed in Degrees per m.s. Hour.\n\nChange of mean level. — <math>(1+\\tfrac{3}{2}e^2)\\tfrac{1}{3}(1-\\tfrac{3}{2}\\sin^2 I)</math> ·25224<sup>1</sup> Of variable part is <math>N</math>, the long. of node 19·34° per annum\n\nFortnightly. <math>\\text{Mf}</math> <math>(1-\\tfrac{5}{2}e^2)\\tfrac{1}{2}\\sin^2 I</math> ·07827 <math>2(s-\\xi)</math> 1·0980330°\n\n{{c|B.—''Schedule of Solar Tides.''}}\n\n{{block center|<math>\\text{Universal Coefficient} = \\frac{3}{2}\\frac{M}{m}\\left(\\frac{a}{c}\\right)^3 a.</math>}}\n\nDescriptive Name. Initial. Coefficient. Value of Coefficient. Argument. Speed in Degrees per m.s. Hour.\n\n{{c|i.—Semi-diurnal Tides; General Coefficient <math>= \\cos^2\\lambda</math>.}}\n\nPrincipal solar <math>\\text{S}_2</math> <math>\\frac{\\tau_,}{\\tau}(1-\\tfrac{5}{2}e_,^2)\\tfrac{1}{2}\\cos^4\\tfrac{1}{2}\\omega</math> ·21137 <math>2t</math> 30·0000000°\n\nLuni-solar (solar portion) <math>\\text{K}_2</math> <math>\\frac{\\tau_,}{\\tau}(1+\\tfrac{3}{2}e_,^2)\\tfrac{1}{4}\\sin^2\\omega</math> ·01823 <math>2t+2h</math> 30·0821372°\n\nLarger elliptic <math>\\text{T}</math> <math>\\frac{\\tau_,}{\\tau}\\tfrac{1}{2}\\tfrac{7}{2}e_,\\cos^4\\tfrac{1}{2}\\omega</math> ·01243 <math>2t-(h-p_,)</math> 29·9589314°",
+   "c2s3": "ii.—Diurnal Tides; General Coefficient <math>= \\sin 2\\lambda</math>.\n\nSolar diurnal P <math>\\frac{\\tau_{,}}{\\tau}(1-\\tfrac{5}{2}e_{,}^2)\\tfrac{1}{2}\\sin\\omega\\cos^2\\tfrac{1}{2}\\omega</math> ·08775 <math>t-h+\\tfrac{1}{2}\\pi</math> 14·9589314°\n\nLuni-solar (solar portion) <math>\\text{K}_1</math> <math>\\frac{\\tau_{,}}{\\tau}(1+\\tfrac{3}{2}e_{,}^2)\\tfrac{1}{2}\\sin\\omega\\cos\\omega</math> ·08407 <math>t+h-\\tfrac{1}{2}\\pi</math> 15·0410686°\n\niii.—Long Period Tides; General Coefficient <math>= \\tfrac{1}{2}-\\tfrac{3}{2}\\sin^2\\lambda</math>\n\nSemi-annual Ssa <math>\\frac{\\tau'_{,}}{\\tau}(1-\\tfrac{5}{2}e_{,}^2)\\tfrac{1}{2}\\sin^2\\omega</math> ·03643 <math>2h</math> 0·0821372°\n\nFrom the fourth columns we see that the coefficients in descending order of magnitude are <math>\\text{M}_2</math>, <math>\\text{K}_1</math> (both combined), <math>\\text{S}_2</math>, O, <math>\\text{K}_1</math> (lunar), N, P, <math>\\text{K}_1</math> (solar) <math>\\text{K}_2</math> (both combined), <math>\\text{K}_2</math> (lunar), Mf, Q, <math>\\text{K}_2</math> (solar), Ssa.\n\n''Scale of Importance of Tides.''\n\nThe tides which we omit from the schedules are relatively unimportant, but nevertheless commonly evaluated in accurate tidal work, are all lunar tides, viz. the following semi-diurnal tides: the smaller elliptic tide L, the larger and smaller evectional tides <math>\\nu</math>, <math>\\lambda</math>, the variational tide <math>\\mu</math>. Also the following diurnal tides, viz. the smaller elliptic tide <math>\\text{M}_1</math>, a tide of speed <math>\\gamma+\\sigma-\\varpi</math> called J. Also amongst the tides of long period, the luni-solar fortnightly called MSf.\n\nThe tides depending on the fourth power of the moon's parallax\n\n{{smaller block|<sup>1</sup>The mean value of this coefficient is <math>\\tfrac{1}{3}(1+\\tfrac{3}{2}e^2)(1-\\tfrac{3}{2}\\sin^2 i)(1-\\tfrac{3}{2}\\sin^2\\omega) = \\cdot 25</math>, and the variable part is approximately <math>-(1+\\tfrac{3}{2}e^2)\\sin i\\cos i\\sin\\omega\\cos\\omega\\cos N = -\\cdot 0328\\cos N</math>.}}"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 9397,
+    "output_tokens": 9292,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|954|TIDE|}}</noinclude>consentaneous in the equatorial belt, and of opposite meanings outside the critical latitudes. We here conceive the function always to be written <math>\\tfrac{1}{3}-\\sin^2\\lambda</math>, so that outside the critical latitudes high-tide is low-water. We may in continuing the development write the <math>\\mathfrak{X}</math>-<math>\\mathfrak{Y}</math>-<math>\\mathfrak{Z}</math> functions in the form appropriate to the equilibrium theory with water covering the whole earth, for the actual case it is only then necessary to multiply by the reducing factor, and to subtract the phase alteration <math>\\kappa</math>. As these are unknown constants for each place, they would only occur in the development as symbols of quantities to be deduced from observation. It will be understood, therefore, that in the following schedules the “argument” is that part of the argument which is derived from theory, the true complete argument being the “argument” <math>-\\kappa</math>, where <math>\\kappa</math> is derived from observation.\n\nUp to this point we have supposed the moon's longitude and the earth's position to be measured from the “intersection”; but in order to pass to the ordinary astronomical formulae we must measure the longitude and the earth's position from the vernal equinox. Hence we determine the longitude and right ascension of the “intersection” in terms of the longitude of the moon's node and the inclination of the lunar orbit, and introduce them into our formulae for the <math>\\mathfrak{X}</math>-<math>\\mathfrak{Y}</math>-<math>\\mathfrak{Z}</math> functions. The expressions for the functions corresponding to solar tides may be written down by symmetry, and in this case the intersection is actually the vernal equinox.\n\nThe final result of the process sketched is to obtain a series of terms each of which is a function of the elements of the moon's '''''Explanation of Schedules below.''''' or sun's orbit, and a function of the terrestrial latitude of the place of observation, multiplied by the cosine of an angle which increases uniformly with the time. We shall now write down the result in the form of a schedule; but we must first state the notation employed: <math>e</math>, <math>e_{,}</math> = eccentricities of lunar and solar orbits; <math>I</math>, <math>\\omega</math> = obliquities of equator to lunar orbit and ecliptic; <math>p</math>, <math>p_{,}</math> = longitudes of lunar and solar perigees, <math>\\varpi</math>, <math>\\varpi_{,}</math> = hourly increments of <math>p</math>, <math>p_{,}</math>; <math>s</math>, <math>h</math> = moon's and sun's mean longitudes; <math>\\sigma</math>, <math>\\eta</math> = hourly increments of <math>s</math>, <math>h</math>; <math>t</math> = local mean solar time reduced to angle; <math>\\gamma-\\eta=15^\\circ</math> per hour; <math>\\lambda</math> = latitude of place of observation; <math>\\xi</math>, <math>\\nu</math> = longitude in lunar orbit, and R.A. of the intersection; <math>N</math> = longitude of moon's node; <math>i</math> = inclination of lunar orbit. '''''Speed Defined.''''' The \"speed\" of any tide is defined as the rate of increase of its argument, and is expressible, therefore, as a linear function of <math>\\gamma</math>, <math>\\eta</math>, <math>\\sigma</math>, <math>\\varpi</math>; for we may neglect <math>\\varpi_{,}</math> as being very small.\n\nThe following schedules, then, give <math>\\text{h}</math> the height of tide. The arrangement is as follows. First, there is a universal coefficient <math>\\frac{3}{2}\\frac{m}{M}\\left(\\frac{a}{c}\\right)^3a</math>, which multiplies every term of all the schedules. Secondly, there are general coefficients, one for each schedule, viz. <math>\\cos^2\\lambda</math> for the semi-diurnal terms, <math>\\sin 2\\lambda</math> for the diurnal, and <math>\\frac{1}{2}-\\frac{3}{2}\\sin^2\\lambda</math> for the terms of long period. In each schedule the third column, headed “coefficient,” gives the functions of <math>I</math> and <math>e</math>. In the fourth column is given the mean semi-range of the corresponding term in numbers, which is approximately the value of the coefficient in the first column when <math>I=\\omega</math>; but we pass over the explanation of the mode of computing the values. The fifth column contains arguments, linear functions of <math>t</math>, <math>h</math>, <math>s</math>, <math>p</math>, <math>\\nu</math>, <math>\\xi</math>. In [A, i.] <math>2t+2(h-\\nu)</math> and in [A, ii.] <math>t+(h-\\nu)</math> are common to all the arguments. The arguments are grouped in a manner convenient for subsequent computation. Lastly, the sixth is a column of speeds, being the hourly increases of the arguments in the preceding column, estimated in degrees per hour. It has been found practically convenient to denote each of these partial tides by an initial letter, arbitrarily chosen. In the first column we give a descriptive name for the tide, and in the second the arbitrarily chosen initial.\n\nThe schedule for the solar tides is drawn up in precisely the same manner, the only difference being that the coefficients are absolute constants. In order that the comparison of the importance of the solar tides with the lunar may be complete, the same universal coefficient <math>\\frac{3m}{2M}\\left(\\frac{a}{c}\\right)^3 a</math> is retained, and the special coefficient for each term is made to involve the factor <math>\\frac{\\tau_{,}}{\\tau}</math>. Here <math>\\tau_{,}=\\frac{3}{2}\\frac{m_{,}}{c_{,}^3}</math>, <math>m_{,}</math> being the sun's mass. With\n{{block center|<math>\\frac{M}{m}=81\\cdot5,\\ \\frac{\\tau_{,}}{\\tau}=\\cdot46035=\\frac{1}{2\\cdot17226}</math>.}}\n\n'''''Mode of Reading Schedules Explained.''''' To write down any term, take the universal coefficient, the general coefficient for the class of tides, the special coefficient, and multiply by the cosine of the argument. The result, taken with the positive sign, is a term in the equilibrium tide, with water covering the whole earth. The transition to the actual case by the introduction of a factor and a delay of phase (to be derived from observation) has been already explained. The sum of all the terms is the complete expression for the height of tide <math>h</math>.\n\nIt must be remarked that the schedule of tides is here largely abridged, and that the reader who desires fuller information must refer to the ''Brit. Assoc. Report'' for 1883, or vol. i. of G. H. Darwin's ''Scientific Papers'', or to Harris's ''Manual of Tides''. {{c|A.—''Schedule of Lunar Tides.''}}\n\n{{block center|Universal Coefficient <math>= \\frac{3}{2}\\frac{m}{M}\\left(\\frac{a}{c}\\right)^3 a.</math>}}\n\n{{c|i.—Semi-diurnal Tides; General Coefficient <math>= \\cos^2\\lambda</math>.}}\n\nDescriptive Name. Initial. Coefficient. Mean Value of Coefficient. Argument <math>2t+2(h-\\nu.)</math> Speed in Degrees per m. s. Hour.\n\nPrincipal lunar. <math>\\text{M}_2</math> <math>\\frac{1}{2}(1-\\frac{5}{2}e^2)\\cos^4\\frac{1}{2}I</math> ·45426 <math>-2(s-\\xi)</math> 28·9841042°\n\nLuni-solar (lunar portion) <math>\\text{K}_2</math> <math>\\frac{1}{2}(1+\\frac{3}{2}e^2)\\frac{1}{2}\\sin^2 I</math> ·03929 — 30·0821372°\n\nLarger elliptic <math>\\text{N}</math> <math>\\frac{1}{2}\\cdot\\frac{7}{2}e\\cos^4\\frac{1}{2}I</math> ·08796 <math>-2(s-\\xi)-(s-p)</math> 28·4397296°\n\n{{c|ii.—Diurnal Tides; General Coefficient <math>= \\sin 2\\lambda</math>.}}\n\nDescriptive Name. Initial. Coefficient. Mean Value of Coefficient. Argument <math>t+(h-\\nu).</math> Speed in Degrees per m.s. Hour.\n\nLunar diurnal <math>\\text{O}</math> <math>(1-\\frac{5}{2}e^2)\\frac{1}{2}\\sin I\\cos^2\\frac{1}{2}I</math> ·18856 <math>-2(s-\\xi)+\\frac{1}{2}\\pi</math> 13·9430356°\n\nLuni-solar (lunar portion) <math>\\text{K}_1</math> <math>(1+\\frac{3}{2}e^2)\\frac{1}{2}\\sin I\\cos I</math> ·18115 <math>-\\frac{1}{2}\\pi</math> 15·0410686°\n\nLarger elliptic <math>\\text{Q}</math> <math>\\frac{7}{2}e\\cdot\\frac{1}{2}\\sin I\\cos^2\\frac{1}{2}I</math> ·03651 <math>\\left\\{\\begin{matrix}-2(s-\\xi)-(s-p)\\\\+\\frac{1}{2}\\pi\\end{matrix}\\right\\}</math> 13·3986609°\n\n{{c|iii.—Long Period Tides; General Coefficient <math>\\frac{1}{2}-\\frac{3}{2}\\sin^2\\lambda</math>.}} Descriptive Name. Initial. Coefficient. Mean Value of Coefficient. Argument. Speed in Degrees per m.s. Hour.\n\nChange of mean level. — <math>(1+\\tfrac{3}{2}e^2)\\tfrac{1}{3}(1-\\tfrac{3}{2}\\sin^2 I)</math> ·25224<sup>1</sup> Of variable part is <math>N</math>, the long. of node 19·34° per annum\n\nFortnightly. <math>\\text{Mf}</math> <math>(1-\\tfrac{5}{2}e^2)\\tfrac{1}{2}\\sin^2 I</math> ·07827 <math>2(s-\\xi)</math> 1·0980330°\n\n{{c|B.—''Schedule of Solar Tides.''}}\n\n{{block center|<math>\\text{Universal Coefficient} = \\frac{3}{2}\\frac{M}{m}\\left(\\frac{a}{c}\\right)^3 a.</math>}}\n\nDescriptive Name. Initial. Coefficient. Value of Coefficient. Argument. Speed in Degrees per m.s. Hour.\n\n{{c|i.—Semi-diurnal Tides; General Coefficient <math>= \\cos^2\\lambda</math>.}}\n\nPrincipal solar <math>\\text{S}_2</math> <math>\\frac{\\tau_,}{\\tau}(1-\\tfrac{5}{2}e_,^2)\\tfrac{1}{2}\\cos^4\\tfrac{1}{2}\\omega</math> ·21137 <math>2t</math> 30·0000000°\n\nLuni-solar (solar portion) <math>\\text{K}_2</math> <math>\\frac{\\tau_,}{\\tau}(1+\\tfrac{3}{2}e_,^2)\\tfrac{1}{4}\\sin^2\\omega</math> ·01823 <math>2t+2h</math> 30·0821372°\n\nLarger elliptic <math>\\text{T}</math> <math>\\frac{\\tau_,}{\\tau}\\tfrac{1}{2}\\tfrac{7}{2}e_,\\cos^4\\tfrac{1}{2}\\omega</math> ·01243 <math>2t-(h-p_,)</math> 29·9589314° ii.—Diurnal Tides; General Coefficient <math>= \\sin 2\\lambda</math>.\n\nSolar diurnal P <math>\\frac{\\tau_{,}}{\\tau}(1-\\tfrac{5}{2}e_{,}^2)\\tfrac{1}{2}\\sin\\omega\\cos^2\\tfrac{1}{2}\\omega</math> ·08775 <math>t-h+\\tfrac{1}{2}\\pi</math> 14·9589314°\n\nLuni-solar (solar portion) <math>\\text{K}_1</math> <math>\\frac{\\tau_{,}}{\\tau}(1+\\tfrac{3}{2}e_{,}^2)\\tfrac{1}{2}\\sin\\omega\\cos\\omega</math> ·08407 <math>t+h-\\tfrac{1}{2}\\pi</math> 15·0410686°\n\niii.—Long Period Tides; General Coefficient <math>= \\tfrac{1}{2}-\\tfrac{3}{2}\\sin^2\\lambda</math>\n\nSemi-annual Ssa <math>\\frac{\\tau'_{,}}{\\tau}(1-\\tfrac{5}{2}e_{,}^2)\\tfrac{1}{2}\\sin^2\\omega</math> ·03643 <math>2h</math> 0·0821372°\n\nFrom the fourth columns we see that the coefficients in descending order of magnitude are <math>\\text{M}_2</math>, <math>\\text{K}_1</math> (both combined), <math>\\text{S}_2</math>, O, <math>\\text{K}_1</math> (lunar), N, P, <math>\\text{K}_1</math> (solar) <math>\\text{K}_2</math> (both combined), <math>\\text{K}_2</math> (lunar), Mf, Q, <math>\\text{K}_2</math> (solar), Ssa.\n\n''Scale of Importance of Tides.''\n\nThe tides which we omit from the schedules are relatively unimportant, but nevertheless commonly evaluated in accurate tidal work, are all lunar tides, viz. the following semi-diurnal tides: the smaller elliptic tide L, the larger and smaller evectional tides <math>\\nu</math>, <math>\\lambda</math>, the variational tide <math>\\mu</math>. Also the following diurnal tides, viz. the smaller elliptic tide <math>\\text{M}_1</math>, a tide of speed <math>\\gamma+\\sigma-\\varpi</math> called J. Also amongst the tides of long period, the luni-solar fortnightly called MSf.\n\nThe tides depending on the fourth power of the moon's parallax\n\n{{smaller block|<sup>1</sup>The mean value of this coefficient is <math>\\tfrac{1}{3}(1+\\tfrac{3}{2}e^2)(1-\\tfrac{3}{2}\\sin^2 i)(1-\\tfrac{3}{2}\\sin^2\\omega) = \\cdot 25</math>, and the variable part is approximately <math>-(1+\\tfrac{3}{2}e^2)\\sin i\\cos i\\sin\\omega\\cos\\omega\\cos N = -\\cdot 0328\\cos N</math>.}}<noinclude><references/></noinclude>"
+}

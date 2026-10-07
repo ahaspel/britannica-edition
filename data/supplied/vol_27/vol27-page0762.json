@@ -1,0 +1,156 @@
+{
+ "volume": 27,
+ "page_number": 762,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n779",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n779",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 1159,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     111,
+     2233,
+     192
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     192,
+     1168,
+     1172
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1172,
+     1168,
+     2021
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2021,
+     1168,
+     2832
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2832,
+     1168,
+     3241
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1168,
+     192,
+     2233,
+     1009
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1168,
+     1009,
+     2233,
+     1985
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1168,
+     1985,
+     2233,
+     2740
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1168,
+     2740,
+     2233,
+     3241
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||UNITS, DIMENSIONS OF|737}}",
+   "c1s1": "engineering the static unit has largely survived; but the increasing importance of electrical applications is introducing uniformity there also. In the science of electricity two different systems of units, the electrostatic and the electrodynamic, still to a large extent persist. The electrostatic system arose because in the development of the subject statics came before kinetics; but in the complete synthesis it is usually found convenient to express the various quantities in terms of the electrokinetic system alone.\n\nThe system of measurement now adopted as fundamental in physics takes the centimetre as unit of length, the gramme as unit of mass, and the second as unit of time. The choice of these units was in the first instance arbitrary and dictated by convenience; for some purposes subsidiary systems based on multiples of these units by certain powers of ten are found convenient. There are certain absolute entities in nature, such as the constant of gravitation, the velocity of light in free space, and the constants occurring in the expression giving the constitution of the radiation in an enclosure that corresponds to each temperature, which are the same for all kinds of matter; these might be utilized, if known with sufficient accuracy, to establish a system of units of an absolute or cosmical kind. The wave-length of a given spectral line might be utilized in the same manner, but that depends on recovering the",
+   "c1s2": "kind of matter which produces the line.\n\nIn physical science the uniformities in the course of phenomena are elucidated by the discovery of permanent or intrinsic relations between the measurable properties of material systems. Each such relation is expressible as an equation connecting the numerical values of entities belonging to the system. Such an equation, representing as it does a relation between actual things, must remain true when the measurements are referred to a new set of fundamental units. Thus, for example, the kinematical equation <math>v^2 = nf^2l</math>, if <math>n</math> is purely numerical, contradicts the necessary relations involved in the definitions of the entities velocity, acceleration, and length which occur in it. For on changing to a new set of units as above the equation should still hold; it, however, then becomes <math>v^2/[\\text{V}]^2 = n \\cdot f^2/[\\text{F}]^2 \\cdot l/[\\text{L}]</math>. Hence on division there remains a dimensional relation <math>[\\text{V}]^2 = [\\text{F}]^2[\\text{L}]</math>, which is in disagreement with the dimensions above determined of the derived units that are involved in it. The inference follows, either that an equation such as that from which we started is a formal impossibility, or else that the factor <math>n</math> which it contains is not a mere number, but represents <math>n</math> times the unit of some derived quantity which ought to be",
+   "c1s3": "specified in order to render the equation a complete statement of a physical relation. On the latter hypothesis the dimensions <math>[\\text{N}]</math> of this quantity are determined by the dimensional equation <math>[\\text{V}]^2=[\\text{N}][\\text{F}]^2[\\text{L}]</math> where, in terms of the fundamental units of length and time, <math>[\\text{V}]=[\\text{L}][\\text{T}]^{-1}</math>, <math>[\\text{F}]=[\\text{L}][\\text{T}]^{-2}</math>; whence by substitution it appears that <math>[\\text{N}]=[\\text{L}]^{-1}[\\text{T}]^2</math>. Thus, instead of being merely numerical, <math>n</math> must represent in the above formula the measure of some physical entity, which may be classified by the statement that it has the conjoint dimensions of time directly and of velocity inversely.\n\nIt often happens that a simple comparison of the dimensions of the quantities which determine a physical system will lead to important knowledge as to the necessary relations that subsist between them. Thus in the case of a simple pendulum the period of oscillation <math>\\tau</math> can depend only on the angular amplitude <math>\\alpha</math> of the swing, the mass <math>m</math> of the bob considered as a point, and the length <math>l</math> of the suspending fibre considered as without mass, and on the value of <math>g</math> the acceleration due to gravity, which is the active force; that is, <math>\\tau=f(\\alpha, m, l, g)</math>. The dimensions must be the same on both sides of this formula,",
+   "c1s4": "for, when they are expressed in terms of the three independent dynamical quantities mass, length, and time, there must be complete identity between its two sides. Now, the dimensions of <math>g</math> are <math>[\\text{L}][\\text{T}]^{-2}</math>; and when the unit of length is altered the numerical value of the period is unaltered, hence its expression must be restricted to the form <math>f(\\alpha, m, l/g)</math>. Moreover, as the period does not depend on the unit of mass, the form is further\n\nXXVII. 24",
+   "c2s1": "reduced to <math>f(\\alpha, l/g)</math>; and as it is of the dimensions <math>+1</math> in time, it must be a multiple of <math>(l/g)^{\\frac{1}{2}}</math>, and therefore of the form <math>\\phi(\\alpha)\\sqrt{(l/g)}</math>. Thus the period of oscillation has been determined by these considerations except as regards the manner in which it depends on the amplitude <math>\\alpha</math> of the swing. When a process of this kind leads to a definite result, it will be one which makes the unknown quantity jointly proportional to various powers of the other quantities involved; it will therefore shorten the process if we assume such an expression for it in advance, and find whether it is possible to determine the exponents definitely and uniquely so as to obtain the correct dimensions. In the present example, assuming in this way the relation <math>\\tau=\\text{A}\\alpha^p m^q l^r g^s</math>, where <math>\\text{A}</math> is a pure numeric, we are led to the dimensional equation <math>[\\text{T}]=[\\alpha]^p[\\text{M}]^q[\\text{L}]^r[\\text{LT}^{-2}]^s</math>, showing that the law assumed would not persist when the fundamental units of length, mass, and time are altered, unless <math>q=0</math>, <math>s=-\\frac{1}{2}</math>, <math>r=\\frac{1}{2}</math>; as an angle has no dimensions, being determined by its numerical ratio to the ''invariable'' angle forming four right angles, <math>p</math> remains undetermined. This leads to the same result, <math>\\tau=\\phi(\\alpha)l^{+\\frac{1}{2}}g^{-\\frac{1}{2}}</math>, as before.",
+   "c2s2": "¶\nAs illustrating the power and also the limitations of this method of dimensions, we may apply it (after Lord Rayleigh, ''Roy. Soc. Proc.'', March 1900) to the laws of viscosity in gases. The dimensions of viscosity (<math>\\mu</math>) are (force/area) ÷ (velocity/length), giving <math>[\\text{ML}^{-1}\\text{T}^{-1}]</math> in terms of the fundamental units. Now, on the dynamical theory of gases viscosity must be a function of the mass <math>m</math> of a molecule, the number <math>n</math> of molecules per unit volume, their velocity of mean square <math>v</math>, and their effective radius <math>a</math>; it can depend on nothing else. The equation of dimensions cannot supply more than ''three'' relations connecting these four possibilities of variation, and so cannot here lead to a definite result without further knowledge of the physical circumstances. And we remark conversely, in passing, that wherever in a problem of physical dynamics we know that the quantity sought can depend on only three other quantities whose dynamical dimensions are known, it must vary as a simple power of each. The additional knowledge required, in order to enable us to proceed in a case like the present, must be of the form of such an equation of simple variation. In the present case it is involved in the new fact that in an actual gas the mean free path is very great compared with the effective molecular radius. On this account the mean free path is inversely as the number of molecules per unit volume; and therefore the coefficient of viscosity, being proportional to these two quantities jointly, is independent of either, so long as the other quantities defining the system remain unchanged. If the molecules are taken to be spheres which exert mutual action only during collision, we therefore assume\n{{block center|<math>\\mu \\propto m^x\\bar{v}^y a^z,</math>}}\nwhich requires that the equation of dimensions\n{{block center|<math>[\\text{ML}^{-1}\\text{T}^{-1}] = [\\text{M}]^x[\\text{LT}^{-1}]^y[\\text{L}]^z</math>}}",
+   "c2s3": "must be satisfied. This gives <math>x=1</math>, <math>y=1</math>, <math>z=-2</math>. As the temperature is proportional to <math>m\\bar{v}^2</math>, it follows that the viscosity is proportional to the square root of the mass of the molecule and the square root of the absolute temperature, and inversely proportional to the square of the effective molecular radius, being, as already seen, uninfluenced by change of density.\n\nIf the atoms are taken to be Boscovichian points exerting mutual attractions, the effective diameter <math>a</math> is not definite; but we can still proceed in cases where the law of mutual attraction is expressed by a simple formula of variation—that is, ''provided'' it is of type <math>km^2r^s</math>, where <math>r</math> is the distance between the two molecules. Then, noting that, as this is a force, the dimensions of <math>k</math> must be <math>(\\text{M}^{-1}\\text{L}^{s+1}\\text{T}^{-2})</math>, we can assume\n{{block center|<math>\\mu \\propto m^x\\bar{v}^yk^w,</math>}}\n{{block center|provided <math>[\\text{ML}^{-1}\\text{T}^{-1}] = [\\text{M}]^x[\\text{LT}^{-1}]^y[\\text{M}^{-1}\\text{L}^{s+1}\\text{T}^{-2}]^w</math>,}}\nwhich demands and is satisfied by\n{{block center|<math>x-w=1,\\ y+2w=1,\\ y+(s+1)w=-1,</math>}}\n{{block center|so that <math>w=-\\frac{2}{s-1},\\ y=\\frac{s+3}{s-1},\\ x=\\frac{s-3}{s-1}</math>.}}\nThus, on this supposition,\n{{block center|<math>\\mu \\propto m^{\\frac{s-9}{2s-2}}k^{-\\frac{2}{s-1}}\\theta^{\\frac{s+3}{2s-2}}</math>}}",
+   "c2s4": "where <math>\\theta</math> represents absolute temperature. (See {{sc|Diffusion}}.)\n\nWhen the quantity sought depends on more than three others, the method may often be equally useful, though it cannot give a complete result. Cf. Sir G. G. Stokes, ''Math. and Phys. Papers'', v. (1881) p. 106, and Lord Rayleigh, ''Phil. Mag.'' (1905), (1) p. 494, for examples dealing with the determination of viscosity from observations of the retarded swings of a vane, and with the formulation of the most general type of characteristic equation for gases respectively. As another example we may consider what is involved in Bashforth's experimental conclusion that the air-resistances to shot of the same shape are proportional to the squares of their"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    3
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2669,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 9380,
+    "output_tokens": 5517,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||UNITS, DIMENSIONS OF|737}}</noinclude>engineering the static unit has largely survived; but the increasing importance of electrical applications is introducing uniformity there also. In the science of electricity two different systems of units, the electrostatic and the electrodynamic, still to a large extent persist. The electrostatic system arose because in the development of the subject statics came before kinetics; but in the complete synthesis it is usually found convenient to express the various quantities in terms of the electrokinetic system alone.\n\nThe system of measurement now adopted as fundamental in physics takes the centimetre as unit of length, the gramme as unit of mass, and the second as unit of time. The choice of these units was in the first instance arbitrary and dictated by convenience; for some purposes subsidiary systems based on multiples of these units by certain powers of ten are found convenient. There are certain absolute entities in nature, such as the constant of gravitation, the velocity of light in free space, and the constants occurring in the expression giving the constitution of the radiation in an enclosure that corresponds to each temperature, which are the same for all kinds of matter; these might be utilized, if known with sufficient accuracy, to establish a system of units of an absolute or cosmical kind. The wave-length of a given spectral line might be utilized in the same manner, but that depends on recovering the kind of matter which produces the line.\n\nIn physical science the uniformities in the course of phenomena are elucidated by the discovery of permanent or intrinsic relations between the measurable properties of material systems. Each such relation is expressible as an equation connecting the numerical values of entities belonging to the system. Such an equation, representing as it does a relation between actual things, must remain true when the measurements are referred to a new set of fundamental units. Thus, for example, the kinematical equation <math>v^2 = nf^2l</math>, if <math>n</math> is purely numerical, contradicts the necessary relations involved in the definitions of the entities velocity, acceleration, and length which occur in it. For on changing to a new set of units as above the equation should still hold; it, however, then becomes <math>v^2/[\\text{V}]^2 = n \\cdot f^2/[\\text{F}]^2 \\cdot l/[\\text{L}]</math>. Hence on division there remains a dimensional relation <math>[\\text{V}]^2 = [\\text{F}]^2[\\text{L}]</math>, which is in disagreement with the dimensions above determined of the derived units that are involved in it. The inference follows, either that an equation such as that from which we started is a formal impossibility, or else that the factor <math>n</math> which it contains is not a mere number, but represents <math>n</math> times the unit of some derived quantity which ought to be specified in order to render the equation a complete statement of a physical relation. On the latter hypothesis the dimensions <math>[\\text{N}]</math> of this quantity are determined by the dimensional equation <math>[\\text{V}]^2=[\\text{N}][\\text{F}]^2[\\text{L}]</math> where, in terms of the fundamental units of length and time, <math>[\\text{V}]=[\\text{L}][\\text{T}]^{-1}</math>, <math>[\\text{F}]=[\\text{L}][\\text{T}]^{-2}</math>; whence by substitution it appears that <math>[\\text{N}]=[\\text{L}]^{-1}[\\text{T}]^2</math>. Thus, instead of being merely numerical, <math>n</math> must represent in the above formula the measure of some physical entity, which may be classified by the statement that it has the conjoint dimensions of time directly and of velocity inversely.\n\nIt often happens that a simple comparison of the dimensions of the quantities which determine a physical system will lead to important knowledge as to the necessary relations that subsist between them. Thus in the case of a simple pendulum the period of oscillation <math>\\tau</math> can depend only on the angular amplitude <math>\\alpha</math> of the swing, the mass <math>m</math> of the bob considered as a point, and the length <math>l</math> of the suspending fibre considered as without mass, and on the value of <math>g</math> the acceleration due to gravity, which is the active force; that is, <math>\\tau=f(\\alpha, m, l, g)</math>. The dimensions must be the same on both sides of this formula, for, when they are expressed in terms of the three independent dynamical quantities mass, length, and time, there must be complete identity between its two sides. Now, the dimensions of <math>g</math> are <math>[\\text{L}][\\text{T}]^{-2}</math>; and when the unit of length is altered the numerical value of the period is unaltered, hence its expression must be restricted to the form <math>f(\\alpha, m, l/g)</math>. Moreover, as the period does not depend on the unit of mass, the form is further\n\nXXVII. 24 reduced to <math>f(\\alpha, l/g)</math>; and as it is of the dimensions <math>+1</math> in time, it must be a multiple of <math>(l/g)^{\\frac{1}{2}}</math>, and therefore of the form <math>\\phi(\\alpha)\\sqrt{(l/g)}</math>. Thus the period of oscillation has been determined by these considerations except as regards the manner in which it depends on the amplitude <math>\\alpha</math> of the swing. When a process of this kind leads to a definite result, it will be one which makes the unknown quantity jointly proportional to various powers of the other quantities involved; it will therefore shorten the process if we assume such an expression for it in advance, and find whether it is possible to determine the exponents definitely and uniquely so as to obtain the correct dimensions. In the present example, assuming in this way the relation <math>\\tau=\\text{A}\\alpha^p m^q l^r g^s</math>, where <math>\\text{A}</math> is a pure numeric, we are led to the dimensional equation <math>[\\text{T}]=[\\alpha]^p[\\text{M}]^q[\\text{L}]^r[\\text{LT}^{-2}]^s</math>, showing that the law assumed would not persist when the fundamental units of length, mass, and time are altered, unless <math>q=0</math>, <math>s=-\\frac{1}{2}</math>, <math>r=\\frac{1}{2}</math>; as an angle has no dimensions, being determined by its numerical ratio to the ''invariable'' angle forming four right angles, <math>p</math> remains undetermined. This leads to the same result, <math>\\tau=\\phi(\\alpha)l^{+\\frac{1}{2}}g^{-\\frac{1}{2}}</math>, as before.\n\nAs illustrating the power and also the limitations of this method of dimensions, we may apply it (after Lord Rayleigh, ''Roy. Soc. Proc.'', March 1900) to the laws of viscosity in gases. The dimensions of viscosity (<math>\\mu</math>) are (force/area) ÷ (velocity/length), giving <math>[\\text{ML}^{-1}\\text{T}^{-1}]</math> in terms of the fundamental units. Now, on the dynamical theory of gases viscosity must be a function of the mass <math>m</math> of a molecule, the number <math>n</math> of molecules per unit volume, their velocity of mean square <math>v</math>, and their effective radius <math>a</math>; it can depend on nothing else. The equation of dimensions cannot supply more than ''three'' relations connecting these four possibilities of variation, and so cannot here lead to a definite result without further knowledge of the physical circumstances. And we remark conversely, in passing, that wherever in a problem of physical dynamics we know that the quantity sought can depend on only three other quantities whose dynamical dimensions are known, it must vary as a simple power of each. The additional knowledge required, in order to enable us to proceed in a case like the present, must be of the form of such an equation of simple variation. In the present case it is involved in the new fact that in an actual gas the mean free path is very great compared with the effective molecular radius. On this account the mean free path is inversely as the number of molecules per unit volume; and therefore the coefficient of viscosity, being proportional to these two quantities jointly, is independent of either, so long as the other quantities defining the system remain unchanged. If the molecules are taken to be spheres which exert mutual action only during collision, we therefore assume\n{{block center|<math>\\mu \\propto m^x\\bar{v}^y a^z,</math>}}\nwhich requires that the equation of dimensions\n{{block center|<math>[\\text{ML}^{-1}\\text{T}^{-1}] = [\\text{M}]^x[\\text{LT}^{-1}]^y[\\text{L}]^z</math>}} must be satisfied. This gives <math>x=1</math>, <math>y=1</math>, <math>z=-2</math>. As the temperature is proportional to <math>m\\bar{v}^2</math>, it follows that the viscosity is proportional to the square root of the mass of the molecule and the square root of the absolute temperature, and inversely proportional to the square of the effective molecular radius, being, as already seen, uninfluenced by change of density.\n\nIf the atoms are taken to be Boscovichian points exerting mutual attractions, the effective diameter <math>a</math> is not definite; but we can still proceed in cases where the law of mutual attraction is expressed by a simple formula of variation—that is, ''provided'' it is of type <math>km^2r^s</math>, where <math>r</math> is the distance between the two molecules. Then, noting that, as this is a force, the dimensions of <math>k</math> must be <math>(\\text{M}^{-1}\\text{L}^{s+1}\\text{T}^{-2})</math>, we can assume\n{{block center|<math>\\mu \\propto m^x\\bar{v}^yk^w,</math>}}\n{{block center|provided <math>[\\text{ML}^{-1}\\text{T}^{-1}] = [\\text{M}]^x[\\text{LT}^{-1}]^y[\\text{M}^{-1}\\text{L}^{s+1}\\text{T}^{-2}]^w</math>,}}\nwhich demands and is satisfied by\n{{block center|<math>x-w=1,\\ y+2w=1,\\ y+(s+1)w=-1,</math>}}\n{{block center|so that <math>w=-\\frac{2}{s-1},\\ y=\\frac{s+3}{s-1},\\ x=\\frac{s-3}{s-1}</math>.}}\nThus, on this supposition,\n{{block center|<math>\\mu \\propto m^{\\frac{s-9}{2s-2}}k^{-\\frac{2}{s-1}}\\theta^{\\frac{s+3}{2s-2}}</math>}} where <math>\\theta</math> represents absolute temperature. (See {{sc|Diffusion}}.)\n\nWhen the quantity sought depends on more than three others, the method may often be equally useful, though it cannot give a complete result. Cf. Sir G. G. Stokes, ''Math. and Phys. Papers'', v. (1881) p. 106, and Lord Rayleigh, ''Phil. Mag.'' (1905), (1) p. 494, for examples dealing with the determination of viscosity from observations of the retarded swings of a vane, and with the formulation of the most general type of characteristic equation for gases respectively. As another example we may consider what is involved in Bashforth's experimental conclusion that the air-resistances to shot of the same shape are proportional to the squares of their<noinclude><references/></noinclude>"
+}

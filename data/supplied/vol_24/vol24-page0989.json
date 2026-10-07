@@ -1,0 +1,274 @@
+{
+ "volume": 24,
+ "page_number": 989,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n999",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n999",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 1092,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     114,
+     118,
+     2265,
+     188
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     114,
+     205,
+     1183,
+     1260
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     114,
+     1262,
+     1183,
+     1300
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     114,
+     1300,
+     1183,
+     1330
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     114,
+     1330,
+     1183,
+     2588
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     114,
+     2595,
+     1183,
+     2664
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     114,
+     2664,
+     1183,
+     3125
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1183,
+     204,
+     2265,
+     1185
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1183,
+     206,
+     2265,
+     2520
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1183,
+     2525,
+     2265,
+     2593
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1183,
+     2593,
+     2265,
+     3125
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|THEORETICAL]|SHIPBUILDING|927}}",
+   "c1s1": "{{c|{{sc|Fig. 11.}}—Curves of Stability of a Merchant Vessel.}}",
+   "c1s2": "[NO_CONTENT_FOUND]",
+   "c1s3": "{{c|{{sc|Fig. 12.}}—Curves of Stability of a Box-shaped Vessel showing the influence of beam and freeboard.}}",
+   "c1s4": "homogeneous cargo, and sometimes for an intermediate condition; typical curves are given in fig. 11.\n\nStability curves are obtained on the assumptions—\n\n1. That all openings in the upper deck, forecastle and poop (if any) are covered in and made watertight; and the buoyancy of any erections above these decks is generally neglected.\n\n2. That the side of the ship is intact up to the upper deck, all side scuttles, ports or other openings being closed.\n\n3. That all weights in the ship are absolutely fixed.\n\n4. That no changes of trim occur during the inclination.\n\nIn some cases curves are drawn (''a'') with forecastle and poop intact, (''b'') with these thrown open to the sea, the latter condition being more commonly considered.",
+   "c2s2": "{{c|{{sc|Fig.}} 14.—Curves of Stability of a Steam Yacht showing effect of variation in height of centre of gravity.}}",
+   "c2s3": "measure) approximately, the initial slope of the curve is proportional to <math>\\text{GM}</math>, and the tangent to this curve at the origin can be drawn by setting by the value of <math>\\text{GM}</math> as an ordinate to an angle of one radian (57·3°) as abscissa, and joining the point to the origin. (See figs. 10 and 11.) The height of the metacentre above the centre of buoyancy will, ''caeteris paribus'', vary with the cube of the breadth, and an increase of beam will result in a large increase of stability at moderate angles.\n\n'''''Effect of position of C.G.'''''\n\nFinally the effect of an alteration in the vertical position of the centre of gravity is illustrated by the three stability curves of a steam yacht in fig. 14, where the centre of gravity is successively raised 1 ft. In the condition corresponding to the fourth and lowest curve, the <math>\\text{GM}</math> is negative (—·2 ft.) and so also are the righting levers up to 15° when the curve crosses the axis; from 15° to about 52° the <math>\\text{GZ}</math> is positive, but above"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p0989 c1f1.png",
+   "c1f2": "eb1911 v24 p0989 c1f2.png",
+   "c2f1": "eb1911 v24 p0989 c2f1.png",
+   "c2f2": "eb1911 v24 p0989 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     156,
+     519,
+     1166,
+     1254
+    ],
+    "caption": [
+     242,
+     1262,
+     1047,
+     1300
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     115,
+     514,
+     1169,
+     1213
+    ]
+   },
+   {
+    "box": [
+     136,
+     1800,
+     1149,
+     2585
+    ],
+    "caption": [
+     148,
+     2595,
+     1132,
+     2664
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     115,
+     1794,
+     1156,
+     2584
+    ]
+   },
+   {
+    "box": [
+     1225,
+     720,
+     2243,
+     1182
+    ],
+    "caption": [
+     1239,
+     1188,
+     2223,
+     1228
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1225,
+     720,
+     2243,
+     1185
+    ]
+   },
+   {
+    "box": [
+     1249,
+     2042,
+     2255,
+     2517
+    ],
+    "caption": [
+     1223,
+     2525,
+     2239,
+     2593
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1225,
+     2037,
+     2254,
+     2436
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    3
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 11374,
+    "output_tokens": 355,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 2208,
+    "output_tokens": 1340,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|THEORETICAL]|SHIPBUILDING|927}}</noinclude>[[File:eb1911 v24 p0989 c1f1.png|center|352px]]\n{{c|{{sc|Fig. 11.}}—Curves of Stability of a Merchant Vessel.}}\n\n[NO_CONTENT_FOUND] homogeneous cargo, and sometimes for an intermediate condition; typical curves are given in fig. 11.\n\n[[File:eb1911 v24 p0989 c1f2.png|center|352px]]\n{{c|{{sc|Fig. 12.}}—Curves of Stability of a Box-shaped Vessel showing the influence of beam and freeboard.}}\n\nStability curves are obtained on the assumptions—\n\n1. That all openings in the upper deck, forecastle and poop (if any) are covered in and made watertight; and the buoyancy of any erections above these decks is generally neglected.\n\n2. That the side of the ship is intact up to the upper deck, all side scuttles, ports or other openings being closed.\n\n3. That all weights in the ship are absolutely fixed.\n\n4. That no changes of trim occur during the inclination.\n\nIn some cases curves are drawn (''a'') with forecastle and poop intact, (''b'') with these thrown open to the sea, the latter condition being more commonly considered. measure) approximately, the initial slope of the curve is proportional to <math>\\text{GM}</math>, and the tangent to this curve at the origin can be drawn by setting by the value of <math>\\text{GM}</math> as an ordinate to an angle of one radian (57·3°) as abscissa, and joining the point to the origin. (See figs. 10 and 11.) The height of the metacentre above the centre of buoyancy will, ''caeteris paribus'', vary with the cube of the breadth, and an increase of beam will result in a large increase of stability at moderate angles.\n\n[[File:eb1911 v24 p0989 c2f1.png|center|357px]]\n\n[[File:eb1911 v24 p0989 c2f2.png|center|357px]]\n{{c|{{sc|Fig.}} 14.—Curves of Stability of a Steam Yacht showing effect of variation in height of centre of gravity.}}\n\n'''''Effect of position of C.G.'''''\n\nFinally the effect of an alteration in the vertical position of the centre of gravity is illustrated by the three stability curves of a steam yacht in fig. 14, where the centre of gravity is successively raised 1 ft. In the condition corresponding to the fourth and lowest curve, the <math>\\text{GM}</math> is negative (—·2 ft.) and so also are the righting levers up to 15° when the curve crosses the axis; from 15° to about 52° the <math>\\text{GZ}</math> is positive, but above<noinclude><references/></noinclude>"
+}

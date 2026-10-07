@@ -1,0 +1,286 @@
+{
+ "volume": 26,
+ "page_number": 364,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n373",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n373",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.1,
+  "column_width": 1085,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     99,
+     96,
+     2243,
+     175
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     99,
+     182,
+     1172,
+     754
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     754,
+     1172,
+     786
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     786,
+     1172,
+     1480
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     99,
+     1480,
+     1172,
+     2011
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     1986,
+     1172,
+     3084
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     175,
+     2243,
+     429
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1172,
+     429,
+     2243,
+     867
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     874,
+     2243,
+     904
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1172,
+     904,
+     2243,
+     2965
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     2970,
+     2243,
+     3000
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     3000,
+     2243,
+     3084
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||TACHEOMETRY|343}}",
+   "c1s1": "{{c|{{sc|Fig.}} 3.}}",
+   "c1s2": "the intercept is exactly 100 divisions or not. If it is not, the wire diaphragm must be shifted in the tube until it is. In figs. 3, 4, 5 and 6 the distances are deduced from the readings of a central wire in the optical axis of the telescope and of a wire above it, for the sake of simplicity. The usual arrangement is to fit the diaphragm with a central wire and with one or two wires above and below it at equal distances from the central wire. The vertical angle of depression or elevation is fixed by directing the central wire to a well-defined division on the staff, and the distance of the staff is inferred from the readings given by the corresponding wires above and below the central wire.\n\nThe elementary form of tacheometer given above illustrates the general principle of the class of tacheometers now under consideration, and as leading up to the practical form, in which the staff is viewed with a telescope mounted in the manner of a theodolite. The simplest form is Reichenbach's tacheometer, which may be investigated as follows:—In fig. 4 let <math>\\text{A}</math> be the object glass by which an image of the staff <math>\\text{ST}</math> is formed at <math>\\text{HK}</math>. The wire diaphragm is moved in the tube so as to coincide with the image,",
+   "c1s4": "and the image and wires are viewed with an eye-piece (not shown) in the usual way. Let <math>\\text{O}</math> be the point where the vertical axis of the instrument cuts the axis of the telescope, the instrument being centred over a peg, from which the distance to the staff is required. The object glass (of focal length <math>=f</math>) is at a distance <math>c</math> from <math>\\text{O}</math>. Let <math>\\text{AT}=u</math> and <math>\\text{AH}=v</math>, and the angle <math>\\text{SAT}=\\text{HAK}=\\theta</math>. Then if <math>i</math> be the height of the image <math>\\text{HK}</math>, <math>i=v\\tan\\theta</math>. Since <math>1/v+1/u=1/f</math>, we have <math>v=-uf/(u-f)</math>, and hence <math>i=uf\\tan\\theta/(u-f)</math>. Let <math>\\text{F}</math> be some point on <math>\\text{AT}</math> such that <math>\\text{AF}=x</math> and <math>\\text{FT}=u'</math>. And let the angle <math>\\text{SFT}=\\phi</math>. Then <math>u=u'+x</math> and <math>\\tan\\theta=u'\\tan\\phi/(u'+x)</math>, and therefore\n{{block center|<math>i=\\frac{(u'+x)f}{u'+x-f}\\frac{u'}{u'+x}\\cdot\\tan\\phi=\\frac{fu'}{u'+x-f}\\tan\\phi</math>; and, if <math>x=f,\\ i=f\\tan\\phi</math>.}}\n\nIf therefore the point <math>\\text{F}</math> be taken at a distance <math>f</math> from the object glass, every intercept of the staff for positions between <math>\\text{T}</math> and <math>\\text{F}</math>, such as <math>\\text{S}'\\text{T}'</math>, <math>\\text{S}''\\text{T}''</math>, &c., which are bounded by the line <math>\\text{FS}</math>, and for which consequently <math>\\theta</math> is the same, will have the same height of image at the diaphragm. Conversely, if <math>\\text{K}</math> be a wire in the diaphragm it will cut the image of the staff for all positions of the staff between <math>\\text{T}</math> and <math>\\text{F}</math> in points that lie on the line <math>\\text{FS}</math>. Now the intercept <math>\\text{S}''\\text{T}''</math>, half-way between <math>\\text{F}</math> and <math>\\text{T}</math>, will be one-half of <math>\\text{ST}</math>, and therefore if the reading on the staff indicated by the wire in question be one-half of <math>\\text{ST}</math>, it may be inferred that the position of the staff is half-way between <math>\\text{F}</math> and <math>\\text{T}</math>, and similarly for other distances. If the distance of <math>\\text{ST}</math> from <math>\\text{O}</math> is required, as is usually the case, a quantity <math>f+c</math> must be added to every distance from <math>\\text{F}</math> determined as above.\n\nIt is very seldom that the line of sight <math>\\text{AT}</math> of the telescope is at right angles to the staff. In general it is more or less inclined to the staff, which is almost always held vertical, and the horizontal",
+   "c2s1": "and vertical distances of the staff from the axis of rotation of the telescope are found thus:—In fig. 5 let <math>\\text{ST}</math> be the observed intercept on the staff when the telescope is inclined at an angle <math>\\alpha</math> to the horizontal. Draw <math>\\text{TS}'</math> at right angles to <math>\\text{OT}</math>. The angle <math>\\text{TS}'\\text{S}</math> will be very nearly a right angle, and <math>\\text{STS}'</math> may be taken as equal to <math>\\alpha</math>. If there were <math>n</math> graduations (each corresponding to 1 yard in distance) in <math>\\text{ST}</math>, there would be <math>n \\cos \\alpha</math> graduations in",
+   "c2s2": "{{c|{{sc|Fig.}} 5.}}",
+   "c2s3": "{{c|{{sc|Fig.}} 6.}}",
+   "c2s4": "Therefore all the readings of the staff which would be given by the outer wire of the diaphragm will lie on the line <math>\\text{OS}</math> (for all of"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0364 c1f1.png",
+   "c1f2": "eb1911 v26 p0364 c1f2.png",
+   "c2f1": "eb1911 v26 p0364 c2f1.png",
+   "c2f2": "eb1911 v26 p0364 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     185,
+     554,
+     1064,
+     733
+    ],
+    "caption": [
+     578,
+     753,
+     687,
+     786
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     177,
+     548,
+     1164,
+     711
+    ]
+   },
+   {
+    "box": [
+     1266,
+     432,
+     2184,
+     864
+    ],
+    "caption": [
+     1664,
+     874,
+     1770,
+     904
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1237,
+     442,
+     2238,
+     866
+    ]
+   },
+   {
+    "box": [
+     107,
+     1479,
+     1192,
+     2008
+    ],
+    "caption": [
+     575,
+     1954,
+     682,
+     1986
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     102,
+     1431,
+     1480,
+     2015
+    ]
+   },
+   {
+    "box": [
+     1152,
+     2548,
+     2234,
+     2965
+    ],
+    "caption": [
+     1579,
+     2970,
+     1685,
+     3000
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1045,
+     2540,
+     2238,
+     2973
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    4
+   ],
+   "2": [
+    2,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 10032,
+    "output_tokens": 312,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 3716,
+    "output_tokens": 3036,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||TACHEOMETRY|343}}</noinclude>[[File:eb1911 v26 p0364 c1f1.png|center|356px]]\n{{c|{{sc|Fig.}} 3.}}\n\nthe intercept is exactly 100 divisions or not. If it is not, the wire diaphragm must be shifted in the tube until it is. In figs. 3, 4, 5 and 6 the distances are deduced from the readings of a central wire in the optical axis of the telescope and of a wire above it, for the sake of simplicity. The usual arrangement is to fit the diaphragm with a central wire and with one or two wires above and below it at equal distances from the central wire. The vertical angle of depression or elevation is fixed by directing the central wire to a well-defined division on the staff, and the distance of the staff is inferred from the readings given by the corresponding wires above and below the central wire.\n\nThe elementary form of tacheometer given above illustrates the general principle of the class of tacheometers now under consideration, and as leading up to the practical form, in which the staff is viewed with a telescope mounted in the manner of a theodolite. The simplest form is Reichenbach's tacheometer, which may be investigated as follows:—In fig. 4 let <math>\\text{A}</math> be the object glass by which an image of the staff <math>\\text{ST}</math> is formed at <math>\\text{HK}</math>. The wire diaphragm is moved in the tube so as to coincide with the image, and vertical distances of the staff from the axis of rotation of the telescope are found thus:—In fig. 5 let <math>\\text{ST}</math> be the observed intercept on the staff when the telescope is inclined at an angle <math>\\alpha</math> to the horizontal. Draw <math>\\text{TS}'</math> at right angles to <math>\\text{OT}</math>. The angle <math>\\text{TS}'\\text{S}</math> will be very nearly a right angle, and <math>\\text{STS}'</math> may be taken as equal to <math>\\alpha</math>. If there were <math>n</math> graduations (each corresponding to 1 yard in distance) in <math>\\text{ST}</math>, there would be <math>n \\cos \\alpha</math> graduations in Therefore all the readings of the staff which would be given by the outer wire of the diaphragm will lie on the line <math>\\text{OS}</math> (for all of\n\n[[File:eb1911 v26 p0364 c1f2.png|center|356px]]\nand the image and wires are viewed with an eye-piece (not shown) in the usual way. Let <math>\\text{O}</math> be the point where the vertical axis of the instrument cuts the axis of the telescope, the instrument being centred over a peg, from which the distance to the staff is required. The object glass (of focal length <math>=f</math>) is at a distance <math>c</math> from <math>\\text{O}</math>. Let <math>\\text{AT}=u</math> and <math>\\text{AH}=v</math>, and the angle <math>\\text{SAT}=\\text{HAK}=\\theta</math>. Then if <math>i</math> be the height of the image <math>\\text{HK}</math>, <math>i=v\\tan\\theta</math>. Since <math>1/v+1/u=1/f</math>, we have <math>v=-uf/(u-f)</math>, and hence <math>i=uf\\tan\\theta/(u-f)</math>. Let <math>\\text{F}</math> be some point on <math>\\text{AT}</math> such that <math>\\text{AF}=x</math> and <math>\\text{FT}=u'</math>. And let the angle <math>\\text{SFT}=\\phi</math>. Then <math>u=u'+x</math> and <math>\\tan\\theta=u'\\tan\\phi/(u'+x)</math>, and therefore\n{{block center|<math>i=\\frac{(u'+x)f}{u'+x-f}\\frac{u'}{u'+x}\\cdot\\tan\\phi=\\frac{fu'}{u'+x-f}\\tan\\phi</math>; and, if <math>x=f,\\ i=f\\tan\\phi</math>.}}\n\nIf therefore the point <math>\\text{F}</math> be taken at a distance <math>f</math> from the object glass, every intercept of the staff for positions between <math>\\text{T}</math> and <math>\\text{F}</math>, such as <math>\\text{S}'\\text{T}'</math>, <math>\\text{S}''\\text{T}''</math>, &c., which are bounded by the line <math>\\text{FS}</math>, and for which consequently <math>\\theta</math> is the same, will have the same height of image at the diaphragm. Conversely, if <math>\\text{K}</math> be a wire in the diaphragm it will cut the image of the staff for all positions of the staff between <math>\\text{T}</math> and <math>\\text{F}</math> in points that lie on the line <math>\\text{FS}</math>. Now the intercept <math>\\text{S}''\\text{T}''</math>, half-way between <math>\\text{F}</math> and <math>\\text{T}</math>, will be one-half of <math>\\text{ST}</math>, and therefore if the reading on the staff indicated by the wire in question be one-half of <math>\\text{ST}</math>, it may be inferred that the position of the staff is half-way between <math>\\text{F}</math> and <math>\\text{T}</math>, and similarly for other distances. If the distance of <math>\\text{ST}</math> from <math>\\text{O}</math> is required, as is usually the case, a quantity <math>f+c</math> must be added to every distance from <math>\\text{F}</math> determined as above.\n\nIt is very seldom that the line of sight <math>\\text{AT}</math> of the telescope is at right angles to the staff. In general it is more or less inclined to the staff, which is almost always held vertical, and the horizontal\n\n[[File:eb1911 v26 p0364 c2f1.png|center|355px]]\n{{c|{{sc|Fig.}} 5.}}\n\n[[File:eb1911 v26 p0364 c2f2.png|center|355px]]\n{{c|{{sc|Fig.}} 6.}}<noinclude><references/></noinclude>"
+}

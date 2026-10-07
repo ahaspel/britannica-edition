@@ -1,0 +1,292 @@
+{
+ "volume": 24,
+ "page_number": 1039,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1054",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1054",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 1075,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     126,
+     1,
+     2410,
+     214
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     126,
+     214,
+     1189,
+     977
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     126,
+     977,
+     1189,
+     1364
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     126,
+     1364,
+     1189,
+     2144
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     126,
+     2156,
+     1189,
+     2188
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     126,
+     2188,
+     1189,
+     3229
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     126,
+     3229,
+     1189,
+     3320
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     214,
+     2410,
+     616
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1189,
+     616,
+     2410,
+     1374
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     1393,
+     2410,
+     1423
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     1423,
+     2410,
+     1932
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1189,
+     1932,
+     2410,
+     2945
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2955,
+     2410,
+     2988
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2988,
+     2410,
+     3320
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|968|SHIPBUILDING|[COURSE OF CONSTRUCTION}}",
+   "c1s1": "¶\n''Frame lines.'' The transverse frame lines are the intersections with the frame surface of transverse vertical planes passing through the lines of intersection of the two exterior surfaces of the flanges of the frame angle bars, or of the web and flange of any other type of rolled section which may be used for the frame. The distance between two adjacent frame lines, called the “frame space,” is given in the specification, and the positions of the frames relatively to the ordinates are shown in the sheer plan of the sheer drawing. The frame space in a warship is commonly 4 ft. within the limits of the double bottom and 3 ft. forward and aft. In a merchant ship the spacing is usually less. The positions of the planes of the frames are set off along the middle line of the half-breadth plan, the proper scale being used in the contracted half-breadth, and ordinates are drawn to represent their traces in the half-breadth and sheer plans. The projections of the frame lines in the body are obtained from the intersections of the ordinates with the water and diagonal lines in the half-breadth and the bow and buttock lines in the sheer plan in a manner already described in the case of the more widely spaced stations used in fairing the body. These frame lines in the body should require no further fairing if the work has been accurately done when using the original square stations, and they can be at once rased in on the floor.",
+   "c1s2": "¶\n'''''Cant frames.''''' As already stated, it is usual to dispose the transverse framing of a ship entirely in planes perpendicular to the trace of the load water-plane with the longitudinal plane of symmetry of the ship. This practice leads to a large and varying bevel being given to the frame bars at the ends of a vessel with a very bluff bow or stern, and it becomes a practical question whether it would not be better at such parts to dispose the frames in planes which are more nearly normal to the general surface of the ship and which need not be perpendicular to either of the three planes of reference. The disposal of frames in this way, more usually in planes perpendicular to the half-breadth planes only, when they",
+   "c1s3": "{{c|{{sc|Fig.}} 101.}}",
+   "c1s4": "are called “cants,” is in common use in wood shipbuilding, it being of great economical importance that the timber frames shall be of square or nearly square section, but it is also adopted in iron and steel ships of unusual form or having special features, such for instance as a lifting screw propeller.\n\nTo lay off a cant frame or “cant”: Let the traces of the ''cant'' be <math>a'b'</math>, <math>ab</math> in fig. 101. Let <math>\\text{LL}</math> be the projections of a level line in the three plans intersecting <math>ab</math> at <math>b</math> in the half-breadth. Then <math>b_1</math> in the sheer is the vertical projection of <math>b</math>, and a curve through all such points as <math>b_1</math> is the projection in the sheer of the shape of the frame or, as it is called, of the moulding edge of the frame. <math>b_2</math> in the body, where <math>a_2b_2</math> is equal to the perpendicular distance of <math>b</math> from the middle line of the half-breadth, is a point in the projection in the body plan; and <math>b_3</math> where <math>a_2b_3</math> is equal to <math>ab</math> is the position of the point, when the cant plane is hinged about <math>a'b'</math> until it is parallel with the body plane. Hence a curve drawn through all such points as <math>b_3</math> is the true form of the moulding edge of the cant. To obtain the angle which the surface of the ship makes with the plane of the moulding edge, a plane parallel to that of the moulding edge and distant from it the width of the bevelling board must be laid off in a suitable position in the body plan. Let <math>g'c'</math>, <math>gc</math> be the traces of such a plane where <math>af</math>, the normal distance between it and the plane whose traces are <math>a'b'</math>, <math>ab</math>, is the breadth of the bevelling board. The vertical projections of <math>c</math>, viz. <math>c_1</math> and <math>c_2</math>, in the sheer and body are found in the same way as those of <math>b</math>; but in order to obtain the rabatted curve of the bevelling edge in such a position relatively to the moulding edge that the perpendicular distance between the two curves measures the bevelling in the same way that the perpendicular",
+   "c1s5": "",
+   "c2s1": "distance between two frame lines of the square body measures their bevelling, it is necessary to first project the bevelling edge on the plane of the moulding edge before rabatting the latter. The whole operation is effected by making <math>a_2\\,c_3</math> in the body equal to <math>fc</math> in the half-breadth, where <math>af</math> is perpendicular to <math>ab</math> and <math>gc</math>. A curve through all such points as <math>c_3</math> is the bevelling edge laid off in the position relative to the moulding edge required, the bevellings being taken in a similar manner to those of the ordinary transverse frames.\n\nSpots on the cant can also be obtained from diagonals as follows:—In fig. 102 let DD be the projections of a diagonal",
+   "c2s2": "{{c|{{sc|Fig.}} 102.}}",
+   "c2s3": "line in the three plans cutting the horizontal traces of the moulding and bevelling edges at <math>d</math> and <math>e</math> in the half-breadth. The projections <math>d_1</math>, <math>e_1</math> in the sheer and <math>d_2</math>, <math>e_2</math> in the body of the intersections of the diagonal line with the planes of the moulding and bevelling edges are obtained in the same way as in the case of the level line, and the method of obtaining the rabatted positions, when the plane of the moulding edge, with the bevelling edge projected upon it, is turned about <math>a'b'</math> until it is parallel to the body plane, is also analogous; but in this case the corresponding points of the moulding and bevelling edges are in different level planes <math>d_2d_1</math> <math>e_2e_1</math>. Points in the rabatted curves of the moulding and bevelling edges of the cant may also be obtained from the intersections with bow and buttock lines, as shown in fig. 103, where <math>\\text{BB}</math> are the projections of the",
+   "c2s4": "{{c|{{sc|Fig.}} 103.}}",
+   "c2s5": "bow or buttock line in the three plans. The method is analogous to that described above when using level lines and as shown by the figure, <math>h_3</math> and <math>k_3</math> being rabatted positions of points in the moulding"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1039 c1f1.png",
+   "c2f1": "eb1911 v24 p1039 c2f1.png",
+   "c2f2": "eb1911 v24 p1039 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     205,
+     1367,
+     1100,
+     2141
+    ],
+    "caption": [
+     563,
+     2156,
+     703,
+     2188
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     195,
+     1368,
+     1184,
+     2136
+    ]
+   },
+   {
+    "box": [
+     1342,
+     619,
+     2146,
+     1371
+    ],
+    "caption": [
+     1645,
+     1393,
+     1785,
+     1423
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1328,
+     615,
+     2080,
+     1372
+    ]
+   },
+   {
+    "box": [
+     1294,
+     1935,
+     2165,
+     2942
+    ],
+    "caption": [
+     1643,
+     2955,
+     1785,
+     2988
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1284,
+     1992,
+     2136,
+     2939
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    0,
+    1
+   ],
+   "1": [
+    1,
+    3
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 4,
+    "input_tokens": 10025,
+    "output_tokens": 265,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 11,
+    "input_tokens": 6407,
+    "output_tokens": 2873,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 21164
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|968|SHIPBUILDING|[COURSE OF CONSTRUCTION}}</noinclude>''Frame lines.'' The transverse frame lines are the intersections with the frame surface of transverse vertical planes passing through the lines of intersection of the two exterior surfaces of the flanges of the frame angle bars, or of the web and flange of any other type of rolled section which may be used for the frame. The distance between two adjacent frame lines, called the “frame space,” is given in the specification, and the positions of the frames relatively to the ordinates are shown in the sheer plan of the sheer drawing. The frame space in a warship is commonly 4 ft. within the limits of the double bottom and 3 ft. forward and aft. In a merchant ship the spacing is usually less. The positions of the planes of the frames are set off along the middle line of the half-breadth plan, the proper scale being used in the contracted half-breadth, and ordinates are drawn to represent their traces in the half-breadth and sheer plans. The projections of the frame lines in the body are obtained from the intersections of the ordinates with the water and diagonal lines in the half-breadth and the bow and buttock lines in the sheer plan in a manner already described in the case of the more widely spaced stations used in fairing the body. These frame lines in the body should require no further fairing if the work has been accurately done when using the original square stations, and they can be at once rased in on the floor.\n\n'''''Cant frames.''''' As already stated, it is usual to dispose the transverse framing of a ship entirely in planes perpendicular to the trace of the load water-plane with the longitudinal plane of symmetry of the ship. This practice leads to a large and varying bevel being given to the frame bars at the ends of a vessel with a very bluff bow or stern, and it becomes a practical question whether it would not be better at such parts to dispose the frames in planes which are more nearly normal to the general surface of the ship and which need not be perpendicular to either of the three planes of reference. The disposal of frames in this way, more usually in planes perpendicular to the half-breadth planes only, when they are called “cants,” is in common use in wood shipbuilding, it being of great economical importance that the timber frames shall be of square or nearly square section, but it is also adopted in iron and steel ships of unusual form or having special features, such for instance as a lifting screw propeller.\n\n[[File:eb1911 v24 p1039 c1f1.png|center|356px]]\n{{c|{{sc|Fig.}} 101.}}\n\nTo lay off a cant frame or “cant”: Let the traces of the ''cant'' be <math>a'b'</math>, <math>ab</math> in fig. 101. Let <math>\\text{LL}</math> be the projections of a level line in the three plans intersecting <math>ab</math> at <math>b</math> in the half-breadth. Then <math>b_1</math> in the sheer is the vertical projection of <math>b</math>, and a curve through all such points as <math>b_1</math> is the projection in the sheer of the shape of the frame or, as it is called, of the moulding edge of the frame. <math>b_2</math> in the body, where <math>a_2b_2</math> is equal to the perpendicular distance of <math>b</math> from the middle line of the half-breadth, is a point in the projection in the body plan; and <math>b_3</math> where <math>a_2b_3</math> is equal to <math>ab</math> is the position of the point, when the cant plane is hinged about <math>a'b'</math> until it is parallel with the body plane. Hence a curve drawn through all such points as <math>b_3</math> is the true form of the moulding edge of the cant. To obtain the angle which the surface of the ship makes with the plane of the moulding edge, a plane parallel to that of the moulding edge and distant from it the width of the bevelling board must be laid off in a suitable position in the body plan. Let <math>g'c'</math>, <math>gc</math> be the traces of such a plane where <math>af</math>, the normal distance between it and the plane whose traces are <math>a'b'</math>, <math>ab</math>, is the breadth of the bevelling board. The vertical projections of <math>c</math>, viz. <math>c_1</math> and <math>c_2</math>, in the sheer and body are found in the same way as those of <math>b</math>; but in order to obtain the rabatted curve of the bevelling edge in such a position relatively to the moulding edge that the perpendicular distance between the two curves measures the bevelling in the same way that the perpendicular distance between two frame lines of the square body measures their bevelling, it is necessary to first project the bevelling edge on the plane of the moulding edge before rabatting the latter. The whole operation is effected by making <math>a_2\\,c_3</math> in the body equal to <math>fc</math> in the half-breadth, where <math>af</math> is perpendicular to <math>ab</math> and <math>gc</math>. A curve through all such points as <math>c_3</math> is the bevelling edge laid off in the position relative to the moulding edge required, the bevellings being taken in a similar manner to those of the ordinary transverse frames.\n\nSpots on the cant can also be obtained from diagonals as follows:—In fig. 102 let DD be the projections of a diagonal line in the three plans cutting the horizontal traces of the moulding and bevelling edges at <math>d</math> and <math>e</math> in the half-breadth. The projections <math>d_1</math>, <math>e_1</math> in the sheer and <math>d_2</math>, <math>e_2</math> in the body of the intersections of the diagonal line with the planes of the moulding and bevelling edges are obtained in the same way as in the case of the level line, and the method of obtaining the rabatted positions, when the plane of the moulding edge, with the bevelling edge projected upon it, is turned about <math>a'b'</math> until it is parallel to the body plane, is also analogous; but in this case the corresponding points of the moulding and bevelling edges are in different level planes <math>d_2d_1</math> <math>e_2e_1</math>. Points in the rabatted curves of the moulding and bevelling edges of the cant may also be obtained from the intersections with bow and buttock lines, as shown in fig. 103, where <math>\\text{BB}</math> are the projections of the bow or buttock line in the three plans. The method is analogous to that described above when using level lines and as shown by the figure, <math>h_3</math> and <math>k_3</math> being rabatted positions of points in the moulding\n\n[[File:eb1911 v24 p1039 c2f1.png|center|409px]]\n{{c|{{sc|Fig.}} 102.}}\n\n[[File:eb1911 v24 p1039 c2f2.png|center|409px]]\n{{c|{{sc|Fig.}} 103.}}<noinclude><references/></noinclude>"
+}

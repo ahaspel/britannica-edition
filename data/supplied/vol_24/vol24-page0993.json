@@ -1,0 +1,242 @@
+{
+ "volume": 24,
+ "page_number": 993,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1003",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1003",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1082,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     69,
+     136,
+     2209,
+     205
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     69,
+     205,
+     1136,
+     1216
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     69,
+     1216,
+     1136,
+     1855
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     69,
+     1855,
+     1136,
+     2382
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     69,
+     2397,
+     1136,
+     2428
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     69,
+     2428,
+     1136,
+     3133
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1136,
+     205,
+     2209,
+     1211
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1136,
+     1211,
+     2209,
+     1597
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1136,
+     1597,
+     2209,
+     1759
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1136,
+     1772,
+     2209,
+     1800
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1136,
+     1800,
+     2209,
+     2871
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1136,
+     2871,
+     2209,
+     3133
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|THEORETICAL]|SHIPBUILDING|931}}",
+   "c1s1": "former force. A more dangerous, though improbable, case in which a gust of wind strikes the ship just as she has completed a roll to windward can similarly be investigated; it is found that the safe angle of steady heel under this condition is considerably less than that represented by <math>\\text{OM}'</math>. It thus appears that it is of the greatest importance that sailing vessels should possess large dynamical stability in order to provide against the risk of capsizing due to fluctuations in the wind-pressure. Although the neglect of the wind and water resistances in the above investigation materially modifies the quantitative results, the general conclusions point to the necessity for sufficient range and freeboard however large the righting levers may be at small inclinations.\n\nThe centres of effort and of lateral resistance have not the same longitudinal position, consequently a horizontal couple is produced which turns the vessel either into the wind or away from it. In the former condition the vessel is said to be “ardent,” and in the latter to be “slack.” In order that a vessel may be quick in going about and yet not require too large a helm angle on a straight course, she should be slightly “ardent,” ''i.e.'' the true centre of effort should be slightly abaft the true centre of lateral resistance. The assumed and true positions of these centres differ to some extent, and on making allowance for this it is found that in the majority of vessels possessing slight ardency the assumed C.E. lies slightly ''before'' instead of ''abaft'' the assumed C.L.R. In small sailing boats the points are usually very near together; but in a large number of sailing ships, including H.M. sloops, their distance apart is about ·05 <math>\\text{L}</math>, and in yachts about ·02 <math>\\text{L}</math>, where <math>\\text{L}</math> is the length.\n\nIt may be noted in this connexion that the area of sail spread and the size of the ship are often connected by the coefficient <math>\\frac{\\text{A}}{\\text{W}^{\\frac{2}{3}}}</math> known",
+   "c1s2": "as the ''Driving Power.'' The value for small sailing boats and for yachts is about 200, and for full-rigged sailing ships from 80 to 100 (including plain sail only).\n\n'''''Longitudinal stability.''''' The method of estimating the righting moment of a ship when inclined from a position of equilibrium through a small angle in the longitudinal plane is exactly analogous to that used in the case of small transverse inclination, and similar propositions are true in both cases, viz.:—\n\n1. Consecutive water-lines intersect about an axis passing through the centre of flotation.\n\n2. The height of the longitudinal metacentre <math>\\text{M}</math> above the centre of buoyancy is equal to the moment of inertia about this axis divided by the volume of displacement of the ship.\n\n3. The righting moment at any small angle of inclination <math>\\theta</math> (circular measure) is equal to\n{{block center|<math>\\text{W}.\\text{GM}.\\theta.</math>}}\n\nIn fig. 21 let <math>\\text{WL}</math> be the water-line corresponding to the positions <math>\\text{G}</math> and <math>\\text{B}</math>, and conceive a longitudinal movement of a portion of",
+   "c1s3": "{{c|{{sc|Fig.}} 21.}}",
+   "c1s4": "the weights in the ship causing <math>\\text{G}</math> to move horizontally to <math>\\text{G}'</math>. If <math>\\text{G}'</math> be abaft <math>\\text{G}</math> the ship will alter trim by the stern until <math>\\text{B}</math> moves to <math>\\text{B}'</math> vertically beneath <math>\\text{G}'</math> and the water-line changes to <math>\\text{W}'\\text{L}'</math>, intersecting <math>\\text{WL}</math> at the centre of flotation <math>\\text{F}</math>.\n\nIf <math>\\text{L}</math> be the length of the ship between the draught marks, the change of trim <math>(\\text{WW}'+\\text{LL}')</math> is equal to <math>\\text{L}.\\theta</math>, and the moment changing trim is <math>\\text{W}.\\text{GG}'</math> or <math>\\text{W}.\\text{GM}.\\theta</math>; the change of trim in inches (other linear dimensions being in feet) is therefore\n{{block center|<math>\\text{W}\\times\\text{GG}'\\div\\frac{\\text{W}\\times\\text{GM}}{12\\text{L}}</math>.}}\nThe change of trim due to any horizontal movement of weights is therefore equal to the moment of the shift of weight divided by the quantity\n{{block center|<math>\\frac{\\text{W}\\times\\text{GM}}{12\\times\\text{L}}</math>}}\nwhich is the moment required to change trim one inch. Since the longitudinal moment of inertia of the water-plane includes the cube of the length as a factor, the longitudinal <math>\\text{BM}</math> is usually large compared",
+   "c2s1": "with <math>\\text{BG}</math>, and the moment to change trim 1 in. in foot-tons is nearly equal to\n\n{{block center|<math>\\frac{\\text{W}\\times\\text{BM}}{12\\times\\text{L}}=\\frac{\\text{W}\\times\\text{I}}{12\\times\\text{L}\\times\\text{V}}=\\frac{\\text{I}}{420\\text{L}},</math>}}\n\nwhich is approximately constant for moderate variations of draught.\n\nIf a weight of moderate amount <math>w</math> tons be placed at a distance of <math>a</math> feet abaft the ''centre of flotation'' <math>\\text{F}</math>, the bodily sinkage in inches is <math>\\frac{w}{\\text{T}}</math>, the moment changing trim by the stern is <math>wa</math> foot-tons, and the change of trim is therefore <math>\\frac{wa}{\\text{M}}</math> where <math>\\text{T}</math> is the “tons per inch” and <math>\\text{M}</math> the moment to change trim 1 in. If <math>b</math> be the distance of <math>\\text{F}</math> abaft the middle of length, the draughts forward and aft are increased respectively by\n\n{{block center|<math>w\\left(\\frac{1}{\\text{T}}-\\frac{a}{\\text{M}}\\cdot\\frac{\\text{L}+2b}{2\\text{L}}\\right)</math> and}}\n\n{{block center|<math>w\\left(\\frac{1}{\\text{T}}+\\frac{a}{\\text{M}}\\,\\frac{\\text{L}-2b}{2\\text{L}}\\right)</math> inches.}}\n\n'''''Stability when damaged.''''' A ship provided with water-tight compartments is liable to have water admitted into any of them on account of damage received, or may require to carry water or other fluid in bulk as ballast or cargo. The effect of this addition on the draught and the stability is therefore of interest. There are three cases:—\n\n1. When the water completely fills a compartment;\n\n2. When the water partially fills a compartment up to the level of the water-line, remaining in free communication with the sea; and\n\n3. When a compartment is partially filled with water without any communication with the sea.",
+   "c2s2": "¶\nIn the first case the water is regarded as a weight added to the ship; the mean sinkage is obtained from the displacement curve, the change of trim from the “moment to change trim,” and the angle of heel from the metacentric diagram, or (for large angles) the cross curves. In general, if the compartment filled is low in the ship, the stability is increased; if high, it is diminished.\n\nIn the second case, assume in the first place the compartment to be amidships, so that no heel or change of trim occurs, and to be moderate in size, so that the sinkage is moderate in amount.\n\nLet ABCD (fig. 22) be such a compartment bounded by water-tight bulkheads sufficiently high to prevent water reaching adjoining",
+   "c2s3": "{{c|{{sc|Fig.}} 22.}}",
+   "c2s4": "compartments. Let the water-lines be <math>\\text{WEFL}</math>, <math>\\text{W}'\\text{GHL}'</math>, before and after bilging; let <math>\\text{A}</math>, <math>a</math> be the area of the whole water-plane <math>\\text{WEFL}</math> and of the portion <math>\\text{EF}</math> within the compartment respectively, in square feet; and let <math>v</math> be the volume contained in <math>\\text{EBCF}</math> diminished by the volume of any solid cargo in the compartment. The buoyancy is reduced by an amount <math>v</math> by bilging, and the amount added through sinking must be equal to the amount so lost. If <math>x</math> be the sinkage in feet, then\n{{block center|<math>v=x(\\text{A}-a)</math>,}}\nso that the mean sinkage is equal to the buoyancy lost divided by the area of the intact water-plane. In the event of the compartment being so situated as to cause heel and change of trim, the mean sinkage is first determined as above, and the effect of heel and change of trim superposed.\n\nTo obtain the heel produced, the position of the centre of flotation for the intact portion of the water-plane is found, and thence the vertical and horizontal positions of the new centre of buoyancy are deduced by taking account of the buoyancy lost through bilging, and then regained by the layer between the two water-planes. The moment of inertia of the intact water-plane is found about an axis through the new centre of flotation and thence the height of the new metacentre <math>\\text{M}'</math> determined. The heel <math>\\theta</math> (assumed small) is found by equating the horizontal shift of <math>\\text{B}</math> to <math>\\sin\\theta\\times</math> the vertical distance of <math>\\text{M}'</math> above <math>\\text{G}</math>, both being equal to the moment causing heel divided by the displacement. In a similar manner the change of trim is obtained. If the compartment bilged is large so that considerable changes in its area and that of the ship at the water-line result, the sinkage and alteration in stability are found by a tentative process, closer approximations to the final water-line being successively made.\n\nAn investigation of the stability when bilged at or near the water-line is of special importance in warships owing to their liability to",
+   "c2s5": "damage by gunfire in action, with the consequent opening up of a large number of compartments to the sea. Calculations are made of the sinkage and stability when the unarmoured or lightly armoured parts of the ship are completely riddled; the stability should be sufficient to provide for this contingency.\n\nThe third case, where the ship is intact but has compartments partially filled with water or other liquid, is of frequent occurrence. Practical illustrations occur in connexion with the filling and"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p0993 c1f1.png",
+   "c2f1": "eb1911 v24 p0993 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     149,
+     1858,
+     1039,
+     2378
+    ],
+    "caption": [
+     534,
+     2397,
+     657,
+     2428
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     168,
+     1856,
+     1041,
+     2380
+    ]
+   },
+   {
+    "box": [
+     1243,
+     1600,
+     2128,
+     1756
+    ],
+    "caption": [
+     1619,
+     1772,
+     1743,
+     1800
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1240,
+     1594,
+     2126,
+     1756
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    2
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6196,
+    "output_tokens": 177,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 10,
+    "input_tokens": 7820,
+    "output_tokens": 5304,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 19240
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|THEORETICAL]|SHIPBUILDING|931}}</noinclude>former force. A more dangerous, though improbable, case in which a gust of wind strikes the ship just as she has completed a roll to windward can similarly be investigated; it is found that the safe angle of steady heel under this condition is considerably less than that represented by <math>\\text{OM}'</math>. It thus appears that it is of the greatest importance that sailing vessels should possess large dynamical stability in order to provide against the risk of capsizing due to fluctuations in the wind-pressure. Although the neglect of the wind and water resistances in the above investigation materially modifies the quantitative results, the general conclusions point to the necessity for sufficient range and freeboard however large the righting levers may be at small inclinations.\n\nThe centres of effort and of lateral resistance have not the same longitudinal position, consequently a horizontal couple is produced which turns the vessel either into the wind or away from it. In the former condition the vessel is said to be “ardent,” and in the latter to be “slack.” In order that a vessel may be quick in going about and yet not require too large a helm angle on a straight course, she should be slightly “ardent,” ''i.e.'' the true centre of effort should be slightly abaft the true centre of lateral resistance. The assumed and true positions of these centres differ to some extent, and on making allowance for this it is found that in the majority of vessels possessing slight ardency the assumed C.E. lies slightly ''before'' instead of ''abaft'' the assumed C.L.R. In small sailing boats the points are usually very near together; but in a large number of sailing ships, including H.M. sloops, their distance apart is about ·05 <math>\\text{L}</math>, and in yachts about ·02 <math>\\text{L}</math>, where <math>\\text{L}</math> is the length.\n\nIt may be noted in this connexion that the area of sail spread and the size of the ship are often connected by the coefficient <math>\\frac{\\text{A}}{\\text{W}^{\\frac{2}{3}}}</math> known as the ''Driving Power.'' The value for small sailing boats and for yachts is about 200, and for full-rigged sailing ships from 80 to 100 (including plain sail only).\n\n'''''Longitudinal stability.''''' The method of estimating the righting moment of a ship when inclined from a position of equilibrium through a small angle in the longitudinal plane is exactly analogous to that used in the case of small transverse inclination, and similar propositions are true in both cases, viz.:—\n\n1. Consecutive water-lines intersect about an axis passing through the centre of flotation.\n\n2. The height of the longitudinal metacentre <math>\\text{M}</math> above the centre of buoyancy is equal to the moment of inertia about this axis divided by the volume of displacement of the ship.\n\n3. The righting moment at any small angle of inclination <math>\\theta</math> (circular measure) is equal to\n{{block center|<math>\\text{W}.\\text{GM}.\\theta.</math>}}\n\nIn fig. 21 let <math>\\text{WL}</math> be the water-line corresponding to the positions <math>\\text{G}</math> and <math>\\text{B}</math>, and conceive a longitudinal movement of a portion of the weights in the ship causing <math>\\text{G}</math> to move horizontally to <math>\\text{G}'</math>. If <math>\\text{G}'</math> be abaft <math>\\text{G}</math> the ship will alter trim by the stern until <math>\\text{B}</math> moves to <math>\\text{B}'</math> vertically beneath <math>\\text{G}'</math> and the water-line changes to <math>\\text{W}'\\text{L}'</math>, intersecting <math>\\text{WL}</math> at the centre of flotation <math>\\text{F}</math>.\n\n[[File:eb1911 v24 p0993 c1f1.png|center|355px]]\n{{c|{{sc|Fig.}} 21.}}\n\nIf <math>\\text{L}</math> be the length of the ship between the draught marks, the change of trim <math>(\\text{WW}'+\\text{LL}')</math> is equal to <math>\\text{L}.\\theta</math>, and the moment changing trim is <math>\\text{W}.\\text{GG}'</math> or <math>\\text{W}.\\text{GM}.\\theta</math>; the change of trim in inches (other linear dimensions being in feet) is therefore\n{{block center|<math>\\text{W}\\times\\text{GG}'\\div\\frac{\\text{W}\\times\\text{GM}}{12\\text{L}}</math>.}}\nThe change of trim due to any horizontal movement of weights is therefore equal to the moment of the shift of weight divided by the quantity\n{{block center|<math>\\frac{\\text{W}\\times\\text{GM}}{12\\times\\text{L}}</math>}}\nwhich is the moment required to change trim one inch. Since the longitudinal moment of inertia of the water-plane includes the cube of the length as a factor, the longitudinal <math>\\text{BM}</math> is usually large compared with <math>\\text{BG}</math>, and the moment to change trim 1 in. in foot-tons is nearly equal to\n\n{{block center|<math>\\frac{\\text{W}\\times\\text{BM}}{12\\times\\text{L}}=\\frac{\\text{W}\\times\\text{I}}{12\\times\\text{L}\\times\\text{V}}=\\frac{\\text{I}}{420\\text{L}},</math>}}\n\nwhich is approximately constant for moderate variations of draught.\n\nIf a weight of moderate amount <math>w</math> tons be placed at a distance of <math>a</math> feet abaft the ''centre of flotation'' <math>\\text{F}</math>, the bodily sinkage in inches is <math>\\frac{w}{\\text{T}}</math>, the moment changing trim by the stern is <math>wa</math> foot-tons, and the change of trim is therefore <math>\\frac{wa}{\\text{M}}</math> where <math>\\text{T}</math> is the “tons per inch” and <math>\\text{M}</math> the moment to change trim 1 in. If <math>b</math> be the distance of <math>\\text{F}</math> abaft the middle of length, the draughts forward and aft are increased respectively by\n\n{{block center|<math>w\\left(\\frac{1}{\\text{T}}-\\frac{a}{\\text{M}}\\cdot\\frac{\\text{L}+2b}{2\\text{L}}\\right)</math> and}}\n\n{{block center|<math>w\\left(\\frac{1}{\\text{T}}+\\frac{a}{\\text{M}}\\,\\frac{\\text{L}-2b}{2\\text{L}}\\right)</math> inches.}}\n\n'''''Stability when damaged.''''' A ship provided with water-tight compartments is liable to have water admitted into any of them on account of damage received, or may require to carry water or other fluid in bulk as ballast or cargo. The effect of this addition on the draught and the stability is therefore of interest. There are three cases:—\n\n1. When the water completely fills a compartment;\n\n2. When the water partially fills a compartment up to the level of the water-line, remaining in free communication with the sea; and\n\n3. When a compartment is partially filled with water without any communication with the sea.\n\nIn the first case the water is regarded as a weight added to the ship; the mean sinkage is obtained from the displacement curve, the change of trim from the “moment to change trim,” and the angle of heel from the metacentric diagram, or (for large angles) the cross curves. In general, if the compartment filled is low in the ship, the stability is increased; if high, it is diminished.\n\nIn the second case, assume in the first place the compartment to be amidships, so that no heel or change of trim occurs, and to be moderate in size, so that the sinkage is moderate in amount.\n\nLet ABCD (fig. 22) be such a compartment bounded by water-tight bulkheads sufficiently high to prevent water reaching adjoining compartments. Let the water-lines be <math>\\text{WEFL}</math>, <math>\\text{W}'\\text{GHL}'</math>, before and after bilging; let <math>\\text{A}</math>, <math>a</math> be the area of the whole water-plane <math>\\text{WEFL}</math> and of the portion <math>\\text{EF}</math> within the compartment respectively, in square feet; and let <math>v</math> be the volume contained in <math>\\text{EBCF}</math> diminished by the volume of any solid cargo in the compartment. The buoyancy is reduced by an amount <math>v</math> by bilging, and the amount added through sinking must be equal to the amount so lost. If <math>x</math> be the sinkage in feet, then\n{{block center|<math>v=x(\\text{A}-a)</math>,}}\nso that the mean sinkage is equal to the buoyancy lost divided by the area of the intact water-plane. In the event of the compartment being so situated as to cause heel and change of trim, the mean sinkage is first determined as above, and the effect of heel and change of trim superposed.\n\n[[File:eb1911 v24 p0993 c2f1.png|center|357px]]\n{{c|{{sc|Fig.}} 22.}}\n\nTo obtain the heel produced, the position of the centre of flotation for the intact portion of the water-plane is found, and thence the vertical and horizontal positions of the new centre of buoyancy are deduced by taking account of the buoyancy lost through bilging, and then regained by the layer between the two water-planes. The moment of inertia of the intact water-plane is found about an axis through the new centre of flotation and thence the height of the new metacentre <math>\\text{M}'</math> determined. The heel <math>\\theta</math> (assumed small) is found by equating the horizontal shift of <math>\\text{B}</math> to <math>\\sin\\theta\\times</math> the vertical distance of <math>\\text{M}'</math> above <math>\\text{G}</math>, both being equal to the moment causing heel divided by the displacement. In a similar manner the change of trim is obtained. If the compartment bilged is large so that considerable changes in its area and that of the ship at the water-line result, the sinkage and alteration in stability are found by a tentative process, closer approximations to the final water-line being successively made.\n\nAn investigation of the stability when bilged at or near the water-line is of special importance in warships owing to their liability to damage by gunfire in action, with the consequent opening up of a large number of compartments to the sea. Calculations are made of the sinkage and stability when the unarmoured or lightly armoured parts of the ship are completely riddled; the stability should be sufficient to provide for this contingency.\n\nThe third case, where the ship is intact but has compartments partially filled with water or other liquid, is of frequent occurrence. Practical illustrations occur in connexion with the filling and<noinclude><references/></noinclude>"
+}

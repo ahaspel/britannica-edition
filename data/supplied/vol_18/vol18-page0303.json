@@ -1,0 +1,156 @@
+{
+ "volume": 18,
+ "page_number": 303,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri18chisrich/page/n310",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri18chisrich/page/n310",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1132,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     163,
+     2,
+     2358,
+     210
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     163,
+     210,
+     1214,
+     706
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     163,
+     706,
+     1214,
+     1591
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     163,
+     1591,
+     1214,
+     2364
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     163,
+     2364,
+     1214,
+     3320
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1214,
+     210,
+     2358,
+     1004
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1214,
+     1004,
+     2358,
+     2092
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1214,
+     2092,
+     2358,
+     3148
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1214,
+     3148,
+     2358,
+     3320
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|282|METEOROLOGY|[PHYSICAL AND THEORETICAL}}",
+   "c1s1": "surface, then the pressure at any altitude is expressed by the so-called barometric or hypsometric formula\n{{block center|<math>p = \\int_{ho}^h - \\sigma g dh</math> (2)}}\nwhere <math>\\sigma</math> is the density and <math>g</math> the apparent gravity for each layer of air whose vertical thickness is <math>dh</math>. The integral of this formula depends upon the vertical distribution of temperature, and moisture, and gravity; but under the simplest possible assumptions as to these vertical gradients, the following formula was deduced by Laplace and is generally known as his hypsometric formula:—\n{{block center|<math>h - h_o = 18400(1 + 0{\\cdot}00367t) \\left(1 + 0{\\cdot}378\\, \\frac{e}{p}\\right) (1 + 0{\\cdot}0026 \\cos 2\\phi)</math>}}\n{{block center|<math>\\left(1 + \\frac{h + h_o}{6370191}\\right) (1 + 0{\\cdot}00157) \\log \\frac{p_o}{p}.</math> (2a)}}",
+   "c1s2": "In this formula <math>t</math> is the average temperature, <math>e</math> the average vapour tension of the layer of air, <math>p</math> the barometric pressure at the top of the layer, <math>p_0</math> the pressure at the bottom, <math>\\phi</math> the latitude of the station, <math>h</math> the elevation above sea-level of the lower limit of the stratum, and <math>h_0</math> that of the upper limit. The modifications which this formula needs in order to adapt it to other hypotheses representing more nearly the actual distribution of temperature, moisture and gravity, have been elaborately investigated by Angot in a memoir published in 1899 in Part I. of the Memoirs of the Central Meteorological Bureau of France for the year 1896. Angot, Hergesell and Rykatcheff have also shown that for hypsometric work of any pretensions to accuracy it is simplest and best to use Laplace's formula for successive thin strata of air, and add together the individual results, rather than attempt a more complex single formula for the whole stratum; yet the latter seems to be essential for work in aërodynamics.\n\n''C. Thermodynamic Relations''.—The temperature of the air is due to the quantity of molecular energy that is present in the form of heat, but usually there is also present a quantity of molecular energy that is spoken of as latent heat. This latent heat is said to do internal work, such as melting ice or boiling water, while the sensible heat does external work, such as expanding and pushing in all directions. These molecular energies can be transformed into each other over and over again without appreciable loss, and this power of transformation is expressed by the various equations of thermodynamics, of which the fundamental one for our purpose is\n{{block center|<math>d\\text{Q} = \\text{C}_v dt + \\text{A}p dv = \\text{C}_v dt + \\text{ART}\\, dv/v.</math> (3)}}",
+   "c1s3": "This equation expresses the fact that when a quantity of heat measured in calories, <math>d\\text{Q}</math>, is added to or taken from a mass of dry air, there may result both a change of temperature, <math>dt</math>, corresponding to one portion of the heat, <math>\\text{C}_v dt</math>, and a quantity of external work corresponding to the remaining portion of the heat <math>(\\text{A}pdv)</math>. It usually happens that the quantity of heat in a given mass of air does not remain the same for any length of time; it is diminished by radiation or is increased by absorption, and a certain quantity is lost when rain, snow or hail drops down from the air, while a quantity is added to the atmosphere when moisture evaporates and mixes with the dry air as invisible vapour, even the passage of rain-drops down through a lower layer alters the thermal conditions appreciably. The changes due to increase and diminution of moisture are usually small as compared with the great gain due to absorption and convection of solar heat or with the loss by radiation. If these losses and gains are to be taken account of, then the quantity <math>d\\text{Q}</math> in the above equation is finite and important. On the other hand, in some cases atmospheric processes go on so rapidly or under such peculiar circumstances—for instance, in the interior of a cloud—that the change in the quantity of heat may be considered as temporarily negligible. In these cases <math>d\\text{Q}</math> is zero; the changes in temperature balance the changes in external work, and the thermal process is said to be adiabatic.",
+   "c1s4": "¶\n''D. The Condition of Continuity''.—When a mass of liquid or gas goes through several motions and changes without being disrupted or otherwise broken into smaller portions, and without the formation of either local condensations into solid or liquid masses or of bubbles and vacuous spaces in its interior, and when all the changes that go on proceed by gradual continuous processes as to time, then the mass of the fluid is subject to the law of continuity as to mass, and the motion of the fluid is continuous as to velocity. These conditions are assumed in elementary hydrodynamics, and are implied in the process of integration, and in the equation of continuity\n{{block center|<math>\\frac{\\partial\\rho}{\\partial t} + \\frac{\\partial(\\rho u)}{\\partial x} + \\frac{\\partial(\\rho v)}{\\partial y} + \\frac{\\partial(\\rho w)}{\\partial z} = 0</math> (4)}}\nwhere <math>\\rho</math> is the density, <math>t</math> is the time and <math>\\partial</math> the ordinary symbol for partial differentiation. But the fact is that meteorologists have to deal entirely with discontinuous external forces such as insolation ceasing at sunset and renewed daily; radiations of heat changing abruptly with land and ocean and cloudiness and snow covering; discontinuous boundary conditions and resistances at the earth's surface altering at every change from mountains to plains; discontinuous masses changing with additions and abstractions of moisture, rain and snow—all which lead to discontinuous vortex motions and overturnings and rearrangements of the atmospheric strata. The only factors that are continuous for any length of time",
+   "c2s1": "or extent of area are the rotation of the earth and the attraction of gravitation. In the presence of such difficulties as these we must at present confine ourselves to the solution of very special local definite problems or to the general statistical problems of our atmosphere.\n\n''E. Conditions as to Energy and Motion.''—When the total quantity of heat, both latent and sensible, remains constant or changes in a continuous manner, and when the motions are continuous, the mechanical and thermal processes are expressible by ordinary differentials and integrals. Motions of fluids involve both energy and inertia, and are subject to conditions expressed by the following equations of hydrodynamics:—\n\n''a.'' Equations of energy. Let the kinetic energy be <math>\\text{T}</math>, the potential energy <math>\\text{V}</math>, the intrinsic energy <math>\\text{W}</math>: <math>l</math>, <math>m</math>, <math>n</math>, be cosines of the angle between the pressure <math>p</math>, and <math>\\text{S}</math> the inwardly directed normal to the boundary surface. Then will\n{{block center|<math>\\frac{\\partial(\\text{T}+\\text{V}+\\text{W})}{\\partial t} = \\int\\int p(lu+mv+nv)d\\text{S}.</math> (5)}}\n\n''b.'' Equations of acceleration and inertia. Let <math>\\text{P}</math> be the potential of the external forces acting on a unit mass of the atmosphere; <math>\\mu</math>, be the coefficient of viscosity or internal friction. Then will\n{{block center|<math>-\\frac{\\partial\\text{P}}{\\partial x} - \\frac{1}{\\rho}\\frac{\\partial p}{\\partial x} = \\frac{\\partial u}{\\partial t} + u.\\frac{\\partial u}{\\partial x} + v.\\frac{\\partial u}{\\partial y} + w.\\frac{\\partial u}{\\partial z}</math>}}",
+   "c2s2": "{{block center|<math>- \\mu \\left[\\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} + \\frac{\\partial^2 u}{\\partial z^2}\\right]</math>}}\n{{block center|<math>-\\frac{\\partial \\text{P}}{\\partial y} - \\frac{1}{\\rho} \\frac{\\partial p}{\\partial y} = \\frac{\\partial v}{\\partial t} + u.\\frac{\\partial v}{\\partial x} + v.\\frac{\\partial v}{\\partial y} + w.\\frac{\\partial w}{\\partial z}</math> (6)}}\n{{block center|<math>- \\mu \\left[\\frac{\\partial^2 v}{\\partial x^2} + \\frac{\\partial^2 v}{\\partial y^2} + \\frac{\\partial^2 v}{\\partial z^2}\\right]</math>}}\n{{block center|<math>-\\frac{\\partial \\text{P}}{\\partial z} - \\frac{1}{\\rho} \\frac{\\partial p}{\\partial z} = \\frac{\\partial w}{\\partial t} + u.\\frac{\\partial w}{\\partial x} + v.\\frac{\\partial w}{\\partial y} + w.\\frac{\\partial w}{\\partial z}</math>}}\n{{block center|<math>\\mu - \\left[\\frac{\\partial^2 w}{\\partial x^2} + \\frac{\\partial^2 w}{\\partial y^2} + \\frac{\\partial^2 w}{\\partial z^2}\\right]</math>}}\n\n''Approximate Assumptions and Solutions.''—After introducing into the preceding system of fundamental equations (1–6) the actual conditions as accurately as they are known relative to gravity, solar radiation, the rotation of the earth, the viscosity of the air, its mass or inertia, its absorption and radiation of heat, its variable content of moisture, the precipitation of rain and cloud, the mutual interconversions of latent and sensible heat, a special difficulty occurs when we attempt to integrate these equations, because we have still to express analytically the initial conditions of the atmosphere as to pressure and temperature, and its boundary conditions as between the rough earth surface on its lower side and the unknown outward surface on its upper side. As the true earth's surface cannot be represented by any simple algebraic formula, it is customary to assume that it is a uniform sphere, neglecting at least partially, if not wholly, the spheroidal shape. We may first assume that there is no friction between the earth and the air, but must afterwards make allowance for its influence. Thirdly, we assume that the action of the earth's surface to heat the air and to throw moisture by evaporation into the atmosphere is perfectly uniform. Finally, in many cases we go so far as to assume that the atmosphere is an incompressible rare liquid having a uniform density and a uniform",
+   "c2s3": "depth of about 8000 metres, corresponding to the average standard density of dry air under a pressure of 760 millimetres and a temperature of 0° C. Even under these simplifications the analytic difficulties have been too great to admit of rigorous solutions, except in a few of the simplest cases.\n\nThe treatment of atmospheric problems by Ferrel was followed by an equally ingenious mathematical treatment by Professors Guldberg and Mohn, of Christiana, in two papers published by them in 1876 and 1880 respectively. These authors, like Ferrel, treat isolated portions of the atmosphere and obtain special solutions, which, however, have not the generality that must eventually be demanded in a rigorous and general discussion of the atmosphere movements. Elegant mathematical solutions of our problems were first given in 1882 by Oberbeck, of the university of Halle, in the ''Ann. Phys.'' xvii. 128. But even Oberbeck's solutions are obtained under various simplifying assumptions that restrict their satisfactory application to the daily weather conditions. Oberbeck's first memoir treats of the mechanics of stationary cyclonic movements. Assuming that the isobars are concentric circles, and that in the outer portion of a cyclone the air has only horizontal movements, while in the inner portion it has only vertical movements, he solves his system of equations for the inner and outer regions of the cyclone separately. He shows that in general the pressure increases on all sides outwards from the centre; the gradient also increases from the centre outwards to the limit of the inner region, whence it diminishes in the outer region and at a great distance becomes inappreciable. In both regions the paths of the wind are curved lines, logarithmic spirals, which cut the isobars or the radial gradient everywhere at the same angle; therefore the movement of the air can be considered as a spiral inflow from all sides towards the centre. But the angle between the wind and the gradient follows different laws in the outer and inner regions, depending in the former on the rotation of the",
+   "c2s4": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 9789,
+    "output_tokens": 5398,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|282|METEOROLOGY|[PHYSICAL AND THEORETICAL}}</noinclude>surface, then the pressure at any altitude is expressed by the so-called barometric or hypsometric formula\n{{block center|<math>p = \\int_{ho}^h - \\sigma g dh</math> (2)}}\nwhere <math>\\sigma</math> is the density and <math>g</math> the apparent gravity for each layer of air whose vertical thickness is <math>dh</math>. The integral of this formula depends upon the vertical distribution of temperature, and moisture, and gravity; but under the simplest possible assumptions as to these vertical gradients, the following formula was deduced by Laplace and is generally known as his hypsometric formula:—\n{{block center|<math>h - h_o = 18400(1 + 0{\\cdot}00367t) \\left(1 + 0{\\cdot}378\\, \\frac{e}{p}\\right) (1 + 0{\\cdot}0026 \\cos 2\\phi)</math>}}\n{{block center|<math>\\left(1 + \\frac{h + h_o}{6370191}\\right) (1 + 0{\\cdot}00157) \\log \\frac{p_o}{p}.</math> (2a)}} In this formula <math>t</math> is the average temperature, <math>e</math> the average vapour tension of the layer of air, <math>p</math> the barometric pressure at the top of the layer, <math>p_0</math> the pressure at the bottom, <math>\\phi</math> the latitude of the station, <math>h</math> the elevation above sea-level of the lower limit of the stratum, and <math>h_0</math> that of the upper limit. The modifications which this formula needs in order to adapt it to other hypotheses representing more nearly the actual distribution of temperature, moisture and gravity, have been elaborately investigated by Angot in a memoir published in 1899 in Part I. of the Memoirs of the Central Meteorological Bureau of France for the year 1896. Angot, Hergesell and Rykatcheff have also shown that for hypsometric work of any pretensions to accuracy it is simplest and best to use Laplace's formula for successive thin strata of air, and add together the individual results, rather than attempt a more complex single formula for the whole stratum; yet the latter seems to be essential for work in aërodynamics.\n\n''C. Thermodynamic Relations''.—The temperature of the air is due to the quantity of molecular energy that is present in the form of heat, but usually there is also present a quantity of molecular energy that is spoken of as latent heat. This latent heat is said to do internal work, such as melting ice or boiling water, while the sensible heat does external work, such as expanding and pushing in all directions. These molecular energies can be transformed into each other over and over again without appreciable loss, and this power of transformation is expressed by the various equations of thermodynamics, of which the fundamental one for our purpose is\n{{block center|<math>d\\text{Q} = \\text{C}_v dt + \\text{A}p dv = \\text{C}_v dt + \\text{ART}\\, dv/v.</math> (3)}} This equation expresses the fact that when a quantity of heat measured in calories, <math>d\\text{Q}</math>, is added to or taken from a mass of dry air, there may result both a change of temperature, <math>dt</math>, corresponding to one portion of the heat, <math>\\text{C}_v dt</math>, and a quantity of external work corresponding to the remaining portion of the heat <math>(\\text{A}pdv)</math>. It usually happens that the quantity of heat in a given mass of air does not remain the same for any length of time; it is diminished by radiation or is increased by absorption, and a certain quantity is lost when rain, snow or hail drops down from the air, while a quantity is added to the atmosphere when moisture evaporates and mixes with the dry air as invisible vapour, even the passage of rain-drops down through a lower layer alters the thermal conditions appreciably. The changes due to increase and diminution of moisture are usually small as compared with the great gain due to absorption and convection of solar heat or with the loss by radiation. If these losses and gains are to be taken account of, then the quantity <math>d\\text{Q}</math> in the above equation is finite and important. On the other hand, in some cases atmospheric processes go on so rapidly or under such peculiar circumstances—for instance, in the interior of a cloud—that the change in the quantity of heat may be considered as temporarily negligible. In these cases <math>d\\text{Q}</math> is zero; the changes in temperature balance the changes in external work, and the thermal process is said to be adiabatic.\n\n''D. The Condition of Continuity''.—When a mass of liquid or gas goes through several motions and changes without being disrupted or otherwise broken into smaller portions, and without the formation of either local condensations into solid or liquid masses or of bubbles and vacuous spaces in its interior, and when all the changes that go on proceed by gradual continuous processes as to time, then the mass of the fluid is subject to the law of continuity as to mass, and the motion of the fluid is continuous as to velocity. These conditions are assumed in elementary hydrodynamics, and are implied in the process of integration, and in the equation of continuity\n{{block center|<math>\\frac{\\partial\\rho}{\\partial t} + \\frac{\\partial(\\rho u)}{\\partial x} + \\frac{\\partial(\\rho v)}{\\partial y} + \\frac{\\partial(\\rho w)}{\\partial z} = 0</math> (4)}}\nwhere <math>\\rho</math> is the density, <math>t</math> is the time and <math>\\partial</math> the ordinary symbol for partial differentiation. But the fact is that meteorologists have to deal entirely with discontinuous external forces such as insolation ceasing at sunset and renewed daily; radiations of heat changing abruptly with land and ocean and cloudiness and snow covering; discontinuous boundary conditions and resistances at the earth's surface altering at every change from mountains to plains; discontinuous masses changing with additions and abstractions of moisture, rain and snow—all which lead to discontinuous vortex motions and overturnings and rearrangements of the atmospheric strata. The only factors that are continuous for any length of time or extent of area are the rotation of the earth and the attraction of gravitation. In the presence of such difficulties as these we must at present confine ourselves to the solution of very special local definite problems or to the general statistical problems of our atmosphere.\n\n''E. Conditions as to Energy and Motion.''—When the total quantity of heat, both latent and sensible, remains constant or changes in a continuous manner, and when the motions are continuous, the mechanical and thermal processes are expressible by ordinary differentials and integrals. Motions of fluids involve both energy and inertia, and are subject to conditions expressed by the following equations of hydrodynamics:—\n\n''a.'' Equations of energy. Let the kinetic energy be <math>\\text{T}</math>, the potential energy <math>\\text{V}</math>, the intrinsic energy <math>\\text{W}</math>: <math>l</math>, <math>m</math>, <math>n</math>, be cosines of the angle between the pressure <math>p</math>, and <math>\\text{S}</math> the inwardly directed normal to the boundary surface. Then will\n{{block center|<math>\\frac{\\partial(\\text{T}+\\text{V}+\\text{W})}{\\partial t} = \\int\\int p(lu+mv+nv)d\\text{S}.</math> (5)}}\n\n''b.'' Equations of acceleration and inertia. Let <math>\\text{P}</math> be the potential of the external forces acting on a unit mass of the atmosphere; <math>\\mu</math>, be the coefficient of viscosity or internal friction. Then will\n{{block center|<math>-\\frac{\\partial\\text{P}}{\\partial x} - \\frac{1}{\\rho}\\frac{\\partial p}{\\partial x} = \\frac{\\partial u}{\\partial t} + u.\\frac{\\partial u}{\\partial x} + v.\\frac{\\partial u}{\\partial y} + w.\\frac{\\partial u}{\\partial z} - \\mu \\left[\\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} + \\frac{\\partial^2 u}{\\partial z^2}\\right]</math>}}\n{{block center|<math>-\\frac{\\partial \\text{P}}{\\partial y} - \\frac{1}{\\rho} \\frac{\\partial p}{\\partial y} = \\frac{\\partial v}{\\partial t} + u.\\frac{\\partial v}{\\partial x} + v.\\frac{\\partial v}{\\partial y} + w.\\frac{\\partial w}{\\partial z}</math> (6)}}\n{{block center|<math>- \\mu \\left[\\frac{\\partial^2 v}{\\partial x^2} + \\frac{\\partial^2 v}{\\partial y^2} + \\frac{\\partial^2 v}{\\partial z^2}\\right]</math>}}\n{{block center|<math>-\\frac{\\partial \\text{P}}{\\partial z} - \\frac{1}{\\rho} \\frac{\\partial p}{\\partial z} = \\frac{\\partial w}{\\partial t} + u.\\frac{\\partial w}{\\partial x} + v.\\frac{\\partial w}{\\partial y} + w.\\frac{\\partial w}{\\partial z}</math>}}\n{{block center|<math>\\mu - \\left[\\frac{\\partial^2 w}{\\partial x^2} + \\frac{\\partial^2 w}{\\partial y^2} + \\frac{\\partial^2 w}{\\partial z^2}\\right]</math>}}\n\n''Approximate Assumptions and Solutions.''—After introducing into the preceding system of fundamental equations (1–6) the actual conditions as accurately as they are known relative to gravity, solar radiation, the rotation of the earth, the viscosity of the air, its mass or inertia, its absorption and radiation of heat, its variable content of moisture, the precipitation of rain and cloud, the mutual interconversions of latent and sensible heat, a special difficulty occurs when we attempt to integrate these equations, because we have still to express analytically the initial conditions of the atmosphere as to pressure and temperature, and its boundary conditions as between the rough earth surface on its lower side and the unknown outward surface on its upper side. As the true earth's surface cannot be represented by any simple algebraic formula, it is customary to assume that it is a uniform sphere, neglecting at least partially, if not wholly, the spheroidal shape. We may first assume that there is no friction between the earth and the air, but must afterwards make allowance for its influence. Thirdly, we assume that the action of the earth's surface to heat the air and to throw moisture by evaporation into the atmosphere is perfectly uniform. Finally, in many cases we go so far as to assume that the atmosphere is an incompressible rare liquid having a uniform density and a uniform depth of about 8000 metres, corresponding to the average standard density of dry air under a pressure of 760 millimetres and a temperature of 0° C. Even under these simplifications the analytic difficulties have been too great to admit of rigorous solutions, except in a few of the simplest cases.\n\nThe treatment of atmospheric problems by Ferrel was followed by an equally ingenious mathematical treatment by Professors Guldberg and Mohn, of Christiana, in two papers published by them in 1876 and 1880 respectively. These authors, like Ferrel, treat isolated portions of the atmosphere and obtain special solutions, which, however, have not the generality that must eventually be demanded in a rigorous and general discussion of the atmosphere movements. Elegant mathematical solutions of our problems were first given in 1882 by Oberbeck, of the university of Halle, in the ''Ann. Phys.'' xvii. 128. But even Oberbeck's solutions are obtained under various simplifying assumptions that restrict their satisfactory application to the daily weather conditions. Oberbeck's first memoir treats of the mechanics of stationary cyclonic movements. Assuming that the isobars are concentric circles, and that in the outer portion of a cyclone the air has only horizontal movements, while in the inner portion it has only vertical movements, he solves his system of equations for the inner and outer regions of the cyclone separately. He shows that in general the pressure increases on all sides outwards from the centre; the gradient also increases from the centre outwards to the limit of the inner region, whence it diminishes in the outer region and at a great distance becomes inappreciable. In both regions the paths of the wind are curved lines, logarithmic spirals, which cut the isobars or the radial gradient everywhere at the same angle; therefore the movement of the air can be considered as a spiral inflow from all sides towards the centre. But the angle between the wind and the gradient follows different laws in the outer and inner regions, depending in the former on the rotation of the<noinclude><references/></noinclude>"
+}

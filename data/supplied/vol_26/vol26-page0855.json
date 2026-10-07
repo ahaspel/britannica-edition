@@ -1,0 +1,136 @@
+{
+ "volume": 26,
+ "page_number": 855,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n869",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n869",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1092,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     68,
+     130,
+     2221,
+     204
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     68,
+     204,
+     1144,
+     1140
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     68,
+     1140,
+     1144,
+     2160
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     68,
+     2160,
+     1144,
+     3149
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1144,
+     204,
+     2221,
+     1069
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1144,
+     1069,
+     2221,
+     2159
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1144,
+     2159,
+     2221,
+     3149
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||THERMOELECTRICITY|815}}",
+   "c1s1": "of the current, <math>C</math>, for any given pair of metals, was found to vary directly as the difference of temperature, <math>t-t'</math>, between the hot and cold junctions, and inversely as the resistance, <math>R</math>, of the circuit. We conclude by applying Ohm's law that the electromotive force, <math>E</math>, of the thermocouple may be approximately represented for small differences of temperature by the formula\n{{block center|<math>E=CR=p(t-t')</math> . . . . . (1)}}\n\n2. ''Thermoelectric Power, Series, Inversion.''—The limiting value, <math>dE/dt</math>, of the coefficient, <math>p</math>, for an infinitesimal difference, <math>dt</math>, between the junctions is called the ''Thermoelectric Power'' of the couple. One metal (A) is said to be thermoelectrically positive to another (B), if positive electricity flows from A to B across the cold junction when the circuit is completed. The opposite convention is sometimes adopted, but the above is the most convenient in practice, as the circuit is generally broken at or near the cold junction for the insertion of the galvanometer. Seebeck found that the metals could be arranged in a ''Thermoelectric Series'', in the order of their power when combined with any one metal, such that the power of any thermocouple <math>p</math>, composed of the metals A and B, was equal to the algebraic difference <math>(p'-p'')</math> of their powers when combined with the standard metal C. The order of the metals in this",
+   "c1s2": "series was found to be different from that in the corresponding Volta series, and to be considerably affected by variations in purity, hardness and other physical conditions. J. Cumming shortly afterwards discovered the phenomenon of ''Thermoelectric Inversion'', or the change of the order of the metals in the thermoelectric series at different temperatures. Copper, for instance, is negative to iron at ordinary temperatures, but is positive to it at 300° C. or above. The E.M.F. of a copper-iron thermocouple reaches a maximum when the temperature of the hot junction is raised to 270° C., at which temperature the thermoelectric power vanishes and the metals are said to be ''neutral'' to one another. Beyond this point the E.M.F. diminishes, vanishing and changing sign when the temperature of the hot junction is nearly as much above the neutral point as the temperature of the cold junction is below it. Similar phenomena occur in the case of many other couples, and it is found that the thermoelectric power <math>p</math> is not in general a constant, and that the simple linear formula (1) is applicable only for small differences of temperature. More accurately it may be stated that the thermoelectromotive force in any given circuit containing a series of different metals is a function of the temperatures of the junctions only, and is independent of the distribution of the temperature at any intermediate points, provided that each of the metals in the series is of uniform quality. This statement admits of the simple mathematical expression",
+   "c1s3": "{{block center|<math>E = \\int_{t_0}^{t'} p'dt + \\int_{t'}^{t''} p''dt + \\text{\\&c.}</math> . . . . (2)}}\nwhere <math>p'</math>, <math>p</math>, &c., are the thermoelectric powers of the metals, and <math>t_0</math>, <math>t'</math>, <math>t''</math>, &c., the temperatures of the junctions. There are some special cases of sufficient practical importance to be separately stated.\n\n3. ''Homogeneous Circuit. Strain Hysteresis.''—In a circuit consisting of a single metal, no current can be produced by variations of temperature, provided that the metal is not thereby strained or altered. This was particularly demonstrated by the experiments of H. G. Magnus. The effects produced by abrupt changes of temperature or section, or by pressing together pieces of the same metal at different temperatures, are probably to be explained as effects of strain. A number of interesting effects of this nature have been investigated by Thomson, F. P. Le Roux, P. G. Tait and others, but the theory has not as yet been fully developed. An interesting example is furnished by an experiment due to F. T. Trouton (''Proc. R. S. Dub.'', 1886). A piece of iron or steel wire in the circuit of a galvanometer is heated in a flame to bright redness at any point. No effect is noticed so long as the flame is stationary, but if the flame be moved slowly in one direction a current is observed, which changes its direction with the direction of motion of the flame. The explanation of this phenomenon is that the metal is trans-",
+   "c2s1": "formed at a red heat into another modification, as is proved by simultaneous changes in its magnetic and electrical properties. The change from one state to the other takes place at a higher temperature on heating than on cooling. The junctions of the magnetic and the non-magnetic steel are therefore at different temperatures if the flame is moved, and a current is produced just as if a piece of different metal with junctions at different temperatures had been introduced into the circuit. Other effects of \"hysteresis\" occur in alloys of iron, which have been studied by W. F. Barrett (''Trans. R. S. Dub.'', January 1900).\n\n4. ''Law of Successive Temperatures.''—The E.M.F. of a given couple between any temperatures <math>t'</math> and <math>t''</math> is the algebraic sum of the E.M.F. between <math>t'</math> and any other temperature <math>t</math> and the E.M.F. between <math>t'</math> and <math>t''</math>. A useful result of this law is that it is sufficient to keep one junction always at some convenient standard temperature, such as 0° C., and to tabulate only the values of the E.M.F. in the circuit corresponding to different temperatures of the other junction.\n\n5. ''Law of Intermediate Metals.''—A thermoelectric circuit may be cut at any point and a wire of some other metal introduced without altering the E.M.F. in the circuit, provided that the",
+   "c2s2": "two junctions with the metal introduced are kept at the same temperature. This law is commonly applied in connecting a thermocouple to a galvanometer with coils of copper wire, the junctions of the copper wires with the other metals being placed side by side in a vessel of water or otherwise kept at the same temperature. Another way of stating this law, which, though apparently quite different, is really equivalent in effect, is the following. The E.M.F. of any couple, AB, for any given limits of temperature is the algebraic sum of the E.M.F.s between the same limits of temperature of the couples BC and CA formed with any other metal C. It is for this reason unnecessary to tabulate the E.M.F.s of all possible combinations of metals, since the E.M.F. of any couple can be at once deduced by addition from the values given by its components with a single standard metal. Different observers have chosen different metals as the standard of reference. Tait and J. A. Fleming select lead on account of the smallness of the Thomson effect in it, as observed by Le Roux. Noll adopts mercury because it is easily purified, and its physical condition in the liquid state is determinate; there is, however, a discontinuity involved in passing from the liquid to the solid state at a temperature of −40° C., and it cannot be used at all with some metals, such as lead, on account of the rapidity with which it dissolves them. Both lead and mercury have the disadvantage that they cannot be employed for temperatures much above 300° C. Of all metals, copper is the most generally convenient, as it is always employed in electrical connexions and is easily obtained in the annealed",
+   "c2s3": "state of uniform purity. For high temperature work it is necessary to employ platinum, which would be an ideal standard for all purposes on account of its constancy and infusibility, did not the thermoelectric properties of different specimens differ considerably.\n\n6. ''Thermoelectric Formulae''.—On the basis of the principles stated above, the most obvious method of tabulating the observations would be to give the values <math>E_t</math> of the E.M.F. between 0° C. and <math>t</math> for each metal against the standard. This involves no assumptions as to the law of variation of E.M.F. with temperature, but is somewhat cumbrous. In the majority of cases it is found that the observations can be represented within the limits of experimental error by a fairly simple empirical formula, at least for moderate ranges of temperatures. The following formulae are some of those employed for this purpose by different observers:—\n{{block center|<math>E_t = bt + ct^2</math> . . . . . . (Avenarius, 1863.)}}\n{{block center|<math>E_t = at + bt^2 + ct^3</math> . . . . . (General type.)}}\n{{block center|<math>log\\ E = a + b/T + c\\ log\\ T</math> . . . (Becquerel, 1863.)}}\n{{block center|<math>E_{(t-t')} = c(t-t')\\ (2t^\\circ - (t+t'))</math> . . (Tait, 1870.)}}\n{{block center|<math>E_t + E_{t^\\circ} = 10^{a+bt} + 10^{a'+b't^\\circ}</math> . . (Barus, 1889.)}}\n{{block center|<math>t = aE + bE^2 + cE^3</math> . . . . (Holborn and Wien, 1892.)}}\n{{block center|<math>E_{(t-t')} = b(t-t')^{4/3}</math> . . . . (Paschen, 1893.)}}\n{{block center|<math>E_{(t-t')} = a(t-t') + b(t-t')^2</math> . . . (Steele, 1894.)}}\n{{block center|<math>E_{(\\text{T}-\\text{T}^\\circ)} = mT^n - mT^{\\circ n},\\ E_t = mt^n</math> . . (Holman, 1896.)}}\n{{block center|<math>E_t = bt + c\\ log\\ T/273,\\ (c = Ts.)</math> . . (Stanfield, 1898.)}}\n{{block center|<math>E_t = -a + bt + ct^2</math> . . . . . (Holborn and Day, 1899.)}}\n{{block center|<math>E_t = at + ct^2 + s^\\circ(T\\ log\\ {}_eT - 273\\ log\\ {}_e273)</math>.}}\n{{block center|(Where <math>s = s^\\circ + 2cT</math>, and <math>c</math> is small. See sec. 15.)}}"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8718,
+    "output_tokens": 4307,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||THERMOELECTRICITY|815}}</noinclude>of the current, <math>C</math>, for any given pair of metals, was found to vary directly as the difference of temperature, <math>t-t'</math>, between the hot and cold junctions, and inversely as the resistance, <math>R</math>, of the circuit. We conclude by applying Ohm's law that the electromotive force, <math>E</math>, of the thermocouple may be approximately represented for small differences of temperature by the formula\n{{block center|<math>E=CR=p(t-t')</math> . . . . . (1)}}\n\n2. ''Thermoelectric Power, Series, Inversion.''—The limiting value, <math>dE/dt</math>, of the coefficient, <math>p</math>, for an infinitesimal difference, <math>dt</math>, between the junctions is called the ''Thermoelectric Power'' of the couple. One metal (A) is said to be thermoelectrically positive to another (B), if positive electricity flows from A to B across the cold junction when the circuit is completed. The opposite convention is sometimes adopted, but the above is the most convenient in practice, as the circuit is generally broken at or near the cold junction for the insertion of the galvanometer. Seebeck found that the metals could be arranged in a ''Thermoelectric Series'', in the order of their power when combined with any one metal, such that the power of any thermocouple <math>p</math>, composed of the metals A and B, was equal to the algebraic difference <math>(p'-p'')</math> of their powers when combined with the standard metal C. The order of the metals in this series was found to be different from that in the corresponding Volta series, and to be considerably affected by variations in purity, hardness and other physical conditions. J. Cumming shortly afterwards discovered the phenomenon of ''Thermoelectric Inversion'', or the change of the order of the metals in the thermoelectric series at different temperatures. Copper, for instance, is negative to iron at ordinary temperatures, but is positive to it at 300° C. or above. The E.M.F. of a copper-iron thermocouple reaches a maximum when the temperature of the hot junction is raised to 270° C., at which temperature the thermoelectric power vanishes and the metals are said to be ''neutral'' to one another. Beyond this point the E.M.F. diminishes, vanishing and changing sign when the temperature of the hot junction is nearly as much above the neutral point as the temperature of the cold junction is below it. Similar phenomena occur in the case of many other couples, and it is found that the thermoelectric power <math>p</math> is not in general a constant, and that the simple linear formula (1) is applicable only for small differences of temperature. More accurately it may be stated that the thermoelectromotive force in any given circuit containing a series of different metals is a function of the temperatures of the junctions only, and is independent of the distribution of the temperature at any intermediate points, provided that each of the metals in the series is of uniform quality. This statement admits of the simple mathematical expression {{block center|<math>E = \\int_{t_0}^{t'} p'dt + \\int_{t'}^{t''} p''dt + \\text{\\&c.}</math> . . . . (2)}}\nwhere <math>p'</math>, <math>p</math>, &c., are the thermoelectric powers of the metals, and <math>t_0</math>, <math>t'</math>, <math>t''</math>, &c., the temperatures of the junctions. There are some special cases of sufficient practical importance to be separately stated.\n\n3. ''Homogeneous Circuit. Strain Hysteresis.''—In a circuit consisting of a single metal, no current can be produced by variations of temperature, provided that the metal is not thereby strained or altered. This was particularly demonstrated by the experiments of H. G. Magnus. The effects produced by abrupt changes of temperature or section, or by pressing together pieces of the same metal at different temperatures, are probably to be explained as effects of strain. A number of interesting effects of this nature have been investigated by Thomson, F. P. Le Roux, P. G. Tait and others, but the theory has not as yet been fully developed. An interesting example is furnished by an experiment due to F. T. Trouton (''Proc. R. S. Dub.'', 1886). A piece of iron or steel wire in the circuit of a galvanometer is heated in a flame to bright redness at any point. No effect is noticed so long as the flame is stationary, but if the flame be moved slowly in one direction a current is observed, which changes its direction with the direction of motion of the flame. The explanation of this phenomenon is that the metal is transformed at a red heat into another modification, as is proved by simultaneous changes in its magnetic and electrical properties. The change from one state to the other takes place at a higher temperature on heating than on cooling. The junctions of the magnetic and the non-magnetic steel are therefore at different temperatures if the flame is moved, and a current is produced just as if a piece of different metal with junctions at different temperatures had been introduced into the circuit. Other effects of \"hysteresis\" occur in alloys of iron, which have been studied by W. F. Barrett (''Trans. R. S. Dub.'', January 1900).\n\n4. ''Law of Successive Temperatures.''—The E.M.F. of a given couple between any temperatures <math>t'</math> and <math>t''</math> is the algebraic sum of the E.M.F. between <math>t'</math> and any other temperature <math>t</math> and the E.M.F. between <math>t'</math> and <math>t''</math>. A useful result of this law is that it is sufficient to keep one junction always at some convenient standard temperature, such as 0° C., and to tabulate only the values of the E.M.F. in the circuit corresponding to different temperatures of the other junction.\n\n5. ''Law of Intermediate Metals.''—A thermoelectric circuit may be cut at any point and a wire of some other metal introduced without altering the E.M.F. in the circuit, provided that the two junctions with the metal introduced are kept at the same temperature. This law is commonly applied in connecting a thermocouple to a galvanometer with coils of copper wire, the junctions of the copper wires with the other metals being placed side by side in a vessel of water or otherwise kept at the same temperature. Another way of stating this law, which, though apparently quite different, is really equivalent in effect, is the following. The E.M.F. of any couple, AB, for any given limits of temperature is the algebraic sum of the E.M.F.s between the same limits of temperature of the couples BC and CA formed with any other metal C. It is for this reason unnecessary to tabulate the E.M.F.s of all possible combinations of metals, since the E.M.F. of any couple can be at once deduced by addition from the values given by its components with a single standard metal. Different observers have chosen different metals as the standard of reference. Tait and J. A. Fleming select lead on account of the smallness of the Thomson effect in it, as observed by Le Roux. Noll adopts mercury because it is easily purified, and its physical condition in the liquid state is determinate; there is, however, a discontinuity involved in passing from the liquid to the solid state at a temperature of −40° C., and it cannot be used at all with some metals, such as lead, on account of the rapidity with which it dissolves them. Both lead and mercury have the disadvantage that they cannot be employed for temperatures much above 300° C. Of all metals, copper is the most generally convenient, as it is always employed in electrical connexions and is easily obtained in the annealed state of uniform purity. For high temperature work it is necessary to employ platinum, which would be an ideal standard for all purposes on account of its constancy and infusibility, did not the thermoelectric properties of different specimens differ considerably.\n\n6. ''Thermoelectric Formulae''.—On the basis of the principles stated above, the most obvious method of tabulating the observations would be to give the values <math>E_t</math> of the E.M.F. between 0° C. and <math>t</math> for each metal against the standard. This involves no assumptions as to the law of variation of E.M.F. with temperature, but is somewhat cumbrous. In the majority of cases it is found that the observations can be represented within the limits of experimental error by a fairly simple empirical formula, at least for moderate ranges of temperatures. The following formulae are some of those employed for this purpose by different observers:—\n{{block center|<math>E_t = bt + ct^2</math> . . . . . . (Avenarius, 1863.)}}\n{{block center|<math>E_t = at + bt^2 + ct^3</math> . . . . . (General type.)}}\n{{block center|<math>log\\ E = a + b/T + c\\ log\\ T</math> . . . (Becquerel, 1863.)}}\n{{block center|<math>E_{(t-t')} = c(t-t')\\ (2t^\\circ - (t+t'))</math> . . (Tait, 1870.)}}\n{{block center|<math>E_t + E_{t^\\circ} = 10^{a+bt} + 10^{a'+b't^\\circ}</math> . . (Barus, 1889.)}}\n{{block center|<math>t = aE + bE^2 + cE^3</math> . . . . (Holborn and Wien, 1892.)}}\n{{block center|<math>E_{(t-t')} = b(t-t')^{4/3}</math> . . . . (Paschen, 1893.)}}\n{{block center|<math>E_{(t-t')} = a(t-t') + b(t-t')^2</math> . . . (Steele, 1894.)}}\n{{block center|<math>E_{(\\text{T}-\\text{T}^\\circ)} = mT^n - mT^{\\circ n},\\ E_t = mt^n</math> . . (Holman, 1896.)}}\n{{block center|<math>E_t = bt + c\\ log\\ T/273,\\ (c = Ts.)</math> . . (Stanfield, 1898.)}}\n{{block center|<math>E_t = -a + bt + ct^2</math> . . . . . (Holborn and Day, 1899.)}}\n{{block center|<math>E_t = at + ct^2 + s^\\circ(T\\ log\\ {}_eT - 273\\ log\\ {}_e273)</math>.}}\n{{block center|(Where <math>s = s^\\circ + 2cT</math>, and <math>c</math> is small. See sec. 15.)}}<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,139 @@
+{
+ "volume": 24,
+ "page_number": 1048,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1067",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1067",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 1137,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     42,
+     135,
+     2260,
+     210
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     42,
+     210,
+     1189,
+     1293
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     42,
+     1293,
+     1189,
+     2298
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     42,
+     2298,
+     1189,
+     3149
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1189,
+     222,
+     2265,
+     2759
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2792,
+     2265,
+     2822
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|COURSE OF CONSTRUCTION]|SHIPBUILDING|973}}",
+   "c1s1": "position; but the process of copying the frame lines on it is one of measuring on battens the ordinates of their intersections with water and diagonal lines, and is the same in either case. All of the frame lines are shown on the scrive-board, and the complete section of the frame surface tor both sides of the ship is shown at each station. To avoid confusion of lines, either a separate board is used for the fore and after bodies, or they are drawn on the same board with their centre lines parallel and a few feet apart, and one of the two bodies inverted. All the lines already referred to as having been laid off in the body plan on the mould loft floor, including the lines of outer edges of all transverse frames, the inner edges of all in the double bottom, and the upper edges of all floor plates outside the double bottom, the projections of plate edges of inner and outer bottom, and of longitudinal frames and main longitudinal bulkheads, projections of beam at side lines for all decks, and of the intersection of the beam surface of the protective deck by the plane of each frame, are copied on the scrive-board and rased in on its surface. The scrive-board thus gives complete information of the shape and dimensions of every part of each transverse frame. To completely define the frame the \"bevelling\" is required in addition, that is the angle between the two flanges of the angle bar on the edge of the frame connecting it to the outer or inner bottom plating. The bevelling is usually given at the plate sight edges; but any other convenient bevelling spots may be chosen and their positions marked on the frame lines. To obtain the bevelling at any spot a normal is drawn to the frame line in the body plan at the spot; the distance from the frame line is measured along this normal to its intersection with the next frame line towards the midship section, and this distance is set up as one of the sides containing the right angle in a right-angled triangle of which the frame space is the base. The angle of this triangle opposite the base is the supplement of the bevelling of the frame at the spot considered. When the curvature of the bottom in the plane normal to the square station at the bevelling",
+   "c1s2": "spot considered is sensible in the length of a frame space, the normal distance measured is that between the two frame lines on either side of that at which the bevelling is to be obtained, and the base of the triangle is made equal to twice the frame space. The bevellings for each frame are marked on a bevelling board, the angles between the straight lines marked on the side of the board and the straight edge of the board representing both the bevelling and its supplement. In the frame bars there is no doubt as to which of these two angles the workmen are to regard as the true bevelling, since the flanges of the frames are all turned towards the midship section, so as to make the true bevelling always greater than a right angle, or \"standing\" as it is usually expressed, in contradistinction to \"under\" bevelling, which is less than a right angle.\n\nSpecial bevelling frames are used in marking the bevelling boards, by which the construction of the triangles is reduced to setting off the normal measurement between the frame lines and drawing the hypotenuse directly on the bevelling board. The flanges of the angle bars on the inside edge of the frame, or the \"reverse\" frame bars, usually point the same way (that is towards the midship section) as the flanges of the frame bars, throughout the double bottom, in order to facilitate the construction of the bracket frame. Where the breadth of the longitudinals is constant, therefore, the bevelling of these angles on the inner bottom is the supplement of that of the frame angles. But throughout the double bottom neither bevelling differs much from a right angle. When the longitudinals taper in breadth separate bevellings must be taken for the inner angles by a method similar to that already described for the frame angles. Outside the double bottom the reverse angle, or inner part of the split zed bar, is either unconnected to anything but the floor plate, or else connects to a horizontal",
+   "c1s3": "flat, and does not require bevelling.\n\nThe bevellings of the short angle bars which connect the bracket or floor plates of the transverse frames to the longitudinals are also obtained by measuring in the body plan at the middle of the intersection of the longitudinal surface with the plane of a frame station the normal distance to its intersection with the plane of the next frame station, and setting it up as one side of a right-angled triangle of which the frame space is the base.\n\nTo check the spread of the transverse frames during their erection, half-breadth staffs and height of breadth staffs are issued from the mould loft, or their lengths may be taken off the scrive-board. These give the co-ordinates of the intersections of the longitudinal sight edges with the frame lines, referred to the middle line of the body plan and a level line through the underside of the keel at each station. The frames are brought to and held in their correct positions",
+   "c2s1": "{{c|{{sc|Fig.}} 108.}}"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v24 p1048 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1169,
+     2327,
+     2249,
+     2752
+    ],
+    "caption": [
+     1355,
+     2792,
+     1500,
+     2822
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     434,
+     2272,
+     2254,
+     2762
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4653,
+    "output_tokens": 309,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 4795,
+    "output_tokens": 1692,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 9620
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|COURSE OF CONSTRUCTION]|SHIPBUILDING|973}}</noinclude>position; but the process of copying the frame lines on it is one of measuring on battens the ordinates of their intersections with water and diagonal lines, and is the same in either case. All of the frame lines are shown on the scrive-board, and the complete section of the frame surface tor both sides of the ship is shown at each station. To avoid confusion of lines, either a separate board is used for the fore and after bodies, or they are drawn on the same board with their centre lines parallel and a few feet apart, and one of the two bodies inverted. All the lines already referred to as having been laid off in the body plan on the mould loft floor, including the lines of outer edges of all transverse frames, the inner edges of all in the double bottom, and the upper edges of all floor plates outside the double bottom, the projections of plate edges of inner and outer bottom, and of longitudinal frames and main longitudinal bulkheads, projections of beam at side lines for all decks, and of the intersection of the beam surface of the protective deck by the plane of each frame, are copied on the scrive-board and rased in on its surface. The scrive-board thus gives complete information of the shape and dimensions of every part of each transverse frame. To completely define the frame the \"bevelling\" is required in addition, that is the angle between the two flanges of the angle bar on the edge of the frame connecting it to the outer or inner bottom plating. The bevelling is usually given at the plate sight edges; but any other convenient bevelling spots may be chosen and their positions marked on the frame lines. To obtain the bevelling at any spot a normal is drawn to the frame line in the body plan at the spot; the distance from the frame line is measured along this normal to its intersection with the next frame line towards the midship section, and this distance is set up as one of the sides containing the right angle in a right-angled triangle of which the frame space is the base. The angle of this triangle opposite the base is the supplement of the bevelling of the frame at the spot considered. When the curvature of the bottom in the plane normal to the square station at the bevelling spot considered is sensible in the length of a frame space, the normal distance measured is that between the two frame lines on either side of that at which the bevelling is to be obtained, and the base of the triangle is made equal to twice the frame space. The bevellings for each frame are marked on a bevelling board, the angles between the straight lines marked on the side of the board and the straight edge of the board representing both the bevelling and its supplement. In the frame bars there is no doubt as to which of these two angles the workmen are to regard as the true bevelling, since the flanges of the frames are all turned towards the midship section, so as to make the true bevelling always greater than a right angle, or \"standing\" as it is usually expressed, in contradistinction to \"under\" bevelling, which is less than a right angle.\n\nSpecial bevelling frames are used in marking the bevelling boards, by which the construction of the triangles is reduced to setting off the normal measurement between the frame lines and drawing the hypotenuse directly on the bevelling board. The flanges of the angle bars on the inside edge of the frame, or the \"reverse\" frame bars, usually point the same way (that is towards the midship section) as the flanges of the frame bars, throughout the double bottom, in order to facilitate the construction of the bracket frame. Where the breadth of the longitudinals is constant, therefore, the bevelling of these angles on the inner bottom is the supplement of that of the frame angles. But throughout the double bottom neither bevelling differs much from a right angle. When the longitudinals taper in breadth separate bevellings must be taken for the inner angles by a method similar to that already described for the frame angles. Outside the double bottom the reverse angle, or inner part of the split zed bar, is either unconnected to anything but the floor plate, or else connects to a horizontal flat, and does not require bevelling.\n\nThe bevellings of the short angle bars which connect the bracket or floor plates of the transverse frames to the longitudinals are also obtained by measuring in the body plan at the middle of the intersection of the longitudinal surface with the plane of a frame station the normal distance to its intersection with the plane of the next frame station, and setting it up as one side of a right-angled triangle of which the frame space is the base.\n\nTo check the spread of the transverse frames during their erection, half-breadth staffs and height of breadth staffs are issued from the mould loft, or their lengths may be taken off the scrive-board. These give the co-ordinates of the intersections of the longitudinal sight edges with the frame lines, referred to the middle line of the body plan and a level line through the underside of the keel at each station. The frames are brought to and held in their correct positions\n\n[[File:eb1911 v24 p1048 c2f1.png|center|341px]]\n{{c|{{sc|Fig.}} 108.}}<noinclude><references/></noinclude>"
+}

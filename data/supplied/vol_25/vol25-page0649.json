@@ -1,0 +1,127 @@
+{
+ "volume": 25,
+ "page_number": 649,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n669",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n669",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1080,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     114,
+     100,
+     2258,
+     171
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     114,
+     171,
+     1181,
+     1096
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     114,
+     1096,
+     1181,
+     2175
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     114,
+     2175,
+     1181,
+     3110
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1181,
+     171,
+     2258,
+     1247
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1181,
+     1247,
+     2258,
+     2301
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1181,
+     2301,
+     2258,
+     3110
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||SPECTROSCOPY|627}}",
+   "c1s1": "not quite keep up with the mathematical expression but tend to become more equal. The distances between the two first lines is <math>\\text{A}</math>, and is small compared with the frequency itself, which is <math>\\text{B}</math>.\n\nIf this is the case it is obvious that an equation of the form\n{{block center|<math>n = \\text{A} - \\frac{\\text{N}}{s^2 + a}</math>}}\ndoes, for small values of <math>s</math>, becomes identical with Deslandres' equation, <math>a</math> representing a constant which is large compared with unity. If we wish to be more general, while still adhering to Deslandres' law as a correct representation of the frequencies when <math>s</math> is small, we may write\n{{block center|<math>n = \\text{A} - \\frac{\\text{N}}{(s + \\mu)^2 + a},</math>}}\nwhere <math>\\mu</math> is an additional constant.\n\nWe have now reduced the law for the bands to a form which we have found applicable to a series of lines, but with this important difference that while <math>a</math> in the case of line spectra is a small corrective term, it now forms the constant on which an essential factor in the appearance of the band depends. Halm,<sup>1</sup> to whom we owe a careful comparison of the above equation with the observed frequencies in a great number of spectra, attached perhaps too much weight to the fact that it is capable of representing both line and band spectra. It is no doubt important to recognize that the two types of spectra seem to represent two extreme cases of one formula, the significant difference being that in the line spectrum the distance between lines diminishes as we recede from the head, while in the",
+   "c1s2": "case of the band it increases, at any rate to begin with. But, on the other hand, no one pretends to have found the rigorous expression for the law, and the appropriate approximation may take quite different forms when constants which are large in one case are small in the other. It would not therefore be correct to push this agreement against Ritz's expression which is not applicable to bands.\n\nA discussion of band spectra on a very broad basis was given by Thiele,<sup>2</sup> who recommends a formula\n{{block center|<math>n = \\frac{q_0 + q_1(s+c) + \\quad \\dots \\dots \\quad + q_r(s+c)^r}{p_0 + p_1(s+c) + \\quad \\dots \\dots \\quad + p_r(s+c)^r},</math>}}\nwhere <math>s</math> as before represents the integer numbers and the other quantities involved are constants. If <math>r = 1</math>, we obtain Pickering's equation, which is the one advocated by Halm. Equations of this form have received a striking observational verification in so far as they predict a tail or root towards which the lines ultimately tend when <math>s</math> is increased indefinitely. This fact bridges over the distinction between the band and line spectra. The distance between the lines measured on the frequency scale does not, according to the equation, increase indefinitely from the head downwards, but has a maximum which, in Pickering's form as written above, is reached when <math>(s+\\mu)^2 = \\tfrac{1}{3}a</math>. This gives a real value for <math>s</math> only when <math>a</math> is positive. If <math>a</math> is negative the frequency passes through infinity and the maximum distance between the lines occurs there. If we only assign positive values to <math>n</math> and <math>a</math>, the band fades away from the head, the lines at first increasing in distance. It appears from the observations of A. S. King,<sup>3</sup> that in the case of the so-called spectrum of cyanogen these tails can be observed. If a negative value of the frequency is admitted, more complicated effects may be predicted. A band might in that case fade away towards zero frequencies, and as <math>s</math> increases, return again from infinity with diminishing distances, the head and the tail pointing in the same direction; or with a different value of constants a",
+   "c1s3": "band might fade away towards infinite frequencies, then return through the whole range of the spectrum to zero frequencies, and once more return with its tail near its head. The same band may therefore cross its own head on the return journey. If we adopt Thiele's view that each band is accompanied by a second branch for which <math>s</math> has negative values the complication is still further increased, but there does not seem to be sufficient reason to adopt this view.\n\n10. ''Effects of Varying Physical Conditions.''—The same spectrum may show differences according to the physical conditions under which the body emitting the spectrum is placed. The main effects we have to discuss are (1) a symmetrical widening, (2) a shift of wave-length, which when it accompanies expansion in both directions may appear as an unsymmetrical widening, (3) a change in the relative intensities of the lines.\n\nAs typical examples illustrating the facts to be explained, the following may be mentioned. (''a'') When a sodium salt is placed in a Bunsen burner in sufficient quantity, the yellow lines are widened. When the amount of luminous matter is small the lines remain narrow. (''b'') If a spark be sent through a Plücker tube containing hydrogen the lines are widened when the pressure\n\n{{smaller block|<sup>1</sup> ''Trans. Roy. Soc. Edin.'' (1905), 41, p. 551.\n<sup>2</sup> ''Astrophys. Journ.'' (1897), 6, p. 65; (1898), 8, p. 1.\n<sup>3</sup> Ibid. (1901), 14, p. 323.}}",
+   "c2s1": "is increased. (''c'') Under moderate pressures the lines of hydrogen may be widened by powerful sparks taken from a condenser. (''d'') If a spark be taken from an electric condenser through air, both the lines of oxygen and nitrogen are wide compared with what they would be at low pressures. But a mixture of nitrogen and oxygen containing only little nitrogen will show the nitrogen lines narrow and similarly narrow oxygen lines may be obtained if the quantity of oxygen is reduced. (''e'') If a spark be taken from a solution of a salt, ''e.g.'' lithium, the relative intensities of the lines are different according as the solution is concentrated or dilute. (''f'') The relative intensity of lines in the spark taken from metallic poles may be altered by the insertion of greater or smaller capacities, similarly the relative intensities are different in arc and spark spectra. (''g'') Increased pressure nearly always diminishes the frequency of vibration, but this effect is generally of a smaller order of magnitude than the widening which takes place in the other cases. In investigating the effects of mixture on the widening of lines in absorption spectrum, R. W. Wood discovered some interesting effects. The cadmium line having a wave-length of 2288 Å broadens by pressure equally in both directions, but if mercury be added the broadening is more marked on the less refrangible side.\n\nThe discussion as to the causes of this widening has turned a good deal on the question whether it is primarily due to changes of density, pressure or temperature, but some confusion has",
+   "c2s2": "been caused by the want of proper definition of terms. For the cause of this the writer of the present article is jointly with others at any rate partly responsible, and clearness of ideas can only be re-established by investigating the mechanical causes of the effect rather than by applying terms which refer to a different order of physical conceptions.\n\nThe facts, as quoted, point to the closeness of the packing of molecules as the factor which always accompanies and perhaps causes the widening of lines. But is this alone sufficient to justify us in assigning the widening to increased density? Increased density at the same temperature means in the first place a reduction of the average distance between the molecules, but it means also a reduction in the mean free path and an increase in the number of impacts. The question is: which of these three factors is significant in the explanation of the widening? If it is the average distance irrespective of length of path and of number of impacts we should be justified in ascribing the effect to density, but if it is the number of impacts it would be more reasonable to ascribe it to pressure. The question could not be settled by experiments made at the same temperature, and if the temperature is altered the question is complicated by the distinction which would probably have to be drawn between the number of collisions and their intensity. Experimentally we should be confined to a strict investigation of absorption spectra, because in the electric discharge temperature has no definite meaning, and variations of pressure and",
+   "c2s3": "density are not easily measured.\n\nAssuming for a moment the change to be one of density and leaving out of account the pressure shift, the cases (''e'') and (''f'') point to the fact that it is the closeness of packing of ''similar'' molecules which is effective, ''e.g.'' the number of oxygen molecules per cubic centimetre determines the width of the oxygen lines, though nitrogen molecules may be mixed with them without materially affecting the appearance. Experiment (''c'') is, however, generally taken to mean that this closeness of packing cannot be the sole determining cause, for it is argued that if a closed vacuum tube can show both wide and narrow lines according to the mode of discharge, density alone cannot account for the change. But this argument is not conclusive, for though the total number of hydrogen molecules is fixed when the gas is enclosed, yet the number of luminous molecules may vary with the condition. Those that are not luminous may, if they do not contain the same vibrating system, behave like inert molecules. When an electric current from a battery is sent through a tube containing hydrogen, increase of current simply means increase in the number of ions which take part"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8718,
+    "output_tokens": 3495,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||SPECTROSCOPY|627}}</noinclude>not quite keep up with the mathematical expression but tend to become more equal. The distances between the two first lines is <math>\\text{A}</math>, and is small compared with the frequency itself, which is <math>\\text{B}</math>.\n\nIf this is the case it is obvious that an equation of the form\n{{block center|<math>n = \\text{A} - \\frac{\\text{N}}{s^2 + a}</math>}}\ndoes, for small values of <math>s</math>, becomes identical with Deslandres' equation, <math>a</math> representing a constant which is large compared with unity. If we wish to be more general, while still adhering to Deslandres' law as a correct representation of the frequencies when <math>s</math> is small, we may write\n{{block center|<math>n = \\text{A} - \\frac{\\text{N}}{(s + \\mu)^2 + a},</math>}}\nwhere <math>\\mu</math> is an additional constant.\n\nWe have now reduced the law for the bands to a form which we have found applicable to a series of lines, but with this important difference that while <math>a</math> in the case of line spectra is a small corrective term, it now forms the constant on which an essential factor in the appearance of the band depends. Halm,<sup>1</sup> to whom we owe a careful comparison of the above equation with the observed frequencies in a great number of spectra, attached perhaps too much weight to the fact that it is capable of representing both line and band spectra. It is no doubt important to recognize that the two types of spectra seem to represent two extreme cases of one formula, the significant difference being that in the line spectrum the distance between lines diminishes as we recede from the head, while in the case of the band it increases, at any rate to begin with. But, on the other hand, no one pretends to have found the rigorous expression for the law, and the appropriate approximation may take quite different forms when constants which are large in one case are small in the other. It would not therefore be correct to push this agreement against Ritz's expression which is not applicable to bands.\n\nA discussion of band spectra on a very broad basis was given by Thiele,<sup>2</sup> who recommends a formula\n{{block center|<math>n = \\frac{q_0 + q_1(s+c) + \\quad \\dots \\dots \\quad + q_r(s+c)^r}{p_0 + p_1(s+c) + \\quad \\dots \\dots \\quad + p_r(s+c)^r},</math>}}\nwhere <math>s</math> as before represents the integer numbers and the other quantities involved are constants. If <math>r = 1</math>, we obtain Pickering's equation, which is the one advocated by Halm. Equations of this form have received a striking observational verification in so far as they predict a tail or root towards which the lines ultimately tend when <math>s</math> is increased indefinitely. This fact bridges over the distinction between the band and line spectra. The distance between the lines measured on the frequency scale does not, according to the equation, increase indefinitely from the head downwards, but has a maximum which, in Pickering's form as written above, is reached when <math>(s+\\mu)^2 = \\tfrac{1}{3}a</math>. This gives a real value for <math>s</math> only when <math>a</math> is positive. If <math>a</math> is negative the frequency passes through infinity and the maximum distance between the lines occurs there. If we only assign positive values to <math>n</math> and <math>a</math>, the band fades away from the head, the lines at first increasing in distance. It appears from the observations of A. S. King,<sup>3</sup> that in the case of the so-called spectrum of cyanogen these tails can be observed. If a negative value of the frequency is admitted, more complicated effects may be predicted. A band might in that case fade away towards zero frequencies, and as <math>s</math> increases, return again from infinity with diminishing distances, the head and the tail pointing in the same direction; or with a different value of constants a band might fade away towards infinite frequencies, then return through the whole range of the spectrum to zero frequencies, and once more return with its tail near its head. The same band may therefore cross its own head on the return journey. If we adopt Thiele's view that each band is accompanied by a second branch for which <math>s</math> has negative values the complication is still further increased, but there does not seem to be sufficient reason to adopt this view.\n\n10. ''Effects of Varying Physical Conditions.''—The same spectrum may show differences according to the physical conditions under which the body emitting the spectrum is placed. The main effects we have to discuss are (1) a symmetrical widening, (2) a shift of wave-length, which when it accompanies expansion in both directions may appear as an unsymmetrical widening, (3) a change in the relative intensities of the lines.\n\nAs typical examples illustrating the facts to be explained, the following may be mentioned. (''a'') When a sodium salt is placed in a Bunsen burner in sufficient quantity, the yellow lines are widened. When the amount of luminous matter is small the lines remain narrow. (''b'') If a spark be sent through a Plücker tube containing hydrogen the lines are widened when the pressure\n\n{{smaller block|<sup>1</sup> ''Trans. Roy. Soc. Edin.'' (1905), 41, p. 551.\n<sup>2</sup> ''Astrophys. Journ.'' (1897), 6, p. 65; (1898), 8, p. 1.\n<sup>3</sup> Ibid. (1901), 14, p. 323.}} is increased. (''c'') Under moderate pressures the lines of hydrogen may be widened by powerful sparks taken from a condenser. (''d'') If a spark be taken from an electric condenser through air, both the lines of oxygen and nitrogen are wide compared with what they would be at low pressures. But a mixture of nitrogen and oxygen containing only little nitrogen will show the nitrogen lines narrow and similarly narrow oxygen lines may be obtained if the quantity of oxygen is reduced. (''e'') If a spark be taken from a solution of a salt, ''e.g.'' lithium, the relative intensities of the lines are different according as the solution is concentrated or dilute. (''f'') The relative intensity of lines in the spark taken from metallic poles may be altered by the insertion of greater or smaller capacities, similarly the relative intensities are different in arc and spark spectra. (''g'') Increased pressure nearly always diminishes the frequency of vibration, but this effect is generally of a smaller order of magnitude than the widening which takes place in the other cases. In investigating the effects of mixture on the widening of lines in absorption spectrum, R. W. Wood discovered some interesting effects. The cadmium line having a wave-length of 2288 Å broadens by pressure equally in both directions, but if mercury be added the broadening is more marked on the less refrangible side.\n\nThe discussion as to the causes of this widening has turned a good deal on the question whether it is primarily due to changes of density, pressure or temperature, but some confusion has been caused by the want of proper definition of terms. For the cause of this the writer of the present article is jointly with others at any rate partly responsible, and clearness of ideas can only be re-established by investigating the mechanical causes of the effect rather than by applying terms which refer to a different order of physical conceptions.\n\nThe facts, as quoted, point to the closeness of the packing of molecules as the factor which always accompanies and perhaps causes the widening of lines. But is this alone sufficient to justify us in assigning the widening to increased density? Increased density at the same temperature means in the first place a reduction of the average distance between the molecules, but it means also a reduction in the mean free path and an increase in the number of impacts. The question is: which of these three factors is significant in the explanation of the widening? If it is the average distance irrespective of length of path and of number of impacts we should be justified in ascribing the effect to density, but if it is the number of impacts it would be more reasonable to ascribe it to pressure. The question could not be settled by experiments made at the same temperature, and if the temperature is altered the question is complicated by the distinction which would probably have to be drawn between the number of collisions and their intensity. Experimentally we should be confined to a strict investigation of absorption spectra, because in the electric discharge temperature has no definite meaning, and variations of pressure and density are not easily measured.\n\nAssuming for a moment the change to be one of density and leaving out of account the pressure shift, the cases (''e'') and (''f'') point to the fact that it is the closeness of packing of ''similar'' molecules which is effective, ''e.g.'' the number of oxygen molecules per cubic centimetre determines the width of the oxygen lines, though nitrogen molecules may be mixed with them without materially affecting the appearance. Experiment (''c'') is, however, generally taken to mean that this closeness of packing cannot be the sole determining cause, for it is argued that if a closed vacuum tube can show both wide and narrow lines according to the mode of discharge, density alone cannot account for the change. But this argument is not conclusive, for though the total number of hydrogen molecules is fixed when the gas is enclosed, yet the number of luminous molecules may vary with the condition. Those that are not luminous may, if they do not contain the same vibrating system, behave like inert molecules. When an electric current from a battery is sent through a tube containing hydrogen, increase of current simply means increase in the number of ions which take part<noinclude><references/></noinclude>"
+}

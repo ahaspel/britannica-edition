@@ -1,0 +1,127 @@
+{
+ "volume": 25,
+ "page_number": 964,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n984",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n984",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1082,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     96,
+     104,
+     2238,
+     173
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     96,
+     173,
+     1165,
+     1248
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     96,
+     1248,
+     1165,
+     2340
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     96,
+     2340,
+     1165,
+     3106
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1165,
+     184,
+     2238,
+     1277
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1165,
+     1277,
+     2238,
+     2377
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1165,
+     2377,
+     2238,
+     3106
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|940|STOICHIOMETRY|}}",
+   "c1s1": "Benjamin Richter to denote the determination of the relative amounts in which acids and bases neutralize one another; but this definition may be extended to include the determination of the masses participating in any chemical reaction. The work of Richter and others who explored this field is treated under {{sc|Element}}; here we discuss a particular branch of the subject, viz. the determination of equivalent and atomic weights of elements, and the molecular weights of elements and compounds. Reference to {{sc|Chemistry}}, {{sc|Atom}} and {{sc|Element}} will explain the principles involved. Every element has an “ equivalent weight ” which is usually defined as the amount of the element which combines with or replaces unit weight of hydrogen; the “ atomic weight ” may be regarded as the smallest weight of an element which can be present in a chemical compound, and the “ molecular weight ” is the weight of the least part of an element or compound which can exist alone. The atomic weight is therefore some multiple of the equivalent weight, and the determining factor is termed the valency (''q.v.'') of the element. We have mentioned hydrogen as our standard element, which was originally chosen as being the lightest known substance; but Berzelius, whose stoichiometric researches are classical, having pointed out that few elements formed stable compounds with hydrogen, and even these presented difficulties to exact analysis, proposed to take oxygen as the standard. This suggestion has been adopted by the International Committee of Atomic Weights, who take the atomic weight of oxygen as 16·000, hydrogen being",
+   "c1s2": "1·0087.<sup>1</sup>\n\nDeferring the discussion of gaseous elements and compounds we will consider the ''modus operandi'' of determining, first, the equivalent weight of an element which forms solid compounds, and, secondly, its atomic weight. Suppose we can cause our element in known quantity to combine with oxygen to form a definite compound, which can be accurately weighed, or, conversely, decompose a known weight of the oxide into its constituents, of which the element can be weighed, then the equivalent weight of the element may be exactly determined. For if <math>x</math> grams of the element yield <math>y</math> grains of the oxide, and if <math>\\text{W}</math> be the equivalent of the element, we have <math>x</math> grams of the element equivalent to <math>y-x</math> grams of oxygen, and hence the equivalent weight <math>\\text{W}</math>, which corresponds to 8 grams of oxygen, is given by the proportion <math>y-x : x :: 8 : \\text{W}</math>, ''i.e.'' <math>\\text{W} = 8x/(y-x)</math>. For example, Lavoisier found that 45 parts of red oxide of mercury on heating yielded 41½ parts of mercury; hence 41½ parts of mercury is equivalent to <math>45 - 41\\tfrac{1}{2} = 3\\tfrac{1}{2}</math> parts of oxygen, and the equivalent of mercury in this oxide is therefore <math>8 \\times 41\\tfrac{1}{2} \\div 3\\tfrac{1}{2} = 95</math>. The question now arises: is this value the true equivalent, ''i.e.'' half the amount of mercury which combines with ''one'' atom of oxygen (for one atom of oxygen is equivalent to two atoms of hydrogen)? Before considering this matter, however, we will show how it is possible to obtain the equivalent of elements whose oxides are not suitable for exact analysis. No better example can be found than Stas's classical determination of the atomic weight of silver and of other elements.<sup>2</sup> It",
+   "c1s3": "will be seen that the routine necessary to the chemical determination of equivalents consists in employing only such substances as can be obtained perfectly pure and stable (under the experimental conditions), and that the reactions chosen must be such as to yield a series of values by which any particular value can be checked or corrected.\n\n{{smaller block|Stas's experiments can be classified in five series. The object of the first series was to obtain the ratio Ag:O by means of the ratios KCl:O and Ag:KCl. The ratio KCl:O was determined by decomposing a known weight of potassium chlorate (''a'') by direct heating, (''b'') by heating with hydrochloric acid and weighing the residual chloride. The reaction may be written for our purpose in the form: KClO<sub>3</sub>=KCl+3O; in case ''a'' the oxygen is liberated as such; in case ''b'' it oxidizes the hydrochloric acid to water and chlorine oxides. The equation shows that one KCl is equivalent}}\n\n<sup>1</sup> We may here state that the equivalent weight of oxygen on this basis is 8·000, ''i.e.'' one half of its atomic weight. This matter is considered below.\n\n<sup>2</sup> The formulae used in the following paragraph were established before Stas began his work; and as oxygen is taken as 16, the results are atomic and not equivalent weights.",
+   "c2s1": "to 3O, and hence if <math>x</math> grams of chlorate yields <math>y</math> grams of chloride, then the ratio KCl:O=<math>y/\\tfrac{1}{3}(x-y)</math>. Taking O as 16 and the experimental value of <math>x</math> and <math>y</math>, Stas obtained KCl:O=74·9502. To find the ratio of Ag:KCl, a known weight of silver was dissolved in nitric acid and the amount of potassium chloride necessary for its exact precipitation was determined. The reaction may be written as AgNO<sub>3</sub>+KCl=AgCl+KNO<sub>3</sub>, which shows that one Ag is equivalent to one KCl. The value found was Ag:KCl =1·447110. The ratio Ag:O is found by combining these values, for Ag:O=KCl:O×Ag:KCl = 74·9502 × 1·44710 = 107·9401.\n\nIn the second series the ratios AgCl:O and AgCl:Ag were obtained, the first by decomposing the chlorate by heating, and the second by synthesizing the chloride by burning a known weight of the metal in chlorine gas and weighing the resulting chloride, and also by dissolving the metal in nitric acid and precipitating it with hydrochloric acid and ammonium chloride. These two sets yield the ratio Ag : O, and also the ratio Cl : O, which, combined with the ratio KCl : O obtained in the first series, gave the atomic weight of potassium. The third and fourth series resembled the second, only the bromate and bromide, and iodate and iodide were worked with. The experiments gave additional values for Ag:O and also the atomic weights of bromine and iodine.\n\nThe fifth series was concerned with the ratios Ag<sub>2</sub>SO<sub>4</sub> : Ag; Ag<sub>2</sub>S : Ag and Ag<sub>2</sub>S:O. The first was obtained by reducing silver sulphate to the metal by hydrogen at high temperatures; the second by the direct combination of silver and sulphur, and also by the interaction of silver and sulphuretted hydrogen; these ratios on combination gave the third ratio Ag<sub>2</sub>S:O. These experiments besides giving values for Ag:O, yielded also the atomic weight of sulphur. There is no need to proceed any further with Stas's work, but it is sufficient to say that the general routine which he employed has been adopted in all chemical determinations of equivalent weights.",
+   "c2s2": "¶\nThe derivation of the atomic from the equivalent weight may be effected in several ways. The simplest are perhaps by means of Dulong and Petit's law of atomic heats (and by Neumann's extension of this law), and by Mitscherlich's doctrine of isomorphism. Dulong and Petit's law may be stated in the form that the product of the specific heat and atomic weight is approximately 6·4, or that an approximate value of the atomic weight is 6·4 divided by the specific heat. This application may be illustrated in the case of mercury. We have seen above that the red oxide yields a value of about 95 for the equivalent; but a green oxide is known which contains twice as much metal for each part of oxygen, and therefore in this compound the equivalent is about 190. The specific heat of mercury, however, is 0·033, and this number divided into 6·4 gives an approximate atomic weight of 194. More accurate analyses show that mercury has an equivalent of 100 in the red oxide and 200 in the green; Dulong and Petit's law shows us that the atomic weight is 200, and that the element is divalent in the red oxide and monovalent in the green. For exceptions to this law see {{sc|Chemistry}}: § ''Physical''.\n\nThe application of isomorphism follows from the fact that chemically similar substances crystallize in practically identical forms, and, more important, form mixed crystals. If two salts yield mixed crystals it may be assumed that they are similarly constituted, and if the formula of one be known, that of the other may be written down. For example gallium sulphate forms a salt with potassium sulphate which yields mixed crystals with potash",
+   "c2s3": "alum; we therefore infer that gallium is trivalent like aluminium, and therefore its atomic weight is deduced by multiplying the equivalent weight (determined by converting the sulphate into oxide) by three. General chemical resemblances yield valuable information in fixing the atomic weight after the equivalent weight has been exactly determined.\n\n''Gases''.—The generalization due to Avogadro—that equal volumes of gases under the same conditions of temperature and pressure contain equal numbers of molecules—may be stated in the form that the densities of gases are proportional to their molecular weights. It therefore follows that a comparison of the density of any gas with that of hydrogen gives the ratio of the molecular weights of the two gases, and if the molecular contents of the gases be known then the atomic weight is determinable. Gas reactions are available in many cases for solving the question whether a molecule is monatomic, diatomic, &c. Thus from the combination of equal volumes of hydrogen and chlorine to form twice the volume of hydrochloric acid, it may"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8718,
+    "output_tokens": 4569,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|940|STOICHIOMETRY|}}</noinclude>Benjamin Richter to denote the determination of the relative amounts in which acids and bases neutralize one another; but this definition may be extended to include the determination of the masses participating in any chemical reaction. The work of Richter and others who explored this field is treated under {{sc|Element}}; here we discuss a particular branch of the subject, viz. the determination of equivalent and atomic weights of elements, and the molecular weights of elements and compounds. Reference to {{sc|Chemistry}}, {{sc|Atom}} and {{sc|Element}} will explain the principles involved. Every element has an “ equivalent weight ” which is usually defined as the amount of the element which combines with or replaces unit weight of hydrogen; the “ atomic weight ” may be regarded as the smallest weight of an element which can be present in a chemical compound, and the “ molecular weight ” is the weight of the least part of an element or compound which can exist alone. The atomic weight is therefore some multiple of the equivalent weight, and the determining factor is termed the valency (''q.v.'') of the element. We have mentioned hydrogen as our standard element, which was originally chosen as being the lightest known substance; but Berzelius, whose stoichiometric researches are classical, having pointed out that few elements formed stable compounds with hydrogen, and even these presented difficulties to exact analysis, proposed to take oxygen as the standard. This suggestion has been adopted by the International Committee of Atomic Weights, who take the atomic weight of oxygen as 16·000, hydrogen being 1·0087.<sup>1</sup>\n\nDeferring the discussion of gaseous elements and compounds we will consider the ''modus operandi'' of determining, first, the equivalent weight of an element which forms solid compounds, and, secondly, its atomic weight. Suppose we can cause our element in known quantity to combine with oxygen to form a definite compound, which can be accurately weighed, or, conversely, decompose a known weight of the oxide into its constituents, of which the element can be weighed, then the equivalent weight of the element may be exactly determined. For if <math>x</math> grams of the element yield <math>y</math> grains of the oxide, and if <math>\\text{W}</math> be the equivalent of the element, we have <math>x</math> grams of the element equivalent to <math>y-x</math> grams of oxygen, and hence the equivalent weight <math>\\text{W}</math>, which corresponds to 8 grams of oxygen, is given by the proportion <math>y-x : x :: 8 : \\text{W}</math>, ''i.e.'' <math>\\text{W} = 8x/(y-x)</math>. For example, Lavoisier found that 45 parts of red oxide of mercury on heating yielded 41½ parts of mercury; hence 41½ parts of mercury is equivalent to <math>45 - 41\\tfrac{1}{2} = 3\\tfrac{1}{2}</math> parts of oxygen, and the equivalent of mercury in this oxide is therefore <math>8 \\times 41\\tfrac{1}{2} \\div 3\\tfrac{1}{2} = 95</math>. The question now arises: is this value the true equivalent, ''i.e.'' half the amount of mercury which combines with ''one'' atom of oxygen (for one atom of oxygen is equivalent to two atoms of hydrogen)? Before considering this matter, however, we will show how it is possible to obtain the equivalent of elements whose oxides are not suitable for exact analysis. No better example can be found than Stas's classical determination of the atomic weight of silver and of other elements.<sup>2</sup> It will be seen that the routine necessary to the chemical determination of equivalents consists in employing only such substances as can be obtained perfectly pure and stable (under the experimental conditions), and that the reactions chosen must be such as to yield a series of values by which any particular value can be checked or corrected.\n\n{{smaller block|Stas's experiments can be classified in five series. The object of the first series was to obtain the ratio Ag:O by means of the ratios KCl:O and Ag:KCl. The ratio KCl:O was determined by decomposing a known weight of potassium chlorate (''a'') by direct heating, (''b'') by heating with hydrochloric acid and weighing the residual chloride. The reaction may be written for our purpose in the form: KClO<sub>3</sub>=KCl+3O; in case ''a'' the oxygen is liberated as such; in case ''b'' it oxidizes the hydrochloric acid to water and chlorine oxides. The equation shows that one KCl is equivalent}}\n\n<sup>1</sup> We may here state that the equivalent weight of oxygen on this basis is 8·000, ''i.e.'' one half of its atomic weight. This matter is considered below.\n\n<sup>2</sup> The formulae used in the following paragraph were established before Stas began his work; and as oxygen is taken as 16, the results are atomic and not equivalent weights. to 3O, and hence if <math>x</math> grams of chlorate yields <math>y</math> grams of chloride, then the ratio KCl:O=<math>y/\\tfrac{1}{3}(x-y)</math>. Taking O as 16 and the experimental value of <math>x</math> and <math>y</math>, Stas obtained KCl:O=74·9502. To find the ratio of Ag:KCl, a known weight of silver was dissolved in nitric acid and the amount of potassium chloride necessary for its exact precipitation was determined. The reaction may be written as AgNO<sub>3</sub>+KCl=AgCl+KNO<sub>3</sub>, which shows that one Ag is equivalent to one KCl. The value found was Ag:KCl =1·447110. The ratio Ag:O is found by combining these values, for Ag:O=KCl:O×Ag:KCl = 74·9502 × 1·44710 = 107·9401.\n\nIn the second series the ratios AgCl:O and AgCl:Ag were obtained, the first by decomposing the chlorate by heating, and the second by synthesizing the chloride by burning a known weight of the metal in chlorine gas and weighing the resulting chloride, and also by dissolving the metal in nitric acid and precipitating it with hydrochloric acid and ammonium chloride. These two sets yield the ratio Ag : O, and also the ratio Cl : O, which, combined with the ratio KCl : O obtained in the first series, gave the atomic weight of potassium. The third and fourth series resembled the second, only the bromate and bromide, and iodate and iodide were worked with. The experiments gave additional values for Ag:O and also the atomic weights of bromine and iodine.\n\nThe fifth series was concerned with the ratios Ag<sub>2</sub>SO<sub>4</sub> : Ag; Ag<sub>2</sub>S : Ag and Ag<sub>2</sub>S:O. The first was obtained by reducing silver sulphate to the metal by hydrogen at high temperatures; the second by the direct combination of silver and sulphur, and also by the interaction of silver and sulphuretted hydrogen; these ratios on combination gave the third ratio Ag<sub>2</sub>S:O. These experiments besides giving values for Ag:O, yielded also the atomic weight of sulphur. There is no need to proceed any further with Stas's work, but it is sufficient to say that the general routine which he employed has been adopted in all chemical determinations of equivalent weights.\n\nThe derivation of the atomic from the equivalent weight may be effected in several ways. The simplest are perhaps by means of Dulong and Petit's law of atomic heats (and by Neumann's extension of this law), and by Mitscherlich's doctrine of isomorphism. Dulong and Petit's law may be stated in the form that the product of the specific heat and atomic weight is approximately 6·4, or that an approximate value of the atomic weight is 6·4 divided by the specific heat. This application may be illustrated in the case of mercury. We have seen above that the red oxide yields a value of about 95 for the equivalent; but a green oxide is known which contains twice as much metal for each part of oxygen, and therefore in this compound the equivalent is about 190. The specific heat of mercury, however, is 0·033, and this number divided into 6·4 gives an approximate atomic weight of 194. More accurate analyses show that mercury has an equivalent of 100 in the red oxide and 200 in the green; Dulong and Petit's law shows us that the atomic weight is 200, and that the element is divalent in the red oxide and monovalent in the green. For exceptions to this law see {{sc|Chemistry}}: § ''Physical''.\n\nThe application of isomorphism follows from the fact that chemically similar substances crystallize in practically identical forms, and, more important, form mixed crystals. If two salts yield mixed crystals it may be assumed that they are similarly constituted, and if the formula of one be known, that of the other may be written down. For example gallium sulphate forms a salt with potassium sulphate which yields mixed crystals with potash alum; we therefore infer that gallium is trivalent like aluminium, and therefore its atomic weight is deduced by multiplying the equivalent weight (determined by converting the sulphate into oxide) by three. General chemical resemblances yield valuable information in fixing the atomic weight after the equivalent weight has been exactly determined.\n\n''Gases''.—The generalization due to Avogadro—that equal volumes of gases under the same conditions of temperature and pressure contain equal numbers of molecules—may be stated in the form that the densities of gases are proportional to their molecular weights. It therefore follows that a comparison of the density of any gas with that of hydrogen gives the ratio of the molecular weights of the two gases, and if the molecular contents of the gases be known then the atomic weight is determinable. Gas reactions are available in many cases for solving the question whether a molecule is monatomic, diatomic, &c. Thus from the combination of equal volumes of hydrogen and chlorine to form twice the volume of hydrochloric acid, it may<noinclude><references/></noinclude>"
+}

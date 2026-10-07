@@ -1,0 +1,218 @@
+{
+ "volume": 26,
+ "page_number": 999,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n1013",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n1013",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 1137,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     65,
+     116,
+     2266,
+     189
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     65,
+     204,
+     1061,
+     1120
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     65,
+     1125,
+     1061,
+     1158
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     1061,
+     204,
+     1189,
+     1158
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     65,
+     1158,
+     1189,
+     2233
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     65,
+     2233,
+     1189,
+     3118
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1797,
+     201,
+     2266,
+     2185
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1797,
+     2195,
+     2266,
+     2231
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     201,
+     1797,
+     2231
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     2231,
+     2266,
+     3118
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||TIDE|959}}",
+   "c1s1": "{{c|{{sc|Fig.}} 8.}}",
+   "c1s2": "ll, the nptotic nentum ximum origin f there\n\ne of the and <math>b</math>, gy, are nates as e curve entum. nentum tum is",
+   "c1s3": "denoted by D, but in a figure of this size it necessarily remains indistinguishable from B. As the zero of energy is quite arbitrary the origin for the energy curve is displaced downwards, and this prevents the two curves from crossing one another in a confusing manner. On account of the limitation imposed we neglect the case where the quartic has no real roots. Every point of the line of momentum gives by its abscissa and ordinate the square root of the satellite's distance and the rotation of the planet, and the ordinate of the energy curve gives the energy corresponding to each distance of the satellite. Part of the figure has no physical meaning, for it is impossible for the satellite to move round the planet at a distance less than the sum of the radii of the planet and satellite. For example, the moon's diameter being about 2200 m. and the earth's about 8000, the moon's distance cannot be less than 5100 miles. Accordingly a strip is marked off and shaded on each side of the vertical axis within which the figure has no physical meaning. The point <math>P</math> indicates the present configuration of the earth and moon. The curve of rigidity <math>x^3y=1</math> is the same for all values of <math>h</math>, and by moving the line of momentum parallel to itself '''''Least Momentum for which no Relative Motion Possible.''''' nearer to or further from the origin, we may represent all possible moments of momentum of the whole system. The smallest amount of moment of momentum with which it is possible to set the system moving as a rigid body, with centrifugal force enough to balance the mutual attraction, is when the line of momentum touches the curve of rigidity. The condition for this is clearly that the equation <math>x^4-hx^3+1=0</math> should have equal roots. If it has equal roots, each root must be <math>\\tfrac{3}{4}h</math>, and therefore\n{{block center|<math>(\\tfrac{3}{4}h)^3-h(\\tfrac{3}{4}h)^3+1=0</math>,}}\nwhence <math>h^4=4^4/3^3</math>, or <math>h=4/3^{\\frac{3}{4}}=1\\cdot75</math>. The actual value of <math>h</math> for the moon and earth is about 4; hence, if the moon-earth system were",
+   "c1s4": "''Maximum Number of Days in Month.'' started with less than <math>\\tfrac{7}{16}</math> of its actual moment of momentum, it would not be possible for the two bodies to move so that the earth should always show the same face to the moon. Again, if we travel along the line of momentum, there must be some point for which <math>yx^3</math> is a maximum, and since <math>yx^3 = n/\\omega</math> there must be some point for which the number of planetary rotations is greatest during one revolution of the satellite; or, shortly, there must be some configuration for which there is a maximum number of days in the month. Now <math>yx^3</math> is equal to <math>x^3\\ (h-x)</math>, and this is a maximum when <math>x = \\tfrac{3}{4}h</math> and the maximum number of days in the month is <math>(\\tfrac{3}{4}h)^3(h-\\tfrac{3}{4}h)</math> or <math>3^3h^4/4^4</math>; if <math>h</math> is equal to 4, as is nearly the case for the earth and moon, this becomes 27. Hence it follows that we now have very nearly the maximum number of days in the month. A more accurate investigation in a paper on the \"Precession of a Viscous Spheroid\" in ''Phil. Trans.'' (1879), pt. i., showed that, taking account of solar tidal friction and of the obliquity to the ecliptic, the maximum number of days is about 29, and that we have already passed through the phase of maximum.\n\nWe will now consider the physical meaning of the figure. It is assumed that the resultant moment of momentum of the whole ''Discussion of Figure.'' system corresponds to a positive rotation. Now imagine two points with the same abscissa, one on the momentum line and the other on the energy curve, and suppose the one on the energy curve to guide that on the momentum line. Since we are supposing frictional tides to be raised on the planet, the energy must degrade, and however the two points",
+   "c2s1": "{{c|{{sc|Fig.}} 9.}}",
+   "c2s2": "are set initially the point on the energy a slope, carrying with it the other p we see that there are four slopes in t down to the planet and two down t therefore four ways in which the sys to the way it was started; but we s corresponding to the portion <math>\\text{AB}ba</math> c the part of the line of momentum longer than the day, and this is the c satellites except the nearer one of Mars. be placed in the condition <math>\\text{A}</math>—that is to round a planet which always shows th the condition is clearly dynamically bance will determine whether the sy slopes <math>ac</math> or <math>ab</math>—that is to say, wheth the planet. If the equilibrium breaks the recession will go on until the s corresponding to <math>\\text{B}</math>. It is clear that, of the shaded strip with the line of the point <math>\\text{A}</math>, which indicates that the planet, then the two bodies are in effe unstable configuration. If, therefore, of the earth, we should expect to find drawn to scale to represent the earth an approach between the edge of the tion of the line of momentum and cu be scarcely possible to distinguish t probability that the two bodies once which broke up in consequence of s view is confirmed by the more detai in the paper on the “Precession of referred to, and subsequent papers, in\n\n§ 36. ''Effects of Tidal Friction on Orbit and on the Earth's Rotation.''—It the limits of the present article to c of tidal friction; we therefore confine considerations which throw light on We have in the preceding section su is perpendicular to the orbit of the sa circular; we shall now suppose the orb and eccentric. For the sake of brevi the earth, and the satellite the moon. was carried out on the hypothesis th spheroid, because this was the only tides which had been worked out. A practically the same for any system we shall speak below of the planet or ea\n\n'''''Obliquity of the Ecliptic Increases.'''''\n\nWe shall show that if the tidal retar of the ecliptic increases, the earth's moon's distance and periodic time are increased. Fig. 9 represents the earth as seen from above the south pole, so that <math>\\text{S}</math> is the pole and the outer circle the equator. The earth's rotation is in the direction of the curved arrow at <math>\\text{S}</math>. The half of the inner circle which is drawn with a full line is a semi-small-circle of south latitude, and the dotted semicircle is a semi-small-circle in the same north latitude. Generally dotted lines indicate parts of the",
+   "c2s3": "dotted lines indicate parts of the figure which are below the plane of the paper. If the moon were cut in two and one half retained at the place of the moon and the other half transported to a point diametrically opposite to the first half with reference to the earth, there would be no material change in the tide-generating forces. It is easy to verify this statement by reference to § 11. These two halves may be described as moon and anti-moon, and such a substitution will facilitate the explanation. Let <math>\\text{M}</math> and <math>\\text{M}'</math> be the projections of the moon and anti-moon on to the terrestrial sphere. If the fluid in which the tides are raised were perfectly frictionless,<sup>3</sup> or if the earth were a perfect fluid or perfectly elastic, the apices of the tidal spheroid would be at <math>\\text{M}</math> and <math>\\text{M}'</math>. If, however, there is internal friction, due to any sort of viscosity, the tides will lag, and we may suppose the tidal apices to be at <math>\\text{T}</math> and <math>\\text{T}'</math>. Now suppose the tidal protuberances to be replaced by two equal heavy particles at <math>\\text{T}</math> and <math>\\text{T}'</math>, which are instantaneously rigidly connected with the earth. Then the attraction of the moon on <math>\\text{T}</math> is greater\n\n{{smaller block|<sup>1</sup> For further consideration of this subject see a series of papers by G. H. Darwin in ''Proceed.'' and ''Trans.'' of the Royal Society from 1878 to 1881, and app. G. (''b'') t. pt. ii. vol. i. of Thomson and Tait's ''Nat. Phil.'' (1883); or ''Scientific Papers'', vol. ii.}}\n\n{{smaller block|<sup>2</sup> These explanations, together with other remarks, are to be found in the abstracts of G. H. Darwin's memoirs in ''Proc. Roy. Soc.'', 1878 to 1881.}}\n\n{{smaller block|<sup>3</sup> We here suppose the tides not to be inverted. If they are inverted the conclusion is precisely the same.}}"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0999 c1f1.png",
+   "c2f1": "eb1911 v26 p0999 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     167,
+     542,
+     1061,
+     1118
+    ],
+    "caption": [
+     569,
+     1126,
+     685,
+     1158
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     221,
+     526,
+     1091,
+     1105
+    ]
+   },
+   {
+    "box": [
+     1802,
+     1801,
+     2260,
+     2185
+    ],
+    "caption": [
+     1973,
+     2195,
+     2082,
+     2227
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1794,
+     1794,
+     2269,
+     2187
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    1,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6693,
+    "output_tokens": 163,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 6490,
+    "output_tokens": 5476,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||TIDE|959}}</noinclude>[[File:eb1911 v26 p0999 c1f1.png|center|315px]]\n{{c|{{sc|Fig.}} 8.}}\n\nll, the nptotic nentum ximum origin f there\n\ne of the and <math>b</math>, gy, are nates as e curve entum. nentum tum is denoted by D, but in a figure of this size it necessarily remains indistinguishable from B. As the zero of energy is quite arbitrary the origin for the energy curve is displaced downwards, and this prevents the two curves from crossing one another in a confusing manner. On account of the limitation imposed we neglect the case where the quartic has no real roots. Every point of the line of momentum gives by its abscissa and ordinate the square root of the satellite's distance and the rotation of the planet, and the ordinate of the energy curve gives the energy corresponding to each distance of the satellite. Part of the figure has no physical meaning, for it is impossible for the satellite to move round the planet at a distance less than the sum of the radii of the planet and satellite. For example, the moon's diameter being about 2200 m. and the earth's about 8000, the moon's distance cannot be less than 5100 miles. Accordingly a strip is marked off and shaded on each side of the vertical axis within which the figure has no physical meaning. The point <math>P</math> indicates the present configuration of the earth and moon. The curve of rigidity <math>x^3y=1</math> is the same for all values of <math>h</math>, and by moving the line of momentum parallel to itself '''''Least Momentum for which no Relative Motion Possible.''''' nearer to or further from the origin, we may represent all possible moments of momentum of the whole system. The smallest amount of moment of momentum with which it is possible to set the system moving as a rigid body, with centrifugal force enough to balance the mutual attraction, is when the line of momentum touches the curve of rigidity. The condition for this is clearly that the equation <math>x^4-hx^3+1=0</math> should have equal roots. If it has equal roots, each root must be <math>\\tfrac{3}{4}h</math>, and therefore\n{{block center|<math>(\\tfrac{3}{4}h)^3-h(\\tfrac{3}{4}h)^3+1=0</math>,}}\nwhence <math>h^4=4^4/3^3</math>, or <math>h=4/3^{\\frac{3}{4}}=1\\cdot75</math>. The actual value of <math>h</math> for the moon and earth is about 4; hence, if the moon-earth system were ''Maximum Number of Days in Month.'' started with less than <math>\\tfrac{7}{16}</math> of its actual moment of momentum, it would not be possible for the two bodies to move so that the earth should always show the same face to the moon. Again, if we travel along the line of momentum, there must be some point for which <math>yx^3</math> is a maximum, and since <math>yx^3 = n/\\omega</math> there must be some point for which the number of planetary rotations is greatest during one revolution of the satellite; or, shortly, there must be some configuration for which there is a maximum number of days in the month. Now <math>yx^3</math> is equal to <math>x^3\\ (h-x)</math>, and this is a maximum when <math>x = \\tfrac{3}{4}h</math> and the maximum number of days in the month is <math>(\\tfrac{3}{4}h)^3(h-\\tfrac{3}{4}h)</math> or <math>3^3h^4/4^4</math>; if <math>h</math> is equal to 4, as is nearly the case for the earth and moon, this becomes 27. Hence it follows that we now have very nearly the maximum number of days in the month. A more accurate investigation in a paper on the \"Precession of a Viscous Spheroid\" in ''Phil. Trans.'' (1879), pt. i., showed that, taking account of solar tidal friction and of the obliquity to the ecliptic, the maximum number of days is about 29, and that we have already passed through the phase of maximum.\n\nWe will now consider the physical meaning of the figure. It is assumed that the resultant moment of momentum of the whole ''Discussion of Figure.'' system corresponds to a positive rotation. Now imagine two points with the same abscissa, one on the momentum line and the other on the energy curve, and suppose the one on the energy curve to guide that on the momentum line. Since we are supposing frictional tides to be raised on the planet, the energy must degrade, and however the two points are set initially the point on the energy a slope, carrying with it the other p we see that there are four slopes in t down to the planet and two down t therefore four ways in which the sys to the way it was started; but we s corresponding to the portion <math>\\text{AB}ba</math> c the part of the line of momentum longer than the day, and this is the c satellites except the nearer one of Mars. be placed in the condition <math>\\text{A}</math>—that is to round a planet which always shows th the condition is clearly dynamically bance will determine whether the sy slopes <math>ac</math> or <math>ab</math>—that is to say, wheth the planet. If the equilibrium breaks the recession will go on until the s corresponding to <math>\\text{B}</math>. It is clear that, of the shaded strip with the line of the point <math>\\text{A}</math>, which indicates that the planet, then the two bodies are in effe unstable configuration. If, therefore, of the earth, we should expect to find drawn to scale to represent the earth an approach between the edge of the tion of the line of momentum and cu be scarcely possible to distinguish t probability that the two bodies once which broke up in consequence of s view is confirmed by the more detai in the paper on the “Precession of referred to, and subsequent papers, in\n\n[[File:eb1911 v26 p0999 c2f1.png|center|148px]]\n{{c|{{sc|Fig.}} 9.}}\n\n§ 36. ''Effects of Tidal Friction on Orbit and on the Earth's Rotation.''—It the limits of the present article to c of tidal friction; we therefore confine considerations which throw light on We have in the preceding section su is perpendicular to the orbit of the sa circular; we shall now suppose the orb and eccentric. For the sake of brevi the earth, and the satellite the moon. was carried out on the hypothesis th spheroid, because this was the only tides which had been worked out. A practically the same for any system we shall speak below of the planet or ea\n\n'''''Obliquity of the Ecliptic Increases.'''''\n\nWe shall show that if the tidal retar of the ecliptic increases, the earth's moon's distance and periodic time are increased. Fig. 9 represents the earth as seen from above the south pole, so that <math>\\text{S}</math> is the pole and the outer circle the equator. The earth's rotation is in the direction of the curved arrow at <math>\\text{S}</math>. The half of the inner circle which is drawn with a full line is a semi-small-circle of south latitude, and the dotted semicircle is a semi-small-circle in the same north latitude. Generally dotted lines indicate parts of the dotted lines indicate parts of the figure which are below the plane of the paper. If the moon were cut in two and one half retained at the place of the moon and the other half transported to a point diametrically opposite to the first half with reference to the earth, there would be no material change in the tide-generating forces. It is easy to verify this statement by reference to § 11. These two halves may be described as moon and anti-moon, and such a substitution will facilitate the explanation. Let <math>\\text{M}</math> and <math>\\text{M}'</math> be the projections of the moon and anti-moon on to the terrestrial sphere. If the fluid in which the tides are raised were perfectly frictionless,<sup>3</sup> or if the earth were a perfect fluid or perfectly elastic, the apices of the tidal spheroid would be at <math>\\text{M}</math> and <math>\\text{M}'</math>. If, however, there is internal friction, due to any sort of viscosity, the tides will lag, and we may suppose the tidal apices to be at <math>\\text{T}</math> and <math>\\text{T}'</math>. Now suppose the tidal protuberances to be replaced by two equal heavy particles at <math>\\text{T}</math> and <math>\\text{T}'</math>, which are instantaneously rigidly connected with the earth. Then the attraction of the moon on <math>\\text{T}</math> is greater\n\n{{smaller block|<sup>1</sup> For further consideration of this subject see a series of papers by G. H. Darwin in ''Proceed.'' and ''Trans.'' of the Royal Society from 1878 to 1881, and app. G. (''b'') t. pt. ii. vol. i. of Thomson and Tait's ''Nat. Phil.'' (1883); or ''Scientific Papers'', vol. ii.}}\n\n{{smaller block|<sup>2</sup> These explanations, together with other remarks, are to be found in the abstracts of G. H. Darwin's memoirs in ''Proc. Roy. Soc.'', 1878 to 1881.}}\n\n{{smaller block|<sup>3</sup> We here suppose the tides not to be inverted. If they are inverted the conclusion is precisely the same.}}<noinclude><references/></noinclude>"
+}

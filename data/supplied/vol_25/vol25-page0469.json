@@ -1,0 +1,318 @@
+{
+ "volume": 25,
+ "page_number": 469,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n477",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n477",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1084,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     115,
+     152,
+     2270,
+     228
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     115,
+     246,
+     299,
+     1067
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     1067,
+     299,
+     1105
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     299,
+     241,
+     1187,
+     1105
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     115,
+     1105,
+     1187,
+     1561
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     1574,
+     1187,
+     1614
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     1614,
+     1187,
+     2398
+    ]
+   },
+   {
+    "name": "c1f3",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     115,
+     2398,
+     1187,
+     2498
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     2501,
+     1187,
+     2533
+    ]
+   },
+   {
+    "name": "c1s6",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     115,
+     2533,
+     1187,
+     3161
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1187,
+     228,
+     2270,
+     1241
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1187,
+     1241,
+     2270,
+     2003
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1187,
+     2003,
+     2270,
+     2176
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1187,
+     2189,
+     2270,
+     2221
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1187,
+     2221,
+     2270,
+     3161
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|STRINGS]|SOUND|453}}",
+   "c1s1": "{{c|{{sc|Fig.}} 30.}}",
+   "c1s2": "the nodal pressure changes, while the other two vibrate y. If, however, the pipe is blown strongly, the fundamental dies away, and the first overtone is predominant. Then the middle point is a loop, and the middle flame is only slightly affected, while the other two, now being at nodes, vibrate strongly.\n\n3. ''Pipe Closed at Both Ends.''—The two ends in such a pipe are nodes. It is evident that the overtones will follow the same rule as for a pipe opened at both ends. This case is not exactly realized in practice, but it is closely approximated to in ''Kundt's dust-tube.'' A glass tube, the “dust-tube,” 3 ft. or more in length, and perhaps 1 in. in diameter, has a little lycopodium powder introduced, and the powder is allowed to run all along the tube, which is then fixed horizontally. A closely-fitting adjustable piston is provided at one end. A glass or metal rod, the “sounder,” is clamped at its middle point, and fixed along the prolongation of the axis of the dust-tube as in fig. 31, a loosely-fitting cork or card piston being fixed on one end of the sounder, which is inserted within the dust-tube. The other end of the sounder is stroked outwards with a damp cloth so as to make it sound its fundamental. Stationary waves are formed in the air in the dust-tube if the length is rightly adjusted by the closely-fitting piston, and the lycopodium dust collects at the nodes in little heaps, the first being at the fixed",
+   "c1s3": "{{c|{{sc|Fig.}} 31.}}",
+   "c1s4": "¶\nThe velocities in different gases may be compared by this apparatus by filling the dust-tube with the gases in place of air. If <math>\\text{L}_1</math> is the internodal distance and <math>\\text{U}_1</math> the velocity in a gas, <math>\\text{L}</math> and <math>\\text{U}</math> being the corresponding values for air, we have <math>\\text{U}_1/\\text{U} = \\text{L}_1/\\text{L}</math>.\n\n'''''Specific Heats' Ratio.''''' Kundt's dust-tube may also be employed for the determination of the ratio of the specific heats of a gas or vapour. If <math>\\text{U}</math> is the velocity of sound in a gas at pressure <math>\\text{P}</math> with density <math>\\rho</math>, and if waves of length <math>\\lambda</math> and frequency <math>\\text{N}</math> are propagated through it, then the distance between the dust-heaps is\n{{block center|<math>d = \\frac{\\lambda}{2} = \\frac{\\text{U}}{2\\text{N}} = \\frac{1}{2\\text{N}}\\sqrt{\\frac{\\gamma\\text{P}}{\\rho}},</math>}}\nwhere <math>\\gamma</math> is the ratio of the two specific heats. If <math>d</math> is measured for two gases in succession for the same frequency <math>\\text{N}</math>, we have\n{{block center|<math>\\frac{\\gamma_2}{\\gamma_1} = \\frac{\\rho_2\\text{P}_1}{\\rho_1\\text{P}_2}\\ \\frac{d_2{}^2}{d_1{}^2},</math>}}\nwhere the suffixes denote the gases to which the quantities relate. If <math>\\gamma_1</math> is known this gives <math>\\gamma_2</math>. Kundt and Warburg applied the method to find <math>\\gamma</math> for mercury vapour (''Pogg. Ann.'', 1876, 157, p. 356), using a double form of the apparatus in which there are two dust-tubes worked by the same sounding rod. This rod is supported at <math>\\tfrac{1}{4}</math> and <math>\\tfrac{3}{4}</math> of its length where it enters the two dust-tubes, as represented diagrammatically in fig. 32. It is stroked in the middle so as to",
+   "c1s5": "{{c|{{sc|Fig.}} 32.}}",
+   "c1s6": "excite its second mode of vibration. The method ensures that the two frequencies shall be exactly the same. In the mercury experiment the sounding rod was sealed into the dust-tube, which was exhausted of air, and contained only some mercury and some quartz dust to give the heaps. It was placed in a high temperature oven, where the mercury was evaporated. The second tube containing air was outside. When a known temperature was attained the sounder was excited, and <math>d_2</math> and <math>d_1</math> could be measured. From the temperature, <math>\\text{P}_2/\\rho_2</math> was known, and <math>\\gamma_2/\\gamma_1</math> could then be found. Taking <math>\\gamma_1 = 1{\\cdot}41</math>, <math>\\gamma_2</math> was determined to be 1·66. Lord Rayleigh and Sir William Ramsay (''Phil. Trans.'' A. 1895, pt. i. p. 187) also used a single dust-tube with a sounder to find <math>\\gamma</math> for argon, and again the value was 1·66.\n\n''Determinations of Pressure Changes and Amplitude of Vibrations in Pipes.''—If the maximum pressure change is determined, the amplitude is given by equation (20), viz.\n{{block center|<math>\\hat{\\omega}_m = 2\\pi na\\rho\\text{U},</math>}}\nfor in the stationary wave system the pressure change and the",
+   "c2s1": "amplitude are both double those in either train, so that the same relation holds.\n\n'''''Amplitude of Vibration.''''' Determinations of the pressure changes, or extent of excursion of the air, in sounding organ pipes have been made by A. Kundt (''Pogg. Ann.'', 1868, 134, p. 163), A. J. I. Töpler and L. Boltzmann (''Pogg. Ann.'', vol. 141, or Rayleigh, ''Sound'', ii. § 422''a''), and E. Mach (''Optisch-akustischen Versuche'', 1873). Mach's method is perhaps the most direct. The pipe was fixed in a horizontal position, and along the top wall ran a platinum wire wetted with sulphuric acid. When the wire was heated by an electric current a fine line of vapour descended from each drop. The pipe was closed at the centre by a membrane which prevented a through draught, yet permitted the vibrations, as it was at a node. The vapour line, therefore, merely vibrated to and fro when the pipe was sounded. The extent of vibration at different parts of the pipe was studied through a glass side wall, a stroboscopic method being used to get the position of the vapour line at a definite part of the vibration. Mach found an excursion of 0·4 cm. at the end of an open pipe 123 cm. long. The amplitude found by the other observers was of the same order. For the vibration of air in other cavities than long cylindrical pipes we refer to Rayleigh's ''Sound'', vol. ii. chs. 12 and 16.\n\n''Propagation of Waves in Pipes of Circular Section.''—Helmholtz investigated the velocity of propagation of sound in pipes, taking into account the viscosity of the air (Rayleigh, ''Sound'', ii. § 347), and Kirchhoff investigated it, taking into account both the viscosity and the heat communication between the air and the walls of the pipe (''loc. cit.'' ii. § 350). Both obtained the value for the velocity\n{{block center|<math>\\text{U}\\left(1-\\frac{\\text{C}}{\\text{R}\\sqrt{2\\pi\\text{N}\\rho}}\\right),</math>}}",
+   "c2s2": "{{smaller|where <math>\\text{U}</math> is the velocity in free air, <math>\\text{R}</math> is the radius of the pipe, <math>\\text{N}</math> the frequency, and <math>\\rho</math> the air density. <math>\\text{C}</math> is a constant, equal to the coefficient of viscosity in Helmholtz's theory, but less simple in Kirchhoff's theory. Experiments on the velocity in pipes were carried out by H. Schneebeli (''Pogg. Ann.'', 1869, 136, p. 296) and by T. J. Seebeck (''Pogg. Ann.'', 1870, 139, p. 104) which accorded with this result as far as <math>\\text{R}</math> is concerned, but the diminution of velocity was found to be more nearly proportional to <math>\\text{N}^{-\\frac{3}{4}}</math>. Kundt also obtained results in general agreement with the formula (Rayleigh, ''Sound'', ii. § 260). He used his dust-tube method.}}\n\n{{c|''Elementary Theory of the Transverse Vibration of Musical Strings.''}}\n\nWe shall first investigate the velocity with which a disturbance travels along a string of mass <math>m</math> per unit length when it is stretched with a constant tension <math>\\text{T}</math>, the same at all points. We shall then show that on certain limitations two trains of disturbance may be superposed so that stationary waves may be formed, and thence we shall deduce the modes of vibration as with pipes.",
+   "c2s3": "{{c|{{sc|Fig.}} 33.}}",
+   "c2s4": "¶\nLet <math>\\text{AB}</math> (fig. 33) represent the string with the ends <math>\\text{AB}</math> fixed. Let a disturbance once set going travel along unchanged in form from <math>\\text{A}</math> to <math>\\text{B}</math> with velocity <math>\\text{U}</math>. Then move <math>\\text{AB}</math> from right to left with this velocity, and the disturbance remains fixed in space. Take a point <math>\\text{P}</math> in the disturbed part, and a point <math>\\text{Q}</math> which the disturbance has not yet reached. Since the conditions in the region <math>\\text{PQ}</math> remain always the same, the momentum perpendicular to <math>\\text{AB}</math> entering the region at <math>\\text{Q}</math> is equal to the momentum perpendicular to <math>\\text{AB}</math> leaving the region at <math>\\text{P}</math>. But, since the motion at <math>\\text{Q}</math> is along <math>\\text{AB}</math>, there is no momentum there perpendicular to <math>\\text{AB}</math>. So also there is on the whole none in that direction leaving at <math>\\text{P}</math>. Let the tangent at <math>\\text{P}</math> make angle <math>\\phi</math> with <math>\\text{AB}</math>. The velocity of the string at <math>\\text{P}</math> parallel to <math>\\text{PM}</math> is <math>\\text{U} \\sin \\phi</math>, and the mass of string passing <math>\\text{P}</math> is <math>m\\text{U}</math> per second, so that <math>m\\text{U}^2 \\sin \\phi</math> is carried out per second. But the tension at <math>\\text{P}</math> is <math>\\text{T}</math>, parallel to the tangent, and <math>\\text{T} \\sin \\phi</math> parallel to <math>\\text{PM}</math>, and through this <math>-\\text{T} \\sin \\phi</math> is the momentum passing out at <math>\\text{P}</math> per second. Since the resultant is zero, <math>m\\text{U}^2 \\sin \\phi - \\text{T} \\sin \\phi = 0</math>, or <math>\\text{U}^2 = \\text{T}/m</math>.\n\nNow keep <math>\\text{AB}</math> fixed, and the disturbance travels with velocity <math>\\text{U}</math>. We might make this investigation more general by introducing a force <math>\\text{X}</math> as in the investigation for air, but it hardly appears necessary.\n\nTo form stationary waves two equal trains must be able to travel in opposite directions with equal velocities, and to be superposed. We must show then that the force called out by the sum of the disturbances is equal to the sum of the forces called out by each train separately.\n\nIn order that the velocity shall remain unchanged the tension <math>\\text{T}</math> must remain the same. This implies that the disturbance is so small that the length is not appreciably altered. The component of <math>\\text{T}</math>"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v25 p0469 c1f1.png",
+   "c1f2": "eb1911 v25 p0469 c1f2.png",
+   "c1f3": "eb1911 v25 p0469 c1f3.png",
+   "c2f1": "eb1911 v25 p0469 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     153,
+     326,
+     277,
+     1056
+    ],
+    "caption": [
+     143,
+     1066,
+     268,
+     1100
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     121,
+     446,
+     283,
+     1065
+    ]
+   },
+   {
+    "box": [
+     128,
+     1431,
+     1157,
+     1560
+    ],
+    "caption": [
+     584,
+     1574,
+     707,
+     1603
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     128,
+     1444,
+     1171,
+     1559
+    ]
+   },
+   {
+    "box": [
+     137,
+     2401,
+     1151,
+     2495
+    ],
+    "caption": [
+     579,
+     2501,
+     705,
+     2533
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     128,
+     2399,
+     1171,
+     2491
+    ]
+   },
+   {
+    "box": [
+     1284,
+     2006,
+     2168,
+     2173
+    ],
+    "caption": [
+     1674,
+     2189,
+     1799,
+     2221
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1285,
+     1999,
+     2213,
+     2182
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 9317,
+    "output_tokens": 343,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 11,
+    "input_tokens": 7605,
+    "output_tokens": 6149,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 21164
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|STRINGS]|SOUND|453}}</noinclude>[[File:eb1911 v25 p0469 c1f1.png|center|61px]]\n{{c|{{sc|Fig.}} 30.}}\n\nthe nodal pressure changes, while the other two vibrate y. If, however, the pipe is blown strongly, the fundamental dies away, and the first overtone is predominant. Then the middle point is a loop, and the middle flame is only slightly affected, while the other two, now being at nodes, vibrate strongly.\n\n3. ''Pipe Closed at Both Ends.''—The two ends in such a pipe are nodes. It is evident that the overtones will follow the same rule as for a pipe opened at both ends. This case is not exactly realized in practice, but it is closely approximated to in ''Kundt's dust-tube.'' A glass tube, the “dust-tube,” 3 ft. or more in length, and perhaps 1 in. in diameter, has a little lycopodium powder introduced, and the powder is allowed to run all along the tube, which is then fixed horizontally. A closely-fitting adjustable piston is provided at one end. A glass or metal rod, the “sounder,” is clamped at its middle point, and fixed along the prolongation of the axis of the dust-tube as in fig. 31, a loosely-fitting cork or card piston being fixed on one end of the sounder, which is inserted within the dust-tube. The other end of the sounder is stroked outwards with a damp cloth so as to make it sound its fundamental. Stationary waves are formed in the air in the dust-tube if the length is rightly adjusted by the closely-fitting piston, and the lycopodium dust collects at the nodes in little heaps, the first being at the fixed\n\n[[File:eb1911 v25 p0469 c1f2.png|center|356px]]\n{{c|{{sc|Fig.}} 31.}}\n\nThe velocities in different gases may be compared by this apparatus by filling the dust-tube with the gases in place of air. If <math>\\text{L}_1</math> is the internodal distance and <math>\\text{U}_1</math> the velocity in a gas, <math>\\text{L}</math> and <math>\\text{U}</math> being the corresponding values for air, we have <math>\\text{U}_1/\\text{U} = \\text{L}_1/\\text{L}</math>.\n\n'''''Specific Heats' Ratio.''''' Kundt's dust-tube may also be employed for the determination of the ratio of the specific heats of a gas or vapour. If <math>\\text{U}</math> is the velocity of sound in a gas at pressure <math>\\text{P}</math> with density <math>\\rho</math>, and if waves of length <math>\\lambda</math> and frequency <math>\\text{N}</math> are propagated through it, then the distance between the dust-heaps is\n{{block center|<math>d = \\frac{\\lambda}{2} = \\frac{\\text{U}}{2\\text{N}} = \\frac{1}{2\\text{N}}\\sqrt{\\frac{\\gamma\\text{P}}{\\rho}},</math>}}\nwhere <math>\\gamma</math> is the ratio of the two specific heats. If <math>d</math> is measured for two gases in succession for the same frequency <math>\\text{N}</math>, we have\n{{block center|<math>\\frac{\\gamma_2}{\\gamma_1} = \\frac{\\rho_2\\text{P}_1}{\\rho_1\\text{P}_2}\\ \\frac{d_2{}^2}{d_1{}^2},</math>}}\nwhere the suffixes denote the gases to which the quantities relate. If <math>\\gamma_1</math> is known this gives <math>\\gamma_2</math>. Kundt and Warburg applied the method to find <math>\\gamma</math> for mercury vapour (''Pogg. Ann.'', 1876, 157, p. 356), using a double form of the apparatus in which there are two dust-tubes worked by the same sounding rod. This rod is supported at <math>\\tfrac{1}{4}</math> and <math>\\tfrac{3}{4}</math> of its length where it enters the two dust-tubes, as represented diagrammatically in fig. 32. It is stroked in the middle so as to excite its second mode of vibration. The method ensures that the two frequencies shall be exactly the same. In the mercury experiment the sounding rod was sealed into the dust-tube, which was exhausted of air, and contained only some mercury and some quartz dust to give the heaps. It was placed in a high temperature oven, where the mercury was evaporated. The second tube containing air was outside. When a known temperature was attained the sounder was excited, and <math>d_2</math> and <math>d_1</math> could be measured. From the temperature, <math>\\text{P}_2/\\rho_2</math> was known, and <math>\\gamma_2/\\gamma_1</math> could then be found. Taking <math>\\gamma_1 = 1{\\cdot}41</math>, <math>\\gamma_2</math> was determined to be 1·66. Lord Rayleigh and Sir William Ramsay (''Phil. Trans.'' A. 1895, pt. i. p. 187) also used a single dust-tube with a sounder to find <math>\\gamma</math> for argon, and again the value was 1·66.\n\n[[File:eb1911 v25 p0469 c1f3.png|center|356px]]\n{{c|{{sc|Fig.}} 32.}}\n\n''Determinations of Pressure Changes and Amplitude of Vibrations in Pipes.''—If the maximum pressure change is determined, the amplitude is given by equation (20), viz.\n{{block center|<math>\\hat{\\omega}_m = 2\\pi na\\rho\\text{U},</math>}}\nfor in the stationary wave system the pressure change and the amplitude are both double those in either train, so that the same relation holds.\n\n'''''Amplitude of Vibration.''''' Determinations of the pressure changes, or extent of excursion of the air, in sounding organ pipes have been made by A. Kundt (''Pogg. Ann.'', 1868, 134, p. 163), A. J. I. Töpler and L. Boltzmann (''Pogg. Ann.'', vol. 141, or Rayleigh, ''Sound'', ii. § 422''a''), and E. Mach (''Optisch-akustischen Versuche'', 1873). Mach's method is perhaps the most direct. The pipe was fixed in a horizontal position, and along the top wall ran a platinum wire wetted with sulphuric acid. When the wire was heated by an electric current a fine line of vapour descended from each drop. The pipe was closed at the centre by a membrane which prevented a through draught, yet permitted the vibrations, as it was at a node. The vapour line, therefore, merely vibrated to and fro when the pipe was sounded. The extent of vibration at different parts of the pipe was studied through a glass side wall, a stroboscopic method being used to get the position of the vapour line at a definite part of the vibration. Mach found an excursion of 0·4 cm. at the end of an open pipe 123 cm. long. The amplitude found by the other observers was of the same order. For the vibration of air in other cavities than long cylindrical pipes we refer to Rayleigh's ''Sound'', vol. ii. chs. 12 and 16.\n\n''Propagation of Waves in Pipes of Circular Section.''—Helmholtz investigated the velocity of propagation of sound in pipes, taking into account the viscosity of the air (Rayleigh, ''Sound'', ii. § 347), and Kirchhoff investigated it, taking into account both the viscosity and the heat communication between the air and the walls of the pipe (''loc. cit.'' ii. § 350). Both obtained the value for the velocity\n{{block center|<math>\\text{U}\\left(1-\\frac{\\text{C}}{\\text{R}\\sqrt{2\\pi\\text{N}\\rho}}\\right),</math> where <math>\\text{U}</math> is the velocity in free air, <math>\\text{R}</math> is the radius of the pipe, <math>\\text{N}</math> the frequency, and <math>\\rho</math> the air density. <math>\\text{C}</math> is a constant, equal to the coefficient of viscosity in Helmholtz's theory, but less simple in Kirchhoff's theory. Experiments on the velocity in pipes were carried out by H. Schneebeli (''Pogg. Ann.'', 1869, 136, p. 296) and by T. J. Seebeck (''Pogg. Ann.'', 1870, 139, p. 104) which accorded with this result as far as <math>\\text{R}</math> is concerned, but the diminution of velocity was found to be more nearly proportional to <math>\\text{N}^{-\\frac{3}{4}}</math>. Kundt also obtained results in general agreement with the formula (Rayleigh, ''Sound'', ii. § 260). He used his dust-tube method.}}\n\n{{c|''Elementary Theory of the Transverse Vibration of Musical Strings.''}}\n\nWe shall first investigate the velocity with which a disturbance travels along a string of mass <math>m</math> per unit length when it is stretched with a constant tension <math>\\text{T}</math>, the same at all points. We shall then show that on certain limitations two trains of disturbance may be superposed so that stationary waves may be formed, and thence we shall deduce the modes of vibration as with pipes.\n\n[[File:eb1911 v25 p0469 c2f1.png|center|360px]]\n{{c|{{sc|Fig.}} 33.}}\n\nLet <math>\\text{AB}</math> (fig. 33) represent the string with the ends <math>\\text{AB}</math> fixed. Let a disturbance once set going travel along unchanged in form from <math>\\text{A}</math> to <math>\\text{B}</math> with velocity <math>\\text{U}</math>. Then move <math>\\text{AB}</math> from right to left with this velocity, and the disturbance remains fixed in space. Take a point <math>\\text{P}</math> in the disturbed part, and a point <math>\\text{Q}</math> which the disturbance has not yet reached. Since the conditions in the region <math>\\text{PQ}</math> remain always the same, the momentum perpendicular to <math>\\text{AB}</math> entering the region at <math>\\text{Q}</math> is equal to the momentum perpendicular to <math>\\text{AB}</math> leaving the region at <math>\\text{P}</math>. But, since the motion at <math>\\text{Q}</math> is along <math>\\text{AB}</math>, there is no momentum there perpendicular to <math>\\text{AB}</math>. So also there is on the whole none in that direction leaving at <math>\\text{P}</math>. Let the tangent at <math>\\text{P}</math> make angle <math>\\phi</math> with <math>\\text{AB}</math>. The velocity of the string at <math>\\text{P}</math> parallel to <math>\\text{PM}</math> is <math>\\text{U} \\sin \\phi</math>, and the mass of string passing <math>\\text{P}</math> is <math>m\\text{U}</math> per second, so that <math>m\\text{U}^2 \\sin \\phi</math> is carried out per second. But the tension at <math>\\text{P}</math> is <math>\\text{T}</math>, parallel to the tangent, and <math>\\text{T} \\sin \\phi</math> parallel to <math>\\text{PM}</math>, and through this <math>-\\text{T} \\sin \\phi</math> is the momentum passing out at <math>\\text{P}</math> per second. Since the resultant is zero, <math>m\\text{U}^2 \\sin \\phi - \\text{T} \\sin \\phi = 0</math>, or <math>\\text{U}^2 = \\text{T}/m</math>.\n\nNow keep <math>\\text{AB}</math> fixed, and the disturbance travels with velocity <math>\\text{U}</math>. We might make this investigation more general by introducing a force <math>\\text{X}</math> as in the investigation for air, but it hardly appears necessary.\n\nTo form stationary waves two equal trains must be able to travel in opposite directions with equal velocities, and to be superposed. We must show then that the force called out by the sum of the disturbances is equal to the sum of the forces called out by each train separately.\n\nIn order that the velocity shall remain unchanged the tension <math>\\text{T}</math> must remain the same. This implies that the disturbance is so small that the length is not appreciably altered. The component of <math>\\text{T}</math><noinclude><references/></noinclude>"
+}

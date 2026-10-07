@@ -1,0 +1,230 @@
+{
+ "volume": 27,
+ "page_number": 944,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n962",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n962",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1179,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     142,
+     0,
+     2372,
+     203
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     142,
+     203,
+     1207,
+     644
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     142,
+     644,
+     1207,
+     1491
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     142,
+     1491,
+     1207,
+     2554
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     142,
+     2554,
+     1207,
+     3249
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1628,
+     203,
+     2372,
+     1007
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1207,
+     203,
+     1628,
+     525
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1779,
+     525,
+     2372,
+     1677
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1207,
+     525,
+     2372,
+     1609
+    ]
+   },
+   {
+    "name": "c2s6",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1207,
+     1609,
+     2372,
+     2701
+    ]
+   },
+   {
+    "name": "c2s7",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1207,
+     2701,
+     2372,
+     3249
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|918|VARIATIONS, CALCULUS OF|}}",
+   "c1s1": "It becomes\n\n{{block center|<math>\\int \\cos^2(x, \\nu)\\frac{\\partial\\psi}{\\partial r}\\, \\frac{\\partial w}{\\partial\\nu} ds'</math>}}\n\n{{block center|<math>+\\int \\left[\\frac{\\partial}{\\partial s'}\\left\\{ \\cos(x, \\nu)\\cos(y, \\nu)\\frac{\\partial\\psi}{\\partial r} \\right\\} - \\cos(x, \\nu)\\frac{\\partial}{\\partial x}\\left(\\frac{\\partial\\psi}{\\partial r}\\right) \\right] w ds'.</math>}}\n\nIn forming the first term within the square brackets we then use the relations\n\n{{block center|<math>\\frac{\\partial}{\\partial s'}\\cos(x, \\nu) = -\\frac{1}{\\rho'}\\cos(y, \\nu), \\frac{\\partial}{\\partial s'}\\cos(y, \\nu) = \\frac{1}{\\rho'}\\cos(x, \\nu),</math>}}\n\n{{block center|<math>\\frac{\\partial}{\\partial s'}\\, \\frac{\\partial\\psi}{\\partial r} = -\\cos(y, \\nu)\\frac{\\partial}{\\partial x}\\, \\frac{\\partial\\psi}{\\partial r} + \\cos(x, \\nu)\\frac{\\partial}{\\partial y}\\, \\frac{\\partial\\psi}{\\partial r},</math>}}",
+   "c1s2": "where <math>\\rho'</math> denotes the radius of curvature of the curve <math>s'</math>.\n\nThe necessity of freeing the calculus of variations from dependence upon the notion of infinitely small quantities was realized by Lagrange, and the process of discarding such quantities was partially carried out by him in his ''Théorie des fonctions analytiques'' (1797). In accordance with the interpretation of differentials which he made in that treatise, he interpreted the variation of an integral, as expressed by means of his symbol <math>\\delta</math>, as the first term, or the sum of the terms of the first order, in the development in series of the complete expression for the change that is made in the value of the integral when small finite changes are made in the variables. The quantity which had been regarded as the '''''The second variation.''''' variation of the integral came to be regarded as the first variation, and the discrimination between maxima and minima came to be regarded as requiring the investigation of the second variation. The first step in this theory had been taken by A. M. Legendre in 1786.\n\nIn the case of an integral of the form\n{{block center|<math>\\int_{x_0}^{x_1}\\text{F}(x, y, y')dx</math>}}\nLegendre defined the second variation as the integral\n{{block center|<math>\\int_{x_0}^{x_1}\\frac{1}{2}\\left\\{\\frac{\\partial^2\\text{F}}{\\partial y^2}(\\delta y)^2+2\\frac{\\partial^2\\text{F}}{\\partial y\\partial y'}\\delta y\\delta y'+\\frac{\\partial^2\\text{F}}{\\partial y'^2}(\\delta y')^2\\right\\}dx.</math>}}\nTo this expression he added the term <math>\\left[\\tfrac{1}{2}\\alpha(\\delta y)^2\\right]_{x_0}^{x_1}</math>, which vanishes",
+   "c1s3": "identically because <math>\\delta y</math> vanishes at <math>x=x_0</math> and at <math>x=x_1</math>. He took <math>\\alpha</math> to satisfy the equation\n{{block center|<math>\\frac{\\partial^2\\text{F}}{\\partial y'^2}\\left(\\frac{\\partial^2\\text{F}}{\\partial y^2}+\\frac{d\\alpha}{dx}\\right) = \\left(\\frac{\\partial^2\\text{F}}{\\partial y\\partial y'}+\\alpha\\right)^2</math>;}}\nand thus transformed the expression for the second variation to\n{{block center|<math>\\int_{x_0}^{x_1}\\frac{\\partial^2\\text{F}}{\\partial y'^2}(\\delta y'+m\\delta y)^2dx</math>,}}\nwhere\n{{block center|<math>m\\frac{\\partial^2\\text{F}}{\\partial y'^2}=\\frac{\\partial^2\\text{F}}{\\partial y\\partial y'}+\\alpha</math>.}}\n\n'''''Legendre's condition.''''' From this investigation Legendre deduced a new condition for the existence of an extremum. It is necessary, not only that the variation should vanish, but also that the second variation should be one-signed. In the case of the First Problem Legendre concluded that this cannot happen unless <math>\\partial^2\\text{F}/\\partial y'^2</math> has the same sign at all points of the stationary curve between the end points, and that the sign must be <math>+</math> for a minimum and <math>-</math> for a maximum. In the application of the perametric method the function which has been denoted by <math>f_1</math> takes the place of <math>\\partial^2\\text{F}/\\partial y'^2</math>.\n\n'''''Jacobi.''''' The transformation of the second variations of integrals of various types into forms in which their signs can be determined by inspection subsequently became one of the leading problems of the calculus of variations. This result came about chiefly through the publication in 1837 of a memoir by C. G. J. Jacobi. He transformed Legendre's equation for the auxiliary function <math>\\alpha</math> into a linear differential equation of the second order by the substitution\n{{block center|<math>\\frac{\\partial^2\\text{F}}{\\partial y\\partial y'}+\\alpha=-\\frac{\\partial^2\\text{F}}{\\partial y'^2}\\frac{1}{w}\\frac{dw}{dx}</math>,}}\nand he pointed out that Legendre's transformation of the second variation cannot be effected if the function <math>w</math> vanishes between the limits of integration. He pointed out further, that if the stationary curves of the integral are given by an equation of the form",
+   "c1s4": "{{block center|<math>y=\\phi(x, a, b),</math>}}\nwhere <math>a</math>, <math>b</math> are arbitrary constants, the complete primitive of the equation for <math>w</math> is of the form\n{{block center|<math>w=\\text{A}\\frac{\\partial\\phi}{\\partial a}+\\text{B}\\frac{\\partial\\phi}{\\partial b},</math>}}\nwhere <math>\\text{A}</math>, <math>\\text{B}</math> are new arbitrary constants. Jacobi stated these propositions without proof, and the proof of them, and the extension of the results to more general problems, became the object of numerous investigations. These investigations were, for the most part, and for a long time, occupied almost exclusively with analytical developments; and the geometrical interpretation which Jacobi had given, and which he afterwards emphasized in his ''Vorlesungen über Dynamik'', was neglected until rather recent times. According to this interpretation, the stationary curves which start from a point <math>(x_0, y_0)</math> have an envelope; and the integral of <math>\\text{F}</math>, taken along such a curve, cannot be an extremum if the point <math>(\\xi_0, \\eta_0)</math> where the curve touches the envelope lies on the arc between the end points. Pairs",
+   "c2s2": "of points such as <math>(x_0, y_0)</math> a ''jugate points'' by Weierstr tegral cannot be an extre between the fixed end poin points was first published l\n\nExamples of conjugate on a sphere, the conjugat foci of analytical dynamic conjugate points, the inte",
+   "c2s5": "there is an exceptional case, of which a suitably chosen arc of the equator of an oblate spheroid may serve as an example. In the problem of the catenoid a pair of conjugate points on any of the catenaries, which are the stationary curves of the problem, is such that the tangents to the catenary at the two points <math>\\text{A}</math> and <math>\\text{A}'</math> meet on the axis of revolution (fig. 2). When both the end points of the required curve move on fixed guiding curves <math>\\text{C}_0</math>, <math>\\text{C}_1</math>, a stationary curve <math>\\text{C}</math>, joining a point <math>\\text{A}_0</math> of <math>\\text{C}_0</math> to a point <math>\\text{A}_1</math> of <math>\\text{C}_1</math>, cannot yield an extremum unless it is cut transversely by <math>\\text{C}_0</math> at <math>\\text{A}_0</math> and by <math>\\text{C}_1</math> at <math>\\text{A}_1</math>. The envelope of stationary curves which set out from <math>\\text{C}_0</math> towards <math>\\text{C}_1</math>, and are cut transversely by <math>\\text{C}_0</math> at points near <math>\\text{A}_0</math>, meets <math>\\text{C}</math> at a point <math>\\text{D}_0</math>; and the envelope of stationary curves which proceed from <math>\\text{C}_0</math> to <math>\\text{C}_1</math>, and are cut transversely by <math>\\text{C}_1</math> at points near <math>\\text{A}_1</math>, meets <math>\\text{C}</math> at a point <math>\\text{D}_1</math>. The curve <math>\\text{C}</math>, drawn from <math>\\text{A}_0</math> to <math>\\text{A}_1</math>, cannot yield an extremum if <math>\\text{D}_0</math> or <math>\\text{D}_1</math> lies between <math>\\text{A}_0</math> and <math>\\text{A}_1</math>, or if <math>\\text{D}_0</math> lies between <math>\\text{A}_1</math> and <math>\\text{D}_1</math>. These results are due to G. A.\n\n{{c|{{sc|Fig. 2.}}}}",
+   "c2s6": "Bliss (1903). A simple example is afforded by the shortest line on a sphere drawn from one small circle to another. In fig. 3 <math>\\text{D}_0</math> is that pole of the small circle <math>\\text{A}_0\\text{B}_0</math> which occurs first on great circles cutting <math>\\text{A}_0\\text{B}_0</math> at right angles, and proceeding towards <math>\\text{A}_1\\text{B}_1</math>; <math>\\text{D}_1</math> is that pole of the small circle <math>\\text{A}_1\\text{B}_1</math> which occurs first on great circles cutting <math>\\text{A}_1\\text{B}_1</math> at right angles, and drawn from points of <math>\\text{A}_0\\text{B}_0</math> towards <math>\\text{A}_1\\text{B}_1</math>. The arc <math>\\text{A}_0\\text{A}_1</math> is the required shortest line, and it is distinguished from <math>\\text{B}_0\\text{B}_1</math> by the above criterion.\n\n{{c|{{sc|Fig.}} 3.}}\n\n'''''Sources of Weierstrass's theory.''''' Jacobi's introduction of conjugate points is one of the germs from which the modern theory of the calculus of variations has sprung. Another is a remark made by Legendre (1786) in regard to the solution of Newton's problem of the solid of least resistance. This problem requires that a curve be found for which the integral\n{{block center|<math>\\int yy'^2(1+y'^2)^{-1}dy</math>}}\nshould be a minimum. The stationary curves are given by the equation\n{{block center|<math>yy'^3(1+y'^2)^{-2}=\\text{const.}</math>,}}\na result equivalent to Newton's solution of the problem; but Legendre observed that, if the integral is taken along a broken line, consisting of two straight lines equally inclined to the axis of <math>x</math> in opposite senses, the integral can be made as small as we please by sufficiently diminishing the angle of inclination. Legendre's remark amounts to admitting a variation of Newton's curve, which is not a weak variation. Variations which are not weak are such that, while the points of a curve are but slightly displaced, the tangents undergo large changes of direction. They are distinguished as ''strong variations''. A general theory of strong variations in connexion with the First Problem, and of the conditions which are sufficient to secure that the integral taken along a stationary curve may be an extremum, was given by Weierstrass in lectures. He delivered courses of lectures on the calculus of variations in several",
+   "c2s7": "years between 1865 and 1889, and his chief discoveries in the subject seem to have been included in the course for 1879. Through these lectures his theory became known to some students and teachers in Europe and America, and there have been published a few treatises and memoirs devoted to the exposition of his ideas.\n\n''Necessary conditions.'' In the First Problem the following conditions are known to be necessary for an extremum. I. The path of integration must be a stationary curve. II. The expression <math>\\partial^2\\text{F}/\\partial y'^2</math>, or the expression denoted by <math>f_1</math> in the application of the parametric method, must not change sign at any point of this curve between the end points. III. The arc of the curve between the end points must not contain a pair of conjugate points. All these results are obtained by using weak variations. Additional"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v27 p0944 c2f1.png",
+   "c2f2": "eb1911 v27 p0944 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1637,
+     546,
+     2255,
+     1004
+    ],
+    "caption": [
+     1823,
+     1030,
+     1931,
+     1058
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1635,
+     542,
+     2279,
+     1007
+    ]
+   },
+   {
+    "box": [
+     1783,
+     1193,
+     2273,
+     1674
+    ],
+    "caption": [
+     1975,
+     1685,
+     2080,
+     1722
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1781,
+     1183,
+     2279,
+     1668
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    2
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6972,
+    "output_tokens": 163,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 9468,
+    "output_tokens": 6917,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|918|VARIATIONS, CALCULUS OF|}}</noinclude>It becomes\n\n{{block center|<math>\\int \\cos^2(x, \\nu)\\frac{\\partial\\psi}{\\partial r}\\, \\frac{\\partial w}{\\partial\\nu} ds'</math>}}\n\n{{block center|<math>+\\int \\left[\\frac{\\partial}{\\partial s'}\\left\\{ \\cos(x, \\nu)\\cos(y, \\nu)\\frac{\\partial\\psi}{\\partial r} \\right\\} - \\cos(x, \\nu)\\frac{\\partial}{\\partial x}\\left(\\frac{\\partial\\psi}{\\partial r}\\right) \\right] w ds'.</math>}}\n\nIn forming the first term within the square brackets we then use the relations\n\n{{block center|<math>\\frac{\\partial}{\\partial s'}\\cos(x, \\nu) = -\\frac{1}{\\rho'}\\cos(y, \\nu), \\frac{\\partial}{\\partial s'}\\cos(y, \\nu) = \\frac{1}{\\rho'}\\cos(x, \\nu),</math>}}\n\n{{block center|<math>\\frac{\\partial}{\\partial s'}\\, \\frac{\\partial\\psi}{\\partial r} = -\\cos(y, \\nu)\\frac{\\partial}{\\partial x}\\, \\frac{\\partial\\psi}{\\partial r} + \\cos(x, \\nu)\\frac{\\partial}{\\partial y}\\, \\frac{\\partial\\psi}{\\partial r},</math>}} where <math>\\rho'</math> denotes the radius of curvature of the curve <math>s'</math>.\n\nThe necessity of freeing the calculus of variations from dependence upon the notion of infinitely small quantities was realized by Lagrange, and the process of discarding such quantities was partially carried out by him in his ''Théorie des fonctions analytiques'' (1797). In accordance with the interpretation of differentials which he made in that treatise, he interpreted the variation of an integral, as expressed by means of his symbol <math>\\delta</math>, as the first term, or the sum of the terms of the first order, in the development in series of the complete expression for the change that is made in the value of the integral when small finite changes are made in the variables. The quantity which had been regarded as the '''''The second variation.''''' variation of the integral came to be regarded as the first variation, and the discrimination between maxima and minima came to be regarded as requiring the investigation of the second variation. The first step in this theory had been taken by A. M. Legendre in 1786.\n\nIn the case of an integral of the form\n{{block center|<math>\\int_{x_0}^{x_1}\\text{F}(x, y, y')dx</math>}}\nLegendre defined the second variation as the integral\n{{block center|<math>\\int_{x_0}^{x_1}\\frac{1}{2}\\left\\{\\frac{\\partial^2\\text{F}}{\\partial y^2}(\\delta y)^2+2\\frac{\\partial^2\\text{F}}{\\partial y\\partial y'}\\delta y\\delta y'+\\frac{\\partial^2\\text{F}}{\\partial y'^2}(\\delta y')^2\\right\\}dx.</math>}}\nTo this expression he added the term <math>\\left[\\tfrac{1}{2}\\alpha(\\delta y)^2\\right]_{x_0}^{x_1}</math>, which vanishes identically because <math>\\delta y</math> vanishes at <math>x=x_0</math> and at <math>x=x_1</math>. He took <math>\\alpha</math> to satisfy the equation\n{{block center|<math>\\frac{\\partial^2\\text{F}}{\\partial y'^2}\\left(\\frac{\\partial^2\\text{F}}{\\partial y^2}+\\frac{d\\alpha}{dx}\\right) = \\left(\\frac{\\partial^2\\text{F}}{\\partial y\\partial y'}+\\alpha\\right)^2</math>;}}\nand thus transformed the expression for the second variation to\n{{block center|<math>\\int_{x_0}^{x_1}\\frac{\\partial^2\\text{F}}{\\partial y'^2}(\\delta y'+m\\delta y)^2dx</math>,}}\nwhere\n{{block center|<math>m\\frac{\\partial^2\\text{F}}{\\partial y'^2}=\\frac{\\partial^2\\text{F}}{\\partial y\\partial y'}+\\alpha</math>.}}\n\n'''''Legendre's condition.''''' From this investigation Legendre deduced a new condition for the existence of an extremum. It is necessary, not only that the variation should vanish, but also that the second variation should be one-signed. In the case of the First Problem Legendre concluded that this cannot happen unless <math>\\partial^2\\text{F}/\\partial y'^2</math> has the same sign at all points of the stationary curve between the end points, and that the sign must be <math>+</math> for a minimum and <math>-</math> for a maximum. In the application of the perametric method the function which has been denoted by <math>f_1</math> takes the place of <math>\\partial^2\\text{F}/\\partial y'^2</math>.\n\n'''''Jacobi.''''' The transformation of the second variations of integrals of various types into forms in which their signs can be determined by inspection subsequently became one of the leading problems of the calculus of variations. This result came about chiefly through the publication in 1837 of a memoir by C. G. J. Jacobi. He transformed Legendre's equation for the auxiliary function <math>\\alpha</math> into a linear differential equation of the second order by the substitution\n{{block center|<math>\\frac{\\partial^2\\text{F}}{\\partial y\\partial y'}+\\alpha=-\\frac{\\partial^2\\text{F}}{\\partial y'^2}\\frac{1}{w}\\frac{dw}{dx}</math>,}}\nand he pointed out that Legendre's transformation of the second variation cannot be effected if the function <math>w</math> vanishes between the limits of integration. He pointed out further, that if the stationary curves of the integral are given by an equation of the form {{block center|<math>y=\\phi(x, a, b),</math>}}\nwhere <math>a</math>, <math>b</math> are arbitrary constants, the complete primitive of the equation for <math>w</math> is of the form\n{{block center|<math>w=\\text{A}\\frac{\\partial\\phi}{\\partial a}+\\text{B}\\frac{\\partial\\phi}{\\partial b},</math>}}\nwhere <math>\\text{A}</math>, <math>\\text{B}</math> are new arbitrary constants. Jacobi stated these propositions without proof, and the proof of them, and the extension of the results to more general problems, became the object of numerous investigations. These investigations were, for the most part, and for a long time, occupied almost exclusively with analytical developments; and the geometrical interpretation which Jacobi had given, and which he afterwards emphasized in his ''Vorlesungen über Dynamik'', was neglected until rather recent times. According to this interpretation, the stationary curves which start from a point <math>(x_0, y_0)</math> have an envelope; and the integral of <math>\\text{F}</math>, taken along such a curve, cannot be an extremum if the point <math>(\\xi_0, \\eta_0)</math> where the curve touches the envelope lies on the arc between the end points. Pairs of points such as <math>(x_0, y_0)</math> a ''jugate points'' by Weierstr tegral cannot be an extre between the fixed end poin points was first published l\n\n[[File:eb1911 v27 p0944 c2f1.png|center|227px]]\n\nExamples of conjugate on a sphere, the conjugat foci of analytical dynamic conjugate points, the inte there is an exceptional case, of which a suitably chosen arc of the equator of an oblate spheroid may serve as an example. In the problem of the catenoid a pair of conjugate points on any of the catenaries, which are the stationary curves of the problem, is such that the tangents to the catenary at the two points <math>\\text{A}</math> and <math>\\text{A}'</math> meet on the axis of revolution (fig. 2). When both the end points of the required curve move on fixed guiding curves <math>\\text{C}_0</math>, <math>\\text{C}_1</math>, a stationary curve <math>\\text{C}</math>, joining a point <math>\\text{A}_0</math> of <math>\\text{C}_0</math> to a point <math>\\text{A}_1</math> of <math>\\text{C}_1</math>, cannot yield an extremum unless it is cut transversely by <math>\\text{C}_0</math> at <math>\\text{A}_0</math> and by <math>\\text{C}_1</math> at <math>\\text{A}_1</math>. The envelope of stationary curves which set out from <math>\\text{C}_0</math> towards <math>\\text{C}_1</math>, and are cut transversely by <math>\\text{C}_0</math> at points near <math>\\text{A}_0</math>, meets <math>\\text{C}</math> at a point <math>\\text{D}_0</math>; and the envelope of stationary curves which proceed from <math>\\text{C}_0</math> to <math>\\text{C}_1</math>, and are cut transversely by <math>\\text{C}_1</math> at points near <math>\\text{A}_1</math>, meets <math>\\text{C}</math> at a point <math>\\text{D}_1</math>. The curve <math>\\text{C}</math>, drawn from <math>\\text{A}_0</math> to <math>\\text{A}_1</math>, cannot yield an extremum if <math>\\text{D}_0</math> or <math>\\text{D}_1</math> lies between <math>\\text{A}_0</math> and <math>\\text{A}_1</math>, or if <math>\\text{D}_0</math> lies between <math>\\text{A}_1</math> and <math>\\text{D}_1</math>. These results are due to G. A.\n\n[[File:eb1911 v27 p0944 c2f2.png|center|181px]]\n\n{{c|{{sc|Fig. 2.}}}} Bliss (1903). A simple example is afforded by the shortest line on a sphere drawn from one small circle to another. In fig. 3 <math>\\text{D}_0</math> is that pole of the small circle <math>\\text{A}_0\\text{B}_0</math> which occurs first on great circles cutting <math>\\text{A}_0\\text{B}_0</math> at right angles, and proceeding towards <math>\\text{A}_1\\text{B}_1</math>; <math>\\text{D}_1</math> is that pole of the small circle <math>\\text{A}_1\\text{B}_1</math> which occurs first on great circles cutting <math>\\text{A}_1\\text{B}_1</math> at right angles, and drawn from points of <math>\\text{A}_0\\text{B}_0</math> towards <math>\\text{A}_1\\text{B}_1</math>. The arc <math>\\text{A}_0\\text{A}_1</math> is the required shortest line, and it is distinguished from <math>\\text{B}_0\\text{B}_1</math> by the above criterion.\n\n{{c|{{sc|Fig.}} 3.}}\n\n'''''Sources of Weierstrass's theory.''''' Jacobi's introduction of conjugate points is one of the germs from which the modern theory of the calculus of variations has sprung. Another is a remark made by Legendre (1786) in regard to the solution of Newton's problem of the solid of least resistance. This problem requires that a curve be found for which the integral\n{{block center|<math>\\int yy'^2(1+y'^2)^{-1}dy</math>}}\nshould be a minimum. The stationary curves are given by the equation\n{{block center|<math>yy'^3(1+y'^2)^{-2}=\\text{const.}</math>,}}\na result equivalent to Newton's solution of the problem; but Legendre observed that, if the integral is taken along a broken line, consisting of two straight lines equally inclined to the axis of <math>x</math> in opposite senses, the integral can be made as small as we please by sufficiently diminishing the angle of inclination. Legendre's remark amounts to admitting a variation of Newton's curve, which is not a weak variation. Variations which are not weak are such that, while the points of a curve are but slightly displaced, the tangents undergo large changes of direction. They are distinguished as ''strong variations''. A general theory of strong variations in connexion with the First Problem, and of the conditions which are sufficient to secure that the integral taken along a stationary curve may be an extremum, was given by Weierstrass in lectures. He delivered courses of lectures on the calculus of variations in several years between 1865 and 1889, and his chief discoveries in the subject seem to have been included in the course for 1879. Through these lectures his theory became known to some students and teachers in Europe and America, and there have been published a few treatises and memoirs devoted to the exposition of his ideas.\n\n''Necessary conditions.'' In the First Problem the following conditions are known to be necessary for an extremum. I. The path of integration must be a stationary curve. II. The expression <math>\\partial^2\\text{F}/\\partial y'^2</math>, or the expression denoted by <math>f_1</math> in the application of the parametric method, must not change sign at any point of this curve between the end points. III. The arc of the curve between the end points must not contain a pair of conjugate points. All these results are obtained by using weak variations. Additional<noinclude><references/></noinclude>"
+}

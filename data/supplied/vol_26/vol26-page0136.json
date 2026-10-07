@@ -1,0 +1,140 @@
+{
+ "volume": 26,
+ "page_number": 136,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n140",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n140",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1154,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     99,
+     152,
+     2309,
+     220
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     220,
+     1167,
+     1312
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     1312,
+     1167,
+     2189
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     2189,
+     1167,
+     3165
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1167,
+     220,
+     2309,
+     1212
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1167,
+     1212,
+     2309,
+     2251
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1167,
+     2251,
+     2309,
+     3165
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|118|SURFACE|}}",
+   "c1s1": "",
+   "c1s2": "of tangent planes of the surface, and the ''class'' of the surface is equal to the number of these tangent planes.\n\nBut, further, through the line imagine a plane; this meets the surface in a curve the order of which is equal (as is at once seen) to the order of the surface. Again, on the line imagine a point; this is the vertex of a cone circumscribing the surface, and the class of this cone is equal (as is at once seen) to the class of the surface. The tangent lines of the surface which lie in the plane are nothing else than the tangents of the plane section, and thus form a singly infinite series of lines; similarly, the tangent lines of the surface which pass through the point are nothing else than the generating lines of the circumscribed cone, and thus form a singly infinite series of lines. But, if we consider those tangent lines of the surface which are at once in the plane and through the point, we see that they are finite in number; and we define the ''rank'' of a surface as equal to the number of tangent lines which lie in a given plane and pass through a given point in that plane. It at once follows that the class of the plane section and the order of the circumscribed cone are each equal to the rank of the surface, and are thus equal to each other. It may be noticed that for a general surface <math>(*)(x, y, z, w)^n, =0</math>, of order <math>n</math> without point singularities the rank is <math>a</math>, <math>=n(n-1)</math>, and the class is <math>n'</math>, <math>=n(n-1)^2</math>; this implies (what is in fact the case) that the circumscribed cone has line singularities, for otherwise its class, that is the class of the surface, would be <math>a(a-1)</math>, which is not <math>=n(n-1)^2</math>.\n\n4. The notions of the tangent line and the tangent plane have been assumed as known, but they require to be further explained",
+   "c1s3": "",
+   "c2s1": "'''''Singularities.''''' been solved.<sup>1</sup> A plane curve has point singularities and line singularities; corresponding to these we have for the surface isolated point singularities and isolated plane singularities, but there are besides continuous singularities applying to curves on or torses circumscribed to the surface, and it is among these that we have the non-special singularities which play the most important part in the theory. Thus the plane curve represented by the general equation <math>(*\\between x,\\ y,\\ z)^n = 0</math>, of any given order <math>n</math>, has the non-special line singularities of inflexions and double tangents; corresponding to this the surface represented by the general equation <math>(*\\between x,\\ y,\\ z,\\ w)^n = 0</math>, of any given order <math>n</math>, has, not the isolated plane singularities, but the continuous singularities of the spinode curve or torse and the node-couple curve or torse. A plane may meet the surface in a curve having (1) a cusp (spinode) or (2) a pair of double points; in each case there is a singly infinite system of such singular tangent planes, and the locus of the points of contact is the curve, the envelope of the tangent planes the torse. The reciprocal singularities to these are the nodal curve and the cuspidal curve: the surface may intersect or touch itself along a curve in such wise that, cutting the surface by an arbitrary plane, the curve of intersection has at each intersection of the plane with the curve on the surface (1) a double point (node) or (2) a cusp. Observe that these are singularities not occurring in the surface represented by the general equation <math>(*\\between x,\\ y,\\ z,\\ w)^n = 0</math> of any order; observe further that in the case of both or either of these singularities the definition of the tangent plane must be modified. A tangent plane is a plane such that there is in the plane section a double point in addition to the nodes or cusps at the intersections with the singular lines on the surface.",
+   "c2s2": "¶\n6. As regards isolated singularities, it will be sufficient to mention the point singularity of the conical point (or cnicnode) and the corresponding plane singularity of the conic of contact (or cnictrope). In the former case we have a point such that the consecutive points, instead of lying in a tangent plane, lie on a quadric cone, having the point for its vertex; in the latter case we have a plane touching the surface along a conic; that is, the complete intersection of the surface by the plane is made up of the conic taken twice and of a residual curve of the order <math>n-4</math>.\n\n7. We may, in the general theory of surfaces, consider either a surface and its reciprocal surface, the reciprocal surface being taken to be the surface enveloped by the polar planes (in regard to a given quadric surface) of the points of the original surface; or—what is better—we may consider a given surface in reference to the reciprocal relations of its order, rank, class and singularities. In either case we have a series of unaccented letters and a corresponding series of accented letters, and the relations between them are such that we may in any equation interchange the accented and the unaccented letters; in some cases an unaccented letter may be equal to the corresponding accented letter. Thus, let <math>n</math>, <math>n'</math> be as before the order and the class of the surface, but, instead of immediately defining the rank, let <math>a</math> be used to denote the class of the plane section and <math>a'</math> the order of the circumscribed cone; also let <math>S</math>, <math>S'</math> be numbers referring to the singularities. The form of the relations is <math>a=a'</math> (=rank of surface); <math>a'=n\\ (n-1)-S</math>; <math>n' = n\\ (n-1)^2 - S</math>; <math>a = n'\\ (n'-1) - S'</math>; <math>n = n'\\ (n'-1)^2 - S'</math>. In these last equations <math>S</math>, <math>S'</math> are merely written down to denote proper corresponding combinations of the several numbers referring to the singularities collectively denoted by <math>S</math>, <math>S'</math> respectively. The theory, as already mentioned, is a complex and difficult one.\n\n8. A torse or developable corresponds to a curve in space in the same manner as a cone corresponds to a plane curve: although",
+   "c2s3": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [
+   "c1s1",
+   "c1s3",
+   "c2s3"
+  ],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ],
+   "2": [
+    0,
+    3
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 4,
+    "input_tokens": 4624,
+    "output_tokens": 3275,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 7696
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|118|SURFACE|}}</noinclude>of tangent planes of the surface, and the ''class'' of the surface is equal to the number of these tangent planes.\n\nBut, further, through the line imagine a plane; this meets the surface in a curve the order of which is equal (as is at once seen) to the order of the surface. Again, on the line imagine a point; this is the vertex of a cone circumscribing the surface, and the class of this cone is equal (as is at once seen) to the class of the surface. The tangent lines of the surface which lie in the plane are nothing else than the tangents of the plane section, and thus form a singly infinite series of lines; similarly, the tangent lines of the surface which pass through the point are nothing else than the generating lines of the circumscribed cone, and thus form a singly infinite series of lines. But, if we consider those tangent lines of the surface which are at once in the plane and through the point, we see that they are finite in number; and we define the ''rank'' of a surface as equal to the number of tangent lines which lie in a given plane and pass through a given point in that plane. It at once follows that the class of the plane section and the order of the circumscribed cone are each equal to the rank of the surface, and are thus equal to each other. It may be noticed that for a general surface <math>(*)(x, y, z, w)^n, =0</math>, of order <math>n</math> without point singularities the rank is <math>a</math>, <math>=n(n-1)</math>, and the class is <math>n'</math>, <math>=n(n-1)^2</math>; this implies (what is in fact the case) that the circumscribed cone has line singularities, for otherwise its class, that is the class of the surface, would be <math>a(a-1)</math>, which is not <math>=n(n-1)^2</math>.\n\n4. The notions of the tangent line and the tangent plane have been assumed as known, but they require to be further explained '''''Singularities.''''' been solved.<sup>1</sup> A plane curve has point singularities and line singularities; corresponding to these we have for the surface isolated point singularities and isolated plane singularities, but there are besides continuous singularities applying to curves on or torses circumscribed to the surface, and it is among these that we have the non-special singularities which play the most important part in the theory. Thus the plane curve represented by the general equation <math>(*\\between x,\\ y,\\ z)^n = 0</math>, of any given order <math>n</math>, has the non-special line singularities of inflexions and double tangents; corresponding to this the surface represented by the general equation <math>(*\\between x,\\ y,\\ z,\\ w)^n = 0</math>, of any given order <math>n</math>, has, not the isolated plane singularities, but the continuous singularities of the spinode curve or torse and the node-couple curve or torse. A plane may meet the surface in a curve having (1) a cusp (spinode) or (2) a pair of double points; in each case there is a singly infinite system of such singular tangent planes, and the locus of the points of contact is the curve, the envelope of the tangent planes the torse. The reciprocal singularities to these are the nodal curve and the cuspidal curve: the surface may intersect or touch itself along a curve in such wise that, cutting the surface by an arbitrary plane, the curve of intersection has at each intersection of the plane with the curve on the surface (1) a double point (node) or (2) a cusp. Observe that these are singularities not occurring in the surface represented by the general equation <math>(*\\between x,\\ y,\\ z,\\ w)^n = 0</math> of any order; observe further that in the case of both or either of these singularities the definition of the tangent plane must be modified. A tangent plane is a plane such that there is in the plane section a double point in addition to the nodes or cusps at the intersections with the singular lines on the surface.\n\n6. As regards isolated singularities, it will be sufficient to mention the point singularity of the conical point (or cnicnode) and the corresponding plane singularity of the conic of contact (or cnictrope). In the former case we have a point such that the consecutive points, instead of lying in a tangent plane, lie on a quadric cone, having the point for its vertex; in the latter case we have a plane touching the surface along a conic; that is, the complete intersection of the surface by the plane is made up of the conic taken twice and of a residual curve of the order <math>n-4</math>.\n\n7. We may, in the general theory of surfaces, consider either a surface and its reciprocal surface, the reciprocal surface being taken to be the surface enveloped by the polar planes (in regard to a given quadric surface) of the points of the original surface; or—what is better—we may consider a given surface in reference to the reciprocal relations of its order, rank, class and singularities. In either case we have a series of unaccented letters and a corresponding series of accented letters, and the relations between them are such that we may in any equation interchange the accented and the unaccented letters; in some cases an unaccented letter may be equal to the corresponding accented letter. Thus, let <math>n</math>, <math>n'</math> be as before the order and the class of the surface, but, instead of immediately defining the rank, let <math>a</math> be used to denote the class of the plane section and <math>a'</math> the order of the circumscribed cone; also let <math>S</math>, <math>S'</math> be numbers referring to the singularities. The form of the relations is <math>a=a'</math> (=rank of surface); <math>a'=n\\ (n-1)-S</math>; <math>n' = n\\ (n-1)^2 - S</math>; <math>a = n'\\ (n'-1) - S'</math>; <math>n = n'\\ (n'-1)^2 - S'</math>. In these last equations <math>S</math>, <math>S'</math> are merely written down to denote proper corresponding combinations of the several numbers referring to the singularities collectively denoted by <math>S</math>, <math>S'</math> respectively. The theory, as already mentioned, is a complex and difficult one.\n\n8. A torse or developable corresponds to a curve in space in the same manner as a cone corresponds to a plane curve: although<noinclude><references/></noinclude>"
+}

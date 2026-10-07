@@ -1,0 +1,127 @@
+{
+ "volume": 25,
+ "page_number": 650,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n670",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n670",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1091,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     97,
+     101,
+     2249,
+     176
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     97,
+     176,
+     1169,
+     1046
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     97,
+     1046,
+     1169,
+     2139
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     97,
+     2139,
+     1169,
+     3107
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1169,
+     176,
+     2249,
+     1237
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1169,
+     1237,
+     2249,
+     2336
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1169,
+     2336,
+     2249,
+     3107
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|628|SPECTROSCOPY|}}",
+   "c1s1": "in the discharge, except within the region of the kathode glow. Each molecule need not radiate with increased energy, but the more brilliant emission of light may be due to the greater number of particles forming similar vibrating systems.\n\nWhen we compare together electric discharges the intensity of which is altered by varying the capacity, we are unable to form an opinion as to whether the effects observed are due to changes in the density of the luminous material or changes of temperature, but the experiments of Sir William and Lady Huggins<sup>1</sup> with the spectrum of calcium are significant in suggesting that it is really the density which is also the determining factor in cases where different concentrations and different spark discharges produce a change in the relative intensities of different lines.\n\nThe widening of lines does not lend itself easily to accurate measurements; more precise numerical data are obtainable by the study of the displacements consequent on increased density which were discovered and studied by W. J. Humphreys and J. F. Mohler. In the original experiments<sup>2</sup> the pressures could only be increased to 15 atmospheres, but in a more recent work Humphreys,<sup>3</sup> and independently Duffield, were able to use",
+   "c1s2": "pressures up to 100 atmospheres. The change of frequency (<math>dn</math>) for a series of lines which behave similarly is approximately proportional to the frequency (<math>n</math>) so that we can take the fraction <math>dn/n</math> as a measure of the shift. It is found that the lines of the same element do not all show the same shift, thus the calcium line at 4223 is displaced by 0·4 Å by 100 atmospheres pressure, while the H and K lines are only displaced through about half that amount. Duffield finds that the iron lines divide themselves into three groups with pressure shifts which are approximately in the ratio 1 : 2 : 4. Curiously enough this is also approximately the ratio of the displacements found by Humphreys in the trunk series, the side branch and main branch in the order named, in cases where these displacements have been measured. It was believed that band spectra did not show any pressure shift, until A. Dufour<sup>4</sup> discovered that the lines into which the band spectra of the fluorides of the alkaline earths may be resolved widen towards the red under increased pressure.\n\nLet us now consider the causes which may affect the homogeneity of radiation. We have first the Doppler effect, which, according to Michelson's experiment, is the chief cause of the limit at very low pressures, but it is too small to account for the widening which is now under discussion. We have further to consider the possibility of sudden changes of phrase during an encounter between two molecules, and we can easily form an estimate of the amount of apparent widening due to this cause. It is found to be appreciable but smaller than the observed",
+   "c1s3": "effects.\n\nShortly after the discovery of pressure shifts A. Schuster<sup>5</sup> suggested that the proximity of molecules vibrating in the same period might be the cause of the diminished frequency, and suggested that according to this view the shifts would be similar if the increase of density were produced by the presence of molecules of a different kind from those whose lines are being examined. Though there is no absolutely conclusive evidence, no experiments hitherto have given any indication that the nature of the gas producing the pressure has any effect on the amount of shift. G. F. Fitzgerald<sup>6</sup> suggested as an alternative explanation the change of inductive capacity of the medium due to increased density. J. Larmor<sup>7</sup> developed the same idea, and arrived by a very simple method at an approximation estimate of the shift to be expected.\n\nIf the medium which contains the vibration is divided into a sphere equal to <math>k</math> times the molecular vibration outside of which the effects of these molecules may be averaged up, so that its\n\n{{smaller block|<sup>1</sup> ''Proc. Roy. Soc.'' (1897), 61, p. 433.\n<sup>2</sup> ''Astrophys. Journ.'' (1876), 3, p. 114.\n<sup>3</sup> Ibid. (1907), 26, p. 18.\n<sup>4</sup> ''Comptes rendus'' (1908), 146, pp. 118, 229.\n<sup>5</sup> ''Astrophys. Journ.'' (1896), 3, p. 292.\n<sup>6</sup> Ibid. (1897), 5, p. 210.\n<sup>7</sup> Ibid. (1907), 26, p. 120.}}",
+   "c2s1": "inductive capacity may be considered uniform and equal to <math>\\text{K}</math>, the frequency of the vibration is increased in the ratio of the square root of <math>1 - k^{-2n+3}(1 - \\text{K}^{-1})</math> to 1. Here <math>n</math> represents an integer which is 3 if the vibration is a simple doublet, but may have a higher integer value. If <math>\\text{K}</math> has a value nearly equal to unity, the pressure shift is <math>\\tfrac{1}{2}k^{-2n+3}(\\text{K}^{-1} - 1)</math>, and it is significant that for different values of <math>n</math>, the shifts should be in geometric ratio, because as stated above, the ratio occurring in the amounts observed with different lines of the same element are as 1 : 2 : 4. The question is complicated by the fact that in the cases which have been observed, the greater portion of the metallic vapour vibrates in an atmosphere of similar molecules, and the static energy of the field is determined by the value of <math>\\text{K}</math> applicable to the particular frequency. It would therefore seem to be more appropriate to replace <math>1 - \\text{K}^{-1}</math> by <math>(\\mu^2 - 1)/\\mu^2</math>, where <math>\\mu</math> is the refractive index; but this expression involves the wave propagation for periods coinciding with free periods of the molecules. Close to and on either side of the absorptive band <math>\\mu^2</math> has large positive and negative values, and if the above expression remains correct the change of frequency would, close to the centre of absorption, be <math>\\tfrac{1}{2}k^{-2n+3}</math>, which for <math>n=3</math> and <math>k=10</math> is 1/2000, or 500 times greater than the observed shifts, but this represents now the ''maximum'' displacement and not the displacement of the most intense portion of the radiation. There is a region within the band where <math>\\mu = 0</math>, and this would give an infinite shift in the opposite direction. We therefore should expect a band in place of the line, which is the case, but our calculation is not able to give the displacement of the most intense portion, which is what we require for comparison with experiment.\n\nThe effects of resonance have been studied theoretically by Prince Galitzin<sup>8</sup> and later by V. W. Ekman.<sup>9</sup> The latter",
+   "c2s2": "obtains results indicating no displacement but a widening. He concludes an interesting and important investigation by giving reasons for believing that the centre of a widened line radiates with smaller energy than the adjacent parts. Hence the apparent reversals so frequently observed in the centre of a widened line may not be reversals at all but due to a reduction in luminosity. Ekman quotes in support an observation due to C. A. Young, according to which the dark line observed in the centre of each component of the sodium doublet in a Bunsen burner is ''transparent'' to a radiation placed behind. It should not be difficult to decide whether the reversals are real or fictitious.\n\nLeaving the consideration of radical changes of a vibrating system out of account for the present, the minor differences which have been observed in the appearances of spectra under different sparking conditions are probably to a large extent due to differences in the quantities of material examined, though temperature must alter the violence of the impact and there is a possible effect due to a difference in the impact according as the vibrating system collides with an electron or with a body of atomic dimensions.\n\nA. Schuster and G. A. Hemsalech have observed that the insertion of a self-induction in a condenser discharge almost entirely obliterates the air lines, and the same effect is produced by diminishing the spark gap sufficiently. The explanation of these facts presents no difficulty, inasmuch as during the sudden discharge which takes place in the absence of a self-induction,",
+   "c2s3": "the metallic molecules have not sufficient time to diffuse through the spark gap; hence the discharge is carried by the gas in which it takes place. When, however, the time of discharge is lengthened, the conditions of the arc are more nearly approached. When the spark gap is small, the sudden evaporation of the metal has a better chance of filling the interval between the poles, even without the introduction of a self-induction.\n\n''Enhanced'' lines are lines which appear chiefly near the pole when strong spark discharges are used. Their presence indicates the characteristic difference between the spark and the arc. The name is due to Sir Norman Lockyer, who has studied these lines and drawn the attention of astronomers to their importance in interpreting stellar spectra. These lines in the case of the spark cannot be due entirely to the increased mass of vapour near the poles, but indicate a real change of spectrum probably connected with a higher temperature.\n\n{{smaller block|<sup>8</sup> ''Wied. Ann.'' (1895), 56, p. 78.\n<sup>9</sup> ''Ann. d. Phys.'' (1907), 24, p. 580.}}"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8718,
+    "output_tokens": 3702,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|628|SPECTROSCOPY|}}</noinclude>in the discharge, except within the region of the kathode glow. Each molecule need not radiate with increased energy, but the more brilliant emission of light may be due to the greater number of particles forming similar vibrating systems.\n\nWhen we compare together electric discharges the intensity of which is altered by varying the capacity, we are unable to form an opinion as to whether the effects observed are due to changes in the density of the luminous material or changes of temperature, but the experiments of Sir William and Lady Huggins<sup>1</sup> with the spectrum of calcium are significant in suggesting that it is really the density which is also the determining factor in cases where different concentrations and different spark discharges produce a change in the relative intensities of different lines.\n\nThe widening of lines does not lend itself easily to accurate measurements; more precise numerical data are obtainable by the study of the displacements consequent on increased density which were discovered and studied by W. J. Humphreys and J. F. Mohler. In the original experiments<sup>2</sup> the pressures could only be increased to 15 atmospheres, but in a more recent work Humphreys,<sup>3</sup> and independently Duffield, were able to use pressures up to 100 atmospheres. The change of frequency (<math>dn</math>) for a series of lines which behave similarly is approximately proportional to the frequency (<math>n</math>) so that we can take the fraction <math>dn/n</math> as a measure of the shift. It is found that the lines of the same element do not all show the same shift, thus the calcium line at 4223 is displaced by 0·4 Å by 100 atmospheres pressure, while the H and K lines are only displaced through about half that amount. Duffield finds that the iron lines divide themselves into three groups with pressure shifts which are approximately in the ratio 1 : 2 : 4. Curiously enough this is also approximately the ratio of the displacements found by Humphreys in the trunk series, the side branch and main branch in the order named, in cases where these displacements have been measured. It was believed that band spectra did not show any pressure shift, until A. Dufour<sup>4</sup> discovered that the lines into which the band spectra of the fluorides of the alkaline earths may be resolved widen towards the red under increased pressure.\n\nLet us now consider the causes which may affect the homogeneity of radiation. We have first the Doppler effect, which, according to Michelson's experiment, is the chief cause of the limit at very low pressures, but it is too small to account for the widening which is now under discussion. We have further to consider the possibility of sudden changes of phrase during an encounter between two molecules, and we can easily form an estimate of the amount of apparent widening due to this cause. It is found to be appreciable but smaller than the observed effects.\n\nShortly after the discovery of pressure shifts A. Schuster<sup>5</sup> suggested that the proximity of molecules vibrating in the same period might be the cause of the diminished frequency, and suggested that according to this view the shifts would be similar if the increase of density were produced by the presence of molecules of a different kind from those whose lines are being examined. Though there is no absolutely conclusive evidence, no experiments hitherto have given any indication that the nature of the gas producing the pressure has any effect on the amount of shift. G. F. Fitzgerald<sup>6</sup> suggested as an alternative explanation the change of inductive capacity of the medium due to increased density. J. Larmor<sup>7</sup> developed the same idea, and arrived by a very simple method at an approximation estimate of the shift to be expected.\n\nIf the medium which contains the vibration is divided into a sphere equal to <math>k</math> times the molecular vibration outside of which the effects of these molecules may be averaged up, so that its\n\n{{smaller block|<sup>1</sup> ''Proc. Roy. Soc.'' (1897), 61, p. 433.\n<sup>2</sup> ''Astrophys. Journ.'' (1876), 3, p. 114.\n<sup>3</sup> Ibid. (1907), 26, p. 18.\n<sup>4</sup> ''Comptes rendus'' (1908), 146, pp. 118, 229.\n<sup>5</sup> ''Astrophys. Journ.'' (1896), 3, p. 292.\n<sup>6</sup> Ibid. (1897), 5, p. 210.\n<sup>7</sup> Ibid. (1907), 26, p. 120.}} inductive capacity may be considered uniform and equal to <math>\\text{K}</math>, the frequency of the vibration is increased in the ratio of the square root of <math>1 - k^{-2n+3}(1 - \\text{K}^{-1})</math> to 1. Here <math>n</math> represents an integer which is 3 if the vibration is a simple doublet, but may have a higher integer value. If <math>\\text{K}</math> has a value nearly equal to unity, the pressure shift is <math>\\tfrac{1}{2}k^{-2n+3}(\\text{K}^{-1} - 1)</math>, and it is significant that for different values of <math>n</math>, the shifts should be in geometric ratio, because as stated above, the ratio occurring in the amounts observed with different lines of the same element are as 1 : 2 : 4. The question is complicated by the fact that in the cases which have been observed, the greater portion of the metallic vapour vibrates in an atmosphere of similar molecules, and the static energy of the field is determined by the value of <math>\\text{K}</math> applicable to the particular frequency. It would therefore seem to be more appropriate to replace <math>1 - \\text{K}^{-1}</math> by <math>(\\mu^2 - 1)/\\mu^2</math>, where <math>\\mu</math> is the refractive index; but this expression involves the wave propagation for periods coinciding with free periods of the molecules. Close to and on either side of the absorptive band <math>\\mu^2</math> has large positive and negative values, and if the above expression remains correct the change of frequency would, close to the centre of absorption, be <math>\\tfrac{1}{2}k^{-2n+3}</math>, which for <math>n=3</math> and <math>k=10</math> is 1/2000, or 500 times greater than the observed shifts, but this represents now the ''maximum'' displacement and not the displacement of the most intense portion of the radiation. There is a region within the band where <math>\\mu = 0</math>, and this would give an infinite shift in the opposite direction. We therefore should expect a band in place of the line, which is the case, but our calculation is not able to give the displacement of the most intense portion, which is what we require for comparison with experiment.\n\nThe effects of resonance have been studied theoretically by Prince Galitzin<sup>8</sup> and later by V. W. Ekman.<sup>9</sup> The latter obtains results indicating no displacement but a widening. He concludes an interesting and important investigation by giving reasons for believing that the centre of a widened line radiates with smaller energy than the adjacent parts. Hence the apparent reversals so frequently observed in the centre of a widened line may not be reversals at all but due to a reduction in luminosity. Ekman quotes in support an observation due to C. A. Young, according to which the dark line observed in the centre of each component of the sodium doublet in a Bunsen burner is ''transparent'' to a radiation placed behind. It should not be difficult to decide whether the reversals are real or fictitious.\n\nLeaving the consideration of radical changes of a vibrating system out of account for the present, the minor differences which have been observed in the appearances of spectra under different sparking conditions are probably to a large extent due to differences in the quantities of material examined, though temperature must alter the violence of the impact and there is a possible effect due to a difference in the impact according as the vibrating system collides with an electron or with a body of atomic dimensions.\n\nA. Schuster and G. A. Hemsalech have observed that the insertion of a self-induction in a condenser discharge almost entirely obliterates the air lines, and the same effect is produced by diminishing the spark gap sufficiently. The explanation of these facts presents no difficulty, inasmuch as during the sudden discharge which takes place in the absence of a self-induction, the metallic molecules have not sufficient time to diffuse through the spark gap; hence the discharge is carried by the gas in which it takes place. When, however, the time of discharge is lengthened, the conditions of the arc are more nearly approached. When the spark gap is small, the sudden evaporation of the metal has a better chance of filling the interval between the poles, even without the introduction of a self-induction.\n\n''Enhanced'' lines are lines which appear chiefly near the pole when strong spark discharges are used. Their presence indicates the characteristic difference between the spark and the arc. The name is due to Sir Norman Lockyer, who has studied these lines and drawn the attention of astronomers to their importance in interpreting stellar spectra. These lines in the case of the spark cannot be due entirely to the increased mass of vapour near the poles, but indicate a real change of spectrum probably connected with a higher temperature.\n\n{{smaller block|<sup>8</sup> ''Wied. Ann.'' (1895), 56, p. 78.\n<sup>9</sup> ''Ann. d. Phys.'' (1907), 24, p. 580.}}<noinclude><references/></noinclude>"
+}

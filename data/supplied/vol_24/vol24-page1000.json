@@ -1,0 +1,168 @@
+{
+ "volume": 24,
+ "page_number": 1000,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1010",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1010",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1095,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     95,
+     133,
+     2250,
+     205
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     95,
+     205,
+     1177,
+     1225
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     95,
+     1225,
+     1177,
+     2017
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     95,
+     2017,
+     1177,
+     2749
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     95,
+     2749,
+     1177,
+     3145
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1177,
+     219,
+     2250,
+     2996
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1177,
+     2996,
+     2250,
+     3023
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1177,
+     3023,
+     2250,
+     3145
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|938|SHIPBUILDING|[ROLLING OF SHIPS}}",
+   "c1s1": "If at any instant\n\n{{block center|<math>\\theta_\\text{A} = \\theta_\\text{C} - \\theta_\\text{B} \\text{ and} \\frac{d\\theta_\\text{A}}{dt} = \\frac{d\\theta_\\text{C}}{dt} - \\frac{d\\theta_\\text{B}}{dt}</math>}}\n\nit follows that\n\n{{block center|<math>\\frac{d^2\\theta_\\text{A}}{dt^2} = \\frac{d^2\\theta_\\text{C}}{dt^2} - \\frac{d^2\\theta_\\text{B}}{dt^2};</math>}}\n\nwhence the above three relations hold at the successive instants and consequently for all time. Hence the rolling of C differs from that of B in having the free oscillations of A in still water superposed upon it. If, therefore, it is possible to obtain any one motion in the swell, any other motion due to a different phase relation between ship and wave slope can be at once determined. A convenient motion in the swell to form a basis for obtaining other motions is the forced oscillation proper to the swell, ''i.e.'' the particular oscillation that is recurrent in the period of the swell. The amplitude of roll at any instant is therefore the sum of the amplitudes due to the forced oscillation and to an arbitrary free oscillation in still water. If the latter component be regarded as perfectly arbitrary there is no limit to the angle of roll obtained by postulating suitable initial conditions; to determine the practical limitation of rolling, however, it may reasonably be assumed that at or near the commencement of the motion there will be a brief period of no roll, and that the maximum angle of roll obtained will occur at no great interval of time after this period. At the instant when there is no roll, the forced and free oscillations are equal in magnitude and opposite in phase, and the period of maximum (termed the \" criterion \") amplitude <math>\\Theta_c</math> will occur as soon as the two components are in phase; the time interval between the two conditions is <math>n\\text{T}</math>, where <math>n = \\pm\\frac{\\text{T}_1}{\\text{T} - \\text{T}_1}</math>.",
+   "c1s2": "It is assumed also that during the above interval—(1) the effect of the swell was sensibly the same as that of a simple harmonic wave, <math>\\text{A}</math> being the amplitude of the forced oscillation (and of the initial free oscillation); (2) the extinction equation of the free oscillation <math>-\\frac{c'\\Theta}{dn} = a\\Theta + b\\Theta^2</math> can be replaced by the simple form <math>-\\frac{d\\Theta}{dn} = \\text{E}\\Theta</math>, where <math>\\text{E} = a + b\\Theta_e</math> approximately; this has been implied by the absence of terms containing <math>\\left(\\frac{d\\theta}{dt}\\right)^2</math> in the differential equation above. The amplitude of the free oscillation during the maximum roll is, from equation (8) <math>\\text{A}e^{-n\\epsilon}</math>; whence\n{{block center|<math>\\Theta_c = \\text{A}(1 + e^{-n\\epsilon}).</math>}}\nAlso, from equation (9), the forced oscillation is given by\n{{block center|<math>\\Theta_1 = \\text{A}\\sqrt{\\left(1 - \\frac{\\text{T}^{22}}{\\text{T}_1{}^2} + \\right)\\left(\\frac{2}{\\pi}\\cdot\\frac{\\text{T}}{\\text{T}_1}\\cdot\\text{E}\\right)^2}</math>}}\nFrom these equations <math>\\Theta_1</math> can be determined if <math>\\text{T}</math>, <math>\\text{T}_1</math>, <math>a</math>, <math>b</math> and <math>\\Theta_c</math> are given; conversely if <math>\\Theta_c</math> is known, <math>\\Theta_1</math> can be tentatively obtained.\n\nThe following table gives the criterion angle (<math>\\Theta_c</math>) and the angle of steady roll (<math>\\text{A}</math>) for the \"Revenge,\" both without and with bilge keels, obtained on the above-mentioned assumptions:\n\n{{c|Maximum Wave-Slope, 3 Degrees.}}",
+   "c1s3": "<math>\\frac{\\text{T}}{\\text{T}_1}=1\\cdot3.</math> <math>n=3\\cdot33.</math> — <math>\\frac{\\text{T}}{\\text{T}_1}=1\\cdot2.</math> <math>n=5.</math> — <math>\\frac{\\text{T}}{\\text{T}_1}=1\\cdot1.</math> <math>n=10.</math> — <math>\\frac{\\text{T}}{\\text{T}_1}=1\\cdot0.</math> <math>n=\\infty.</math>\n\nCriterion Angle. Angle of Steady Roll. Criterion Angle. Angle of Steady Roll. Criterion Angle. Angle of Steady Roll. Criterion Angle. Angle of Steady Roll.\n\ndeg. deg. deg. deg. deg. deg. deg. deg.\n\n“Revenge” (deep draught), with no bilge keels 8·25 4·35 12·25 6·8 21·2 13·9 41·1 41·1\n\n“Revenge” (deep draught), with bilge keels . 6·6 4·24 8·6 6·4 11·55 10·8 14·85 14·85\n\nAmong the conclusions reached by Mr R. E. Froude in the case of a ship rolling in a uniform swell were:\n\nHowever non-uniform initially, the rolling ultimately falls into the uniform forced oscillation; it does so the sooner, ''caeteris''",
+   "c1s4": "''paribus'', the higher the resistance, and with the fewer \"cycles\" or alterations of amplitude of rolling, the more nearly synchronous the swell with the ship. The amplitude of the ultimate uniform rolling is an approximate mean of the alternate maxima and minima of the precedent non-uniform rolling. If the rolling starts from zero, the maximum amplitude falls short of twice the ultimate uniform amplitude, the more so the higher the resistance and the more synchronous the swell; and in a synchronous swell the maximum amplitude cannot exceed the ultimate uniform amplitude, unless it does so initially.\n\nIn two papers by Captain and Professor Kriloff of St Petersburg,",
+   "c2s1": "{{c|{{sc|Fig.}} 30.}}",
+   "c2s2": "port side, and the righting couple is therefore greater than that corresponding to the angle of heel of the ship and a fixed centre of gravity amidships. In the position No. 5 the ship has momentarily"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v24 p1000 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1157,
+     2757,
+     2240,
+     2989
+    ],
+    "caption": [
+     1573,
+     2995,
+     1698,
+     3023
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1081,
+     2757,
+     2250,
+     2974
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4118,
+    "output_tokens": 99,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 4858,
+    "output_tokens": 3272,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|938|SHIPBUILDING|[ROLLING OF SHIPS}}</noinclude>If at any instant\n\n{{block center|<math>\\theta_\\text{A} = \\theta_\\text{C} - \\theta_\\text{B} \\text{ and} \\frac{d\\theta_\\text{A}}{dt} = \\frac{d\\theta_\\text{C}}{dt} - \\frac{d\\theta_\\text{B}}{dt}</math>}}\n\nit follows that\n\n{{block center|<math>\\frac{d^2\\theta_\\text{A}}{dt^2} = \\frac{d^2\\theta_\\text{C}}{dt^2} - \\frac{d^2\\theta_\\text{B}}{dt^2};</math>}}\n\nwhence the above three relations hold at the successive instants and consequently for all time. Hence the rolling of C differs from that of B in having the free oscillations of A in still water superposed upon it. If, therefore, it is possible to obtain any one motion in the swell, any other motion due to a different phase relation between ship and wave slope can be at once determined. A convenient motion in the swell to form a basis for obtaining other motions is the forced oscillation proper to the swell, ''i.e.'' the particular oscillation that is recurrent in the period of the swell. The amplitude of roll at any instant is therefore the sum of the amplitudes due to the forced oscillation and to an arbitrary free oscillation in still water. If the latter component be regarded as perfectly arbitrary there is no limit to the angle of roll obtained by postulating suitable initial conditions; to determine the practical limitation of rolling, however, it may reasonably be assumed that at or near the commencement of the motion there will be a brief period of no roll, and that the maximum angle of roll obtained will occur at no great interval of time after this period. At the instant when there is no roll, the forced and free oscillations are equal in magnitude and opposite in phase, and the period of maximum (termed the \" criterion \") amplitude <math>\\Theta_c</math> will occur as soon as the two components are in phase; the time interval between the two conditions is <math>n\\text{T}</math>, where <math>n = \\pm\\frac{\\text{T}_1}{\\text{T} - \\text{T}_1}</math>. It is assumed also that during the above interval—(1) the effect of the swell was sensibly the same as that of a simple harmonic wave, <math>\\text{A}</math> being the amplitude of the forced oscillation (and of the initial free oscillation); (2) the extinction equation of the free oscillation <math>-\\frac{c'\\Theta}{dn} = a\\Theta + b\\Theta^2</math> can be replaced by the simple form <math>-\\frac{d\\Theta}{dn} = \\text{E}\\Theta</math>, where <math>\\text{E} = a + b\\Theta_e</math> approximately; this has been implied by the absence of terms containing <math>\\left(\\frac{d\\theta}{dt}\\right)^2</math> in the differential equation above. The amplitude of the free oscillation during the maximum roll is, from equation (8) <math>\\text{A}e^{-n\\epsilon}</math>; whence\n{{block center|<math>\\Theta_c = \\text{A}(1 + e^{-n\\epsilon}).</math>}}\nAlso, from equation (9), the forced oscillation is given by\n{{block center|<math>\\Theta_1 = \\text{A}\\sqrt{\\left(1 - \\frac{\\text{T}^{22}}{\\text{T}_1{}^2} + \\right)\\left(\\frac{2}{\\pi}\\cdot\\frac{\\text{T}}{\\text{T}_1}\\cdot\\text{E}\\right)^2}</math>}}\nFrom these equations <math>\\Theta_1</math> can be determined if <math>\\text{T}</math>, <math>\\text{T}_1</math>, <math>a</math>, <math>b</math> and <math>\\Theta_c</math> are given; conversely if <math>\\Theta_c</math> is known, <math>\\Theta_1</math> can be tentatively obtained.\n\nThe following table gives the criterion angle (<math>\\Theta_c</math>) and the angle of steady roll (<math>\\text{A}</math>) for the \"Revenge,\" both without and with bilge keels, obtained on the above-mentioned assumptions:\n\n{{c|Maximum Wave-Slope, 3 Degrees.}} <math>\\frac{\\text{T}}{\\text{T}_1}=1\\cdot3.</math> <math>n=3\\cdot33.</math> — <math>\\frac{\\text{T}}{\\text{T}_1}=1\\cdot2.</math> <math>n=5.</math> — <math>\\frac{\\text{T}}{\\text{T}_1}=1\\cdot1.</math> <math>n=10.</math> — <math>\\frac{\\text{T}}{\\text{T}_1}=1\\cdot0.</math> <math>n=\\infty.</math>\n\nCriterion Angle. Angle of Steady Roll. Criterion Angle. Angle of Steady Roll. Criterion Angle. Angle of Steady Roll. Criterion Angle. Angle of Steady Roll.\n\ndeg. deg. deg. deg. deg. deg. deg. deg.\n\n“Revenge” (deep draught), with no bilge keels 8·25 4·35 12·25 6·8 21·2 13·9 41·1 41·1\n\n“Revenge” (deep draught), with bilge keels . 6·6 4·24 8·6 6·4 11·55 10·8 14·85 14·85\n\nAmong the conclusions reached by Mr R. E. Froude in the case of a ship rolling in a uniform swell were:\n\nHowever non-uniform initially, the rolling ultimately falls into the uniform forced oscillation; it does so the sooner, ''caeteris paribus'', the higher the resistance, and with the fewer \"cycles\" or alterations of amplitude of rolling, the more nearly synchronous the swell with the ship. The amplitude of the ultimate uniform rolling is an approximate mean of the alternate maxima and minima of the precedent non-uniform rolling. If the rolling starts from zero, the maximum amplitude falls short of twice the ultimate uniform amplitude, the more so the higher the resistance and the more synchronous the swell; and in a synchronous swell the maximum amplitude cannot exceed the ultimate uniform amplitude, unless it does so initially.\n\nIn two papers by Captain and Professor Kriloff of St Petersburg, port side, and the righting couple is therefore greater than that corresponding to the angle of heel of the ship and a fixed centre of gravity amidships. In the position No. 5 the ship has momentarily\n\n[[File:eb1911 v24 p1000 c2f1.png|center|353px]]\n{{c|{{sc|Fig.}} 30.}}<noinclude><references/></noinclude>"
+}

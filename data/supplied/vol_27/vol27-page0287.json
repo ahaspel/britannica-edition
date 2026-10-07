@@ -1,0 +1,168 @@
+{
+ "volume": 27,
+ "page_number": 287,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n294",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n294",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1169,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     46,
+     0,
+     2372,
+     179
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     46,
+     179,
+     1192,
+     1239
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     46,
+     1239,
+     1192,
+     2264
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     46,
+     2264,
+     1192,
+     3113
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1852,
+     179,
+     2372,
+     1361
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1192,
+     179,
+     1852,
+     1360
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1192,
+     1360,
+     2372,
+     2458
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1192,
+     2458,
+     2372,
+     3113
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|272|TRIGONOMETRY|}}",
+   "c1s1": "at Seville in the 11th century, wrote an astronomy in nine books, which was translated into Latin in the 12th century by Gerard of Cremona and was published in 1534. The first book contains a trigonometry which is a considerable improvement on that in the ''Almagest.'' He gave proofs of the formulae for right-angled spherical triangles, depending on a rule of four quantities, instead of Ptolemy's rule of six quantities. The formulae <math>\\cos B = \\cos b \\sin A</math>, <math>\\cos c = \\cot A \\cot B</math>, in a triangle of which <math>C</math> is a right angle had escaped the notice of Ptolemy and were given for the first time by Geber. Strangely enough, he made no progress in plane trigonometry. Arrachel, a Spanish Arab who lived in the 12th century, wrote a work of which we have an analysis by Purbach, in which, like the Indians, he made the sine and the arc for the value <math>3^\\circ 45'</math> coincide.\n\nGeorg Purbach (1423–1461), professor of mathematics at Vienna, wrote a work entitled ''Tractatus super propositiones Ptolemaei de sinubus et chordis'' (Nuremberg, 1541). This treatise consists of a development of Arrachel's method of interpolation for the calculation of tables of sines, and was published by Regiomontanus at the end of one of his works. Johannes Müller (1436–1476), known as Regiomontanus, was a pupil of Purbach and taught astronomy at Padua; he wrote an exposition of the ''Almagest'', and a more important work, ''De triangulis planis et sphericis cum tabulis sinuum'', which was published in 1533, a later edition appearing in 1561. He reinvented the tangent and calculated a table of tangents for each degree, but did not make any practical applications of this table, and did not use formulae involving the tangent. His work was the first complete European treatise on trigonometry, and contains a number of interesting problems; but his methods were in some respects behind those of the Arabs. Copernicus (1473–1543) gave the first simple demonstration of the fundamental formula of spherical trigonometry; the ''Trigonometria Copernici'' was published by Rheticus in 1542. George Joachim (1514–1576), known as Rheticus,",
+   "c1s2": "wrote ''Opus palatinum de triangulis'' (see {{sc|Tables, Mathematical}}), which contains tables of sines, tangents and secants of arcs at intervals of 10″ from 0° to 90°. His method of calculation depends upon the formulae which give <math>\\sin n\\alpha</math> and <math>\\cos n\\alpha</math> in terms of the sines and cosines of <math>(n-1)\\alpha</math> and <math>(n-2)\\alpha</math>; thus these formulae may be regarded as due to him. Rheticus found the formulae for the sines of the half and third of an angle in terms of the sine of the whole angle. In 1599 there appeared an important work by Bartholomew Pitiscus (1561–1613), entitled ''Trigonometriae seu De dimensione triangulorum''; this contained several important theorems on the trigonometrical functions of two angles, some of which had been given before by Finck, Landsberg (or Lansberghe de Meuleblecke) and Adriaan van Roomen. François Viète or Vieta (1540–1603) employed the equation <math>(2\\cos \\tfrac{1}{2}\\phi)^3-3(2\\cos \\tfrac{1}{2}\\phi)=2\\cos \\phi</math> to solve the cubic <math>x^3-3a^2x=a^2b(a>\\tfrac{1}{2}b)</math>; he obtained, however, only one root of the cubic. In 1593 Van Roomen proposed, as a problem for all mathematicians, to solve the equation\n{{block center|<math>45y-3795y^3+95634y^5- \\dots +945y^{41}-45y^{43}+y^{45}=C.</math>}}\nVieta gave <math>y=2\\sin \\tfrac{1}{45}\\phi</math>, where <math>C=2\\sin \\phi</math>, as a solution, and also twenty-two of the other solutions, but he failed to obtain the negative roots. In his work ''Ad angulares sectiones'' Vieta gave formulae for the chords of multiples of a given arc in terms of the chord of the simple arc.\n\nA new stage in the development of the science was commenced after John Napier's invention of logarithms in 1614. Napier also simplified the solution of spherical triangles by his well-known analogies and by his rules for the solution of right-angled triangles. The first tables of logarithmic sines and tangents were constructed by Edmund Gunter (1581–1626), professor of astronomy at Gresham College, London; he was also the first to employ the expressions cosine, cotangent and cosecant for the sine, tangent and secant",
+   "c1s3": "of the complement of an arc. A treatise by Albert Girard (1590–1634), published at the Hague in 1626, contains the theorems which give areas of spherical triangles and polygons, and applications of the properties of the supplementary triangles to the reduction of the number of different cases in the solution of spherical triangles. He used the notation sin, tan, sec for the sine, tangent and secant of an arc. In the second half of the 17th century the theory of infinite series was developed by John Wallis, Gregory, Mercator, and afterwards by Newton and Leibnitz. In the ''Analysis per aequationes numero terminorum infinitas'', which was written before 1669, Newton gave the series for the arc in powers of its sine; from this he obtained the series for the sine and cosine in powers of the arc; but these series were given in such a form that the law of the formation of the coefficients was hidden. James Gregory discovered in 1670 the series for the arc in powers of the tangent and for the tangent and secant in powers of the arc. The first of these series was also discovered independently by Leibnitz in 1673, and published without proof in the ''Acta eruditorum'' for 1682. The series for the sine in powers of the arc he published in 1693; this he obtained by differentiation of a series with undetermined coefficients.\n\nIn the 18th century the science began to take a more analytical form; evidence of this is given in the works of Kresa in 1720 and Mayer in 1727. Friedrich Wilhelm v. Oppel's ''Analysis triangulorum'' (1746) was the first complete work on analytical trigonometry. None of these mathematicians used the notation sin, cos, tan, which is the more surprising in the case of Oppel, since Leonhard Euler",
+   "c2s2": "had in 1744 employed it in a memoir in Bernoulli was the first to obtain real resul <math>\\sqrt{-1}</math>; he published in 1712 the gene terms of tan <math>\\phi</math>, which he obtained by n the arc into imaginary logarithms. T however, made by Euler, who brought respects into the state in which it is a the present notation into general use, trigonometrical functions had been, exc by special letters, and had been regarde the absolute lengths of which depended in which they were drawn. Euler's gre in his regarding the sine, cosine, &c., as f thereby giving to equations connecting analytical interpretation, instead of a geo The exponential values of the sine and co and a great number of other analytical metrical functions, are due to Euler, mos be found in the ''Memoirs'' of the St Petersb\n\n''Plane Trigonomet''\n\n'''''Conception of Angles of any Magnitude.'''''\n\n1. Imagine a straight line terminated initially coincident with a fixed straight li and finally to take up any position <math>OB</math>. We shall suppose that, when this revolving straight line is turning in one direction, say that opposite to that in which the hands of a clock turn, it is describing a positive angle, and when it is turning in the other direction it is describing a negative angle. Before finally taking up the position <math>OB</math> the straight line may have passed any number of times through the position <math>OB</math>, making any number of",
+   "c2s3": "complete revolutions round <math>O</math> in either direction. Each time that the straight line makes a complete revolution round <math>O</math> we consider it to have described four right angles, taken with the positive or negative sign, according to the direction in which it has revolved; thus, when it stops in the position <math>OB</math>, it may have revolved through any one of an infinite number of positive or negative angles any two of which differ from one another by a positive or negative multiple of four right angles, and all of which have the same bounding lines <math>OA</math> and <math>OB</math>. If <math>OB'</math> is the final position of the revolving line, the smallest positive angle which can have been described is that described by the revolving line making more than one-half and less than the whole of a complete revolution, so that in this case we have a positive angle greater than two and less than four right angles. We have thus shown how we may conceive an angle not restricted to be less than two right angles, but of any positive or negative magnitude, to be generated.\n\n{{c|{{sc|Fig.}} 1.}}\n\n''Numerical Measurement of Angular Magnitudes.''\n\n2. Two systems of numerical measurement of angular magnitudes are in ordinary use. For practical measurements the sexagesimal system is the one employed: the ninetieth part of a right angle is taken as the unit and is called a degree; the degree is divided into sixty equal parts called minutes; and the minute into sixty equal parts called seconds; angles smaller than a second are usually measured as decimals of a second, the \"thirds,\" \"fourths,\" &c., not being in ordinary use. In the common notation an angle, for example, of 120 degrees, 17 minutes and 14·36 seconds is written 120° 17′ 14·36″. The decimal system measurement of angles has never come into ordinary use. In analytical trigonometry the circular measure of an angle is employed. In this system the unit angle or radian is the angle subtended at the centre of a circle by an arc equal in length to the radius. The constancy of this angle follows from the geometrical propositions—(1) the circumferences of different circles vary as their radii; (2) in the same circle angles at",
+   "c2s4": "the centre are proportional to the arcs which subtend them. It thus follows that the radian is an angle independent of the particular circle used in defining it. The constant ratio of the circumference of a circle to its diameter is a number incommensurable with unity, usually denoted by <math>\\pi</math>. We shall indicate later on some of the methods which have been employed to approximate to the value of this number. Its value to 20 places is <math>3{\\cdot}14159265358979323846</math>; its reciprocal to the same number of places is <math>0{\\cdot}31830988618379067153</math>. In circular measure every angle is measured by the ratio which it bears to the unit angle. Two right angles are measured by the number <math>\\pi</math>, and, since the same angle is 180°, we see that the number of degrees in an angle of circular measure <math>\\theta</math> is obtained from the formula <math>180\\times\\theta/\\pi</math>. The value of the radian has been found to 41 places of decimals by Glaisher (''Proc. London Math. Soc.'' vol. iv.); the value of <math>1/\\pi</math>, from which the unit can easily be calculated, is given to 140 places of decimals in ''Grunerts Archiv'' (1841), vol. i. To 10 decimal places the value of the unit angle is <math>57^\\circ\\ 17'\\ 44{\\cdot}8062470964''</math>. The unit of circular measure is too large to be convenient for practical purposes, but its use introduces a simplification into the series in analytical trigonometry, owing to the fact that the size of"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v27 p0287 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1864,
+     955,
+     2258,
+     1348
+    ],
+    "caption": [
+     2015,
+     1359,
+     2122,
+     1389
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1854,
+     953,
+     2262,
+     1326
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4670,
+    "output_tokens": 89,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8898,
+    "output_tokens": 5406,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|272|TRIGONOMETRY|}}</noinclude>at Seville in the 11th century, wrote an astronomy in nine books, which was translated into Latin in the 12th century by Gerard of Cremona and was published in 1534. The first book contains a trigonometry which is a considerable improvement on that in the ''Almagest.'' He gave proofs of the formulae for right-angled spherical triangles, depending on a rule of four quantities, instead of Ptolemy's rule of six quantities. The formulae <math>\\cos B = \\cos b \\sin A</math>, <math>\\cos c = \\cot A \\cot B</math>, in a triangle of which <math>C</math> is a right angle had escaped the notice of Ptolemy and were given for the first time by Geber. Strangely enough, he made no progress in plane trigonometry. Arrachel, a Spanish Arab who lived in the 12th century, wrote a work of which we have an analysis by Purbach, in which, like the Indians, he made the sine and the arc for the value <math>3^\\circ 45'</math> coincide.\n\nGeorg Purbach (1423–1461), professor of mathematics at Vienna, wrote a work entitled ''Tractatus super propositiones Ptolemaei de sinubus et chordis'' (Nuremberg, 1541). This treatise consists of a development of Arrachel's method of interpolation for the calculation of tables of sines, and was published by Regiomontanus at the end of one of his works. Johannes Müller (1436–1476), known as Regiomontanus, was a pupil of Purbach and taught astronomy at Padua; he wrote an exposition of the ''Almagest'', and a more important work, ''De triangulis planis et sphericis cum tabulis sinuum'', which was published in 1533, a later edition appearing in 1561. He reinvented the tangent and calculated a table of tangents for each degree, but did not make any practical applications of this table, and did not use formulae involving the tangent. His work was the first complete European treatise on trigonometry, and contains a number of interesting problems; but his methods were in some respects behind those of the Arabs. Copernicus (1473–1543) gave the first simple demonstration of the fundamental formula of spherical trigonometry; the ''Trigonometria Copernici'' was published by Rheticus in 1542. George Joachim (1514–1576), known as Rheticus, wrote ''Opus palatinum de triangulis'' (see {{sc|Tables, Mathematical}}), which contains tables of sines, tangents and secants of arcs at intervals of 10″ from 0° to 90°. His method of calculation depends upon the formulae which give <math>\\sin n\\alpha</math> and <math>\\cos n\\alpha</math> in terms of the sines and cosines of <math>(n-1)\\alpha</math> and <math>(n-2)\\alpha</math>; thus these formulae may be regarded as due to him. Rheticus found the formulae for the sines of the half and third of an angle in terms of the sine of the whole angle. In 1599 there appeared an important work by Bartholomew Pitiscus (1561–1613), entitled ''Trigonometriae seu De dimensione triangulorum''; this contained several important theorems on the trigonometrical functions of two angles, some of which had been given before by Finck, Landsberg (or Lansberghe de Meuleblecke) and Adriaan van Roomen. François Viète or Vieta (1540–1603) employed the equation <math>(2\\cos \\tfrac{1}{2}\\phi)^3-3(2\\cos \\tfrac{1}{2}\\phi)=2\\cos \\phi</math> to solve the cubic <math>x^3-3a^2x=a^2b(a>\\tfrac{1}{2}b)</math>; he obtained, however, only one root of the cubic. In 1593 Van Roomen proposed, as a problem for all mathematicians, to solve the equation\n{{block center|<math>45y-3795y^3+95634y^5- \\dots +945y^{41}-45y^{43}+y^{45}=C.</math>}}\nVieta gave <math>y=2\\sin \\tfrac{1}{45}\\phi</math>, where <math>C=2\\sin \\phi</math>, as a solution, and also twenty-two of the other solutions, but he failed to obtain the negative roots. In his work ''Ad angulares sectiones'' Vieta gave formulae for the chords of multiples of a given arc in terms of the chord of the simple arc.\n\nA new stage in the development of the science was commenced after John Napier's invention of logarithms in 1614. Napier also simplified the solution of spherical triangles by his well-known analogies and by his rules for the solution of right-angled triangles. The first tables of logarithmic sines and tangents were constructed by Edmund Gunter (1581–1626), professor of astronomy at Gresham College, London; he was also the first to employ the expressions cosine, cotangent and cosecant for the sine, tangent and secant of the complement of an arc. A treatise by Albert Girard (1590–1634), published at the Hague in 1626, contains the theorems which give areas of spherical triangles and polygons, and applications of the properties of the supplementary triangles to the reduction of the number of different cases in the solution of spherical triangles. He used the notation sin, tan, sec for the sine, tangent and secant of an arc. In the second half of the 17th century the theory of infinite series was developed by John Wallis, Gregory, Mercator, and afterwards by Newton and Leibnitz. In the ''Analysis per aequationes numero terminorum infinitas'', which was written before 1669, Newton gave the series for the arc in powers of its sine; from this he obtained the series for the sine and cosine in powers of the arc; but these series were given in such a form that the law of the formation of the coefficients was hidden. James Gregory discovered in 1670 the series for the arc in powers of the tangent and for the tangent and secant in powers of the arc. The first of these series was also discovered independently by Leibnitz in 1673, and published without proof in the ''Acta eruditorum'' for 1682. The series for the sine in powers of the arc he published in 1693; this he obtained by differentiation of a series with undetermined coefficients.\n\nIn the 18th century the science began to take a more analytical form; evidence of this is given in the works of Kresa in 1720 and Mayer in 1727. Friedrich Wilhelm v. Oppel's ''Analysis triangulorum'' (1746) was the first complete work on analytical trigonometry. None of these mathematicians used the notation sin, cos, tan, which is the more surprising in the case of Oppel, since Leonhard Euler had in 1744 employed it in a memoir in Bernoulli was the first to obtain real resul <math>\\sqrt{-1}</math>; he published in 1712 the gene terms of tan <math>\\phi</math>, which he obtained by n the arc into imaginary logarithms. T however, made by Euler, who brought respects into the state in which it is a the present notation into general use, trigonometrical functions had been, exc by special letters, and had been regarde the absolute lengths of which depended in which they were drawn. Euler's gre in his regarding the sine, cosine, &c., as f thereby giving to equations connecting analytical interpretation, instead of a geo The exponential values of the sine and co and a great number of other analytical metrical functions, are due to Euler, mos be found in the ''Memoirs'' of the St Petersb\n\n[[File:eb1911 v27 p0287 c2f1.png|center|160px]]\n\n''Plane Trigonomet''\n\n'''''Conception of Angles of any Magnitude.'''''\n\n1. Imagine a straight line terminated initially coincident with a fixed straight li and finally to take up any position <math>OB</math>. We shall suppose that, when this revolving straight line is turning in one direction, say that opposite to that in which the hands of a clock turn, it is describing a positive angle, and when it is turning in the other direction it is describing a negative angle. Before finally taking up the position <math>OB</math> the straight line may have passed any number of times through the position <math>OB</math>, making any number of complete revolutions round <math>O</math> in either direction. Each time that the straight line makes a complete revolution round <math>O</math> we consider it to have described four right angles, taken with the positive or negative sign, according to the direction in which it has revolved; thus, when it stops in the position <math>OB</math>, it may have revolved through any one of an infinite number of positive or negative angles any two of which differ from one another by a positive or negative multiple of four right angles, and all of which have the same bounding lines <math>OA</math> and <math>OB</math>. If <math>OB'</math> is the final position of the revolving line, the smallest positive angle which can have been described is that described by the revolving line making more than one-half and less than the whole of a complete revolution, so that in this case we have a positive angle greater than two and less than four right angles. We have thus shown how we may conceive an angle not restricted to be less than two right angles, but of any positive or negative magnitude, to be generated.\n\n{{c|{{sc|Fig.}} 1.}}\n\n''Numerical Measurement of Angular Magnitudes.''\n\n2. Two systems of numerical measurement of angular magnitudes are in ordinary use. For practical measurements the sexagesimal system is the one employed: the ninetieth part of a right angle is taken as the unit and is called a degree; the degree is divided into sixty equal parts called minutes; and the minute into sixty equal parts called seconds; angles smaller than a second are usually measured as decimals of a second, the \"thirds,\" \"fourths,\" &c., not being in ordinary use. In the common notation an angle, for example, of 120 degrees, 17 minutes and 14·36 seconds is written 120° 17′ 14·36″. The decimal system measurement of angles has never come into ordinary use. In analytical trigonometry the circular measure of an angle is employed. In this system the unit angle or radian is the angle subtended at the centre of a circle by an arc equal in length to the radius. The constancy of this angle follows from the geometrical propositions—(1) the circumferences of different circles vary as their radii; (2) in the same circle angles at the centre are proportional to the arcs which subtend them. It thus follows that the radian is an angle independent of the particular circle used in defining it. The constant ratio of the circumference of a circle to its diameter is a number incommensurable with unity, usually denoted by <math>\\pi</math>. We shall indicate later on some of the methods which have been employed to approximate to the value of this number. Its value to 20 places is <math>3{\\cdot}14159265358979323846</math>; its reciprocal to the same number of places is <math>0{\\cdot}31830988618379067153</math>. In circular measure every angle is measured by the ratio which it bears to the unit angle. Two right angles are measured by the number <math>\\pi</math>, and, since the same angle is 180°, we see that the number of degrees in an angle of circular measure <math>\\theta</math> is obtained from the formula <math>180\\times\\theta/\\pi</math>. The value of the radian has been found to 41 places of decimals by Glaisher (''Proc. London Math. Soc.'' vol. iv.); the value of <math>1/\\pi</math>, from which the unit can easily be calculated, is given to 140 places of decimals in ''Grunerts Archiv'' (1841), vol. i. To 10 decimal places the value of the unit angle is <math>57^\\circ\\ 17'\\ 44{\\cdot}8062470964''</math>. The unit of circular measure is too large to be convenient for practical purposes, but its use introduces a simplification into the series in analytical trigonometry, owing to the fact that the size of<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,180 @@
+{
+ "volume": 26,
+ "page_number": 864,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n878",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n878",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1144,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     130,
+     113,
+     2333,
+     183
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     130,
+     183,
+     1199,
+     1244
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     130,
+     1244,
+     1199,
+     2171
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     130,
+     2171,
+     1199,
+     3115
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1199,
+     183,
+     2333,
+     645
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1199,
+     645,
+     2333,
+     1273
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1199,
+     1274,
+     2333,
+     1372
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1199,
+     1372,
+     2333,
+     2466
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1199,
+     2466,
+     2333,
+     3115
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|824|THERMOMETRY|[GAS}}",
+   "c1s1": "lower by <math>a \\times n \\times (t - t_2)</math> degrees (nearly) than it would have been if the whole of the mercury and stem had been at the temperature <math>t</math>. The factor <math>a</math> in this expression is the apparent coefficient of expansion of mercury in glass, and varies from ·000150 to ·000165 for different kinds of glass. In order to apply this correction, it is usual to observe <math>t_2</math> by means of an auxiliary \"stem-thermometer\" with its bulb placed near the middle of the emergent column <math>n</math>. Occasionally stem-thermometers with long thin bulbs are employed to give more nearly the average temperature of the whole emergent column. Owing to conduction along the stem of the thermometer, and to heated vapours near the bath, the mean temperature determined in this manner is generally too low. To allow for this empirically, an arbitrary reduction is often made in the value taken for <math>n</math> or <math>a</math>, but this cannot be regarded as satisfactory for work of precision. The only practical method of reducing the correction is to limit the number of degrees <math>n</math> exposed, or, in other words, to work with thermometers of \"limited range.\" Each of these thermometers must then be corrected by comparison with a standard thermometer free from stem-exposure correction, such as a platinum-resistance thermometer. To secure results of any value the correction must be determined at each point under the actual conditions of observation under which the thermometer is to be used. In work of precision it is necessary to use ten or twenty thermometers to cover a range of 300°, as this is the only method of securing an open scale and reasonable accuracy as regards stem-exposure. To quote the opinion of C. E. Guillaume, one of the leading authorities on mercurial thermometry: \"When this correction is large, it cannot generally be determined with sufficient approximation for measurements of precision. The mercury thermometer should then be replaced by other instruments, among which those based on the variation of the electrical resistance of metals hold the first rank.\"",
+   "c1s2": "¶\n(V) ''Scale Correction.''—The correction required to reduce the readings of a mercurial thermometer to the normal scale may appropriately be called the \"scale correction.\" One of the chief advantages of the mercurial thermometer for scientific purposes is that its scale agrees very closely with the thermodynamical scale between 0° and 200° C. The scale corrections of the standard French thermometers of ''verre dur'' have been very carefully determined over the range 0° to 80° C. by P. Chappuis using a constant-volume gas thermometer containing hydrogen (at an initial pressure of one metre of mercury at 0° C.) as the representative of the normal scale. His observations between 0° and 80° C. are represented by the quartic equation\n\n{{block center|<math>t_h - t_m = t(t - 100)\\ (-61{\\cdot}859 + 0{\\cdot}47351\\ t - 0{\\cdot}0011577\\ t^2) \\times 10^{-6},</math> (7)}}\n\nin which <math>t_h</math> and <math>t_m</math> represent temperature on the scales of the hydrogen and mercury thermometers respectively. The ''verre dur'' mercury thermometer reads 0·112° C. above the hydrogen thermometer at 40° C. where the difference of the scales is a maximum. The scale corrections of the Jena-glass thermometers, deduced by comparison with the French ''verre dur'', appear to be practically of the same magnitude, but show differences of as much as 0·010° C. on either side of the mean. It may be questioned whether it is possible to construct mercury thermometers with scales agreeing more closely than this, owing to inevitable variations in the quality and treatment of the glass. According to Guillaume, the scale of a French ''cristal'' thermometer <math>t_c</math> differs from that of the standard ''verre dur'' <math>t_m</math> between 0° and 50° C., according to the cubic formula\n\n{{block center|<math>t_c - t_m = t(100 - t)(14{\\cdot}126 - 0{\\cdot}0311t) \\times 10^{-6}</math> . . (8)}}",
+   "c1s3": "According to some unpublished observations made by the writer in 1893–1894, the scale of an English flint-glass thermometer, tested by comparison with a platinum thermometer, does not differ from that of the constant-pressure air thermometer by more than one or two hundredths of a degree between 0° and 100° C. But for the comparison of the scales to be of any value, it would be necessary to study a large number of such thermometers. It is possible to obtain much more consistent results if the thermometers are not heated above 50° C.\n\nThe comparisons of the ''verre dur'' thermometers with the normal scale at the International Bureau at Paris have not as yet extended beyond 100° C. The most important observations on the mercury thermometer above these limits appear to be those of Regnault. The later observations of J. M. Crafts were confined to French thermometers of ''cristal dur'' (''Comptes Rendus'', 1882, 95, p. 863). He found the following deviations from the hydrogen scale:—\n{{block center|<math>t_h \\qquad 150^\\circ \\quad 170^\\circ \\quad 200^\\circ \\quad 230^\\circ \\quad 250^\\circ \\quad 280^\\circ \\quad 300^\\circ \\quad 330^\\circ</math>}}\n{{block center|<math>t_h - t_m \\quad +\\cdot25 \\quad +\\cdot35 \\quad +\\cdot27 \\quad -\\cdot02 \\quad -\\cdot26 \\quad -\\cdot63 \\quad -1\\cdot21 \\quad -2\\cdot48</math>}}\nThe correction changes sign at about 230° C., owing to the rapid increase in the expansion of mercury. Between 0° and 150° C. it would appear that the coefficient of expansion of glass increases more rapidly than that of mercury.\n\n''Poggendorff's Correction''.—It should be observed that, since in the construction of a mercury thermometer the tube is divided or calibrated so as to read in divisions of equal volume when the whole of the tube is at one temperature, the degrees do not as a matter of fact correspond to equal increments of the apparent expansion of mercury. The scale does not therefore agree in",
+   "c2s1": "practice with the theoretical formula (1) for the scale of the expansion of mercury, since the expansion is measured in a tube which itself is expanding. A similar argument applies to the method of the weight thermometer, in which the overflow is measured by weight. Even if the expansion of mercury and glass were both uniform, as measured on the thermodynamical scale, the scale of the mercury thermometer, as ordinarily calibrated, would not agree with the thermodynamical scale. The difference can be easily calculated if the actual expansion of mercury and glass is known. The correction is known as Poggendorff's, but is generally included in the scale correction, and is not applied separately. It has the effect of making the thermometer read higher at temperatures between 0° and 100° than it would if the divisions of the stem did",
+   "c2s2": "{{c|{{sc|Fig. 2.}}—Differences between Scales of Mercury, and Gas Thermometers and Hydrogen Scale, according to Guillaume and Chappuis.}}",
+   "c2s3": "not expand as the temperature rose. The amount of the correction for ''verre dur'' is given by Guillaume as\n{{block center|<math>\\text{P.C.} = t(100-t)(23{\\cdot}920+0{\\cdot}0240t)\\times 10^{-6}</math> . . (9)}}\nThe value of this correction is between ·060° and ·080° at 50° C. for different thermometers.\n\n{{c|{{sc|Gas Thermometry}}}}\n\n8. The deviations of the gas thermometer from the absolute scale are so small that this instrument is now universally regarded as the ultimate standard in thermometry. It had, in fact, already been adopted for this purpose by Regnault and others, on a priori considerations, before the absolute scale itself had been invented. Although the indications of a gas thermometer are not absolutely independent of the changes of volume of the envelope or bulb in which the gas is contained, the effect of any uncertainty in this respect is minimized by the relatively large expansibility of the gas. The capricious changes of volume of the bulb, which are so great a difficulty in mercurial thermometry, are twenty times less important in the case of the gas thermometer. As additional reasons for the choice we have the great simplicity of the laws of gases, and the approximate equality of expansion and close agreement of the thermometric scales of all gases, provided that they are above their critical temperatures. Subject to this condition, at moderate pressures and provided that they are not dissociated or decomposed, all gases satisfy approximately the laws of Boyle and Charles. These two laws are combined in the charac-",
+   "c2s4": "teristic equation of the gaseous state, viz., <math>pv = \\text{RT}</math>, in which <math>p</math> is the pressure and <math>v</math> the volume of unit mass of the gas in question, and <math>\\text{R}</math> is a constant which varies inversely as the molecular weight of the gas, and is approximately equal to the difference of the specific heats.\n\n9. ''Practical Conditions.''—In practice it is not convenient to deal with unit mass, but with an arbitrary mass <math>\\text{M}</math> occupying a space <math>\\text{V}</math>, so that the specific volume <math>v = \\text{V}/\\text{M}</math>. It is also necessary to measure the pressure <math>p</math> in terms of mercury columns, and not in absolute units. The numerical value of the constant <math>\\text{R}</math> is adjusted to suit these conditions, but is of no consequence in thermometry, as we are concerned with ratios and differences only. The equation may be written in the form <math>\\text{T} = p\\text{V}/\\text{RM}</math>, but in order to satisfy the essential condition that <math>\\text{T}</math> shall be a definite function of the temperature in the case of a gas which does not satisfy Boyle's law exactly, it is necessary to limit"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v26 p0864 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1267,
+     648,
+     2225,
+     1270
+    ],
+    "caption": [
+     1217,
+     1274,
+     2271,
+     1372
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1241,
+     658,
+     2275,
+     1255
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    7
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4941,
+    "output_tokens": 92,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 8062,
+    "output_tokens": 3776,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|824|THERMOMETRY|[GAS}}</noinclude>lower by <math>a \\times n \\times (t - t_2)</math> degrees (nearly) than it would have been if the whole of the mercury and stem had been at the temperature <math>t</math>. The factor <math>a</math> in this expression is the apparent coefficient of expansion of mercury in glass, and varies from ·000150 to ·000165 for different kinds of glass. In order to apply this correction, it is usual to observe <math>t_2</math> by means of an auxiliary \"stem-thermometer\" with its bulb placed near the middle of the emergent column <math>n</math>. Occasionally stem-thermometers with long thin bulbs are employed to give more nearly the average temperature of the whole emergent column. Owing to conduction along the stem of the thermometer, and to heated vapours near the bath, the mean temperature determined in this manner is generally too low. To allow for this empirically, an arbitrary reduction is often made in the value taken for <math>n</math> or <math>a</math>, but this cannot be regarded as satisfactory for work of precision. The only practical method of reducing the correction is to limit the number of degrees <math>n</math> exposed, or, in other words, to work with thermometers of \"limited range.\" Each of these thermometers must then be corrected by comparison with a standard thermometer free from stem-exposure correction, such as a platinum-resistance thermometer. To secure results of any value the correction must be determined at each point under the actual conditions of observation under which the thermometer is to be used. In work of precision it is necessary to use ten or twenty thermometers to cover a range of 300°, as this is the only method of securing an open scale and reasonable accuracy as regards stem-exposure. To quote the opinion of C. E. Guillaume, one of the leading authorities on mercurial thermometry: \"When this correction is large, it cannot generally be determined with sufficient approximation for measurements of precision. The mercury thermometer should then be replaced by other instruments, among which those based on the variation of the electrical resistance of metals hold the first rank.\"\n\n(V) ''Scale Correction.''—The correction required to reduce the readings of a mercurial thermometer to the normal scale may appropriately be called the \"scale correction.\" One of the chief advantages of the mercurial thermometer for scientific purposes is that its scale agrees very closely with the thermodynamical scale between 0° and 200° C. The scale corrections of the standard French thermometers of ''verre dur'' have been very carefully determined over the range 0° to 80° C. by P. Chappuis using a constant-volume gas thermometer containing hydrogen (at an initial pressure of one metre of mercury at 0° C.) as the representative of the normal scale. His observations between 0° and 80° C. are represented by the quartic equation\n\n{{block center|<math>t_h - t_m = t(t - 100)\\ (-61{\\cdot}859 + 0{\\cdot}47351\\ t - 0{\\cdot}0011577\\ t^2) \\times 10^{-6},</math> (7)}}\n\nin which <math>t_h</math> and <math>t_m</math> represent temperature on the scales of the hydrogen and mercury thermometers respectively. The ''verre dur'' mercury thermometer reads 0·112° C. above the hydrogen thermometer at 40° C. where the difference of the scales is a maximum. The scale corrections of the Jena-glass thermometers, deduced by comparison with the French ''verre dur'', appear to be practically of the same magnitude, but show differences of as much as 0·010° C. on either side of the mean. It may be questioned whether it is possible to construct mercury thermometers with scales agreeing more closely than this, owing to inevitable variations in the quality and treatment of the glass. According to Guillaume, the scale of a French ''cristal'' thermometer <math>t_c</math> differs from that of the standard ''verre dur'' <math>t_m</math> between 0° and 50° C., according to the cubic formula\n\n{{block center|<math>t_c - t_m = t(100 - t)(14{\\cdot}126 - 0{\\cdot}0311t) \\times 10^{-6}</math> . . (8)}} According to some unpublished observations made by the writer in 1893–1894, the scale of an English flint-glass thermometer, tested by comparison with a platinum thermometer, does not differ from that of the constant-pressure air thermometer by more than one or two hundredths of a degree between 0° and 100° C. But for the comparison of the scales to be of any value, it would be necessary to study a large number of such thermometers. It is possible to obtain much more consistent results if the thermometers are not heated above 50° C.\n\nThe comparisons of the ''verre dur'' thermometers with the normal scale at the International Bureau at Paris have not as yet extended beyond 100° C. The most important observations on the mercury thermometer above these limits appear to be those of Regnault. The later observations of J. M. Crafts were confined to French thermometers of ''cristal dur'' (''Comptes Rendus'', 1882, 95, p. 863). He found the following deviations from the hydrogen scale:—\n{{block center|<math>t_h \\qquad 150^\\circ \\quad 170^\\circ \\quad 200^\\circ \\quad 230^\\circ \\quad 250^\\circ \\quad 280^\\circ \\quad 300^\\circ \\quad 330^\\circ</math>}}\n{{block center|<math>t_h - t_m \\quad +\\cdot25 \\quad +\\cdot35 \\quad +\\cdot27 \\quad -\\cdot02 \\quad -\\cdot26 \\quad -\\cdot63 \\quad -1\\cdot21 \\quad -2\\cdot48</math>}}\nThe correction changes sign at about 230° C., owing to the rapid increase in the expansion of mercury. Between 0° and 150° C. it would appear that the coefficient of expansion of glass increases more rapidly than that of mercury.\n\n''Poggendorff's Correction''.—It should be observed that, since in the construction of a mercury thermometer the tube is divided or calibrated so as to read in divisions of equal volume when the whole of the tube is at one temperature, the degrees do not as a matter of fact correspond to equal increments of the apparent expansion of mercury. The scale does not therefore agree in practice with the theoretical formula (1) for the scale of the expansion of mercury, since the expansion is measured in a tube which itself is expanding. A similar argument applies to the method of the weight thermometer, in which the overflow is measured by weight. Even if the expansion of mercury and glass were both uniform, as measured on the thermodynamical scale, the scale of the mercury thermometer, as ordinarily calibrated, would not agree with the thermodynamical scale. The difference can be easily calculated if the actual expansion of mercury and glass is known. The correction is known as Poggendorff's, but is generally included in the scale correction, and is not applied separately. It has the effect of making the thermometer read higher at temperatures between 0° and 100° than it would if the divisions of the stem did not expand as the temperature rose. The amount of the correction for ''verre dur'' is given by Guillaume as\n{{block center|<math>\\text{P.C.} = t(100-t)(23{\\cdot}920+0{\\cdot}0240t)\\times 10^{-6}</math> . . (9)}}\nThe value of this correction is between ·060° and ·080° at 50° C. for different thermometers.\n\n[[File:eb1911 v26 p0864 c2f1.png|center|357px]]\n{{c|{{sc|Fig. 2.}}—Differences between Scales of Mercury, and Gas Thermometers and Hydrogen Scale, according to Guillaume and Chappuis.}}\n\n{{c|{{sc|Gas Thermometry}}}}\n\n8. The deviations of the gas thermometer from the absolute scale are so small that this instrument is now universally regarded as the ultimate standard in thermometry. It had, in fact, already been adopted for this purpose by Regnault and others, on a priori considerations, before the absolute scale itself had been invented. Although the indications of a gas thermometer are not absolutely independent of the changes of volume of the envelope or bulb in which the gas is contained, the effect of any uncertainty in this respect is minimized by the relatively large expansibility of the gas. The capricious changes of volume of the bulb, which are so great a difficulty in mercurial thermometry, are twenty times less important in the case of the gas thermometer. As additional reasons for the choice we have the great simplicity of the laws of gases, and the approximate equality of expansion and close agreement of the thermometric scales of all gases, provided that they are above their critical temperatures. Subject to this condition, at moderate pressures and provided that they are not dissociated or decomposed, all gases satisfy approximately the laws of Boyle and Charles. These two laws are combined in the characteristic equation of the gaseous state, viz., <math>pv = \\text{RT}</math>, in which <math>p</math> is the pressure and <math>v</math> the volume of unit mass of the gas in question, and <math>\\text{R}</math> is a constant which varies inversely as the molecular weight of the gas, and is approximately equal to the difference of the specific heats.\n\n9. ''Practical Conditions.''—In practice it is not convenient to deal with unit mass, but with an arbitrary mass <math>\\text{M}</math> occupying a space <math>\\text{V}</math>, so that the specific volume <math>v = \\text{V}/\\text{M}</math>. It is also necessary to measure the pressure <math>p</math> in terms of mercury columns, and not in absolute units. The numerical value of the constant <math>\\text{R}</math> is adjusted to suit these conditions, but is of no consequence in thermometry, as we are concerned with ratios and differences only. The equation may be written in the form <math>\\text{T} = p\\text{V}/\\text{RM}</math>, but in order to satisfy the essential condition that <math>\\text{T}</math> shall be a definite function of the temperature in the case of a gas which does not satisfy Boyle's law exactly, it is necessary to limit<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,120 @@
+{
+ "volume": 22,
+ "page_number": 803,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri22chisrich/page/n812",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri22chisrich/page/n812",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1156,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     141,
+     0,
+     2358,
+     157
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     141,
+     157,
+     1214,
+     1235
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     141,
+     1235,
+     1214,
+     2330
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     141,
+     2330,
+     1214,
+     3301
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1214,
+     157,
+     2358,
+     1729
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1214,
+     1729,
+     2358,
+     3301
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|786|RADIATION|}}",
+   "c1s1": "at independently by Balfour Stewart and Kirchhoff about the year 1858, that the constitution (§ 6) of the radiation which pervades an enclosure, surrounded by bodies in a steady thermal state, must be a function of the temperature of those bodies, and of nothing else. It was subsequently pointed out by Stewart (''Brit. Assoc. Report'', 1871) that if the enclosure contains a radiating and absorbing body which is put in motion, all being at the same temperature, the constituents of the radiation in front of it and behind it will differ in period on account of the Doppler-Fizeau effect, so that there will be an opportunity of gaining mechanical work in its settling down to an equilibrium; there must thus be some kind of thermodynamic compensation, which might arise either from aethereal friction, or from work required to produce the motion of the body against pressure exerted on it by the surrounding radiation. The hypothesis of friction is now excluded in ultimate molecular physics, while the thermodynamic bearing of a pressure exerted by radiation, such as is demanded by Maxwell's electric theory, has been more recently developed on other lines by Bartoli and Boltzmann (1884), and combined with that of the Doppler effect by W. Wien (1893) in development of the ideas above expressed.\n\nThe original reasoning of Stewart and Kirchhoff rests on the dynamical principle, that by no process of ordinary reflexion or transmission can the period, and therefore the wave-length, of any harmonic constituent of the radiation be changed;",
+   "c1s2": "each constituent remains of the same wave-length from the time it is emitted until the time it is again absorbed. If we imagine a field of radiation to be enclosed within perfectly reflecting walls, then, provided there is no material substance in the field which can radiate and absorb, the constitution of the radiation in it may be any whatever, and it will remain permanent. It is only the presence of material bodies that by their continued emission and absorption can transform the surrounding radiation towards the unique constitution which corresponds to their temperature. We can define the temperature of an isolated field of radiation, of this definite ultimate constitution, to be the same as that of the material bodies with which it would thus be in equilibrium. Further, the mutual independence of the various constituents of any field of radiation enclosed by perfect reflectors allows us to assign a temperature to each constituent, such as the part involving wave-lengths lying between <math>\\lambda</math> and <math>\\lambda+\\delta\\lambda</math>; that will be the temperature of a material system with which this constituent by itself is in equilibrium of emission and absorption. But to reason about the temperature of radiation in this way we must be sure that it completely pervades the space, and has no special direction; this is ensured by the continual reflexions from the walls of the enclosure. The question of the temperature of a directed wave-train travelling through space, such as a beam of light, will come up later. The temperature of each constituent in a region of undirected radiation is thus a function of its wave-length and its intensity alone.",
+   "c1s3": "It is the fundamental principle of thermodynamics, that temperatures tend to become uniform. In the present case of a field of radiation, this equalization cannot take place directly between the various constituents of the radiation that occupy the same space, but only through the intervention of the emission and absorption of material bodies; the constituent radiations are virtually partitioned off adiabatically from direct interchange. Thus in discussing the transformations of temperatures of the constituent elements of radiation, we are really reasoning about the activity of material bodies that are in thermal equilibrium with those constituents; and the theoretical basis of the idea of temperature, as depending on the fortuitous residue of the energy of molecular motions, is preserved.\n\n2. ''Mechanical Pressure of Undulatory Motions.''—Consider a wave-train of any kind, in which the displacement is <math>\\xi = a \\cos m(x+ct)</math> so that it is propagated in the direction in which <math>x</math> decreases; let it be directly incident on a perfect reflector travelling towards it with velocity <math>v</math>, whose position is there-",
+   "c2s1": "fore given at time <math>t</math> by <math>x=vt</math>. There will be a reflected train given by <math>\\xi'=a'\\cos m'(x-ct)</math>, the velocity of propagation <math>c</math> being of course the same for both. The disturbance does not travel into the reflector, and must therefore be annulled at its surface; thus when <math>x=vt</math> we must have <math>\\xi+\\xi'=0</math> identically. This gives <math>a'=-a</math>, and <math>m'(c-v)=m(c+v)</math>. The amplitude of the reflected disturbance is therefore equal to that of the incident one; while the wave-length is altered on the ratio <math>\\frac{c-v}{c+v}</math>, which is approximately <math>1-2\\frac{v}{c}</math>, where <math>v/c</math> is small, and is thus in agreement with the usual statement of the Doppler effect. The energy in the wave-train being half potential and half kinetic, it is given by the integration of <math>\\rho(d\\xi/dt)^2</math> along the train, where <math>\\rho</math> represents density. In the reflected train it is therefore augmented, when equal lengths are compared, in the ratio <math>\\left(\\frac{c+v}{c-v}\\right)^2</math>; but the length of the train is diminished by the reflexion in the ratio <math>\\frac{c-v}{c+v}</math>; hence on the whole the energy transmitted per unit time is increased by the reflexion in the ratio <math>\\frac{c+v}{c-v}</math>. This increase per unit time can arise only from work done by the advancing reflector against pressure exerted by the radiation. That pressure, per unit surface, must therefore be equal to the fraction <math>\\frac{2}{c-v}</math> of the energy in a length <math>c+v</math> of the incident wave-train; thus it is the fraction <math>\\frac{c^2-v^2}{c^2+v^2}</math> of the total density of energy in front of the reflector, belonging to both the incident and reflected trains. When <math>v</math> is small compared with <math>c</math>, this makes the pressure equal to the density of vibrational energy, in accordance with Maxwell's electrodynamic formula (''Elec. and Mag.'', 1871).\n\nThe argument may be illustrated by the transverse vibrations of a tense cord, the reflector being then a lamina through a small aperture in which the cord passes; the lamina can thus slide along the cord and sweep the vibratory motion in front of",
+   "c2s2": "it. In this case the force acting on the lamina is the resultant of the tensions <math>\\text{T}</math> of the cord on the two sides of the aperture, giving a lengthwise force <math>\\tfrac{1}{2}\\text{T}d(\\xi+\\xi')^2/dx^2</math> when, as usual, powers higher than the second of the ratio of amplitude to wave-length are neglected; this, when <math>v/c</math> is small, is an oscillatory force of amount <math>2\\rho(d\\xi/dt)^2</math>, whose time-average agrees with the value above obtained. If we consider a finite train of waves thus sent back from a moving reflector, the time integral of the pressure must represent force transmitted along the cord, or a gain of longitudinal momentum in the reflected waves, or both together.\n\nWhen it is a case of transverse waves in an elastic medium, reflected by an advancing obstacle, the origin of the working pressure is not so obvious, because we cannot easily formulate a mechanism for the advancing reflector like that of the lamina above employed. In the case of light-waves we can, however, imagine an ideal material body, constituted of very small molecules, that would sweep them in front of it with the same perfection as a metallic mirror actually reflects the longer Hertzian waves. The pressure will then be identified physically, as in the case of the latter waves, with the mechanical forces acting on the screening oscillatory electric current-sheet which is induced on the surface of the reflector. The displacement represented above by <math>\\xi</math>, which is annulled at the reflector, may then be taken to be either the tangential electric force or the normal component of the vector whose velocity is the magnetic force. The latter interpretation is theoretically interesting, because that vector, which is the dynamical displacement in electron-theory, usually occurs only through its velocity. The general case of oblique incidence can be treated on similar lines; each filament of radiation (ray) in fact exerts its own longitudinal push equal to its energy per unit length, and it is only a matter of summation.\n\nThe usual formula for the pressure of electric radiation is"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 6,
+    "input_tokens": 9755,
+    "output_tokens": 3540,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 11544
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|786|RADIATION|}}</noinclude>at independently by Balfour Stewart and Kirchhoff about the year 1858, that the constitution (§ 6) of the radiation which pervades an enclosure, surrounded by bodies in a steady thermal state, must be a function of the temperature of those bodies, and of nothing else. It was subsequently pointed out by Stewart (''Brit. Assoc. Report'', 1871) that if the enclosure contains a radiating and absorbing body which is put in motion, all being at the same temperature, the constituents of the radiation in front of it and behind it will differ in period on account of the Doppler-Fizeau effect, so that there will be an opportunity of gaining mechanical work in its settling down to an equilibrium; there must thus be some kind of thermodynamic compensation, which might arise either from aethereal friction, or from work required to produce the motion of the body against pressure exerted on it by the surrounding radiation. The hypothesis of friction is now excluded in ultimate molecular physics, while the thermodynamic bearing of a pressure exerted by radiation, such as is demanded by Maxwell's electric theory, has been more recently developed on other lines by Bartoli and Boltzmann (1884), and combined with that of the Doppler effect by W. Wien (1893) in development of the ideas above expressed.\n\nThe original reasoning of Stewart and Kirchhoff rests on the dynamical principle, that by no process of ordinary reflexion or transmission can the period, and therefore the wave-length, of any harmonic constituent of the radiation be changed; each constituent remains of the same wave-length from the time it is emitted until the time it is again absorbed. If we imagine a field of radiation to be enclosed within perfectly reflecting walls, then, provided there is no material substance in the field which can radiate and absorb, the constitution of the radiation in it may be any whatever, and it will remain permanent. It is only the presence of material bodies that by their continued emission and absorption can transform the surrounding radiation towards the unique constitution which corresponds to their temperature. We can define the temperature of an isolated field of radiation, of this definite ultimate constitution, to be the same as that of the material bodies with which it would thus be in equilibrium. Further, the mutual independence of the various constituents of any field of radiation enclosed by perfect reflectors allows us to assign a temperature to each constituent, such as the part involving wave-lengths lying between <math>\\lambda</math> and <math>\\lambda+\\delta\\lambda</math>; that will be the temperature of a material system with which this constituent by itself is in equilibrium of emission and absorption. But to reason about the temperature of radiation in this way we must be sure that it completely pervades the space, and has no special direction; this is ensured by the continual reflexions from the walls of the enclosure. The question of the temperature of a directed wave-train travelling through space, such as a beam of light, will come up later. The temperature of each constituent in a region of undirected radiation is thus a function of its wave-length and its intensity alone. It is the fundamental principle of thermodynamics, that temperatures tend to become uniform. In the present case of a field of radiation, this equalization cannot take place directly between the various constituents of the radiation that occupy the same space, but only through the intervention of the emission and absorption of material bodies; the constituent radiations are virtually partitioned off adiabatically from direct interchange. Thus in discussing the transformations of temperatures of the constituent elements of radiation, we are really reasoning about the activity of material bodies that are in thermal equilibrium with those constituents; and the theoretical basis of the idea of temperature, as depending on the fortuitous residue of the energy of molecular motions, is preserved.\n\n2. ''Mechanical Pressure of Undulatory Motions.''—Consider a wave-train of any kind, in which the displacement is <math>\\xi = a \\cos m(x+ct)</math> so that it is propagated in the direction in which <math>x</math> decreases; let it be directly incident on a perfect reflector travelling towards it with velocity <math>v</math>, whose position is therefore given at time <math>t</math> by <math>x=vt</math>. There will be a reflected train given by <math>\\xi'=a'\\cos m'(x-ct)</math>, the velocity of propagation <math>c</math> being of course the same for both. The disturbance does not travel into the reflector, and must therefore be annulled at its surface; thus when <math>x=vt</math> we must have <math>\\xi+\\xi'=0</math> identically. This gives <math>a'=-a</math>, and <math>m'(c-v)=m(c+v)</math>. The amplitude of the reflected disturbance is therefore equal to that of the incident one; while the wave-length is altered on the ratio <math>\\frac{c-v}{c+v}</math>, which is approximately <math>1-2\\frac{v}{c}</math>, where <math>v/c</math> is small, and is thus in agreement with the usual statement of the Doppler effect. The energy in the wave-train being half potential and half kinetic, it is given by the integration of <math>\\rho(d\\xi/dt)^2</math> along the train, where <math>\\rho</math> represents density. In the reflected train it is therefore augmented, when equal lengths are compared, in the ratio <math>\\left(\\frac{c+v}{c-v}\\right)^2</math>; but the length of the train is diminished by the reflexion in the ratio <math>\\frac{c-v}{c+v}</math>; hence on the whole the energy transmitted per unit time is increased by the reflexion in the ratio <math>\\frac{c+v}{c-v}</math>. This increase per unit time can arise only from work done by the advancing reflector against pressure exerted by the radiation. That pressure, per unit surface, must therefore be equal to the fraction <math>\\frac{2}{c-v}</math> of the energy in a length <math>c+v</math> of the incident wave-train; thus it is the fraction <math>\\frac{c^2-v^2}{c^2+v^2}</math> of the total density of energy in front of the reflector, belonging to both the incident and reflected trains. When <math>v</math> is small compared with <math>c</math>, this makes the pressure equal to the density of vibrational energy, in accordance with Maxwell's electrodynamic formula (''Elec. and Mag.'', 1871).\n\nThe argument may be illustrated by the transverse vibrations of a tense cord, the reflector being then a lamina through a small aperture in which the cord passes; the lamina can thus slide along the cord and sweep the vibratory motion in front of it. In this case the force acting on the lamina is the resultant of the tensions <math>\\text{T}</math> of the cord on the two sides of the aperture, giving a lengthwise force <math>\\tfrac{1}{2}\\text{T}d(\\xi+\\xi')^2/dx^2</math> when, as usual, powers higher than the second of the ratio of amplitude to wave-length are neglected; this, when <math>v/c</math> is small, is an oscillatory force of amount <math>2\\rho(d\\xi/dt)^2</math>, whose time-average agrees with the value above obtained. If we consider a finite train of waves thus sent back from a moving reflector, the time integral of the pressure must represent force transmitted along the cord, or a gain of longitudinal momentum in the reflected waves, or both together.\n\nWhen it is a case of transverse waves in an elastic medium, reflected by an advancing obstacle, the origin of the working pressure is not so obvious, because we cannot easily formulate a mechanism for the advancing reflector like that of the lamina above employed. In the case of light-waves we can, however, imagine an ideal material body, constituted of very small molecules, that would sweep them in front of it with the same perfection as a metallic mirror actually reflects the longer Hertzian waves. The pressure will then be identified physically, as in the case of the latter waves, with the mechanical forces acting on the screening oscillatory electric current-sheet which is induced on the surface of the reflector. The displacement represented above by <math>\\xi</math>, which is annulled at the reflector, may then be taken to be either the tangential electric force or the normal component of the vector whose velocity is the magnetic force. The latter interpretation is theoretically interesting, because that vector, which is the dynamical displacement in electron-theory, usually occurs only through its velocity. The general case of oblique incidence can be treated on similar lines; each filament of radiation (ray) in fact exerts its own longitudinal push equal to its energy per unit length, and it is only a matter of summation.\n\nThe usual formula for the pressure of electric radiation is<noinclude><references/></noinclude>"
+}

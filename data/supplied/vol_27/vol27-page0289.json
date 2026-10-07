@@ -1,0 +1,204 @@
+{
+ "volume": 27,
+ "page_number": 289,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n296",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n296",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1191,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     121,
+     0,
+     2372,
+     175
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     175,
+     1189,
+     962
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     121,
+     962,
+     555,
+     1428
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     1434,
+     555,
+     1468
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     555,
+     962,
+     1189,
+     1480
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     1480,
+     1189,
+     2486
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     2486,
+     1189,
+     3112
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     175,
+     2372,
+     1036
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     1036,
+     2372,
+     1938
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     1938,
+     2372,
+     3036
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1189,
+     3036,
+     2372,
+     3112
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|274|TRIGONOMETRY|}}",
+   "c1s1": "on a straight line making an angle <math>+\\tfrac{1}{2}\\pi</math> with <math>OD</math>, and is therefore equal to <math>OF \\sin B</math>; hence\n\n{{block center|<math>OF \\cos(A+B) = OE \\cos A + EF \\cos(\\tfrac{1}{2}\\pi + A)</math>}}\n\n{{block center|<math>= OF (\\cos A \\cos B - \\sin A \\sin B),</math>}}\n\n{{block center|or <math>\\cos(A+B) = \\cos A \\cos B - \\sin A \\sin B.</math>}}\n\nThe angles <math>A</math>, <math>B</math> are absolutely unrestricted in magnitude, and thus this formula is perfectly general. We may change the sign of <math>B</math>, thus\n\n{{block center|<math>\\cos(A-B) = \\cos A \\cos(-B) - \\sin A \\sin(-B),</math>}}\n\n{{block center|or <math>\\cos(A-B) = \\cos A \\cos B + \\sin A \\sin B.</math>}}\n\nIf we projected the sides of the triangle <math>OEF</math> on a straight line making an angle <math>+\\tfrac{1}{2}\\pi</math> with <math>OA</math> we should obtain the formulae\n\n{{block center|<math>\\sin(A \\pm B) = \\sin A \\cos B \\pm \\cos A \\sin B,</math>}}\n\nwhich are really contained in the cosine formula, since we may put <math>\\tfrac{1}{2}\\pi - B</math> for <math>B</math>. The formulae\n\n{{block center|<math>\\tan(A \\pm B) = \\frac{\\tan A \\pm \\tan B}{1 \\mp \\tan A \\tan B}, \\cot(A \\pm B) = \\frac{\\cot A \\cot B \\mp 1}{\\cot B \\pm \\cot A}</math>}}\n\nare immediately deducible from the above formulae. The equations\n\n{{block center|<math>\\sin C + \\sin D = 2 \\sin \\tfrac{1}{2}(C+D) \\cos \\tfrac{1}{2}(C-D),</math>}}\n\n{{block center|<math>\\sin C - \\sin D = 2 \\sin \\tfrac{1}{2}(C-D) \\cos \\tfrac{1}{2}(C+D),</math>}}\n\n{{block center|<math>\\cos D + \\cos C = 2 \\cos \\tfrac{1}{2}(C+D) \\cos \\tfrac{1}{2}(C-D),</math>}}\n\n{{block center|<math>\\cos D - \\cos C = 2 \\sin \\tfrac{1}{2}(C+D) \\sin \\tfrac{1}{2}(C-D),</math>}}",
+   "c1s2": "{{c|{{sc|Fig.}} 4.}}",
+   "c1s3": "by the method of projections. Take <math>OC</math>, <math>OD</math>, making angles <math>C</math>, <math>D</math>, with <math>OA</math>, r to <math>CD</math>. The angle which <math>OE</math> makes with <math>OA</math> is <math>\\tfrac{1}{2}(C+D)</math> and that which <math>DC</math> makes is <math>\\tfrac{1}{2}(\\pi+C+D)</math>; the angle <math>COE</math> is <math>\\tfrac{1}{2}(C-D)</math>. The sum of the projections of <math>OD</math> and <math>DE</math> on <math>OA</math> is equal to that of <math>OE</math>, and the sum of the projections of <math>OC</math> and <math>CE</math> is equal to that of <math>OE</math>; hence the sum of the projections of <math>OC</math> and <math>OD</math> is twice that of <math>OE</math>, or <math>\\cos C+\\cos D=2\\cos\\tfrac{1}{2}(C+D)\\cos\\tfrac{1}{2}(C-D)</math>. The difference of the projections of <math>OD</math> and <math>OC</math> an <math>OA</math> is equal to twice that of <math>ED</math>, hence we have the formula <math>\\cos D-\\cos C</math>",
+   "c1s4": "=2 <math>\\sin \\tfrac{1}{2}(C+D) \\sin \\tfrac{1}{2}(C-D)</math>. The other two formulae will be obtained by projecting on a straight line inclined at an angle <math>+\\tfrac{1}{2}\\pi</math> to <math>OA</math>.\n\nAs another example of the use of projections, we will find the sum of the series <math>\\cos \\alpha+\\cos (\\alpha+\\beta)+\\cos (\\alpha+2\\beta)+ \\dots +\\cos (\\alpha+\\overline{n-1}\\beta)</math>. '''''Sum of Series of Cosines in Arithmetical Progression.''''' Suppose an unclosed polygon each angle of which is <math>\\pi-\\beta</math> to be inscribed in a circle, and let <math>A</math>, <math>A_1</math>, <math>A_2</math>, <math>A_3</math>, …, <math>A_n</math> be <math>n+1</math> consecutive angular points; let <math>D</math> be the diameter of the circle; and suppose a straight line drawn making an angle <math>\\alpha</math> with <math>AA_1</math>, then <math>\\alpha+\\beta</math>, <math>\\alpha+2\\beta</math>, … are the angles it makes with <math>A_1 A_2</math>, <math>A_2</math>, <math>A_3</math>, …; we have by projections\n\n{{block center|<math>AA_n \\cos (\\alpha+\\tfrac{1}{2}\\overline{n-1}\\beta)=AA_1 \\{\\cos \\alpha+ \\cos \\overline{\\alpha+\\beta+}\\dots+\\cos \\alpha+\\overline{(n-1)}\\beta\\}</math>,}}\n{{block center|also <math>AA_1=\\text{D} \\sin \\tfrac{1}{2}\\beta,\\ AA_n=D \\sin \\tfrac{1}{2}n\\beta</math>;}}\nhence the sum of the series of cosines is\n{{block center|<math>\\cos (\\alpha+\\overline{\\tfrac{1}{2}n-1}\\,\\beta) \\sin \\tfrac{1}{2}n\\beta \\operatorname{cosec} \\tfrac{1}{2}\\beta</math>.}}\nBy a double application of the addition formulae we may obtain the formulae '''''Formulae for Sine and Cosine of Sum of Angles.'''''\n{{block center|<math>\\sin (A_1+A_2+A_3)=\\sin A_1 \\cos A_2 \\cos A_3</math>}}\n{{block center|<math>+\\cos A_1 \\sin A_2 \\cos A_3+\\cos A_1 \\cos A_2 \\sin A_3</math>}}\n{{block center|<math>-\\sin A_1 \\sin A_2 \\sin A_3</math>;}}\n{{block center|<math>\\cos (A_1+A_2+A_3)=\\cos A_1 \\cos A_2 \\cos A_3</math>}}\n{{block center|<math>-\\cos A_1 \\sin A_2 \\sin A_3-\\sin A_1 \\cos A_2 \\sin A_3</math>}}\n{{block center|<math>-\\sin A_1 \\sin A_2 \\cos A_3</math>.}}\nWe can by induction extend these formulae to the case of <math>n</math> angles.\n{{block center|Assume <math>\\sin (A_1+A_2+ \\dots +A_n)=S_1-S_3+S_5- \\dots</math>}}\n{{block center|<math>\\cos (A_1+A_2+ \\dots +A_n)=S_0-S_2+S_4- \\dots</math>}}\nwhere <math>S_r</math> denotes the sum of the products of the sines of <math>r</math> of the angles and the cosines of the remaining <math>n-r</math> angles; then we have",
+   "c1s5": "{{block center|<math>\\sin (A_1+A_2+ \\dots +A_n+A_{n+1}) = \\cos A_{n+1}(S_1-S_3+S_5- \\dots)</math>}}\n{{block center|<math>+\\sin A_{n+1}(S_0-S_2+S_4- \\dots).</math>}}\nThe right-hand side of this equation may be written\n{{block center|<math>(S_1 \\cos A_{n+1}+S_0 \\sin A_{n+1})-(S_3 \\cos A_{n+1}+S_2 \\sin A_{n+1})+ \\dots,</math>}}\n{{block center|or <math>S'_1-S'_3+ \\dots</math>}}\nwhere <math>S'_r</math> denotes the quantity which corresponds for <math>n+1</math> angles to <math>S_r</math> for <math>n</math> angles; similarly we may proceed with the cosine formula. The theorems are true for <math>n=2</math> and <math>n=3</math>; thus they are true generally. The formulae\n\n'''''Formulae for Multiple and Sub-Multiple Angles.'''''\n{{block center|<math>\\cos 2A = \\cos^2 A - \\sin^2 A = 2 \\cos^2 A - 1 = 1 - 2 \\sin^2 A,</math>}}\n{{block center|<math>\\sin 2A = 2 \\sin A \\cos A, \\qquad \\tan 2A = \\frac{2 \\tan A}{1-\\tan^2 A},</math>}}\n{{block center|<math>\\sin 3A = 3 \\sin A - 4 \\sin^3 A, \\quad \\cos 3A = 4 \\cos^3 A - 3 \\cos A,</math>}}\n{{block center|<math>\\sin nA = n \\cos^{n-1} A \\sin A - \\frac{n(n-1)(n-2)}{3!} \\cos^{n-3} A \\sin^3 A + \\dots</math>}}\n{{block center|<math>+(-1)^r \\frac{n(n-1) \\dots (n-2r)}{(2r+1)!} \\cos^{n-2r-1} A \\sin^{2r+1} A,</math>}}",
+   "c2s1": "{{block center|<math>\\cos nA = \\cos^n A - \\frac{n(n-1)}{2!} \\cos^{n-2} A \\sin^2 A + \\dots</math>}}\n\n{{block center|<math>+ (-)^r \\frac{n(n-1)\\dots(n-2r+1)}{2r!} \\cos^{n-2r} A \\sin^{2r} A + \\dots</math>}}\n\nmay all be deduced from the addition formulae by making the angles all equal. From the last two formulae we obtain by division\n\n{{block center|<math>\\tan nA = \\frac{n \\tan A - \\frac{n(n-1)(n-2)}{3!} \\tan^3 A + \\dots + (-1)^r \\frac{n(n-1)\\dots(n-2r)}{(2r+1)!} \\tan^{2r+1} A + \\dots}{1 - \\frac{n(n-1)}{2!} \\tan^2 A + \\dots + (-1)^r \\frac{n(n-1)\\dots(n-2r+1)}{2r!} \\tan^{2r} A + \\dots}</math>}}\n\nIn the particular case of <math>n=3</math> we have <math>\\tan 3A = \\frac{3 \\tan A - \\tan^3 A}{1 - 3 \\tan^2 A}</math>.\n\nThe values of <math>\\sin \\tfrac{1}{2}A</math>, <math>\\cos \\tfrac{1}{2}A</math>, <math>\\tan \\tfrac{1}{2}A</math> are given in terms of <math>\\cos A</math> by the formulae\n\n{{block center|<math>\\sin \\tfrac{1}{2} A = (-1)^p \\left(\\frac{1-\\cos A}{2}\\right)^{\\frac{1}{2}},\\ \\cos \\tfrac{1}{2}A = (-1)^q \\left(\\frac{1+\\cos A}{2}\\right)^{\\frac{1}{2}},</math>}}\n\n{{block center|<math>\\tan \\tfrac{1}{2} A = (-1)^r \\left(\\frac{1-\\cos A}{1+\\cos A}\\right)^{\\frac{1}{2}},</math>}}\n\nwhere <math>p</math> is the integral part of <math>A/2\\pi</math>, <math>q</math> the integral part of <math>A/2\\pi + \\tfrac{1}{2}</math>, and <math>r</math> the integral part of <math>A/\\pi</math>. Sin <math>\\tfrac{1}{2}A</math>, <math>\\cos \\tfrac{1}{2}A</math> are given in terms of <math>\\sin A</math> by the formulae\n\n{{block center|<math>2 \\sin \\tfrac{1}{2}A = (-1)^{p'}(1+\\sin A)^{\\frac{1}{2}} + (-1)^{q'}(1-\\sin A)^{\\frac{1}{2}},</math>}}\n\n{{block center|<math>2 \\cos \\tfrac{1}{2}A = (-1)^{p'}(1+\\sin A)^{\\frac{1}{2}} - (-1)^{q'}(1-\\sin A)^{\\frac{1}{2}},</math>}}",
+   "c2s2": "where <math>p'</math> is the integral part of <math>A/2\\pi+\\tfrac{1}{4}</math> and <math>q'</math> the integral part of <math>A/2\\pi-\\tfrac{1}{4}</math>.\n\n'''''Properties of Triangles.'''''\n\n6. In any plane triangle <math>ABC</math> we will denote the lengths of the sides <math>BC</math>, <math>CA</math>, <math>AB</math> by <math>a</math>, <math>b</math>, <math>c</math> respectively, and the angles <math>BAC</math>, <math>ABC</math>, <math>ACB</math> by <math>A</math>, <math>B</math>, <math>C</math> respectively. The fact that the projections of <math>b</math> and <math>c</math> on a straight line perpendicular to the side <math>a</math> are equal to one another is expressed by the equation <math>b \\sin C=c \\sin B</math>; this equation and the one obtained by projecting <math>c</math> and <math>a</math> on a straight line perpendicular to <math>a</math> may be written <math>a/\\sin A=b/\\sin B=c/\\sin C</math>. The equation <math>a=b \\cos C+c \\cos B</math> expresses the fact that the side <math>a</math> is equal to the sum of the projections of the sides <math>b</math> and <math>c</math> on itself; thus we obtain the equations\n{{block center|<math>\\left.\\begin{array}{l} a=b \\cos C+c \\cos B \\\\ b=c \\cos A+a \\cos C \\\\ c=a \\cos B+b \\cos A \\end{array}\\right\\}</math>.}}\nIf we multiply the first of these equations by <math>-a</math>, the second by <math>b</math>, and the third by <math>c</math>, and add the resulting equations, we obtain the formula <math>b^2+c^2-a^2=2bc \\cos A</math> or <math>\\cos A=(b^2+c^2-a^2)/2bc</math>, which gives the cosine of an angle in terms of the sides. From this expression for <math>\\cos A</math> the formulae\n{{block center|<math>\\sin \\tfrac{1}{2}A=\\left\\{\\frac{(s-b)(s-c)}{bc}\\right\\}^{\\frac{1}{2}},\\ \\cos \\tfrac{1}{2}A=\\left\\{\\frac{s(s-a)}{bc}\\right\\}^{\\frac{1}{2}}</math>,}}\n{{block center|<math>\\tan \\tfrac{1}{2}A=\\left\\{\\frac{(s-b)(s-c)}{s(s-a)}\\right\\}^{\\frac{1}{2}},\\ \\sin A=\\frac{2}{bc}\\{s(s-a)(s-b)(s-c)\\}^{\\frac{1}{2}}</math>,}}",
+   "c2s3": "where <math>s</math> denotes <math>\\tfrac{1}{2}(a+b+c)</math>, can be deduced by means of the dimidiary formula.\n\nFrom any general relation between the sides and angles of a triangle other relations may be deduced by various methods of transformation, of which we give two examples.\n\n<math>\\alpha</math>. In any general relation between the sines and cosines of the angles <math>A</math>, <math>B</math>, <math>C</math> of a triangle we may substitute <math>pA+qB+rC</math>, <math>rA+pB+qC</math>, <math>qA+rB+pC</math> for <math>A</math>, <math>B</math>, <math>C</math> respectively, where <math>p</math>, <math>q</math>, <math>r</math> are any quantities such that <math>p+q+r+1</math> is a positive or negative multiple of 6, provided that we change the signs of all the sines. Suppose <math>p+q+r+1=6n</math>, then the sum of the three angles <math>2n\\pi-(pA+qB+rC)</math>, <math>2n\\pi-(rA+pB+qC)</math>, <math>2n\\pi-(qA+rB+pC)</math> is <math>\\pi</math>; and, since the given relation follows from the condition <math>A+B+C=\\pi</math>, we may substitute for <math>A</math>, <math>B</math>, <math>C</math> respectively any angles of which the sum is <math>\\pi</math>; thus the transformation is admissible.\n\n<math>\\beta</math>. It may easily be shown that the sides and angles of the triangle formed by joining the feet of the perpendiculars from the angular points <math>A</math>, <math>B</math>, <math>C</math> on the opposite sides of the triangle <math>ABC</math> are respectively <math>a\\cos A</math>, <math>b\\cos B</math>, <math>c\\cos C</math>, <math>\\pi-2A</math>, <math>\\pi-2B</math>, <math>\\pi-2C</math>; we may therefore substitute these expressions for <math>a</math>, <math>b</math>, <math>c</math>, <math>A</math>, <math>B</math>, <math>C</math> respectively in any general formula. By drawing the perpendiculars of this second triangle and joining their feet as before, we obtain a triangle of which the sides are <math>-a\\cos A\\cos 2A</math>, <math>-b\\cos B\\cos 2B</math>, <math>-c\\cos C\\cos 2C</math> and the angles are <math>4A-\\pi</math>, <math>4B-\\pi</math>, <math>4C-\\pi</math>; we may therefore substitute these expressions for the sides and angles of the original triangle; for example, we obtain thus the formula\n{{block center|<math>\\cos 4A = \\frac{a^2\\cos^2 A\\cos^2 2A-b^2\\cos^2 B\\cos^2 2B-c^2\\cos^2 C\\cos^2 2C}{2bc\\cos B\\cos C\\cos 2B\\cos 2C}</math>.}}\nThis transformation obviously admits of further extension.\n\n'''''Solution of Triangles.'''''\n\n(1) The three sides of a triangle <math>ABC</math> being given, the angles can be determined by the formula",
+   "c2s4": "{{block center|<math>L \\tan \\frac{1}{2}A = 10 + \\frac{1}{2} \\log (s-b) + \\frac{1}{2} \\log (s-c) - \\frac{1}{2} \\log s - \\frac{1}{2} \\log (s-a)</math>}}\nand two corresponding formulae for the other angles."
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0289 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     123,
+     1072,
+     556,
+     1425
+    ],
+    "caption": [
+     291,
+     1435,
+     398,
+     1468
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     113,
+     1070,
+     559,
+     1430
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4507,
+    "output_tokens": 87,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 10,
+    "input_tokens": 9325,
+    "output_tokens": 9548,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 19240
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|274|TRIGONOMETRY|}}</noinclude>on a straight line making an angle <math>+\\tfrac{1}{2}\\pi</math> with <math>OD</math>, and is therefore equal to <math>OF \\sin B</math>; hence\n\n{{block center|<math>OF \\cos(A+B) = OE \\cos A + EF \\cos(\\tfrac{1}{2}\\pi + A)</math>}}\n\n{{block center|<math>= OF (\\cos A \\cos B - \\sin A \\sin B),</math>}}\n\n{{block center|or <math>\\cos(A+B) = \\cos A \\cos B - \\sin A \\sin B.</math>}}\n\nThe angles <math>A</math>, <math>B</math> are absolutely unrestricted in magnitude, and thus this formula is perfectly general. We may change the sign of <math>B</math>, thus\n\n{{block center|<math>\\cos(A-B) = \\cos A \\cos(-B) - \\sin A \\sin(-B),</math>}}\n\n{{block center|or <math>\\cos(A-B) = \\cos A \\cos B + \\sin A \\sin B.</math>}}\n\nIf we projected the sides of the triangle <math>OEF</math> on a straight line making an angle <math>+\\tfrac{1}{2}\\pi</math> with <math>OA</math> we should obtain the formulae\n\n{{block center|<math>\\sin(A \\pm B) = \\sin A \\cos B \\pm \\cos A \\sin B,</math>}}\n\nwhich are really contained in the cosine formula, since we may put <math>\\tfrac{1}{2}\\pi - B</math> for <math>B</math>. The formulae\n\n{{block center|<math>\\tan(A \\pm B) = \\frac{\\tan A \\pm \\tan B}{1 \\mp \\tan A \\tan B}, \\cot(A \\pm B) = \\frac{\\cot A \\cot B \\mp 1}{\\cot B \\pm \\cot A}</math>}}\n\nare immediately deducible from the above formulae. The equations\n\n{{block center|<math>\\sin C + \\sin D = 2 \\sin \\tfrac{1}{2}(C+D) \\cos \\tfrac{1}{2}(C-D),</math>}}\n\n{{block center|<math>\\sin C - \\sin D = 2 \\sin \\tfrac{1}{2}(C-D) \\cos \\tfrac{1}{2}(C+D),</math>}}\n\n{{block center|<math>\\cos D + \\cos C = 2 \\cos \\tfrac{1}{2}(C+D) \\cos \\tfrac{1}{2}(C-D),</math>}}\n\n{{block center|<math>\\cos D - \\cos C = 2 \\sin \\tfrac{1}{2}(C+D) \\sin \\tfrac{1}{2}(C-D),</math>}} by the method of projections. Take <math>OC</math>, <math>OD</math>, making angles <math>C</math>, <math>D</math>, with <math>OA</math>, r to <math>CD</math>. The angle which <math>OE</math> makes with <math>OA</math> is <math>\\tfrac{1}{2}(C+D)</math> and that which <math>DC</math> makes is <math>\\tfrac{1}{2}(\\pi+C+D)</math>; the angle <math>COE</math> is <math>\\tfrac{1}{2}(C-D)</math>. The sum of the projections of <math>OD</math> and <math>DE</math> on <math>OA</math> is equal to that of <math>OE</math>, and the sum of the projections of <math>OC</math> and <math>CE</math> is equal to that of <math>OE</math>; hence the sum of the projections of <math>OC</math> and <math>OD</math> is twice that of <math>OE</math>, or <math>\\cos C+\\cos D=2\\cos\\tfrac{1}{2}(C+D)\\cos\\tfrac{1}{2}(C-D)</math>. The difference of the projections of <math>OD</math> and <math>OC</math> an <math>OA</math> is equal to twice that of <math>ED</math>, hence we have the formula <math>\\cos D-\\cos C</math> =2 <math>\\sin \\tfrac{1}{2}(C+D) \\sin \\tfrac{1}{2}(C-D)</math>. The other two formulae will be obtained by projecting on a straight line inclined at an angle <math>+\\tfrac{1}{2}\\pi</math> to <math>OA</math>.\n\n[[File:eb1911 v27 p0289 c1f1.png|center|131px]]\n{{c|{{sc|Fig.}} 4.}}\n\nAs another example of the use of projections, we will find the sum of the series <math>\\cos \\alpha+\\cos (\\alpha+\\beta)+\\cos (\\alpha+2\\beta)+ \\dots +\\cos (\\alpha+\\overline{n-1}\\beta)</math>. '''''Sum of Series of Cosines in Arithmetical Progression.''''' Suppose an unclosed polygon each angle of which is <math>\\pi-\\beta</math> to be inscribed in a circle, and let <math>A</math>, <math>A_1</math>, <math>A_2</math>, <math>A_3</math>, …, <math>A_n</math> be <math>n+1</math> consecutive angular points; let <math>D</math> be the diameter of the circle; and suppose a straight line drawn making an angle <math>\\alpha</math> with <math>AA_1</math>, then <math>\\alpha+\\beta</math>, <math>\\alpha+2\\beta</math>, … are the angles it makes with <math>A_1 A_2</math>, <math>A_2</math>, <math>A_3</math>, …; we have by projections\n\n{{block center|<math>AA_n \\cos (\\alpha+\\tfrac{1}{2}\\overline{n-1}\\beta)=AA_1 \\{\\cos \\alpha+ \\cos \\overline{\\alpha+\\beta+}\\dots+\\cos \\alpha+\\overline{(n-1)}\\beta\\}</math>,}}\n{{block center|also <math>AA_1=\\text{D} \\sin \\tfrac{1}{2}\\beta,\\ AA_n=D \\sin \\tfrac{1}{2}n\\beta</math>;}}\nhence the sum of the series of cosines is\n{{block center|<math>\\cos (\\alpha+\\overline{\\tfrac{1}{2}n-1}\\,\\beta) \\sin \\tfrac{1}{2}n\\beta \\operatorname{cosec} \\tfrac{1}{2}\\beta</math>.}}\nBy a double application of the addition formulae we may obtain the formulae '''''Formulae for Sine and Cosine of Sum of Angles.'''''\n{{block center|<math>\\sin (A_1+A_2+A_3)=\\sin A_1 \\cos A_2 \\cos A_3</math>}}\n{{block center|<math>+\\cos A_1 \\sin A_2 \\cos A_3+\\cos A_1 \\cos A_2 \\sin A_3</math>}}\n{{block center|<math>-\\sin A_1 \\sin A_2 \\sin A_3</math>;}}\n{{block center|<math>\\cos (A_1+A_2+A_3)=\\cos A_1 \\cos A_2 \\cos A_3</math>}}\n{{block center|<math>-\\cos A_1 \\sin A_2 \\sin A_3-\\sin A_1 \\cos A_2 \\sin A_3</math>}}\n{{block center|<math>-\\sin A_1 \\sin A_2 \\cos A_3</math>.}}\nWe can by induction extend these formulae to the case of <math>n</math> angles.\n{{block center|Assume <math>\\sin (A_1+A_2+ \\dots +A_n)=S_1-S_3+S_5- \\dots</math>}}\n{{block center|<math>\\cos (A_1+A_2+ \\dots +A_n)=S_0-S_2+S_4- \\dots</math>}}\nwhere <math>S_r</math> denotes the sum of the products of the sines of <math>r</math> of the angles and the cosines of the remaining <math>n-r</math> angles; then we have {{block center|<math>\\sin (A_1+A_2+ \\dots +A_n+A_{n+1}) = \\cos A_{n+1}(S_1-S_3+S_5- \\dots)</math>}}\n{{block center|<math>+\\sin A_{n+1}(S_0-S_2+S_4- \\dots).</math>}}\nThe right-hand side of this equation may be written\n{{block center|<math>(S_1 \\cos A_{n+1}+S_0 \\sin A_{n+1})-(S_3 \\cos A_{n+1}+S_2 \\sin A_{n+1})+ \\dots,</math>}}\n{{block center|or <math>S'_1-S'_3+ \\dots</math>}}\nwhere <math>S'_r</math> denotes the quantity which corresponds for <math>n+1</math> angles to <math>S_r</math> for <math>n</math> angles; similarly we may proceed with the cosine formula. The theorems are true for <math>n=2</math> and <math>n=3</math>; thus they are true generally. The formulae\n\n'''''Formulae for Multiple and Sub-Multiple Angles.'''''\n{{block center|<math>\\cos 2A = \\cos^2 A - \\sin^2 A = 2 \\cos^2 A - 1 = 1 - 2 \\sin^2 A,</math>}}\n{{block center|<math>\\sin 2A = 2 \\sin A \\cos A, \\qquad \\tan 2A = \\frac{2 \\tan A}{1-\\tan^2 A},</math>}}\n{{block center|<math>\\sin 3A = 3 \\sin A - 4 \\sin^3 A, \\quad \\cos 3A = 4 \\cos^3 A - 3 \\cos A,</math>}}\n{{block center|<math>\\sin nA = n \\cos^{n-1} A \\sin A - \\frac{n(n-1)(n-2)}{3!} \\cos^{n-3} A \\sin^3 A + \\dots</math>}}\n{{block center|<math>+(-1)^r \\frac{n(n-1) \\dots (n-2r)}{(2r+1)!} \\cos^{n-2r-1} A \\sin^{2r+1} A, \\cos nA = \\cos^n A - \\frac{n(n-1)}{2!} \\cos^{n-2} A \\sin^2 A + \\dots</math>}}\n\n{{block center|<math>+ (-)^r \\frac{n(n-1)\\dots(n-2r+1)}{2r!} \\cos^{n-2r} A \\sin^{2r} A + \\dots</math>}}\n\nmay all be deduced from the addition formulae by making the angles all equal. From the last two formulae we obtain by division\n\n{{block center|<math>\\tan nA = \\frac{n \\tan A - \\frac{n(n-1)(n-2)}{3!} \\tan^3 A + \\dots + (-1)^r \\frac{n(n-1)\\dots(n-2r)}{(2r+1)!} \\tan^{2r+1} A + \\dots}{1 - \\frac{n(n-1)}{2!} \\tan^2 A + \\dots + (-1)^r \\frac{n(n-1)\\dots(n-2r+1)}{2r!} \\tan^{2r} A + \\dots}</math>}}\n\nIn the particular case of <math>n=3</math> we have <math>\\tan 3A = \\frac{3 \\tan A - \\tan^3 A}{1 - 3 \\tan^2 A}</math>.\n\nThe values of <math>\\sin \\tfrac{1}{2}A</math>, <math>\\cos \\tfrac{1}{2}A</math>, <math>\\tan \\tfrac{1}{2}A</math> are given in terms of <math>\\cos A</math> by the formulae\n\n{{block center|<math>\\sin \\tfrac{1}{2} A = (-1)^p \\left(\\frac{1-\\cos A}{2}\\right)^{\\frac{1}{2}},\\ \\cos \\tfrac{1}{2}A = (-1)^q \\left(\\frac{1+\\cos A}{2}\\right)^{\\frac{1}{2}},</math>}}\n\n{{block center|<math>\\tan \\tfrac{1}{2} A = (-1)^r \\left(\\frac{1-\\cos A}{1+\\cos A}\\right)^{\\frac{1}{2}},</math>}}\n\nwhere <math>p</math> is the integral part of <math>A/2\\pi</math>, <math>q</math> the integral part of <math>A/2\\pi + \\tfrac{1}{2}</math>, and <math>r</math> the integral part of <math>A/\\pi</math>. Sin <math>\\tfrac{1}{2}A</math>, <math>\\cos \\tfrac{1}{2}A</math> are given in terms of <math>\\sin A</math> by the formulae\n\n{{block center|<math>2 \\sin \\tfrac{1}{2}A = (-1)^{p'}(1+\\sin A)^{\\frac{1}{2}} + (-1)^{q'}(1-\\sin A)^{\\frac{1}{2}},</math>}}\n\n{{block center|<math>2 \\cos \\tfrac{1}{2}A = (-1)^{p'}(1+\\sin A)^{\\frac{1}{2}} - (-1)^{q'}(1-\\sin A)^{\\frac{1}{2}},</math>}} where <math>p'</math> is the integral part of <math>A/2\\pi+\\tfrac{1}{4}</math> and <math>q'</math> the integral part of <math>A/2\\pi-\\tfrac{1}{4}</math>.\n\n'''''Properties of Triangles.'''''\n\n6. In any plane triangle <math>ABC</math> we will denote the lengths of the sides <math>BC</math>, <math>CA</math>, <math>AB</math> by <math>a</math>, <math>b</math>, <math>c</math> respectively, and the angles <math>BAC</math>, <math>ABC</math>, <math>ACB</math> by <math>A</math>, <math>B</math>, <math>C</math> respectively. The fact that the projections of <math>b</math> and <math>c</math> on a straight line perpendicular to the side <math>a</math> are equal to one another is expressed by the equation <math>b \\sin C=c \\sin B</math>; this equation and the one obtained by projecting <math>c</math> and <math>a</math> on a straight line perpendicular to <math>a</math> may be written <math>a/\\sin A=b/\\sin B=c/\\sin C</math>. The equation <math>a=b \\cos C+c \\cos B</math> expresses the fact that the side <math>a</math> is equal to the sum of the projections of the sides <math>b</math> and <math>c</math> on itself; thus we obtain the equations\n{{block center|<math>\\left.\\begin{array}{l} a=b \\cos C+c \\cos B \\\\ b=c \\cos A+a \\cos C \\\\ c=a \\cos B+b \\cos A \\end{array}\\right\\}</math>.}}\nIf we multiply the first of these equations by <math>-a</math>, the second by <math>b</math>, and the third by <math>c</math>, and add the resulting equations, we obtain the formula <math>b^2+c^2-a^2=2bc \\cos A</math> or <math>\\cos A=(b^2+c^2-a^2)/2bc</math>, which gives the cosine of an angle in terms of the sides. From this expression for <math>\\cos A</math> the formulae\n{{block center|<math>\\sin \\tfrac{1}{2}A=\\left\\{\\frac{(s-b)(s-c)}{bc}\\right\\}^{\\frac{1}{2}},\\ \\cos \\tfrac{1}{2}A=\\left\\{\\frac{s(s-a)}{bc}\\right\\}^{\\frac{1}{2}}</math>,}}\n{{block center|<math>\\tan \\tfrac{1}{2}A=\\left\\{\\frac{(s-b)(s-c)}{s(s-a)}\\right\\}^{\\frac{1}{2}},\\ \\sin A=\\frac{2}{bc}\\{s(s-a)(s-b)(s-c)\\}^{\\frac{1}{2}}</math>,}} where <math>s</math> denotes <math>\\tfrac{1}{2}(a+b+c)</math>, can be deduced by means of the dimidiary formula.\n\nFrom any general relation between the sides and angles of a triangle other relations may be deduced by various methods of transformation, of which we give two examples.\n\n<math>\\alpha</math>. In any general relation between the sines and cosines of the angles <math>A</math>, <math>B</math>, <math>C</math> of a triangle we may substitute <math>pA+qB+rC</math>, <math>rA+pB+qC</math>, <math>qA+rB+pC</math> for <math>A</math>, <math>B</math>, <math>C</math> respectively, where <math>p</math>, <math>q</math>, <math>r</math> are any quantities such that <math>p+q+r+1</math> is a positive or negative multiple of 6, provided that we change the signs of all the sines. Suppose <math>p+q+r+1=6n</math>, then the sum of the three angles <math>2n\\pi-(pA+qB+rC)</math>, <math>2n\\pi-(rA+pB+qC)</math>, <math>2n\\pi-(qA+rB+pC)</math> is <math>\\pi</math>; and, since the given relation follows from the condition <math>A+B+C=\\pi</math>, we may substitute for <math>A</math>, <math>B</math>, <math>C</math> respectively any angles of which the sum is <math>\\pi</math>; thus the transformation is admissible.\n\n<math>\\beta</math>. It may easily be shown that the sides and angles of the triangle formed by joining the feet of the perpendiculars from the angular points <math>A</math>, <math>B</math>, <math>C</math> on the opposite sides of the triangle <math>ABC</math> are respectively <math>a\\cos A</math>, <math>b\\cos B</math>, <math>c\\cos C</math>, <math>\\pi-2A</math>, <math>\\pi-2B</math>, <math>\\pi-2C</math>; we may therefore substitute these expressions for <math>a</math>, <math>b</math>, <math>c</math>, <math>A</math>, <math>B</math>, <math>C</math> respectively in any general formula. By drawing the perpendiculars of this second triangle and joining their feet as before, we obtain a triangle of which the sides are <math>-a\\cos A\\cos 2A</math>, <math>-b\\cos B\\cos 2B</math>, <math>-c\\cos C\\cos 2C</math> and the angles are <math>4A-\\pi</math>, <math>4B-\\pi</math>, <math>4C-\\pi</math>; we may therefore substitute these expressions for the sides and angles of the original triangle; for example, we obtain thus the formula\n{{block center|<math>\\cos 4A = \\frac{a^2\\cos^2 A\\cos^2 2A-b^2\\cos^2 B\\cos^2 2B-c^2\\cos^2 C\\cos^2 2C}{2bc\\cos B\\cos C\\cos 2B\\cos 2C}</math>.}}\nThis transformation obviously admits of further extension.\n\n'''''Solution of Triangles.'''''\n\n(1) The three sides of a triangle <math>ABC</math> being given, the angles can be determined by the formula {{block center|<math>L \\tan \\frac{1}{2}A = 10 + \\frac{1}{2} \\log (s-b) + \\frac{1}{2} \\log (s-c) - \\frac{1}{2} \\log s - \\frac{1}{2} \\log (s-a)</math>}}\nand two corresponding formulae for the other angles.<noinclude><references/></noinclude>"
+}

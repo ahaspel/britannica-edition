@@ -1,0 +1,163 @@
+{
+ "volume": 26,
+ "page_number": 860,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n874",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n874",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.05,
+  "column_width": 1192,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     145,
+     2330,
+     216
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     216,
+     1205,
+     1291
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1291,
+     1205,
+     2389
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2389,
+     1205,
+     3158
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     216,
+     2330,
+     1170
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1205,
+     1170,
+     2330,
+     1996
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     1996,
+     2330,
+     2068
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     2068,
+     2330,
+     3158
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|820|THERMOELECTRICITY|}}",
+   "c1s1": "Peltier effect, and that the difference of potential in the substance of the metals when the circuit is complete cannot be greater than the coefficient <math>P</math>. The Peltier effect, it may be objected, measures that part only of the potential difference which depends upon temperature, and can therefore give no information about the absolute potential difference. But the reason for concluding that there is no other effective source of potential difference at the junction besides the Peltier effect, is simply that no other appreciable action takes place at the junction when a current passes except the Peltier generation or absorption of heat.\n\n20. ''Convection Theory.''—The idea of convection of heat by an electric current, and the phrase “specific heat of electricity” were introduced by Thomson as a convenient mode of expressing the phenomena of the Thomson effect. He did not intend to imply that electricity really possessed a positive or negative specific heat, but merely that a quantity of heat was absorbed in a metal when unit quantity of electricity flowed from cold to hot through a difference of temperature of 1°. The absorption of heat was considered as representing an equivalent conversion of heat energy into electrical energy in the element. The element might thus be regarded as the seat of an E.M.F., <math>dE=sdT</math>, where <math>dT</math> is the difference of temperature between its ends. The potential diagrams already given have been drawn on this assumption, that the Thomson effect is not really due to convection of heat by the current, but is the measure of an E.M.F.",
+   "c1s2": "located in the substance of the conductor. This view with regard to the seat of the E.M.F. has been generally taken by the majority of writers on the subject. It is not, however, necessarily implied in the reasoning or in the equations given by Thomson, which are not founded on any assumptions with regard to the seat of the E.M.F., but only on the balance of heat absorbed and evolved in all the different parts of the circuit. In fact, the equations themselves are open to an entirely different interpretation in this respect from that which is generally given.\n\nReturning again to the equations already given in § 11 for an elementary thermocouple, we have the following equivalent expressions for the E.M.F. <math>dE</math>, namely,\n{{block center|<math>dE = dP + (s' - s'')dT = (P/T)dT = pdT = (p'' - p')dT,</math>}}\nin which the coefficient, <math>P</math>, of the Peltier effect, and the thermoelectric power, <math>p</math>, of the couple, may be expressed in terms of the difference of the thermoelectric powers, <math>p'</math> and <math>p''</math>, of the separate metals with respect to a neutral standard. So far as these equations are concerned, we might evidently regard the seat of the E.M.F. as located entirely in the conductors themselves, and not at all at the junctions, if <math>p</math> or <math>(p'' - p')</math> is the difference of the E.M.F.s per degree in corresponding elements of the two metals. In this case, however, in order to account for the phenomenon of the Peltier effect at the junctions, it is necessary to suppose that there is a ''real convection of heat'' by an electric current, and that the coefficient <math>P</math> or <math>pT</math> is the difference",
+   "c1s3": "of the quantities of heat carried by unit quantity of electricity in the two metals. On this hypothesis, if we confine our attention to one of the two metals, say <math>p''</math>, in which the current is supposed to flow from hot to cold, we observe that <math>p''dT</math> expresses the quantity of heat converted into electrical energy per unit of electricity by an E.M.F. <math>p''</math> per 1° located in the element <math>dT</math>. It happens that the absolute magnitude of <math>p''</math> cannot be experimentally determined, but this is immaterial, as we are only concerned with differences. The quantity of heat liberated by convection as the current flows from hot to cold is represented in the equation by <math>dP = d(pT)</math>. Since <math>d(p''T) = p''dT + Tdp''</math>, it is clear that the balance of heat liberated in the element is only <math>Tdp'' = s''dT</math>, namely, the Thomson effect, and is ''not'' the equivalent of the E.M.F. <math>p''dT</math>, because on this theory the absorption of heat is masked by the convection. If <math>p</math> is constant there is no Thomson effect, but it does not follow that there is no E.M.F. located in the element. The Peltier effect, on the other hand, may be ascribed entirely to convection. The quantity of heat <math>p''T</math> is brought up to one",
+   "c2s1": "side of the junction per unit of electricity, and the quantity of heat <math>p'T</math> taken away on the other. The balance <math>(p''-p')T</math> is evolved at the junction. If, therefore, we are prepared to admit that an electric current can carry heat, the existence of the Peltier effect is no proof that a corresponding E.M.F. is located at the junction, or, in other words, that the conversion of heat into electrical energy occurs at this point of the circuit, or is due to the contact of dissimilar metals. On the contact theory, as generally adopted, the E.M.F. is due entirely to change of substance <math>(dP-Tdp)</math>; on the convection theory, it is due entirely to change of temperature <math>(pdT)</math>. But the two expressions are equivalent, and give the same results.\n\n21. ''Potential Diagrams on Convection Theory.''—The difference between the two theories is most readily appreciated by drawing the potential diagrams corresponding to the supposed locations of the E.M.F. in each case. The contact theory has been already illustrated in fig. 4. Corresponding diagrams for the same metals on the convection theory are given in fig. 5. In this diagram the metals are supposed to be all joined together and to be at the same time potential at the cold junction at 0° C. The ordinate of the curve at any temperature is the difference of potential between any point in the metal and a point in lead at the same temperature. Since there is no contact E.M.F. on this theory, the ordinates also represent the E.M.F. of a thermocouple metal-",
+   "c2s2": "{{c|{{sc|Fig.}} 5.—Curves of Thermo-E.M.F., or Potential Diagrams, on the Convection Theory.}}",
+   "c2s3": "lead, in which one junction is at 0° C. and the other at <math>t</math>° C. For this reason the potential diagrams on the convection theory are more simple and useful than those on the contact theory. The curves of E.M.F. are in fact the most natural and most convenient method of recording the numerical data, more particularly in cases where they do not admit of being adequately represented by a formula. The line of lead is taken to be horizontal in the diagram, because the thermoelectric power, <math>p</math>, may be reckoned from any convenient zero. It is not intended to imply that there is no E.M.F. in the metal-lead with change of temperature, but that the value of <math>p</math> in this metal is nearly constant, as the Thomson effect is very small. It is very probable that the absolute values of <math>p</math> in different metals are of the same sign and of the same order of magnitude, being large compared with the differences observed. It would be theoretically possible to measure the absolute value in some metal by observing with an electrometer the P.D. between parts of the same metal at different temperatures, but the difference would probably be of the order of only one-hundredth of a volt for a difference of 100° C. It would be sufficiently difficult to detect so small a difference under the best conditions. The difficulty would be greatly increased, if not rendered practically insuperable, by the large difference of temperature.\n\n22. ''Conduction Theory''.—In Thomson's theory it is expressly assumed that the reversible thermal effects may be considered separately without reference to conduction. In the conduction theory of F. W. G. Kohlrausch (''Pogg. Ann.'', 1875, vol. 156, p. 601), the fundamental postulate is that the thermo-E.M.F. is due to the conduction of heat in the metal, which is contrary to Thomson's theory. It is assumed that a flow of heat <math>Q</math>, due to conduction, tends to carry with it a proportional electric current <math>C=aQ</math>. This is interpreted to mean that there is an E.M.F. <math>dE=-akr\\ dT=-\\theta dT</math>, in each element, where <math>k</math> is the thermal conductivity and"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v26 p0860 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1295,
+     1173,
+     2205,
+     1993
+    ],
+    "caption": [
+     1276,
+     1995,
+     2202,
+     2068
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1294,
+     1175,
+     2209,
+     1940
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4959,
+    "output_tokens": 91,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8298,
+    "output_tokens": 2826,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|820|THERMOELECTRICITY|}}</noinclude>Peltier effect, and that the difference of potential in the substance of the metals when the circuit is complete cannot be greater than the coefficient <math>P</math>. The Peltier effect, it may be objected, measures that part only of the potential difference which depends upon temperature, and can therefore give no information about the absolute potential difference. But the reason for concluding that there is no other effective source of potential difference at the junction besides the Peltier effect, is simply that no other appreciable action takes place at the junction when a current passes except the Peltier generation or absorption of heat.\n\n20. ''Convection Theory.''—The idea of convection of heat by an electric current, and the phrase “specific heat of electricity” were introduced by Thomson as a convenient mode of expressing the phenomena of the Thomson effect. He did not intend to imply that electricity really possessed a positive or negative specific heat, but merely that a quantity of heat was absorbed in a metal when unit quantity of electricity flowed from cold to hot through a difference of temperature of 1°. The absorption of heat was considered as representing an equivalent conversion of heat energy into electrical energy in the element. The element might thus be regarded as the seat of an E.M.F., <math>dE=sdT</math>, where <math>dT</math> is the difference of temperature between its ends. The potential diagrams already given have been drawn on this assumption, that the Thomson effect is not really due to convection of heat by the current, but is the measure of an E.M.F. located in the substance of the conductor. This view with regard to the seat of the E.M.F. has been generally taken by the majority of writers on the subject. It is not, however, necessarily implied in the reasoning or in the equations given by Thomson, which are not founded on any assumptions with regard to the seat of the E.M.F., but only on the balance of heat absorbed and evolved in all the different parts of the circuit. In fact, the equations themselves are open to an entirely different interpretation in this respect from that which is generally given.\n\nReturning again to the equations already given in § 11 for an elementary thermocouple, we have the following equivalent expressions for the E.M.F. <math>dE</math>, namely,\n{{block center|<math>dE = dP + (s' - s'')dT = (P/T)dT = pdT = (p'' - p')dT,</math>}}\nin which the coefficient, <math>P</math>, of the Peltier effect, and the thermoelectric power, <math>p</math>, of the couple, may be expressed in terms of the difference of the thermoelectric powers, <math>p'</math> and <math>p''</math>, of the separate metals with respect to a neutral standard. So far as these equations are concerned, we might evidently regard the seat of the E.M.F. as located entirely in the conductors themselves, and not at all at the junctions, if <math>p</math> or <math>(p'' - p')</math> is the difference of the E.M.F.s per degree in corresponding elements of the two metals. In this case, however, in order to account for the phenomenon of the Peltier effect at the junctions, it is necessary to suppose that there is a ''real convection of heat'' by an electric current, and that the coefficient <math>P</math> or <math>pT</math> is the difference of the quantities of heat carried by unit quantity of electricity in the two metals. On this hypothesis, if we confine our attention to one of the two metals, say <math>p''</math>, in which the current is supposed to flow from hot to cold, we observe that <math>p''dT</math> expresses the quantity of heat converted into electrical energy per unit of electricity by an E.M.F. <math>p''</math> per 1° located in the element <math>dT</math>. It happens that the absolute magnitude of <math>p''</math> cannot be experimentally determined, but this is immaterial, as we are only concerned with differences. The quantity of heat liberated by convection as the current flows from hot to cold is represented in the equation by <math>dP = d(pT)</math>. Since <math>d(p''T) = p''dT + Tdp''</math>, it is clear that the balance of heat liberated in the element is only <math>Tdp'' = s''dT</math>, namely, the Thomson effect, and is ''not'' the equivalent of the E.M.F. <math>p''dT</math>, because on this theory the absorption of heat is masked by the convection. If <math>p</math> is constant there is no Thomson effect, but it does not follow that there is no E.M.F. located in the element. The Peltier effect, on the other hand, may be ascribed entirely to convection. The quantity of heat <math>p''T</math> is brought up to one side of the junction per unit of electricity, and the quantity of heat <math>p'T</math> taken away on the other. The balance <math>(p''-p')T</math> is evolved at the junction. If, therefore, we are prepared to admit that an electric current can carry heat, the existence of the Peltier effect is no proof that a corresponding E.M.F. is located at the junction, or, in other words, that the conversion of heat into electrical energy occurs at this point of the circuit, or is due to the contact of dissimilar metals. On the contact theory, as generally adopted, the E.M.F. is due entirely to change of substance <math>(dP-Tdp)</math>; on the convection theory, it is due entirely to change of temperature <math>(pdT)</math>. But the two expressions are equivalent, and give the same results.\n\n21. ''Potential Diagrams on Convection Theory.''—The difference between the two theories is most readily appreciated by drawing the potential diagrams corresponding to the supposed locations of the E.M.F. in each case. The contact theory has been already illustrated in fig. 4. Corresponding diagrams for the same metals on the convection theory are given in fig. 5. In this diagram the metals are supposed to be all joined together and to be at the same time potential at the cold junction at 0° C. The ordinate of the curve at any temperature is the difference of potential between any point in the metal and a point in lead at the same temperature. Since there is no contact E.M.F. on this theory, the ordinates also represent the E.M.F. of a thermocouple metallead, in which one junction is at 0° C. and the other at <math>t</math>° C. For this reason the potential diagrams on the convection theory are more simple and useful than those on the contact theory. The curves of E.M.F. are in fact the most natural and most convenient method of recording the numerical data, more particularly in cases where they do not admit of being adequately represented by a formula. The line of lead is taken to be horizontal in the diagram, because the thermoelectric power, <math>p</math>, may be reckoned from any convenient zero. It is not intended to imply that there is no E.M.F. in the metal-lead with change of temperature, but that the value of <math>p</math> in this metal is nearly constant, as the Thomson effect is very small. It is very probable that the absolute values of <math>p</math> in different metals are of the same sign and of the same order of magnitude, being large compared with the differences observed. It would be theoretically possible to measure the absolute value in some metal by observing with an electrometer the P.D. between parts of the same metal at different temperatures, but the difference would probably be of the order of only one-hundredth of a volt for a difference of 100° C. It would be sufficiently difficult to detect so small a difference under the best conditions. The difficulty would be greatly increased, if not rendered practically insuperable, by the large difference of temperature.\n\n[[File:eb1911 v26 p0860 c2f1.png|center|340px]]\n{{c|{{sc|Fig.}} 5.—Curves of Thermo-E.M.F., or Potential Diagrams, on the Convection Theory.}}\n\n22. ''Conduction Theory''.—In Thomson's theory it is expressly assumed that the reversible thermal effects may be considered separately without reference to conduction. In the conduction theory of F. W. G. Kohlrausch (''Pogg. Ann.'', 1875, vol. 156, p. 601), the fundamental postulate is that the thermo-E.M.F. is due to the conduction of heat in the metal, which is contrary to Thomson's theory. It is assumed that a flow of heat <math>Q</math>, due to conduction, tends to carry with it a proportional electric current <math>C=aQ</math>. This is interpreted to mean that there is an E.M.F. <math>dE=-akr\\ dT=-\\theta dT</math>, in each element, where <math>k</math> is the thermal conductivity and<noinclude><references/></noinclude>"
+}

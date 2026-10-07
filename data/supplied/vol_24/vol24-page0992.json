@@ -1,0 +1,184 @@
+{
+ "volume": 24,
+ "page_number": 992,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1002",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1002",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1081,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     136,
+     140,
+     2270,
+     209
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     136,
+     209,
+     1200,
+     1293
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     136,
+     1293,
+     1200,
+     2390
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     136,
+     2390,
+     1200,
+     3142
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     209,
+     2270,
+     1150
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1828,
+     1150,
+     2270,
+     2678
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1828,
+     2688,
+     2270,
+     2719
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     1150,
+     1828,
+     2719
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     2719,
+     2270,
+     3142
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|930|SHIPBUILDING|[THEORETICAL}}",
+   "c1s1": "¶\n\n'''''Dynamical stability.''''' The work done in inclining a ship slowly so as to maintain a constant displacement (and avoid communicating any unnecessary movement or disturbance to the water) is given by the expression <math>\\int_0^\\theta \\text{M}.d\\theta</math> where <math>\\text{M}</math> is the moment resisting the inclination. This may be written\n\n{{block center|<math>\\text{W} \\times \\int_0^\\theta \\text{GZ}.d\\theta;</math>}}\n\nand it has been shown above that this is equal to the weight multiplied by the vertical separation of the centres of gravity and buoyancy. This is otherwise evident since the work is the sum of that done against the forces acting on the ship, viz. the weight and the buoyancy; these are respectively equal to <math>\\text{W}\\times</math>rise of <math>\\text{G}</math>, and <math>\\text{W}\\times</math>fall of <math>\\text{B}</math>, giving the value <math>\\text{W}.(\\text{Z}'\\text{B}'-\\text{BG})</math> as before.\n\nThe ''dynamical stability'' of a ship at any angle is defined as the work done in inclining the ship from the upright position; and its value is conveniently obtained by integrating the curve of statical stability as stated above. The dynamical stability can thus be calculated at various angles and a curve obtained, whose ordinates represent work done in foot-tons. The curve of dynamical stability is drawn for a battleship (normal condition) in fig. 10, and is there shown in relation to the curve of statical stability; it will be seen that the dynamical stability increases continuously until the righting moment vanishes, when it becomes a maximum.\n\nA formula for the dynamical stability of a ship at any angle was given by Canon Moseley in a paper read before the Royal Society in 1850. Experiments on models made under his direction at Portsmouth Dockyard showed that the actual work in quickly inclining to a moderate angle agreed closely with that calculated in the case of a model of circular section; but considerable divergence was obtained with a model of triangular section owing to the motion of the water set up, and also, probably, to the variation in displacement",
+   "c1s2": "during the roll.\n\n''Sailing ships.'' The existence of large righting couples at moderate angles of heel is of greater importance in a sailing ship than in a steamship, since in the former it determines the amount of sail that can be safely carried under known weather conditions and thereby influences the speed. A sailing ship in motion is subjected to the wind-pressures on the sails and the upper works of the ship, and to the water-pressures on the hull. When the ship is in steady motion, these forces are equal and opposite; and, so far as the stability is concerned, it is sufficient to determine the transverse resultant of the wind-pressure on the sails, and its moment, the water-pressure on the hull affecting only the speed and leeway of the ship.\n\nThe pressure on the sails depends on their form and area, their position, and the apparent velocity of the wind, ''i.e.'' the velocity relative to the ship. The pressure of the wind on the hull is obtainable similarly to that on the sails, but is usually neglected as the heeling moment is small. Experiments have been made to determine the wind-pressure on plates by Dines, Langley, Eiffel, Stanton and others; and the results of the experiments are briefly as follows—\n\nThe normal pressure <math>\\text{R}</math> in pounds on a plate of area <math>\\text{A}</math> square feet exposed to face normally a wind of velocity <math>\\text{V}</math> feet per second is given by the formula <math>\\text{R} = \\text{KAV}^2</math>, where <math>\\text{K}</math> is a coefficient depending on the form and area of the plate. For a square or circular plate of about 1 sq. ft. in area <math>\\text{K}</math> is about ·0014, corresponding to a pressure of 1 ℔ per sq. ft. at about 16 knots. The coefficient increases slightly for larger dimensions of the plate. It has also been found that a departure from the square or circular form involving an increase in perimeter for the same area causes an increase in the mean pressure. An alteration from the plane to the concave, analogous to the \"bellying\" of sails, is accompanied by a slight increase in the pressure per square foot of projected area; but for any large amount of concavity the increase is more than counterbalanced by the decrease in the projected area.",
+   "c1s3": "¶\nNo simple law exists connecting the normal pressure on a plate exposed obliquely to the wind with the angle of incidence; it is found that the results for air exhibit a close agreement with those for water after allowing for the difference of density between the two fluids. At small angles of incidence up to about 20°, or even 40° (varying with the shape of the plate), the pressure varies directly as the angle; beyond this limit it is slightly diminished, afterwards increasing or decreasing to a value which is almost constant for the remaining angles up to and including 90°. The centre of pressure for oblique impact lies between the leading edge and the centre of gravity of the area. In a plate 1 ft. square, it lies 0·3 ft. from the leading edge at 10° inclination and 0·4 ft. at 30° inclination, gradually approaching the centre of the plate as the angle of inclination is increased. A slight curving or concavity of the plate does not appear to have much influence on the normal component of the wind-pressure.\n\nThe wind-pressure on the sails of a ship cannot be calculated with any degree of precision because existing information is insufficient to take account of (''a'') the variety in area and shape of the sails used; (''b'') the different positions in which the sails may be placed relative to the wind and to each other; and (''c'') the interference of adjacent sails with each other. On the other hand, conclusions based on these experiments are of value both in assisting in an intelligent",
+   "c2s1": "appreciation of the effects of changes in the sail areas, sail positions, and in the form of rig, and in forming a comparison between the various qualities of speed, stability and general behaviour of vessels with which experience has been obtained.\n\nThe stability of a sailing vessel is usually estimated by assuming all plain sail to be placed in a fore and aft direction and to be subject to a normal pressure of 1 ℔ per sq. ft., corresponding to a wind of about 16 knots. The resultant pressure of the wind is supposed to act through the centre of gravity of the total sail area (termed the ''centre of effort''). The resultant pressure of the water on the hull, which is equal and opposite to the wind-pressure, is assumed to pass through the centre of gravity of the area of the immersed middle line plane (termed the ''centre of lateral resistance''). If <math>h</math> be the vertical distance between these points in feet, <math>\\text{A}</math> the sail area in square feet, and <math>\\alpha</math> the angle of heel, the moment causing the heel is (on these assumptions)\n{{block center|<math>\\frac{\\text{A}h}{2240}</math> foot-tons}}\nand the righting moment is approximately\n{{block center|<math>\\text{W}\\times\\text{GM}\\sin\\alpha</math>.}}\n\nHence\n{{block center|<math>\\sin\\alpha = \\frac{\\text{A}h}{2240.\\text{W}\\times\\text{GM}}</math>.}}\n\nThe reciprocal of this quantity or\n{{block center|<math>\\frac{2240.\\text{W}\\times\\text{GM}}{\\text{A}h}</math>}}",
+   "c2s2": "{{c|{{sc|Fig.}} 20.}}",
+   "c2s3": "The stability of sailing vessels at larg\n...\n\nHmm—first line is not paragraph start, so no ¶.\n\nis a measure of the capability of the ship and is termed the ''power to carry sail.'' I sizes and classes of ships and boats. I boats and small yachts owing to the p angle of heel by movable ballast; and a in large yachts on account of their great and yachts it varies from 3 to 4 and in 15 to 20.\n\nThe stability of sailing vessels at larg considerably with the class of vessel. completely decked sailing boats whose draught are comparatively small, init lowering the centre of gravity with balla range then extends to considerably ove number of half-decked or open sailing b when inclined to a moderate angle. Wit Kemp in his ''Yacht Architecture'' remark not be immersed at an angle of heel centre-board boats whose gunwales are anxiety. With full-rigged sailing ships to 25°.\n\nThe effect of a sudden gust of wind by equating the work done on the ship stability; and the angle at which this extreme angle of heel, assuming the ship at rest. Since the dynamical stability i the statical stability curve it is conver in relation to this latter curve. The inertia of the water and any change of the wind-pressure is assumed constant d with the results of experiments on ob angle of roll being supposed less than 5 pressure due to the motion of the sail is\n\nLet <math>\\text{OPQ}</math> (fig. 20) be the curve of sta representing righting moments, and let gust be represented by <math>\\text{OS}</math>. If <math>\\text{N}</math> be the <math>\\text{SPUR}</math> parallel to the base, cutting the perpendicular. The work done by the w equal to the dynamical stability of th Hence the areas <math>\\text{OPS}</math>, <math>\\text{PQU}</math> are equal, and the extreme angle of heel is determined by this equality. If <math>\\text{P}</math> and <math>\\text{Q}</math> lie on the initial and approximately straight portion of the curve, the extreme angle of heel <math>\\text{ON}</math> is about twice that of the steady angle <math>\\text{OM}</math> corresponding to the strength of the gust. The area <math>\\text{QUR}</math> represents the reserve",
+   "c2s4": "dynamical stability when the wind is blowing with strength corresponding to <math>\\text{OS}</math>; the intercepts of the ordinates below <math>\\text{SPUR}</math> doing work against the force of the wind, leaving the segments above <math>\\text{SPR}</math> available for absorbing the kinetic energy possessed by the vessel at the position of steady heel <math>\\text{PM}</math>. As the strength of the gust is increased the points <math>\\text{P}</math> and <math>\\text{Q}</math> travel farther along the curve until <math>\\text{P}'</math>, <math>\\text{Q}'</math> are reached, such that the areas <math>\\text{P}'\\text{Q}'\\text{Q}</math>, <math>\\text{OTP}'</math> are equal; the vessel will then come momentarily to rest at <math>\\text{Q}'</math> and will be in unstable equilibrium, any increase in the wind-pressure causing her to capsize. It follows that a ship sailing in a wind of sufficient strength to cause a moderate angle of heel equal to <math>\\text{OM}'</math> will be on the point of capsizing if the wind should happen to drop and afterwards return suddenly with its"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v24 p0992 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1835,
+     2455,
+     2258,
+     2677
+    ],
+    "caption": [
+     1967,
+     2689,
+     2115,
+     2719
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1833,
+     2449,
+     2267,
+     2684
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    2
+   ],
+   "2": [
+    1,
+    3
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4198,
+    "output_tokens": 93,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 7758,
+    "output_tokens": 5899,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|930|SHIPBUILDING|[THEORETICAL}}</noinclude>'''''Dynamical stability.''''' The work done in inclining a ship slowly so as to maintain a constant displacement (and avoid communicating any unnecessary movement or disturbance to the water) is given by the expression <math>\\int_0^\\theta \\text{M}.d\\theta</math> where <math>\\text{M}</math> is the moment resisting the inclination. This may be written\n\n{{block center|<math>\\text{W} \\times \\int_0^\\theta \\text{GZ}.d\\theta;</math>}}\n\nand it has been shown above that this is equal to the weight multiplied by the vertical separation of the centres of gravity and buoyancy. This is otherwise evident since the work is the sum of that done against the forces acting on the ship, viz. the weight and the buoyancy; these are respectively equal to <math>\\text{W}\\times</math>rise of <math>\\text{G}</math>, and <math>\\text{W}\\times</math>fall of <math>\\text{B}</math>, giving the value <math>\\text{W}.(\\text{Z}'\\text{B}'-\\text{BG})</math> as before.\n\nThe ''dynamical stability'' of a ship at any angle is defined as the work done in inclining the ship from the upright position; and its value is conveniently obtained by integrating the curve of statical stability as stated above. The dynamical stability can thus be calculated at various angles and a curve obtained, whose ordinates represent work done in foot-tons. The curve of dynamical stability is drawn for a battleship (normal condition) in fig. 10, and is there shown in relation to the curve of statical stability; it will be seen that the dynamical stability increases continuously until the righting moment vanishes, when it becomes a maximum.\n\nA formula for the dynamical stability of a ship at any angle was given by Canon Moseley in a paper read before the Royal Society in 1850. Experiments on models made under his direction at Portsmouth Dockyard showed that the actual work in quickly inclining to a moderate angle agreed closely with that calculated in the case of a model of circular section; but considerable divergence was obtained with a model of triangular section owing to the motion of the water set up, and also, probably, to the variation in displacement during the roll.\n\n''Sailing ships.'' The existence of large righting couples at moderate angles of heel is of greater importance in a sailing ship than in a steamship, since in the former it determines the amount of sail that can be safely carried under known weather conditions and thereby influences the speed. A sailing ship in motion is subjected to the wind-pressures on the sails and the upper works of the ship, and to the water-pressures on the hull. When the ship is in steady motion, these forces are equal and opposite; and, so far as the stability is concerned, it is sufficient to determine the transverse resultant of the wind-pressure on the sails, and its moment, the water-pressure on the hull affecting only the speed and leeway of the ship.\n\nThe pressure on the sails depends on their form and area, their position, and the apparent velocity of the wind, ''i.e.'' the velocity relative to the ship. The pressure of the wind on the hull is obtainable similarly to that on the sails, but is usually neglected as the heeling moment is small. Experiments have been made to determine the wind-pressure on plates by Dines, Langley, Eiffel, Stanton and others; and the results of the experiments are briefly as follows—\n\nThe normal pressure <math>\\text{R}</math> in pounds on a plate of area <math>\\text{A}</math> square feet exposed to face normally a wind of velocity <math>\\text{V}</math> feet per second is given by the formula <math>\\text{R} = \\text{KAV}^2</math>, where <math>\\text{K}</math> is a coefficient depending on the form and area of the plate. For a square or circular plate of about 1 sq. ft. in area <math>\\text{K}</math> is about ·0014, corresponding to a pressure of 1 ℔ per sq. ft. at about 16 knots. The coefficient increases slightly for larger dimensions of the plate. It has also been found that a departure from the square or circular form involving an increase in perimeter for the same area causes an increase in the mean pressure. An alteration from the plane to the concave, analogous to the \"bellying\" of sails, is accompanied by a slight increase in the pressure per square foot of projected area; but for any large amount of concavity the increase is more than counterbalanced by the decrease in the projected area.\n\nNo simple law exists connecting the normal pressure on a plate exposed obliquely to the wind with the angle of incidence; it is found that the results for air exhibit a close agreement with those for water after allowing for the difference of density between the two fluids. At small angles of incidence up to about 20°, or even 40° (varying with the shape of the plate), the pressure varies directly as the angle; beyond this limit it is slightly diminished, afterwards increasing or decreasing to a value which is almost constant for the remaining angles up to and including 90°. The centre of pressure for oblique impact lies between the leading edge and the centre of gravity of the area. In a plate 1 ft. square, it lies 0·3 ft. from the leading edge at 10° inclination and 0·4 ft. at 30° inclination, gradually approaching the centre of the plate as the angle of inclination is increased. A slight curving or concavity of the plate does not appear to have much influence on the normal component of the wind-pressure.\n\nThe wind-pressure on the sails of a ship cannot be calculated with any degree of precision because existing information is insufficient to take account of (''a'') the variety in area and shape of the sails used; (''b'') the different positions in which the sails may be placed relative to the wind and to each other; and (''c'') the interference of adjacent sails with each other. On the other hand, conclusions based on these experiments are of value both in assisting in an intelligent appreciation of the effects of changes in the sail areas, sail positions, and in the form of rig, and in forming a comparison between the various qualities of speed, stability and general behaviour of vessels with which experience has been obtained.\n\nThe stability of a sailing vessel is usually estimated by assuming all plain sail to be placed in a fore and aft direction and to be subject to a normal pressure of 1 ℔ per sq. ft., corresponding to a wind of about 16 knots. The resultant pressure of the wind is supposed to act through the centre of gravity of the total sail area (termed the ''centre of effort''). The resultant pressure of the water on the hull, which is equal and opposite to the wind-pressure, is assumed to pass through the centre of gravity of the area of the immersed middle line plane (termed the ''centre of lateral resistance''). If <math>h</math> be the vertical distance between these points in feet, <math>\\text{A}</math> the sail area in square feet, and <math>\\alpha</math> the angle of heel, the moment causing the heel is (on these assumptions)\n{{block center|<math>\\frac{\\text{A}h}{2240}</math> foot-tons}}\nand the righting moment is approximately\n{{block center|<math>\\text{W}\\times\\text{GM}\\sin\\alpha</math>.}}\n\nHence\n{{block center|<math>\\sin\\alpha = \\frac{\\text{A}h}{2240.\\text{W}\\times\\text{GM}}</math>.}}\n\nThe reciprocal of this quantity or\n{{block center|<math>\\frac{2240.\\text{W}\\times\\text{GM}}{\\text{A}h}</math>}} The stability of sailing vessels at larg\n...\n\n[[File:eb1911 v24 p0992 c2f1.png|center|147px]]\n{{c|{{sc|Fig.}} 20.}}\n\nHmm—first line is not paragraph start, so no ¶.\n\nis a measure of the capability of the ship and is termed the ''power to carry sail.'' I sizes and classes of ships and boats. I boats and small yachts owing to the p angle of heel by movable ballast; and a in large yachts on account of their great and yachts it varies from 3 to 4 and in 15 to 20.\n\nThe stability of sailing vessels at larg considerably with the class of vessel. completely decked sailing boats whose draught are comparatively small, init lowering the centre of gravity with balla range then extends to considerably ove number of half-decked or open sailing b when inclined to a moderate angle. Wit Kemp in his ''Yacht Architecture'' remark not be immersed at an angle of heel centre-board boats whose gunwales are anxiety. With full-rigged sailing ships to 25°.\n\nThe effect of a sudden gust of wind by equating the work done on the ship stability; and the angle at which this extreme angle of heel, assuming the ship at rest. Since the dynamical stability i the statical stability curve it is conver in relation to this latter curve. The inertia of the water and any change of the wind-pressure is assumed constant d with the results of experiments on ob angle of roll being supposed less than 5 pressure due to the motion of the sail is\n\nLet <math>\\text{OPQ}</math> (fig. 20) be the curve of sta representing righting moments, and let gust be represented by <math>\\text{OS}</math>. If <math>\\text{N}</math> be the <math>\\text{SPUR}</math> parallel to the base, cutting the perpendicular. The work done by the w equal to the dynamical stability of th Hence the areas <math>\\text{OPS}</math>, <math>\\text{PQU}</math> are equal, and the extreme angle of heel is determined by this equality. If <math>\\text{P}</math> and <math>\\text{Q}</math> lie on the initial and approximately straight portion of the curve, the extreme angle of heel <math>\\text{ON}</math> is about twice that of the steady angle <math>\\text{OM}</math> corresponding to the strength of the gust. The area <math>\\text{QUR}</math> represents the reserve dynamical stability when the wind is blowing with strength corresponding to <math>\\text{OS}</math>; the intercepts of the ordinates below <math>\\text{SPUR}</math> doing work against the force of the wind, leaving the segments above <math>\\text{SPR}</math> available for absorbing the kinetic energy possessed by the vessel at the position of steady heel <math>\\text{PM}</math>. As the strength of the gust is increased the points <math>\\text{P}</math> and <math>\\text{Q}</math> travel farther along the curve until <math>\\text{P}'</math>, <math>\\text{Q}'</math> are reached, such that the areas <math>\\text{P}'\\text{Q}'\\text{Q}</math>, <math>\\text{OTP}'</math> are equal; the vessel will then come momentarily to rest at <math>\\text{Q}'</math> and will be in unstable equilibrium, any increase in the wind-pressure causing her to capsize. It follows that a ship sailing in a wind of sufficient strength to cause a moderate angle of heel equal to <math>\\text{OM}'</math> will be on the point of capsizing if the wind should happen to drop and afterwards return suddenly with its<noinclude><references/></noinclude>"
+}

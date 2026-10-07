@@ -1,0 +1,188 @@
+{
+ "volume": 26,
+ "page_number": 980,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n994",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n994",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1107,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     142,
+     143,
+     2331,
+     214
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     142,
+     214,
+     1213,
+     769
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     142,
+     769,
+     1213,
+     1836
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     142,
+     1836,
+     1213,
+     2829
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     142,
+     2829,
+     1213,
+     3134
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1213,
+     234,
+     2331,
+     1750
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1213,
+     1751,
+     2331,
+     1820
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1213,
+     1820,
+     2331,
+     2327
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1213,
+     2327,
+     2331,
+     3134
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|940|TIDE|}}",
+   "c1s1": "¶\n'''''Empirical Tide-tables.''''' §4. ''Tide-Tables and the Degree of Accuracy in Tidal Prediction.''<sup>1</sup>—The connexion between the tides and the movements of the moon and sun is so obvious that tidal predictions were regularly made and published long before mathematicians had devoted their attention to them; and these predictions attained considerable success, although they were founded on empirical methods. During the 18th century, and even in the earlier part of the 19th, the art of prediction was regarded as a valuable family secret to be jealously guarded from the public. The best example of this kind of tide-table was afforded by Holden’s tables for Liverpool, founded on twenty years of observation by a harbour-master named Hutchinson.<sup>2</sup>",
+   "c1s2": "{{c|{{sc|Fig.}} 1.—Tide-curve for Bombay from the beginning of t 1884, or from 12<sup>h</sup> Dec. 31, 1883, to 12<sup>h</sup> J}}",
+   "c1s3": "About 1832 the researches of W. Whewell and of Sir John Lubbock (senior) pointed the way to improvement on the empirical tables prepared by secret methods, and since that time the preparation of tide-tables has become a branch of science.\n\n'''''Prediction for each Day.'''''\n\nA perfect tide-table would tell the height of the water at the place of observation at every moment of the day, but such a table would be cumbrous; it is therefore usual to predict only the times and heights of high-water and of low-water. The best kind of tide-table contains definite forecasts for each day of a definite year, and we may describe it as a special table. Although the table is only made for one definite place, yet it is often possible to give fairly accurate predictions for neighbouring ports by the application of corrections both for time and height. Special tide-tables are published by all civilized countries for their most important harbours.\n\n'''''Prediction by Reference to Time of Moon's Transit.'''''\n\nBut there is another kind of table, which we may describe as a general one, where the heights and times are given by reference to the time at which the moon crosses the meridian. Although such a table is only applicable to a definite place, yet it holds good for all time. In this case it is necessary to refer to the ''Nautical Almanac'' for the time of the moon's transit, and a simple calculation then gives the required result. In a general tide-table",
+   "c1s4": "¶\n<sup>1</sup> References may be given to two papers by G. H. Darwin on this subject, viz. “Tidal Prediction,” ''Phil. Trans.'', A. (1891) pp. 159–229; and “An apparatus for facilitating the reduction of tidal observations,” ''Proc. Roy. Soc.'' (1892), vol. lii. For a general account without mathematics see Darwin's ''Tides'', &c.; this section is founded on chs. xiii. and xiv. of that book. For mathematical methods see Maurice Lévy, ''Théorie des marées'' (Paris, 1898).\n\n<sup>2</sup> Whewell, ''History of Inductive Sciences'', ii. 248; Darwin's ''Tides'', ''&c.'', ch. iv.",
+   "c2s1": "{{c|the civil year 1884 to the midnight ending Jan. 14, Jan. 14, 1884, astronomical time. ''Zero of Gauge''}}",
+   "c2s2": "expenditure involved in the publication of special tables. But this kind of elaborate general table has been used in few cases,<sup>3</sup> and the information furnished to mariners usually consists either of a full prediction for every day of a future year, or of a meagre statement as to the average rise and interval, which must generally be almost useless.\n\n'''''Meteorological Disturbance of Prediction.''''' The success of tidal predictions varies much according to the place of observation. In stormy regions the errors are often considerable, and the utmost that can be expected of a tide-table is that it shall be correct with a steady barometer and in calm weather. But such conditions are practically non-existent, and therefore errors are inevitable.",
+   "c2s3": "¶\n'''''Amount of Error at Portsmouth.'''''\n\nNotwithstanding these perturbations, tide-tables are usually of surprising accuracy even in northern latitudes; this may be seen from the following table showing the results of comparison between prediction and actuality at Portsmouth. The importance of the errors in height depends, of course, on the range of the tide; it is well, therefore, to note that the average ranges of the tide at springs and neaps are 13 ft. 9 in. and 7 ft. 9 in. respectively.\n\n'''''Amount of Error at Aden.'''''\n\nPrediction at such a place as Portsmouth is difficult, on account of the instability of the weather, but, on the other hand, the tides in themselves are remarkably simple in character. Let us now turn to such a port as Aden, where the weather is very uniform, but the tides very complex on account of the large diurnal inequality, which frequently obliterates one of two successive high-waters. The short series of comparisons between actuality and prediction which we give below may be taken as a fair example of what would hold good when a long series is examined. The results refer to the intervals 10th of March to the 9th of April and the 12th of November to the 12th of December 1884. In these two periods there should have been 118 high waters, but the tide-gauge failed to register on one occasion,\n\n{{smaller block|<sup>3</sup> Darwin, “Tidal Prediction,” quoted above. This kind of table has been applied with some success at Cairns in North Queensland, where there is a large diurnal inequality.}}"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v26 p0980 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1193,
+     742,
+     2209,
+     1746
+    ],
+    "caption": [
+     1193,
+     1751,
+     2149,
+     1818
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     239,
+     736,
+     2209,
+     1745
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    0,
+    1
+   ],
+   "1": [
+    0,
+    2
+   ],
+   "2": [
+    1,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4688,
+    "output_tokens": 91,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 6617,
+    "output_tokens": 4505,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|940|TIDE|}}</noinclude>'''''Empirical Tide-tables.''''' §4. ''Tide-Tables and the Degree of Accuracy in Tidal Prediction.''<sup>1</sup>—The connexion between the tides and the movements of the moon and sun is so obvious that tidal predictions were regularly made and published long before mathematicians had devoted their attention to them; and these predictions attained considerable success, although they were founded on empirical methods. During the 18th century, and even in the earlier part of the 19th, the art of prediction was regarded as a valuable family secret to be jealously guarded from the public. The best example of this kind of tide-table was afforded by Holden’s tables for Liverpool, founded on twenty years of observation by a harbour-master named Hutchinson.<sup>2</sup> {{c|{{sc|Fig.}} 1.—Tide-curve for Bombay from the beginning of t 1884, or from 12<sup>h</sup> Dec. 31, 1883, to 12<sup>h</sup> J}} About 1832 the researches of W. Whewell and of Sir John Lubbock (senior) pointed the way to improvement on the empirical tables prepared by secret methods, and since that time the preparation of tide-tables has become a branch of science.\n\n'''''Prediction for each Day.'''''\n\nA perfect tide-table would tell the height of the water at the place of observation at every moment of the day, but such a table would be cumbrous; it is therefore usual to predict only the times and heights of high-water and of low-water. The best kind of tide-table contains definite forecasts for each day of a definite year, and we may describe it as a special table. Although the table is only made for one definite place, yet it is often possible to give fairly accurate predictions for neighbouring ports by the application of corrections both for time and height. Special tide-tables are published by all civilized countries for their most important harbours.\n\n'''''Prediction by Reference to Time of Moon's Transit.'''''\n\nBut there is another kind of table, which we may describe as a general one, where the heights and times are given by reference to the time at which the moon crosses the meridian. Although such a table is only applicable to a definite place, yet it holds good for all time. In this case it is necessary to refer to the ''Nautical Almanac'' for the time of the moon's transit, and a simple calculation then gives the required result. In a general tide-table\n\n<sup>1</sup> References may be given to two papers by G. H. Darwin on this subject, viz. “Tidal Prediction,” ''Phil. Trans.'', A. (1891) pp. 159–229; and “An apparatus for facilitating the reduction of tidal observations,” ''Proc. Roy. Soc.'' (1892), vol. lii. For a general account without mathematics see Darwin's ''Tides'', &c.; this section is founded on chs. xiii. and xiv. of that book. For mathematical methods see Maurice Lévy, ''Théorie des marées'' (Paris, 1898).\n\n<sup>2</sup> Whewell, ''History of Inductive Sciences'', ii. 248; Darwin's ''Tides'', ''&c.'', ch. iv. expenditure involved in the publication of special tables. But this kind of elaborate general table has been used in few cases,<sup>3</sup> and the information furnished to mariners usually consists either of a full prediction for every day of a future year, or of a meagre statement as to the average rise and interval, which must generally be almost useless.\n\n[[File:eb1911 v26 p0980 c2f1.png|center|364px]]\n{{c|the civil year 1884 to the midnight ending Jan. 14, Jan. 14, 1884, astronomical time. ''Zero of Gauge''}}\n\n'''''Meteorological Disturbance of Prediction.''''' The success of tidal predictions varies much according to the place of observation. In stormy regions the errors are often considerable, and the utmost that can be expected of a tide-table is that it shall be correct with a steady barometer and in calm weather. But such conditions are practically non-existent, and therefore errors are inevitable.\n\n'''''Amount of Error at Portsmouth.'''''\n\nNotwithstanding these perturbations, tide-tables are usually of surprising accuracy even in northern latitudes; this may be seen from the following table showing the results of comparison between prediction and actuality at Portsmouth. The importance of the errors in height depends, of course, on the range of the tide; it is well, therefore, to note that the average ranges of the tide at springs and neaps are 13 ft. 9 in. and 7 ft. 9 in. respectively.\n\n'''''Amount of Error at Aden.'''''\n\nPrediction at such a place as Portsmouth is difficult, on account of the instability of the weather, but, on the other hand, the tides in themselves are remarkably simple in character. Let us now turn to such a port as Aden, where the weather is very uniform, but the tides very complex on account of the large diurnal inequality, which frequently obliterates one of two successive high-waters. The short series of comparisons between actuality and prediction which we give below may be taken as a fair example of what would hold good when a long series is examined. The results refer to the intervals 10th of March to the 9th of April and the 12th of November to the 12th of December 1884. In these two periods there should have been 118 high waters, but the tide-gauge failed to register on one occasion,\n\n{{smaller block|<sup>3</sup> Darwin, “Tidal Prediction,” quoted above. This kind of table has been applied with some success at Cairns in North Queensland, where there is a large diurnal inequality.}}<noinclude><references/></noinclude>"
+}

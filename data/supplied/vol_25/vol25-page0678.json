@@ -1,0 +1,127 @@
+{
+ "volume": 25,
+ "page_number": 678,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n698",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n698",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1080,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     129,
+     115,
+     2265,
+     185
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     185,
+     1197,
+     1130
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     1130,
+     1197,
+     2140
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     2140,
+     1197,
+     3099
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1197,
+     185,
+     2265,
+     1249
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1197,
+     1249,
+     2265,
+     2328
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1197,
+     2328,
+     2265,
+     3099
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|656|SPHERICAL HARMONICS|}}",
+   "c1s1": "¶\nFrom this form it can be shown that\n\n{{block center|<math>\\text{Q}_n(\\mu) = \\frac{1}{2}\\text{P}_n(\\mu)\\log\\frac{\\mu+1}{\\mu-1} - \\text{W}_{n-1}(\\mu),</math>}}\n\nwhere <math>\\text{W}_{n-1}(\\mu)</math> is a rational integral function of degree <math>n-1</math> in <math>\\mu</math>; it can be shown that this form is in agreement with the definition of <math>\\text{Q}_n(\\mu)</math> by series, for the case mod <math>\\mu > 1</math>. In case mod <math>\\mu < 1</math> it is convenient to use the symbol <math>\\text{Q}_n(\\mu)</math> for\n\n{{block center|<math>\\frac{1}{2}\\text{P}_n(\\mu)\\log\\frac{1+\\mu}{1-\\mu} - \\text{W}_{n-1}(\\mu),</math>}}\n\nwhich is real when <math>\\mu</math> is real and between <math>\\pm 1</math>, the function <math>\\text{Q}_n(\\mu)</math> in this case is not the analytical continuation of the function <math>\\text{Q}_n(\\mu)</math> for mod <math>\\mu > 1</math>, but differs from it by an imaginary multiple of <math>\\text{P}_n(\\mu)</math>. It will be observed that <math>\\text{Q}_n(1)</math>, <math>\\text{Q}_n(-1)</math> are infinite, and <math>\\text{Q}_n(\\infty) = 0</math>. The function <math>\\text{W}_{n-1}(\\mu)</math> has been expressed by Christoffel in the form\n\n{{block center|<math>\\frac{2n-1}{1.n}\\text{P}_{n-1}(\\mu) + \\frac{2n-5}{3.n-1}\\text{P}_{n-3}(\\mu) + \\frac{2n-9}{5.n-2}\\text{P}_{n-5}(\\mu) + \\dots,</math>}}\n\nand it can also be expressed in the form\n\n{{block center|<math>\\frac{1}{n}\\text{P}_0(\\mu)\\text{P}_{n-1}(\\mu) + \\frac{1}{n-1}\\text{P}_1(\\mu)\\text{P}_{n-2}(\\mu) + \\dots + \\text{P}_{n-1}(\\mu)\\text{P}_0(\\mu).</math>}}\n\nIt can easily be shown that the formula (28) is equivalent to\n\n{{block center|<math>\\text{Q}_n(\\mu) = 2^n n!\\int_\\mu^\\infty\\int_\\mu^\\infty\\dots\\int_\\mu^\\infty\\frac{(d\\mu)^{\\ n+1}}{(\\mu^2-1)^{n+1}}</math>}}",
+   "c1s2": "which is analogous to Rodrigue's expression for <math>\\text{P}_n(\\mu)</math>.\n\nAnother expression of a similar character is\n{{block center|<math>\\text{Q}_n(\\mu) = (-1)^n \\frac{2^n n!}{(2n)!} \\frac{d^n}{d\\mu^n} \\left\\{ (\\mu^2-1)^n \\int_\\mu^\\infty \\frac{d\\mu}{(\\mu^2-1)^{n+1}} \\right\\}</math>.}}\nIt can be shown that under the condition mod <math>\\{u-\\sqrt{(u^2-1)}\\} > \\text{mod}\\ \\{\\mu-\\sqrt{(\\mu^2-1)}\\}</math>, the function <math>1/(\\mu-u)</math> can be expanded in the form <math>\\Sigma(2n+1)\\text{P}_n(u)\\text{Q}_n(u)</math>; this expansion is connected with the definite integral formula for <math>\\text{Q}_n(\\mu)</math> which was used by F. Neumann as a definition of the function <math>\\text{Q}_n(\\mu)</math>, this is\n{{block center|<math>\\text{Q}_n(\\mu) = \\frac{1}{2}\\int_{-1}^1 \\frac{\\text{P}_n(u)}{\\mu-u}du</math>,}}\nwhich holds for all values of <math>\\mu</math> which are not real and between <math>\\pm 1</math>.\n\nFrom Neumann's integral can be deduced the formula\n{{block center|<math>\\text{Q}_n(\\mu) = \\int_1^\\infty \\frac{d\\psi}{\\{\\mu+\\sqrt{(\\mu^2-1)}.\\cosh\\psi\\}^{n+1}}</math>,}}\nwhich holds for all values of <math>\\mu</math> which are not real and between <math>\\pm 1</math>, provided the sign of <math>\\sqrt{(\\mu^2-1)}</math> is properly chosen; when <math>\\mu</math> is real and greater than <math>1</math>, <math>\\sqrt{(\\mu^2-1)}</math> has its positive value.\n\nBy means of the substitution.\n{{block center|<math>\\{\\mu+\\sqrt{(\\mu^2-1)}.\\cosh\\psi\\}\\{\\mu-\\sqrt{(\\mu^2-1)}.\\cosh\\chi\\} = 1</math>,}}\nthe above integral becomes\n{{block center|<math>\\text{Q}_n(\\mu) = \\int_0^{\\chi_0} \\{\\mu-\\sqrt{(\\mu^2-1)}.\\cosh\\chi\\}^n d\\chi</math>, where <math>\\chi_0 = \\frac{1}{2}\\log_e\\frac{\\mu+1}{\\mu-1}</math>.}}\nThis formula gives a simple means of calculating <math>\\text{Q}_n(\\mu)</math> for small values of <math>n</math>; thus",
+   "c1s3": "{{block center|<math>\\text{Q}_0(\\mu) = \\int_0^{\\chi_0} d\\chi = \\frac{1}{2}\\log_e\\frac{\\mu+1}{\\mu-1}.</math>}}\n\n{{block center|<math>\\text{Q}_1(\\mu) = \\mu\\chi_0 - \\sqrt{(\\mu^2-1)}\\,.\\,\\sinh\\,\\chi_0 = \\mu\\,.\\,\\frac{1}{2}\\log\\frac{\\mu+1}{\\mu-1} - 1.</math>}}\n\nNeumann's integral affords a means of establishing a relation between successive <math>\\text{Q}</math> functions, thus\n\n{{block center|<math>n\\text{Q}_n - (2n-1)\\mu\\text{Q}_{n-1} + (n-1)\\text{Q}_{n-2}</math>}}\n\n{{block center|<math>= \\frac{1}{2}\\int_{-1}^1 \\frac{n\\text{P}_n(u) + (n-1)\\text{P}_{n-2}(u) - (2n-1)}{\\mu - u}\\mu\\text{P}_{n-1}(u)du</math>}}\n\n{{block center|<math>= -\\frac{1}{2}\\int_{-1}^1 (2n-1)\\text{P}_{n-1}(u) = 0.</math>}}\n\nAgain, it may similarly be proved that\n\n{{block center|<math>\\frac{d\\text{Q}_{n+1}}{d\\mu} - \\frac{d\\text{Q}_{n-1}}{d\\mu} = (2n+1)\\text{Q}_n.</math>}}\n\n19. ''Legendre Associated Functions.''—Returning to the equation (26) satisfied by <math>u^m_n</math> the factor in the normal forms <math>{r^n \\atop r^{-n-1}}\\,{\\cos \\atop \\sin}\\,m\\phi\\,.\\,u^m_n</math>, we shall consider the case in which <math>n</math>, <math>m</math> are positive integers, and <math>n \\geqq m</math>. Let <math>u = (\\mu^2-1)^{\\frac{1}{2}m}v</math>, then it will be found that <math>v</math> satisfies the equation\n\n{{block center|<math>(1-\\mu^2)\\frac{d^2v}{d\\mu^2} - 2(m+1)\\mu\\frac{dv}{d\\mu} + (n-m)(n+m+1)v = 0.</math>}}",
+   "c2s1": "¶\nIf, in Legendre's equation, we differentiate <math>m</math> times, we find\n\n{{block center|<math>(1-\\mu^2)\\frac{d^{m+2}u}{d\\mu^{m+2}}-2(m+1)\\mu\\frac{d^{m+1}u}{d\\mu^{m+1}}+(n-m)(n+m+1)\\frac{d^mu}{d\\mu^m}=0;</math>}}\n\nit follows that <math>v=\\frac{d^mu}{d\\mu^m}</math>, hence <math>u^m_n=(\\mu^2-1)^{\\frac{1}{2}m}\\frac{d^mu}{d\\mu^m}</math>.\n\nThe complete solution of (26) is therefore\n\n{{block center|<math>u=(\\mu^2-1)^{\\frac{1}{2}m}\\left\\{\\text{A}\\frac{d^m\\text{P}_n(\\mu)}{d\\mu^m}+\\text{B}\\frac{d^m\\text{Q}_n(\\mu)}{d\\mu^m}\\right\\};</math>}}\n\nwhen <math>\\mu</math> is real and lies between <math>\\pm1</math>, the two functions\n\n{{block center|<math>(1-\\mu^2)^{\\frac{1}{2}m}\\frac{d^m\\text{P}_n(\\mu)}{d\\mu^m},(1-\\mu^2)^{\\frac{1}{2}m}\\frac{d^m\\text{Q}_n(\\mu)}{d\\mu^m}</math>}}\n\nare called Legendre's associated functions of degree <math>n</math>, and order <math>m</math>, of the first and second kinds respectively. When <math>\\mu</math> is not real and between <math>\\pm1</math>, the same names are given to the two functions\n\n{{block center|<math>(\\mu^2-1)^{\\frac{1}{2}m}\\frac{d^m\\text{P}_n(\\mu)}{d\\mu^m},\\ (\\mu^2-1)^{\\frac{1}{2}m}\\frac{d^m\\text{Q}_n(\\nu)}{d\\mu^m};</math>}}\n\nin either case the functions may be denoted by <math>\\text{P}^m_n(\\mu)</math>, <math>\\text{Q}^m_n(\\mu)</math>.\n\nIt can be shown that, when <math>\\mu</math> is real and between <math>\\pm1</math>\n\n{{block center|<math>\\text{P}^m_n(\\mu)=\\frac{(-1)^m}{2^n(n-m)!}\\left(\\frac{1+\\mu}{1-\\mu}\\right)^{\\frac{1}{2}m}\\frac{d^n}{d\\mu^n}\\{(\\mu-1)^{n+m}(\\mu+1)^{n-m}\\}</math>}}\n\n{{block center|<math>=\\frac{1}{2^n(n-m)!}\\left(\\frac{1-\\mu}{1+\\mu}\\right)^{\\frac{1}{2}m}\\frac{d^n}{d\\mu^n}\\{(\\mu-1)^{n-m}(\\mu+1)^{n+m}\\}.</math>}}\n\nIn the same case, we find\n\n{{block center|<math>\\text{P}^{m+2}_n(\\cos\\theta)-2(m+1)\\cot\\theta\\,\\text{P}^{m+1}_n(\\cos\\theta)</math>}}\n\n{{block center|<math>+(n-m)(n+m+1)\\text{P}^m_n(\\cos\\theta)=0,</math>}}",
+   "c2s2": "{{block center|<math>(n-m+2)\\text{P}^m_{n+2}(\\cos\\theta)-(2n+3)\\mu\\text{P}^m_{n+1}(\\cos\\theta)</math>}}\n{{block center|<math>+(n+m+1)\\text{P}^m_n(\\cos\\theta)=0.</math>}}\n\n20. ''Bessel's Functions.''—If we take for three orthogonal systems of surfaces a system of parallel planes, a system of co-axial circular cylinders perpendicular to the planes, and a system of planes through the axis of the cylinders, the parameters are <math>z</math>, <math>\\rho</math>, <math>\\phi</math>, the cylindrical co-ordinates; in that case <math>\\text{H}_1=1</math>, <math>\\text{H}_2=1</math>, <math>\\text{H}_3=1/\\rho</math>, and the equation (25) becomes\n{{block center|<math>\\frac{\\partial^2\\text{V}}{\\partial z^2}+\\frac{\\partial^2\\text{V}}{\\partial\\rho^2}+\\frac{1}{\\rho}\\frac{\\partial\\text{V}}{\\partial\\rho}+\\frac{1}{\\rho^2}\\frac{\\partial^2\\text{V}}{\\partial\\phi^2}=0.</math>}}\n\nTo find the normal functions which satisfy this equation, we put <math>\\text{V}=\\text{ZR}\\Phi</math>, when <math>\\text{Z}</math> is a function of <math>z</math> only, <math>\\text{R}</math> of <math>\\rho</math> only, and <math>\\Phi</math> of <math>\\phi</math>, the equation then becomes\n{{block center|<math>\\frac{1}{\\text{Z}}\\frac{d^2\\text{Z}}{dz^2}+\\frac{1}{\\text{R}}\\left(\\frac{d^2\\text{R}}{d\\rho^2}+\\frac{1}{\\rho}\\frac{d\\text{R}}{d\\rho}\\right)+\\frac{1}{\\rho^2}\\frac{1}{\\Phi}\\frac{d^2\\Phi}{d\\phi^2}=0.</math>}}\nThat this may be satisfied we must have <math>\\frac{1}{\\text{Z}}\\frac{d^2\\text{Z}}{dz^2}</math> constant, say <math>=k^2</math>, <math>\\frac{1}{\\text{Z}}\\frac{d^2\\text{Z}}{dz^2}</math> constant, say <math>=-m^2</math>, and <math>\\text{R}</math>, for which we write <math>u</math>, must satisfy the differential equation\n{{block center|<math>\\frac{d^2u}{d\\rho^2}+\\frac{1}{\\rho}\\frac{du}{d\\rho}+\\left(k^2-\\frac{m^2}{\\rho^2}\\right)u=0,</math>}}\nit follows that the normal forms are <math>e^{\\pm kz}{}^{\\cos}_{\\sin}m\\phi\\,.\\,u(k\\rho)</math>, where <math>u(\\rho)</math> satisfies the equation\n{{block center|<math>\\frac{d^2u}{d\\rho^2}+\\frac{1}{\\rho}\\frac{du}{d\\rho}+\\left(1-\\frac{m^2}{\\rho^2}\\right)u=0.</math> (29)}}",
+   "c2s3": "This is known as Bessel's equation of order <math>m</math>; the particular case\n{{block center|<math>\\frac{d^2u}{d\\rho^2}+\\frac{1}{\\rho}\\,\\frac{du}{d\\rho}+u=0,</math> (30)}}\ncorresponding to <math>m=0</math>, is known as Bessel's equation.\n\nIf we solve the equation (29) in series, we find by the usual process that it is satisfied by the series\n{{block center|<math>\\rho^m\\left\\{1-\\frac{\\rho^2}{2.2m+2}+\\frac{\\rho^4}{2.4.2m+2.2m+4}-\\dots\\right\\};</math>}}\nthe expression\n{{block center|<math>\\frac{\\rho^m}{2^m\\Pi(m)}\\left\\{1-\\frac{\\rho^2}{2.2m+2}+\\frac{\\rho^4}{2.4.2m+2.2m+4}-\\dots\\right\\}</math>}}\nor\n{{block center|<math>\\sum_{n=0,}^{\\infty}\\frac{(-1)^n\\rho^{m+2n}}{2^{m+2n}\\Pi(m+n)\\Pi(n)}</math>}}\nis denoted by <math>\\text{J}_m(\\rho)</math>.\n\nWhen <math>m=0</math>, the solution\n{{block center|<math>1-\\frac{\\rho^2}{2^2}+\\frac{\\rho^4}{2^2.4^2}-\\dots</math>}}\nof the equation (30) is denoted by <math>\\text{J}_0(\\rho)</math> or by <math>\\text{J}(\\rho)</math>."
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2615,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 8640,
+    "output_tokens": 8203,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13468
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|656|SPHERICAL HARMONICS|}}</noinclude>From this form it can be shown that\n\n{{block center|<math>\\text{Q}_n(\\mu) = \\frac{1}{2}\\text{P}_n(\\mu)\\log\\frac{\\mu+1}{\\mu-1} - \\text{W}_{n-1}(\\mu),</math>}}\n\nwhere <math>\\text{W}_{n-1}(\\mu)</math> is a rational integral function of degree <math>n-1</math> in <math>\\mu</math>; it can be shown that this form is in agreement with the definition of <math>\\text{Q}_n(\\mu)</math> by series, for the case mod <math>\\mu > 1</math>. In case mod <math>\\mu < 1</math> it is convenient to use the symbol <math>\\text{Q}_n(\\mu)</math> for\n\n{{block center|<math>\\frac{1}{2}\\text{P}_n(\\mu)\\log\\frac{1+\\mu}{1-\\mu} - \\text{W}_{n-1}(\\mu),</math>}}\n\nwhich is real when <math>\\mu</math> is real and between <math>\\pm 1</math>, the function <math>\\text{Q}_n(\\mu)</math> in this case is not the analytical continuation of the function <math>\\text{Q}_n(\\mu)</math> for mod <math>\\mu > 1</math>, but differs from it by an imaginary multiple of <math>\\text{P}_n(\\mu)</math>. It will be observed that <math>\\text{Q}_n(1)</math>, <math>\\text{Q}_n(-1)</math> are infinite, and <math>\\text{Q}_n(\\infty) = 0</math>. The function <math>\\text{W}_{n-1}(\\mu)</math> has been expressed by Christoffel in the form\n\n{{block center|<math>\\frac{2n-1}{1.n}\\text{P}_{n-1}(\\mu) + \\frac{2n-5}{3.n-1}\\text{P}_{n-3}(\\mu) + \\frac{2n-9}{5.n-2}\\text{P}_{n-5}(\\mu) + \\dots,</math>}}\n\nand it can also be expressed in the form\n\n{{block center|<math>\\frac{1}{n}\\text{P}_0(\\mu)\\text{P}_{n-1}(\\mu) + \\frac{1}{n-1}\\text{P}_1(\\mu)\\text{P}_{n-2}(\\mu) + \\dots + \\text{P}_{n-1}(\\mu)\\text{P}_0(\\mu).</math>}}\n\nIt can easily be shown that the formula (28) is equivalent to\n\n{{block center|<math>\\text{Q}_n(\\mu) = 2^n n!\\int_\\mu^\\infty\\int_\\mu^\\infty\\dots\\int_\\mu^\\infty\\frac{(d\\mu)^{\\ n+1}}{(\\mu^2-1)^{n+1}}</math>}} which is analogous to Rodrigue's expression for <math>\\text{P}_n(\\mu)</math>.\n\nAnother expression of a similar character is\n{{block center|<math>\\text{Q}_n(\\mu) = (-1)^n \\frac{2^n n!}{(2n)!} \\frac{d^n}{d\\mu^n} \\left\\{ (\\mu^2-1)^n \\int_\\mu^\\infty \\frac{d\\mu}{(\\mu^2-1)^{n+1}} \\right\\}</math>.}}\nIt can be shown that under the condition mod <math>\\{u-\\sqrt{(u^2-1)}\\} > \\text{mod}\\ \\{\\mu-\\sqrt{(\\mu^2-1)}\\}</math>, the function <math>1/(\\mu-u)</math> can be expanded in the form <math>\\Sigma(2n+1)\\text{P}_n(u)\\text{Q}_n(u)</math>; this expansion is connected with the definite integral formula for <math>\\text{Q}_n(\\mu)</math> which was used by F. Neumann as a definition of the function <math>\\text{Q}_n(\\mu)</math>, this is\n{{block center|<math>\\text{Q}_n(\\mu) = \\frac{1}{2}\\int_{-1}^1 \\frac{\\text{P}_n(u)}{\\mu-u}du</math>,}}\nwhich holds for all values of <math>\\mu</math> which are not real and between <math>\\pm 1</math>.\n\nFrom Neumann's integral can be deduced the formula\n{{block center|<math>\\text{Q}_n(\\mu) = \\int_1^\\infty \\frac{d\\psi}{\\{\\mu+\\sqrt{(\\mu^2-1)}.\\cosh\\psi\\}^{n+1}}</math>,}}\nwhich holds for all values of <math>\\mu</math> which are not real and between <math>\\pm 1</math>, provided the sign of <math>\\sqrt{(\\mu^2-1)}</math> is properly chosen; when <math>\\mu</math> is real and greater than <math>1</math>, <math>\\sqrt{(\\mu^2-1)}</math> has its positive value.\n\nBy means of the substitution.\n{{block center|<math>\\{\\mu+\\sqrt{(\\mu^2-1)}.\\cosh\\psi\\}\\{\\mu-\\sqrt{(\\mu^2-1)}.\\cosh\\chi\\} = 1</math>,}}\nthe above integral becomes\n{{block center|<math>\\text{Q}_n(\\mu) = \\int_0^{\\chi_0} \\{\\mu-\\sqrt{(\\mu^2-1)}.\\cosh\\chi\\}^n d\\chi</math>, where <math>\\chi_0 = \\frac{1}{2}\\log_e\\frac{\\mu+1}{\\mu-1}</math>.}}\nThis formula gives a simple means of calculating <math>\\text{Q}_n(\\mu)</math> for small values of <math>n</math>; thus {{block center|<math>\\text{Q}_0(\\mu) = \\int_0^{\\chi_0} d\\chi = \\frac{1}{2}\\log_e\\frac{\\mu+1}{\\mu-1}.</math>}}\n\n{{block center|<math>\\text{Q}_1(\\mu) = \\mu\\chi_0 - \\sqrt{(\\mu^2-1)}\\,.\\,\\sinh\\,\\chi_0 = \\mu\\,.\\,\\frac{1}{2}\\log\\frac{\\mu+1}{\\mu-1} - 1.</math>}}\n\nNeumann's integral affords a means of establishing a relation between successive <math>\\text{Q}</math> functions, thus\n\n{{block center|<math>n\\text{Q}_n - (2n-1)\\mu\\text{Q}_{n-1} + (n-1)\\text{Q}_{n-2}</math>}}\n\n{{block center|<math>= \\frac{1}{2}\\int_{-1}^1 \\frac{n\\text{P}_n(u) + (n-1)\\text{P}_{n-2}(u) - (2n-1)}{\\mu - u}\\mu\\text{P}_{n-1}(u)du</math>}}\n\n{{block center|<math>= -\\frac{1}{2}\\int_{-1}^1 (2n-1)\\text{P}_{n-1}(u) = 0.</math>}}\n\nAgain, it may similarly be proved that\n\n{{block center|<math>\\frac{d\\text{Q}_{n+1}}{d\\mu} - \\frac{d\\text{Q}_{n-1}}{d\\mu} = (2n+1)\\text{Q}_n.</math>}}\n\n19. ''Legendre Associated Functions.''—Returning to the equation (26) satisfied by <math>u^m_n</math> the factor in the normal forms <math>{r^n \\atop r^{-n-1}}\\,{\\cos \\atop \\sin}\\,m\\phi\\,.\\,u^m_n</math>, we shall consider the case in which <math>n</math>, <math>m</math> are positive integers, and <math>n \\geqq m</math>. Let <math>u = (\\mu^2-1)^{\\frac{1}{2}m}v</math>, then it will be found that <math>v</math> satisfies the equation\n\n{{block center|<math>(1-\\mu^2)\\frac{d^2v}{d\\mu^2} - 2(m+1)\\mu\\frac{dv}{d\\mu} + (n-m)(n+m+1)v = 0.</math>}}\n\nIf, in Legendre's equation, we differentiate <math>m</math> times, we find\n\n{{block center|<math>(1-\\mu^2)\\frac{d^{m+2}u}{d\\mu^{m+2}}-2(m+1)\\mu\\frac{d^{m+1}u}{d\\mu^{m+1}}+(n-m)(n+m+1)\\frac{d^mu}{d\\mu^m}=0;</math>}}\n\nit follows that <math>v=\\frac{d^mu}{d\\mu^m}</math>, hence <math>u^m_n=(\\mu^2-1)^{\\frac{1}{2}m}\\frac{d^mu}{d\\mu^m}</math>.\n\nThe complete solution of (26) is therefore\n\n{{block center|<math>u=(\\mu^2-1)^{\\frac{1}{2}m}\\left\\{\\text{A}\\frac{d^m\\text{P}_n(\\mu)}{d\\mu^m}+\\text{B}\\frac{d^m\\text{Q}_n(\\mu)}{d\\mu^m}\\right\\};</math>}}\n\nwhen <math>\\mu</math> is real and lies between <math>\\pm1</math>, the two functions\n\n{{block center|<math>(1-\\mu^2)^{\\frac{1}{2}m}\\frac{d^m\\text{P}_n(\\mu)}{d\\mu^m},(1-\\mu^2)^{\\frac{1}{2}m}\\frac{d^m\\text{Q}_n(\\mu)}{d\\mu^m}</math>}}\n\nare called Legendre's associated functions of degree <math>n</math>, and order <math>m</math>, of the first and second kinds respectively. When <math>\\mu</math> is not real and between <math>\\pm1</math>, the same names are given to the two functions\n\n{{block center|<math>(\\mu^2-1)^{\\frac{1}{2}m}\\frac{d^m\\text{P}_n(\\mu)}{d\\mu^m},\\ (\\mu^2-1)^{\\frac{1}{2}m}\\frac{d^m\\text{Q}_n(\\nu)}{d\\mu^m};</math>}}\n\nin either case the functions may be denoted by <math>\\text{P}^m_n(\\mu)</math>, <math>\\text{Q}^m_n(\\mu)</math>.\n\nIt can be shown that, when <math>\\mu</math> is real and between <math>\\pm1</math>\n\n{{block center|<math>\\text{P}^m_n(\\mu)=\\frac{(-1)^m}{2^n(n-m)!}\\left(\\frac{1+\\mu}{1-\\mu}\\right)^{\\frac{1}{2}m}\\frac{d^n}{d\\mu^n}\\{(\\mu-1)^{n+m}(\\mu+1)^{n-m}\\}</math>}}\n\n{{block center|<math>=\\frac{1}{2^n(n-m)!}\\left(\\frac{1-\\mu}{1+\\mu}\\right)^{\\frac{1}{2}m}\\frac{d^n}{d\\mu^n}\\{(\\mu-1)^{n-m}(\\mu+1)^{n+m}\\}.</math>}}\n\nIn the same case, we find\n\n{{block center|<math>\\text{P}^{m+2}_n(\\cos\\theta)-2(m+1)\\cot\\theta\\,\\text{P}^{m+1}_n(\\cos\\theta)</math>}}\n\n{{block center|<math>+(n-m)(n+m+1)\\text{P}^m_n(\\cos\\theta)=0, (n-m+2)\\text{P}^m_{n+2}(\\cos\\theta)-(2n+3)\\mu\\text{P}^m_{n+1}(\\cos\\theta)</math>}}\n{{block center|<math>+(n+m+1)\\text{P}^m_n(\\cos\\theta)=0.</math>}}\n\n20. ''Bessel's Functions.''—If we take for three orthogonal systems of surfaces a system of parallel planes, a system of co-axial circular cylinders perpendicular to the planes, and a system of planes through the axis of the cylinders, the parameters are <math>z</math>, <math>\\rho</math>, <math>\\phi</math>, the cylindrical co-ordinates; in that case <math>\\text{H}_1=1</math>, <math>\\text{H}_2=1</math>, <math>\\text{H}_3=1/\\rho</math>, and the equation (25) becomes\n{{block center|<math>\\frac{\\partial^2\\text{V}}{\\partial z^2}+\\frac{\\partial^2\\text{V}}{\\partial\\rho^2}+\\frac{1}{\\rho}\\frac{\\partial\\text{V}}{\\partial\\rho}+\\frac{1}{\\rho^2}\\frac{\\partial^2\\text{V}}{\\partial\\phi^2}=0.</math>}}\n\nTo find the normal functions which satisfy this equation, we put <math>\\text{V}=\\text{ZR}\\Phi</math>, when <math>\\text{Z}</math> is a function of <math>z</math> only, <math>\\text{R}</math> of <math>\\rho</math> only, and <math>\\Phi</math> of <math>\\phi</math>, the equation then becomes\n{{block center|<math>\\frac{1}{\\text{Z}}\\frac{d^2\\text{Z}}{dz^2}+\\frac{1}{\\text{R}}\\left(\\frac{d^2\\text{R}}{d\\rho^2}+\\frac{1}{\\rho}\\frac{d\\text{R}}{d\\rho}\\right)+\\frac{1}{\\rho^2}\\frac{1}{\\Phi}\\frac{d^2\\Phi}{d\\phi^2}=0.</math>}}\nThat this may be satisfied we must have <math>\\frac{1}{\\text{Z}}\\frac{d^2\\text{Z}}{dz^2}</math> constant, say <math>=k^2</math>, <math>\\frac{1}{\\text{Z}}\\frac{d^2\\text{Z}}{dz^2}</math> constant, say <math>=-m^2</math>, and <math>\\text{R}</math>, for which we write <math>u</math>, must satisfy the differential equation\n{{block center|<math>\\frac{d^2u}{d\\rho^2}+\\frac{1}{\\rho}\\frac{du}{d\\rho}+\\left(k^2-\\frac{m^2}{\\rho^2}\\right)u=0,</math>}}\nit follows that the normal forms are <math>e^{\\pm kz}{}^{\\cos}_{\\sin}m\\phi\\,.\\,u(k\\rho)</math>, where <math>u(\\rho)</math> satisfies the equation\n{{block center|<math>\\frac{d^2u}{d\\rho^2}+\\frac{1}{\\rho}\\frac{du}{d\\rho}+\\left(1-\\frac{m^2}{\\rho^2}\\right)u=0.</math> (29)}} This is known as Bessel's equation of order <math>m</math>; the particular case\n{{block center|<math>\\frac{d^2u}{d\\rho^2}+\\frac{1}{\\rho}\\,\\frac{du}{d\\rho}+u=0,</math> (30)}}\ncorresponding to <math>m=0</math>, is known as Bessel's equation.\n\nIf we solve the equation (29) in series, we find by the usual process that it is satisfied by the series\n{{block center|<math>\\rho^m\\left\\{1-\\frac{\\rho^2}{2.2m+2}+\\frac{\\rho^4}{2.4.2m+2.2m+4}-\\dots\\right\\};</math>}}\nthe expression\n{{block center|<math>\\frac{\\rho^m}{2^m\\Pi(m)}\\left\\{1-\\frac{\\rho^2}{2.2m+2}+\\frac{\\rho^4}{2.4.2m+2.2m+4}-\\dots\\right\\}</math>}}\nor\n{{block center|<math>\\sum_{n=0,}^{\\infty}\\frac{(-1)^n\\rho^{m+2n}}{2^{m+2n}\\Pi(m+n)\\Pi(n)}</math>}}\nis denoted by <math>\\text{J}_m(\\rho)</math>.\n\nWhen <math>m=0</math>, the solution\n{{block center|<math>1-\\frac{\\rho^2}{2^2}+\\frac{\\rho^4}{2^2.4^2}-\\dots</math>}}\nof the equation (30) is denoted by <math>\\text{J}_0(\\rho)</math> or by <math>\\text{J}(\\rho)</math>.<noinclude><references/></noinclude>"
+}

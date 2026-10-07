@@ -1,0 +1,148 @@
+{
+ "volume": 26,
+ "page_number": 142,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n146",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n146",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1165,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     94,
+     154,
+     2319,
+     222
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     94,
+     222,
+     1165,
+     1280
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     94,
+     1280,
+     1165,
+     1928
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     94,
+     1928,
+     1165,
+     2854
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     94,
+     2854,
+     1165,
+     3150
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1165,
+     222,
+     2319,
+     1245
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1165,
+     1245,
+     2319,
+     2312
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1165,
+     2312,
+     2319,
+     3150
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|124|SURFACE|}}",
+   "c1s1": "surface, and two systems on the second, such that the equation for the lineal element, when referred to these, may have an identical form for the two surfaces. The problem is now to select these corresponding systems. We may conveniently take for the co-ordinate <math>u</math> the specific curvature on each surface, and choose for <math>v</math> the function <math>du/dn</math> which denotes the rate of increase of <math>u</math> along a direction normal to the curve <math>u = \\text{const}</math>. Then, since at corresponding points both <math>u</math> and <math>v</math> will be the same for one surface as for the other, if the surfaces are applicable, <math>\\text{E}</math>, <math>\\text{F}</math> and <math>\\text{G}</math>, in the equation <math>ds^2 = \\text{E}du^2 + 2\\text{F}dudv + \\text{G}dv^2</math>, must be identical for the two surfaces. Clerk Maxwell has put the geometrical relation which exists between two applicable surfaces in the following way: If we take any two corresponding points <math>\\text{P}</math> and <math>\\text{P}'</math> on two such surfaces, it is always possible to draw two elements through <math>\\text{P}</math> parallel to conjugate semi-diameters of the indicatrix at <math>\\text{P}</math>, such that the corresponding elements through <math>\\text{P}'</math> shall be parallel to conjugate semi-diameters of the indicatrix at <math>\\text{P}'</math>. The curves made up of all these elements will divide the two surfaces into small parallelograms, the four parallelograms having <math>\\text{P}</math> as common vertex being identical in size and shape with the four having <math>\\text{P}'</math> as vertex. Maxwell regards the surfaces as made up in the limit of these small parallelograms. Now, in order to render these surfaces ready for application, the first step would be to alter the angle between two of the planes of the parallelograms at <math>\\text{P}</math>, so as to make it equal to that between the corresponding planes at <math>\\text{P}'</math>. If this be done it is readily seen that all the angles between the other planes at <math>\\text{P}</math> and <math>\\text{P}'</math>, and at all other corresponding points, will become equal also. The curves which thus belong to the conjugate systems common to the two surfaces may be regarded as ''lines of bending''.\n\n2. Any surface of uniform specific curvature, whether positive or negative, is applicable to another surface of the same uniform specific curvature in an infinite variety of ways. For if we arbitrarily choose two points, <math>\\text{O}</math> and <math>\\text{O}'</math>, one on each surface, and two",
+   "c1s2": "elements, one through each point, we can apply the surfaces, making <math>\\text{O}</math> and <math>\\text{O}'</math> corresponding points and the elements corresponding elements. This follows from the form of the equation of the lineal element, which is for synclastic surfaces <math>ds^2 = du^2 + a^2 \\sin^2(ua^{-1}) dv^2</math>, and for anticlastic, <math>ds^2 = du^2 + a^2 \\sinh^2(ua^{-1}) dv^2</math>, and is therefore identical for the two surfaces in question. Again, a ruled surface may evidently be deformed by first rotating round a generator, the portion of the surface lying to one side of this generator, then round the consecutive generator, the portion of the surface lying beyond this again, and so on. It is clear that in such deformation the rectilinear generators in the old surface remain the rectilinear generators in the new; but it is interesting to note that two ruled surfaces can be constructed which shall be applicable, yet so that the generators will not correspond. For, deform a hyperboloid of one sheet in the manner described, turning the portions of the surface round the consecutive generators of one system, and then deform the hyperboloid, using the generators of the other system. The two surfaces so obtained are, of course, applicable to one another, yet so that their generators do not now correspond. Conversely Bonnet has shown that, whenever two ruled surfaces are thus",
+   "c1s3": "applicable, without correspondence of generators, they must be both applicable to the same hyperboloid of one sheet. The alysséide is a good example of a surface of revolution applicable to a ruled surface, in this case the right circular conoid, the generators of the conoid coinciding with the meridians of the alysséide.\n\n3. As instances of surfaces applicable to themselves, we may take surfaces of uniform specific curvature, as obviously follows from the reasoning already given; also surfaces of revolution, inasmuch as any such surface can be turned round its axis and still fit upon its old position. Again, helicoidal surfaces possess this property. A helicoidal surface means that traced out by a rigid wire, which is given a screw motion round a fixed axis, or, which comes to the same thing, the surface made up of a system of helices starting from the points of a given curve, all having the same axis and the same interval between the successive threads. The applicability of such a surface to itself, if given a screw motion round the axis, is evident from the law of its formation.\n\n4. The possible small variations <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> of the points of a surface when it is subject to a small inextensional deformation are conditioned by the equation <math>dxd\\xi+dyd\\eta+dzd\\zeta=0</math>, or making <math>x</math> and <math>y</math> the independent variables,\n\n{{block center|<math>dx^2\\left(\\frac{d\\xi}{dx}+p\\frac{d\\zeta}{dx}\\right)+dxdy\\left(\\frac{d\\xi}{dy}+\\frac{d\\eta}{dx}+p\\frac{d\\zeta}{dy}+q\\frac{d\\zeta}{dx}\\right)+dy^2\\left(\\frac{d\\eta}{dy}+q\\frac{d\\zeta}{dy}\\right)=0.</math>}}\n\nFrom this it follows that the three equations must separately hold\n\n{{block center|<math>\\frac{d\\xi}{dx}+p\\frac{d\\zeta}{dx}=0,\\ \\frac{d\\xi}{dy}+\\frac{d\\eta}{dx}+p\\frac{d\\zeta}{dy}+q\\frac{d\\zeta}{dx}=0,\\ \\frac{d\\eta}{dy}+q\\frac{d\\zeta}{dy}=0.</math>}}",
+   "c1s4": "Accordingly, the determination of a possible small deformation cf a given surface is reduced to the analytical problem of finding three functions <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> of the variables <math>x</math> and <math>y</math> to satisfy these equations. Changing the co-ordinates to <math>\\alpha</math> and <math>\\beta</math> where <math>\\alpha = \\text{const}</math>, <math>\\beta = \\text{const}</math>, are the curves of inflexion on the surface, the solution of the equations can be shown to depend upon that of the equation <math>d^2w/d\\alpha d\\beta = \\lambda w</math>, where <math>\\lambda</math> is a function of <math>\\alpha</math> and <math>\\beta</math> depending on the form of the surface. The last equation can be integrated, and the possible deformation determined in the case of a spherical surface, or of any surface of",
+   "c2s1": "uniform specific curvature. It is easily shown that if we have determined the displacements for any surface S we can do so for any surface obtained from S by a linear transformation of the variables.\n\nFor let\n{{block center|<math>x' = a_1x = b_1y + c_1z + d_1,\\ y = a_2x + b_2y + c_2z + d_2,</math>}}\n{{block center|<math>z' = a_3x + b_3y + c_3z + d_3,</math>}}\nthen the displacements\n{{block center|<math>\\xi' = \\text{A}_1\\xi + \\text{B}_1\\eta + \\text{C}_1\\zeta,\\ \\eta' = \\text{A}_2\\xi + \\text{B}_2\\eta + \\text{C}_2\\zeta,\\ \\zeta' = \\text{A}_3\\xi + \\text{B}_3\\eta + \\text{C}_3\\zeta,</math>}}\nwhere <math>\\text{A}_1</math> <math>\\text{B}_1</math>, &c., are the minors of the determinant <math>[a_1\\ b_2\\ c_3]</math>, will evidently satisfy the equation\n{{block center|<math>dx'd\\xi' + dy'd\\eta' + dz'd\\zeta' = 0.</math>}}\nAccordingly the known solution for a sphere furnishes us with a solution for any quadric. Moutard has pointed out a curious connexion between the problem of small deformation and that of the applicability of two finitely different surfaces.\n\nFor if <math>dxd\\xi + dyd\\eta + dzd\\zeta = 0</math>, it follows that if <math>k</math> be any constant,\n{{block center|<math>\\{d(x + k\\xi)\\}^2 + \\{d(y + k\\eta)\\}^2 + \\{d(z + k\\zeta)\\}^2</math>}}\n{{block center|<math>= \\{d(x - k\\xi)\\}^2 + \\{d(y - k\\eta)\\}^2 + \\{d(z - k\\zeta)\\}^2.</math>}}\nConsequently, if we take two surfaces such that for the first\n{{block center|<math>\\text{X} = x + k\\xi,\\ \\text{Y} = y + k\\eta,\\ \\text{Z} = z + k\\zeta,</math>}}\nand for the second\n{{block center|<math>\\text{X}' = x - k\\xi,\\ \\text{Y}' = y - k\\eta,\\ \\text{Z}' = z - k\\zeta,</math>}}\nthen\n{{block center|<math>d\\text{X}^2 + d\\text{Y}^2 + d\\text{Z}^2 = d\\text{X}'^2 + d\\text{Y}'^2 = d\\text{Z}'^2,</math>}}\nand therefore the new surfaces are applicable.\n\n5. Jellett and Clerk Maxwell have shown by different methods that, if a curve on a surface be held fixed, there can be no small",
+   "c2s2": "deformation, except this curve be a curve of inflexion. This may be also proved thus: There can be no displacement of the tangent planes along the fixed curve, for, at any point of the curve the geodetic curvature cannot alter; but in present case the ordinary curvature of the curve is also fixed, therefore their ratio is constant, so that <math>\\delta\\cos\\theta = -\\sin\\,\\theta\\delta\\theta = 0</math>, where <math>\\theta</math> is the angle which the osculating plane makes with the tangent plane; therefore unless <math>\\sin\\,\\theta = 0</math>, as it is along a curve of inflexion, <math>\\delta\\theta = 0</math>, and therefore the tangent plane at each point is unaltered. Hence it can be shown that along the given curve not only <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> vanish, but also their differential coefficients of all orders, and therefore no displacement is possible.\n\nThe question has been much discussed: Can a closed synclastic surface be deformed? There seems to be a prevalent opinion amongst mathematicians that such deformation is always impossible, but we do not think any unimpeachable demonstration of this has yet been given. It is certain that a complete spherical surface does not admit of inextensive deformation, for if it did it would follow from Gauss's theorem that the new surface would have a uniform specific curvature. Now, it is not difficult to prove that the only closed surface possessing this property is the sphere itself, provided that the surfaces in question be such that all their tangent planes lie entirely outside them. We can then, by the method of linear transformation already given, extend the theorem of the impossibility of deformation to any ellipsoid.\n\nThe theorem that a sphere is the only closed surface of constant specific curvature may, we suggest, be established by means of the following two propositions, which hold for integration on any closed surface, <math>p</math> being the perpendicular from the origin on the tangent plane:—\n\n{{block center|<math>\\iint (1/\\text{R} + 1/\\text{R}')\\,d\\text{S} = 2\\iint p\\,d\\text{S}/\\text{RR}'</math> (1)}}\n\n{{block center|<math>2\\iint d\\text{S} = \\iint p(1/\\text{R} + 1/\\text{R}')d\\text{S}.</math> (2)}}",
+   "c2s3": "and subtract the second, and we get:—\n\n{{block center|<math>\\iint\\{(\\text{R}'/\\text{R})^{\\frac{1}{4}} - (\\text{R}/\\text{R}')^{\\frac{1}{4}}\\}^2 d\\text{S} + \\iint p(1/\\text{R}^{\\frac{1}{2}} - 1/\\text{R}'^{\\frac{1}{2}})^2 d\\text{S} = 0</math>}}\n\nwhich is impossible unless <math>\\text{R}' = \\text{R}</math> everywhere, since in accordance with the proviso <math>p</math> is everywhere positive.\n\nTheorems (1) and (2) are deduced by Jellett by means of the calculus of variations in his treatise on that subject. They may also be very simply proved thus: Draw normals to the surface along the contours of the small squares formed by lines of curvature, and let these meet successive parallel surfaces at distances <math>dn</math>, then the volume bounded by two parallel surfaces\n\n{{block center|<math>= \\iint (d\\text{S} \\int^n_0 dn(1 + n/\\text{R})(1 + n/\\text{R}')</math>}}\n\n{{block center|<math>= \\iint d\\text{S}(n + \\tfrac{1}{2}n^2(1/\\text{R} + 1/\\text{R}') + \\tfrac{1}{3}n^3/\\text{RR}');</math>}}\n\nbut taking origin inside, the perpendiculars let fall from O on a tangent plane to the outer surface <math>= p + n</math> on account of the parallelism of the surfaces. Also <math>d\\text{S}</math> for outer surface <math>= d\\text{S}(1 + n/\\text{R})(1 + n/\\text{R}')</math>; therefore volume in question\n\n{{block center|<math>= \\tfrac{1}{3}\\iint (p + n)(1 + n/\\text{R})(1 + n/\\text{R}')d\\text{S} - \\tfrac{1}{3}\\iint pd\\text{S}</math>}}\n\n{{block center|<math>= \\tfrac{1}{3}n\\iint \\left(1 + \\frac{p}{\\text{R}} + \\frac{p}{\\text{R}'}\\right)d\\text{S} + \\tfrac{1}{3}n^2\\iint \\left(\\frac{p}{\\text{RR}'} + \\frac{1}{\\text{R}} + \\frac{1}{\\text{R}'}\\right)d\\text{S} + \\tfrac{1}{3}n^3\\iint \\frac{1}{\\text{RR}'}d\\text{S}.</math>}}"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ],
+   "2": [
+    0,
+    3
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 9070,
+    "output_tokens": 5844,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 15392
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|124|SURFACE|}}</noinclude>surface, and two systems on the second, such that the equation for the lineal element, when referred to these, may have an identical form for the two surfaces. The problem is now to select these corresponding systems. We may conveniently take for the co-ordinate <math>u</math> the specific curvature on each surface, and choose for <math>v</math> the function <math>du/dn</math> which denotes the rate of increase of <math>u</math> along a direction normal to the curve <math>u = \\text{const}</math>. Then, since at corresponding points both <math>u</math> and <math>v</math> will be the same for one surface as for the other, if the surfaces are applicable, <math>\\text{E}</math>, <math>\\text{F}</math> and <math>\\text{G}</math>, in the equation <math>ds^2 = \\text{E}du^2 + 2\\text{F}dudv + \\text{G}dv^2</math>, must be identical for the two surfaces. Clerk Maxwell has put the geometrical relation which exists between two applicable surfaces in the following way: If we take any two corresponding points <math>\\text{P}</math> and <math>\\text{P}'</math> on two such surfaces, it is always possible to draw two elements through <math>\\text{P}</math> parallel to conjugate semi-diameters of the indicatrix at <math>\\text{P}</math>, such that the corresponding elements through <math>\\text{P}'</math> shall be parallel to conjugate semi-diameters of the indicatrix at <math>\\text{P}'</math>. The curves made up of all these elements will divide the two surfaces into small parallelograms, the four parallelograms having <math>\\text{P}</math> as common vertex being identical in size and shape with the four having <math>\\text{P}'</math> as vertex. Maxwell regards the surfaces as made up in the limit of these small parallelograms. Now, in order to render these surfaces ready for application, the first step would be to alter the angle between two of the planes of the parallelograms at <math>\\text{P}</math>, so as to make it equal to that between the corresponding planes at <math>\\text{P}'</math>. If this be done it is readily seen that all the angles between the other planes at <math>\\text{P}</math> and <math>\\text{P}'</math>, and at all other corresponding points, will become equal also. The curves which thus belong to the conjugate systems common to the two surfaces may be regarded as ''lines of bending''.\n\n2. Any surface of uniform specific curvature, whether positive or negative, is applicable to another surface of the same uniform specific curvature in an infinite variety of ways. For if we arbitrarily choose two points, <math>\\text{O}</math> and <math>\\text{O}'</math>, one on each surface, and two elements, one through each point, we can apply the surfaces, making <math>\\text{O}</math> and <math>\\text{O}'</math> corresponding points and the elements corresponding elements. This follows from the form of the equation of the lineal element, which is for synclastic surfaces <math>ds^2 = du^2 + a^2 \\sin^2(ua^{-1}) dv^2</math>, and for anticlastic, <math>ds^2 = du^2 + a^2 \\sinh^2(ua^{-1}) dv^2</math>, and is therefore identical for the two surfaces in question. Again, a ruled surface may evidently be deformed by first rotating round a generator, the portion of the surface lying to one side of this generator, then round the consecutive generator, the portion of the surface lying beyond this again, and so on. It is clear that in such deformation the rectilinear generators in the old surface remain the rectilinear generators in the new; but it is interesting to note that two ruled surfaces can be constructed which shall be applicable, yet so that the generators will not correspond. For, deform a hyperboloid of one sheet in the manner described, turning the portions of the surface round the consecutive generators of one system, and then deform the hyperboloid, using the generators of the other system. The two surfaces so obtained are, of course, applicable to one another, yet so that their generators do not now correspond. Conversely Bonnet has shown that, whenever two ruled surfaces are thus applicable, without correspondence of generators, they must be both applicable to the same hyperboloid of one sheet. The alysséide is a good example of a surface of revolution applicable to a ruled surface, in this case the right circular conoid, the generators of the conoid coinciding with the meridians of the alysséide.\n\n3. As instances of surfaces applicable to themselves, we may take surfaces of uniform specific curvature, as obviously follows from the reasoning already given; also surfaces of revolution, inasmuch as any such surface can be turned round its axis and still fit upon its old position. Again, helicoidal surfaces possess this property. A helicoidal surface means that traced out by a rigid wire, which is given a screw motion round a fixed axis, or, which comes to the same thing, the surface made up of a system of helices starting from the points of a given curve, all having the same axis and the same interval between the successive threads. The applicability of such a surface to itself, if given a screw motion round the axis, is evident from the law of its formation.\n\n4. The possible small variations <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> of the points of a surface when it is subject to a small inextensional deformation are conditioned by the equation <math>dxd\\xi+dyd\\eta+dzd\\zeta=0</math>, or making <math>x</math> and <math>y</math> the independent variables,\n\n{{block center|<math>dx^2\\left(\\frac{d\\xi}{dx}+p\\frac{d\\zeta}{dx}\\right)+dxdy\\left(\\frac{d\\xi}{dy}+\\frac{d\\eta}{dx}+p\\frac{d\\zeta}{dy}+q\\frac{d\\zeta}{dx}\\right)+dy^2\\left(\\frac{d\\eta}{dy}+q\\frac{d\\zeta}{dy}\\right)=0.</math>}}\n\nFrom this it follows that the three equations must separately hold\n\n{{block center|<math>\\frac{d\\xi}{dx}+p\\frac{d\\zeta}{dx}=0,\\ \\frac{d\\xi}{dy}+\\frac{d\\eta}{dx}+p\\frac{d\\zeta}{dy}+q\\frac{d\\zeta}{dx}=0,\\ \\frac{d\\eta}{dy}+q\\frac{d\\zeta}{dy}=0.</math>}} Accordingly, the determination of a possible small deformation cf a given surface is reduced to the analytical problem of finding three functions <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> of the variables <math>x</math> and <math>y</math> to satisfy these equations. Changing the co-ordinates to <math>\\alpha</math> and <math>\\beta</math> where <math>\\alpha = \\text{const}</math>, <math>\\beta = \\text{const}</math>, are the curves of inflexion on the surface, the solution of the equations can be shown to depend upon that of the equation <math>d^2w/d\\alpha d\\beta = \\lambda w</math>, where <math>\\lambda</math> is a function of <math>\\alpha</math> and <math>\\beta</math> depending on the form of the surface. The last equation can be integrated, and the possible deformation determined in the case of a spherical surface, or of any surface of uniform specific curvature. It is easily shown that if we have determined the displacements for any surface S we can do so for any surface obtained from S by a linear transformation of the variables.\n\nFor let\n{{block center|<math>x' = a_1x = b_1y + c_1z + d_1,\\ y = a_2x + b_2y + c_2z + d_2,</math>}}\n{{block center|<math>z' = a_3x + b_3y + c_3z + d_3,</math>}}\nthen the displacements\n{{block center|<math>\\xi' = \\text{A}_1\\xi + \\text{B}_1\\eta + \\text{C}_1\\zeta,\\ \\eta' = \\text{A}_2\\xi + \\text{B}_2\\eta + \\text{C}_2\\zeta,\\ \\zeta' = \\text{A}_3\\xi + \\text{B}_3\\eta + \\text{C}_3\\zeta,</math>}}\nwhere <math>\\text{A}_1</math> <math>\\text{B}_1</math>, &c., are the minors of the determinant <math>[a_1\\ b_2\\ c_3]</math>, will evidently satisfy the equation\n{{block center|<math>dx'd\\xi' + dy'd\\eta' + dz'd\\zeta' = 0.</math>}}\nAccordingly the known solution for a sphere furnishes us with a solution for any quadric. Moutard has pointed out a curious connexion between the problem of small deformation and that of the applicability of two finitely different surfaces.\n\nFor if <math>dxd\\xi + dyd\\eta + dzd\\zeta = 0</math>, it follows that if <math>k</math> be any constant,\n{{block center|<math>\\{d(x + k\\xi)\\}^2 + \\{d(y + k\\eta)\\}^2 + \\{d(z + k\\zeta)\\}^2</math>}}\n{{block center|<math>= \\{d(x - k\\xi)\\}^2 + \\{d(y - k\\eta)\\}^2 + \\{d(z - k\\zeta)\\}^2.</math>}}\nConsequently, if we take two surfaces such that for the first\n{{block center|<math>\\text{X} = x + k\\xi,\\ \\text{Y} = y + k\\eta,\\ \\text{Z} = z + k\\zeta,</math>}}\nand for the second\n{{block center|<math>\\text{X}' = x - k\\xi,\\ \\text{Y}' = y - k\\eta,\\ \\text{Z}' = z - k\\zeta,</math>}}\nthen\n{{block center|<math>d\\text{X}^2 + d\\text{Y}^2 + d\\text{Z}^2 = d\\text{X}'^2 + d\\text{Y}'^2 = d\\text{Z}'^2,</math>}}\nand therefore the new surfaces are applicable.\n\n5. Jellett and Clerk Maxwell have shown by different methods that, if a curve on a surface be held fixed, there can be no small deformation, except this curve be a curve of inflexion. This may be also proved thus: There can be no displacement of the tangent planes along the fixed curve, for, at any point of the curve the geodetic curvature cannot alter; but in present case the ordinary curvature of the curve is also fixed, therefore their ratio is constant, so that <math>\\delta\\cos\\theta = -\\sin\\,\\theta\\delta\\theta = 0</math>, where <math>\\theta</math> is the angle which the osculating plane makes with the tangent plane; therefore unless <math>\\sin\\,\\theta = 0</math>, as it is along a curve of inflexion, <math>\\delta\\theta = 0</math>, and therefore the tangent plane at each point is unaltered. Hence it can be shown that along the given curve not only <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> vanish, but also their differential coefficients of all orders, and therefore no displacement is possible.\n\nThe question has been much discussed: Can a closed synclastic surface be deformed? There seems to be a prevalent opinion amongst mathematicians that such deformation is always impossible, but we do not think any unimpeachable demonstration of this has yet been given. It is certain that a complete spherical surface does not admit of inextensive deformation, for if it did it would follow from Gauss's theorem that the new surface would have a uniform specific curvature. Now, it is not difficult to prove that the only closed surface possessing this property is the sphere itself, provided that the surfaces in question be such that all their tangent planes lie entirely outside them. We can then, by the method of linear transformation already given, extend the theorem of the impossibility of deformation to any ellipsoid.\n\nThe theorem that a sphere is the only closed surface of constant specific curvature may, we suggest, be established by means of the following two propositions, which hold for integration on any closed surface, <math>p</math> being the perpendicular from the origin on the tangent plane:—\n\n{{block center|<math>\\iint (1/\\text{R} + 1/\\text{R}')\\,d\\text{S} = 2\\iint p\\,d\\text{S}/\\text{RR}'</math> (1)}}\n\n{{block center|<math>2\\iint d\\text{S} = \\iint p(1/\\text{R} + 1/\\text{R}')d\\text{S}.</math> (2)}} and subtract the second, and we get:—\n\n{{block center|<math>\\iint\\{(\\text{R}'/\\text{R})^{\\frac{1}{4}} - (\\text{R}/\\text{R}')^{\\frac{1}{4}}\\}^2 d\\text{S} + \\iint p(1/\\text{R}^{\\frac{1}{2}} - 1/\\text{R}'^{\\frac{1}{2}})^2 d\\text{S} = 0</math>}}\n\nwhich is impossible unless <math>\\text{R}' = \\text{R}</math> everywhere, since in accordance with the proviso <math>p</math> is everywhere positive.\n\nTheorems (1) and (2) are deduced by Jellett by means of the calculus of variations in his treatise on that subject. They may also be very simply proved thus: Draw normals to the surface along the contours of the small squares formed by lines of curvature, and let these meet successive parallel surfaces at distances <math>dn</math>, then the volume bounded by two parallel surfaces\n\n{{block center|<math>= \\iint (d\\text{S} \\int^n_0 dn(1 + n/\\text{R})(1 + n/\\text{R}')</math>}}\n\n{{block center|<math>= \\iint d\\text{S}(n + \\tfrac{1}{2}n^2(1/\\text{R} + 1/\\text{R}') + \\tfrac{1}{3}n^3/\\text{RR}');</math>}}\n\nbut taking origin inside, the perpendiculars let fall from O on a tangent plane to the outer surface <math>= p + n</math> on account of the parallelism of the surfaces. Also <math>d\\text{S}</math> for outer surface <math>= d\\text{S}(1 + n/\\text{R})(1 + n/\\text{R}')</math>; therefore volume in question\n\n{{block center|<math>= \\tfrac{1}{3}\\iint (p + n)(1 + n/\\text{R})(1 + n/\\text{R}')d\\text{S} - \\tfrac{1}{3}\\iint pd\\text{S}</math>}}\n\n{{block center|<math>= \\tfrac{1}{3}n\\iint \\left(1 + \\frac{p}{\\text{R}} + \\frac{p}{\\text{R}'}\\right)d\\text{S} + \\tfrac{1}{3}n^2\\iint \\left(\\frac{p}{\\text{RR}'} + \\frac{1}{\\text{R}} + \\frac{1}{\\text{R}'}\\right)d\\text{S} + \\tfrac{1}{3}n^3\\iint \\frac{1}{\\text{RR}'}d\\text{S}.</math>}}<noinclude><references/></noinclude>"
+}

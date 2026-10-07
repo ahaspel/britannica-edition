@@ -10,6 +10,15 @@ CHEMISTRY is not mathematics: a chemical formula or equation is written in
 the running text with <sub> for its subscript numbers, never in <math>:
 SiI<sub>4</sub>+2C<sub>2</sub>H<sub>5</sub>OH = SiO<sub>2</sub>+…
 
+A chemical formula SET OUT IN ROWS — atom groups printed above and below one
+another and joined by upright bonds, often several formulae side by side with
+their names beneath — is a formula grid ({| class="chem-grid"): one printed
+line of type to a row, each atom group in its own cell, each bond printed
+between groups in a row (—, ·, :) in a cell of its own, an upright bond (│,
+double ║) in a cell of its own under the group it joins, a group printed
+across two lines in a cell that spans them, and the names in the last row. A formula drawn as a ring,
+or with slanting or curved bonds, is an illustration, not text.
+
 MATHEMATICS. Write every formula, and every symbol standing for a quantity,
 in LaTeX inside <math>…</math> — never with <sup>, <sub>, italic quotes or
 Unicode look-alikes. A letter or symbol in the running text is a formula too:

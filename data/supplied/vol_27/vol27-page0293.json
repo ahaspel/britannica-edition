@@ -1,0 +1,262 @@
+{
+ "volume": 27,
+ "page_number": 293,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n300",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n300",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 1190,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     57,
+     117,
+     2372,
+     185
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     57,
+     185,
+     1235,
+     308
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     57,
+     398,
+     731,
+     1063
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     57,
+     1071,
+     731,
+     1105
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     731,
+     308,
+     1235,
+     1105
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     57,
+     1105,
+     1235,
+     1237
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     57,
+     1237,
+     574,
+     1623
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     57,
+     1632,
+     574,
+     1664
+    ]
+   },
+   {
+    "name": "c1s6",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     574,
+     1237,
+     1235,
+     1664
+    ]
+   },
+   {
+    "name": "c1s7",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     57,
+     1664,
+     1235,
+     2685
+    ]
+   },
+   {
+    "name": "c1s8",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     57,
+     2685,
+     1235,
+     3113
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1235,
+     185,
+     2372,
+     1078
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1235,
+     1078,
+     2372,
+     2117
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1235,
+     2117,
+     2372,
+     3113
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|278|TRIGONOMETRY|}}",
+   "c1s1": "<math>(a+\\iota b)^{m/n}</math> are obtained by giving <math>s</math> the values <math>0, 1, 2, \\dots n-1</math> in the expression <math>r^{m/n}\\ (\\cos\\ m.\\overline{\\theta+2s\\pi}/n + \\iota \\sin\\ m.\\overline{\\theta+2s\\pi}/n)</math>, where <math>r=(a^2+b^2)^{\\frac{1}{2}}</math> and <math>\\theta=\\text{arc tan}\\ b/a</math>.",
+   "c1s2": "{{c|{{sc|Fig.}} 9.}}",
+   "c1s3": "l representation of the complex <math>B_3,\\dots B_n</math> represent the expression <math>x+\\iota y</math>, <math>(x+\\iota y)^2</math>, <math>(x+\\iota y)^3</math>, <math>\\dots (x+\\iota y)^n</math> respectively, the triangles <math>OAB_1</math>, <math>OB_1B_2</math>, <math>\\dots OB_{n-1}B_n</math> are all similar. Let <math>(x+\\iota y)^n = a+\\iota b</math>, then the converse problem of finding the <math>n</math>th root of <math>a+\\iota b</math> is equivalent to the geometrical problem of describing such a series of triangles that <math>OA</math> is the first side of the first triangle and <math>OB_n</math> the second side of the <math>n</math>th. Now it is obvious that this geometrical problem has more solutions than one, since any number of complete revolutions round <math>O</math> may be made in travelling from <math>B_1</math> to <math>B_n</math>. The first solution is that in which the vertical angle of each triangle is <math>B_nOA/n</math>; the second is that in which each is <math>(B_nOA+2\\pi)/n</math>,",
+   "c1s4": "lution being made round <math>O</math>; the third has <math>(B_nOA+4\\pi)/n</math> for the vertical angle of each triangle; and so on. There are <math>n</math> sets of triangles which satisfy the required conditions. For simplicity",
+   "c1s5": "{{c|{{sc|Fig.}} 10.}}",
+   "c1s6": "we will take the case of the determination of the values of <math>(\\cos\\theta + \\iota \\sin\\theta)^{\\frac{1}{3}}</math>. Suppose <math>B</math> to represent the expression <math>\\cos\\theta + \\iota\\sin\\theta</math>. If the angle <math>AOP_1</math> is <math>\\tfrac{1}{3}\\theta</math>, <math>P_1</math> represent the root <math>\\cos\\tfrac{1}{3}\\theta + \\iota\\sin\\tfrac{1}{3}\\theta</math>; the angle <math>AOB</math> is filled up by the angles of the three similar triangles <math>AOP_1</math>, <math>P_1Op_1</math>, <math>p_1OB</math>. Also, if <math>P_2</math>, <math>P_3</math> be such that the angles <math>P_1OP_2</math> <math>P_1OP_3</math> are <math>\\tfrac{2}{3}\\pi</math>, <math>\\tfrac{4}{3}\\pi</math> respectively, the two sets of triangles <math>AOP_2</math>, <math>P_2Op_3</math>, <math>p_3OB</math> and <math>AOP_3</math>, <math>P_3Op_2</math>, <math>p_2OB</math> satisfy the conditions of similarity and of having <math>OA</math>, <math>OB</math> for the bounding sides; thus <math>P_2</math>, <math>P_3</math> represent the roots",
+   "c1s7": "sides; thus <math>\\text{P}_2</math>, <math>\\text{P}_3</math> represent the roots <math>\\cos\\tfrac{1}{3}(\\theta+2\\pi)+\\iota\\ \\sin\\ \\tfrac{1}{3}(\\theta+2\\pi)</math>, <math>\\cos\\ \\tfrac{1}{3}(\\theta+4\\pi)+\\iota\\ \\sin\\ \\tfrac{1}{3}(\\theta+4\\pi)</math> respectively. If <math>B</math> coincides with <math>A</math>, the problem is reduced to that of finding the three cube roots of unity. One will be represented by <math>A</math> and the others by the two angular points of an equilateral triangle, with <math>A</math> as one angular point, inscribed in the circle.\n\n'''''The <math>n</math>th Roots of Unity.''''' The problem of determining the values of the <math>n</math>th roots of unity is equivalent to the geometrical problem of inscribing a regular polygon of <math>n</math> sides in a circle. Gauss has shown in his ''Disquisitiones arithmeticae'' that this can always be done by the compass and ruler only when <math>n</math> is a prime of the form <math>2^p+1</math>. The determination of the <math>n</math>th root of any complex number requires in addition, for its geometrical solution, the division of an angle into <math>n</math> equal parts.\n\n'''''Factorizations.''''' 19. We are now in a position to factorize an expression of the form <math>x^n-(a+\\iota b)</math>. Using the values which we have obtained above for <math>(a+\\iota b)^{1/n}</math>, we have\n{{block center|<math>x^n-(a+\\iota b) = \\underset{s=0}{\\overset{s=n-1}{P}} \\left[x-r^{\\frac{1}{n}}\\left(\\cos\\frac{\\theta+2s\\pi}{n}+\\iota\\sin\\frac{\\theta+2s\\pi}{n}\\right)\\right].</math> (1)}}\nIf <math>b=0</math>, <math>a=1</math>, this becomes\n{{block center|<math>x^n-1 = \\underset{s=0}{\\overset{s=n-1}{P}} \\left[x-\\cos\\frac{2s\\pi}{n}-\\iota\\sin\\frac{2s\\pi}{n}\\right]</math>}}\n{{block center|<math>= (x-1)(x+1)\\underset{s=1}{\\overset{s=\\frac{1}{2}n-1}{P}} \\left(x-\\cos\\frac{2s\\pi}{n}\\pm\\iota\\sin\\frac{2s\\pi}{n}\\right)</math>}}\n{{block center|<math>= (x-1)(x+1)\\underset{s=1}{\\overset{s=\\frac{1}{2}n-1}{P}} \\left(x^2-2x\\cos\\frac{2s\\pi}{n}+1\\right)</math> (<math>n</math> even). (2)}}",
+   "c1s8": "{{block center|<math>x^n-1=(x-1)\\mathop{\\text{P}}_{s=1}^{s=\\frac{1}{2}(n-1)}\\left(x^2-2x\\cos\\frac{2s\\pi}{n}+1\\right)</math> (''n'' odd). (3)}}\nIf in (1) we put <math>a=-1</math>, <math>b=0</math>, and therefore <math>\\theta=\\pi</math>, we have\n{{block center|<math>x^n+1=\\mathop{\\text{P}}_{s=0}^{s=n-1}\\left[x-\\cos\\frac{\\overline{2s+1\\pi}}{n}-\\iota\\sin\\frac{\\overline{2s+1\\pi}}{n}\\right]</math>}}\n{{block center|<math>=\\mathop{\\text{P}}_{s=0}^{s=\\frac{1}{2}(n-2)}\\left[x^2-2x\\cos\\frac{\\overline{2s+1\\pi}}{n}+1\\right]</math> (''n'' even). (4)}}\n{{block center|<math>x^n+1=(x+1)\\mathop{\\text{P}}_{s=0}^{s=\\frac{1}{2}(n-3)}\\left[x^2-2x\\cos\\frac{\\overline{2s+1\\pi}}{n}+1\\right]</math> (''n'' odd). (5)}}",
+   "c2s1": "Also <math>x^{2n}-2x^ny^n\\cos n\\theta+y^{2n}</math>\n\n{{block center|<math>=(x^n-y^n\\,\\overline{\\cos n\\theta+\\iota\\sin n\\theta})(x^n-y^n\\,\\overline{\\cos n\\theta-\\iota\\sin n\\theta})</math>}}\n\n{{block center|<math>=\\overset{s=n-1}{\\underset{s=0}{P}}\\left(x-y\\,\\overline{\\cos\\frac{\\theta+2s\\pi}{n}\\pm\\iota\\sin\\frac{\\theta+2s\\pi}{n}}\\right)</math>}}\n\n{{block center|<math>=\\overset{s=n-1}{\\underset{s=0}{P}}\\left[x^2-2xy\\cos\\theta+\\frac{2s\\pi}{n}+y^2\\right].</math> (6)}}\n\nAiry and Adams have given proofs of this theorem which do not involve the use of the symbol <math>\\iota</math> (see ''Camb. Phil. Trans.'', vol. xi).\n\nA large number of interesting theorems may be derived from De Moivre's theorem and the factorizations which we have deduced from it; we shall notice one of them.\n\n''Example of De Moivre's Theorem.''—In equation (6) put <math>y=1/x</math>, take logarithms, and then differentiate each side with respect to <math>x</math>, and we get\n\n{{block center|<math>\\frac{2n(x^{2n-1}-x^{-2n-1})}{x^{2n}-2\\cos n\\theta+x^{-2n}}=\\sum_{s=0}^{s=n-1}\\frac{2(x-x^{-3})}{x^2-2\\cos\\theta+\\frac{2s\\pi}{n}+x^{-2}}.</math>}}\n\nPut <math>x^2=a/b</math>, then we have the expression\n\n{{block center|<math>\\frac{n(a^{2n}-b^{2n})}{(a^2-b^2)(a^{2n}-2a^nb^n\\cos n\\theta+b^{2n})}</math>}}\n\nfor the sum of the series\n\n{{block center|<math>\\sum_{s=0}^{s=n-1}\\frac{1}{a^2-2ab\\cos\\overline{\\theta+\\frac{2s\\pi}{n}}+b^2}.</math>}}",
+   "c2s2": "¶\n''The Exponential Series.''—20. Denoting the complex number <math>x+iy</math> by <math>z</math>, let us consider the series <math>1+z+z^2/2!+\\dots+z^n/n!+\\dots</math> This series converges uniformly and absolutely for all values of <math>z</math> whose moduli do not exceed an arbitrarily chosen positive number <math>\\text{R}</math>. Consequently the function <math>E(z)</math>, defined as the limiting sum of the above series, is continuous in every finite domain. The two series representing <math>E(z_1)</math> and <math>E(z_2)</math>, when multiplied together give the series represented by <math>E(z_1+z_2)</math>. In accordance with a known theorem, since the series for <math>E(z_1)</math> <math>E(z_2)</math> are absolutely convergent, we have <math>E(z_1)\\times E(z_2)=E(z_1+z_2)</math>. From this fundamental relation, we deduce at once that <math>\\{E(z)\\}^n=E(nz)</math>, where <math>n</math> is any positive integer. The number <math>E(1)</math>, the sum of the convergent series <math>1+1+1/2!+1/3!\\dots</math>, is usually denoted by <math>e</math>; its value can be shown to be <math>2{\\cdot}718281828459\\dots</math> It is known to be a transcendental number, ''i.e.'' it cannot be the root of any algebraical equation with rational coefficients; this was first established by Hermite. Writing <math>z=1</math>, we have <math>E(n)=e^n</math>, where <math>n</math> is a positive integer. If <math>z</math> has as a value a positive fraction <math>p/q</math>, we find that <math>\\{E(p/q)\\}^q=E(p)=e^p</math>; hence <math>\\text{E}(p/q)</math> is the real positive value of <math>e^{p/q}</math>. Again <math>E(-p/q)\\times E(p/q)=E(0)=1</math>, hence <math>E(-p/q)</math> is the real positive value of <math>e^{-p/q}</math>. It has been thus shown that for any real and rational number <math>x</math>, the value of <math>E(x)</math> is the principal value of <math>e^x</math>. This result can be extended to irrational values of <math>x</math>, if we assume that <math>e^x</math> is for such a value of <math>x</math> defined as the limit of the sequence <math>e^{x_1}, e^{x_2},\\dots</math>, where <math>x_1, x_2,\\dots</math> is a sequence of rational numbers of which <math>x</math> is the limit, since <math>E(x_1)</math>, <math>E(x_2)\\dots</math>, then converges to <math>E(x)</math>.\n\nNext consider <math>(1+z/m)^m</math>, where <math>m</math> is a positive integer. We have by the binomial theorem,\n{{block center|<math>\\left(1+\\frac{z}{m}\\right)^m=1+z+\\left(1-\\frac{1}{m}\\right)\\frac{z^2}{2!}+.+\\left(1-\\frac{1}{m}\\right)\\left(1-\\frac{2}{m}\\right)\\dots</math>}}",
+   "c2s3": "{{block center|<math>\\left(1-\\frac{s-1}{m}\\right)\\frac{z^s}{s!}+\\dots+\\left(\\frac{z}{m}\\right)^m.</math>}}\nAlso\n{{block center|<math>\\left(1-\\frac{1}{m}\\right)\\left(1-\\frac{2}{m}\\right)\\dots\\left(1-\\frac{s-1}{m}\\right)</math>}}\nlies between <math>1</math> and\n{{block center|<math>1+\\left(\\frac{1}{m}+\\frac{2}{m}+\\dots+\\frac{s-1}{m}\\right);</math>}}\nhence the product equals <math>1-\\theta_s s\\,.\\,s-1/2m</math> where <math>\\theta_s</math> is such that <math>0<\\theta_s<1</math>.\n\nWe have now\n{{block center|<math>\\left(1+\\frac{z}{m}\\right)^m=1+z+\\left(1-\\frac{1}{m}\\right)\\frac{z^2}{2!}+\\dots+\\left[1-\\theta_s\\frac{s\\,.\\,s-1}{2m}\\right]\\frac{z_s}{s!}+\\dots</math>}}\n{{block center|<math>+\\left[1-\\theta_m\\frac{m-1}{2}\\right]\\frac{z^m}{m!}</math>}}\n{{block center|<math>=1+z+z^2/2!+\\dots+z^s/s!+\\text{R}_s,</math>}}\nwhere\n{{block center|<math>\\text{R}_s=\\frac{z^{s+1}}{(s+1)!}+\\dots+\\frac{z^m}{m!}-\\frac{z^2}{2m}\\biggl\\{1+\\theta_3\\frac{2}{1}+\\dots</math>}}\n{{block center|<math>+\\theta_s\\frac{z^{s-2}}{(s-2)!}+\\dots+\\theta_m\\frac{z^{m-2}}{(m-2)!}\\biggr\\}.</math>}}\nSince the series for <math>E(z)</math> converges, <math>s</math> can be fixed so that for all values of <math>m>s</math> the modulus of <math>z^{s+1}/(s+1)!+\\dots+z^m/m!</math> is less than an arbitrarily chosen number <math>\\tfrac{1}{2}\\epsilon</math>. Also the modulus of <math>1+\\theta_3z/1+\\dots+\\theta_m z^{m-2}/(m-2)!</math> is less than that of <math>1+1\\,|z|/1!+|z|^2/2!+\\dots</math>, or of <math>e^{\\text{mod}\\,z}</math>, hence <math>\\text{mod}\\ \\text{R}_s<\\tfrac{1}{2}\\epsilon+(1/2m)</math>. <math>\\text{mod}\\ (z^2e^z)<\\epsilon</math>, if <math>m</math> be chosen sufficiently great. It follows that <math>\\lim_{m=\\infty}(1+z/m)^m=E(z)</math>, where <math>z</math> is any complex number. To evaluate <math>E(z)</math>, write <math>1+x/m=\\rho\\cos\\phi</math>, <math>y/m=\\rho\\sin\\phi</math>, then"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0293 c1f1.png",
+   "c1f2": "eb1911 v27 p0293 c1f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     170,
+     398,
+     725,
+     1061
+    ],
+    "caption": [
+     400,
+     1072,
+     506,
+     1103
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     286,
+     390,
+     724,
+     1061
+    ]
+   },
+   {
+    "box": [
+     177,
+     1241,
+     567,
+     1621
+    ],
+    "caption": [
+     305,
+     1632,
+     431,
+     1664
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     169,
+     1239,
+     568,
+     1625
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 7193,
+    "output_tokens": 162,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 12,
+    "input_tokens": 8605,
+    "output_tokens": 9482,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 23088
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|278|TRIGONOMETRY|}}</noinclude><math>(a+\\iota b)^{m/n}</math> are obtained by giving <math>s</math> the values <math>0, 1, 2, \\dots n-1</math> in the expression <math>r^{m/n}\\ (\\cos\\ m.\\overline{\\theta+2s\\pi}/n + \\iota \\sin\\ m.\\overline{\\theta+2s\\pi}/n)</math>, where <math>r=(a^2+b^2)^{\\frac{1}{2}}</math> and <math>\\theta=\\text{arc tan}\\ b/a</math>. l representation of the complex <math>B_3,\\dots B_n</math> represent the expression <math>x+\\iota y</math>, <math>(x+\\iota y)^2</math>, <math>(x+\\iota y)^3</math>, <math>\\dots (x+\\iota y)^n</math> respectively, the triangles <math>OAB_1</math>, <math>OB_1B_2</math>, <math>\\dots OB_{n-1}B_n</math> are all similar. Let <math>(x+\\iota y)^n = a+\\iota b</math>, then the converse problem of finding the <math>n</math>th root of <math>a+\\iota b</math> is equivalent to the geometrical problem of describing such a series of triangles that <math>OA</math> is the first side of the first triangle and <math>OB_n</math> the second side of the <math>n</math>th. Now it is obvious that this geometrical problem has more solutions than one, since any number of complete revolutions round <math>O</math> may be made in travelling from <math>B_1</math> to <math>B_n</math>. The first solution is that in which the vertical angle of each triangle is <math>B_nOA/n</math>; the second is that in which each is <math>(B_nOA+2\\pi)/n</math>, lution being made round <math>O</math>; the third has <math>(B_nOA+4\\pi)/n</math> for the vertical angle of each triangle; and so on. There are <math>n</math> sets of triangles which satisfy the required conditions. For simplicity we will take the case of the determination of the values of <math>(\\cos\\theta + \\iota \\sin\\theta)^{\\frac{1}{3}}</math>. Suppose <math>B</math> to represent the expression <math>\\cos\\theta + \\iota\\sin\\theta</math>. If the angle <math>AOP_1</math> is <math>\\tfrac{1}{3}\\theta</math>, <math>P_1</math> represent the root <math>\\cos\\tfrac{1}{3}\\theta + \\iota\\sin\\tfrac{1}{3}\\theta</math>; the angle <math>AOB</math> is filled up by the angles of the three similar triangles <math>AOP_1</math>, <math>P_1Op_1</math>, <math>p_1OB</math>. Also, if <math>P_2</math>, <math>P_3</math> be such that the angles <math>P_1OP_2</math> <math>P_1OP_3</math> are <math>\\tfrac{2}{3}\\pi</math>, <math>\\tfrac{4}{3}\\pi</math> respectively, the two sets of triangles <math>AOP_2</math>, <math>P_2Op_3</math>, <math>p_3OB</math> and <math>AOP_3</math>, <math>P_3Op_2</math>, <math>p_2OB</math> satisfy the conditions of similarity and of having <math>OA</math>, <math>OB</math> for the bounding sides; thus <math>P_2</math>, <math>P_3</math> represent the roots sides; thus <math>\\text{P}_2</math>, <math>\\text{P}_3</math> represent the roots <math>\\cos\\tfrac{1}{3}(\\theta+2\\pi)+\\iota\\ \\sin\\ \\tfrac{1}{3}(\\theta+2\\pi)</math>, <math>\\cos\\ \\tfrac{1}{3}(\\theta+4\\pi)+\\iota\\ \\sin\\ \\tfrac{1}{3}(\\theta+4\\pi)</math> respectively. If <math>B</math> coincides with <math>A</math>, the problem is reduced to that of finding the three cube roots of unity. One will be represented by <math>A</math> and the others by the two angular points of an equilateral triangle, with <math>A</math> as one angular point, inscribed in the circle.\n\n[[File:eb1911 v27 p0293 c1f1.png|center|204px]]\n{{c|{{sc|Fig.}} 9.}}\n\n[[File:eb1911 v27 p0293 c1f2.png|center|156px]]\n{{c|{{sc|Fig.}} 10.}}\n\n'''''The <math>n</math>th Roots of Unity.''''' The problem of determining the values of the <math>n</math>th roots of unity is equivalent to the geometrical problem of inscribing a regular polygon of <math>n</math> sides in a circle. Gauss has shown in his ''Disquisitiones arithmeticae'' that this can always be done by the compass and ruler only when <math>n</math> is a prime of the form <math>2^p+1</math>. The determination of the <math>n</math>th root of any complex number requires in addition, for its geometrical solution, the division of an angle into <math>n</math> equal parts.\n\n'''''Factorizations.''''' 19. We are now in a position to factorize an expression of the form <math>x^n-(a+\\iota b)</math>. Using the values which we have obtained above for <math>(a+\\iota b)^{1/n}</math>, we have\n{{block center|<math>x^n-(a+\\iota b) = \\underset{s=0}{\\overset{s=n-1}{P}} \\left[x-r^{\\frac{1}{n}}\\left(\\cos\\frac{\\theta+2s\\pi}{n}+\\iota\\sin\\frac{\\theta+2s\\pi}{n}\\right)\\right].</math> (1)}}\nIf <math>b=0</math>, <math>a=1</math>, this becomes\n{{block center|<math>x^n-1 = \\underset{s=0}{\\overset{s=n-1}{P}} \\left[x-\\cos\\frac{2s\\pi}{n}-\\iota\\sin\\frac{2s\\pi}{n}\\right]</math>}}\n{{block center|<math>= (x-1)(x+1)\\underset{s=1}{\\overset{s=\\frac{1}{2}n-1}{P}} \\left(x-\\cos\\frac{2s\\pi}{n}\\pm\\iota\\sin\\frac{2s\\pi}{n}\\right)</math>}}\n{{block center|<math>= (x-1)(x+1)\\underset{s=1}{\\overset{s=\\frac{1}{2}n-1}{P}} \\left(x^2-2x\\cos\\frac{2s\\pi}{n}+1\\right)</math> (<math>n</math> even). (2) <math>x^n-1=(x-1)\\mathop{\\text{P}}_{s=1}^{s=\\frac{1}{2}(n-1)}\\left(x^2-2x\\cos\\frac{2s\\pi}{n}+1\\right)</math> (''n'' odd). (3)}}\nIf in (1) we put <math>a=-1</math>, <math>b=0</math>, and therefore <math>\\theta=\\pi</math>, we have\n{{block center|<math>x^n+1=\\mathop{\\text{P}}_{s=0}^{s=n-1}\\left[x-\\cos\\frac{\\overline{2s+1\\pi}}{n}-\\iota\\sin\\frac{\\overline{2s+1\\pi}}{n}\\right]</math>}}\n{{block center|<math>=\\mathop{\\text{P}}_{s=0}^{s=\\frac{1}{2}(n-2)}\\left[x^2-2x\\cos\\frac{\\overline{2s+1\\pi}}{n}+1\\right]</math> (''n'' even). (4)}}\n{{block center|<math>x^n+1=(x+1)\\mathop{\\text{P}}_{s=0}^{s=\\frac{1}{2}(n-3)}\\left[x^2-2x\\cos\\frac{\\overline{2s+1\\pi}}{n}+1\\right]</math> (''n'' odd). (5)}} Also <math>x^{2n}-2x^ny^n\\cos n\\theta+y^{2n}</math>\n\n{{block center|<math>=(x^n-y^n\\,\\overline{\\cos n\\theta+\\iota\\sin n\\theta})(x^n-y^n\\,\\overline{\\cos n\\theta-\\iota\\sin n\\theta})</math>}}\n\n{{block center|<math>=\\overset{s=n-1}{\\underset{s=0}{P}}\\left(x-y\\,\\overline{\\cos\\frac{\\theta+2s\\pi}{n}\\pm\\iota\\sin\\frac{\\theta+2s\\pi}{n}}\\right)</math>}}\n\n{{block center|<math>=\\overset{s=n-1}{\\underset{s=0}{P}}\\left[x^2-2xy\\cos\\theta+\\frac{2s\\pi}{n}+y^2\\right].</math> (6)}}\n\nAiry and Adams have given proofs of this theorem which do not involve the use of the symbol <math>\\iota</math> (see ''Camb. Phil. Trans.'', vol. xi).\n\nA large number of interesting theorems may be derived from De Moivre's theorem and the factorizations which we have deduced from it; we shall notice one of them.\n\n''Example of De Moivre's Theorem.''—In equation (6) put <math>y=1/x</math>, take logarithms, and then differentiate each side with respect to <math>x</math>, and we get\n\n{{block center|<math>\\frac{2n(x^{2n-1}-x^{-2n-1})}{x^{2n}-2\\cos n\\theta+x^{-2n}}=\\sum_{s=0}^{s=n-1}\\frac{2(x-x^{-3})}{x^2-2\\cos\\theta+\\frac{2s\\pi}{n}+x^{-2}}.</math>}}\n\nPut <math>x^2=a/b</math>, then we have the expression\n\n{{block center|<math>\\frac{n(a^{2n}-b^{2n})}{(a^2-b^2)(a^{2n}-2a^nb^n\\cos n\\theta+b^{2n})}</math>}}\n\nfor the sum of the series\n\n{{block center|<math>\\sum_{s=0}^{s=n-1}\\frac{1}{a^2-2ab\\cos\\overline{\\theta+\\frac{2s\\pi}{n}}+b^2}.</math>}}\n\n''The Exponential Series.''—20. Denoting the complex number <math>x+iy</math> by <math>z</math>, let us consider the series <math>1+z+z^2/2!+\\dots+z^n/n!+\\dots</math> This series converges uniformly and absolutely for all values of <math>z</math> whose moduli do not exceed an arbitrarily chosen positive number <math>\\text{R}</math>. Consequently the function <math>E(z)</math>, defined as the limiting sum of the above series, is continuous in every finite domain. The two series representing <math>E(z_1)</math> and <math>E(z_2)</math>, when multiplied together give the series represented by <math>E(z_1+z_2)</math>. In accordance with a known theorem, since the series for <math>E(z_1)</math> <math>E(z_2)</math> are absolutely convergent, we have <math>E(z_1)\\times E(z_2)=E(z_1+z_2)</math>. From this fundamental relation, we deduce at once that <math>\\{E(z)\\}^n=E(nz)</math>, where <math>n</math> is any positive integer. The number <math>E(1)</math>, the sum of the convergent series <math>1+1+1/2!+1/3!\\dots</math>, is usually denoted by <math>e</math>; its value can be shown to be <math>2{\\cdot}718281828459\\dots</math> It is known to be a transcendental number, ''i.e.'' it cannot be the root of any algebraical equation with rational coefficients; this was first established by Hermite. Writing <math>z=1</math>, we have <math>E(n)=e^n</math>, where <math>n</math> is a positive integer. If <math>z</math> has as a value a positive fraction <math>p/q</math>, we find that <math>\\{E(p/q)\\}^q=E(p)=e^p</math>; hence <math>\\text{E}(p/q)</math> is the real positive value of <math>e^{p/q}</math>. Again <math>E(-p/q)\\times E(p/q)=E(0)=1</math>, hence <math>E(-p/q)</math> is the real positive value of <math>e^{-p/q}</math>. It has been thus shown that for any real and rational number <math>x</math>, the value of <math>E(x)</math> is the principal value of <math>e^x</math>. This result can be extended to irrational values of <math>x</math>, if we assume that <math>e^x</math> is for such a value of <math>x</math> defined as the limit of the sequence <math>e^{x_1}, e^{x_2},\\dots</math>, where <math>x_1, x_2,\\dots</math> is a sequence of rational numbers of which <math>x</math> is the limit, since <math>E(x_1)</math>, <math>E(x_2)\\dots</math>, then converges to <math>E(x)</math>.\n\nNext consider <math>(1+z/m)^m</math>, where <math>m</math> is a positive integer. We have by the binomial theorem,\n{{block center|<math>\\left(1+\\frac{z}{m}\\right)^m=1+z+\\left(1-\\frac{1}{m}\\right)\\frac{z^2}{2!}+.+\\left(1-\\frac{1}{m}\\right)\\left(1-\\frac{2}{m}\\right)\\dots \\left(1-\\frac{s-1}{m}\\right)\\frac{z^s}{s!}+\\dots+\\left(\\frac{z}{m}\\right)^m.</math>}}\nAlso\n{{block center|<math>\\left(1-\\frac{1}{m}\\right)\\left(1-\\frac{2}{m}\\right)\\dots\\left(1-\\frac{s-1}{m}\\right)</math>}}\nlies between <math>1</math> and\n{{block center|<math>1+\\left(\\frac{1}{m}+\\frac{2}{m}+\\dots+\\frac{s-1}{m}\\right);</math>}}\nhence the product equals <math>1-\\theta_s s\\,.\\,s-1/2m</math> where <math>\\theta_s</math> is such that <math>0<\\theta_s<1</math>.\n\nWe have now\n{{block center|<math>\\left(1+\\frac{z}{m}\\right)^m=1+z+\\left(1-\\frac{1}{m}\\right)\\frac{z^2}{2!}+\\dots+\\left[1-\\theta_s\\frac{s\\,.\\,s-1}{2m}\\right]\\frac{z_s}{s!}+\\dots</math>}}\n{{block center|<math>+\\left[1-\\theta_m\\frac{m-1}{2}\\right]\\frac{z^m}{m!}</math>}}\n{{block center|<math>=1+z+z^2/2!+\\dots+z^s/s!+\\text{R}_s,</math>}}\nwhere\n{{block center|<math>\\text{R}_s=\\frac{z^{s+1}}{(s+1)!}+\\dots+\\frac{z^m}{m!}-\\frac{z^2}{2m}\\biggl\\{1+\\theta_3\\frac{2}{1}+\\dots</math>}}\n{{block center|<math>+\\theta_s\\frac{z^{s-2}}{(s-2)!}+\\dots+\\theta_m\\frac{z^{m-2}}{(m-2)!}\\biggr\\}.</math>}}\nSince the series for <math>E(z)</math> converges, <math>s</math> can be fixed so that for all values of <math>m>s</math> the modulus of <math>z^{s+1}/(s+1)!+\\dots+z^m/m!</math> is less than an arbitrarily chosen number <math>\\tfrac{1}{2}\\epsilon</math>. Also the modulus of <math>1+\\theta_3z/1+\\dots+\\theta_m z^{m-2}/(m-2)!</math> is less than that of <math>1+1\\,|z|/1!+|z|^2/2!+\\dots</math>, or of <math>e^{\\text{mod}\\,z}</math>, hence <math>\\text{mod}\\ \\text{R}_s<\\tfrac{1}{2}\\epsilon+(1/2m)</math>. <math>\\text{mod}\\ (z^2e^z)<\\epsilon</math>, if <math>m</math> be chosen sufficiently great. It follows that <math>\\lim_{m=\\infty}(1+z/m)^m=E(z)</math>, where <math>z</math> is any complex number. To evaluate <math>E(z)</math>, write <math>1+x/m=\\rho\\cos\\phi</math>, <math>y/m=\\rho\\sin\\phi</math>, then<noinclude><references/></noinclude>"
+}

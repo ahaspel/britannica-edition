@@ -1,0 +1,230 @@
+{
+ "volume": 26,
+ "page_number": 363,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n372",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n372",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.0,
+  "column_width": 1141,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     103,
+     133,
+     2324,
+     202
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     103,
+     202,
+     1172,
+     997
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     103,
+     997,
+     1172,
+     1291
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     103,
+     1305,
+     1172,
+     1336
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     103,
+     1336,
+     1172,
+     2324
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     103,
+     2324,
+     1172,
+     3138
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     202,
+     2324,
+     1296
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     1296,
+     2324,
+     1800
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1172,
+     1800,
+     2324,
+     2409
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     2416,
+     2324,
+     2446
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     2446,
+     2324,
+     3138
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|342|TACHEOMETRY|}}",
+   "c1s1": "inferred either from the vertical angle included between two well-defined points on the staff and the known distance between them, or by readings of the staff indicated by two fixed wires in the diaphragm of the telescope. The difference of height is computed from the angle of depression or elevation of a fixed point on the staff and the horizontal distance already obtained. Thus all the measurements requisite to locate a point both vertically and horizontally with reference to the point where the tacheometer is centred are determined by an observer at the instrument without any assistance beyond that of a man to hold the staff.\n\n'''''Subtense method.'''''\n\nThe simplest system of tacheometry employs a theodolite without additions of any kind, and the horizontal and vertical distances are obtained from the angles of depression or elevation of two well-defined points on a staff at known heights from the foot, the staff being held vertically. In fig. 1 let <math>\\text{T}</math> be the telescope of a theodolite centred over the point <math>\\text{C}</math>, and let <math>\\text{AB}</math> be the staff held truly vertical on the ground at <math>\\text{A}</math>. Let <math>\\text{P}</math> and <math>\\text{P}'</math> be the two well-defined marks on the face of the staff,",
+   "c1s2": "{{c|{{sc|Fig.}} 1.}}",
+   "c1s3": "both of them at known heights above <math>\\text{A}</math>, and enclosing a distance <math>\\text{PP}'=s</math> between them. Let <math>\\alpha</math> and <math>\\beta</math> be the measured angles of elevation of <math>\\text{P}</math> and <math>\\text{P}'</math>, and let <math>d</math> be the horizontal distance <math>\\text{TM}</math> of the staff from the theodolite, and <math>h</math> the height <math>\\text{PM}</math> of <math>\\text{P}</math> above <math>\\text{T}</math>. Then since\n{{block center|<math>\\text{P}'\\text{M}=d\\tan\\beta \\text{ and } \\text{PM}=d\\tan\\alpha,</math>}}\n{{block center|we have <math>s=\\text{P}'\\text{M}-\\text{PM}=d(\\tan\\beta-\\tan\\alpha).</math>}}\n{{block center|Therefore <math>d=\\frac{s}{\\tan\\beta-\\tan\\alpha};\\qquad h=\\frac{s\\tan\\alpha}{\\tan\\beta-\\tan\\alpha}.</math>}}\n\nIf <math>\\text{TC}</math>, the height of the rotation axis of the telescope above the ground, <math>=q</math>, and if <math>\\text{AP}=p</math>, then the height of <math>\\text{A}</math> above <math>\\text{C}</math> is <math>h-p+q</math>. If, as is usually the case, a number of points are determined from one station of the theodolite, and <math>h_1</math>, <math>h_2</math>, <math>h_3</math>, &c., be the values of <math>h</math> for the different points <math>\\text{A}_1</math>, <math>\\text{A}_2</math>, <math>\\text{A}_3</math>, &c., then the difference of level of <math>\\text{A}_1</math> and <math>\\text{A}_2</math> will be <math>h_2-h_1</math>, that of <math>\\text{A}_1</math> and <math>\\text{A}_3</math> will be <math>h_3-h_1</math>, and so on. To ensure the essential condition that the staff is held vertical, it is usually provided with a small circular spirit-level, and the staff-holder must always keep the bubble in the centre of its run. No graduation of the staff is required beyond two well-defined black lines across the white face at <math>\\text{P}</math> and <math>\\text{P}'</math>, but the marks can be very usefully supplemented by wings fastened on the two sides of the staff, having their tops at right angles to the staff, at the same height as the points <math>\\text{P}</math> and <math>\\text{P}'</math>, and forming a continuation of the black lines. A convenient length for the staff is 12 ft., with the point <math>\\text{P}</math> 2 ft. from the foot, and the point <math>\\text{P}'</math> at the top of the staff, so that <math>s=10</math> ft.",
+   "c1s4": "¶\nWith the above arrangement the staff can easily be read with a 5-inch theodolite at half a mile distance. But while it is frequently very useful to determine approximately points a long way off, the determinations will not be nearly so accurate as those of near points. Thus suppose that the distance of the staff is <math>d</math>, and the intercept on the staff is <math>s</math>, and suppose that the personal and instrumental error is <math>\\delta\\alpha</math> (<math>\\alpha</math> being the angle subtended by <math>s</math> at the telescope); then since\n{{block center|<math>d = \\frac{s}{\\tan\\alpha}, \\frac{d(d)}{d\\alpha} = -\\frac{s}{\\sin^2\\alpha} = -s\\frac{1+\\tan^2\\alpha}{\\tan^2\\alpha}</math>, or <math>\\frac{d(d)}{d\\alpha} = -s\\frac{1+s^2/d^2}{s^2/d^2} = -\\frac{1}{s}(s^2+d^2).</math>}}\nTherefore <math>\\delta d</math>, the distance error, is given by the equation <math>\\delta d = -\\delta\\alpha(s^2+d^2)/s</math>. But at distances of 5 chains or more <math>s^2</math> will be very small compared with <math>d^2</math> and may be neglected, so that <math>\\delta d = -\\delta\\alpha . d^2/s</math>. Since <math>\\delta\\alpha</math> may be considered as constant for all distances where the staff can be distinctly read, the distance error increases as the square of the distance. With small theodolites, where special care has not been given to the graduating and reading of the vertical circle, <math>\\delta\\alpha</math> will probably amount to about 20″. At a quarter of a mile excellent work can be done. In carrying on a traverse line by this method with stations 10 or 12 chains apart, the theodolite being set up at points about midway between the stations, the probable distance error in a mile is about 3½ ft., and the probable level error about 4 in. In 25 miles these probable errors would correspond to about 18 ft. and 20 in. respectively. This system of tacheometry is well adapted",
+   "c2s1": "for distant readings, and from the great simplicity of the observations there is little likelihood of errors in the field. But the reduction work is rather heavier than is the case with some of the tacheometers described below. Since the accuracy of the method depends entirely upon the accuracy with which the vertical angles are measured, it is advisable that the vertical circle should be as large as possible, very finely and accurately divided, and fitted with good verniers and microscopes.\n\nIn Eckhold's omnimeter the vertical circle of the theodolite is dispensed with, and a saving of reduction work is effected by reading, not the vertical angles themselves, but the tangents of the angles.\n\nIn the Ziegler-Hager tacheograph the tangents are read not horizontally but vertically, and the arrangement is as follows:—In fig. 2 <math>\\text{O}</math> is the axis of rotation of the telescope; <math>mn</math> is the axial line of a steel bolt, which carries on its top a knife-edge, on which the telescope rests by means of an agate plate. The bolt is carried by a slide in which it can be raised or lowered by a micrometer screw fitted with a graduated head. The slide plays between the vertical cheeks of a standard rigidly attached to the frame of the instrument, and it can be raised or lowered by a rack and pinion. The telescope, which rests on the knife-edge, follows the movement of the bolt. The slide carries on one side a vernier by which to read the divisions on a scale fixed to one of the vertical legs of the standard, and the zero point <math>o</math> of the scale is the point where the horizontal plane through <math>\\text{O}</math> cuts the scale when the plane-table or upper plate of the theodolite is truly level. The scale is graduated in divisions, each of which is the <math>\\frac{1}{100}</math>th part of the distance <math>\\text{O}o</math>, or <math>h</math>. The head of the micrometer screw which raises or lowers the steel bolt in the slide is graduated with a zero mark and with marks corresponding to a vertical movement of the knife-edge of <math>\\frac{1}{100}h, \\frac{1}{50}h</math>, &c. The instrument is used as follows:—Let <math>\\text{AB}</math> be the surface of the ground, and <math>\\text{BC}</math> a staff held vertically at <math>\\text{B}</math>, and let <math>\\text{CB}</math> be produced to meet the horizontal line through <math>\\text{O}</math> in <math>\\text{M}</math>. Let the head of the micrometer",
+   "c2s2": "screw be turned till the zero division is exactly under the pointer. Let <math>p</math> be the zero division on the staff, and let the slide and bolt be raised by the rack and pinion movement till the axis of the telescope is directed towards <math>p</math>. Let <math>v</math> be the point where the line <math>\\text{O}p</math> cuts <math>mn</math>, and let the tangent reading <math>ov</math> be taken on the scale. Then let the telescope be lowered by the micrometer screw in the slide till the division on the head of the screw marked 1 is exactly under the pointer; the knife-edge of the bolt has then been lowered through a distance <math>vt</math> equal to <math>h/100</math>. Let <math>q</math> be the point on the staff where the line <math>\\text{O}t</math> cuts it, and let the reading at <math>q</math> be taken. Then since the triangles between <math>\\text{O}</math> and <math>mn</math> and <math>\\text{O}</math> and <math>\\text{CM}</math> are similar to each other, and <math>vt</math> is <math>\\tfrac{1}{100}</math>th of <math>\\text{O}o</math>, therefore <math>pq</math> will be <math>\\tfrac{1}{100}</math>th of <math>\\text{OM}</math>, or <math>\\text{OM} = 100 \\times pq</math>. This gives the horizontal distance of the staff from <math>\\text{O}</math>, and the vertical distance <math>p\\text{M}</math> of <math>p</math> above <math>\\text{O}</math> is <math>\\text{OM} \\tan \\text{MO}p = \\text{OM} \\times ov/\\text{O}o</math>, and since <math>ov</math> has been read in",
+   "c2s3": "{{c|{{sc|Fig.}} 2.}}",
+   "c2s4": "parts of which <math>\\text{O}o</math> contains 100, the distance <math>p\\text{M}</math> is readily obtained. If the difference of elevation of <math>\\text{B}</math> and <math>\\text{A}</math> be required, the height <math>p\\text{M}</math> must be reduced by <math>p\\text{B}</math> and increased by <math>\\text{OA}</math>, both known quantities. By this arrangement the reduction work of the observations is rendered extremely simple, and can readily be performed in the field. The instrument is well adapted for use with the plane-table.\n\n'''''Stadia method.''''' Tacheometers in which the horizontal distance of the staff from the telescope is deduced from the readings of the staff indicated by two fixed wires in the diaphragm of the telescope will now be considered. In fig. 3 <math>\\text{BC}</math> is a diaphragm fixed in a tube having fine horizontal wires at <math>\\text{B}</math> and <math>\\text{C}</math>. Let the end <math>\\text{E}</math> of the tube be closed by a disk which has a minute hole at <math>\\text{E}</math>, to which the eye can be applied. If <math>\\text{P}</math> and <math>\\text{D}</math> be the points on a vertical staff at which the lines <math>\\text{EB}</math> and <math>\\text{EC}</math> are observed to cut the staff, so that the intercept <math>\\text{PD}</math> is known, then from similar triangles <math>\\text{ED} = (\\text{EC}/\\text{BC})\\text{PD}</math>, and since <math>\\text{EC}</math> and <math>\\text{BC}</math> are constant, <math>\\text{ED}</math> varies as <math>\\text{PD}</math>. If, for instance, <math>\\text{PD}</math> has a certain observed value when the staff is held at a certain distance <math>\\text{ED}</math>, and has exactly half that value when the staff is held at another distance <math>\\text{ED}'</math>, then the distance"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0363 c1f1.png",
+   "c2f1": "eb1911 v26 p0363 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     255,
+     1000,
+     1009,
+     1288
+    ],
+    "caption": [
+     577,
+     1305,
+     683,
+     1336
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     252,
+     998,
+     959,
+     1286
+    ]
+   },
+   {
+    "box": [
+     1152,
+     1799,
+     2208,
+     2409
+    ],
+    "caption": [
+     1618,
+     2416,
+     1724,
+     2446
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1091,
+     1794,
+     2227,
+     2408
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6624,
+    "output_tokens": 179,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 7825,
+    "output_tokens": 5704,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|342|TACHEOMETRY|}}</noinclude>inferred either from the vertical angle included between two well-defined points on the staff and the known distance between them, or by readings of the staff indicated by two fixed wires in the diaphragm of the telescope. The difference of height is computed from the angle of depression or elevation of a fixed point on the staff and the horizontal distance already obtained. Thus all the measurements requisite to locate a point both vertically and horizontally with reference to the point where the tacheometer is centred are determined by an observer at the instrument without any assistance beyond that of a man to hold the staff.\n\n'''''Subtense method.'''''\n\nThe simplest system of tacheometry employs a theodolite without additions of any kind, and the horizontal and vertical distances are obtained from the angles of depression or elevation of two well-defined points on a staff at known heights from the foot, the staff being held vertically. In fig. 1 let <math>\\text{T}</math> be the telescope of a theodolite centred over the point <math>\\text{C}</math>, and let <math>\\text{AB}</math> be the staff held truly vertical on the ground at <math>\\text{A}</math>. Let <math>\\text{P}</math> and <math>\\text{P}'</math> be the two well-defined marks on the face of the staff, both of them at known heights above <math>\\text{A}</math>, and enclosing a distance <math>\\text{PP}'=s</math> between them. Let <math>\\alpha</math> and <math>\\beta</math> be the measured angles of elevation of <math>\\text{P}</math> and <math>\\text{P}'</math>, and let <math>d</math> be the horizontal distance <math>\\text{TM}</math> of the staff from the theodolite, and <math>h</math> the height <math>\\text{PM}</math> of <math>\\text{P}</math> above <math>\\text{T}</math>. Then since\n{{block center|<math>\\text{P}'\\text{M}=d\\tan\\beta \\text{ and } \\text{PM}=d\\tan\\alpha,</math>}}\n{{block center|we have <math>s=\\text{P}'\\text{M}-\\text{PM}=d(\\tan\\beta-\\tan\\alpha).</math>}}\n{{block center|Therefore <math>d=\\frac{s}{\\tan\\beta-\\tan\\alpha};\\qquad h=\\frac{s\\tan\\alpha}{\\tan\\beta-\\tan\\alpha}.</math>}}\n\n[[File:eb1911 v26 p0363 c1f1.png|center|337px]]\n{{c|{{sc|Fig.}} 1.}}\n\nIf <math>\\text{TC}</math>, the height of the rotation axis of the telescope above the ground, <math>=q</math>, and if <math>\\text{AP}=p</math>, then the height of <math>\\text{A}</math> above <math>\\text{C}</math> is <math>h-p+q</math>. If, as is usually the case, a number of points are determined from one station of the theodolite, and <math>h_1</math>, <math>h_2</math>, <math>h_3</math>, &c., be the values of <math>h</math> for the different points <math>\\text{A}_1</math>, <math>\\text{A}_2</math>, <math>\\text{A}_3</math>, &c., then the difference of level of <math>\\text{A}_1</math> and <math>\\text{A}_2</math> will be <math>h_2-h_1</math>, that of <math>\\text{A}_1</math> and <math>\\text{A}_3</math> will be <math>h_3-h_1</math>, and so on. To ensure the essential condition that the staff is held vertical, it is usually provided with a small circular spirit-level, and the staff-holder must always keep the bubble in the centre of its run. No graduation of the staff is required beyond two well-defined black lines across the white face at <math>\\text{P}</math> and <math>\\text{P}'</math>, but the marks can be very usefully supplemented by wings fastened on the two sides of the staff, having their tops at right angles to the staff, at the same height as the points <math>\\text{P}</math> and <math>\\text{P}'</math>, and forming a continuation of the black lines. A convenient length for the staff is 12 ft., with the point <math>\\text{P}</math> 2 ft. from the foot, and the point <math>\\text{P}'</math> at the top of the staff, so that <math>s=10</math> ft.\n\nWith the above arrangement the staff can easily be read with a 5-inch theodolite at half a mile distance. But while it is frequently very useful to determine approximately points a long way off, the determinations will not be nearly so accurate as those of near points. Thus suppose that the distance of the staff is <math>d</math>, and the intercept on the staff is <math>s</math>, and suppose that the personal and instrumental error is <math>\\delta\\alpha</math> (<math>\\alpha</math> being the angle subtended by <math>s</math> at the telescope); then since\n{{block center|<math>d = \\frac{s}{\\tan\\alpha}, \\frac{d(d)}{d\\alpha} = -\\frac{s}{\\sin^2\\alpha} = -s\\frac{1+\\tan^2\\alpha}{\\tan^2\\alpha}</math>, or <math>\\frac{d(d)}{d\\alpha} = -s\\frac{1+s^2/d^2}{s^2/d^2} = -\\frac{1}{s}(s^2+d^2).</math>}}\nTherefore <math>\\delta d</math>, the distance error, is given by the equation <math>\\delta d = -\\delta\\alpha(s^2+d^2)/s</math>. But at distances of 5 chains or more <math>s^2</math> will be very small compared with <math>d^2</math> and may be neglected, so that <math>\\delta d = -\\delta\\alpha . d^2/s</math>. Since <math>\\delta\\alpha</math> may be considered as constant for all distances where the staff can be distinctly read, the distance error increases as the square of the distance. With small theodolites, where special care has not been given to the graduating and reading of the vertical circle, <math>\\delta\\alpha</math> will probably amount to about 20″. At a quarter of a mile excellent work can be done. In carrying on a traverse line by this method with stations 10 or 12 chains apart, the theodolite being set up at points about midway between the stations, the probable distance error in a mile is about 3½ ft., and the probable level error about 4 in. In 25 miles these probable errors would correspond to about 18 ft. and 20 in. respectively. This system of tacheometry is well adapted for distant readings, and from the great simplicity of the observations there is little likelihood of errors in the field. But the reduction work is rather heavier than is the case with some of the tacheometers described below. Since the accuracy of the method depends entirely upon the accuracy with which the vertical angles are measured, it is advisable that the vertical circle should be as large as possible, very finely and accurately divided, and fitted with good verniers and microscopes.\n\nIn Eckhold's omnimeter the vertical circle of the theodolite is dispensed with, and a saving of reduction work is effected by reading, not the vertical angles themselves, but the tangents of the angles.\n\nIn the Ziegler-Hager tacheograph the tangents are read not horizontally but vertically, and the arrangement is as follows:—In fig. 2 <math>\\text{O}</math> is the axis of rotation of the telescope; <math>mn</math> is the axial line of a steel bolt, which carries on its top a knife-edge, on which the telescope rests by means of an agate plate. The bolt is carried by a slide in which it can be raised or lowered by a micrometer screw fitted with a graduated head. The slide plays between the vertical cheeks of a standard rigidly attached to the frame of the instrument, and it can be raised or lowered by a rack and pinion. The telescope, which rests on the knife-edge, follows the movement of the bolt. The slide carries on one side a vernier by which to read the divisions on a scale fixed to one of the vertical legs of the standard, and the zero point <math>o</math> of the scale is the point where the horizontal plane through <math>\\text{O}</math> cuts the scale when the plane-table or upper plate of the theodolite is truly level. The scale is graduated in divisions, each of which is the <math>\\frac{1}{100}</math>th part of the distance <math>\\text{O}o</math>, or <math>h</math>. The head of the micrometer screw which raises or lowers the steel bolt in the slide is graduated with a zero mark and with marks corresponding to a vertical movement of the knife-edge of <math>\\frac{1}{100}h, \\frac{1}{50}h</math>, &c. The instrument is used as follows:—Let <math>\\text{AB}</math> be the surface of the ground, and <math>\\text{BC}</math> a staff held vertically at <math>\\text{B}</math>, and let <math>\\text{CB}</math> be produced to meet the horizontal line through <math>\\text{O}</math> in <math>\\text{M}</math>. Let the head of the micrometer screw be turned till the zero division is exactly under the pointer. Let <math>p</math> be the zero division on the staff, and let the slide and bolt be raised by the rack and pinion movement till the axis of the telescope is directed towards <math>p</math>. Let <math>v</math> be the point where the line <math>\\text{O}p</math> cuts <math>mn</math>, and let the tangent reading <math>ov</math> be taken on the scale. Then let the telescope be lowered by the micrometer screw in the slide till the division on the head of the screw marked 1 is exactly under the pointer; the knife-edge of the bolt has then been lowered through a distance <math>vt</math> equal to <math>h/100</math>. Let <math>q</math> be the point on the staff where the line <math>\\text{O}t</math> cuts it, and let the reading at <math>q</math> be taken. Then since the triangles between <math>\\text{O}</math> and <math>mn</math> and <math>\\text{O}</math> and <math>\\text{CM}</math> are similar to each other, and <math>vt</math> is <math>\\tfrac{1}{100}</math>th of <math>\\text{O}o</math>, therefore <math>pq</math> will be <math>\\tfrac{1}{100}</math>th of <math>\\text{OM}</math>, or <math>\\text{OM} = 100 \\times pq</math>. This gives the horizontal distance of the staff from <math>\\text{O}</math>, and the vertical distance <math>p\\text{M}</math> of <math>p</math> above <math>\\text{O}</math> is <math>\\text{OM} \\tan \\text{MO}p = \\text{OM} \\times ov/\\text{O}o</math>, and since <math>ov</math> has been read in parts of which <math>\\text{O}o</math> contains 100, the distance <math>p\\text{M}</math> is readily obtained. If the difference of elevation of <math>\\text{B}</math> and <math>\\text{A}</math> be required, the height <math>p\\text{M}</math> must be reduced by <math>p\\text{B}</math> and increased by <math>\\text{OA}</math>, both known quantities. By this arrangement the reduction work of the observations is rendered extremely simple, and can readily be performed in the field. The instrument is well adapted for use with the plane-table.\n\n[[File:eb1911 v26 p0363 c2f1.png|center|363px]]\n{{c|{{sc|Fig.}} 2.}}\n\n'''''Stadia method.''''' Tacheometers in which the horizontal distance of the staff from the telescope is deduced from the readings of the staff indicated by two fixed wires in the diaphragm of the telescope will now be considered. In fig. 3 <math>\\text{BC}</math> is a diaphragm fixed in a tube having fine horizontal wires at <math>\\text{B}</math> and <math>\\text{C}</math>. Let the end <math>\\text{E}</math> of the tube be closed by a disk which has a minute hole at <math>\\text{E}</math>, to which the eye can be applied. If <math>\\text{P}</math> and <math>\\text{D}</math> be the points on a vertical staff at which the lines <math>\\text{EB}</math> and <math>\\text{EC}</math> are observed to cut the staff, so that the intercept <math>\\text{PD}</math> is known, then from similar triangles <math>\\text{ED} = (\\text{EC}/\\text{BC})\\text{PD}</math>, and since <math>\\text{EC}</math> and <math>\\text{BC}</math> are constant, <math>\\text{ED}</math> varies as <math>\\text{PD}</math>. If, for instance, <math>\\text{PD}</math> has a certain observed value when the staff is held at a certain distance <math>\\text{ED}</math>, and has exactly half that value when the staff is held at another distance <math>\\text{ED}'</math>, then the distance<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,196 @@
+{
+ "volume": 28,
+ "page_number": 444,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri28chisrich/page/n452",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri28chisrich/page/n452",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": -0.05,
+  "column_width": 1133,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     176,
+     1,
+     2366,
+     245
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     176,
+     245,
+     1247,
+     1316
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     176,
+     1316,
+     1247,
+     2295
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     176,
+     2295,
+     1247,
+     3334
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1247,
+     245,
+     2366,
+     470
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1928,
+     470,
+     2366,
+     1181
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1928,
+     1184,
+     2366,
+     1217
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1247,
+     470,
+     1928,
+     1217
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1247,
+     1217,
+     2366,
+     3080
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1247,
+     3080,
+     2366,
+     3334
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|426|WAVE|}}",
+   "c1s1": "the more condensed portions of the wave gain continually on the less condensed, the tendency being apparently towards the production of a discontinuity, somewhat analogous to a “ bore ” in water-waves. Before this stage can be reached, however, dissipative forces (so far ignored), such as viscosity and thermal conduction, come into play. In practical acoustics the results are also modified by the diminution of amplitude due to spherical divergence.\n\n{{c|§ 2. ''Wave-Propagation in General.''}}\n\nWe have next to consider the processes of wave-propagation in two or three dimensions. The simplest case is that of air-waves. When terms of the second order in the velocities are neglected, the dynamical equations are\n{{block center|<math>\\rho_0\\frac{\\partial u}{\\partial t} = -\\frac{\\partial p}{\\partial x},\\ \\rho_0\\frac{\\partial v}{\\partial t} = -\\frac{\\partial p}{\\partial y},\\ \\rho_0\\frac{\\partial w}{\\partial t} = -\\frac{\\partial p}{\\partial z};</math> . . . (1)}}\nand the “ equation of continuity ” (see {{sc|Hydromechanics}}) is\n{{block center|<math>\\frac{\\partial \\rho}{\\partial t} + \\rho_0\\left(\\frac{\\partial u}{\\partial x} + \\frac{\\partial v}{\\partial y} + \\frac{\\partial w}{\\partial z}\\right) = 0.</math> . . . . (2)}}\nIf we write <math>\\rho = \\rho_0(1+s)</math>, <math>p = p_0+ks</math>, these may be written\n{{block center|<math>\\frac{\\partial u}{\\partial t} = -c^2\\frac{\\partial s}{\\partial x},\\ \\frac{\\partial v}{\\partial t} = -c^2\\frac{\\partial s}{\\partial y},\\ \\frac{\\partial w}{\\partial t} = -c^2\\frac{\\partial s}{\\partial z},</math> . . . (3)}}\nwhere <math>c</math> is given by § 1 (13), and\n{{block center|<math>\\frac{\\partial s}{\\partial t} = -\\left(\\frac{\\partial u}{\\partial x} + \\frac{\\partial v}{\\partial y} + \\frac{\\partial w}{\\partial z}\\right),</math> . . . . . (4)}}\nthe latter equation expressing that the condensation <math>s</math> is diminishing at a rate equal to the “ divergence ” of the vector <math>(u, v, w)</math> (see {{sc|Vector Analysis}}). Eliminating <math>u</math>, <math>v</math>, <math>w</math>, we obtain\n{{block center|<math>\\frac{\\partial^2 s}{\\partial t^2} = c^2\\nabla^2 s</math> . . . . . . (5)}}",
+   "c1s2": "where <math>\\nabla^2</math> stands for Laplace's operator <math>\\partial^2/\\partial x^2 + \\partial^2/\\partial y^2 + \\partial^2/\\partial z^2</math>. This, the general equation of sound-waves, appears to be due to L. Euler (1759). In the particular case where the disturbance is symmetrical with respect to a centre O, it takes the simpler form\n{{block center|<math>\\frac{\\partial^2(rs)}{\\partial t^2} = c^2\\frac{\\partial^2(rs)}{\\partial r^2},</math> . . . . . (6)}}\nwhere <math>r</math> denotes distance from O. It is easily deduced from (1) that in the case of a medium initially at rest the velocity <math>(u, v, w)</math> is now wholly radial. The solution of (6) is\n{{block center|<math>s = \\frac{f(ct-r)}{r} + \\frac{\\text{F}(ct+r)}{r},</math> . . . . (7)}}\nThis represents two spherical waves travelling outwards and inwards, respectively, with the velocity <math>c</math>, but there is now a progressive change of amplitude. Thus in the case of the diverging wave represented by the first term, the condensation in any particular part of the wave continually diminishes as <math>1/r</math> as the wave spreads. The potential energy per unit volume [§ 1 (5)] varies as <math>s^2</math>, and so diminishes in inverse proportion to the square of the distance from O. It may be shown that as in the case of plane waves the total energy of a diverging (or a converging) wave is half potential and half kinetic.\n\nThe solution of the general equation (5), first given by S. D. Poisson in 1819, expresses the value of <math>s</math> at any given point P at time <math>t</math>, in terms of the mean values of <math>s</math> and <math>\\dot{s}</math> at the instant <math>t=0</math> over a spherical surface of radius <math>ct</math> described with P as centre, viz.\n{{block center|<math>s_\\text{P} = \\frac{t}{4\\pi}\\int\\int\\text{F}(ct)d\\omega + \\frac{d}{dt}\\left[\\frac{t}{4\\pi}\\int\\int f(ct)d\\omega\\right],</math> . . (8)}}",
+   "c1s3": "where the integrations extend over the surface of the aforesaid sphere, <math>d\\omega</math> is the solid angle subtended at <math>\\text{P}</math> by an element of its surface, and <math>f(ct)</math>, <math>\\text{F}(ct)</math> respectively denote the original values of <math>s</math> and <math>\\dot{s}</math> at the position of the element. Hence, if the disturbance be originally confined to a limited region, the agitation at any point <math>\\text{P}</math> external to this region will begin after a time <math>r_1/c</math> and will cease after a time <math>r_2/c</math>, where <math>r_1</math>, <math>r_2</math> are the least and greatest distances of <math>\\text{P}</math> from the boundary of the region in question. The region occupied by the disturbance at any instant <math>t</math> is therefore delimited by the envelope of a family of spheres of radius <math>ct</math> described with the points of the original boundary as centres.\n\nOne remarkable point about waves diverging in three dimensions remains to be noticed. It easily appears from (3) that the value of the integral <math>\\int s\\,dt</math> at any point <math>\\text{P}</math>, taken over the whole time of transit of a wave, is independent of the position of <math>\\text{P}</math>, and therefore equal to zero, as is seen by taking <math>\\text{P}</math> at an infinite distance from the original seat of disturbance. This shows that a diverging wave necessarily contains both condensed and rarefied portions. If initially we have zero velocity everywhere, but a uniform condensation <math>s_0</math> throughout a spherical space of radius <math>a</math>, it is found that we have ultimately a diverging wave in the form of a spherical shell of thickness <math>2a</math>, and that the value of <math>s</math> within this shell varies from <math>\\tfrac{1}{2}s_0a/r</math> at the anterior face to <math>-\\tfrac{1}{2}s_0a/r</math> at the interior face, <math>r</math> denoting the mean radius of the shell.\n\nThe process of wave-propagation in ''two'' dimensions offers some peculiarities which are exemplified in cylindrical waves of sound, in waves on a uniform tense plane membrane, and in annular waves",
+   "c2s1": "on a horizontal sheet of water of (relatively) small depth. The equation of motion is in all these cases of the form\n{{block center|<math>\\frac{\\partial^2 s}{\\partial t^2} = c^2 \\nabla_1{}^2 s,</math> . . . . . (9)}}\nwhere <math>\\nabla_1{}^2 = \\partial^2/\\partial x^2 + \\partial^2/\\partial y^2</math>. In the case of the membrane <math>s</math> denotes",
+   "c2s2": "{{c|{{sc|Fig.}} 1.<sup>1</sup>}}",
+   "c2s3": "in the application to water-waves it represents the elevation of the surface above the undisturbed level. The solution of (9), even in the case of symmetry about the origin, is analytically much less simple than that of (6). It appears that the wave due to a transient local disturbance, even of the simplest type, is now not sharply defined in the rear, as it is in the front, but has an indefinitely prolonged \"tail.\" This is illustrated by the annexed figures which represent graphically the time-variations in the condensation <math>s</math> at a particular point, as a wave originating in a local condensation passes over this point. The curve A represents (in a typical case) the effect of a plane wave, B that of a cylindrical wave, and C that of a spherical wave. The changes of type from A to B and from B to C are accounted for by the increasing degree of mobility",
+   "c2s4": "of the medium.\n\nThe equations governing the displacements <math>u</math>, <math>v</math>, <math>w</math> of a uniform isotropic elastic solid medium are\n{{block center|<math>\\left.\\begin{aligned}\\rho\\frac{\\partial^2u}{\\partial t^2} &= (\\lambda+\\mu)\\frac{\\partial\\Delta}{\\partial x}+\\mu\\nabla^2u,\\\\ \\rho\\frac{\\partial^2v}{\\partial t^2} &= (\\lambda+\\mu)\\frac{\\partial\\Delta}{\\partial y}+\\mu\\nabla^2v,\\\\ \\rho\\frac{\\partial^2w}{\\partial t^2} &= (\\lambda+\\mu)\\frac{\\partial\\Delta}{\\partial z}+\\mu\\nabla^2w,\\end{aligned}\\right\\}</math> . . . . (10)}}\nwhere\n{{block center|<math>\\Delta = \\frac{\\partial u}{\\partial x}+\\frac{\\partial v}{\\partial y}+\\frac{\\partial w}{\\partial z}</math> . . . . (11)}}\nFrom these we derive by differentiation\n{{block center|<math>\\frac{\\partial^2\\Delta}{\\partial t^2} = a^2\\nabla^2\\Delta,</math> . . . . . . (12)}}\n{{block center|<math>\\frac{\\partial^2\\xi}{\\partial t^2} = b^2\\nabla^2\\xi,\\ \\frac{\\partial^2\\eta}{\\partial t^2} = b^2\\nabla^2\\eta,\\ \\frac{\\partial^2\\zeta}{\\partial t^2} = b^2\\nabla^2\\zeta,</math> . . . (13)}}\nwhere\n{{block center|<math>\\xi,\\ \\eta,\\ \\zeta = \\frac{\\partial w}{\\partial y}-\\frac{\\partial v}{\\partial z},\\ \\frac{\\partial u}{\\partial z}-\\frac{\\partial w}{\\partial x},\\ \\frac{\\partial v}{\\partial x}-\\frac{\\partial u}{\\partial y},</math> . . . (14)}}\nand\n{{block center|<math>a^2 = (\\lambda+2\\mu)/\\rho,\\ b^2 = \\mu/\\rho,</math> . . . . (15)}}\nas in § 1. It appears then that the “dilatation” <math>\\Delta</math> and the “rotations” <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> are propagated with the velocities <math>a</math>, <math>b</math>, respectively. By formulae analogous to (8) we can calculate the values of <math>\\Delta</math>, <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> at any instant in terms of the initial conditions. The subsequent determination of <math>u</math>, <math>v</math>, <math>w</math> is a merely analytical problem into which we do not enter; it is clear, however, that if the original disturbance be confined to a limited region we have ultimately two concentric spherical diverging waves. In the outer one of these, which travels with the velocity <math>a</math>, the rotations <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> vanish, and the wave is accordingly described as “irrotational,” or “condensational.” In the inner wave, which travels with the smaller velocity <math>b</math>, the dilatation <math>\\Delta</math> vanishes, and the wave is therefore characterized as “equivoluminal” or “distortional.” In the former wave the directions of vibration of the particles tend to become normal, and in the latter tangential, to the wave-front, as in the case of plane elastic waves (§ 1).\n\nThe problems of reflection and transmission which arise when a wave encounters the boundary of an elastic-solid medium, or the interface of two such media, are of interest chiefly in relation to the older theories of optics. It may, however, be worth while to remark that an irrotational or an equivoluminal wave does not in general give rise to a reflected (or transmitted) wave of single character; thus an equivoluminal wave gives rise to an irrotational as well as an equivoluminal reflected wave, and so on.\n\nFinally, in a limited elastic solid we may also have systems of waves of a different type. These travel ''over the surface'' with a definite velocity somewhat less than that of the equivoluminal waves above referred to; thus in an incompressible solid the velocity is <math>\\cdot 9554b</math>; in a solid such that <math>\\lambda = \\mu</math> it is <math>\\cdot 9194b</math>. The agitation due to these waves is confined to the immediate neighbourhood of the surface, diminishing exponentially with increasing depth. The theory of these surface waves was given by Lord Rayleigh in 1885. In the modern theory of earthquakes three phases of the disturbance",
+   "c2s5": "¶\n<sup>1</sup> Figures 1, 2, 4, 6, 7 and 8 are from Professor Horace Lamb's ''Hydrodynamics'', by permission of the Cambridge University Press."
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v28 p0444 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1943,
+     473,
+     2307,
+     1178
+    ],
+    "caption": [
+     2069,
+     1184,
+     2185,
+     1217
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1930,
+     440,
+     2268,
+     1179
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    3
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 5013,
+    "output_tokens": 93,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 9,
+    "input_tokens": 9457,
+    "output_tokens": 5155,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17316
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|426|WAVE|}}</noinclude>the more condensed portions of the wave gain continually on the less condensed, the tendency being apparently towards the production of a discontinuity, somewhat analogous to a “ bore ” in water-waves. Before this stage can be reached, however, dissipative forces (so far ignored), such as viscosity and thermal conduction, come into play. In practical acoustics the results are also modified by the diminution of amplitude due to spherical divergence.\n\n{{c|§ 2. ''Wave-Propagation in General.''}}\n\nWe have next to consider the processes of wave-propagation in two or three dimensions. The simplest case is that of air-waves. When terms of the second order in the velocities are neglected, the dynamical equations are\n{{block center|<math>\\rho_0\\frac{\\partial u}{\\partial t} = -\\frac{\\partial p}{\\partial x},\\ \\rho_0\\frac{\\partial v}{\\partial t} = -\\frac{\\partial p}{\\partial y},\\ \\rho_0\\frac{\\partial w}{\\partial t} = -\\frac{\\partial p}{\\partial z};</math> . . . (1)}}\nand the “ equation of continuity ” (see {{sc|Hydromechanics}}) is\n{{block center|<math>\\frac{\\partial \\rho}{\\partial t} + \\rho_0\\left(\\frac{\\partial u}{\\partial x} + \\frac{\\partial v}{\\partial y} + \\frac{\\partial w}{\\partial z}\\right) = 0.</math> . . . . (2)}}\nIf we write <math>\\rho = \\rho_0(1+s)</math>, <math>p = p_0+ks</math>, these may be written\n{{block center|<math>\\frac{\\partial u}{\\partial t} = -c^2\\frac{\\partial s}{\\partial x},\\ \\frac{\\partial v}{\\partial t} = -c^2\\frac{\\partial s}{\\partial y},\\ \\frac{\\partial w}{\\partial t} = -c^2\\frac{\\partial s}{\\partial z},</math> . . . (3)}}\nwhere <math>c</math> is given by § 1 (13), and\n{{block center|<math>\\frac{\\partial s}{\\partial t} = -\\left(\\frac{\\partial u}{\\partial x} + \\frac{\\partial v}{\\partial y} + \\frac{\\partial w}{\\partial z}\\right),</math> . . . . . (4)}}\nthe latter equation expressing that the condensation <math>s</math> is diminishing at a rate equal to the “ divergence ” of the vector <math>(u, v, w)</math> (see {{sc|Vector Analysis}}). Eliminating <math>u</math>, <math>v</math>, <math>w</math>, we obtain\n{{block center|<math>\\frac{\\partial^2 s}{\\partial t^2} = c^2\\nabla^2 s</math> . . . . . . (5)}} where <math>\\nabla^2</math> stands for Laplace's operator <math>\\partial^2/\\partial x^2 + \\partial^2/\\partial y^2 + \\partial^2/\\partial z^2</math>. This, the general equation of sound-waves, appears to be due to L. Euler (1759). In the particular case where the disturbance is symmetrical with respect to a centre O, it takes the simpler form\n{{block center|<math>\\frac{\\partial^2(rs)}{\\partial t^2} = c^2\\frac{\\partial^2(rs)}{\\partial r^2},</math> . . . . . (6)}}\nwhere <math>r</math> denotes distance from O. It is easily deduced from (1) that in the case of a medium initially at rest the velocity <math>(u, v, w)</math> is now wholly radial. The solution of (6) is\n{{block center|<math>s = \\frac{f(ct-r)}{r} + \\frac{\\text{F}(ct+r)}{r},</math> . . . . (7)}}\nThis represents two spherical waves travelling outwards and inwards, respectively, with the velocity <math>c</math>, but there is now a progressive change of amplitude. Thus in the case of the diverging wave represented by the first term, the condensation in any particular part of the wave continually diminishes as <math>1/r</math> as the wave spreads. The potential energy per unit volume [§ 1 (5)] varies as <math>s^2</math>, and so diminishes in inverse proportion to the square of the distance from O. It may be shown that as in the case of plane waves the total energy of a diverging (or a converging) wave is half potential and half kinetic.\n\nThe solution of the general equation (5), first given by S. D. Poisson in 1819, expresses the value of <math>s</math> at any given point P at time <math>t</math>, in terms of the mean values of <math>s</math> and <math>\\dot{s}</math> at the instant <math>t=0</math> over a spherical surface of radius <math>ct</math> described with P as centre, viz.\n{{block center|<math>s_\\text{P} = \\frac{t}{4\\pi}\\int\\int\\text{F}(ct)d\\omega + \\frac{d}{dt}\\left[\\frac{t}{4\\pi}\\int\\int f(ct)d\\omega\\right],</math> . . (8)}} where the integrations extend over the surface of the aforesaid sphere, <math>d\\omega</math> is the solid angle subtended at <math>\\text{P}</math> by an element of its surface, and <math>f(ct)</math>, <math>\\text{F}(ct)</math> respectively denote the original values of <math>s</math> and <math>\\dot{s}</math> at the position of the element. Hence, if the disturbance be originally confined to a limited region, the agitation at any point <math>\\text{P}</math> external to this region will begin after a time <math>r_1/c</math> and will cease after a time <math>r_2/c</math>, where <math>r_1</math>, <math>r_2</math> are the least and greatest distances of <math>\\text{P}</math> from the boundary of the region in question. The region occupied by the disturbance at any instant <math>t</math> is therefore delimited by the envelope of a family of spheres of radius <math>ct</math> described with the points of the original boundary as centres.\n\nOne remarkable point about waves diverging in three dimensions remains to be noticed. It easily appears from (3) that the value of the integral <math>\\int s\\,dt</math> at any point <math>\\text{P}</math>, taken over the whole time of transit of a wave, is independent of the position of <math>\\text{P}</math>, and therefore equal to zero, as is seen by taking <math>\\text{P}</math> at an infinite distance from the original seat of disturbance. This shows that a diverging wave necessarily contains both condensed and rarefied portions. If initially we have zero velocity everywhere, but a uniform condensation <math>s_0</math> throughout a spherical space of radius <math>a</math>, it is found that we have ultimately a diverging wave in the form of a spherical shell of thickness <math>2a</math>, and that the value of <math>s</math> within this shell varies from <math>\\tfrac{1}{2}s_0a/r</math> at the anterior face to <math>-\\tfrac{1}{2}s_0a/r</math> at the interior face, <math>r</math> denoting the mean radius of the shell.\n\nThe process of wave-propagation in ''two'' dimensions offers some peculiarities which are exemplified in cylindrical waves of sound, in waves on a uniform tense plane membrane, and in annular waves on a horizontal sheet of water of (relatively) small depth. The equation of motion is in all these cases of the form\n{{block center|<math>\\frac{\\partial^2 s}{\\partial t^2} = c^2 \\nabla_1{}^2 s,</math> . . . . . (9)}}\nwhere <math>\\nabla_1{}^2 = \\partial^2/\\partial x^2 + \\partial^2/\\partial y^2</math>. In the case of the membrane <math>s</math> denotes in the application to water-waves it represents the elevation of the surface above the undisturbed level. The solution of (9), even in the case of symmetry about the origin, is analytically much less simple than that of (6). It appears that the wave due to a transient local disturbance, even of the simplest type, is now not sharply defined in the rear, as it is in the front, but has an indefinitely prolonged \"tail.\" This is illustrated by the annexed figures which represent graphically the time-variations in the condensation <math>s</math> at a particular point, as a wave originating in a local condensation passes over this point. The curve A represents (in a typical case) the effect of a plane wave, B that of a cylindrical wave, and C that of a spherical wave. The changes of type from A to B and from B to C are accounted for by the increasing degree of mobility of the medium.\n\n[[File:eb1911 v28 p0444 c2f1.png|center|139px]]\n{{c|{{sc|Fig.}} 1.<sup>1</sup>}}\n\nThe equations governing the displacements <math>u</math>, <math>v</math>, <math>w</math> of a uniform isotropic elastic solid medium are\n{{block center|<math>\\left.\\begin{aligned}\\rho\\frac{\\partial^2u}{\\partial t^2} &= (\\lambda+\\mu)\\frac{\\partial\\Delta}{\\partial x}+\\mu\\nabla^2u,\\\\ \\rho\\frac{\\partial^2v}{\\partial t^2} &= (\\lambda+\\mu)\\frac{\\partial\\Delta}{\\partial y}+\\mu\\nabla^2v,\\\\ \\rho\\frac{\\partial^2w}{\\partial t^2} &= (\\lambda+\\mu)\\frac{\\partial\\Delta}{\\partial z}+\\mu\\nabla^2w,\\end{aligned}\\right\\}</math> . . . . (10)}}\nwhere\n{{block center|<math>\\Delta = \\frac{\\partial u}{\\partial x}+\\frac{\\partial v}{\\partial y}+\\frac{\\partial w}{\\partial z}</math> . . . . (11)}}\nFrom these we derive by differentiation\n{{block center|<math>\\frac{\\partial^2\\Delta}{\\partial t^2} = a^2\\nabla^2\\Delta,</math> . . . . . . (12)}}\n{{block center|<math>\\frac{\\partial^2\\xi}{\\partial t^2} = b^2\\nabla^2\\xi,\\ \\frac{\\partial^2\\eta}{\\partial t^2} = b^2\\nabla^2\\eta,\\ \\frac{\\partial^2\\zeta}{\\partial t^2} = b^2\\nabla^2\\zeta,</math> . . . (13)}}\nwhere\n{{block center|<math>\\xi,\\ \\eta,\\ \\zeta = \\frac{\\partial w}{\\partial y}-\\frac{\\partial v}{\\partial z},\\ \\frac{\\partial u}{\\partial z}-\\frac{\\partial w}{\\partial x},\\ \\frac{\\partial v}{\\partial x}-\\frac{\\partial u}{\\partial y},</math> . . . (14)}}\nand\n{{block center|<math>a^2 = (\\lambda+2\\mu)/\\rho,\\ b^2 = \\mu/\\rho,</math> . . . . (15)}}\nas in § 1. It appears then that the “dilatation” <math>\\Delta</math> and the “rotations” <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> are propagated with the velocities <math>a</math>, <math>b</math>, respectively. By formulae analogous to (8) we can calculate the values of <math>\\Delta</math>, <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> at any instant in terms of the initial conditions. The subsequent determination of <math>u</math>, <math>v</math>, <math>w</math> is a merely analytical problem into which we do not enter; it is clear, however, that if the original disturbance be confined to a limited region we have ultimately two concentric spherical diverging waves. In the outer one of these, which travels with the velocity <math>a</math>, the rotations <math>\\xi</math>, <math>\\eta</math>, <math>\\zeta</math> vanish, and the wave is accordingly described as “irrotational,” or “condensational.” In the inner wave, which travels with the smaller velocity <math>b</math>, the dilatation <math>\\Delta</math> vanishes, and the wave is therefore characterized as “equivoluminal” or “distortional.” In the former wave the directions of vibration of the particles tend to become normal, and in the latter tangential, to the wave-front, as in the case of plane elastic waves (§ 1).\n\nThe problems of reflection and transmission which arise when a wave encounters the boundary of an elastic-solid medium, or the interface of two such media, are of interest chiefly in relation to the older theories of optics. It may, however, be worth while to remark that an irrotational or an equivoluminal wave does not in general give rise to a reflected (or transmitted) wave of single character; thus an equivoluminal wave gives rise to an irrotational as well as an equivoluminal reflected wave, and so on.\n\nFinally, in a limited elastic solid we may also have systems of waves of a different type. These travel ''over the surface'' with a definite velocity somewhat less than that of the equivoluminal waves above referred to; thus in an incompressible solid the velocity is <math>\\cdot 9554b</math>; in a solid such that <math>\\lambda = \\mu</math> it is <math>\\cdot 9194b</math>. The agitation due to these waves is confined to the immediate neighbourhood of the surface, diminishing exponentially with increasing depth. The theory of these surface waves was given by Lord Rayleigh in 1885. In the modern theory of earthquakes three phases of the disturbance\n\n<sup>1</sup> Figures 1, 2, 4, 6, 7 and 8 are from Professor Horace Lamb's ''Hydrodynamics'', by permission of the Cambridge University Press.<noinclude><references/></noinclude>"
+}
