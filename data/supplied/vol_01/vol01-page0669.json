@@ -1,0 +1,132 @@
+{
+ "volume": 1,
+ "page_number": 669,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri01chisrich/page/n681",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri01chisrich/page/n681",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-06",
+  "angle": -0.2,
+  "column_width": 1193,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     0,
+     2273,
+     167
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     167,
+     1205,
+     1227
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     1227,
+     1205,
+     2284
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2284,
+     1205,
+     3106
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     167,
+     2273,
+     1027
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     1027,
+     2273,
+     2037
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     2037,
+     2273,
+     3106
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||ALGEBRAIC FORMS|629}}",
+   "c1s1": "vanish. From the above <math>\\text{D}_{pq}</math> is an operator of order <math>pq</math>, but it is convenient for some purposes to obtain its expression in the form of a number of terms, each of which denotes <math>pq</math> successive linear operations; to accomplish this write\n{{block center|<math>d_{pq} = \\sum a_{rs}\\frac{d}{a_{p+r,q+s}}</math>}}\nand note the general result <sup>1</sup>\n{{block center|<math>\\overline{exp}\\ (m_{10}d_{10}+m_{01}d_{01}+\\dots+m_{pq}d_{pq}+\\dots)</math>}}\n{{block center|<math>=exp\\ (\\text{M}_{10}d_{10}+\\text{M}_{01}d_{01}+\\dots+\\text{M}_{pq}d_{pq}+\\dots)</math>;}}\nwhere the multiplications on the left- and right-hand sides of the equation are symbolic and unsymbolic respectively, provided that <math>m_{pq}</math>, <math>\\text{M}_{pq}</math> are quantities which satisfy the relation\n{{block center|<math>exp\\ (\\text{M}_{10}\\xi+\\text{M}_{01}\\eta+\\dots+\\text{M}_{pq}\\xi^p\\eta^p+\\dots)</math>}}\n{{block center|<math>=1+m_{10}\\xi+m_{01}\\eta+\\dots+m_{pq}\\xi^p\\eta^q+\\dots</math>;}}\nwhere <math>\\xi</math>, <math>\\eta</math> are undetermined algebraic quantities. In the present particular case putting <math>m_{10}=\\mu</math>, <math>m_{01}=\\nu</math> and <math>m_{pq}=0</math> otherwise\n{{block center|<math>\\text{M}_{10}\\xi+\\text{M}_{01}\\eta+\\dots+\\text{M}_{pq}\\xi^p\\eta^q+\\dots=\\log\\ (1+\\mu\\xi+\\nu\\eta)</math>}}\nor\n{{block center|<math>\\text{M}_{pq}=(-)^{p+q-1}\\frac{(p+q-1)!}{p!q!}\\mu^p\\nu^q</math>;}}\nand the result is thus\n{{block center|<math>\\overline{exp}(\\mu d_{10}+\\nu d_{01})</math>}}\n{{block center|<math>=exp\\{\\mu d_{10}+\\nu d_{01}-\\frac{1}{2}(\\mu^2d_{20}+2\\mu\\nu d_{11}+\\nu^2d_{02})+\\dots\\}</math>}}\n{{block center|<math>=1+\\mu\\text{D}_{10}+\\nu\\text{D}_{01}+\\dots+\\mu^p\\nu^q\\text{D}_{pq}+\\dots</math>;}}\nand thence\n{{block center|<math>\\mu d_{10}+\\nu d_{01}-\\frac{1}{2}(\\mu^2d_{20}+2\\mu\\nu d_{11}+\\nu^2d_{02})+\\dots</math>}}\n{{block center|<math>=\\ \\log\\ (1+\\mu\\text{D}_{10}+\\nu\\text{D}_{01}+\\dots+\\mu^p\\nu^q\\text{D}_{pq}+\\dots)</math>.}}",
+   "c1s2": "From these formulae we derive two important relations, viz.\n{{block center|<math>(-)^{p+q-1}\\frac{(p+q-1)!}{p!q!}d_{pq} = \\sum_\\pi (-)^{\\Sigma\\pi-1}\\frac{(\\Sigma\\pi-1)!}{\\pi_1!\\pi_2!\\dots}\\text{D}^{\\pi_1}_{p_1q_1}\\text{D}^{\\pi_2}_{p_2q_2}\\dots,</math>}}\n{{block center|<math>(-)^{p+q-1}\\text{D}_{pq} = \\sum_\\pi \\left\\{\\frac{(p_1+q_1-1)!}{p_1!q_1!}\\right\\}^{\\pi_1}\\left\\{\\frac{(p_2+q_2-1)!}{p_2!q_2!}\\right\\}^{\\pi_2}\\dots</math>}}\n{{block center|<math>\\dots\\frac{(-)^{\\Sigma\\pi-1}}{\\pi_1!\\pi_2!\\dots}d^{\\pi_1}_{p_1q_1}d^{\\pi_2}_{p_2q_2}\\dots,</math>}}\nthe last written relation having, in regard to each term on the right-hand side, to do with <math>\\Sigma\\pi</math> successive linear operations. Recalling the formulae above which connect <math>s_{pq}</math> and <math>a_{pq}</math>, we see that <math>d_{pq}</math> and <math>\\text{D}_{pq}</math> are in co-relation with these quantities respectively, and may be said to be operations which correspond to the partitions <math>(pq)</math>, <math>(\\overline{10}^p\\overline{01}^q)</math> respectively. We might conjecture from this observation that every partition is in correspondence with some operation; this is found to be the case, and it has been shown (''loc. cit.'' p. 493) that the operation\n{{block center|<math>\\frac{1}{\\pi_1!}\\frac{1}{\\pi_2!}\\dots d^{\\pi_1}_{p_1q_1}d^{\\pi_2}_{p_2q_2}\\dots</math> (multiplication symbolic)}}\ncorresponds to the partition <math>(\\overline{p_1q_1}^{\\pi_1}\\,\\overline{p_2q_2}^{\\pi_2}\\dots)</math>. The partitions being taken as denoting symmetric functions we have complete correspondence between the algebras of quantity and operation, and from any algebraic formula we can at once write down an operation formula. This fact is of extreme importance in the theory of algebraic forms, and is easily representable whatever be the number of the systems of quantities.\n\nWe may remark the particular result\n{{block center|<math>(-)^{p+q-1}\\frac{(p+q-1)!}{p!q!}d_{pq}s_{pq} = \\text{D}_{pq}(\\overline{pq}) = 1;</math>}}",
+   "c1s3": "<math>d_{pq}</math> causes every other single part function to vanish, and must cause any monomial function to vanish which does not comprise one of the partitions of the biweight <math>\\overline{pq}</math> amongst its parts.\n\nSince\n{{block center|<math>d_{pq} = (-)^{p+q-1} \\frac{(p+q-1)!}{p!q!} \\frac{d}{ds_{pq}},</math>}}\nthe solutions of the partial differential equation <math>d_{pq} = 0</math> are the single bipart forms, omitting <math>s_{pq}</math>, and we have seen that the solutions of <math>\\text{D}_{pq} = 0</math> are those monomial functions in which the part <math>\\overline{pq}</math> is absent.\n\nOne more relation is easily obtained, viz.\n{{block center|<math>\\frac{d}{da_{pq}} = d_{pq} - h_{10}d_{p+1,q} - h_{01}d_{p,q+1} + \\dots + (-)^{r+s}h_{rs}d_{p+r,q+s} + \\dots.</math>}}\n\n{{sc|References for Symmetric Functions.}}—Albert Girard, ''Invention nouvelle en l'algèbre'' (Amsterdam, 1629); Thomas Waring, ''Meditationes Algebraicae'' (London, 1782); Lagrange, ''Mém. de l'acad. de Berlin'' (1768); Meyer-Hirsch, ''Sammlung von Aufgaben aus der Theorie der algebraischen Gleichungen'' (Berlin, 1809); Serret, ''Cours d'algèbre supérieure'', t. iii. (Paris, 1885); Unferdinger, ''Sitzungsber. d. Acad. d. Wissensch. i. Wien'', Bd. lx. (Vienna, 1869); L. Schläfli, \"Ueber die Resultante eines Systemes mehrerer algebraischen Gleichungen,\" ''Vienna Transactions'', t. iv. 1852; MacMahon, \"Memoirs on a New Theory of Symmetric Functions,\" ''American''\n\n{{smaller block|<sup>1</sup> ''Phil. Trans.'', 1890, p. 490.}}",
+   "c2s1": "''Journal of Mathematics'', Baltimore, Md. 1888–1890; “Memoir on Symmetric Functions of Roots of Systems of Equations,” ''Phil. Trans.'' 1890.\n\n{{c|III. {{sc|The Theory of Binary Forms}}}}\n\nA binary form of order <math>n</math> is a homogeneous polynomial of the <math>n</math>th degree in two variables. It may be written in the form\n{{block center|<math>ax^n_1+bx^{n-1}_1x_2+cx^{n-2}_1x^2_2+\\dots;</math>}}\nor in the form\n{{block center|<math>ax^n_1+\\binom{n}{1}bx^{n-1}_1x_2+\\binom{n}{2}cx^{n-2}_1x^2_2+\\dots,</math>}}\nwhich Cayley denotes by\n{{block center|<math>(a, b, c, \\dots)(x_1, x_2)^n</math>}}\n<math>\\binom{n}{1}</math>, <math>\\binom{n}{2}</math>... being a notation for the successive binomial coefficients <math>n</math>, <math>\\frac{1}{2}n(n-1)</math>,.... Other forms are\n{{block center|<math>ax^n_1+nbx^{n-1}_1x_2+n(n-1)cx^{n-2}_1x^2_2+\\dots,</math>}}\nthe binomial coefficients <math>\\binom{n}{s}</math> being replaced by <math>s!\\binom{n}{s}</math>, and\n{{block center|<math>ax^n_1+\\frac{1}{1!}bx^{n-1}_1x_2+\\frac{1}{2!}cx^{n-2}_1x^2_2+\\dots,</math>}}\nthe special convenience of which will appear later. For present purposes the form will be written\n{{block center|<math>\\overline{a}_0x^n_1+\\binom{n}{1}\\overline{a}_1x^{n-1}_1x_2+\\binom{n}{2}\\overline{a}_2x^{n-2}_1x^2_2+\\dots+\\overline{a}_nx^n_2,</math>}}",
+   "c2s2": "the notation adopted by German writers; the literal coefficients have a rule placed over them to distinguish them from umbral coefficients which are introduced almost at once. The coefficients <math>\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{a}_n</math>, <math>n+1</math> in number are arbitrary. If the form, sometimes termed a quantic, be equated to zero the <math>n+1</math> coefficients are equivalent to but <math>n</math>, since one can be made unity by division and the equation is to be regarded as one for the determination of the ratio of the variables.\n\nIf the variables of the quantic <math>f(x_1, x_2)</math> be subjected to the linear transformation\n{{block center|<math>x_1 = \\alpha_{11}\\xi_1 + \\alpha_{12}\\xi_2,</math>}}\n{{block center|<math>x_2 = \\alpha_{21}\\xi_1 + \\alpha_{22}\\xi_2,</math>}}\n<math>\\xi_1</math>, <math>\\xi_2</math> being new variables replacing <math>x_1</math>, <math>x_2</math> and the coefficients <math>\\alpha_{11}</math>, <math>\\alpha_{12}</math>, <math>\\alpha_{21}</math>, <math>\\alpha_{22}</math>, termed the coefficients of substitution (or of transformation), being constants, we arrive at a transformed quantic\n{{block center|<math>f(\\xi_1, \\xi_2) = \\bar{a}'_0\\xi^n_1 + \\binom{n}{1}\\bar{a}'_1\\xi^{n-1}_1\\xi_2 + \\binom{n}{2}\\bar{a}'_2\\xi^{n-2}_1\\xi_2 + \\dots + \\bar{a}'_n\\xi^n_2</math>}}\nin the new variables which is of the same order as the original quantic; the new coefficients <math>\\bar{a}'_0</math>, <math>\\bar{a}'_1</math>, <math>\\bar{a}'_2 \\dots \\bar{a}'_n</math> are linear functions of the original coefficients, and also linear functions of products, of the coefficients of substitution, of the ''nth'' degree.\n\nBy solving the equations of transformation we obtain\n{{block center|<math>r\\xi_1 = \\alpha_{22}x_1 - \\alpha_{12}x_2,</math>}}\n{{block center|<math>r\\xi_2 = -\\alpha_{21}x_1 + \\alpha_{11}x_2,</math>}}\n{{block center|where <math>r = \\begin{vmatrix} \\alpha_{11} & \\alpha_{12} \\\\ \\alpha_{21} & \\alpha_{22} \\end{vmatrix} = \\alpha_{11}\\alpha_{12} - \\alpha_{12}\\alpha_{21};</math>}}\n<math>r</math> is termed the determinant of substitution or modulus of transformation; we assure <math>x_1</math>, <math>x_2</math> to be independents, so that <math>r</math> must differ from zero.",
+   "c2s3": "¶\nIn the theory of forms we seek functions of the coefficients and variables of the original quantic which, save as to a power of the modulus of transformation, are equal to the like functions of the coefficients and variables of the transformed quantic. We may have such a function which does not involve the variables, viz.\n{{block center|<math>\\text{F}(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots \\bar{a}'_n) = r^\\lambda \\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{a}_n),</math>}}\nthe function <math>\\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{a}_n)</math> is then said to be an ''invariant'' of the quantic ''quâ'' linear transformation. If, however, <math>\\text{F}</math> involve as well the variables, viz.\n{{block center|<math>\\text{F}(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots ; \\xi_1, \\xi_2) = r^\\lambda \\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots ; x_1, x_2),</math>}}\nthe function <math>\\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots x_1, x_2)</math> is said to be a ''covariant'' of the quantic. The expression \"invariantive forms\" includes both invariants and covariants, and frequently also other analogous forms which will be met with. Occasionally the word \"invariants\" includes covariants; when this is so it will be implied by the text. Invariantive forms will be found to be homogeneous functions alike of the coefficients and of the variables. Instead of a single quantic we may have several\n{{block center|<math>f(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2 \\dots ; x_1, x_2), \\phi(\\bar{b}_0, \\bar{b}_1, \\bar{b}_2, \\dots ; x_1, x_2), \\dots</math>}}\nwhich have different coefficients, the same variables, and are of the same or different degrees in the variables; we may transform them all by the same substitution, so that they become\n{{block center|<math>f(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots ; \\xi_1, \\xi_2), \\phi(\\bar{b}'_0, \\bar{b}'_1, \\bar{b}'_2, \\dots ; \\xi_1, \\xi_2), \\dots.</math>}}\nIf then we find\n{{block center|<math>\\text{F}(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots \\bar{b}'_0, \\bar{b}'_1, \\bar{b}'_2, \\dots, \\dots ; \\xi_1, \\xi_2),</math>}}\n{{block center|<math>= r^\\lambda \\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{b}_0, \\bar{b}_1, \\bar{b}_2, \\dots, \\dots ; x_1, x_2),</math>}}"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 9509,
+    "output_tokens": 8724,
+    "cache_creation_input_tokens": 5772,
+    "cache_read_input_tokens": 7696
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||ALGEBRAIC FORMS|629}}</noinclude>vanish. From the above <math>\\text{D}_{pq}</math> is an operator of order <math>pq</math>, but it is convenient for some purposes to obtain its expression in the form of a number of terms, each of which denotes <math>pq</math> successive linear operations; to accomplish this write\n{{block center|<math>d_{pq} = \\sum a_{rs}\\frac{d}{a_{p+r,q+s}}</math>}}\nand note the general result <sup>1</sup>\n{{block center|<math>\\overline{exp}\\ (m_{10}d_{10}+m_{01}d_{01}+\\dots+m_{pq}d_{pq}+\\dots)</math>}}\n{{block center|<math>=exp\\ (\\text{M}_{10}d_{10}+\\text{M}_{01}d_{01}+\\dots+\\text{M}_{pq}d_{pq}+\\dots)</math>;}}\nwhere the multiplications on the left- and right-hand sides of the equation are symbolic and unsymbolic respectively, provided that <math>m_{pq}</math>, <math>\\text{M}_{pq}</math> are quantities which satisfy the relation\n{{block center|<math>exp\\ (\\text{M}_{10}\\xi+\\text{M}_{01}\\eta+\\dots+\\text{M}_{pq}\\xi^p\\eta^p+\\dots)</math>}}\n{{block center|<math>=1+m_{10}\\xi+m_{01}\\eta+\\dots+m_{pq}\\xi^p\\eta^q+\\dots</math>;}}\nwhere <math>\\xi</math>, <math>\\eta</math> are undetermined algebraic quantities. In the present particular case putting <math>m_{10}=\\mu</math>, <math>m_{01}=\\nu</math> and <math>m_{pq}=0</math> otherwise\n{{block center|<math>\\text{M}_{10}\\xi+\\text{M}_{01}\\eta+\\dots+\\text{M}_{pq}\\xi^p\\eta^q+\\dots=\\log\\ (1+\\mu\\xi+\\nu\\eta)</math>}}\nor\n{{block center|<math>\\text{M}_{pq}=(-)^{p+q-1}\\frac{(p+q-1)!}{p!q!}\\mu^p\\nu^q</math>;}}\nand the result is thus\n{{block center|<math>\\overline{exp}(\\mu d_{10}+\\nu d_{01})</math>}}\n{{block center|<math>=exp\\{\\mu d_{10}+\\nu d_{01}-\\frac{1}{2}(\\mu^2d_{20}+2\\mu\\nu d_{11}+\\nu^2d_{02})+\\dots\\}</math>}}\n{{block center|<math>=1+\\mu\\text{D}_{10}+\\nu\\text{D}_{01}+\\dots+\\mu^p\\nu^q\\text{D}_{pq}+\\dots</math>;}}\nand thence\n{{block center|<math>\\mu d_{10}+\\nu d_{01}-\\frac{1}{2}(\\mu^2d_{20}+2\\mu\\nu d_{11}+\\nu^2d_{02})+\\dots</math>}}\n{{block center|<math>=\\ \\log\\ (1+\\mu\\text{D}_{10}+\\nu\\text{D}_{01}+\\dots+\\mu^p\\nu^q\\text{D}_{pq}+\\dots)</math>.}} From these formulae we derive two important relations, viz.\n{{block center|<math>(-)^{p+q-1}\\frac{(p+q-1)!}{p!q!}d_{pq} = \\sum_\\pi (-)^{\\Sigma\\pi-1}\\frac{(\\Sigma\\pi-1)!}{\\pi_1!\\pi_2!\\dots}\\text{D}^{\\pi_1}_{p_1q_1}\\text{D}^{\\pi_2}_{p_2q_2}\\dots,</math>}}\n{{block center|<math>(-)^{p+q-1}\\text{D}_{pq} = \\sum_\\pi \\left\\{\\frac{(p_1+q_1-1)!}{p_1!q_1!}\\right\\}^{\\pi_1}\\left\\{\\frac{(p_2+q_2-1)!}{p_2!q_2!}\\right\\}^{\\pi_2}\\dots</math>}}\n{{block center|<math>\\dots\\frac{(-)^{\\Sigma\\pi-1}}{\\pi_1!\\pi_2!\\dots}d^{\\pi_1}_{p_1q_1}d^{\\pi_2}_{p_2q_2}\\dots,</math>}}\nthe last written relation having, in regard to each term on the right-hand side, to do with <math>\\Sigma\\pi</math> successive linear operations. Recalling the formulae above which connect <math>s_{pq}</math> and <math>a_{pq}</math>, we see that <math>d_{pq}</math> and <math>\\text{D}_{pq}</math> are in co-relation with these quantities respectively, and may be said to be operations which correspond to the partitions <math>(pq)</math>, <math>(\\overline{10}^p\\overline{01}^q)</math> respectively. We might conjecture from this observation that every partition is in correspondence with some operation; this is found to be the case, and it has been shown (''loc. cit.'' p. 493) that the operation\n{{block center|<math>\\frac{1}{\\pi_1!}\\frac{1}{\\pi_2!}\\dots d^{\\pi_1}_{p_1q_1}d^{\\pi_2}_{p_2q_2}\\dots</math> (multiplication symbolic)}}\ncorresponds to the partition <math>(\\overline{p_1q_1}^{\\pi_1}\\,\\overline{p_2q_2}^{\\pi_2}\\dots)</math>. The partitions being taken as denoting symmetric functions we have complete correspondence between the algebras of quantity and operation, and from any algebraic formula we can at once write down an operation formula. This fact is of extreme importance in the theory of algebraic forms, and is easily representable whatever be the number of the systems of quantities.\n\nWe may remark the particular result\n{{block center|<math>(-)^{p+q-1}\\frac{(p+q-1)!}{p!q!}d_{pq}s_{pq} = \\text{D}_{pq}(\\overline{pq}) = 1;</math>}} <math>d_{pq}</math> causes every other single part function to vanish, and must cause any monomial function to vanish which does not comprise one of the partitions of the biweight <math>\\overline{pq}</math> amongst its parts.\n\nSince\n{{block center|<math>d_{pq} = (-)^{p+q-1} \\frac{(p+q-1)!}{p!q!} \\frac{d}{ds_{pq}},</math>}}\nthe solutions of the partial differential equation <math>d_{pq} = 0</math> are the single bipart forms, omitting <math>s_{pq}</math>, and we have seen that the solutions of <math>\\text{D}_{pq} = 0</math> are those monomial functions in which the part <math>\\overline{pq}</math> is absent.\n\nOne more relation is easily obtained, viz.\n{{block center|<math>\\frac{d}{da_{pq}} = d_{pq} - h_{10}d_{p+1,q} - h_{01}d_{p,q+1} + \\dots + (-)^{r+s}h_{rs}d_{p+r,q+s} + \\dots.</math>}}\n\n{{sc|References for Symmetric Functions.}}—Albert Girard, ''Invention nouvelle en l'algèbre'' (Amsterdam, 1629); Thomas Waring, ''Meditationes Algebraicae'' (London, 1782); Lagrange, ''Mém. de l'acad. de Berlin'' (1768); Meyer-Hirsch, ''Sammlung von Aufgaben aus der Theorie der algebraischen Gleichungen'' (Berlin, 1809); Serret, ''Cours d'algèbre supérieure'', t. iii. (Paris, 1885); Unferdinger, ''Sitzungsber. d. Acad. d. Wissensch. i. Wien'', Bd. lx. (Vienna, 1869); L. Schläfli, \"Ueber die Resultante eines Systemes mehrerer algebraischen Gleichungen,\" ''Vienna Transactions'', t. iv. 1852; MacMahon, \"Memoirs on a New Theory of Symmetric Functions,\" ''American''\n\n{{smaller block|<sup>1</sup> ''Phil. Trans.'', 1890, p. 490.}} ''Journal of Mathematics'', Baltimore, Md. 1888–1890; “Memoir on Symmetric Functions of Roots of Systems of Equations,” ''Phil. Trans.'' 1890.\n\n{{c|III. {{sc|The Theory of Binary Forms}}}}\n\nA binary form of order <math>n</math> is a homogeneous polynomial of the <math>n</math>th degree in two variables. It may be written in the form\n{{block center|<math>ax^n_1+bx^{n-1}_1x_2+cx^{n-2}_1x^2_2+\\dots;</math>}}\nor in the form\n{{block center|<math>ax^n_1+\\binom{n}{1}bx^{n-1}_1x_2+\\binom{n}{2}cx^{n-2}_1x^2_2+\\dots,</math>}}\nwhich Cayley denotes by\n{{block center|<math>(a, b, c, \\dots)(x_1, x_2)^n</math>}}\n<math>\\binom{n}{1}</math>, <math>\\binom{n}{2}</math>... being a notation for the successive binomial coefficients <math>n</math>, <math>\\frac{1}{2}n(n-1)</math>,.... Other forms are\n{{block center|<math>ax^n_1+nbx^{n-1}_1x_2+n(n-1)cx^{n-2}_1x^2_2+\\dots,</math>}}\nthe binomial coefficients <math>\\binom{n}{s}</math> being replaced by <math>s!\\binom{n}{s}</math>, and\n{{block center|<math>ax^n_1+\\frac{1}{1!}bx^{n-1}_1x_2+\\frac{1}{2!}cx^{n-2}_1x^2_2+\\dots,</math>}}\nthe special convenience of which will appear later. For present purposes the form will be written\n{{block center|<math>\\overline{a}_0x^n_1+\\binom{n}{1}\\overline{a}_1x^{n-1}_1x_2+\\binom{n}{2}\\overline{a}_2x^{n-2}_1x^2_2+\\dots+\\overline{a}_nx^n_2,</math>}} the notation adopted by German writers; the literal coefficients have a rule placed over them to distinguish them from umbral coefficients which are introduced almost at once. The coefficients <math>\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{a}_n</math>, <math>n+1</math> in number are arbitrary. If the form, sometimes termed a quantic, be equated to zero the <math>n+1</math> coefficients are equivalent to but <math>n</math>, since one can be made unity by division and the equation is to be regarded as one for the determination of the ratio of the variables.\n\nIf the variables of the quantic <math>f(x_1, x_2)</math> be subjected to the linear transformation\n{{block center|<math>x_1 = \\alpha_{11}\\xi_1 + \\alpha_{12}\\xi_2,</math>}}\n{{block center|<math>x_2 = \\alpha_{21}\\xi_1 + \\alpha_{22}\\xi_2,</math>}}\n<math>\\xi_1</math>, <math>\\xi_2</math> being new variables replacing <math>x_1</math>, <math>x_2</math> and the coefficients <math>\\alpha_{11}</math>, <math>\\alpha_{12}</math>, <math>\\alpha_{21}</math>, <math>\\alpha_{22}</math>, termed the coefficients of substitution (or of transformation), being constants, we arrive at a transformed quantic\n{{block center|<math>f(\\xi_1, \\xi_2) = \\bar{a}'_0\\xi^n_1 + \\binom{n}{1}\\bar{a}'_1\\xi^{n-1}_1\\xi_2 + \\binom{n}{2}\\bar{a}'_2\\xi^{n-2}_1\\xi_2 + \\dots + \\bar{a}'_n\\xi^n_2</math>}}\nin the new variables which is of the same order as the original quantic; the new coefficients <math>\\bar{a}'_0</math>, <math>\\bar{a}'_1</math>, <math>\\bar{a}'_2 \\dots \\bar{a}'_n</math> are linear functions of the original coefficients, and also linear functions of products, of the coefficients of substitution, of the ''nth'' degree.\n\nBy solving the equations of transformation we obtain\n{{block center|<math>r\\xi_1 = \\alpha_{22}x_1 - \\alpha_{12}x_2,</math>}}\n{{block center|<math>r\\xi_2 = -\\alpha_{21}x_1 + \\alpha_{11}x_2,</math>}}\n{{block center|where <math>r = \\begin{vmatrix} \\alpha_{11} & \\alpha_{12} \\\\ \\alpha_{21} & \\alpha_{22} \\end{vmatrix} = \\alpha_{11}\\alpha_{12} - \\alpha_{12}\\alpha_{21};</math>}}\n<math>r</math> is termed the determinant of substitution or modulus of transformation; we assure <math>x_1</math>, <math>x_2</math> to be independents, so that <math>r</math> must differ from zero.\n\nIn the theory of forms we seek functions of the coefficients and variables of the original quantic which, save as to a power of the modulus of transformation, are equal to the like functions of the coefficients and variables of the transformed quantic. We may have such a function which does not involve the variables, viz.\n{{block center|<math>\\text{F}(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots \\bar{a}'_n) = r^\\lambda \\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{a}_n),</math>}}\nthe function <math>\\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{a}_n)</math> is then said to be an ''invariant'' of the quantic ''quâ'' linear transformation. If, however, <math>\\text{F}</math> involve as well the variables, viz.\n{{block center|<math>\\text{F}(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots ; \\xi_1, \\xi_2) = r^\\lambda \\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots ; x_1, x_2),</math>}}\nthe function <math>\\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots x_1, x_2)</math> is said to be a ''covariant'' of the quantic. The expression \"invariantive forms\" includes both invariants and covariants, and frequently also other analogous forms which will be met with. Occasionally the word \"invariants\" includes covariants; when this is so it will be implied by the text. Invariantive forms will be found to be homogeneous functions alike of the coefficients and of the variables. Instead of a single quantic we may have several\n{{block center|<math>f(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2 \\dots ; x_1, x_2), \\phi(\\bar{b}_0, \\bar{b}_1, \\bar{b}_2, \\dots ; x_1, x_2), \\dots</math>}}\nwhich have different coefficients, the same variables, and are of the same or different degrees in the variables; we may transform them all by the same substitution, so that they become\n{{block center|<math>f(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots ; \\xi_1, \\xi_2), \\phi(\\bar{b}'_0, \\bar{b}'_1, \\bar{b}'_2, \\dots ; \\xi_1, \\xi_2), \\dots.</math>}}\nIf then we find\n{{block center|<math>\\text{F}(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots \\bar{b}'_0, \\bar{b}'_1, \\bar{b}'_2, \\dots, \\dots ; \\xi_1, \\xi_2),</math>}}\n{{block center|<math>= r^\\lambda \\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{b}_0, \\bar{b}_1, \\bar{b}_2, \\dots, \\dots ; x_1, x_2),</math>}}<noinclude><references/></noinclude>"
+}

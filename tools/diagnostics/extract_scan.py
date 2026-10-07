@@ -9,62 +9,28 @@ Usage:
 """
 from wikikit.corpora import current_corpus
 import argparse
-import io
 import json
 import sys
-import zipfile
 from pathlib import Path
 
 from PIL import Image
 
 sys.path.insert(0, "src")
 from wikikit.export.pages import leaf_for_ws   # noqa: E402
+from eb1911.scans import leaf_image   # noqa: E402
 
-SCAN_DIR = Path("data/raw/ia_scans")
 OUT_DIR = current_corpus().derived("scans")
-
-def _ia_identifier(vol: int) -> str:
-    if vol in (3, 5, 6, 7, 8, 9, 11, 12, 13):
-        return f"encyclopaediabrit{vol:02d}chisrich"
-    elif vol == 20:
-        return "10689.10192"
-    else:
-        return f"encyclopaediabri{vol:02d}chisrich"
-
-
-def _find_zip(vol: int) -> Path | None:
-    ident = _ia_identifier(vol)
-    expected = SCAN_DIR / f"{ident}_jp2.zip"
-    if expected.exists():
-        return expected
-    for f in SCAN_DIR.iterdir():
-        if f.suffix == ".zip" and f"vol{vol:02d}" in f.name.lower():
-            return f
-    return None
 
 
 def extract_leaf(vol: int, leaf: int, out_name: str, width: int = 1200) -> Path | None:
-    """Extract a single leaf by its IA leaf number. Returns output path or None."""
+    """Extract a single leaf by its IA leaf number, downsampled to `width` for
+    the site. Returns output path or None."""
     out = OUT_DIR / out_name
     if out.exists() and out.stat().st_size > 0:
         return out
-
-    zip_path = _find_zip(vol)
-    if not zip_path:
-        print(f"  No JP2 zip for volume {vol}", file=sys.stderr)
-        return None
-
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-
     try:
-        z = zipfile.ZipFile(zip_path)
-        ident = zip_path.stem.replace("_jp2", "")
-        jp2_name = f"{ident}_jp2/{ident}_{leaf:04d}.jp2"
-        if jp2_name not in z.namelist():
-            print(f"  Leaf {leaf} not in {zip_path.name}", file=sys.stderr)
-            return None
-        jp2_data = z.read(jp2_name)
-        img = Image.open(io.BytesIO(jp2_data))
+        img = leaf_image(vol, leaf)
         if img.width > width:
             ratio = width / img.width
             img = img.resize((width, int(img.height * ratio)), Image.LANCZOS)

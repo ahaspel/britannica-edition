@@ -1,0 +1,144 @@
+{
+ "volume": 1,
+ "page_number": 672,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri01chisrich/page/n684",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri01chisrich/page/n684",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-06",
+  "angle": 0.05,
+  "column_width": 1165,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     117,
+     0,
+     2340,
+     198
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     198,
+     1187,
+     1284
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     1284,
+     1187,
+     2352
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     2352,
+     1187,
+     3333
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1187,
+     198,
+     2340,
+     1068
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1187,
+     1068,
+     2340,
+     2145
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1187,
+     2145,
+     2340,
+     3214
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1187,
+     3214,
+     2340,
+     3333
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|632|ALGEBRAIC FORMS|}}",
+   "c1s1": "¶\nEach term on the right-hand side may be shown by permutation of <math>a</math>, <math>b</math>, <math>c</math> to be the symbolical representation of the same covariant; they are equivalent symbolic products, and we may accordingly write\n{{block center|<math>2(ac)(bc)a^{n-1}_x b^{n-1}_x c^{n-2}_x = (ab)^2a^{n-2}_x b^{n-2}_x c^n_x,</math>}}\na relation which shows that the form on the left is the product of the two covariants\n{{block center|<math>(ab)^2a^{n-2}_x b^{n-2}_x</math> and <math>c^n_x</math>.}}\n\nThe identities are, in particular, of service in reducing symbolic products to standard forms. A symbolical expression may be always so transformed that the power of any determinant factor <math>(ab)</math> is even. For we may in any product interchange <math>a</math> and <math>b</math> without altering its signification; therefore\n{{block center|<math>(ab)^{2m+1}\\phi_1 = -(ab)^{2m+1}\\phi_2,</math>}}\nwhere <math>\\phi_1</math> becomes <math>\\phi_2</math> by the interchange, and hence\n{{block center|<math>(ab)^{2m+1}\\phi_1 = \\frac{1}{2}(ab)^{2m+1}(\\phi_1 - \\phi_2);</math>}}\nand identity (I.) will always result in transforming <math>\\phi_1 - \\phi_2</math> so as to make it divisible by <math>(ab)</math>.\n\n''Ex. gr.''\n{{block center|<math>(ab)(ac)b_xc_x = -(ab)(bc)a_xc_x</math>}}\n{{block center|<math>= \\frac{1}{2}(ab)c_x\\{(ac)b_x - (bc)a_x\\} = \\frac{1}{2}(ab)^2c^2_x;</math>}}\nso that the covariant of the quadratic on the left is half the product of the quadratic itself and its only invariant. To obtain the corresponding theorem concerning the general form of even order we multiply throughout by <math>(ab)^{2m-2}c^{2m-2}_x</math> and obtain\n{{block center|<math>(ab)^{2m-1}(ac)b_xc^{2m-1}_x = \\frac{1}{2}(ab)^{2m}c^{2m}_x.</math>}}",
+   "c1s2": "¶\nPaying attention merely to the determinant factors there is no form with one factor since <math>(ab)</math> vanishes identically. For two factors the standard form is <math>(ab)^2</math>; for three factors <math>(ab)^2(ac)</math>; for four factors <math>(ab)^4</math> and <math>(ab)^2(cd)^2</math>; for five factors <math>(ab)^4(ac)</math> and <math>(ab)^2(ac)(de)^2</math>; for six factors <math>(ab)^6</math>, <math>(ab)^2(bc)^2(ca)^2</math>, and <math>(ab)^2(cd)^2(ef)^2</math>. It will be a useful exercise for the reader to interpret the corresponding covariants of the general quantic, to show that some of them are simple powers or products of other covariants of lower degrees and order.\n\n''The Polar Process.''—The <math>\\mu^{th}</math> polar of <math>a^n_x</math> with regard to <math>y</math> is\n{{block center|<math>a^{n-\\mu}_x a^\\mu_y</math>,}}\n''i.e.'' <math>\\mu</math> of the symbolic factors of the form are replaced by <math>\\mu</math> others in which new variables <math>y_1</math>, <math>y_2</math> replace the old variables <math>x_1</math>, <math>x_2</math>. The operation of taking the polar results in a symbolic product, and the repetition of the process in regard to new cogredient sets of variables results in symbolic forms. It is therefore an invariant process. All the forms obtained are invariants in regard to linear transformations, in accordance with the same scheme of substitutions, of the several sets of variables.\n\nAn important associated operation is\n{{block center|<math>\\frac{\\partial^2}{\\partial x_1\\partial y_2} - \\frac{\\partial^2}{\\partial x_2\\partial y_1}</math>,}}\nwhich, operating upon any polar, causes it to vanish. Moreover, its operation upon any invariant form produces an invariant form.\n\nEvery symbolic product, involving several sets of cogredient variables, can be exhibited as a sum of terms, each of which is a polar multiplied by a product of powers of the determinant factors\n{{block center|<math>(xy), (xz), (yz), \\dots</math>}}\n\n''Transvection.''—We have seen that <math>(ab)</math> is a simultaneous invariant of the two different linear forms <math>a_x</math>, <math>b_x</math>, and we observe that <math>(ab)</math> is equivalent to",
+   "c1s3": "{{block center|<math>\\frac{\\partial f}{\\partial x_1}\\frac{\\partial \\phi}{\\partial x_2} - \\frac{\\partial f}{\\partial x_2}\\frac{\\partial \\phi}{\\partial x_1}</math>}}\nwhere <math>f = a_x</math>, <math>\\phi = b_x</math>.\n\nIf <math>f = a^m_x</math>, <math>\\phi = b^n_x</math> be any two binary forms, we generalize by forming the function\n{{block center|<math>\\frac{(m-k)!}{m!}\\,\\frac{(n-k)!}{n!}\\left(\\frac{\\partial f}{\\partial x_1}\\frac{\\partial \\phi}{\\partial x_2} - \\frac{\\partial f}{\\partial x_2}\\frac{\\partial \\phi}{\\partial x_1}\\right)^k</math>.}}\n\nThis is called the <math>k^{th}</math> transvectant of <math>f</math> over <math>\\phi</math>; it may be conveniently denoted by\n{{block center|<math>(f, \\phi)^k</math>.}}\nObserving that\n{{block center|<math>(a^m_x, b^n_x)^k = (ab)^k a^{m-k} b^{n-k}_x</math>,}}\nit is clear that the <math>k^{th}</math> transvectant is a simultaneous covariant of the two forms.\n\nIt has been shown by Gordan that every symbolic product is expressible as a sum of transvectants.\n\nIf <math>m \\geqq n</math> there are <math>n+1</math> transvectants corresponding to the values <math>0, 1, 2, \\dots n</math> of <math>k</math>; if <math>k = 0</math> we have the product of the two forms, and for all values of <math>k > n</math> the transvectants vanish. In general we may have any two forms\n{{block center|<math>\\phi^p_x = (\\phi_1 x_1 + \\phi_2 x_2)^p,\\ \\psi^q_x = (\\psi_1 x_1 + \\psi_2 x_2)^q</math>,}}",
+   "c2s1": "<math>\\phi_1</math>, <math>\\phi_2</math>, <math>\\psi_1</math>, <math>\\psi_2</math> being the umbrae, as usual, and for the <math>k^{th}</math> transvectant we have\n{{block center|<math>(\\phi^p_x, \\psi^q_x)^k = (\\phi\\psi)^k\\phi^{p-k}_x\\psi^{q-k}_x</math>,}}\na simultaneous covariant of the two forms. We may suppose <math>\\phi^p_x</math>, <math>\\psi^q_x</math> to be any two covariants appertaining to a system, and the process of transvection supplies a means of proceeding from them to other covariants.\n\nThe two forms <math>a^m_x</math>, <math>b^n_x</math>, or <math>\\phi^p_x</math>, <math>\\psi^q_x</math>, may be identical; we then have the <math>k^{th}</math> transvectant of a form over itself which may, or may not, vanish identically; and, in the latter case, is a covariant of the single form. It is obvious that, when <math>k</math> is uneven, the <math>k^{th}</math> transvectant of a form over itself ''does'' vanish. We have seen that transvection is equivalent to the performance of partial differential operations upon the two forms, but, practically, we may regard the process as merely substituting <math>(ab)^k</math>, <math>(\\phi\\psi)^k</math> for <math>a^k_xb^k_x</math>, <math>\\phi^k_x\\psi^k_x</math> respectively in the symbolic product subjected to transvection. It is essentially an operation performed upon the product of two forms. If, then, we require the transvectants of the two forms <math>f+\\lambda f'</math>, <math>\\phi+\\mu\\phi'</math>, we take their product\n{{block center|<math>f\\phi+\\lambda f'\\phi+\\mu f\\phi'+\\lambda\\mu f'\\phi'</math>,}}\nand the <math>k^{th}</math> transvectant is simply obtained by operating upon each term separately, viz.\n{{block center|<math>(f, \\phi)^k+\\lambda(f', \\phi)^k+\\mu(f, \\phi')^k+\\lambda\\mu(f', \\phi')^k</math>;}}",
+   "c2s2": "and, moreover, if we require to find the <math>k^{th}</math> transvectant of one linear system of forms over another we have merely to multiply the two systems, and take the <math>k^{th}</math> transvectant of the separate products.\n\nThe process of transvection is connected with the operations <math>\\Omega</math>; for\n\n{{block center|<math>\\Omega^k (a^m_x b^n_y) = (ab)^k a^{m-k}_x b^{n-k}_y</math>;}}\n\n{{block center|or <math>\\Omega^k (a^m_x b^n_y)_{y=x} = (f, \\phi)^k</math>;}}\n\nso also is the polar process, for since\n\n{{block center|<math>f^k_y = a^{m-k}_x b^k_y,\\ \\phi^k_y = b^{n-k}_x b^k_y</math>,}}\n\nif we take the <math>k^{th}</math> transvectant of <math>f^k_y</math> over <math>\\phi^k_y</math>, regarding <math>y_1</math>, <math>y_2</math> as the variables,\n\n{{block center|<math>(f^k_y, \\phi^k_y)^k = (ab)^k a^{m-k}_x b^{n-k}_x = (f, \\phi)^k</math>;}}\n\nor the <math>k^{th}</math> transvectant of the <math>k^{th}</math> polars, in regard to <math>y</math>, is equal to the <math>k^{th}</math> transvectant of the forms. Moreover, the <math>k^{th}</math> transvectant <math>(ab)^k a^{m-k}_x b^{n-k}_x</math> is derivable from the <math>k^{th}</math> polar of <math>a^m_x</math>, viz. <math>a^{m-k}_x a^k_y</math> by substituting for <math>y_1</math>, <math>y_2</math> the cogredient quantities <math>b_2, -b_1</math>, and multiplying by <math>b^{n-k}_x</math>.\n\n''First and Second Transvectants.''—A few words must be said about the first two transvectants as they are of exceptional interest. Since, if <math>f = a^m_n</math>, <math>\\phi = b^n_x</math>,\n\n{{block center|<math>(f, \\phi)^1 = \\frac{1}{mn}\\left(\\frac{\\partial f}{\\partial x_1}\\frac{\\partial \\phi}{\\partial x_2} - \\frac{\\partial f}{\\partial x_2}\\frac{\\partial \\phi}{\\partial x_1}\\right) = (ab)a^{m-1}_x b^{n-1}_x = \\text{J}</math>,}}\n\nthe first transvectant differs but by a numerical factor from the Jacobian or functional determinant, of the two forms. We can find an expression for the first transvectant of <math>(f, \\phi)^1</math> over another form <math>c^p</math>.\n\nFor",
+   "c2s3": "{{block center|<math>(m+n)(f,\\phi)^1_y = nf.\\phi^1_y + mf^1_y.\\phi,</math>}}\nand\n{{block center|<math>f,\\phi^1_y - f_y.\\phi = (a_x b_y - a_y b_x)\\, a_x^{m-1} b_x^{n-1} = (xy)(f,\\phi)^1;</math>}}\n{{block center|<math>\\therefore (f,\\phi)^1 = f^1_y.\\phi + \\frac{n}{m+n}(xy)(f,\\phi)^1.</math>}}\n\nPut <math>m-1</math> for <math>m</math>, <math>n-1</math> for <math>n</math>, and multiply through by <math>(ab)</math>; then\n{{block center|<math>\\{(f,\\phi)\\}^1_y = (ab)a_x^{m-2}a_y b_x^{n-1} + \\frac{n-1}{m+n-2}(xy)(f,\\phi)^2,</math>}}\n{{block center|<math>= (ab)a_x^{m-1}b_x^{n-2}b_y - \\frac{m-1}{m+n-2}(xy)(f,\\phi)^2.</math>}}\n\nMultiply by <math>c_x^{p-1}</math> and for <math>y_1</math>, <math>y_2</math> write <math>c_2</math>, <math>-c_1</math>; then the right-hand side becomes\n{{block center|<math>(ab)(bc)a_x^{m-1}b_x^{n-2}c_x^{p-1} + \\frac{m-1}{m+n-2}c_x^p(f,\\phi)^2,</math>}}\nof which the first term, writing <math>c_x^p = \\psi</math>, is\n{{block center|<math>a_x^{m-2}b_x^{n-2}c_x^{p-2}(ab)(bc)a_x c_x</math>}}\n{{block center|<math>= -\\frac{1}{2}a_x^{m-2}b_x^{n-2}c_x^{p-2}\\left\\{(bc)^2a_x^2 + (ab)^2c_x^2 - (ac)^2b_x^2\\right\\}</math>}}\n{{block center|<math>= -\\frac{1}{2}\\left\\{a_x^m(bc)^2b_x^{n-2}c_x^{p-2} + c_x^p(ab)^2a_x^{m-2}b_x^{n-2} - b_x^n(ac)^2a_x^{m-2}c_x^{p-2}\\right\\}</math>}}\n{{block center|<math>= -\\frac{1}{2}\\left\\{(\\phi,\\psi)^2.f + (f,\\phi)^2.\\psi - (f,\\psi)^2.\\phi\\right\\};</math>}}\nand, if <math>(f,\\phi)^1 = k_x^{m+n-2}</math>,\n{{block center|<math>\\left\\{(f,\\phi)^1\\right\\}^1_y.c_x^{p-1} = k_x^{m+n-3}k_y c_x^{p-1};</math>}}",
+   "c2s4": "````\n````"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 10121,
+    "output_tokens": 8004,
+    "cache_creation_input_tokens": 9620,
+    "cache_read_input_tokens": 5772
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|632|ALGEBRAIC FORMS|}}</noinclude>Each term on the right-hand side may be shown by permutation of <math>a</math>, <math>b</math>, <math>c</math> to be the symbolical representation of the same covariant; they are equivalent symbolic products, and we may accordingly write\n{{block center|<math>2(ac)(bc)a^{n-1}_x b^{n-1}_x c^{n-2}_x = (ab)^2a^{n-2}_x b^{n-2}_x c^n_x,</math>}}\na relation which shows that the form on the left is the product of the two covariants\n{{block center|<math>(ab)^2a^{n-2}_x b^{n-2}_x</math> and <math>c^n_x</math>.}}\n\nThe identities are, in particular, of service in reducing symbolic products to standard forms. A symbolical expression may be always so transformed that the power of any determinant factor <math>(ab)</math> is even. For we may in any product interchange <math>a</math> and <math>b</math> without altering its signification; therefore\n{{block center|<math>(ab)^{2m+1}\\phi_1 = -(ab)^{2m+1}\\phi_2,</math>}}\nwhere <math>\\phi_1</math> becomes <math>\\phi_2</math> by the interchange, and hence\n{{block center|<math>(ab)^{2m+1}\\phi_1 = \\frac{1}{2}(ab)^{2m+1}(\\phi_1 - \\phi_2);</math>}}\nand identity (I.) will always result in transforming <math>\\phi_1 - \\phi_2</math> so as to make it divisible by <math>(ab)</math>.\n\n''Ex. gr.''\n{{block center|<math>(ab)(ac)b_xc_x = -(ab)(bc)a_xc_x</math>}}\n{{block center|<math>= \\frac{1}{2}(ab)c_x\\{(ac)b_x - (bc)a_x\\} = \\frac{1}{2}(ab)^2c^2_x;</math>}}\nso that the covariant of the quadratic on the left is half the product of the quadratic itself and its only invariant. To obtain the corresponding theorem concerning the general form of even order we multiply throughout by <math>(ab)^{2m-2}c^{2m-2}_x</math> and obtain\n{{block center|<math>(ab)^{2m-1}(ac)b_xc^{2m-1}_x = \\frac{1}{2}(ab)^{2m}c^{2m}_x.</math>}}\n\nPaying attention merely to the determinant factors there is no form with one factor since <math>(ab)</math> vanishes identically. For two factors the standard form is <math>(ab)^2</math>; for three factors <math>(ab)^2(ac)</math>; for four factors <math>(ab)^4</math> and <math>(ab)^2(cd)^2</math>; for five factors <math>(ab)^4(ac)</math> and <math>(ab)^2(ac)(de)^2</math>; for six factors <math>(ab)^6</math>, <math>(ab)^2(bc)^2(ca)^2</math>, and <math>(ab)^2(cd)^2(ef)^2</math>. It will be a useful exercise for the reader to interpret the corresponding covariants of the general quantic, to show that some of them are simple powers or products of other covariants of lower degrees and order.\n\n''The Polar Process.''—The <math>\\mu^{th}</math> polar of <math>a^n_x</math> with regard to <math>y</math> is\n{{block center|<math>a^{n-\\mu}_x a^\\mu_y</math>,}}\n''i.e.'' <math>\\mu</math> of the symbolic factors of the form are replaced by <math>\\mu</math> others in which new variables <math>y_1</math>, <math>y_2</math> replace the old variables <math>x_1</math>, <math>x_2</math>. The operation of taking the polar results in a symbolic product, and the repetition of the process in regard to new cogredient sets of variables results in symbolic forms. It is therefore an invariant process. All the forms obtained are invariants in regard to linear transformations, in accordance with the same scheme of substitutions, of the several sets of variables.\n\nAn important associated operation is\n{{block center|<math>\\frac{\\partial^2}{\\partial x_1\\partial y_2} - \\frac{\\partial^2}{\\partial x_2\\partial y_1}</math>,}}\nwhich, operating upon any polar, causes it to vanish. Moreover, its operation upon any invariant form produces an invariant form.\n\nEvery symbolic product, involving several sets of cogredient variables, can be exhibited as a sum of terms, each of which is a polar multiplied by a product of powers of the determinant factors\n{{block center|<math>(xy), (xz), (yz), \\dots</math>}}\n\n''Transvection.''—We have seen that <math>(ab)</math> is a simultaneous invariant of the two different linear forms <math>a_x</math>, <math>b_x</math>, and we observe that <math>(ab)</math> is equivalent to {{block center|<math>\\frac{\\partial f}{\\partial x_1}\\frac{\\partial \\phi}{\\partial x_2} - \\frac{\\partial f}{\\partial x_2}\\frac{\\partial \\phi}{\\partial x_1}</math>}}\nwhere <math>f = a_x</math>, <math>\\phi = b_x</math>.\n\nIf <math>f = a^m_x</math>, <math>\\phi = b^n_x</math> be any two binary forms, we generalize by forming the function\n{{block center|<math>\\frac{(m-k)!}{m!}\\,\\frac{(n-k)!}{n!}\\left(\\frac{\\partial f}{\\partial x_1}\\frac{\\partial \\phi}{\\partial x_2} - \\frac{\\partial f}{\\partial x_2}\\frac{\\partial \\phi}{\\partial x_1}\\right)^k</math>.}}\n\nThis is called the <math>k^{th}</math> transvectant of <math>f</math> over <math>\\phi</math>; it may be conveniently denoted by\n{{block center|<math>(f, \\phi)^k</math>.}}\nObserving that\n{{block center|<math>(a^m_x, b^n_x)^k = (ab)^k a^{m-k} b^{n-k}_x</math>,}}\nit is clear that the <math>k^{th}</math> transvectant is a simultaneous covariant of the two forms.\n\nIt has been shown by Gordan that every symbolic product is expressible as a sum of transvectants.\n\nIf <math>m \\geqq n</math> there are <math>n+1</math> transvectants corresponding to the values <math>0, 1, 2, \\dots n</math> of <math>k</math>; if <math>k = 0</math> we have the product of the two forms, and for all values of <math>k > n</math> the transvectants vanish. In general we may have any two forms\n{{block center|<math>\\phi^p_x = (\\phi_1 x_1 + \\phi_2 x_2)^p,\\ \\psi^q_x = (\\psi_1 x_1 + \\psi_2 x_2)^q</math>,}} <math>\\phi_1</math>, <math>\\phi_2</math>, <math>\\psi_1</math>, <math>\\psi_2</math> being the umbrae, as usual, and for the <math>k^{th}</math> transvectant we have\n{{block center|<math>(\\phi^p_x, \\psi^q_x)^k = (\\phi\\psi)^k\\phi^{p-k}_x\\psi^{q-k}_x</math>,}}\na simultaneous covariant of the two forms. We may suppose <math>\\phi^p_x</math>, <math>\\psi^q_x</math> to be any two covariants appertaining to a system, and the process of transvection supplies a means of proceeding from them to other covariants.\n\nThe two forms <math>a^m_x</math>, <math>b^n_x</math>, or <math>\\phi^p_x</math>, <math>\\psi^q_x</math>, may be identical; we then have the <math>k^{th}</math> transvectant of a form over itself which may, or may not, vanish identically; and, in the latter case, is a covariant of the single form. It is obvious that, when <math>k</math> is uneven, the <math>k^{th}</math> transvectant of a form over itself ''does'' vanish. We have seen that transvection is equivalent to the performance of partial differential operations upon the two forms, but, practically, we may regard the process as merely substituting <math>(ab)^k</math>, <math>(\\phi\\psi)^k</math> for <math>a^k_xb^k_x</math>, <math>\\phi^k_x\\psi^k_x</math> respectively in the symbolic product subjected to transvection. It is essentially an operation performed upon the product of two forms. If, then, we require the transvectants of the two forms <math>f+\\lambda f'</math>, <math>\\phi+\\mu\\phi'</math>, we take their product\n{{block center|<math>f\\phi+\\lambda f'\\phi+\\mu f\\phi'+\\lambda\\mu f'\\phi'</math>,}}\nand the <math>k^{th}</math> transvectant is simply obtained by operating upon each term separately, viz.\n{{block center|<math>(f, \\phi)^k+\\lambda(f', \\phi)^k+\\mu(f, \\phi')^k+\\lambda\\mu(f', \\phi')^k</math>;}} and, moreover, if we require to find the <math>k^{th}</math> transvectant of one linear system of forms over another we have merely to multiply the two systems, and take the <math>k^{th}</math> transvectant of the separate products.\n\nThe process of transvection is connected with the operations <math>\\Omega</math>; for\n\n{{block center|<math>\\Omega^k (a^m_x b^n_y) = (ab)^k a^{m-k}_x b^{n-k}_y</math>;}}\n\n{{block center|or <math>\\Omega^k (a^m_x b^n_y)_{y=x} = (f, \\phi)^k</math>;}}\n\nso also is the polar process, for since\n\n{{block center|<math>f^k_y = a^{m-k}_x b^k_y,\\ \\phi^k_y = b^{n-k}_x b^k_y</math>,}}\n\nif we take the <math>k^{th}</math> transvectant of <math>f^k_y</math> over <math>\\phi^k_y</math>, regarding <math>y_1</math>, <math>y_2</math> as the variables,\n\n{{block center|<math>(f^k_y, \\phi^k_y)^k = (ab)^k a^{m-k}_x b^{n-k}_x = (f, \\phi)^k</math>;}}\n\nor the <math>k^{th}</math> transvectant of the <math>k^{th}</math> polars, in regard to <math>y</math>, is equal to the <math>k^{th}</math> transvectant of the forms. Moreover, the <math>k^{th}</math> transvectant <math>(ab)^k a^{m-k}_x b^{n-k}_x</math> is derivable from the <math>k^{th}</math> polar of <math>a^m_x</math>, viz. <math>a^{m-k}_x a^k_y</math> by substituting for <math>y_1</math>, <math>y_2</math> the cogredient quantities <math>b_2, -b_1</math>, and multiplying by <math>b^{n-k}_x</math>.\n\n''First and Second Transvectants.''—A few words must be said about the first two transvectants as they are of exceptional interest. Since, if <math>f = a^m_n</math>, <math>\\phi = b^n_x</math>,\n\n{{block center|<math>(f, \\phi)^1 = \\frac{1}{mn}\\left(\\frac{\\partial f}{\\partial x_1}\\frac{\\partial \\phi}{\\partial x_2} - \\frac{\\partial f}{\\partial x_2}\\frac{\\partial \\phi}{\\partial x_1}\\right) = (ab)a^{m-1}_x b^{n-1}_x = \\text{J}</math>,}}\n\nthe first transvectant differs but by a numerical factor from the Jacobian or functional determinant, of the two forms. We can find an expression for the first transvectant of <math>(f, \\phi)^1</math> over another form <math>c^p</math>.\n\nFor {{block center|<math>(m+n)(f,\\phi)^1_y = nf.\\phi^1_y + mf^1_y.\\phi,</math>}}\nand\n{{block center|<math>f,\\phi^1_y - f_y.\\phi = (a_x b_y - a_y b_x)\\, a_x^{m-1} b_x^{n-1} = (xy)(f,\\phi)^1;</math>}}\n{{block center|<math>\\therefore (f,\\phi)^1 = f^1_y.\\phi + \\frac{n}{m+n}(xy)(f,\\phi)^1.</math>}}\n\nPut <math>m-1</math> for <math>m</math>, <math>n-1</math> for <math>n</math>, and multiply through by <math>(ab)</math>; then\n{{block center|<math>\\{(f,\\phi)\\}^1_y = (ab)a_x^{m-2}a_y b_x^{n-1} + \\frac{n-1}{m+n-2}(xy)(f,\\phi)^2,</math>}}\n{{block center|<math>= (ab)a_x^{m-1}b_x^{n-2}b_y - \\frac{m-1}{m+n-2}(xy)(f,\\phi)^2.</math>}}\n\nMultiply by <math>c_x^{p-1}</math> and for <math>y_1</math>, <math>y_2</math> write <math>c_2</math>, <math>-c_1</math>; then the right-hand side becomes\n{{block center|<math>(ab)(bc)a_x^{m-1}b_x^{n-2}c_x^{p-1} + \\frac{m-1}{m+n-2}c_x^p(f,\\phi)^2,</math>}}\nof which the first term, writing <math>c_x^p = \\psi</math>, is\n{{block center|<math>a_x^{m-2}b_x^{n-2}c_x^{p-2}(ab)(bc)a_x c_x</math>}}\n{{block center|<math>= -\\frac{1}{2}a_x^{m-2}b_x^{n-2}c_x^{p-2}\\left\\{(bc)^2a_x^2 + (ab)^2c_x^2 - (ac)^2b_x^2\\right\\}</math>}}\n{{block center|<math>= -\\frac{1}{2}\\left\\{a_x^m(bc)^2b_x^{n-2}c_x^{p-2} + c_x^p(ab)^2a_x^{m-2}b_x^{n-2} - b_x^n(ac)^2a_x^{m-2}c_x^{p-2}\\right\\}</math>}}\n{{block center|<math>= -\\frac{1}{2}\\left\\{(\\phi,\\psi)^2.f + (f,\\phi)^2.\\psi - (f,\\psi)^2.\\phi\\right\\};</math>}}\nand, if <math>(f,\\phi)^1 = k_x^{m+n-2}</math>,\n{{block center|<math>\\left\\{(f,\\phi)^1\\right\\}^1_y.c_x^{p-1} = k_x^{m+n-3}k_y c_x^{p-1};</math>}} ````\n````<noinclude><references/></noinclude>"
+}

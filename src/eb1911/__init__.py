@@ -116,6 +116,11 @@ EB1911 = Corpus(
     # Front matter: To This Edition · the 1910 Editorial Preface · the
     # Historical Preface, then the Reader's Guide.
     ancillary=_hook("eb1911.front_matter", "ancillary"),
+    # Pages the book transcribes itself — those Wikisource has only as raw
+    # OCR: the Internet Archive leaf the site shows, at full resolution.
+    page_scan=_hook("eb1911.scans", "page_scan"),
+    page_scan_url=_hook("eb1911.scans", "page_scan_url"),
+    page_layout=_hook("eb1911.scans", "page_layout"),
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({
@@ -127,6 +132,7 @@ EB1911 = Corpus(
         "templates/mdx_description.html", "templates/mdx_description_sample.html",
         "templates/mdx_about.html", "templates/mdx_help_sample.html",
         "mdx_phrases.json", "reference_link_overrides.json",
+        "templates/scan_page.md",
     }),
     site="https://britannica11.org",
     short_name="Britannica 11",

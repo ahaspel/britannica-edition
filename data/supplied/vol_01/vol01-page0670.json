@@ -1,0 +1,144 @@
+{
+ "volume": 1,
+ "page_number": 670,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri01chisrich/page/n682",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri01chisrich/page/n682",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-07",
+  "angle": 0.2,
+  "column_width": 1112,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     82,
+     0,
+     2340,
+     191
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     82,
+     191,
+     1183,
+     1278
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     82,
+     1278,
+     1183,
+     2231
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     82,
+     2231,
+     1183,
+     3108
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1183,
+     191,
+     2340,
+     1232
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1183,
+     1232,
+     2340,
+     1765
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1183,
+     1765,
+     2340,
+     2708
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1183,
+     2708,
+     2340,
+     3108
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|630|ALGEBRAIC FORMS|}}",
+   "c1s1": "the function F, on the right which multiplies <math>r</math>, is said to be a ''simultaneous invariant'' or covariant of the system of quantics. This notion is fundamental in the present theory because we will find that one of the most valuable artifices for finding invariants of a single quantic is first to find simultaneous invariants of several different quantics, and subsequently to make all the quantics identical. Moreover, instead of having one pair of variables <math>x_1</math>, <math>x_2</math> we may have several pairs <math>y_1</math>, <math>y_2</math>; <math>z_1</math>, <math>z_2</math>;... in addition, and transform each pair to a new pair by substitutions, having the same coefficients <math>\\alpha_{11}</math>, <math>\\alpha_{12}</math>, <math>\\alpha_{21}</math>, <math>\\alpha_{22}</math> and arrive at functions of the original coefficients and variables (of one or more quantics) which possess the above-defined invariant property. A particular quantic of the system may be of the same or different degrees in the pairs of variables which it involves, and these degrees may vary from quantic to quantic of the system. Such quantics have been termed by Cayley ''multipartite''.\n\n''Symbolic Form''.—Restricting consideration, for the present, to binary forms in a single pair of variables, we must introduce the symbolic form of Aronhold, Clebsch and Gordan; they write the form\n{{block center|<math>(a_1x_1+a_2x_2)^n=a_1^nx_1^n+\\binom{n}{1}a_1^{n-1}a_2x_1^{n-1}x_2+\\dots+a_2^nx_2^n=a_x^n</math>}}\nwherein <math>a_1</math>, <math>a_2</math> are umbrae, such that\n{{block center|<math>a_1^n, a_1^{n-1}a_2, \\dots a_1a_2^{n-1}, a_2^n</math>}}\nare symbolical representations of the real coefficients <math>\\bar{a}_0</math>, <math>\\bar{a}_1</math>,... <math>\\bar{a}_{n-1}</math>, <math>\\bar{a}_n</math>, and in general <math>a_1^{n-k}a_2^k</math> is the symbol for <math>\\bar{a}_k</math>. If we restrict ourselves to this set of symbols we can uniquely pass from a product of real coefficients to the symbolic representations of such product, but we cannot, uniquely, from the symbols recover the real form. This is clear because we can write",
+   "c1s2": "{{block center|<math>\\bar{a}_1\\bar{a}_2 = a_1^{n-1}a_2 . a_1^{n-2}a_2^2 = a_1^{2n-3}a_2^3</math>}}\nwhile the same product of umbrae arises from\n{{block center|<math>\\bar{a}_0\\bar{a}_3 = a_1^n . a_1^{n-3}a_2^3 = a_1^{2n-3}a_2^3.</math>}}\nHence it becomes necessary to have more than one set of umbrae, so that we may have more than one symbolical representation of the same real coefficients. We consider the quantic to have any number of equivalent representations <math>a_x^n \\equiv b_x^n \\equiv c_x^n \\equiv \\dots.</math> So that <math>a_1^{n-k}a_2^k \\equiv b_1^{n-k}b_2^k \\equiv c_1^{n-k}c_2^k \\equiv \\dots = \\bar{a}_k</math>; and if we wish to denote, by umbrae, a product of coefficients of degree <math>s</math> we employ <math>s</math> sets of umbrae.\n\n''Ex. gr.'' We write <math>\\bar{a}_1\\bar{a}_2 = a_1^{n-1}a_2 . b_1^{n-2}b_2^2</math>,\n{{block center|<math>\\overline{a_3^3} = a_1^{n-3}a_2^3 . b_1^{n-3}b_2^3 . c_1^{n-3}c_2^3</math>,}}\nand so on whenever we require to represent a product of real coefficients symbolically; we then have a one-to-one correspondence between the products of real coefficients and their symbolic forms. If we have a function of degree <math>s</math> in the coefficients, we may select any <math>s</math> sets of umbrae for use, and having made a selection we may when only one quantic is under consideration at any time permute the sets of umbrae in any manner without altering the real significance of the symbolism. ''Ex. gr.'' To express the function <math>\\bar{a}_0\\bar{a}_2 - \\bar{a}_1^2</math>, which is the discriminant of the binary quadratic <math>\\bar{a}_0x_1^2 + 2\\bar{a}_1x_1x_2 + \\bar{a}_2x_2^2 = a_x^2 = b_x^2</math>, in a symbolic form we have",
+   "c1s3": "{{block center|<math>2(a_0a_2-a_1^2)=\\bar{a}_0\\bar{a}_2+\\bar{a}_0\\bar{a}_2-2\\bar{a}_1\\,.\\,\\bar{a}_1=a_1^2b_1^2+a_2^2b_1^2-2a_1a_2b_1b_2</math>}}\n{{block center|<math>=(a_1b_2-a_2b_1)^2</math>.}}\nSuch an expression as <math>a_1b_2-a_2b_1</math>, which is\n{{block center|<math>\\frac{\\partial a_x}{\\partial x_1}\\frac{\\partial b_x}{\\partial x_2}-\\frac{\\partial a_x}{\\partial x_2}\\frac{\\partial b_x}{\\partial x_1}</math>,}}\nis usually written <math>(ab)</math> for brevity; in the same notation the determinant, whose rows are <math>a_1</math>, <math>a_2</math>, <math>a_3</math>; <math>b_1</math>, <math>b_2</math>, <math>b_3</math>; <math>c_1</math>, <math>c_2</math>, <math>c_3</math> respectively, is written <math>(abc)</math> and so on. It should be noticed that the real function denoted by <math>(ab)^2</math> is not the square of a real function denoted by <math>(ab)</math>. For a single quantic of the first order <math>(ab)</math> is the symbol of a function of the coefficients which vanishes identically; thus\n{{block center|<math>(ab)=a_1b_2-a_2b_1=\\bar{a}_0\\bar{a}_1-\\bar{a}_1\\bar{a}_0=0</math>}}\nand, indeed, from a remark made above we see that <math>(ab)</math> remains unchanged by interchange of <math>a</math> and <math>b</math>; but <math>(ab)=-(ba)</math>, and these two facts necessitate <math>(ab)=0</math>.\n\nTo find the effect of linear transformation on the symbolic form of quantic we will disuse the coefficients <math>a_{11}</math>, <math>a_{12}</math>, <math>a_{21}</math>, <math>a_{22}</math>, and employ <math>\\lambda_1</math>, <math>\\mu_1</math>, <math>\\lambda_2</math>, <math>\\mu_2</math>. For the substitution\n{{block center|<math>x_1=\\lambda_1\\xi_1+\\mu_1\\xi_2,\\ x_2=\\lambda_2\\xi_1+\\mu_2\\xi_2</math>,}}\n{{block center|of modulus <math>\\begin{vmatrix}\\lambda_1 & \\mu_1\\\\ \\lambda_2 & \\mu_2\\end{vmatrix}=(\\lambda_1\\mu_2-\\lambda_2\\mu_1)=(\\lambda\\mu)</math>,}}\nthe quadratic form <math>\\bar{a}_0x_1^2+2\\bar{a}_1x_1x_2+\\bar{a}_2x_2^2={}^2_x=f(x)</math>,\nbecomes\n{{block center|<math>\\overline{\\text{A}}_0\\xi_1^2+2\\overline{\\text{A}}_1\\xi_1\\xi_2+\\overline{\\text{A}}_2\\xi_2^2=\\text{A}_\\xi^2=\\phi(\\xi)</math>,}}",
+   "c2s1": "where\n\n{{block center|<math>\\overline{\\text{A}}_0 = \\bar{a}_0\\lambda_1^2 + 2\\bar{a}_1\\lambda_1\\lambda_2 + \\bar{a}_2\\lambda_2^2,</math>}}\n{{block center|<math>\\overline{\\text{A}}_1 = \\bar{a}_0\\lambda_1\\mu_1 + \\bar{a}_1(\\lambda_1\\mu_2 + \\lambda_2\\mu_1) + \\bar{a}_2\\lambda_2\\mu_2,</math>}}\n{{block center|<math>\\overline{\\text{A}}_2 = \\bar{a}_0\\mu_1^2 + 2\\bar{a}_1\\mu_1\\mu_2 + \\bar{a}_2\\mu_2^2.</math>}}\n\nWe pass to the symbolic forms\n\n{{block center|<math>a_x^2 = (a_1x_1 + a_2x_2)^2, \\ \\text{A}_\\xi^2 = (\\text{A}_1\\xi_1 + \\text{A}_2\\xi_2)^2,</math>}}\nby writing for\n{{block center|<math>\\bar{a}_0, \\bar{a}_1, \\bar{a}_2</math> the symbols <math>a_1^2, a_1a_2, a_2^2</math>}}\n{{block center|<math>\\overline{\\text{A}}_0, \\overline{\\text{A}}_1, \\overline{\\text{A}}_2</math> ,, <math>\\text{A}_1^2, \\text{A}_1\\text{A}_2, \\text{A}_2^2</math>}}\nand then\n{{block center|<math>\\overline{\\text{A}}_0 = a_1^2\\lambda_1^2 + 2a_1a_2\\lambda_1\\lambda_2 + a_2^2\\lambda_2^2 = (a_1\\lambda_1 + a_2\\lambda_2)^2 = a_\\lambda^2,</math>}}\n{{block center|<math>\\overline{\\text{A}}_1 = (a_1\\lambda_1 + a_2\\lambda_2)(a_1\\mu_1 + a_2\\mu_2) = a_\\lambda a_\\mu,</math>}}\n{{block center|<math>\\overline{\\text{A}}_2 = (a_1\\mu_1 + a_2\\mu_2)^2 = a_\\mu^2;</math>}}\nso that\n{{block center|<math>\\text{A}_\\xi^2 = a_\\lambda^2\\xi_1^2 + 2a_\\lambda a_\\mu\\xi_1\\xi_2 + a_\\mu^2\\xi_2^2 = (a_\\lambda\\xi_1 + a_\\mu\\xi_2)^2;</math>}}\nwhence <math>\\text{A}_1</math>, <math>\\text{A}_2</math> become <math>a_\\lambda</math>, <math>a_\\mu</math> respectively and\n{{block center|<math>\\phi(\\xi) = (a_\\lambda\\xi_1 + a_\\mu\\xi_2)^2.</math>}}\nThe practical result of the transformation is to change the umbrae <math>a_1</math>, <math>a_2</math> into the umbrae\n{{block center|<math>a_\\lambda = a_1\\lambda_1 + a_2\\lambda_2, \\ a_\\mu = a_1\\mu_1 + a_2\\mu_2</math>}}\nrespectively.\n\nBy similarly transforming the binary <math>n^{ic}</math> form <math>a_x^n</math> we find\n{{block center|<math>\\overline{\\text{A}}_0 = (a_1\\lambda_1 + a_2\\lambda_2)^n = a_\\lambda^n + \\text{A}_1^n,</math>}}",
+   "c2s2": "{{block center|<math>\\bar{\\text{A}}_1 = (a_1\\lambda_1+a_2\\lambda_2)^{n-1}(a_1\\mu_1+a_2\\mu_2) = a_\\lambda^{n-1}a_\\mu = \\text{A}_1^{n-1}\\text{A}_2,</math>}}\n{{block center|<math>\\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot</math>}}\n{{block center|<math>\\bar{\\text{A}}_k = (a_1\\lambda_1+a_2\\lambda_2)^{n-k}(a_1\\mu_1+a_2\\mu_2)^k = a_\\lambda^{n-k}a_\\mu^k = \\text{A}_1^{n-k}\\text{A}_2^k,</math>}}\nso that the umbrae <math>\\text{A}_1</math>, <math>\\text{A}_2</math> are <math>a_\\lambda</math>, <math>a_\\mu</math> respectively.\n\n''Theorem.''—When the binary form\n{{block center|<math>a_x^n = (a_1x_1+a_2x_2)^n</math>}}\nis transformed to\n{{block center|<math>\\text{A}_\\xi^n = (\\text{A}_1\\xi_1+\\text{A}_2\\xi_2)^n</math>}}\nby the substitutions\n{{block center|<math>x_1 = \\lambda_1\\xi_1+\\mu_1\\xi_2,\\ x_2 = \\lambda_2\\xi_1+\\mu_2\\xi_2,</math>}}\nthe umbrae <math>\\text{A}_1</math>, <math>\\text{A}_2</math> are expressed in terms of the umbrae <math>a_1</math>, <math>a_2</math> by the formulae",
+   "c2s3": "{{block center|<math>\\text{A}_1 = \\lambda_1 a_1 + \\lambda_2 a_2,\\ \\text{A}_2 = \\mu_1 a_1 + \\mu_2 a_2.</math>}}\nWe gather that <math>\\text{A}_1</math>, <math>\\text{A}_2</math> are transformed to <math>a_1</math>, <math>a_2</math> in such wise that the determinant of transformation reads by rows as the original determinant reads by columns, and that the modulus of the transformation is, as before, <math>(\\lambda\\mu)</math>. For this reason the umbrae <math>\\text{A}_1</math>, <math>\\text{A}_2</math> are said to be ''contragredient'' to <math>x_1</math>, <math>x_2</math>. If we solve the equations connecting the original and transformed unbrae we find\n{{block center|<math>(\\lambda\\mu)(-a_2) = \\lambda_1(-\\text{A}_2) + \\mu_1\\text{A}_1,</math>}}\n{{block center|<math>(\\lambda\\mu)a_1 \\quad = \\lambda_2(-\\text{A}_2) + \\mu_2\\text{A}_1,</math>}}\nand we find that, except for the factor <math>(\\lambda\\mu)</math>, <math>-a_2</math> and <math>+a_1</math> are transformed to <math>-\\text{A}_2</math> and <math>+\\text{A}_1</math> by the same substitutions as <math>x_1</math> and <math>x_2</math> are transformed to <math>\\xi_1</math> and <math>\\xi_2</math>. For this reason the umbrae <math>-a_2</math>, <math>a_1</math> are said to be cogredient to <math>x_1</math> and <math>x_2</math>. We frequently meet with cogredient and contragedient quantities, and we have in general the following definitions:—(1) “If two equally numerous sets of quantities <math>x, y, z, \\dots\\ x', y', z', \\dots</math> are such that whenever one set <math>x, y, z, \\dots</math> is expressed in terms of new quantities <math>\\text{X}, \\text{Y}, \\text{Z}, \\dots</math> the second set <math>x', y', z', \\dots</math> is expressed in terms of other new quantities <math>\\text{X}', \\text{Y}', \\text{Z}', \\dots</math>, by the same scheme of linear substitution the two sets are said to be ''cogredient'' quantities.” (2) “Two sets of quantities <math>x, y, z, \\dots</math>; <math>\\xi, \\eta, \\zeta, \\dots</math> are said to be ''contragredient'' when the linear substitutions for the first set are\n{{block center|<math>x = \\lambda_1\\text{X} + \\mu_1\\text{Y} + \\nu_1\\text{Z} + \\dots,</math>}}\n{{block center|<math>y = \\lambda_2\\text{X} + \\mu_2\\text{Y} + \\nu_2\\text{Z} + \\dots,</math>}}\n{{block center|<math>z = \\lambda_3\\text{X} + \\mu_3\\text{Y} + \\nu_3\\text{Z} + \\dots,</math>}}\n{{block center|<math>\\cdot \\qquad \\cdot \\qquad \\cdot</math>}}\nand these are associated with the following formulae appertaining to the second set,\n{{block center|<math>\\Xi = \\lambda_1\\xi + \\lambda_2\\eta + \\lambda_3\\zeta + \\dots,</math>}}",
+   "c2s4": "{{block center|<math>\\text{H} = \\mu_1\\xi + \\mu_2\\eta + \\mu_3\\zeta + \\dots,</math>}}\n{{block center|<math>\\text{Z} = \\nu_1\\xi + \\nu_2\\eta + \\nu_3\\zeta + \\dots,</math>}}\n{{block center|<math>\\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot</math>}}\nwherein it should be noticed that ''new'' quantities are expressed in terms of the ''old'', as regards the latter set, and not ''vice versa''.\"\n\n''Ex. gr.'' The symbols <math>\\frac{d}{dx}, \\frac{d}{dy}, \\frac{d}{dz}, \\dots</math> are contragredient with the variables <math>x</math>, <math>y</math>, <math>z</math>, ... for when\n{{block center|<math>(x, y, z, \\dots) = (\\lambda_1, \\mu_1, \\nu_1, \\dots)(\\text{X}, \\text{Y}, \\text{Z}, \\dots),</math>}}\n{{block center|<math>\\begin{vmatrix} \\lambda_2, & \\mu_2, & \\nu_2, & \\dots \\\\ \\lambda_3, & \\mu_3, & \\nu_3, & \\dots \\\\ \\cdot & \\cdot & \\cdot & \\cdot \\end{vmatrix}</math>}}"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 8,
+    "input_tokens": 9506,
+    "output_tokens": 11013,
+    "cache_creation_input_tokens": 15392,
+    "cache_read_input_tokens": 0
+   }
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|630|ALGEBRAIC FORMS|}}</noinclude>the function F, on the right which multiplies <math>r</math>, is said to be a ''simultaneous invariant'' or covariant of the system of quantics. This notion is fundamental in the present theory because we will find that one of the most valuable artifices for finding invariants of a single quantic is first to find simultaneous invariants of several different quantics, and subsequently to make all the quantics identical. Moreover, instead of having one pair of variables <math>x_1</math>, <math>x_2</math> we may have several pairs <math>y_1</math>, <math>y_2</math>; <math>z_1</math>, <math>z_2</math>;... in addition, and transform each pair to a new pair by substitutions, having the same coefficients <math>\\alpha_{11}</math>, <math>\\alpha_{12}</math>, <math>\\alpha_{21}</math>, <math>\\alpha_{22}</math> and arrive at functions of the original coefficients and variables (of one or more quantics) which possess the above-defined invariant property. A particular quantic of the system may be of the same or different degrees in the pairs of variables which it involves, and these degrees may vary from quantic to quantic of the system. Such quantics have been termed by Cayley ''multipartite''.\n\n''Symbolic Form''.—Restricting consideration, for the present, to binary forms in a single pair of variables, we must introduce the symbolic form of Aronhold, Clebsch and Gordan; they write the form\n{{block center|<math>(a_1x_1+a_2x_2)^n=a_1^nx_1^n+\\binom{n}{1}a_1^{n-1}a_2x_1^{n-1}x_2+\\dots+a_2^nx_2^n=a_x^n</math>}}\nwherein <math>a_1</math>, <math>a_2</math> are umbrae, such that\n{{block center|<math>a_1^n, a_1^{n-1}a_2, \\dots a_1a_2^{n-1}, a_2^n</math>}}\nare symbolical representations of the real coefficients <math>\\bar{a}_0</math>, <math>\\bar{a}_1</math>,... <math>\\bar{a}_{n-1}</math>, <math>\\bar{a}_n</math>, and in general <math>a_1^{n-k}a_2^k</math> is the symbol for <math>\\bar{a}_k</math>. If we restrict ourselves to this set of symbols we can uniquely pass from a product of real coefficients to the symbolic representations of such product, but we cannot, uniquely, from the symbols recover the real form. This is clear because we can write {{block center|<math>\\bar{a}_1\\bar{a}_2 = a_1^{n-1}a_2 . a_1^{n-2}a_2^2 = a_1^{2n-3}a_2^3</math>}}\nwhile the same product of umbrae arises from\n{{block center|<math>\\bar{a}_0\\bar{a}_3 = a_1^n . a_1^{n-3}a_2^3 = a_1^{2n-3}a_2^3.</math>}}\nHence it becomes necessary to have more than one set of umbrae, so that we may have more than one symbolical representation of the same real coefficients. We consider the quantic to have any number of equivalent representations <math>a_x^n \\equiv b_x^n \\equiv c_x^n \\equiv \\dots.</math> So that <math>a_1^{n-k}a_2^k \\equiv b_1^{n-k}b_2^k \\equiv c_1^{n-k}c_2^k \\equiv \\dots = \\bar{a}_k</math>; and if we wish to denote, by umbrae, a product of coefficients of degree <math>s</math> we employ <math>s</math> sets of umbrae.\n\n''Ex. gr.'' We write <math>\\bar{a}_1\\bar{a}_2 = a_1^{n-1}a_2 . b_1^{n-2}b_2^2</math>,\n{{block center|<math>\\overline{a_3^3} = a_1^{n-3}a_2^3 . b_1^{n-3}b_2^3 . c_1^{n-3}c_2^3</math>,}}\nand so on whenever we require to represent a product of real coefficients symbolically; we then have a one-to-one correspondence between the products of real coefficients and their symbolic forms. If we have a function of degree <math>s</math> in the coefficients, we may select any <math>s</math> sets of umbrae for use, and having made a selection we may when only one quantic is under consideration at any time permute the sets of umbrae in any manner without altering the real significance of the symbolism. ''Ex. gr.'' To express the function <math>\\bar{a}_0\\bar{a}_2 - \\bar{a}_1^2</math>, which is the discriminant of the binary quadratic <math>\\bar{a}_0x_1^2 + 2\\bar{a}_1x_1x_2 + \\bar{a}_2x_2^2 = a_x^2 = b_x^2</math>, in a symbolic form we have {{block center|<math>2(a_0a_2-a_1^2)=\\bar{a}_0\\bar{a}_2+\\bar{a}_0\\bar{a}_2-2\\bar{a}_1\\,.\\,\\bar{a}_1=a_1^2b_1^2+a_2^2b_1^2-2a_1a_2b_1b_2</math>}}\n{{block center|<math>=(a_1b_2-a_2b_1)^2</math>.}}\nSuch an expression as <math>a_1b_2-a_2b_1</math>, which is\n{{block center|<math>\\frac{\\partial a_x}{\\partial x_1}\\frac{\\partial b_x}{\\partial x_2}-\\frac{\\partial a_x}{\\partial x_2}\\frac{\\partial b_x}{\\partial x_1}</math>,}}\nis usually written <math>(ab)</math> for brevity; in the same notation the determinant, whose rows are <math>a_1</math>, <math>a_2</math>, <math>a_3</math>; <math>b_1</math>, <math>b_2</math>, <math>b_3</math>; <math>c_1</math>, <math>c_2</math>, <math>c_3</math> respectively, is written <math>(abc)</math> and so on. It should be noticed that the real function denoted by <math>(ab)^2</math> is not the square of a real function denoted by <math>(ab)</math>. For a single quantic of the first order <math>(ab)</math> is the symbol of a function of the coefficients which vanishes identically; thus\n{{block center|<math>(ab)=a_1b_2-a_2b_1=\\bar{a}_0\\bar{a}_1-\\bar{a}_1\\bar{a}_0=0</math>}}\nand, indeed, from a remark made above we see that <math>(ab)</math> remains unchanged by interchange of <math>a</math> and <math>b</math>; but <math>(ab)=-(ba)</math>, and these two facts necessitate <math>(ab)=0</math>.\n\nTo find the effect of linear transformation on the symbolic form of quantic we will disuse the coefficients <math>a_{11}</math>, <math>a_{12}</math>, <math>a_{21}</math>, <math>a_{22}</math>, and employ <math>\\lambda_1</math>, <math>\\mu_1</math>, <math>\\lambda_2</math>, <math>\\mu_2</math>. For the substitution\n{{block center|<math>x_1=\\lambda_1\\xi_1+\\mu_1\\xi_2,\\ x_2=\\lambda_2\\xi_1+\\mu_2\\xi_2</math>,}}\n{{block center|of modulus <math>\\begin{vmatrix}\\lambda_1 & \\mu_1\\\\ \\lambda_2 & \\mu_2\\end{vmatrix}=(\\lambda_1\\mu_2-\\lambda_2\\mu_1)=(\\lambda\\mu)</math>,}}\nthe quadratic form <math>\\bar{a}_0x_1^2+2\\bar{a}_1x_1x_2+\\bar{a}_2x_2^2={}^2_x=f(x)</math>,\nbecomes\n{{block center|<math>\\overline{\\text{A}}_0\\xi_1^2+2\\overline{\\text{A}}_1\\xi_1\\xi_2+\\overline{\\text{A}}_2\\xi_2^2=\\text{A}_\\xi^2=\\phi(\\xi)</math>,}} where\n\n{{block center|<math>\\overline{\\text{A}}_0 = \\bar{a}_0\\lambda_1^2 + 2\\bar{a}_1\\lambda_1\\lambda_2 + \\bar{a}_2\\lambda_2^2,</math>}}\n{{block center|<math>\\overline{\\text{A}}_1 = \\bar{a}_0\\lambda_1\\mu_1 + \\bar{a}_1(\\lambda_1\\mu_2 + \\lambda_2\\mu_1) + \\bar{a}_2\\lambda_2\\mu_2,</math>}}\n{{block center|<math>\\overline{\\text{A}}_2 = \\bar{a}_0\\mu_1^2 + 2\\bar{a}_1\\mu_1\\mu_2 + \\bar{a}_2\\mu_2^2.</math>}}\n\nWe pass to the symbolic forms\n\n{{block center|<math>a_x^2 = (a_1x_1 + a_2x_2)^2, \\ \\text{A}_\\xi^2 = (\\text{A}_1\\xi_1 + \\text{A}_2\\xi_2)^2,</math>}}\nby writing for\n{{block center|<math>\\bar{a}_0, \\bar{a}_1, \\bar{a}_2</math> the symbols <math>a_1^2, a_1a_2, a_2^2</math>}}\n{{block center|<math>\\overline{\\text{A}}_0, \\overline{\\text{A}}_1, \\overline{\\text{A}}_2</math> ,, <math>\\text{A}_1^2, \\text{A}_1\\text{A}_2, \\text{A}_2^2</math>}}\nand then\n{{block center|<math>\\overline{\\text{A}}_0 = a_1^2\\lambda_1^2 + 2a_1a_2\\lambda_1\\lambda_2 + a_2^2\\lambda_2^2 = (a_1\\lambda_1 + a_2\\lambda_2)^2 = a_\\lambda^2,</math>}}\n{{block center|<math>\\overline{\\text{A}}_1 = (a_1\\lambda_1 + a_2\\lambda_2)(a_1\\mu_1 + a_2\\mu_2) = a_\\lambda a_\\mu,</math>}}\n{{block center|<math>\\overline{\\text{A}}_2 = (a_1\\mu_1 + a_2\\mu_2)^2 = a_\\mu^2;</math>}}\nso that\n{{block center|<math>\\text{A}_\\xi^2 = a_\\lambda^2\\xi_1^2 + 2a_\\lambda a_\\mu\\xi_1\\xi_2 + a_\\mu^2\\xi_2^2 = (a_\\lambda\\xi_1 + a_\\mu\\xi_2)^2;</math>}}\nwhence <math>\\text{A}_1</math>, <math>\\text{A}_2</math> become <math>a_\\lambda</math>, <math>a_\\mu</math> respectively and\n{{block center|<math>\\phi(\\xi) = (a_\\lambda\\xi_1 + a_\\mu\\xi_2)^2.</math>}}\nThe practical result of the transformation is to change the umbrae <math>a_1</math>, <math>a_2</math> into the umbrae\n{{block center|<math>a_\\lambda = a_1\\lambda_1 + a_2\\lambda_2, \\ a_\\mu = a_1\\mu_1 + a_2\\mu_2</math>}}\nrespectively.\n\nBy similarly transforming the binary <math>n^{ic}</math> form <math>a_x^n</math> we find\n{{block center|<math>\\overline{\\text{A}}_0 = (a_1\\lambda_1 + a_2\\lambda_2)^n = a_\\lambda^n + \\text{A}_1^n, \\bar{\\text{A}}_1 = (a_1\\lambda_1+a_2\\lambda_2)^{n-1}(a_1\\mu_1+a_2\\mu_2) = a_\\lambda^{n-1}a_\\mu = \\text{A}_1^{n-1}\\text{A}_2,</math>}}\n{{block center|<math>\\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot</math>}}\n{{block center|<math>\\bar{\\text{A}}_k = (a_1\\lambda_1+a_2\\lambda_2)^{n-k}(a_1\\mu_1+a_2\\mu_2)^k = a_\\lambda^{n-k}a_\\mu^k = \\text{A}_1^{n-k}\\text{A}_2^k,</math>}}\nso that the umbrae <math>\\text{A}_1</math>, <math>\\text{A}_2</math> are <math>a_\\lambda</math>, <math>a_\\mu</math> respectively.\n\n''Theorem.''—When the binary form\n{{block center|<math>a_x^n = (a_1x_1+a_2x_2)^n</math>}}\nis transformed to\n{{block center|<math>\\text{A}_\\xi^n = (\\text{A}_1\\xi_1+\\text{A}_2\\xi_2)^n</math>}}\nby the substitutions\n{{block center|<math>x_1 = \\lambda_1\\xi_1+\\mu_1\\xi_2,\\ x_2 = \\lambda_2\\xi_1+\\mu_2\\xi_2,</math>}}\nthe umbrae <math>\\text{A}_1</math>, <math>\\text{A}_2</math> are expressed in terms of the umbrae <math>a_1</math>, <math>a_2</math> by the formulae {{block center|<math>\\text{A}_1 = \\lambda_1 a_1 + \\lambda_2 a_2,\\ \\text{A}_2 = \\mu_1 a_1 + \\mu_2 a_2.</math>}}\nWe gather that <math>\\text{A}_1</math>, <math>\\text{A}_2</math> are transformed to <math>a_1</math>, <math>a_2</math> in such wise that the determinant of transformation reads by rows as the original determinant reads by columns, and that the modulus of the transformation is, as before, <math>(\\lambda\\mu)</math>. For this reason the umbrae <math>\\text{A}_1</math>, <math>\\text{A}_2</math> are said to be ''contragredient'' to <math>x_1</math>, <math>x_2</math>. If we solve the equations connecting the original and transformed unbrae we find\n{{block center|<math>(\\lambda\\mu)(-a_2) = \\lambda_1(-\\text{A}_2) + \\mu_1\\text{A}_1,</math>}}\n{{block center|<math>(\\lambda\\mu)a_1 \\quad = \\lambda_2(-\\text{A}_2) + \\mu_2\\text{A}_1,</math>}}\nand we find that, except for the factor <math>(\\lambda\\mu)</math>, <math>-a_2</math> and <math>+a_1</math> are transformed to <math>-\\text{A}_2</math> and <math>+\\text{A}_1</math> by the same substitutions as <math>x_1</math> and <math>x_2</math> are transformed to <math>\\xi_1</math> and <math>\\xi_2</math>. For this reason the umbrae <math>-a_2</math>, <math>a_1</math> are said to be cogredient to <math>x_1</math> and <math>x_2</math>. We frequently meet with cogredient and contragedient quantities, and we have in general the following definitions:—(1) “If two equally numerous sets of quantities <math>x, y, z, \\dots\\ x', y', z', \\dots</math> are such that whenever one set <math>x, y, z, \\dots</math> is expressed in terms of new quantities <math>\\text{X}, \\text{Y}, \\text{Z}, \\dots</math> the second set <math>x', y', z', \\dots</math> is expressed in terms of other new quantities <math>\\text{X}', \\text{Y}', \\text{Z}', \\dots</math>, by the same scheme of linear substitution the two sets are said to be ''cogredient'' quantities.” (2) “Two sets of quantities <math>x, y, z, \\dots</math>; <math>\\xi, \\eta, \\zeta, \\dots</math> are said to be ''contragredient'' when the linear substitutions for the first set are\n{{block center|<math>x = \\lambda_1\\text{X} + \\mu_1\\text{Y} + \\nu_1\\text{Z} + \\dots,</math>}}\n{{block center|<math>y = \\lambda_2\\text{X} + \\mu_2\\text{Y} + \\nu_2\\text{Z} + \\dots,</math>}}\n{{block center|<math>z = \\lambda_3\\text{X} + \\mu_3\\text{Y} + \\nu_3\\text{Z} + \\dots,</math>}}\n{{block center|<math>\\cdot \\qquad \\cdot \\qquad \\cdot</math>}}\nand these are associated with the following formulae appertaining to the second set,\n{{block center|<math>\\Xi = \\lambda_1\\xi + \\lambda_2\\eta + \\lambda_3\\zeta + \\dots, \\text{H} = \\mu_1\\xi + \\mu_2\\eta + \\mu_3\\zeta + \\dots,</math>}}\n{{block center|<math>\\text{Z} = \\nu_1\\xi + \\nu_2\\eta + \\nu_3\\zeta + \\dots,</math>}}\n{{block center|<math>\\cdot \\qquad \\cdot \\qquad \\cdot \\qquad \\cdot</math>}}\nwherein it should be noticed that ''new'' quantities are expressed in terms of the ''old'', as regards the latter set, and not ''vice versa''.\"\n\n''Ex. gr.'' The symbols <math>\\frac{d}{dx}, \\frac{d}{dy}, \\frac{d}{dz}, \\dots</math> are contragredient with the variables <math>x</math>, <math>y</math>, <math>z</math>, ... for when\n{{block center|<math>(x, y, z, \\dots) = (\\lambda_1, \\mu_1, \\nu_1, \\dots)(\\text{X}, \\text{Y}, \\text{Z}, \\dots),</math>}}\n{{block center|<math>\\begin{vmatrix} \\lambda_2, & \\mu_2, & \\nu_2, & \\dots \\\\ \\lambda_3, & \\mu_3, & \\nu_3, & \\dots \\\\ \\cdot & \\cdot & \\cdot & \\cdot \\end{vmatrix}</math>}}<noinclude><references/></noinclude>"
+}
