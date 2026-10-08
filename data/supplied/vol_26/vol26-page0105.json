@@ -2,23 +2,23 @@
  "volume": 26,
  "page_number": 105,
  "source": "scan",
- "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n107",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n109",
  "provenance": {
-  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n107",
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n109",
   "model": "claude-opus-5-5",
   "transcribed": "2026-10-07",
-  "angle": -0.65,
-  "column_width": 1130,
+  "angle": -0.1,
+  "column_width": 1100,
   "items": [
    {
     "name": "head",
     "kind": "head",
     "column": 0,
     "box": [
-     44,
-     164,
-     2243,
-     256
+     134,
+     140,
+     2294,
+     207
     ]
    },
    {
@@ -26,21 +26,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     44,
-     256,
-     1161,
-     293
-    ]
-   },
-   {
-    "name": "c1f1",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     44,
-     293,
-     1161,
-     1545
+     134,
+     207,
+     1205,
+     881
     ]
    },
    {
@@ -48,21 +37,32 @@
     "kind": "text",
     "column": 1,
     "box": [
-     44,
-     1558,
-     1161,
-     1598
+     134,
+     881,
+     1205,
+     1581
     ]
    },
    {
-    "name": "c1f2",
+    "name": "c1f1",
     "kind": "figure",
     "column": 1,
     "box": [
-     44,
-     1599,
-     1161,
-     2953
+     134,
+     1581,
+     551,
+     2038
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     134,
+     2042,
+     551,
+     2074
     ]
    },
    {
@@ -70,10 +70,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     44,
-     2962,
-     1161,
-     3001
+     551,
+     1581,
+     1205,
+     2074
     ]
    },
    {
@@ -81,10 +81,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     44,
-     3001,
-     1161,
-     3065
+     134,
+     2074,
+     1205,
+     3153
     ]
    },
    {
@@ -92,10 +92,10 @@
     "kind": "text",
     "column": 2,
     "box": [
-     1161,
-     256,
-     2243,
-     293
+     1205,
+     207,
+     2294,
+     443
     ]
    },
    {
@@ -103,10 +103,21 @@
     "kind": "figure",
     "column": 2,
     "box": [
-     1161,
-     293,
-     2243,
-     1547
+     1205,
+     443,
+     2294,
+     663
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1205,
+     664,
+     2294,
+     768
     ]
    },
    {
@@ -114,10 +125,10 @@
     "kind": "text",
     "column": 2,
     "box": [
-     1161,
-     1562,
-     2243,
-     1601
+     1205,
+     768,
+     2294,
+     1839
     ]
    },
    {
@@ -125,21 +136,10 @@
     "kind": "text",
     "column": 2,
     "box": [
-     1161,
-     1601,
-     2243,
-     1669
-    ]
-   },
-   {
-    "name": "c2f2",
-    "kind": "figure",
-    "column": 2,
-    "box": [
-     1161,
-     1669,
-     2243,
-     2951
+     1205,
+     1839,
+     2294,
+     2919
     ]
    },
    {
@@ -147,187 +147,107 @@
     "kind": "text",
     "column": 2,
     "box": [
-     1161,
-     2961,
-     2243,
-     3000
-    ]
-   },
-   {
-    "name": "c2s5",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1161,
-     3000,
-     2243,
-     3065
-    ]
-   },
-   {
-    "name": "c0s1",
-    "kind": "text",
-    "column": 0,
-    "box": [
-     44,
-     3065,
-     2243,
-     3164
+     1205,
+     2919,
+     2294,
+     3153
     ]
    }
   ],
   "readings": {
-   "head": "",
-   "c1s1": "",
-   "c1s2": "{{c|(1) 1905, June 25d. 4h. 16m. 15s.}}",
-   "c1s3": "{{c|(3) 1905, June 25d. 4h. 17m. 40s.}}",
-   "c1s4": "",
-   "c2s1": "",
-   "c2s2": "{{c|(2) 1905, June 25d. 4h. 17m. 15s.}}",
-   "c2s3": "",
-   "c2s4": "{{c|(4) 1905, June 25d. 4h. 19m. 0s.}}",
-   "c2s5": "````\n````",
-   "c0s1": "ENLARGED PHOTOGRAPHS OF THE SOLAR SURFACE. Taken by M. A. Hansky at the Observatory of Pulkowa (1905, June 25), at intervals from 25s. to 80s.\n\nXXVI. 86."
+   "head": "{{RunningHeader||SUN|87}}",
+   "c1s1": "condensing power of gravitation at the sun's borders is the pressure of radiation.\n\n'''''\"The Black Body.\"''''' The radiations from the sun must be considered in two parts, corresponding respectively to the continuous spectrum and the line-spectrum. The latter is considered below; it is indicative of the chemical elements from which the lines can proceed, and its state at the time of emission; the former is indicative only of the rate of loss of energy from the sun by radiation, and is inwoven with a remarkable group of physical theory and experiment, known as the theory of the black body, or as black radiation. The \"black body\" is an ideal body with surface so constituted as to reflect no part of any radiations that fall upon it; in the case of such a body Kirchhoff and Balfour Stewart showed that unless energy were to be lost the rate of emission and absorption must be in fixed ratio for each specific wave-length.",
+   "c1s2": "¶\nThe name has no reference to the appearance of the body to the eye; when emitting energy, its radiations will be of all wave-lengths, and if intense enough will appeal to the eye as luminous between about wave-lengths 7600 and 4000 tenth-metres; this intensity is a question of temperature, and as it is exquisitely inappropriate to speak of the bulk of the solar radiations as black, the writer will speak instead of amorphous radiations from an ideal radiator. The ideal radiator is realized within any closed cavity, the walls of which are maintained at a definite temperature. The space within is filled with radiations corresponding to this temperature, and these attain a certain equilibrium which permits the energy of radiation to be spoken of as a whole, as a scalar quantity, without express reference to the propagation or interference of the waves of which it is composed. It is then found both by experiment and by thermodynamic theory that in these amorphous radiations there is for each temperature a definite distribution of the energy over the spectrum according to a law which may be expressed by <math>\\theta^5\\phi(\\theta\\lambda)d\\lambda</math>, between the wave-lengths <math>\\lambda</math>, <math>\\lambda+d\\lambda</math>; and as to the form of the function <math>\\phi</math>, Planck has shown (''Sitzungsber. Berlin Akad.'' 544) that an intelligible theory can be given which leads to the form <math>\\phi(\\theta\\lambda) = c_1/\\{exp(c_2/\\lambda\\theta)-1\\}</math>, a form which agrees in a satisfactory way with all the experi-",
+   "c1c1": "{{c|{{sc|Fig.}} 11.}}",
+   "c1s3": "ments. Fig. 11 shows the resulting distribution of energy. The enclosed area for each temperature represents the total emission of energy for that temperature, the abscissae are the wave-lengths, and the ordinates the corresponding intensities of emission for that wave-length. It will be seen that the maximum ordinates lie upon the curve <math>\\lambda\\theta = \\text{constant}</math> dotted in the figure, and so, as the temperature of the ideal body rises, the wave-length of most intense radiation shifts from the infra-red towards the luminous part of the spectrum. When we speak of the sun's",
+   "c1s4": "it is of the character of the radiations from an ideal radiator at an appropriate temperature.\n\n''The Solar Constant.'' The first adequate determination of the character as well as amount of solar radiation was made by S. P. Langley in 1893 at Mount Whitney in California (14,000 ft.), with the bolometer, an exceedingly sensitive instrument which he invented, and which enabled him to feel his way thermally over the whole spectrum, noting all the chief Fraunhofer lines and bands, which were shown by sharp serrations, or more prolonged depressions of the curve which gave the emissions, and discovering the lines and bands of the invisible ultra-red portion. The bolograph thus obtained must be cleared of the absorption of the earth's atmosphere, and that of the transmitting apparatus—a spectroscope and siderostat. The first in itself requires an elaborate study. The first essential is an elevated observatory; the next is a long series of bolographs taken at different times of the year and of the day, to examine the effect of interposing different thicknesses of air and its variation in transparency (chiefly due to water vapour). It is found that atmospheric absorption is generally greater in summer than in winter, a difference of 20% being found between March and August; morning hours show a rapid and often irregular increase of transparency, culminating shortly after noon, after which the diminution is slow and comparatively regular.\n\nThe resulting allowances and conclusion are illustrated in fig. 12,",
+   "c2s1": "taken from an article by Langley in the ''Astrophysical Journal'' (1903), xvii. 2. The integrated emission of energy is given by the area of the outer smoothed curve (4), and the conclusion from this one bolograph is that the \"solar constant\" is 2·54 calories. The meaning of this statement is that, arguing away the earth's atmosphere, which wastes about one-half what is received, a square",
+   "c2c1": "{{c|'''(From ''Astrophysical Journal'', xvii. 2, by permission of the University of Chicago Press.)'''}}\n{{c|{{sc|Fig.}} 12.}}",
+   "c2s2": "centimetre, exposed perpendicularly to the sun's rays, would receive sufficient energy per minute to raise 2·54 grams of water 1° C. Langley's general determination of the constant was greater than this—3·0 to 3·5 calories; more recently C. G. Abbot at Mount Wilson, with instruments and methods in which Langley's experience is embodied, has reduced it greatly, having proved that one of Langley's corrections was erroneously applied. The results vary between 1·89 and 2·22, and the variation appears to be solar, not terrestrial. Taking the value at 2·1 the earth is therefore receiving energy at the rate of 1·47 kilowatts per square metre, or 1·70 horse-power per square yard. The corresponding intensity at the sun's surface is <math>4{\\cdot}62\\times 10^4</math> as great, or <math>6{\\cdot}79\\times 10^4</math> kilowatts per square metre<math>=7{\\cdot}88\\times 10^4</math> horse-power per square yard—enough to melt a thickness of 13·3 metres (=39·6 ft.) of ice, or to vaporize 1·81 metres (=5·92 ft.) of water per minute.\n\n'''''Temperature of the Sun.''''' If we assume that the bolograph of solar energy is simply a graph of amorphous radiation from an ideal radiator, so that the constants <math>c_1</math>, <math>c_2</math>, of Planck's formula determined terrestrially apply to it, the hyperbola of maximum intensity is <math>\\lambda\\theta = 2{\\cdot}921\\times 10^7</math>; and as the sun's maximum intensity occurs for about <math>\\lambda = 4900</math>, we find the absolute temperature to be 5960° abs. If we calculate from the total energy emitted, and not from the position of maximum intensity, the same result is obtained within a few degrees. But to call this the temperature of the sun's surface is a convention, which sets aside some material factors. We may ask first whether the matter of which the surface is composed is such as to give an ideal radiator; it is impossible to answer this, but even if we admit a departure as great as the greatest known terrestrial exception, the estimated temperature is diminished only some 10%. A second question relates to the boundaries. The theory refers to radiation homogeneous at all points within a single closed boundary maintained at uniform temperature; in the actual",
+   "c2s3": "case we have a double boundary, one the sun's surface, and the other infinitely remote, or say, non-existent, and at zero temperature; and it is assumed that the density of radiation in the free space varies inversely as the squares of the distance from the sun. Though there is no experiment behind this assumption it can hardly lead to error.\n\nA third question is more difficult. The temperature gradient at the confines of the photosphere must certainly ascend sharply at first. When we say the sun's temperature is 6000°, of what level are we speaking? The fact is that radiation is not a superficial phenomenon but a molar one, and Stefan's law, exact though it be, is not an ultimate theory but only a convenient halting-place, and the radiations of two bodies can only be compared by it when their surfaces are similar in a specific way. One characteristic of such surfaces is fixity, which has no trace of parallel in the sun. The confines of the sun are visibly in a state of turmoil, for which a sufficient cause can be assigned in the relative readiness with which the outer portions part with heat to space, and so condensing produce a state of static instability, so that the outer surface of the sun in place of being fixed is continually circulating, portions at high temperatures rising rapidly from the depths to positions where they will part rapidly with their heat, and then, whether perceived or not, descending again. It is clear that at least a considerable part of the solar radiations comes from a more or less diffuse atmosphere. With the help of theory and observation the part played by this atmosphere is tolerably precise. Its absorptive effects upon the radiations of the inner photosphere can be readily traced progressively from the centre to the rim of the sun's disk, and it has been measured as a whole by Langley, W. E. Wilson and others, and for each separate wave-length by F. W. Very (''Astrophys. Journ.'', vol. xvi.). The entries in the table on following page express the reduction of intensity for different wave-lengths <math>\\lambda</math>, when the slit is set at distances <math>\\gamma \\times \\text{radius}</math> from the centre of the disk.",
+   "c2s4": "¶\nBuilding upon these results A. Schuster has shown (''Astrophys. Journ.'', vol. xvi.) that, if for the sake of argument the solar atmosphere be taken as homogeneous in temperature and quality, forming a sheet which itself radiates as well as absorbs, the radiation which an unshielded ideal radiator at 6000° would give is represented well, both in sum and in the distribution of intensity with respect to wave-length, by another ideal radiator—now the actual body of"
   },
   "figure_files": {
    "c1f1": "eb1911 v26 p0105 c1f1.png",
-   "c1f2": "eb1911 v26 p0105 c1f2.png",
-   "c2f1": "eb1911 v26 p0105 c2f1.png",
-   "c2f2": "eb1911 v26 p0105 c2f2.png"
+   "c2f1": "eb1911 v26 p0105 c2f1.png"
   },
   "figures": [
    {
     "box": [
-     53,
-     298,
-     1076,
-     1541
+     1230,
+     442,
+     2260,
+     660
     ],
     "caption": [
-     305,
-     1558,
-     818,
-     1598
-    ],
-    "column": 1,
-    "inset": false,
-    "page_box": [
-     53,
-     298,
-     1078,
-     1540
-    ]
-   },
-   {
-    "box": [
-     1166,
-     298,
-     2200,
-     1543
-    ],
-    "caption": [
-     1425,
-     1562,
-     1936,
-     1601
+     1221,
+     664,
+     1901,
+     768
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1164,
-     298,
-     2202,
-     1544
+     1222,
+     448,
+     2282,
+     656
     ]
    },
    {
     "box": [
-     45,
-     1692,
-     1083,
-     2949
+     142,
+     1602,
+     546,
+     2034
     ],
     "caption": [
-     302,
-     2962,
-     815,
-     3001
+     280,
+     2042,
+     404,
+     2074
     ],
     "column": 1,
-    "inset": false,
+    "inset": true,
     "page_box": [
-     46,
-     1694,
-     1087,
-     2942
-    ]
-   },
-   {
-    "box": [
-     1163,
-     1686,
-     2203,
-     2939
-    ],
-    "caption": [
-     1436,
-     2961,
-     1931,
-     3000
-    ],
-    "column": 2,
-    "inset": false,
-    "page_box": [
-     1160,
-     1688,
-     2205,
-     2945
+     137,
+     1584,
+     548,
+     2037
     ]
    }
   ],
-  "across": [
-   [
-    150,
-    3062,
-    2114,
-    3150
-   ]
-  ],
+  "across": [],
   "refused": [],
-  "unread": {
-   "head": "a malformed running head"
-  },
-  "rejected": {
-   "head": "{{RunningHeader||SUN|{{sc|Plate I.}}}}"
-  },
+  "unread": {},
+  "rejected": {},
   "disagreements": {
    "1": [
-    2,
-    0
-   ],
-   "2": [
-    2,
-    0
+    1,
+    2
    ]
   },
   "usage": {
    "figures": {
-    "batch": true,
-    "calls": 5,
-    "input_tokens": 10313,
-    "output_tokens": 376,
+    "model": "claude-opus-5-5",
+    "calls": 3,
+    "input_tokens": 6386,
+    "output_tokens": 175,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 12,
-    "input_tokens": 2090,
-    "output_tokens": 535,
+    "model": "claude-opus-5-5",
+    "calls": 11,
+    "input_tokens": 8349,
+    "output_tokens": 5175,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 23088
+    "cache_read_input_tokens": 26631
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" /></noinclude>[[File:eb1911 v26 p0105 c1f1.png|center|356px]]\n{{c|(1) 1905, June 25d. 4h. 16m. 15s.}}\n\n[[File:eb1911 v26 p0105 c1f2.png|center|356px]]\n{{c|(3) 1905, June 25d. 4h. 17m. 40s.}}\n\n[[File:eb1911 v26 p0105 c2f1.png|center|345px]]\n{{c|(2) 1905, June 25d. 4h. 17m. 15s.}}\n\n[[File:eb1911 v26 p0105 c2f2.png|center|345px]]\n{{c|(4) 1905, June 25d. 4h. 19m. 0s.}}\n\n````\n````\n\nENLARGED PHOTOGRAPHS OF THE SOLAR SURFACE. Taken by M. A. Hansky at the Observatory of Pulkowa (1905, June 25), at intervals from 25s. to 80s.\n\nXXVI. 86.<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||SUN|87}}</noinclude>condensing power of gravitation at the sun's borders is the pressure of radiation.\n\n'''''\"The Black Body.\"''''' The radiations from the sun must be considered in two parts, corresponding respectively to the continuous spectrum and the line-spectrum. The latter is considered below; it is indicative of the chemical elements from which the lines can proceed, and its state at the time of emission; the former is indicative only of the rate of loss of energy from the sun by radiation, and is inwoven with a remarkable group of physical theory and experiment, known as the theory of the black body, or as black radiation. The \"black body\" is an ideal body with surface so constituted as to reflect no part of any radiations that fall upon it; in the case of such a body Kirchhoff and Balfour Stewart showed that unless energy were to be lost the rate of emission and absorption must be in fixed ratio for each specific wave-length.\n\nThe name has no reference to the appearance of the body to the eye; when emitting energy, its radiations will be of all wave-lengths, and if intense enough will appeal to the eye as luminous between about wave-lengths 7600 and 4000 tenth-metres; this intensity is a question of temperature, and as it is exquisitely inappropriate to speak of the bulk of the solar radiations as black, the writer will speak instead of amorphous radiations from an ideal radiator. The ideal radiator is realized within any closed cavity, the walls of which are maintained at a definite temperature. The space within is filled with radiations corresponding to this temperature, and these attain a certain equilibrium which permits the energy of radiation to be spoken of as a whole, as a scalar quantity, without express reference to the propagation or interference of the waves of which it is composed. It is then found both by experiment and by thermodynamic theory that in these amorphous radiations there is for each temperature a definite distribution of the energy over the spectrum according to a law which may be expressed by <math>\\theta^5\\phi(\\theta\\lambda)d\\lambda</math>, between the wave-lengths <math>\\lambda</math>, <math>\\lambda+d\\lambda</math>; and as to the form of the function <math>\\phi</math>, Planck has shown (''Sitzungsber. Berlin Akad.'' 544) that an intelligible theory can be given which leads to the form <math>\\phi(\\theta\\lambda) = c_1/\\{exp(c_2/\\lambda\\theta)-1\\}</math>, a form which agrees in a satisfactory way with all the experiments. Fig. 11 shows the resulting distribution of energy. The enclosed area for each temperature represents the total emission of energy for that temperature, the abscissae are the wave-lengths, and the ordinates the corresponding intensities of emission for that wave-length. It will be seen that the maximum ordinates lie upon the curve <math>\\lambda\\theta = \\text{constant}</math> dotted in the figure, and so, as the temperature of the ideal body rises, the wave-length of most intense radiation shifts from the infra-red towards the luminous part of the spectrum. When we speak of the sun's it is of the character of the radiations from an ideal radiator at an appropriate temperature.\n\n[[File:eb1911 v26 p0105 c1f1.png|center|136px]]\n{{c|{{sc|Fig.}} 11.}}\n\n''The Solar Constant.'' The first adequate determination of the character as well as amount of solar radiation was made by S. P. Langley in 1893 at Mount Whitney in California (14,000 ft.), with the bolometer, an exceedingly sensitive instrument which he invented, and which enabled him to feel his way thermally over the whole spectrum, noting all the chief Fraunhofer lines and bands, which were shown by sharp serrations, or more prolonged depressions of the curve which gave the emissions, and discovering the lines and bands of the invisible ultra-red portion. The bolograph thus obtained must be cleared of the absorption of the earth's atmosphere, and that of the transmitting apparatus—a spectroscope and siderostat. The first in itself requires an elaborate study. The first essential is an elevated observatory; the next is a long series of bolographs taken at different times of the year and of the day, to examine the effect of interposing different thicknesses of air and its variation in transparency (chiefly due to water vapour). It is found that atmospheric absorption is generally greater in summer than in winter, a difference of 20% being found between March and August; morning hours show a rapid and often irregular increase of transparency, culminating shortly after noon, after which the diminution is slow and comparatively regular.\n\nThe resulting allowances and conclusion are illustrated in fig. 12, taken from an article by Langley in the ''Astrophysical Journal'' (1903), xvii. 2. The integrated emission of energy is given by the area of the outer smoothed curve (4), and the conclusion from this one bolograph is that the \"solar constant\" is 2·54 calories. The meaning of this statement is that, arguing away the earth's atmosphere, which wastes about one-half what is received, a square centimetre, exposed perpendicularly to the sun's rays, would receive sufficient energy per minute to raise 2·54 grams of water 1° C. Langley's general determination of the constant was greater than this—3·0 to 3·5 calories; more recently C. G. Abbot at Mount Wilson, with instruments and methods in which Langley's experience is embodied, has reduced it greatly, having proved that one of Langley's corrections was erroneously applied. The results vary between 1·89 and 2·22, and the variation appears to be solar, not terrestrial. Taking the value at 2·1 the earth is therefore receiving energy at the rate of 1·47 kilowatts per square metre, or 1·70 horse-power per square yard. The corresponding intensity at the sun's surface is <math>4{\\cdot}62\\times 10^4</math> as great, or <math>6{\\cdot}79\\times 10^4</math> kilowatts per square metre<math>=7{\\cdot}88\\times 10^4</math> horse-power per square yard—enough to melt a thickness of 13·3 metres (=39·6 ft.) of ice, or to vaporize 1·81 metres (=5·92 ft.) of water per minute.\n\n[[File:eb1911 v26 p0105 c2f1.png|center|356px]]\n{{c|'''(From ''Astrophysical Journal'', xvii. 2, by permission of the University of Chicago Press.)'''}}\n{{c|{{sc|Fig.}} 12.}}\n\n'''''Temperature of the Sun.''''' If we assume that the bolograph of solar energy is simply a graph of amorphous radiation from an ideal radiator, so that the constants <math>c_1</math>, <math>c_2</math>, of Planck's formula determined terrestrially apply to it, the hyperbola of maximum intensity is <math>\\lambda\\theta = 2{\\cdot}921\\times 10^7</math>; and as the sun's maximum intensity occurs for about <math>\\lambda = 4900</math>, we find the absolute temperature to be 5960° abs. If we calculate from the total energy emitted, and not from the position of maximum intensity, the same result is obtained within a few degrees. But to call this the temperature of the sun's surface is a convention, which sets aside some material factors. We may ask first whether the matter of which the surface is composed is such as to give an ideal radiator; it is impossible to answer this, but even if we admit a departure as great as the greatest known terrestrial exception, the estimated temperature is diminished only some 10%. A second question relates to the boundaries. The theory refers to radiation homogeneous at all points within a single closed boundary maintained at uniform temperature; in the actual case we have a double boundary, one the sun's surface, and the other infinitely remote, or say, non-existent, and at zero temperature; and it is assumed that the density of radiation in the free space varies inversely as the squares of the distance from the sun. Though there is no experiment behind this assumption it can hardly lead to error.\n\nA third question is more difficult. The temperature gradient at the confines of the photosphere must certainly ascend sharply at first. When we say the sun's temperature is 6000°, of what level are we speaking? The fact is that radiation is not a superficial phenomenon but a molar one, and Stefan's law, exact though it be, is not an ultimate theory but only a convenient halting-place, and the radiations of two bodies can only be compared by it when their surfaces are similar in a specific way. One characteristic of such surfaces is fixity, which has no trace of parallel in the sun. The confines of the sun are visibly in a state of turmoil, for which a sufficient cause can be assigned in the relative readiness with which the outer portions part with heat to space, and so condensing produce a state of static instability, so that the outer surface of the sun in place of being fixed is continually circulating, portions at high temperatures rising rapidly from the depths to positions where they will part rapidly with their heat, and then, whether perceived or not, descending again. It is clear that at least a considerable part of the solar radiations comes from a more or less diffuse atmosphere. With the help of theory and observation the part played by this atmosphere is tolerably precise. Its absorptive effects upon the radiations of the inner photosphere can be readily traced progressively from the centre to the rim of the sun's disk, and it has been measured as a whole by Langley, W. E. Wilson and others, and for each separate wave-length by F. W. Very (''Astrophys. Journ.'', vol. xvi.). The entries in the table on following page express the reduction of intensity for different wave-lengths <math>\\lambda</math>, when the slit is set at distances <math>\\gamma \\times \\text{radius}</math> from the centre of the disk.\n\nBuilding upon these results A. Schuster has shown (''Astrophys. Journ.'', vol. xvi.) that, if for the sake of argument the solar atmosphere be taken as homogeneous in temperature and quality, forming a sheet which itself radiates as well as absorbs, the radiation which an unshielded ideal radiator at 6000° would give is represented well, both in sum and in the distribution of intensity with respect to wave-length, by another ideal radiator—now the actual body of<noinclude><references/></noinclude>"
 }

@@ -29,7 +29,7 @@
      95,
      203,
      1170,
-     227
+     1162
     ]
    },
    {
@@ -38,9 +38,20 @@
     "column": 1,
     "box": [
      95,
-     233,
+     1162,
      574,
-     1490
+     1495
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     95,
+     1535,
+     574,
+     1570
     ]
    },
    {
@@ -48,9 +59,9 @@
     "kind": "text",
     "column": 1,
     "box": [
-     95,
-     1496,
      574,
+     1162,
+     1170,
      1570
     ]
    },
@@ -59,21 +70,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     574,
-     227,
-     1170,
-     1570
-    ]
-   },
-   {
-    "name": "c1s4",
-    "kind": "text",
-    "column": 1,
-    "box": [
      95,
      1570,
      1170,
-     1766
+     1767
     ]
    },
    {
@@ -82,24 +82,24 @@
     "column": 1,
     "box": [
      95,
-     1766,
+     1767,
      1170,
-     2365
+     2367
     ]
    },
    {
-    "name": "c1s5",
-    "kind": "text",
+    "name": "c1c2",
+    "kind": "caption",
     "column": 1,
     "box": [
      95,
-     2379,
+     2377,
      1170,
      2413
     ]
    },
    {
-    "name": "c1s6",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
@@ -117,7 +117,7 @@
      1170,
      203,
      2256,
-     976
+     1303
     ]
    },
    {
@@ -126,9 +126,9 @@
     "column": 2,
     "box": [
      1170,
-     976,
+     1303,
      2256,
-     2008
+     1715
     ]
    },
    {
@@ -137,9 +137,9 @@
     "column": 2,
     "box": [
      1170,
-     2008,
+     1715,
      2256,
-     3078
+     2641
     ]
    },
    {
@@ -148,7 +148,7 @@
     "column": 2,
     "box": [
      1170,
-     3078,
+     2641,
      2256,
      3150
     ]
@@ -156,16 +156,16 @@
   ],
   "readings": {
    "head": "{{RunningHeader||SURFACE|123}}",
-   "c1s1": "",
-   "c1s2": "{{c|''axis of revolution''}}\n{{c|{{sc|Fig.}} 5.}}",
-   "c1s3": "lly for any synclastic surface whose nt lies between the limits <math>a^{-2}</math> and <math>b^{-2}</math> from a point always meet again at a in value between <math>\\pi a</math> and <math>\\pi b</math>. On an odetics proceeding from a point never\n\n''Surface by Corresponding Figures on a Theory of Maps.''\n\nof effecting such representation are re identical in shape with the figures property is known to belong to the rface by Mercator’s method as well as ographic projection. The problem of representation is easily seen to be the expression for the lineal element y of heat conduction as the isothermal have then only to choose for the ne that whose rectangular co-ordinates investigation has been made by to represent a surface on a plane in on the surface shall correspond to the example, holds true when a spherical by lines through its centre)? He has rface for which such representation is specific curvature.\n\nies of a synclastic surface of uniform e to those of a particular surface of this type, ''i.e.'' the sphere, so we can deal with an anticlastic surface of constant specific curvature, and reduce its properties to a particular anticlastic surface. A convenient surface to study for this purpose is that known as the ''pseudosphere'', formed by the revolution of the tractrix (an involute of the catenary) round its base (see fig. 5). Its equations are <math>r = a \\sin \\phi</math>, <math>z = a(\\cos \\phi + \\log \\tan \\tfrac{1}{2}\\phi)</math>. This surface can be conformably repre-",
-   "c1s4": "sented as a plane map by choosing <math>x' = \\omega</math> where <math>\\omega</math> is the longitude of the point and <math>y' = a/\\sin\\phi</math>. It will then be found that <math>ds = a\\,ds'/y'</math>, where <math>ds =</math> lineal element on the surface, <math>ds' =</math> same on the map. It easily appears that geodetic circles on the surface are represented by circles on the map, the angle <math>\\psi</math> at which these circles cut the base depending only upon the",
-   "c1s5": "{{c|{{sc|Fig.}} 6.}}",
-   "c1s6": "curvature of the geodetic circle, <math>\\cos\\psi</math> being equal to <math>\\rho^{-1}</math>. As a particular case it follows that the geodetics on the surface are represented by those special circles on the map whose centres lie on the base (see fig. 6). The geodetic distance between two points <math>\\text{P}</math> and <math>\\text{Q}</math> on the surface is represented by the logarithm of the anharmonic function <math>\\text{AP}'\\text{BQ}'</math>, where <math>\\text{P}'\\text{Q}'</math> are the representing points on the map, <math>\\text{A}</math> <math>\\text{B}</math> the points in which the circle on the map which passes through <math>\\text{P}'</math> and <math>\\text{Q}'</math> and has its centre on the base cuts the base. The perimeter (<math>l</math>) of a geodetic circle of curvature <math>\\rho^{-1}</math> turns out to be <math>2\\pi a\\rho/\\sqrt{(a^2-\\rho^2)}</math>, and its area <math>(l\\rho^{-1}-2\\pi)a^2</math>. The geometry of coaxal circles ''in plano'' accordingly enables us to demonstrate anew by means of the pseudosphere the properties which we have shown to hold good in all anticlastic surfaces of constant curvature. Thus the system of geodetics cutting orthogonally a geodetic circle <math>\\text{C}</math> will be represented on the map by circles having their centres on the base, and cutting a given circle <math>\\text{C}'</math> orthogonally, ''i.e.'' by a coaxal system of circles. We know that the other orthogonal trajectories of this last system are another coaxal system, and therefore, going back to the pseudosphere, we learn that if a system of geodetics be drawn normal to a geodetic circle, all the orthogonals to this system are geodetic circles. It is to be noted that while every point on the surface has its representative on the map, the converse does not hold. It is",
-   "c2s1": "only points lying above the line <math>y' = a</math> which have their prototypes on the surface, the portion of the plane below this line not answering to any real part of the surface. If we take any curve <math>\\text{C}'</math> on the map crossing this line, the part of the curve above this line has as its prototype a curve on the surface. When <math>\\text{C}'</math> reaches this line, <math>\\text{C}</math> reaches the circular base of the pseudosphere, and there terminates abruptly. The distinction between the two cases of a geodetic circle with curvature greater and one with curvature less than <math>a^{-1}</math> also comes out clearly. For if curvature of <math>\\text{C} > a^{-1}</math> the map circle <math>\\text{C}'</math> lies entirely above the base, and the coaxal system cutting <math>\\text{C}'</math> orthogonally passes through a real point; therefore <math>\\text{C}</math> has a centre. If curvature of <math>\\text{C} < a^{-1}</math> the map circle <math>\\text{C}'</math> intersects the base, the coaxal system cutting <math>\\text{C}'</math> orthogonally does not intersect in a real point, and <math>\\text{C}</math> has accordingly no centre. It is of interest to examine in what way a pseudosphere differs from a plane as regards the behaviour of parallel lines. If on a plane a geodetic <math>\\text{AB}</math> (''i.e.'' a right line) be taken, and another geodetic constantly pass through a point <math>\\text{P}</math> and revolve round <math>\\text{P}</math>, it will always meet <math>\\text{AB}</math> in the point except in the particular position. On the pseudosphere, if we carry out the corresponding construction, the position of the non-intersecting geodetic is not unique, but all geodetics drawn within a certain angle fail to meet the geodetic <math>\\text{AB}</math>.\n\n{{c|''Minimal Surfaces.''}}",
-   "c2s2": "¶\nFrom the definition given in part I. readily follows the well-known property of these surfaces—that the two principal curvatures are at every point of such a surface equal and opposite. For familiar instances of the class we have the surface formed by the revolution of a catenary round its base called by French mathematicians the alysséide, and the right conoid, <math>z=a \\tan^{-1}(y/x)</math>, formed by the successive edges of the steps of a spiral staircase. Monge succeeded in expressing the co-ordinates of the most general minimal surface in two parameters, and in a form in which the variables are separated. The separation of the variables in the expression signifies that every minimal surface belongs to the class of surfaces which can be generated by a movement of translation of a curve. Enneper has thrown the expression for the co-ordinates into the following convenient forms:—\n{{block center|<math>x=\\tfrac{1}{2}\\int(1-u^2)f(u)du+\\tfrac{1}{2}\\int(1-v^2)\\phi(v)dv,</math>}}\n{{block center|<math>y=\\tfrac{1}{2}i\\int(1+u^2)f(u)du-\\tfrac{1}{2}i\\int(1+v^2)\\phi(v)dv,</math>}}\n{{block center|<math>z=\\int uf(u)du+\\int v\\phi(v)dv.</math>}}\nIt is noteworthy that the expression for the lineal element on a minimal surface assumes the isothermal form <math>ds^2=\\lambda(du^2+dv^2)</math>—(1) when the curves <math>u=\\text{const}</math>, <math>v=\\text{const}</math> are so chosen as to be the lines of curvature; and (2) when they are chosen to be the lines in which the surface is intersected by a system of parallel planes and the orthogonal trajectories of these lines. It is easily proved that a minimal surface possesses the property of being conformable to its spherical representation. For since the indicatrix at every point is a rectangular hyperbola, the angle between the elements of two intersecting curves = angle between their conjugate tangents; but this = angle between conjugate tangents to representative curves on sphere = angle between these curves themselves.",
-   "c2s3": "¶\nThe problem of finding a minimal surface to pass through a given curve in space, known as Plateau's problem, possesses an exceptional interest from the circumstance that it can be always exhibited to the eye in the following way by an actual physical experiment. Dip a wire having the form of the given curve in a soap-bubble solution, and the film adhering to the wire when it is withdrawn is the surface required. This is evident, since from the theory of surface-tension we know that a very thin film must assume that form for which the area of its surface is the least possible. The same theory also furnishes us with an elementary proof of the characteristic property that the sum of the curvatures is everywhere zero, inasmuch as the normal pressure on the film, here zero, is known to be proportional to the surface-tension multiplied by the sum of the curvatures.\n\nRiemann, adopting a method depending upon the use of the complex variable, has succeeded in solving Plateau's problem for several interesting cases, ''e.g.'' 1° when the contour consists of three infinite right lines; 2° when it consists of a gauche quadrilateral; and 3° when it consists of any two circles situated in parallel planes. (For Lie's investigations in this domain, see {{sc|Groups, Theory of}}.)\n\n{{c|''Non-extensional Deformation.''}}\n\nWe have already explained what is meant by this term. It is a subject to which much study has been devoted, connecting itself, as it does, with the work of Gauss in pure geometry on the one hand and with the theory of elasticity on the other. Several questions have been opened up: (1) What are the conditions which must be fulfilled by two surfaces such that one can be \"deformed\" so as to fit on the other? (2) What instances have we of known surfaces applicable to one another? (3) What surfaces are applicable to themselves? (4) In regard to infinitely small deformations, what are the differential equations which must be satisfied by the displacements? (5) Under what circumstances can a surface not be deformed? Can a closed surface ever be deformed?",
-   "c2s4": "¶\n1. Of course if two surfaces are applicable we must be able to get two systems of parameter curves <math>u=\\text{const}</math>, <math>v=\\text{const}</math>, on the first"
+   "c1s1": "distance <math>\\pi a</math>; and more generally for any synclastic surface whose specific curvature at every point lies between the limits <math>a^{-2}</math> and <math>b^{-2}</math> two near geodetics proceeding from a point always meet again at a geodetic distance intermediate in value between <math>\\pi a</math> and <math>\\pi b</math>. On an anticlastic surface two near geodetics proceeding from a point never meet again.\n\n''Representation of Figures on a Surface by Corresponding Figures on a Plane; Theory of Maps.''\n\nThe most valuable methods of effecting such representation are those in which small figures are identical in shape with the figures which they represent. This property is known to belong to the representation of a spherical surface by Mercator's method as well as to the representation by stereographic projection. The problem of effecting this \"conformable\" representation is easily seen to be equivalent to that of throwing the expression for the lineal element into what is known in the theory of heat conduction as the isothermal form <math>ds^2=\\lambda(du^2+dv^2)</math>, for we have then only to choose for the representative point on the plane that whose rectangular co-ordinates are <math>x=u,\\ y=v</math>. A curious investigation has been made by Beltrami—when is it possible to represent a surface on a plane in such a way that the geodetics on the surface shall correspond to the right lines on the plane (as, for example, holds true when a spherical surface is projected on a plane by lines through its centre)? He has proved that the only class of surface for which such representation is possible is the class of uniform specific curvature.\n\nJust as the intrinsic properties of a synclastic surface of uniform specific curvature are reducible to those of a particular surface of this type, ''i.e.'' the sphere, so we can",
+   "c1c1": "{{c|{{sc|Fig.}} 5.}}",
+   "c1s2": "deal with an anticlastic surface of constant specific curvature, and reduce its properties to a particular anticlastic surface. A convenient surface to study for this purpose is that known as the ''pseudosphere'', formed by the revolution of the tractrix (an involute of the catenary) round its base (see fig. 5). Its equations are <math>r = a \\sin \\phi</math>, <math>z = a(\\cos \\phi + \\log \\tan \\tfrac{1}{2}\\phi)</math>. This surface can be conformably repre-",
+   "c1s3": "sented as a plane map by choosing <math>x' = \\omega</math> where <math>\\omega</math> is the longitude of the point and <math>y' = a/\\sin \\phi</math>. It will then be found that <math>ds = a\\,ds'/y'</math>, where <math>ds</math> = lineal element on the surface, <math>ds'</math> = same on the map. It easily appears that geodetic circles on the surface are represented by circles on the map, the angle <math>\\psi</math> at which these circles cut the base depending only upon the",
+   "c1c2": "{{c|{{sc|Fig.}} 6.}}",
+   "c1s4": "curvature of the geodetic circle, <math>\\cos\\psi</math> being equal to <math>\\rho^{-1}</math>. As a particular case it follows that the geodetics on the surface are represented by those special circles on the map whose centres lie on the base (see fig. 6). The geodetic distance between two points <math>\\text{P}</math> and <math>\\text{Q}</math> on the surface is represented by the logarithm of the anharmonic function <math>\\text{AP}'\\text{BQ}'</math>, where <math>\\text{P}'\\text{Q}'</math> are the representing points on the map, <math>\\text{A}</math> <math>\\text{B}</math> the points in which the circle on the map which passes through <math>\\text{P}'</math> and <math>\\text{Q}'</math> and has its centre on the base cuts the base. The perimeter (<math>l</math>) of a geodetic circle of curvature <math>\\rho^{-1}</math> turns out to be <math>2\\pi a\\rho/\\sqrt{(a^2-\\rho^2)}</math>, and its area <math>(l\\rho^{-1}-2\\pi)a^2</math>. The geometry of coaxal circles ''in plano'' accordingly enables us to demonstrate anew by means of the pseudosphere the properties which we have shown to hold good in all anticlastic surfaces of constant curvature. Thus the system of geodetics cutting orthogonally a geodetic circle <math>\\text{C}</math> will be represented on the map by circles having their centres on the base, and cutting a given circle <math>\\text{C}'</math> orthogonally, ''i.e.'' by a coaxal system of circles. We know that the other orthogonal trajectories of this last system are another coaxal system, and therefore, going back to the pseudosphere, we learn that if a system of geodetics be drawn normal to a geodetic circle, all the orthogonals to this system are geodetic circles. It is to be noted that while every point on the surface has its representative on the map, the converse does not hold. It is",
+   "c2s1": "only points lying above the line <math>y' = a</math> which have their prototypes on the surface, the portion of the plane below this line not answering to any real part of the surface. If we take any curve <math>\\text{C}'</math> on the map crossing this line, the part of the curve above this line has as its prototype a curve on the surface. When <math>\\text{C}'</math> reaches this line, <math>\\text{C}</math> reaches the circular base of the pseudosphere, and there terminates abruptly. The distinction between the two cases of a geodetic circle with curvature greater and one with curvature less than <math>a^{-1}</math> also comes out clearly. For if curvature of <math>\\text{C} > a^{-1}</math> the map circle <math>\\text{C}'</math> lies entirely above the base, and the coaxal system cutting <math>\\text{C}'</math> orthogonally passes through a real point; therefore <math>\\text{C}</math> has a centre. If curvature of <math>\\text{C} < a^{-1}</math> the map circle <math>\\text{C}'</math> intersects the base, the coaxal system cutting <math>\\text{C}'</math> orthogonally does not intersect in a real point, and <math>\\text{C}</math> has accordingly no centre. It is of interest to examine in what way a pseudosphere differs from a plane as regards the behaviour of parallel lines. If on a plane a geodetic <math>\\text{AB}</math> (''i.e.'' a right line) be taken, and another geodetic constantly pass through a point <math>\\text{P}</math> and revolve round <math>\\text{P}</math>, it will always meet <math>\\text{AB}</math> in the point except in the particular position. On the pseudosphere, if we carry out the corresponding construction, the position of the non-intersecting geodetic is not unique, but all geodetics drawn within a certain angle fail to meet the geodetic <math>\\text{AB}</math>.\n\n{{c|''Minimal Surfaces.''}}\n\nFrom the definition given in part I. readily follows the well-known property of these surfaces—that the two principal curvatures are at every point of such a surface equal and opposite. For familiar instances of the class we have the surface formed by the revolution of a catenary round its base called by French mathematicians the alysséide, and the right conoid, <math>z = a \\tan^{-1}(y/x)</math>, formed by the successive edges of the steps of a spiral staircase. Monge succeeded in expressing the co-ordinates of the most general minimal surface in two parameters, and in a form in which the variables are separated. The separation of the variables in the expression signifies",
+   "c2s2": "that every minimal surface belongs to the class of surfaces which can be generated by a movement of translation of a curve. Enneper has thrown the expression for the co-ordinates into the following convenient forms:—\n\n{{block center|<math>x=\\tfrac{1}{2}\\int(1-u^2)f(u)du+\\tfrac{1}{2}\\int(1-v^2)\\phi(v)dv</math>,}}\n{{block center|<math>y=\\tfrac{1}{2}i\\int(1+u^2)f(u)du-\\tfrac{1}{2}i\\int(1+v^2)\\phi(v)dv</math>,}}\n{{block center|<math>z=\\int uf(u)du+\\int v\\phi(v)dv</math>.}}\n\nIt is noteworthy that the expression for the lineal element on a minimal surface assumes the isothermal form <math>ds^2=\\lambda(du^2+dv^2)</math>—(1) when the curves <math>u=\\text{const}</math>, <math>v=\\text{const}</math> are so chosen as to be the lines",
+   "c2s3": "of curvature; and (2) when they are chosen to be the lines in which the surface is intersected by a system of parallel planes and the orthogonal trajectories of these lines. It is easily proved that a minimal surface possesses the property of being conformable to its spherical representation. For since the indicatrix at every point is a rectangular hyperbola, the angle between the elements of two intersecting curves = angle between their conjugate tangents; but this = angle between conjugate tangents to representative curves on sphere = angle between these curves themselves.\n\nThe problem of finding a minimal surface to pass through a given curve in space, known as Plateau's problem, possesses an exceptional interest from the circumstance that it can be always exhibited to the eye in the following way by an actual physical experiment. Dip a wire having the form of the given curve in a soap-bubble solution, and the film adhering to the wire when it is withdrawn is the surface required. This is evident, since from the theory of surface-tension we know that a very thin film must assume that form for which the area of its surface is the least possible. The same theory also furnishes us with an elementary proof of the characteristic property that the sum of the curvatures is everywhere zero, inasmuch as the normal pressure on the film, here zero, is known to be proportional to the surface-tension multiplied by the sum of the curvatures.\n\nRiemann, adopting a method depending upon the use of the complex variable, has succeeded in solving Plateau's problem for several interesting cases, ''e.g.'' 1° when the contour consists of three infinite right lines; 2° when it consists of a gauche quadrilateral; and 3° when it consists of any two circles situated in parallel planes. (For Lie's investigations in this domain, see {{sc|Groups, Theory of}}.)",
+   "c2s4": "¶\n{{c|''Non-extensional Deformation.''}}\n\nWe have already explained what is meant by this term. It is a subject to which much study has been devoted, connecting itself, as it does, with the work of Gauss in pure geometry on the one hand and with the theory of elasticity on the other. Several questions have been opened up: (1) What are the conditions which must be fulfilled by two surfaces such that one can be “deformed” so as to fit on the other? (2) What instances have we of known surfaces applicable to one another? (3) What surfaces are applicable to themselves? (4) In regard to infinitely small deformations, what are the differential equations which must be satisfied by the displacements? (5) Under what circumstances can a surface not be deformed? Can a closed surface ever be deformed?\n\n1. Of course if two surfaces are applicable we must be able to get two systems of parameter curves <math>u=\\text{const}</math>, <math>v=\\text{const}</math>, on the first"
   },
   "figure_files": {
    "c1f1": "eb1911 v26 p0141 c1f1.png",
@@ -175,45 +175,45 @@
    {
     "box": [
      103,
-     1166,
-     583,
-     1486
+     1167,
+     565,
+     1495
     ],
     "caption": [
-     165,
-     1498,
-     467,
+     297,
+     1538,
+     405,
      1570
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      97,
-     1158,
-     579,
-     1493
+     1155,
+     596,
+     1498
     ]
    },
    {
     "box": [
      180,
-     1769,
+     1770,
      1083,
-     2365
+     2367
     ],
     "caption": [
-     573,
-     2379,
+     575,
+     2377,
      685,
      2411
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     181,
-     1767,
-     1118,
-     2368
+     177,
+     1765,
+     1111,
+     2364
     ]
    }
   ],
@@ -229,22 +229,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 3,
-    "input_tokens": 6557,
-    "output_tokens": 163,
+    "input_tokens": 6709,
+    "output_tokens": 177,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 11,
-    "input_tokens": 7242,
-    "output_tokens": 4810,
+    "input_tokens": 7902,
+    "output_tokens": 4977,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 21164
+    "cache_read_input_tokens": 26631
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||SURFACE|123}}</noinclude>[[File:eb1911 v26 p0141 c1f1.png|center|157px]]\n{{c|''axis of revolution''}}\n{{c|{{sc|Fig.}} 5.}}\n\nlly for any synclastic surface whose nt lies between the limits <math>a^{-2}</math> and <math>b^{-2}</math> from a point always meet again at a in value between <math>\\pi a</math> and <math>\\pi b</math>. On an odetics proceeding from a point never\n\n''Surface by Corresponding Figures on a Theory of Maps.''\n\nof effecting such representation are re identical in shape with the figures property is known to belong to the rface by Mercator’s method as well as ographic projection. The problem of representation is easily seen to be the expression for the lineal element y of heat conduction as the isothermal have then only to choose for the ne that whose rectangular co-ordinates investigation has been made by to represent a surface on a plane in on the surface shall correspond to the example, holds true when a spherical by lines through its centre)? He has rface for which such representation is specific curvature.\n\nies of a synclastic surface of uniform e to those of a particular surface of this type, ''i.e.'' the sphere, so we can deal with an anticlastic surface of constant specific curvature, and reduce its properties to a particular anticlastic surface. A convenient surface to study for this purpose is that known as the ''pseudosphere'', formed by the revolution of the tractrix (an involute of the catenary) round its base (see fig. 5). Its equations are <math>r = a \\sin \\phi</math>, <math>z = a(\\cos \\phi + \\log \\tan \\tfrac{1}{2}\\phi)</math>. This surface can be conformably represented as a plane map by choosing <math>x' = \\omega</math> where <math>\\omega</math> is the longitude of the point and <math>y' = a/\\sin\\phi</math>. It will then be found that <math>ds = a\\,ds'/y'</math>, where <math>ds =</math> lineal element on the surface, <math>ds' =</math> same on the map. It easily appears that geodetic circles on the surface are represented by circles on the map, the angle <math>\\psi</math> at which these circles cut the base depending only upon the curvature of the geodetic circle, <math>\\cos\\psi</math> being equal to <math>\\rho^{-1}</math>. As a particular case it follows that the geodetics on the surface are represented by those special circles on the map whose centres lie on the base (see fig. 6). The geodetic distance between two points <math>\\text{P}</math> and <math>\\text{Q}</math> on the surface is represented by the logarithm of the anharmonic function <math>\\text{AP}'\\text{BQ}'</math>, where <math>\\text{P}'\\text{Q}'</math> are the representing points on the map, <math>\\text{A}</math> <math>\\text{B}</math> the points in which the circle on the map which passes through <math>\\text{P}'</math> and <math>\\text{Q}'</math> and has its centre on the base cuts the base. The perimeter (<math>l</math>) of a geodetic circle of curvature <math>\\rho^{-1}</math> turns out to be <math>2\\pi a\\rho/\\sqrt{(a^2-\\rho^2)}</math>, and its area <math>(l\\rho^{-1}-2\\pi)a^2</math>. The geometry of coaxal circles ''in plano'' accordingly enables us to demonstrate anew by means of the pseudosphere the properties which we have shown to hold good in all anticlastic surfaces of constant curvature. Thus the system of geodetics cutting orthogonally a geodetic circle <math>\\text{C}</math> will be represented on the map by circles having their centres on the base, and cutting a given circle <math>\\text{C}'</math> orthogonally, ''i.e.'' by a coaxal system of circles. We know that the other orthogonal trajectories of this last system are another coaxal system, and therefore, going back to the pseudosphere, we learn that if a system of geodetics be drawn normal to a geodetic circle, all the orthogonals to this system are geodetic circles. It is to be noted that while every point on the surface has its representative on the map, the converse does not hold. It is only points lying above the line <math>y' = a</math> which have their prototypes on the surface, the portion of the plane below this line not answering to any real part of the surface. If we take any curve <math>\\text{C}'</math> on the map crossing this line, the part of the curve above this line has as its prototype a curve on the surface. When <math>\\text{C}'</math> reaches this line, <math>\\text{C}</math> reaches the circular base of the pseudosphere, and there terminates abruptly. The distinction between the two cases of a geodetic circle with curvature greater and one with curvature less than <math>a^{-1}</math> also comes out clearly. For if curvature of <math>\\text{C} > a^{-1}</math> the map circle <math>\\text{C}'</math> lies entirely above the base, and the coaxal system cutting <math>\\text{C}'</math> orthogonally passes through a real point; therefore <math>\\text{C}</math> has a centre. If curvature of <math>\\text{C} < a^{-1}</math> the map circle <math>\\text{C}'</math> intersects the base, the coaxal system cutting <math>\\text{C}'</math> orthogonally does not intersect in a real point, and <math>\\text{C}</math> has accordingly no centre. It is of interest to examine in what way a pseudosphere differs from a plane as regards the behaviour of parallel lines. If on a plane a geodetic <math>\\text{AB}</math> (''i.e.'' a right line) be taken, and another geodetic constantly pass through a point <math>\\text{P}</math> and revolve round <math>\\text{P}</math>, it will always meet <math>\\text{AB}</math> in the point except in the particular position. On the pseudosphere, if we carry out the corresponding construction, the position of the non-intersecting geodetic is not unique, but all geodetics drawn within a certain angle fail to meet the geodetic <math>\\text{AB}</math>.\n\n[[File:eb1911 v26 p0141 c1f2.png|center|353px]]\n{{c|{{sc|Fig.}} 6.}}\n\n{{c|''Minimal Surfaces.''}}\n\nFrom the definition given in part I. readily follows the well-known property of these surfaces—that the two principal curvatures are at every point of such a surface equal and opposite. For familiar instances of the class we have the surface formed by the revolution of a catenary round its base called by French mathematicians the alysséide, and the right conoid, <math>z=a \\tan^{-1}(y/x)</math>, formed by the successive edges of the steps of a spiral staircase. Monge succeeded in expressing the co-ordinates of the most general minimal surface in two parameters, and in a form in which the variables are separated. The separation of the variables in the expression signifies that every minimal surface belongs to the class of surfaces which can be generated by a movement of translation of a curve. Enneper has thrown the expression for the co-ordinates into the following convenient forms:—\n{{block center|<math>x=\\tfrac{1}{2}\\int(1-u^2)f(u)du+\\tfrac{1}{2}\\int(1-v^2)\\phi(v)dv,</math>}}\n{{block center|<math>y=\\tfrac{1}{2}i\\int(1+u^2)f(u)du-\\tfrac{1}{2}i\\int(1+v^2)\\phi(v)dv,</math>}}\n{{block center|<math>z=\\int uf(u)du+\\int v\\phi(v)dv.</math>}}\nIt is noteworthy that the expression for the lineal element on a minimal surface assumes the isothermal form <math>ds^2=\\lambda(du^2+dv^2)</math>—(1) when the curves <math>u=\\text{const}</math>, <math>v=\\text{const}</math> are so chosen as to be the lines of curvature; and (2) when they are chosen to be the lines in which the surface is intersected by a system of parallel planes and the orthogonal trajectories of these lines. It is easily proved that a minimal surface possesses the property of being conformable to its spherical representation. For since the indicatrix at every point is a rectangular hyperbola, the angle between the elements of two intersecting curves = angle between their conjugate tangents; but this = angle between conjugate tangents to representative curves on sphere = angle between these curves themselves.\n\nThe problem of finding a minimal surface to pass through a given curve in space, known as Plateau's problem, possesses an exceptional interest from the circumstance that it can be always exhibited to the eye in the following way by an actual physical experiment. Dip a wire having the form of the given curve in a soap-bubble solution, and the film adhering to the wire when it is withdrawn is the surface required. This is evident, since from the theory of surface-tension we know that a very thin film must assume that form for which the area of its surface is the least possible. The same theory also furnishes us with an elementary proof of the characteristic property that the sum of the curvatures is everywhere zero, inasmuch as the normal pressure on the film, here zero, is known to be proportional to the surface-tension multiplied by the sum of the curvatures.\n\nRiemann, adopting a method depending upon the use of the complex variable, has succeeded in solving Plateau's problem for several interesting cases, ''e.g.'' 1° when the contour consists of three infinite right lines; 2° when it consists of a gauche quadrilateral; and 3° when it consists of any two circles situated in parallel planes. (For Lie's investigations in this domain, see {{sc|Groups, Theory of}}.)\n\n{{c|''Non-extensional Deformation.''}}\n\nWe have already explained what is meant by this term. It is a subject to which much study has been devoted, connecting itself, as it does, with the work of Gauss in pure geometry on the one hand and with the theory of elasticity on the other. Several questions have been opened up: (1) What are the conditions which must be fulfilled by two surfaces such that one can be \"deformed\" so as to fit on the other? (2) What instances have we of known surfaces applicable to one another? (3) What surfaces are applicable to themselves? (4) In regard to infinitely small deformations, what are the differential equations which must be satisfied by the displacements? (5) Under what circumstances can a surface not be deformed? Can a closed surface ever be deformed?\n\n1. Of course if two surfaces are applicable we must be able to get two systems of parameter curves <math>u=\\text{const}</math>, <math>v=\\text{const}</math>, on the first<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||SURFACE|123}}</noinclude>distance <math>\\pi a</math>; and more generally for any synclastic surface whose specific curvature at every point lies between the limits <math>a^{-2}</math> and <math>b^{-2}</math> two near geodetics proceeding from a point always meet again at a geodetic distance intermediate in value between <math>\\pi a</math> and <math>\\pi b</math>. On an anticlastic surface two near geodetics proceeding from a point never meet again.\n\n''Representation of Figures on a Surface by Corresponding Figures on a Plane; Theory of Maps.''\n\nThe most valuable methods of effecting such representation are those in which small figures are identical in shape with the figures which they represent. This property is known to belong to the representation of a spherical surface by Mercator's method as well as to the representation by stereographic projection. The problem of effecting this \"conformable\" representation is easily seen to be equivalent to that of throwing the expression for the lineal element into what is known in the theory of heat conduction as the isothermal form <math>ds^2=\\lambda(du^2+dv^2)</math>, for we have then only to choose for the representative point on the plane that whose rectangular co-ordinates are <math>x=u,\\ y=v</math>. A curious investigation has been made by Beltrami—when is it possible to represent a surface on a plane in such a way that the geodetics on the surface shall correspond to the right lines on the plane (as, for example, holds true when a spherical surface is projected on a plane by lines through its centre)? He has proved that the only class of surface for which such representation is possible is the class of uniform specific curvature.\n\nJust as the intrinsic properties of a synclastic surface of uniform specific curvature are reducible to those of a particular surface of this type, ''i.e.'' the sphere, so we can deal with an anticlastic surface of constant specific curvature, and reduce its properties to a particular anticlastic surface. A convenient surface to study for this purpose is that known as the ''pseudosphere'', formed by the revolution of the tractrix (an involute of the catenary) round its base (see fig. 5). Its equations are <math>r = a \\sin \\phi</math>, <math>z = a(\\cos \\phi + \\log \\tan \\tfrac{1}{2}\\phi)</math>. This surface can be conformably represented as a plane map by choosing <math>x' = \\omega</math> where <math>\\omega</math> is the longitude of the point and <math>y' = a/\\sin \\phi</math>. It will then be found that <math>ds = a\\,ds'/y'</math>, where <math>ds</math> = lineal element on the surface, <math>ds'</math> = same on the map. It easily appears that geodetic circles on the surface are represented by circles on the map, the angle <math>\\psi</math> at which these circles cut the base depending only upon the curvature of the geodetic circle, <math>\\cos\\psi</math> being equal to <math>\\rho^{-1}</math>. As a particular case it follows that the geodetics on the surface are represented by those special circles on the map whose centres lie on the base (see fig. 6). The geodetic distance between two points <math>\\text{P}</math> and <math>\\text{Q}</math> on the surface is represented by the logarithm of the anharmonic function <math>\\text{AP}'\\text{BQ}'</math>, where <math>\\text{P}'\\text{Q}'</math> are the representing points on the map, <math>\\text{A}</math> <math>\\text{B}</math> the points in which the circle on the map which passes through <math>\\text{P}'</math> and <math>\\text{Q}'</math> and has its centre on the base cuts the base. The perimeter (<math>l</math>) of a geodetic circle of curvature <math>\\rho^{-1}</math> turns out to be <math>2\\pi a\\rho/\\sqrt{(a^2-\\rho^2)}</math>, and its area <math>(l\\rho^{-1}-2\\pi)a^2</math>. The geometry of coaxal circles ''in plano'' accordingly enables us to demonstrate anew by means of the pseudosphere the properties which we have shown to hold good in all anticlastic surfaces of constant curvature. Thus the system of geodetics cutting orthogonally a geodetic circle <math>\\text{C}</math> will be represented on the map by circles having their centres on the base, and cutting a given circle <math>\\text{C}'</math> orthogonally, ''i.e.'' by a coaxal system of circles. We know that the other orthogonal trajectories of this last system are another coaxal system, and therefore, going back to the pseudosphere, we learn that if a system of geodetics be drawn normal to a geodetic circle, all the orthogonals to this system are geodetic circles. It is to be noted that while every point on the surface has its representative on the map, the converse does not hold. It is only points lying above the line <math>y' = a</math> which have their prototypes on the surface, the portion of the plane below this line not answering to any real part of the surface. If we take any curve <math>\\text{C}'</math> on the map crossing this line, the part of the curve above this line has as its prototype a curve on the surface. When <math>\\text{C}'</math> reaches this line, <math>\\text{C}</math> reaches the circular base of the pseudosphere, and there terminates abruptly. The distinction between the two cases of a geodetic circle with curvature greater and one with curvature less than <math>a^{-1}</math> also comes out clearly. For if curvature of <math>\\text{C} > a^{-1}</math> the map circle <math>\\text{C}'</math> lies entirely above the base, and the coaxal system cutting <math>\\text{C}'</math> orthogonally passes through a real point; therefore <math>\\text{C}</math> has a centre. If curvature of <math>\\text{C} < a^{-1}</math> the map circle <math>\\text{C}'</math> intersects the base, the coaxal system cutting <math>\\text{C}'</math> orthogonally does not intersect in a real point, and <math>\\text{C}</math> has accordingly no centre. It is of interest to examine in what way a pseudosphere differs from a plane as regards the behaviour of parallel lines. If on a plane a geodetic <math>\\text{AB}</math> (''i.e.'' a right line) be taken, and another geodetic constantly pass through a point <math>\\text{P}</math> and revolve round <math>\\text{P}</math>, it will always meet <math>\\text{AB}</math> in the point except in the particular position. On the pseudosphere, if we carry out the corresponding construction, the position of the non-intersecting geodetic is not unique, but all geodetics drawn within a certain angle fail to meet the geodetic <math>\\text{AB}</math>.\n\n[[File:eb1911 v26 p0141 c1f1.png|center|157px]]\n{{c|{{sc|Fig.}} 5.}}\n\n[[File:eb1911 v26 p0141 c1f2.png|center|353px]]\n{{c|{{sc|Fig.}} 6.}}\n\n{{c|''Minimal Surfaces.''}}\n\nFrom the definition given in part I. readily follows the well-known property of these surfaces—that the two principal curvatures are at every point of such a surface equal and opposite. For familiar instances of the class we have the surface formed by the revolution of a catenary round its base called by French mathematicians the alysséide, and the right conoid, <math>z = a \\tan^{-1}(y/x)</math>, formed by the successive edges of the steps of a spiral staircase. Monge succeeded in expressing the co-ordinates of the most general minimal surface in two parameters, and in a form in which the variables are separated. The separation of the variables in the expression signifies that every minimal surface belongs to the class of surfaces which can be generated by a movement of translation of a curve. Enneper has thrown the expression for the co-ordinates into the following convenient forms:—\n\n{{block center|<math>x=\\tfrac{1}{2}\\int(1-u^2)f(u)du+\\tfrac{1}{2}\\int(1-v^2)\\phi(v)dv</math>,}}\n{{block center|<math>y=\\tfrac{1}{2}i\\int(1+u^2)f(u)du-\\tfrac{1}{2}i\\int(1+v^2)\\phi(v)dv</math>,}}\n{{block center|<math>z=\\int uf(u)du+\\int v\\phi(v)dv</math>.}}\n\nIt is noteworthy that the expression for the lineal element on a minimal surface assumes the isothermal form <math>ds^2=\\lambda(du^2+dv^2)</math>—(1) when the curves <math>u=\\text{const}</math>, <math>v=\\text{const}</math> are so chosen as to be the lines of curvature; and (2) when they are chosen to be the lines in which the surface is intersected by a system of parallel planes and the orthogonal trajectories of these lines. It is easily proved that a minimal surface possesses the property of being conformable to its spherical representation. For since the indicatrix at every point is a rectangular hyperbola, the angle between the elements of two intersecting curves = angle between their conjugate tangents; but this = angle between conjugate tangents to representative curves on sphere = angle between these curves themselves.\n\nThe problem of finding a minimal surface to pass through a given curve in space, known as Plateau's problem, possesses an exceptional interest from the circumstance that it can be always exhibited to the eye in the following way by an actual physical experiment. Dip a wire having the form of the given curve in a soap-bubble solution, and the film adhering to the wire when it is withdrawn is the surface required. This is evident, since from the theory of surface-tension we know that a very thin film must assume that form for which the area of its surface is the least possible. The same theory also furnishes us with an elementary proof of the characteristic property that the sum of the curvatures is everywhere zero, inasmuch as the normal pressure on the film, here zero, is known to be proportional to the surface-tension multiplied by the sum of the curvatures.\n\nRiemann, adopting a method depending upon the use of the complex variable, has succeeded in solving Plateau's problem for several interesting cases, ''e.g.'' 1° when the contour consists of three infinite right lines; 2° when it consists of a gauche quadrilateral; and 3° when it consists of any two circles situated in parallel planes. (For Lie's investigations in this domain, see {{sc|Groups, Theory of}}.)\n\n{{c|''Non-extensional Deformation.''}}\n\nWe have already explained what is meant by this term. It is a subject to which much study has been devoted, connecting itself, as it does, with the work of Gauss in pure geometry on the one hand and with the theory of elasticity on the other. Several questions have been opened up: (1) What are the conditions which must be fulfilled by two surfaces such that one can be “deformed” so as to fit on the other? (2) What instances have we of known surfaces applicable to one another? (3) What surfaces are applicable to themselves? (4) In regard to infinitely small deformations, what are the differential equations which must be satisfied by the displacements? (5) Under what circumstances can a surface not be deformed? Can a closed surface ever be deformed?\n\n1. Of course if two surfaces are applicable we must be able to get two systems of parameter curves <math>u=\\text{const}</math>, <math>v=\\text{const}</math>, on the first<noinclude><references/></noinclude>"
 }

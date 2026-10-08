@@ -22,23 +22,34 @@
     ]
    },
    {
-    "name": "c1f1",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     166,
-     237,
-     536,
-     666
-    ]
-   },
-   {
     "name": "c1s1",
     "kind": "text",
     "column": 1,
     "box": [
      166,
-     676,
+     217,
+     1236,
+     238
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     166,
+     323,
+     536,
+     666
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     166,
+     675,
      536,
      708
     ]
@@ -49,9 +60,20 @@
     "column": 1,
     "box": [
      536,
-     237,
+     238,
      1236,
      719
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     166,
+     719,
+     1236,
+     1112
     ]
    },
    {
@@ -60,14 +82,14 @@
     "column": 1,
     "box": [
      166,
-     722,
+     1119,
      821,
-     1393
+     1390
     ]
    },
    {
-    "name": "c1s3",
-    "kind": "text",
+    "name": "c1c2",
+    "kind": "caption",
     "column": 1,
     "box": [
      166,
@@ -82,20 +104,9 @@
     "column": 1,
     "box": [
      821,
-     722,
+     1112,
      1236,
      1469
-    ]
-   },
-   {
-    "name": "c1f3",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     166,
-     1469,
-     805,
-     1752
     ]
    },
    {
@@ -104,9 +115,31 @@
     "column": 1,
     "box": [
      166,
-     1760,
-     805,
-     1793
+     1469,
+     1236,
+     1578
+    ]
+   },
+   {
+    "name": "c1f3",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     166,
+     1578,
+     803,
+     1752
+    ]
+   },
+   {
+    "name": "c1c3",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     166,
+     1759,
+     803,
+     1794
     ]
    },
    {
@@ -114,10 +147,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     805,
-     1469,
+     803,
+     1578,
      1236,
-     1793
+     1794
     ]
    },
    {
@@ -126,9 +159,9 @@
     "column": 1,
     "box": [
      166,
-     1793,
+     1794,
      1236,
-     1823
+     1964
     ]
    },
    {
@@ -137,9 +170,20 @@
     "column": 1,
     "box": [
      166,
-     1823,
-     656,
+     1964,
+     654,
      2485
+    ]
+   },
+   {
+    "name": "c1c4",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     166,
+     2485,
+     654,
+     2521
     ]
    },
    {
@@ -147,9 +191,9 @@
     "kind": "text",
     "column": 1,
     "box": [
-     166,
-     2486,
-     656,
+     654,
+     1964,
+     1236,
      2521
     ]
    },
@@ -158,21 +202,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     656,
-     1823,
-     1236,
-     2521
-    ]
-   },
-   {
-    "name": "c1s10",
-    "kind": "text",
-    "column": 1,
-    "box": [
      166,
      2521,
      1236,
-     2714
+     2699
     ]
    },
    {
@@ -181,24 +214,24 @@
     "column": 1,
     "box": [
      166,
-     2714,
+     2699,
      1236,
-     2982
+     2981
     ]
    },
    {
-    "name": "c1s11",
-    "kind": "text",
+    "name": "c1c5",
+    "kind": "caption",
     "column": 1,
     "box": [
      166,
-     2997,
+     2996,
      1236,
      3030
     ]
    },
    {
-    "name": "c1s12",
+    "name": "c1s10",
     "kind": "text",
     "column": 1,
     "box": [
@@ -231,18 +264,18 @@
     ]
    },
    {
-    "name": "c2s2",
-    "kind": "text",
+    "name": "c2c1",
+    "kind": "caption",
     "column": 2,
     "box": [
      2031,
-     869,
+     870,
      2306,
      904
     ]
    },
    {
-    "name": "c2s3",
+    "name": "c2s2",
     "kind": "text",
     "column": 2,
     "box": [
@@ -253,19 +286,30 @@
     ]
    },
    {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1236,
+     904,
+     2306,
+     1001
+    ]
+   },
+   {
     "name": "c2f2",
     "kind": "figure",
     "column": 2,
     "box": [
      1646,
-     904,
+     1001,
      2306,
      1475
     ]
    },
    {
-    "name": "c2s4",
-    "kind": "text",
+    "name": "c2c2",
+    "kind": "caption",
     "column": 2,
     "box": [
      1646,
@@ -275,14 +319,25 @@
     ]
    },
    {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1236,
+     1001,
+     1646,
+     1518
+    ]
+   },
+   {
     "name": "c2s5",
     "kind": "text",
     "column": 2,
     "box": [
      1236,
-     904,
-     1646,
-     1518
+     1518,
+     2306,
+     1772
     ]
    },
    {
@@ -290,10 +345,21 @@
     "kind": "figure",
     "column": 2,
     "box": [
-     2127,
-     1531,
+     2126,
+     1772,
      2306,
      2549
+    ]
+   },
+   {
+    "name": "c2c3",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     2126,
+     2558,
+     2306,
+     2595
     ]
    },
    {
@@ -301,25 +367,14 @@
     "kind": "text",
     "column": 2,
     "box": [
-     2127,
-     2558,
-     2306,
-     2594
-    ]
-   },
-   {
-    "name": "c2s7",
-    "kind": "text",
-    "column": 2,
-    "box": [
      1236,
-     1531,
-     2127,
+     1772,
+     2126,
      2641
     ]
    },
    {
-    "name": "c2s8",
+    "name": "c2s7",
     "kind": "text",
     "column": 2,
     "box": [
@@ -341,8 +396,8 @@
     ]
    },
    {
-    "name": "c2s9",
-    "kind": "text",
+    "name": "c2c4",
+    "kind": "caption",
     "column": 2,
     "box": [
      1236,
@@ -352,7 +407,7 @@
     ]
    },
    {
-    "name": "c2s10",
+    "name": "c2s8",
     "kind": "text",
     "column": 2,
     "box": [
@@ -365,28 +420,33 @@
   ],
   "readings": {
    "head": "{{RunningHeader|1020|STRENGTH OF MATERIALS|}}",
-   "c1s1": "{{c|{{sc|Fig.}} 27.}}",
+   "c1s1": "",
+   "c1c1": "{{c|{{sc|Fig.}} 27.}}",
    "c1s2": "s on any plane surface <math>\\text{AB}</math> (fig. 27), such as tion of a strained piece, may be represented by a figure formed by setting up ordinates <math>\\text{A}a</math>, <math>\\text{B}b</math>, &c., from points on the surface, the length of these being made proportional to the intensity of stress at each point. This gives an ideal solid, which may be called the stress figure, whose height shows the distribution of stress over the surface which forms its base. A line drawn from <math>g</math>, the centre of gravity of the stress figure, parallel to the ordinates <math>\\text{A}a</math>, &c., determines the point <math>c</math>, which is called the centre of stress, and is the point through which the resultant of the distributed stress",
-   "c1s3": "{{c|{{sc|Fig.}} 28.}}",
-   "c1s4": "uted stress, <math>ab</math> is a plane e of gravity of the surface pull applied axially—that sses through the centre of may be taken as (sensibly) ot near a place where the d the bar is homogeneous in a state of ease and the\n\nvarying stress is illustrated stresses within the elastic limit) in a bent beam, in a tie subjected to non-axial pull, and in a long strut or column where buckling makes the stress become non-axial. In uniformly varying stress the intensity <math>p</math> at any point <math>\\text{P}</math> is proportional to the distance of <math>\\text{P}</math> from a line <math>\\text{MN}</math>, called the the stressed surface and",
-   "c1s5": "{{c|{{sc|Fig.}} 29.}}",
-   "c1s6": "h is assumed to be that in ost rapidly. There is no to <math>\\text{MN}</math>. If <math>\\text{MN}</math> passes through <math>\\text{C}</math>, the centre of gravity of the surface, as in fig. 29, it may easily be shown that the total pull stress on one side of the neutral axis is equal to the total push stress on",
-   "c1s7": "the other side, whatever",
-   "c1s8": "{{c|{{sc|Fig.}} 30.}}",
-   "c1s9": ". The resultant of the whole stress e, whose moment may be found as tely small part of the surface at a xis through C, and let <math>p</math> be the intensity of stress on <math>d\\text{S}</math>. The moment of the stress on <math>d\\text{S}</math> is <math>xpd\\text{S}</math>. But <math>p = p_1x/x_1 = p_2x/x_2</math> (see fig. 29). The whole moment of the stress on AB is <math>\\int xpd\\text{S} = (p_1x_1)\\int x^2d\\text{S} = p_1\\text{I}/x_1</math> or <math>p_2\\text{I}/x_2</math>, where I is the moment of inertia of the surface AB about the neutral axis through C.\n\nA stress such as that shown in fig. 28 or fig. 30 may be regarded as a uniformly distributed stress of intensity <math>p_0</math> (which is the intensity at the centre of gravity of the surface C) and a stress of the kind shown in fig. 29. The resultant is <math>p_0\\text{S}</math>, where S is the",
-   "c1s10": "whole area of the surface, and it acts at a distance CD from C such that the moment <math>p_0\\text{S}.\\text{CD} = (p_2 - p_0)\\text{I}/x_1 = (p_1 + p_0)\\text{I}/x_2</math>. Hence <math>p_2 = p_0(1 + x_2\\text{S}.\\text{CD}/\\text{I})</math>, and <math>p_1 = p_0(1 - x_1\\text{S}.\\text{CD}/\\text{I})</math>.\n\n''Simple bending'' occurs when a beam is in equilibrium under equal and opposite couples in the plane of the beam. Thus if a beam (fig.",
-   "c1s11": "{{c|{{sc|Fig.}} 31.}}",
-   "c1s12": "31), supported at its ends, be loaded at two points so that <math>\\text{W}_1l_1 = \\text{W}_2l_2</math>, the portion of the beam lying between <math>\\text{W}_1</math> and <math>\\text{W}_2</math> is subjected",
+   "c1s3": "acts. In the case of a uniformly distributed stress, <math>ab</math> is a plane surface parallel to <math>\\text{AB}</math>, and <math>c</math> is the centre of gravity of the surface <math>\\text{AB}</math>. When a bar is subjected to simple pull applied axially—that is to say, so that the resultant stress passes through the centre of gravity of every cross-section—the stress may be taken as (sensibly) uniformly distributed over any section not near a place where the form of the cross-section changes, provided the bar is homogeneous in respect of elastic quality and is initially in a state of ease and the stress is within the limits of elasticity.\n\n''Uniformly Varying Stress.''—Uniformly varying stress is illustrated by fig. 28. It occurs (in each case for stresses within the elastic limit) in a bent beam, in",
+   "c1c2": "{{c|{{sc|Fig.}} 28.}}",
+   "c1s4": "a tie subjected to non-axial pull, and in a long strut or column where buckling makes the stress become non-axial. In uniformly varying stress the intensity <math>p</math> at any point <math>\\text{P}</math> is proportional to the distance of <math>\\text{P}</math> from a line <math>\\text{MN}</math>, called the the stressed surface and",
+   "c1s5": "at right angles to the direction <math>\\text{AB}</math>, which is assumed to be that in which the intensity of stress varies most rapidly. There is no variation of stress along lines parallel to <math>\\text{MN}</math>. If <math>\\text{MN}</math> passes",
+   "c1c3": "{{c|{{sc|Fig.}} 29.}}",
+   "c1s6": "through <math>\\text{C}</math>, the centre of gravity of the surface, as in fig. 29, it may easily be shown that the total pull stress on one side of the neutral axis is equal to the total push stress on",
+   "c1s7": "the other side, whatever be the form of the surface <math>\\text{AB}</math>. The resultant of the whole stress on <math>\\text{AB}</math> is in that case a couple, whose moment may be found as follows. Let <math>d\\text{S}</math> be an indefinitely small part of the surface at a distance <math>x</math> from the neutral axis through <math>\\text{C}</math>, and let <math>p</math> be the",
+   "c1c4": "{{c|{{sc|Fig.}} 30.}}",
+   "c1s8": "intensity of stress on <math>d\\text{S}</math>. The moment of the stress on <math>d\\text{S}</math> is <math>xpd\\text{S}</math>. But <math>p = p_1x/x_1 = p_2x/x_2</math> (see fig. 29). The whole moment of the stress on AB is <math>\\textstyle\\int xpd\\text{S} = (p_1x_1)\\int x^2d\\text{S} = p_1\\text{I}/x_1</math> or <math>p_2\\text{I}/x_2</math>, where <math>\\text{I}</math> is the moment of inertia of the surface AB about the neutral axis through C.\n\nA stress such as that shown in fig. 28 or fig. 30 may be regarded as a uniformly distributed stress of intensity <math>p_0</math> (which is the intensity at the centre of gravity of the surface C) and a stress of the kind shown in fig. 29. The resultant is <math>p_0\\text{S}</math>, where <math>\\text{S}</math> is the",
+   "c1s9": "whole area of the surface, and it acts at a distance <math>\\text{CD}</math> from <math>\\text{C}</math> such that the moment <math>p_0\\text{S}.\\text{CD} = (p_2 - p_0)\\text{I}/x_1 = (p_1+p_0)\\text{I}/x_2</math>. Hence <math>p_2 = p_0(1+x_2\\text{S}.\\text{CD}/\\text{I})</math>, and <math>p_1=p_0(1-x_1\\text{S}.\\text{CD}/\\text{I})</math>.\n\n''Simple bending'' occurs when a beam is in equilibrium under equal and opposite couples in the plane of the beam. Thus if a beam (fig.",
+   "c1c5": "{{c|{{sc|Fig.}} 31.}}",
+   "c1s10": "31), supported at its ends, be loaded at two points so that <math>\\text{W}_1l_1 = \\text{W}_2l_2</math>, the portion of the beam lying between <math>\\text{W}_1</math> and <math>\\text{W}_2</math> is subjected",
    "c2s1": "to a simple bending stress. On any section <math>\\text{AB}</math> the only stress consists of pull and push, and has for its resultant a couple whose moment <math>\\text{M} = \\text{W}_1l_1 = \\text{W}_2l_2</math>. This is called the ''bending moment'' at the section. If the stress be within the elastic limits it will be distributed as in fig. 32, with the neutral axis at",
-   "c2s2": "{{c|{{sc|Fig.}} 32.}}",
-   "c2s3": "the centre of gravity of the section. The greatest intensities of push and of pull, at the top and bottom edge respectively, are <math>p_1 = \\text{M}y_1/\\text{I}</math> and <math>p_2 = \\text{M}y_2/\\text{I}</math>, and the intensity at any point at a distance <math>y</math> above or below C is <math>p = \\text{M}y/\\text{I}</math>.\n\n''Bending beyond Elastic Limits''.—Let the bending moment now be increased; non-elastic strain will begin as soon as either <math>p_1</math> or <math>p_2</math> exceeds the corresponding limit of elasticity, and the distribution of stress will be changed in consequence of the fact that the outer layers of the beam are taking set while the inner layers are still following Hooke's law. As a simple instance we may consider the case of a material strictly elastic up to a certain stress, and then so plastic that a",
-   "c2s4": "{{c|{{sc|Fig.}} 33. {{sc|Fig.}} 34.}}",
-   "c2s5": "without further change of by soft wrought iron and take the form sketched in fig. 33. If the elastic limit is (say) less for compression than for tension, the diagram will be as in fig. 34, with the neutral axis shifted towards the tension side. When the beam is relieved from external load it will be left in a state of internal stress, represented, for the case of fig. 33, by the dotted lines in that figure.\n\nIn consequence of the",
-   "c2s6": "{{c|{{sc|Fig.}} 35.}}",
-   "c2s7": "illustrated by these figures, the moment required to brea cannot be calculated by taking for <math>f</math> the value of t tensile or compressive strength of the material in t <math>\\text{M}=f\\text{I}/y</math>, because the distribution of stress which is exist in finding this relation ceases as soon as overstrain\n\n''Strain produced by Bending''.—The strain produced stress in a bar or beam is, as regards any imaginary fila along the length of the piece, sensibly the same as if that filament were directly pulled or compressed by itself. The resulting deformation of the piece consists, in the first place and chiefly, of curvature in the direction of the length, due to the longitudinal extension and compression of the filaments, and, in the second place, of transverse flexure, due to the lateral compression and extension which go along with the longitudinal extension and compression. Let <math>l_1</math> (fig. 35) be a short portion of the length of a beam strained by a bending moment <math>\\text{M}</math> (within the limits of elasticity). The beam, which we assume to be originally straight, bends in the direction of its length to a curve of radius <math>\\text{R}</math>, such that <math>\\text{R}/l=y_1/\\delta l</math>, <math>\\delta l</math> being the change of <math>l</math> by extension or compression at a distance <math>y_1</math> from the neutral axis. But <math>\\delta l=lp_1/\\text{E}</math>, and <math>p_1=\\text{M}y_1/\\text{I}</math>. Hence <math>\\text{R}=\\text{EI}/\\text{M}</math>. The transverse flexure is not, in general, of practical importance. The centre of curvature for it is on the opposite side from the centre for longitudinal flexure, and the radius is <math>\\text{R}\\sigma</math>, where <math>\\sigma</math> is the ratio of longitudinal extension to lateral contraction under simple pull.\n\n''Ordinary Bending of Beams''.—Bending combined with shearing is the mode of stress to which beams are ordinarily subject, the loads, or externally applied forces, being applied at right angles to the direction of the length. Let HK (fig. 36) be any cross-section",
-   "c2s8": "in equilibrium. The portion <math>\\text{B}</math> of the beam, which lies on one side of <math>\\text{HK}</math>, is in equilibrium under the joint action of the external",
-   "c2s9": "{{c|{{sc|Fig.}} 36.}}",
-   "c2s10": "forces <math>\\text{F}_1</math>, <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, &c., and the forces which the other portion <math>\\text{A}</math> exerts on <math>\\text{B}</math> in consequence of the state of stress at <math>\\text{HK}</math>. The forces"
+   "c2c1": "{{c|{{sc|Fig.}} 32.}}",
+   "c2s2": "the centre of gravity of the section. The greatest intensities of push and of pull, at the top and bottom edge respectively, are <math>p_1 = \\text{M}y_1/\\text{I}</math> and <math>p_2 = \\text{M}y_2/\\text{I}</math>, and the intensity at any point at a distance <math>y</math> above or below <math>\\text{C}</math> is <math>p = \\text{M}y/\\text{I}</math>.\n\n''Bending beyond Elastic Limits''.—Let the bending moment now be increased; non-elastic strain will begin as soon as either <math>p_1</math> or <math>p_2</math> exceeds the corresponding limit of elasticity, and the distribution of stress will be changed in consequence of the fact that the outer layers of the beam are taking set while the inner layers are still following Hooke's law. As a simple instance we may consider the case of a material strictly elastic up to a certain stress, and then so plastic that a",
+   "c2s3": "without further change of stress, a case not very far from being realized by soft wrought iron and mild steel. The diagram of stress will now",
+   "c2c2": "{{c|{{sc|Fig.}} 33. {{sc|Fig.}} 34.}}",
+   "c2s4": "take the form sketched in fig. 33. If the elastic limit is (say) less for compression than for tension, the diagram will be as in fig. 34, with the neutral axis shifted towards the tension side. When the beam is relieved from external load it will be left in a state of internal stress, represented, for the case of fig. 33, by the dotted lines in that figure.\n\nIn consequence of the action which has been",
+   "c2s5": "illustrated by these figures, the moment required to break the beam cannot be calculated by taking for <math>f</math> the value of the ultimate tensile or compressive strength of the material in the formula <math>\\text{M} = f\\text{I}/y</math>, because the distribution of stress which is assumed to exist in finding this relation ceases as soon as overstraining begins.\n\n''Strain produced by Bending''.—The strain produced by bending stress in a bar or beam is, as regards any imaginary filament taken",
+   "c2c3": "{{c|{{sc|Fig.}} 35.}}",
+   "c2s6": "along the length of the piece, sensibly the same as if that filament were directly pulled or compressed by itself. The resulting deformation of the piece consists, in the first place and chiefly, of curvature in the direction of the length, due to the longitudinal extension and compression of the filaments, and, in the second place, of transverse flexure, due to the lateral compression and extension which go along with the longitudinal extension and compression. Let <math>l_1</math> (fig. 35) be a short portion of the length of a beam strained by a bending moment <math>\\text{M}</math> (within the limits of elasticity). The beam, which we assume to be originally straight, bends in the direction of its length to a curve of radius <math>\\text{R}</math>, such that <math>\\text{R}/l = y_1/\\delta l</math>, <math>\\delta l</math> being the change of <math>l</math> by extension or compression at a distance <math>y_1</math> from the neutral axis. But <math>\\delta l = lp_1/\\text{E}</math>, and <math>p_1 = \\text{M}y_1/\\text{I}</math>. Hence <math>\\text{R} = \\text{EI}/\\text{M}</math>. The transverse flexure is not, in general, of practical importance. The centre of curvature for it is on the opposite side from the centre for longitudinal flexure, and the radius is <math>\\text{R}\\sigma</math>, where <math>\\sigma</math> is the ratio of longitudinal extension to lateral contraction under simple pull.\n\n''Ordinary Bending of Beams''.—Bending combined with shearing is the mode of stress to which beams are ordinarily subject, the loads, or externally applied forces, being applied at right angles to the direction of the length. Let <math>\\text{HK}</math> (fig. 36) be any cross-section",
+   "c2s7": "in equilibrium. The portion <math>\\text{B}</math> of the beam, which lies on one side of <math>\\text{HK}</math>, is in equilibrium under the joint action of the external",
+   "c2c4": "{{c|{{sc|Fig.}} 36.}}",
+   "c2s8": "forces <math>\\text{F}_1</math>, <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, &c., and the forces which the other portion <math>\\text{A}</math> exerts on <math>\\text{B}</math> in consequence of the state of stress at <math>\\text{HK}</math>. The forces"
   },
   "figure_files": {
    "c1f1": "eb1911 v25 p1046 c1f1.png",
@@ -404,30 +464,30 @@
     "box": [
      179,
      326,
-     523,
-     662
+     528,
+     664
     ],
     "caption": [
-     298,
-     676,
-     420,
-     704
+     296,
+     675,
+     422,
+     707
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      177,
      327,
-     530,
-     658
+     552,
+     641
     ]
    },
    {
     "box": [
-     176,
-     1123,
-     814,
-     1393
+     179,
+     1126,
+     816,
+     1390
     ],
     "caption": [
      433,
@@ -441,160 +501,182 @@
      177,
      1118,
      828,
-     1380
+     1400
     ]
    },
    {
     "box": [
-     174,
-     1580,
-     801,
-     1749
+     176,
+     1578,
+     778,
+     1750
     ],
     "caption": [
-     433,
-     1760,
-     551,
-     1792
+     429,
+     1759,
+     550,
+     1794
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      177,
-     1604,
-     800,
-     1727
+     1612,
+     795,
+     1734
     ]
    },
    {
     "box": [
-     174,
-     1984,
-     638,
-     2471
+     176,
+     1979,
+     633,
+     2485
     ],
     "caption": [
-     349,
-     2486,
+     347,
+     2485,
      470,
-     2521
+     2520
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     170,
-     1979,
-     663,
+     177,
+     1977,
+     641,
      2474
     ]
    },
    {
     "box": [
      326,
-     2717,
+     2702,
      1056,
-     2979
+     2978
     ],
     "caption": [
      629,
-     2997,
-     727,
+     2996,
+     753,
      3030
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     338,
+     331,
      2712,
-     1060,
-     2977
+     1042,
+     2986
     ]
    },
    {
     "box": [
-     2034,
-     403,
-     2300,
-     851
+     2036,
+     405,
+     2299,
+     850
     ],
     "caption": [
-     2104,
-     869,
+     2105,
+     870,
      2228,
-     903
+     900
     ],
     "column": 2,
     "inset": true,
     "page_box": [
-     2028,
-     393,
-     2257,
+     2138,
+     398,
+     2312,
      857
     ]
    },
    {
     "box": [
-     1654,
-     1003,
-     1973,
-     1474
+     1652,
+     1006,
+     2294,
+     1473
     ],
     "caption": [
      1745,
-     1485,
-     1869,
-     1517
+     1486,
+     2205,
+     1518
     ],
     "column": 2,
     "inset": true,
     "page_box": [
      1650,
-     998,
-     2257,
-     1475
+     1001,
+     1944,
+     1480
     ]
    },
    {
     "box": [
-     2142,
-     1773,
-     2295,
-     2546
+     1653,
+     1002,
+     1976,
+     1472
     ],
     "caption": [
-     2155,
-     2558,
-     2279,
-     2594
+     1750,
+     1484,
+     1872,
+     1518
     ],
     "column": 2,
     "inset": true,
     "page_box": [
-     2134,
-     1754,
-     2310,
+     1888,
+     1016,
+     2312,
+     1480
+    ]
+   },
+   {
+    "box": [
+     2140,
+     1772,
+     2292,
+     2546
+    ],
+    "caption": [
+     2154,
+     2558,
+     2281,
+     2595
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     2120,
+     1763,
+     2312,
      2474
     ]
    },
    {
     "box": [
-     1384,
-     2724,
-     2178,
-     3030
+     1388,
+     2722,
+     2168,
+     3029
     ],
     "caption": [
-     1712,
+     1713,
      3035,
-     1836,
-     3065
+     1837,
+     3066
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1376,
-     2712,
-     2315,
+     1369,
+     2717,
+     2253,
      3026
     ]
    }
@@ -615,22 +697,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
-    "calls": 10,
-    "input_tokens": 19180,
-    "output_tokens": 1203,
+    "model": "claude-opus-5-5",
+    "calls": 11,
+    "input_tokens": 21250,
+    "output_tokens": 1452,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 23,
-    "input_tokens": 6319,
-    "output_tokens": 5525,
+    "model": "claude-opus-5-5",
+    "calls": 28,
+    "input_tokens": 7285,
+    "output_tokens": 6432,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 44252
+    "cache_read_input_tokens": 67788
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|1020|STRENGTH OF MATERIALS|}}</noinclude>[[File:eb1911 v25 p1046 c1f1.png|center|123px]]\n{{c|{{sc|Fig.}} 27.}}\n\ns on any plane surface <math>\\text{AB}</math> (fig. 27), such as tion of a strained piece, may be represented by a figure formed by setting up ordinates <math>\\text{A}a</math>, <math>\\text{B}b</math>, &c., from points on the surface, the length of these being made proportional to the intensity of stress at each point. This gives an ideal solid, which may be called the stress figure, whose height shows the distribution of stress over the surface which forms its base. A line drawn from <math>g</math>, the centre of gravity of the stress figure, parallel to the ordinates <math>\\text{A}a</math>, &c., determines the point <math>c</math>, which is called the centre of stress, and is the point through which the resultant of the distributed stress uted stress, <math>ab</math> is a plane e of gravity of the surface pull applied axially—that sses through the centre of may be taken as (sensibly) ot near a place where the d the bar is homogeneous in a state of ease and the\n\n[[File:eb1911 v25 p1046 c1f2.png|center|218px]]\n{{c|{{sc|Fig.}} 28.}}\n\nvarying stress is illustrated stresses within the elastic limit) in a bent beam, in a tie subjected to non-axial pull, and in a long strut or column where buckling makes the stress become non-axial. In uniformly varying stress the intensity <math>p</math> at any point <math>\\text{P}</math> is proportional to the distance of <math>\\text{P}</math> from a line <math>\\text{MN}</math>, called the the stressed surface and h is assumed to be that in ost rapidly. There is no to <math>\\text{MN}</math>. If <math>\\text{MN}</math> passes through <math>\\text{C}</math>, the centre of gravity of the surface, as in fig. 29, it may easily be shown that the total pull stress on one side of the neutral axis is equal to the total push stress on the other side, whatever . The resultant of the whole stress e, whose moment may be found as tely small part of the surface at a xis through C, and let <math>p</math> be the intensity of stress on <math>d\\text{S}</math>. The moment of the stress on <math>d\\text{S}</math> is <math>xpd\\text{S}</math>. But <math>p = p_1x/x_1 = p_2x/x_2</math> (see fig. 29). The whole moment of the stress on AB is <math>\\int xpd\\text{S} = (p_1x_1)\\int x^2d\\text{S} = p_1\\text{I}/x_1</math> or <math>p_2\\text{I}/x_2</math>, where I is the moment of inertia of the surface AB about the neutral axis through C.\n\n[[File:eb1911 v25 p1046 c1f3.png|center|213px]]\n{{c|{{sc|Fig.}} 29.}}\n\n[[File:eb1911 v25 p1046 c1f4.png|center|163px]]\n{{c|{{sc|Fig.}} 30.}}\n\nA stress such as that shown in fig. 28 or fig. 30 may be regarded as a uniformly distributed stress of intensity <math>p_0</math> (which is the intensity at the centre of gravity of the surface C) and a stress of the kind shown in fig. 29. The resultant is <math>p_0\\text{S}</math>, where S is the whole area of the surface, and it acts at a distance CD from C such that the moment <math>p_0\\text{S}.\\text{CD} = (p_2 - p_0)\\text{I}/x_1 = (p_1 + p_0)\\text{I}/x_2</math>. Hence <math>p_2 = p_0(1 + x_2\\text{S}.\\text{CD}/\\text{I})</math>, and <math>p_1 = p_0(1 - x_1\\text{S}.\\text{CD}/\\text{I})</math>.\n\n''Simple bending'' occurs when a beam is in equilibrium under equal and opposite couples in the plane of the beam. Thus if a beam (fig. 31), supported at its ends, be loaded at two points so that <math>\\text{W}_1l_1 = \\text{W}_2l_2</math>, the portion of the beam lying between <math>\\text{W}_1</math> and <math>\\text{W}_2</math> is subjected to a simple bending stress. On any section <math>\\text{AB}</math> the only stress consists of pull and push, and has for its resultant a couple whose moment <math>\\text{M} = \\text{W}_1l_1 = \\text{W}_2l_2</math>. This is called the ''bending moment'' at the section. If the stress be within the elastic limits it will be distributed as in fig. 32, with the neutral axis at the centre of gravity of the section. The greatest intensities of push and of pull, at the top and bottom edge respectively, are <math>p_1 = \\text{M}y_1/\\text{I}</math> and <math>p_2 = \\text{M}y_2/\\text{I}</math>, and the intensity at any point at a distance <math>y</math> above or below C is <math>p = \\text{M}y/\\text{I}</math>.\n\n[[File:eb1911 v25 p1046 c1f5.png|center|356px]]\n{{c|{{sc|Fig.}} 31.}}\n\n[[File:eb1911 v25 p1046 c2f1.png|center|91px]]\n{{c|{{sc|Fig.}} 32.}}\n\n''Bending beyond Elastic Limits''.—Let the bending moment now be increased; non-elastic strain will begin as soon as either <math>p_1</math> or <math>p_2</math> exceeds the corresponding limit of elasticity, and the distribution of stress will be changed in consequence of the fact that the outer layers of the beam are taking set while the inner layers are still following Hooke's law. As a simple instance we may consider the case of a material strictly elastic up to a certain stress, and then so plastic that a without further change of by soft wrought iron and take the form sketched in fig. 33. If the elastic limit is (say) less for compression than for tension, the diagram will be as in fig. 34, with the neutral axis shifted towards the tension side. When the beam is relieved from external load it will be left in a state of internal stress, represented, for the case of fig. 33, by the dotted lines in that figure.\n\n[[File:eb1911 v25 p1046 c2f2.png|center|220px]]\n{{c|{{sc|Fig.}} 33. {{sc|Fig.}} 34.}}\n\nIn consequence of the illustrated by these figures, the moment required to brea cannot be calculated by taking for <math>f</math> the value of t tensile or compressive strength of the material in t <math>\\text{M}=f\\text{I}/y</math>, because the distribution of stress which is exist in finding this relation ceases as soon as overstrain\n\n[[File:eb1911 v25 p1046 c2f3.png|center|60px]]\n{{c|{{sc|Fig.}} 35.}}\n\n''Strain produced by Bending''.—The strain produced stress in a bar or beam is, as regards any imaginary fila along the length of the piece, sensibly the same as if that filament were directly pulled or compressed by itself. The resulting deformation of the piece consists, in the first place and chiefly, of curvature in the direction of the length, due to the longitudinal extension and compression of the filaments, and, in the second place, of transverse flexure, due to the lateral compression and extension which go along with the longitudinal extension and compression. Let <math>l_1</math> (fig. 35) be a short portion of the length of a beam strained by a bending moment <math>\\text{M}</math> (within the limits of elasticity). The beam, which we assume to be originally straight, bends in the direction of its length to a curve of radius <math>\\text{R}</math>, such that <math>\\text{R}/l=y_1/\\delta l</math>, <math>\\delta l</math> being the change of <math>l</math> by extension or compression at a distance <math>y_1</math> from the neutral axis. But <math>\\delta l=lp_1/\\text{E}</math>, and <math>p_1=\\text{M}y_1/\\text{I}</math>. Hence <math>\\text{R}=\\text{EI}/\\text{M}</math>. The transverse flexure is not, in general, of practical importance. The centre of curvature for it is on the opposite side from the centre for longitudinal flexure, and the radius is <math>\\text{R}\\sigma</math>, where <math>\\sigma</math> is the ratio of longitudinal extension to lateral contraction under simple pull.\n\n''Ordinary Bending of Beams''.—Bending combined with shearing is the mode of stress to which beams are ordinarily subject, the loads, or externally applied forces, being applied at right angles to the direction of the length. Let HK (fig. 36) be any cross-section in equilibrium. The portion <math>\\text{B}</math> of the beam, which lies on one side of <math>\\text{HK}</math>, is in equilibrium under the joint action of the external forces <math>\\text{F}_1</math>, <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, &c., and the forces which the other portion <math>\\text{A}</math> exerts on <math>\\text{B}</math> in consequence of the state of stress at <math>\\text{HK}</math>. The forces\n\n[[File:eb1911 v25 p1046 c2f4.png|center|356px]]\n{{c|{{sc|Fig.}} 36.}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|1020|STRENGTH OF MATERIALS|}}</noinclude>[[File:eb1911 v25 p1046 c1f1.png|center|123px]]\n{{c|{{sc|Fig.}} 27.}}\n\ns on any plane surface <math>\\text{AB}</math> (fig. 27), such as tion of a strained piece, may be represented by a figure formed by setting up ordinates <math>\\text{A}a</math>, <math>\\text{B}b</math>, &c., from points on the surface, the length of these being made proportional to the intensity of stress at each point. This gives an ideal solid, which may be called the stress figure, whose height shows the distribution of stress over the surface which forms its base. A line drawn from <math>g</math>, the centre of gravity of the stress figure, parallel to the ordinates <math>\\text{A}a</math>, &c., determines the point <math>c</math>, which is called the centre of stress, and is the point through which the resultant of the distributed stress acts. In the case of a uniformly distributed stress, <math>ab</math> is a plane surface parallel to <math>\\text{AB}</math>, and <math>c</math> is the centre of gravity of the surface <math>\\text{AB}</math>. When a bar is subjected to simple pull applied axially—that is to say, so that the resultant stress passes through the centre of gravity of every cross-section—the stress may be taken as (sensibly) uniformly distributed over any section not near a place where the form of the cross-section changes, provided the bar is homogeneous in respect of elastic quality and is initially in a state of ease and the stress is within the limits of elasticity.\n\n''Uniformly Varying Stress.''—Uniformly varying stress is illustrated by fig. 28. It occurs (in each case for stresses within the elastic limit) in a bent beam, in a tie subjected to non-axial pull, and in a long strut or column where buckling makes the stress become non-axial. In uniformly varying stress the intensity <math>p</math> at any point <math>\\text{P}</math> is proportional to the distance of <math>\\text{P}</math> from a line <math>\\text{MN}</math>, called the the stressed surface and at right angles to the direction <math>\\text{AB}</math>, which is assumed to be that in which the intensity of stress varies most rapidly. There is no variation of stress along lines parallel to <math>\\text{MN}</math>. If <math>\\text{MN}</math> passes through <math>\\text{C}</math>, the centre of gravity of the surface, as in fig. 29, it may easily be shown that the total pull stress on one side of the neutral axis is equal to the total push stress on the other side, whatever be the form of the surface <math>\\text{AB}</math>. The resultant of the whole stress on <math>\\text{AB}</math> is in that case a couple, whose moment may be found as follows. Let <math>d\\text{S}</math> be an indefinitely small part of the surface at a distance <math>x</math> from the neutral axis through <math>\\text{C}</math>, and let <math>p</math> be the intensity of stress on <math>d\\text{S}</math>. The moment of the stress on <math>d\\text{S}</math> is <math>xpd\\text{S}</math>. But <math>p = p_1x/x_1 = p_2x/x_2</math> (see fig. 29). The whole moment of the stress on AB is <math>\\textstyle\\int xpd\\text{S} = (p_1x_1)\\int x^2d\\text{S} = p_1\\text{I}/x_1</math> or <math>p_2\\text{I}/x_2</math>, where <math>\\text{I}</math> is the moment of inertia of the surface AB about the neutral axis through C.\n\n[[File:eb1911 v25 p1046 c1f2.png|center|218px]]\n{{c|{{sc|Fig.}} 28.}}\n\n[[File:eb1911 v25 p1046 c1f3.png|center|212px]]\n{{c|{{sc|Fig.}} 29.}}\n\n[[File:eb1911 v25 p1046 c1f4.png|center|162px]]\n{{c|{{sc|Fig.}} 30.}}\n\nA stress such as that shown in fig. 28 or fig. 30 may be regarded as a uniformly distributed stress of intensity <math>p_0</math> (which is the intensity at the centre of gravity of the surface C) and a stress of the kind shown in fig. 29. The resultant is <math>p_0\\text{S}</math>, where <math>\\text{S}</math> is the whole area of the surface, and it acts at a distance <math>\\text{CD}</math> from <math>\\text{C}</math> such that the moment <math>p_0\\text{S}.\\text{CD} = (p_2 - p_0)\\text{I}/x_1 = (p_1+p_0)\\text{I}/x_2</math>. Hence <math>p_2 = p_0(1+x_2\\text{S}.\\text{CD}/\\text{I})</math>, and <math>p_1=p_0(1-x_1\\text{S}.\\text{CD}/\\text{I})</math>.\n\n''Simple bending'' occurs when a beam is in equilibrium under equal and opposite couples in the plane of the beam. Thus if a beam (fig. 31), supported at its ends, be loaded at two points so that <math>\\text{W}_1l_1 = \\text{W}_2l_2</math>, the portion of the beam lying between <math>\\text{W}_1</math> and <math>\\text{W}_2</math> is subjected to a simple bending stress. On any section <math>\\text{AB}</math> the only stress consists of pull and push, and has for its resultant a couple whose moment <math>\\text{M} = \\text{W}_1l_1 = \\text{W}_2l_2</math>. This is called the ''bending moment'' at the section. If the stress be within the elastic limits it will be distributed as in fig. 32, with the neutral axis at the centre of gravity of the section. The greatest intensities of push and of pull, at the top and bottom edge respectively, are <math>p_1 = \\text{M}y_1/\\text{I}</math> and <math>p_2 = \\text{M}y_2/\\text{I}</math>, and the intensity at any point at a distance <math>y</math> above or below <math>\\text{C}</math> is <math>p = \\text{M}y/\\text{I}</math>.\n\n[[File:eb1911 v25 p1046 c1f5.png|center|356px]]\n{{c|{{sc|Fig.}} 31.}}\n\n[[File:eb1911 v25 p1046 c2f1.png|center|91px]]\n{{c|{{sc|Fig.}} 32.}}\n\n''Bending beyond Elastic Limits''.—Let the bending moment now be increased; non-elastic strain will begin as soon as either <math>p_1</math> or <math>p_2</math> exceeds the corresponding limit of elasticity, and the distribution of stress will be changed in consequence of the fact that the outer layers of the beam are taking set while the inner layers are still following Hooke's law. As a simple instance we may consider the case of a material strictly elastic up to a certain stress, and then so plastic that a without further change of stress, a case not very far from being realized by soft wrought iron and mild steel. The diagram of stress will now take the form sketched in fig. 33. If the elastic limit is (say) less for compression than for tension, the diagram will be as in fig. 34, with the neutral axis shifted towards the tension side. When the beam is relieved from external load it will be left in a state of internal stress, represented, for the case of fig. 33, by the dotted lines in that figure.\n\n[[File:eb1911 v25 p1046 c2f2.png|center|220px]]\n{{c|{{sc|Fig.}} 33. {{sc|Fig.}} 34.}}\n\nIn consequence of the action which has been illustrated by these figures, the moment required to break the beam cannot be calculated by taking for <math>f</math> the value of the ultimate tensile or compressive strength of the material in the formula <math>\\text{M} = f\\text{I}/y</math>, because the distribution of stress which is assumed to exist in finding this relation ceases as soon as overstraining begins.\n\n''Strain produced by Bending''.—The strain produced by bending stress in a bar or beam is, as regards any imaginary filament taken along the length of the piece, sensibly the same as if that filament were directly pulled or compressed by itself. The resulting deformation of the piece consists, in the first place and chiefly, of curvature in the direction of the length, due to the longitudinal extension and compression of the filaments, and, in the second place, of transverse flexure, due to the lateral compression and extension which go along with the longitudinal extension and compression. Let <math>l_1</math> (fig. 35) be a short portion of the length of a beam strained by a bending moment <math>\\text{M}</math> (within the limits of elasticity). The beam, which we assume to be originally straight, bends in the direction of its length to a curve of radius <math>\\text{R}</math>, such that <math>\\text{R}/l = y_1/\\delta l</math>, <math>\\delta l</math> being the change of <math>l</math> by extension or compression at a distance <math>y_1</math> from the neutral axis. But <math>\\delta l = lp_1/\\text{E}</math>, and <math>p_1 = \\text{M}y_1/\\text{I}</math>. Hence <math>\\text{R} = \\text{EI}/\\text{M}</math>. The transverse flexure is not, in general, of practical importance. The centre of curvature for it is on the opposite side from the centre for longitudinal flexure, and the radius is <math>\\text{R}\\sigma</math>, where <math>\\sigma</math> is the ratio of longitudinal extension to lateral contraction under simple pull.\n\n[[File:eb1911 v25 p1046 c2f3.png|center|60px]]\n{{c|{{sc|Fig.}} 35.}}\n\n''Ordinary Bending of Beams''.—Bending combined with shearing is the mode of stress to which beams are ordinarily subject, the loads, or externally applied forces, being applied at right angles to the direction of the length. Let <math>\\text{HK}</math> (fig. 36) be any cross-section in equilibrium. The portion <math>\\text{B}</math> of the beam, which lies on one side of <math>\\text{HK}</math>, is in equilibrium under the joint action of the external forces <math>\\text{F}_1</math>, <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, &c., and the forces which the other portion <math>\\text{A}</math> exerts on <math>\\text{B}</math> in consequence of the state of stress at <math>\\text{HK}</math>. The forces\n\n[[File:eb1911 v25 p1046 c2f4.png|center|356px]]\n{{c|{{sc|Fig.}} 36.}}<noinclude><references/></noinclude>"
 }

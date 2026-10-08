@@ -51,7 +51,7 @@
      97,
      2053,
      1167,
-     2383
+     2775
     ]
    },
    {
@@ -60,14 +60,14 @@
     "column": 1,
     "box": [
      97,
-     2383,
+     2775,
      1167,
-     2873
+     2876
     ]
    },
    {
-    "name": "c1s4",
-    "kind": "text",
+    "name": "c1c1",
+    "kind": "caption",
     "column": 1,
     "box": [
      97,
@@ -77,7 +77,7 @@
     ]
    },
    {
-    "name": "c1s5",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
@@ -88,25 +88,36 @@
     ]
    },
    {
-    "name": "c2f1",
-    "kind": "figure",
-    "column": 2,
-    "box": [
-     1167,
-     239,
-     2237,
-     1509
-    ]
-   },
-   {
     "name": "c2s1",
     "kind": "text",
     "column": 2,
     "box": [
      1167,
+     221,
+     2237,
+     388
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1167,
+     388,
+     2237,
+     1508
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1167,
      1519,
      2237,
-     1550
+     1552
     ]
    },
    {
@@ -115,7 +126,7 @@
     "column": 2,
     "box": [
      1167,
-     1550,
+     1552,
      2237,
      2646
     ]
@@ -135,13 +146,14 @@
   "readings": {
    "head": "{{RunningHeader|SOURCES]|SOUND|451}}",
    "c1s1": "but that the stream required increased rapidly as the frequency was reduced below 256.\n\nThe second method may be illustrated by the experiments of M. Wien (''Wied. Ann.'', 1889, xxxvi. 834). He used a spherical Helmholtz resonator resounding to the tone to be measured. The orifice which is usually placed to the ear was enlarged and closed by a corrugated plate like that of an aneroid barometer, and the motion of this plate was indicated by means of a mirror which had one edge fixed, while the other was attached to a style fixed to the centre of the plate. When the plate vibrated the mirror was vibrated about the fixed edge, and the image of a reflected slit was broadened out into a band, the broadening giving the amplitude of vibration of the plate. From subsidiary experiments (for which the original memoir must be consulted) the pressure variations within the resonator could be calculated from the movements of the plate. The open orifice of the resonator was then exposed to the waves from a source of its own frequency. Helmholtz's theory of the resonator (Rayleigh, ''Sound'', ii. § 311) gives the pressure variations in the incident waves in terms of those in the resonator, and so the pressure variation and the amplitude of vibration in the waves to be measured were determined.\n\nFor minimum audible sounds Wien found a somewhat smaller",
-   "c1s2": "value of the amplitude than Rayleigh. It is remarkable that, as Lord Rayleigh says, “the streams of energy required to influence the eye and the ear are of the same order of magnitude.” Wien also used the apparatus to find the decrease of intensity with increase of distance, and found that it was somewhat more rapid than the inverse square law would give.\n\nIn a later series of experiments (''Science Abst.'' vi. 301) Wien used a telephone plate, of which the amplitude could be determined from the value of the exciting current, and he found that the smallest amplitude audible was <math>6{\\cdot}3\\times10^{-10}</math> cm.\n\nW. Zernov (''Ann. d. Physik'', 1906, 21, p. 131) compared the indications of Wien’s resonator manometer with those of V. Altberg’s sound pressure apparatus and found very satisfactory agreement.\n\n''Stationary Waves''.—As a preliminary to the investigation of the modes of vibration of certain sources of sound we shall consider the formation of “stationary waves.” These are not really waves in the ordinary sense, but the disturbance arising from the passage through the medium in opposite directions of two equal trains. The medium is divided up into sections between fixed points, and these sections vibrate. We can form stationary waves with ease by fixing one end of a rope—say 20 ft. long—and holding the other end in the hand. When the hand is moved to and fro ''transversely'' waves are sent along the rope and reflected at the fixed end. The direct and reflected systems are practically equal, and by suitably timing the vibrations of the hand for each case the rope may be made to vibrate as a whole, as two halves, as three-thirds and so on. When it vibrates in several sections, each section moves in the opposite way to its neighbours.\n\nLet us suppose that two trains of sine waves of length <math>\\lambda</math> and amplitude <math>a</math> are travelling in opposite directions with velocity <math>\\text{U}</math>. We may represent the displacement due to one of the trains by\n{{block center|<math>y_1 = a\\sin\\frac{2\\pi}{\\lambda}(x-\\text{U}t).</math> (24)}}",
-   "c1s3": "where <math>x</math> is measured as in equation (16) from an ascending node as A in fig. 21. If we measure <math>t</math> from an instant at which the two trains exactly coincide, then as <math>\\text{U}</math> for the other train has the opposite sign, its displacement is represented by\n\n{{block center|<math>y_2 = a\\sin\\frac{2\\pi}{\\lambda}(x + \\text{U}t).</math> (25)}}\n\nThe sum of the disturbance is obtained by adding (24) and (25)\n\n{{block center|<math>y = y_1 + y_2 = 2a\\cos\\frac{2\\pi}{\\lambda}\\text{U}t\\sin\\frac{2\\pi}{\\lambda}x,</math> (26)}}",
-   "c1s4": "{{c|{{sc|Fig.}} 25.}}",
-   "c1s5": "two extreme amplitudes. The points <math>\\text{A}</math>, <math>\\text{B}</math>, <math>\\text{C}</math>, <math>\\text{D}</math> are termed “nodes,” and the points half-way between them “loops.”\n\nThe general character of these results may be obtained by a graphic construction. Let fig. 26 (1) represent a wave-length of each train when they are coincident. It is sufficient to take a single wave-length. The dotted curve represents the superposition, which simply doubles each ordinate. Divide the wave-length into,",
-   "c2s1": "{{c|{{sc|Fig.}} 26.}}",
-   "c2s2": "{{smaller|the resultant with amplitude <math>1/\\sqrt{2}</math> that of (1). Another movement of <math>\\tfrac{1}{4}\\lambda</math> in each direction gives (3) with resultant a straight line, and so on for (4) and (5). In (5) the displacement is evidently equal and opposite to that in (1). Further displacement will give the figures (4), (3), (2), (1) again, but with (I) and (II) interchanged. When we get back to (1) each train has been displaced through <math>\\lambda</math> and the period is <math>\\lambda/\\text{U}</math>. Further, the original nodes are always at rest, and the intervening sections vibrate to and fro.}}\n\n{{smaller|The vibrations of certain sources of sound may be represented, at least as a first approximation, as consisting of stationary waves, and from a consideration of the rate of propagation of waves along these sources we can deduce their frequency when we know their length.}}\n\n{{c|''Sources of Sound.''}}\n\n''Elementary Theory of Pipes''.—The longitudinal vibration of air in cylindrical pipes is made use of in various wind instruments. We shall deduce the modes of vibration of the air column in a cylindrical pipe from the consideration that the air in motion within the pipe forms some part of a system of stationary waves, one train being formed by the exciter of the disturbance, and the other being formed by the reflection of the train at the end of the pipe.\n\nIn order to justify the use of stationary waves we must show that two such trains can move in opposite directions over the same ground without modifying each other so long as the displacement in either is small. For this it is necessary that the total force on an element due to the sum of the displacements should be equal to the sum of the forces due to the two displacements considered separately. The medium then acts for the",
-   "c2s3": "second train just as if it were undisturbed by the first. It is sufficient then to show that the excess of pressure at any point is the sum of the excesses due to either train separately.\n\nIf <math>\\omega</math> is the total pressure excess, and if <math>y</math> is the total displacement at <math>x</math>, then <math>\\omega = \\text{E} \\times</math>change of volume<math>\\div</math>original volume<math>= -\\text{E}dy/dx</math>. If <math>y_1</math> and <math>y_2</math> are the two separate displacements and if <math>y = y_1 + y_2</math>, then <math>\\omega = -\\text{E}\\ (dy_1/dx + dy_2/dx) = \\omega_1 + \\omega_2</math>. This proves the proposition. It is a case of the principle of superposition of small disturbances.\n\nLet us suppose that a system of stationary waves is formed in the air in a pipe of indefinite length, and let fig. 27 represent a part of the system. At the nodes A, B, C, D, E there is no displacement, but there are maximum volume and pressure changes. Consider, for instance, the point B. When the displacement is represented by AHBKC the particles on each side of B are displaced towards it"
+   "c1s2": "value of the amplitude than Rayleigh. It is remarkable that, as Lord Rayleigh says, “the streams of energy required to influence the eye and the ear are of the same order of magnitude.” Wien also used the apparatus to find the decrease of intensity with increase of distance, and found that it was somewhat more rapid than the inverse square law would give.\n\nIn a later series of experiments (''Science Abst.'' vi. 301) Wien used a telephone plate, of which the amplitude could be determined from the value of the exciting current, and he found that the smallest amplitude audible was <math>6\\cdot3\\times10^{-10}</math> cm.\n\nW. Zernov (''Ann. d. Physik'', 1906, 21, p. 131) compared the indications of Wien's resonator manometer with those of V. Altberg's sound pressure apparatus and found very satisfactory agreement.\n\n''Stationary Waves''.—As a preliminary to the investigation of the modes of vibration of certain sources of sound we shall consider the formation of “stationary waves.” These are not really waves in the ordinary sense, but the disturbance arising from the passage through the medium in opposite directions of two equal trains. The medium is divided up into sections between fixed points, and these sections vibrate. We can form stationary waves with ease by fixing one end of a rope—say 20 ft. long—and holding the other end in the hand. When the hand is moved to and fro ''transversely'' waves are sent along the rope and reflected at the fixed end. The direct and reflected systems are practically equal, and by suitably timing the vibrations of the hand for each case the rope may be made to vibrate as a whole, as two halves, as three-thirds and so on. When it vibrates in several sections, each section moves in the opposite way to its neighbours.\n\nLet us suppose that two trains of sine waves of length <math>\\lambda</math> and amplitude <math>a</math> are travelling in opposite directions with velocity <math>\\text{U}</math>. We may represent the displacement due to one of the trains by\n{{block center|<math>y_1 = a \\sin \\frac{2\\pi}{\\lambda}(x - \\text{U}t).</math> (24)}}",
+   "c1s3": "where <math>x</math> is measured as in equation (16) from an ascending node as A in fig. 21. If we measure <math>t</math> from an instant at which the two trains exactly coincide, then as <math>\\text{U}</math> for the other train has the opposite sign, its displacement is represented by\n{{block center|<math>y_2=a\\sin\\frac{2\\pi}{\\lambda}(x+\\text{U}t).</math> (25)}}\nThe sum of the disturbance is obtained by adding (24) and (25)\n{{block center|<math>y=y_1+y_2=2a\\cos\\frac{2\\pi}{\\lambda}\\text{U}t\\sin\\frac{2\\pi}{\\lambda}x,</math> (26)}}\nAt any given instant <math>t</math> this is a sine curve of amplitude <math>2a\\cos(2\\pi/\\lambda)\\text{U}t</math>, and of wave-length <math>\\lambda</math>, and with nodes at <math>x=0</math>, <math>\\tfrac{1}{2}\\lambda</math>, <math>\\lambda</math>, <math>\\dots</math>, that is, there is no displacement at these nodes whatever the value of <math>t</math>, and between them the displacement is always a sine curve, but of amplitude varying between <math>+2a</math> and <math>-2a</math>. The ordinate of the curve changes sign as we pass through a node, so that successive sections are moving always in opposite directions and have opposite displacements. Each section then vibrates, and its amplitude goes through all its values in time given by <math>2\\pi\\text{UT}/\\lambda=2\\pi</math>, or <math>\\text{T}=\\lambda/\\text{U}</math>, and the frequency is <math>\\text{U}/\\lambda</math>. We may represent such a train of “stationary waves” by fig. 25, where the curves give the",
+   "c1c1": "{{c|{{sc|Fig.}} 25.}}",
+   "c1s4": "two extreme amplitudes. The points <math>\\text{A}</math>, <math>\\text{B}</math>, <math>\\text{C}</math>, <math>\\text{D}</math> are termed “nodes,” and the points half-way between them “loops.”\n\nThe general character of these results may be obtained by a graphic construction. Let fig. 26 (1) represent a wave-length of each train when they are coincident. It is sufficient to take a single wave-length. The dotted curve represents the superposition, which simply doubles each ordinate. Divide the wave-length into,",
+   "c2s1": "say, eight equal parts as marked. Then move one train marked (I) <math>\\tfrac{1}{8}\\lambda</math> to the right, and the other train (II) <math>\\tfrac{1}{8}\\lambda</math> to the left, introducing new parts of each train at one end, and sending out old parts at the other. Then we get fig. 26 (2), the dotted curve representing",
+   "c2c1": "{{c|{{sc|Fig.}} 26.}}",
+   "c2s2": "the resultant with amplitude <math>1/\\sqrt{2}</math> that of (1). Another movement of <math>\\tfrac{1}{4}\\lambda</math> in each direction gives (3) with resultant a straight line, and so on for (4) and (5). In (5) the displacement is evidently equal and opposite to that in (1). Further displacement will give the figures (4), (3), (2), (1) again, but with (I) and (II) interchanged. When we get back to (1) each train has been displaced through <math>\\lambda</math> and the period is <math>\\lambda/\\text{U}</math>. Further, the original nodes are always at rest, and the intervening sections vibrate to and fro.\n\nThe vibrations of certain sources of sound may be represented, at least as a first approximation, as consisting of stationary waves, and from a consideration of the rate of propagation of waves along these sources we can deduce their frequency when we know their length.\n\n{{c|''Sources of Sound.''}}\n\n''Elementary Theory of Pipes.''—The longitudinal vibration of air in cylindrical pipes is made use of in various wind instruments. We shall deduce the modes of vibration of the air column in a cylindrical pipe from the consideration that the air in motion within the pipe forms some part of a system of stationary waves, one train being formed by the exciter of the disturbance, and the other being formed by the reflection of the train at the end of the pipe.\n\nIn order to justify the use of stationary waves we must show that two such trains can move in opposite directions over the same ground without modifying each other so long as the displacement in either is small. For this it is necessary that the total force on an element due to the sum of the displacements should be equal to the sum of the forces due to the two displacements considered separately. The medium then acts for the",
+   "c2s3": "second train just as if it were undisturbed by the first. It is sufficient then to show that the excess of pressure at any point is the sum of the excesses due to either train separately.\n\nIf <math>\\omega</math> is the total pressure excess, and if <math>y</math> is the total displacement at <math>x</math>, then <math>\\omega = \\text{E} \\times \\text{change of volume} \\div \\text{original volume} = -\\text{E}dy/dx</math>. If <math>y_1</math> and <math>y_2</math> are the two separate displacements and if <math>y = y_1 + y_2</math>, then <math>\\omega = -\\text{E}\\ (dy_1/dx + dy_2/dx) = \\omega_1 + \\omega_2</math>. This proves the proposition. It is a case of the principle of superposition of small disturbances.\n\nLet us suppose that a system of stationary waves is formed in the air in a pipe of indefinite length, and let fig. 27 represent a part of the system. At the nodes A, B, C, D, E there is no displacement, but there are maximum volume and pressure changes. Consider, for instance, the point B. When the displacement is represented by AHBKC the particles on each side of B are displaced towards it"
   },
   "figure_files": {
    "c1f1": "eb1911 v25 p0467 c1f1.png",
@@ -150,46 +162,46 @@
   "figures": [
    {
     "box": [
-     281,
+     1299,
+     389,
+     2113,
+     1507
+    ],
+    "caption": [
+     1645,
+     1519,
+     1762,
+     1552
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1294,
+     380,
+     2125,
+     1502
+    ]
+   },
+   {
+    "box": [
+     280,
      2776,
      977,
-     2867
+     2876
     ],
     "caption": [
      568,
      2890,
-     690,
+     687,
      2925
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     278,
-     2776,
+     283,
+     2778,
      981,
-     2860
-    ]
-   },
-   {
-    "box": [
-     1299,
-     388,
-     2111,
-     1509
-    ],
-    "caption": [
-     1645,
-     1519,
-     1763,
-     1550
-    ],
-    "column": 2,
-    "inset": false,
-    "page_box": [
-     1303,
-     382,
-     2125,
-     1475
+     2856
     ]
    }
   ],
@@ -205,22 +217,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 3,
-    "input_tokens": 6057,
+    "input_tokens": 6129,
     "output_tokens": 180,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 9,
-    "input_tokens": 6352,
-    "output_tokens": 3282,
+    "model": "claude-opus-5-5",
+    "calls": 10,
+    "input_tokens": 7157,
+    "output_tokens": 3982,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 17316
+    "cache_read_input_tokens": 24210
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|SOURCES]|SOUND|451}}</noinclude>but that the stream required increased rapidly as the frequency was reduced below 256.\n\nThe second method may be illustrated by the experiments of M. Wien (''Wied. Ann.'', 1889, xxxvi. 834). He used a spherical Helmholtz resonator resounding to the tone to be measured. The orifice which is usually placed to the ear was enlarged and closed by a corrugated plate like that of an aneroid barometer, and the motion of this plate was indicated by means of a mirror which had one edge fixed, while the other was attached to a style fixed to the centre of the plate. When the plate vibrated the mirror was vibrated about the fixed edge, and the image of a reflected slit was broadened out into a band, the broadening giving the amplitude of vibration of the plate. From subsidiary experiments (for which the original memoir must be consulted) the pressure variations within the resonator could be calculated from the movements of the plate. The open orifice of the resonator was then exposed to the waves from a source of its own frequency. Helmholtz's theory of the resonator (Rayleigh, ''Sound'', ii. § 311) gives the pressure variations in the incident waves in terms of those in the resonator, and so the pressure variation and the amplitude of vibration in the waves to be measured were determined.\n\nFor minimum audible sounds Wien found a somewhat smaller value of the amplitude than Rayleigh. It is remarkable that, as Lord Rayleigh says, “the streams of energy required to influence the eye and the ear are of the same order of magnitude.” Wien also used the apparatus to find the decrease of intensity with increase of distance, and found that it was somewhat more rapid than the inverse square law would give.\n\nIn a later series of experiments (''Science Abst.'' vi. 301) Wien used a telephone plate, of which the amplitude could be determined from the value of the exciting current, and he found that the smallest amplitude audible was <math>6{\\cdot}3\\times10^{-10}</math> cm.\n\nW. Zernov (''Ann. d. Physik'', 1906, 21, p. 131) compared the indications of Wien’s resonator manometer with those of V. Altberg’s sound pressure apparatus and found very satisfactory agreement.\n\n''Stationary Waves''.—As a preliminary to the investigation of the modes of vibration of certain sources of sound we shall consider the formation of “stationary waves.” These are not really waves in the ordinary sense, but the disturbance arising from the passage through the medium in opposite directions of two equal trains. The medium is divided up into sections between fixed points, and these sections vibrate. We can form stationary waves with ease by fixing one end of a rope—say 20 ft. long—and holding the other end in the hand. When the hand is moved to and fro ''transversely'' waves are sent along the rope and reflected at the fixed end. The direct and reflected systems are practically equal, and by suitably timing the vibrations of the hand for each case the rope may be made to vibrate as a whole, as two halves, as three-thirds and so on. When it vibrates in several sections, each section moves in the opposite way to its neighbours.\n\nLet us suppose that two trains of sine waves of length <math>\\lambda</math> and amplitude <math>a</math> are travelling in opposite directions with velocity <math>\\text{U}</math>. We may represent the displacement due to one of the trains by\n{{block center|<math>y_1 = a\\sin\\frac{2\\pi}{\\lambda}(x-\\text{U}t).</math> (24)}} where <math>x</math> is measured as in equation (16) from an ascending node as A in fig. 21. If we measure <math>t</math> from an instant at which the two trains exactly coincide, then as <math>\\text{U}</math> for the other train has the opposite sign, its displacement is represented by\n\n{{block center|<math>y_2 = a\\sin\\frac{2\\pi}{\\lambda}(x + \\text{U}t).</math> (25)}}\n\nThe sum of the disturbance is obtained by adding (24) and (25)\n\n{{block center|<math>y = y_1 + y_2 = 2a\\cos\\frac{2\\pi}{\\lambda}\\text{U}t\\sin\\frac{2\\pi}{\\lambda}x,</math> (26)}} two extreme amplitudes. The points <math>\\text{A}</math>, <math>\\text{B}</math>, <math>\\text{C}</math>, <math>\\text{D}</math> are termed “nodes,” and the points half-way between them “loops.”\n\n[[File:eb1911 v25 p0467 c1f1.png|center|356px]]\n{{c|{{sc|Fig.}} 25.}}\n\nThe general character of these results may be obtained by a graphic construction. Let fig. 26 (1) represent a wave-length of each train when they are coincident. It is sufficient to take a single wave-length. The dotted curve represents the superposition, which simply doubles each ordinate. Divide the wave-length into, {{smaller|the resultant with amplitude <math>1/\\sqrt{2}</math> that of (1). Another movement of <math>\\tfrac{1}{4}\\lambda</math> in each direction gives (3) with resultant a straight line, and so on for (4) and (5). In (5) the displacement is evidently equal and opposite to that in (1). Further displacement will give the figures (4), (3), (2), (1) again, but with (I) and (II) interchanged. When we get back to (1) each train has been displaced through <math>\\lambda</math> and the period is <math>\\lambda/\\text{U}</math>. Further, the original nodes are always at rest, and the intervening sections vibrate to and fro.}}\n\n[[File:eb1911 v25 p0467 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 26.}}\n\n{{smaller|The vibrations of certain sources of sound may be represented, at least as a first approximation, as consisting of stationary waves, and from a consideration of the rate of propagation of waves along these sources we can deduce their frequency when we know their length.}}\n\n{{c|''Sources of Sound.''}}\n\n''Elementary Theory of Pipes''.—The longitudinal vibration of air in cylindrical pipes is made use of in various wind instruments. We shall deduce the modes of vibration of the air column in a cylindrical pipe from the consideration that the air in motion within the pipe forms some part of a system of stationary waves, one train being formed by the exciter of the disturbance, and the other being formed by the reflection of the train at the end of the pipe.\n\nIn order to justify the use of stationary waves we must show that two such trains can move in opposite directions over the same ground without modifying each other so long as the displacement in either is small. For this it is necessary that the total force on an element due to the sum of the displacements should be equal to the sum of the forces due to the two displacements considered separately. The medium then acts for the second train just as if it were undisturbed by the first. It is sufficient then to show that the excess of pressure at any point is the sum of the excesses due to either train separately.\n\nIf <math>\\omega</math> is the total pressure excess, and if <math>y</math> is the total displacement at <math>x</math>, then <math>\\omega = \\text{E} \\times</math>change of volume<math>\\div</math>original volume<math>= -\\text{E}dy/dx</math>. If <math>y_1</math> and <math>y_2</math> are the two separate displacements and if <math>y = y_1 + y_2</math>, then <math>\\omega = -\\text{E}\\ (dy_1/dx + dy_2/dx) = \\omega_1 + \\omega_2</math>. This proves the proposition. It is a case of the principle of superposition of small disturbances.\n\nLet us suppose that a system of stationary waves is formed in the air in a pipe of indefinite length, and let fig. 27 represent a part of the system. At the nodes A, B, C, D, E there is no displacement, but there are maximum volume and pressure changes. Consider, for instance, the point B. When the displacement is represented by AHBKC the particles on each side of B are displaced towards it<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|SOURCES]|SOUND|451}}</noinclude>but that the stream required increased rapidly as the frequency was reduced below 256.\n\nThe second method may be illustrated by the experiments of M. Wien (''Wied. Ann.'', 1889, xxxvi. 834). He used a spherical Helmholtz resonator resounding to the tone to be measured. The orifice which is usually placed to the ear was enlarged and closed by a corrugated plate like that of an aneroid barometer, and the motion of this plate was indicated by means of a mirror which had one edge fixed, while the other was attached to a style fixed to the centre of the plate. When the plate vibrated the mirror was vibrated about the fixed edge, and the image of a reflected slit was broadened out into a band, the broadening giving the amplitude of vibration of the plate. From subsidiary experiments (for which the original memoir must be consulted) the pressure variations within the resonator could be calculated from the movements of the plate. The open orifice of the resonator was then exposed to the waves from a source of its own frequency. Helmholtz's theory of the resonator (Rayleigh, ''Sound'', ii. § 311) gives the pressure variations in the incident waves in terms of those in the resonator, and so the pressure variation and the amplitude of vibration in the waves to be measured were determined.\n\nFor minimum audible sounds Wien found a somewhat smaller value of the amplitude than Rayleigh. It is remarkable that, as Lord Rayleigh says, “the streams of energy required to influence the eye and the ear are of the same order of magnitude.” Wien also used the apparatus to find the decrease of intensity with increase of distance, and found that it was somewhat more rapid than the inverse square law would give.\n\nIn a later series of experiments (''Science Abst.'' vi. 301) Wien used a telephone plate, of which the amplitude could be determined from the value of the exciting current, and he found that the smallest amplitude audible was <math>6\\cdot3\\times10^{-10}</math> cm.\n\nW. Zernov (''Ann. d. Physik'', 1906, 21, p. 131) compared the indications of Wien's resonator manometer with those of V. Altberg's sound pressure apparatus and found very satisfactory agreement.\n\n''Stationary Waves''.—As a preliminary to the investigation of the modes of vibration of certain sources of sound we shall consider the formation of “stationary waves.” These are not really waves in the ordinary sense, but the disturbance arising from the passage through the medium in opposite directions of two equal trains. The medium is divided up into sections between fixed points, and these sections vibrate. We can form stationary waves with ease by fixing one end of a rope—say 20 ft. long—and holding the other end in the hand. When the hand is moved to and fro ''transversely'' waves are sent along the rope and reflected at the fixed end. The direct and reflected systems are practically equal, and by suitably timing the vibrations of the hand for each case the rope may be made to vibrate as a whole, as two halves, as three-thirds and so on. When it vibrates in several sections, each section moves in the opposite way to its neighbours.\n\nLet us suppose that two trains of sine waves of length <math>\\lambda</math> and amplitude <math>a</math> are travelling in opposite directions with velocity <math>\\text{U}</math>. We may represent the displacement due to one of the trains by\n{{block center|<math>y_1 = a \\sin \\frac{2\\pi}{\\lambda}(x - \\text{U}t).</math> (24)}} where <math>x</math> is measured as in equation (16) from an ascending node as A in fig. 21. If we measure <math>t</math> from an instant at which the two trains exactly coincide, then as <math>\\text{U}</math> for the other train has the opposite sign, its displacement is represented by\n{{block center|<math>y_2=a\\sin\\frac{2\\pi}{\\lambda}(x+\\text{U}t).</math> (25)}}\nThe sum of the disturbance is obtained by adding (24) and (25)\n{{block center|<math>y=y_1+y_2=2a\\cos\\frac{2\\pi}{\\lambda}\\text{U}t\\sin\\frac{2\\pi}{\\lambda}x,</math> (26)}}\nAt any given instant <math>t</math> this is a sine curve of amplitude <math>2a\\cos(2\\pi/\\lambda)\\text{U}t</math>, and of wave-length <math>\\lambda</math>, and with nodes at <math>x=0</math>, <math>\\tfrac{1}{2}\\lambda</math>, <math>\\lambda</math>, <math>\\dots</math>, that is, there is no displacement at these nodes whatever the value of <math>t</math>, and between them the displacement is always a sine curve, but of amplitude varying between <math>+2a</math> and <math>-2a</math>. The ordinate of the curve changes sign as we pass through a node, so that successive sections are moving always in opposite directions and have opposite displacements. Each section then vibrates, and its amplitude goes through all its values in time given by <math>2\\pi\\text{UT}/\\lambda=2\\pi</math>, or <math>\\text{T}=\\lambda/\\text{U}</math>, and the frequency is <math>\\text{U}/\\lambda</math>. We may represent such a train of “stationary waves” by fig. 25, where the curves give the two extreme amplitudes. The points <math>\\text{A}</math>, <math>\\text{B}</math>, <math>\\text{C}</math>, <math>\\text{D}</math> are termed “nodes,” and the points half-way between them “loops.”\n\n[[File:eb1911 v25 p0467 c1f1.png|center|356px]]\n{{c|{{sc|Fig.}} 25.}}\n\nThe general character of these results may be obtained by a graphic construction. Let fig. 26 (1) represent a wave-length of each train when they are coincident. It is sufficient to take a single wave-length. The dotted curve represents the superposition, which simply doubles each ordinate. Divide the wave-length into, say, eight equal parts as marked. Then move one train marked (I) <math>\\tfrac{1}{8}\\lambda</math> to the right, and the other train (II) <math>\\tfrac{1}{8}\\lambda</math> to the left, introducing new parts of each train at one end, and sending out old parts at the other. Then we get fig. 26 (2), the dotted curve representing the resultant with amplitude <math>1/\\sqrt{2}</math> that of (1). Another movement of <math>\\tfrac{1}{4}\\lambda</math> in each direction gives (3) with resultant a straight line, and so on for (4) and (5). In (5) the displacement is evidently equal and opposite to that in (1). Further displacement will give the figures (4), (3), (2), (1) again, but with (I) and (II) interchanged. When we get back to (1) each train has been displaced through <math>\\lambda</math> and the period is <math>\\lambda/\\text{U}</math>. Further, the original nodes are always at rest, and the intervening sections vibrate to and fro.\n\n[[File:eb1911 v25 p0467 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 26.}}\n\nThe vibrations of certain sources of sound may be represented, at least as a first approximation, as consisting of stationary waves, and from a consideration of the rate of propagation of waves along these sources we can deduce their frequency when we know their length.\n\n{{c|''Sources of Sound.''}}\n\n''Elementary Theory of Pipes.''—The longitudinal vibration of air in cylindrical pipes is made use of in various wind instruments. We shall deduce the modes of vibration of the air column in a cylindrical pipe from the consideration that the air in motion within the pipe forms some part of a system of stationary waves, one train being formed by the exciter of the disturbance, and the other being formed by the reflection of the train at the end of the pipe.\n\nIn order to justify the use of stationary waves we must show that two such trains can move in opposite directions over the same ground without modifying each other so long as the displacement in either is small. For this it is necessary that the total force on an element due to the sum of the displacements should be equal to the sum of the forces due to the two displacements considered separately. The medium then acts for the second train just as if it were undisturbed by the first. It is sufficient then to show that the excess of pressure at any point is the sum of the excesses due to either train separately.\n\nIf <math>\\omega</math> is the total pressure excess, and if <math>y</math> is the total displacement at <math>x</math>, then <math>\\omega = \\text{E} \\times \\text{change of volume} \\div \\text{original volume} = -\\text{E}dy/dx</math>. If <math>y_1</math> and <math>y_2</math> are the two separate displacements and if <math>y = y_1 + y_2</math>, then <math>\\omega = -\\text{E}\\ (dy_1/dx + dy_2/dx) = \\omega_1 + \\omega_2</math>. This proves the proposition. It is a case of the principle of superposition of small disturbances.\n\nLet us suppose that a system of stationary waves is formed in the air in a pipe of indefinite length, and let fig. 27 represent a part of the system. At the nodes A, B, C, D, E there is no displacement, but there are maximum volume and pressure changes. Consider, for instance, the point B. When the displacement is represented by AHBKC the particles on each side of B are displaced towards it<noinclude><references/></noinclude>"
 }

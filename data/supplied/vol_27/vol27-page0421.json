@@ -22,18 +22,40 @@
     ]
    },
    {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     139,
+     184,
+     1206,
+     629
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1206,
+     184,
+     2278,
+     629
+    ]
+   },
+   {
     "name": "c0s1",
     "kind": "text",
     "column": 0,
     "box": [
      139,
-     184,
+     629,
      2278,
      1230
     ]
    },
    {
-    "name": "c1s1",
+    "name": "c1s2",
     "kind": "text",
     "column": 1,
     "box": [
@@ -51,62 +73,18 @@
      139,
      1650,
      1203,
-     2012
+     2010
     ]
    },
    {
-    "name": "c1s2",
-    "kind": "text",
+    "name": "c1c1",
+    "kind": "caption",
     "column": 1,
     "box": [
      139,
-     2063,
+     2113,
      1203,
      2183
-    ]
-   },
-   {
-    "name": "c1f2",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     139,
-     2197,
-     1203,
-     2930
-    ]
-   },
-   {
-    "name": "c1s3",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     139,
-     2986,
-     1203,
-     3098
-    ]
-   },
-   {
-    "name": "c2s1",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1203,
-     1230,
-     2278,
-     1254
-    ]
-   },
-   {
-    "name": "c2f1",
-    "kind": "figure",
-    "column": 2,
-    "box": [
-     1203,
-     1254,
-     2278,
-     2957
     ]
    },
    {
@@ -115,9 +93,31 @@
     "column": 2,
     "box": [
      1203,
-     2990,
+     1230,
      2278,
-     3070
+     2191
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     139,
+     2195,
+     1741,
+     2927
+    ]
+   },
+   {
+    "name": "c0c1",
+    "kind": "caption",
+    "column": 0,
+    "box": [
+     139,
+     2986,
+     1741,
+     3100
     ]
    },
    {
@@ -125,8 +125,8 @@
     "kind": "text",
     "column": 0,
     "box": [
-     139,
-     3029,
+     1741,
+     2195,
      2278,
      3115
     ]
@@ -134,46 +134,46 @@
   ],
   "readings": {
    "head": "{{RunningHeader|404|TUNNEL|}}",
-   "c0s1": "tunnel walls were then built in the chamber. For the remaining part of the river the foregoing process was varied by cutting off the sheet piling at mid-height of the tunnel and making the upper half of the tunnel, which was built above and lowered in sections through the water, serve as the roof of the chamber in which the lower half of the tunnel was built.\n\nThe tunnels of the Métropolitain railway of Paris (F. Bienvenüe, engineer-in-chief) under the two arms of the Seine, between Place Chatelêt and Place Saint Michel, were made by means of compressed-air caissons sunk beneath the river bed, were next made by the aid of temporary small caissons sunk through about 26 ft. of earth under the river. The tops of the side walls were made even with the end walls. A steel rectangular coffer-dam (figs. 5 and 6) was sunk to rest with rubber or clay joint on these surrounding walls. The coffer-dam had shafts reaching above the surface of the water, so that the earth core was easily taken out (after removing the water) in free air. The adjacent chambers under the caissons were then connected together. Three caissons, of a total length of 396 ft., were used under the larger arm, and two, of an aggregate length\n\n{{c|''Mountain Tunnels for Railways.''}}\n\nTunnel. Location. Length. (miles) Internal Width and Height. Material penetrated. Average progress per day = 24 hrs. (lin. yds.). Approximate cost per lin. yd.\n\nMont Cenis (1 tunnel). Modane, France and Bardonecchia, Italy. 7·98 26 ft. 3 in. × 24 ft. 7 in. (horseshoe). Granitic 2·57 £226\n\nSt Gotthard (1 tunnel) Göschenen and Airolo in Switzerland. 9·3 26 ft. 3 in. × 24 ft. 7 in. (horseshoe). Granitic 6·01 143\n\nArlberg (1 tunnel). Innsbruck and Bludenz in Tirol. 6·36 25 ft. 3 in. wide — 9·07 108\n\nSimplon (2 tunnels). Brigue, Switzerland and Iselle, Italy. 12·3 16 ft. 5 in. × 19 ft. 6 in. each (min.). Gneiss, mica schist, limestone and disintegrated mica schist rock. 11·63 148",
-   "c1s1": "L. Chagnaud being the contractor. They were built of plates of sheet steel and masonry, with temporary steel diaphragms in the ends, filled with concrete, making a cross wall with a level top about even with the outside top of the tunnel and about 2 ft. below the bottom of the Seine. The caissons were sunk on the line of the tunnel so that adjacent ends (and the walls just described) were nearly 5 ft. apart with—at that stage—a core of earth between them. Side walls joining the end walls and thus enclosing the earth core on four sides (fig. 4)",
-   "c1s2": "{{c|{{smaller|(From ''Engineering News'', New York.)}}}}\n{{c|{{sc|Fig.}} 4.—Perspective showing manner of enclosing space between tunnel caissons for the Métropolitain under the Seine at Paris.}}",
-   "c1s3": "{{c|{{sc|Fig.}} 5.—Transverse Section. {{sc|Fig.}} 6}}\n{{c|Coffer-dam superimposed over joints between caissons in tun under the Seine at Paris.}}",
-   "c2s1": "",
-   "c2s2": "{{c|—Longitudinal Section.<br>nels for the Métropolitain}}\n\nlittle more than three years. The main heading was driven",
-   "c0s2": "{{c|Coffer-dam superimposed over joints between caissons in tunnels for the Métropolitain under the Seine at Paris.}}\n\nThe main heading was driven along the bottom of the"
+   "c1s1": "tunnel walls were then built in the chamber. For the remaining part of the river the foregoing process was varied by cutting off the sheet piling at mid-height of the tunnel and making the upper half of the tunnel, which was built above and lowered in sections through the water, serve as the roof of the chamber in which the lower half of the tunnel was built.\n\nThe tunnels of the Métropolitain railway of Paris (F. Bienvenüe, engineer-in-chief) under the two arms of the Seine, between Place Chatelêt and Place Saint Michel, were made by means of compressed-air caissons sunk beneath the river bed,",
+   "c2s1": "were next made by the aid of temporary small caissons sunk through about 26 ft. of earth under the river. The tops of the side walls were made even with the end walls. A steel rectangular coffer-dam (figs. 5 and 6) was sunk to rest with rubber or clay joint on these surrounding walls. The coffer-dam had shafts reaching above the surface of the water, so that the earth core was easily taken out (after removing the water) in free air. The adjacent chambers under the caissons were then connected together. Three caissons, of a total length of 396 ft., were used under the larger arm, and two, of an aggregate length",
+   "c0s1": "{{c|''Mountain Tunnels for Railways.''}}\n\n{| style=\"margin:auto\"\n|Tunnel.||Location.||Length. (miles)||Internal Width and Height.||Material penetrated.||Average progress per day = 24 hrs. (lin. yds.).||Approximate cost per lin. yd.\n|-\n|Mont Cenis (1 tunnel)||Modane, France and Bardonecchia, Italy.||7·98||26 ft. 3 in. × 24 ft. 7 in. (horseshoe).||Granitic||2·57||£226\n|-\n|St Gotthard (1 tunnel)||Göschenen and Airolo in Switzerland.||9·3||26 ft. 3 in. × 24 ft. 7 in. (horseshoe).||Granitic||6·01||143\n|-\n|Arlberg (1 tunnel)||Innsbruck and Bludenz in Tirol.||6·36||25 ft. 3 in. wide||—||9·07||108\n|-\n|Simplon (2 tunnels)||Brigue, Switzerland and Iselle, Italy.||12·3||16 ft. 5 in. × 19 ft. 6 in. each (min.).||Gneiss, mica schist, limestone and disintegrated mica schist rock.||11·63||148\n|}",
+   "c1s2": "L. Chagnaud being the contractor. They were built of plates of sheet steel and masonry, with temporary steel diaphragms in the ends, filled with concrete, making a cross wall with a level top about even with the outside top of the tunnel and about 2 ft. below the bottom of the Seine. The caissons were sunk on the line of the tunnel so that adjacent ends (and the walls just described) were nearly 5 ft. apart with—at that stage—a core of earth between them. Side walls joining the end walls and thus enclosing the earth core on four sides (fig. 4)",
+   "c1c1": "{{c|{{sc|Fig.}} 4.—Perspective showing manner of enclosing space between tunnel caissons for the Métropolitain under the Seine at Paris.}}",
+   "c2s2": "of 132 ft., under the smaller arm of the Seine. The cost of the tunnel was 7000 francs per lineal metre.\n\nWilliam Sooy Smith published in Chicago, in 1877, a description of a scheme for building a tunnel under the Detroit river by sinking caissons end to end, each caisson to be secured to the adjoining one by tongued and grooved guides, and a nearly water-tight connexion between the two to be made by means of an annular inflated hose.\n\n''Tunnelling through Mountains''.—Where a great thickness of rock overlies a tunnel through a mountain, it may be necessary to do the work wholly from the two ends without intermediate shafts. The problem largely resolves itself into devising the most expeditious way of excavating and removing the rock. Experience has led to great advances in speed and economy, as may be seen from examples in the above table.\n\nIn 1857 the first blast was fired in connexion with the Mont Cenis works; in 1861 machine drilling was introduced; and in 1871 the tunnel was opened for traffic. With the exception of about 300 yds. the tunnel is lined throughout with brick or stone. During the first four years of hand labour the average progress was not more than 9 in. per day on each side of the Alps; but with compressed air rock-drills the rate towards the end was five times greater.",
+   "c0c1": "{{c|{{sc|Fig.}} 5.—Transverse Section. {{sc|Fig.}} 6.—Longitudinal Section.}}\n{{c|Coffer-dam superimposed over joints between caissons in tunnels for the Métropolitain under the Seine at Paris.}}",
+   "c0s2": "¶\nIn 1872 the St Gotthard tunnel was begun, and in 1881 the first locomotive ran through it. Mechanical drills were used from the beginning. Tunnelling was carried on by driving in advance a top heading about 8 ft. square, then enlarging this sideways, and finally sinking the excavation to invert level (see figs. 7 and 8). Air for working the rock-drills was compressed to seven atmospheres by turbines of about 2000 horse-power.\n\nThe driving of the Arlberg tunnel was begun in 1880 and the work was completed in little more than three years. The main heading was driven along the bottom of the"
   },
   "figure_files": {
    "c1f1": "eb1911 v27 p0421 c1f1.png",
-   "c1f2": "eb1911 v27 p0421 c1f2.png",
-   "c2f1": "eb1911 v27 p0421 c2f1.png"
+   "c0f1": "eb1911 v27 p0421 c0f1.png"
   },
   "figures": [
    {
     "box": [
      367,
      1651,
-     959,
-     2009
+     961,
+     2007
     ],
     "caption": [
-     139,
-     2063,
+     137,
+     2113,
      1187,
      2183
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     368,
+     364,
      1651,
      970,
-     2054
+     2062
     ]
    },
    {
     "box": [
      141,
-     2197,
+     2194,
      919,
      2914
     ],
@@ -181,37 +181,37 @@
      259,
      2987,
      1223,
-     3098
+     3100
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     134,
+     130,
      2192,
-     879,
-     2924
+     970,
+     2957
     ]
    },
    {
     "box": [
-     1183,
-     2194,
-     1728,
-     2934
+     148,
+     2198,
+     1726,
+     2924
     ],
     "caption": [
-     1183,
-     2990,
+     260,
+     2987,
      1605,
-     3070
+     3097
     ],
     "column": 2,
-    "inset": false,
+    "inset": true,
     "page_box": [
      979,
      2192,
-     1733,
-     2924
+     1744,
+     2957
     ]
    }
   ],
@@ -220,17 +220,17 @@
     931,
     626,
     1425,
-    661
+    663
    ],
    [
     139,
-    678,
-    2275,
-    1228
+    680,
+    2279,
+    1217
    ],
    [
-    256,
-    3026,
+    260,
+    3024,
     1607,
     3100
    ]
@@ -239,37 +239,36 @@
   "unread": {},
   "rejected": {},
   "disagreements": {
-   "0": [
-    3,
-    1
-   ],
    "1": [
-    2,
+    1,
     0
    ],
    "2": [
-    1,
-    0
+    0,
+    1
    ]
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 4,
-    "input_tokens": 9223,
-    "output_tokens": 293,
+    "input_tokens": 9184,
+    "output_tokens": 552,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 8,
-    "input_tokens": 4741,
-    "output_tokens": 2442,
+    "model": "claude-opus-5-5",
+    "calls": 9,
+    "input_tokens": 6404,
+    "output_tokens": 2292,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 15392
+    "cache_read_input_tokens": 21789
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|404|TUNNEL|}}</noinclude>tunnel walls were then built in the chamber. For the remaining part of the river the foregoing process was varied by cutting off the sheet piling at mid-height of the tunnel and making the upper half of the tunnel, which was built above and lowered in sections through the water, serve as the roof of the chamber in which the lower half of the tunnel was built.\n\nThe tunnels of the Métropolitain railway of Paris (F. Bienvenüe, engineer-in-chief) under the two arms of the Seine, between Place Chatelêt and Place Saint Michel, were made by means of compressed-air caissons sunk beneath the river bed, were next made by the aid of temporary small caissons sunk through about 26 ft. of earth under the river. The tops of the side walls were made even with the end walls. A steel rectangular coffer-dam (figs. 5 and 6) was sunk to rest with rubber or clay joint on these surrounding walls. The coffer-dam had shafts reaching above the surface of the water, so that the earth core was easily taken out (after removing the water) in free air. The adjacent chambers under the caissons were then connected together. Three caissons, of a total length of 396 ft., were used under the larger arm, and two, of an aggregate length\n\n{{c|''Mountain Tunnels for Railways.''}}\n\nTunnel. Location. Length. (miles) Internal Width and Height. Material penetrated. Average progress per day = 24 hrs. (lin. yds.). Approximate cost per lin. yd.\n\nMont Cenis (1 tunnel). Modane, France and Bardonecchia, Italy. 7·98 26 ft. 3 in. × 24 ft. 7 in. (horseshoe). Granitic 2·57 £226\n\nSt Gotthard (1 tunnel) Göschenen and Airolo in Switzerland. 9·3 26 ft. 3 in. × 24 ft. 7 in. (horseshoe). Granitic 6·01 143\n\nArlberg (1 tunnel). Innsbruck and Bludenz in Tirol. 6·36 25 ft. 3 in. wide — 9·07 108\n\nSimplon (2 tunnels). Brigue, Switzerland and Iselle, Italy. 12·3 16 ft. 5 in. × 19 ft. 6 in. each (min.). Gneiss, mica schist, limestone and disintegrated mica schist rock. 11·63 148\n\nL. Chagnaud being the contractor. They were built of plates of sheet steel and masonry, with temporary steel diaphragms in the ends, filled with concrete, making a cross wall with a level top about even with the outside top of the tunnel and about 2 ft. below the bottom of the Seine. The caissons were sunk on the line of the tunnel so that adjacent ends (and the walls just described) were nearly 5 ft. apart with—at that stage—a core of earth between them. Side walls joining the end walls and thus enclosing the earth core on four sides (fig. 4)\n\n[[File:eb1911 v27 p0421 c1f1.png|center|361px]]\n{{c|{{smaller|(From ''Engineering News'', New York.)}}}}\n{{c|{{sc|Fig.}} 4.—Perspective showing manner of enclosing space between tunnel caissons for the Métropolitain under the Seine at Paris.}}\n\n[[File:eb1911 v27 p0421 c1f2.png|center|361px]]\n{{c|{{sc|Fig.}} 5.—Transverse Section. {{sc|Fig.}} 6}}\n{{c|Coffer-dam superimposed over joints between caissons in tun under the Seine at Paris.}}\n\n[[File:eb1911 v27 p0421 c2f1.png|center|365px]]\n{{c|—Longitudinal Section.<br>nels for the Métropolitain}}\n\nlittle more than three years. The main heading was driven\n\n{{c|Coffer-dam superimposed over joints between caissons in tunnels for the Métropolitain under the Seine at Paris.}}\n\nThe main heading was driven along the bottom of the<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|404|TUNNEL|}}</noinclude>tunnel walls were then built in the chamber. For the remaining part of the river the foregoing process was varied by cutting off the sheet piling at mid-height of the tunnel and making the upper half of the tunnel, which was built above and lowered in sections through the water, serve as the roof of the chamber in which the lower half of the tunnel was built.\n\nThe tunnels of the Métropolitain railway of Paris (F. Bienvenüe, engineer-in-chief) under the two arms of the Seine, between Place Chatelêt and Place Saint Michel, were made by means of compressed-air caissons sunk beneath the river bed, were next made by the aid of temporary small caissons sunk through about 26 ft. of earth under the river. The tops of the side walls were made even with the end walls. A steel rectangular coffer-dam (figs. 5 and 6) was sunk to rest with rubber or clay joint on these surrounding walls. The coffer-dam had shafts reaching above the surface of the water, so that the earth core was easily taken out (after removing the water) in free air. The adjacent chambers under the caissons were then connected together. Three caissons, of a total length of 396 ft., were used under the larger arm, and two, of an aggregate length\n\n{{c|''Mountain Tunnels for Railways.''}}\n\n{| style=\"margin:auto\"\n|Tunnel.||Location.||Length. (miles)||Internal Width and Height.||Material penetrated.||Average progress per day = 24 hrs. (lin. yds.).||Approximate cost per lin. yd.\n|-\n|Mont Cenis (1 tunnel)||Modane, France and Bardonecchia, Italy.||7·98||26 ft. 3 in. × 24 ft. 7 in. (horseshoe).||Granitic||2·57||£226\n|-\n|St Gotthard (1 tunnel)||Göschenen and Airolo in Switzerland.||9·3||26 ft. 3 in. × 24 ft. 7 in. (horseshoe).||Granitic||6·01||143\n|-\n|Arlberg (1 tunnel)||Innsbruck and Bludenz in Tirol.||6·36||25 ft. 3 in. wide||—||9·07||108\n|-\n|Simplon (2 tunnels)||Brigue, Switzerland and Iselle, Italy.||12·3||16 ft. 5 in. × 19 ft. 6 in. each (min.).||Gneiss, mica schist, limestone and disintegrated mica schist rock.||11·63||148\n|}\n\nL. Chagnaud being the contractor. They were built of plates of sheet steel and masonry, with temporary steel diaphragms in the ends, filled with concrete, making a cross wall with a level top about even with the outside top of the tunnel and about 2 ft. below the bottom of the Seine. The caissons were sunk on the line of the tunnel so that adjacent ends (and the walls just described) were nearly 5 ft. apart with—at that stage—a core of earth between them. Side walls joining the end walls and thus enclosing the earth core on four sides (fig. 4) of 132 ft., under the smaller arm of the Seine. The cost of the tunnel was 7000 francs per lineal metre.\n\n[[File:eb1911 v27 p0421 c1f1.png|center|361px]]\n{{c|{{sc|Fig.}} 4.—Perspective showing manner of enclosing space between tunnel caissons for the Métropolitain under the Seine at Paris.}}\n\nWilliam Sooy Smith published in Chicago, in 1877, a description of a scheme for building a tunnel under the Detroit river by sinking caissons end to end, each caisson to be secured to the adjoining one by tongued and grooved guides, and a nearly water-tight connexion between the two to be made by means of an annular inflated hose.\n\n''Tunnelling through Mountains''.—Where a great thickness of rock overlies a tunnel through a mountain, it may be necessary to do the work wholly from the two ends without intermediate shafts. The problem largely resolves itself into devising the most expeditious way of excavating and removing the rock. Experience has led to great advances in speed and economy, as may be seen from examples in the above table.\n\nIn 1857 the first blast was fired in connexion with the Mont Cenis works; in 1861 machine drilling was introduced; and in 1871 the tunnel was opened for traffic. With the exception of about 300 yds. the tunnel is lined throughout with brick or stone. During the first four years of hand labour the average progress was not more than 9 in. per day on each side of the Alps; but with compressed air rock-drills the rate towards the end was five times greater.\n\n[[File:eb1911 v27 p0421 c0f1.png|center|544px]]\n{{c|{{sc|Fig.}} 5.—Transverse Section. {{sc|Fig.}} 6.—Longitudinal Section.}}\n{{c|Coffer-dam superimposed over joints between caissons in tunnels for the Métropolitain under the Seine at Paris.}}\n\nIn 1872 the St Gotthard tunnel was begun, and in 1881 the first locomotive ran through it. Mechanical drills were used from the beginning. Tunnelling was carried on by driving in advance a top heading about 8 ft. square, then enlarging this sideways, and finally sinking the excavation to invert level (see figs. 7 and 8). Air for working the rock-drills was compressed to seven atmospheres by turbines of about 2000 horse-power.\n\nThe driving of the Arlberg tunnel was begun in 1880 and the work was completed in little more than three years. The main heading was driven along the bottom of the<noinclude><references/></noinclude>"
 }

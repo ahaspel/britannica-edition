@@ -44,18 +44,18 @@
     ]
    },
    {
-    "name": "c1s2",
-    "kind": "text",
+    "name": "c1c1",
+    "kind": "caption",
     "column": 1,
     "box": [
      0,
-     1073,
+     1072,
      531,
      1110
     ]
    },
    {
-    "name": "c1s3",
+    "name": "c1s2",
     "kind": "text",
     "column": 1,
     "box": [
@@ -66,7 +66,7 @@
     ]
    },
    {
-    "name": "c1s4",
+    "name": "c1s3",
     "kind": "text",
     "column": 1,
     "box": [
@@ -88,34 +88,34 @@
     ]
    },
    {
-    "name": "c1s5",
-    "kind": "text",
+    "name": "c1c2",
+    "kind": "caption",
     "column": 1,
     "box": [
      0,
-     2143,
+     2144,
      764,
-     2181
+     2180
     ]
    },
    {
-    "name": "c1s6",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
      764,
      1544,
      1121,
-     2181
+     2180
     ]
    },
    {
-    "name": "c1s7",
+    "name": "c1s5",
     "kind": "text",
     "column": 1,
     "box": [
      0,
-     2181,
+     2180,
      1121,
      3249
     ]
@@ -167,15 +167,15 @@
   ],
   "readings": {
    "head": "{{RunningHeader||SEWERAGE|741}}",
-   "c1s1": "sewer of any size may be determined in feet by the formula <math>dr/100</math>, where <math>d</math> = depth of excavation in feet and <math>r</math> = external radius in feet.\n\nAn egg-shaped sewer, made with two thicknesses of brick, an invert block, and a concrete setting, is illustrated in fig. 27.\n\nConcrete is largely used in the",
-   "c1s2": "{{c|{{sc|Fig.}} 27.—Brick Sewer.}}",
-   "c1s3": "Concrete is largely used in the construction of sewers, either in combination with brickwork or alone. For this purpose the concrete consists of from 5 to 7 parts of sand and gravel or broken stone to 1 of Portland cement. It may be used as a cradle for or as a backing to a brick ring, or as the sole material of construction by running it into position round a mould which is removed when the concrete is sufficiently set, the inner surface of the sewer being in this case coated with a thin layer of cement. A develop-",
-   "c1s4": "ment in the construction of concrete sewers, whether laid in sectional pipes or constructed and moulded ''in situ'', is the use of iron or steel bars and wires embedded in the material as a reinforcement. Such conduits can be constructed of any size and designed to withstand high pressures. Fig. 28 is a section of a concrete sewer having a diameter of more than 9 ft. constructed with round rod reinforcement. With regard to the method for calculating the proportions, generally speaking the thickness of the concrete shell should in no place be less than one-twelfth of the greatest in-",
-   "c1s5": "{{c|{{sc|Fig.}} 28.—Reinforced Concrete Sewer. Section.}}",
-   "c1s6": "ternal diameter of the tube, while the steel reinforcement should be designed to resist the whole of the tensile stress. Where the safe tensile stress in the steel is 8 tons per sq. in. <math>\\text{P}=</math> the pressure in pounds per sq. in., and <math>r=</math> the internal radius in inches; the weight of the reinforcement per",
-   "c1s7": "sq. ft <math>= \\text{P}r/450</math>, while its area at each side of the pipe per longitudinal foot, when <math>f=</math>safe tensile stress in the reinforcement in pounds, is <math>12\\,\\text{P}r/f</math>.\n\n''Dimensions of sewers.''—In determining the dimensions of sewers, the amount of sewage proper may be taken as equal to the water supply (generally about 30 gallons per head per diem), and to this must be added (when the “combined” system is adopted) an allowance for the surface water due to rainfall. The latter, which is generally by far the larger constituent, is to be estimated from the maximum rate of rainfall for the district and from the area and character of the surface. In the sewerage of Berlin, for example, the maximum rainfall allowed for is <math>\\tfrac{7}{8}</math> of an inch per hour, of which one-third is supposed to enter the sewers. In any estimate of the size of sewers based on rainfall account must of course be taken of the relief provided by storm-overflows, and also of the capacity of the sewers to become simply charged with water during the short time to which very heavy showers are invariably limited. Rainfall at the rate of 5 or 6 in. per hour has been known to occur for a few minutes, but it is unnecessary to provide (even above storm-overflows) sewers capable of discharging any such amount as this; the time taken by sewers of more moderate size to fill would of itself prevent the discharge from them from reaching a condition of steady flow; and, apart from this, the risk of damage by such an exceptional fall would not warrant so great an initial expenditure. Engineers differ widely in their estimates of the allowance to be made for the discharge of surface water, and no rule can be laid down which would be of general application.\n\nIn order that sewers should be self-cleansing, the mean velocity of flow should be not less than <math>2\\tfrac{1}{2}</math> ft. per second. The gradient",
-   "c2s1": "necessary to secure this is calculated on principles which are stated in the article {{sc|Hydraulics}} (''q.v.''). The velocity of flow, <math>\\text{V}</math>, is\n{{block center|<math>\\text{V} = c\\sqrt{im},</math>}}\n'''''Velocity of discharge.''''' where <math>i</math> is the inclination, or ratio of vertical to horizontal distance; <math>m</math> is the “hydraulic mean depth,” or the ratio of area of section of the stream to the wetted perimeter; and <math>c</math> is a coefficient depending on the dimensions and the roughness of the channel and the depth of the stream. A table of values of <math>c</math> will be found in § 98 of the article referred to. This velocity multiplied by the area of the stream gives the rate of discharge. Tables to facilitate the determination of velocity and discharge in sewers of various dimensions, forms and gradients will be found in Latham's and other practical treatises.\n\n'''''Interception sewers.''''' Where the contour of the ground does not admit of a sufficient gradient from the gathering ground to the place of destination, the sewage must be pumped to a higher level at one or more points in its course. To minimize this necessity, and also for other reasons, it is frequently desirable not to gather sewage from the whole area into a single main, but to collect the sewage of higher portions of the town by a separate high-level or interception sewer.\n\n'''''Storm-water overflows.''''' It is undoubtedly necessary to construct overflows for storm water in connexion with combined systems of sewerage. No combined sewer of such size as will make it comparatively self-cleansing under normal conditions can hope to carry off the volume of water resulting from heavy rain. It might be thought that the overflow resulting from a storm would consist of nearly pure rain-water, but this is not the case, as the pressure of storm water has the effect of scouring out from the sewers a great deal of foul matter that is deposited when the flow is small. This being the case it is obviously bad policy to take the overflow into a stream, which would thereby suffer con-",
-   "c2s2": "tamination. A better plan is to direct the discharge into a dry ditch or channel where the liquid may soak into the soil and the solid particles by contact with the air may quickly become oxidized. In agricultural districts it might be possible by arrangement with farmers to run the overflow over grass-land, as it has good manurial properties.\n\n'''''Inverted siphons.''''' Occasionally when a sewer has to cross a stream or other obstruction it is found impossible to bridge or carry the pipe across and preserve its proper gradient. In such cases it must be carried under the obstruction by means of an inverted siphon. The exact form that should be given to inverted siphons is disputed, but it is generally agreed that they are expedients to be avoided wherever possible. The majority take roughly the form of the stream section, that is, they have two sloping pieces corresponding with the banks with a flat cross-piece under the bed of the stream. The pipes are invariably of iron and should be laid in duplicate, as they are liable to silt up in the flat length. For this reason it is usual in constructing a siphon to place permanent chains in the pipes, and these are periodically pulled backward and forward to stir up the silt. Brushes may also be attached to the chains and pulled through from end to end. At either end of the siphon pipes there are manholes into which the pipes are built. Penstock valves also should be provided at each end so that sewage can be shut out of one or both of the siphons as desired for clearing",
+   "c1s1": "sewer of any size may be determined in feet by the formula <math>dr/100</math>, where <math>d</math>=depth of excavation in feet and <math>r</math>=external radius in feet.\n\nAn egg-shaped sewer, made with two thicknesses of brick, an invert block, and a concrete setting, is illustrated in fig. 27.\n\nConcrete is largely used in the",
+   "c1c1": "{{c|{{sc|Fig.}} 27.—Brick Sewer.}}",
+   "c1s2": "Concrete is largely used in the construction of sewers, either in combination with brickwork or alone. For this purpose the concrete consists of from 5 to 7 parts of sand and gravel or broken stone to 1 of Portland cement. It may be used as a cradle for or as a backing to a brick ring, or as the sole material of construction by running it into position round a mould which is removed when the concrete is sufficiently set, the inner surface of the sewer being in this case coated with a thin layer of cement. A develop-",
+   "c1s3": "ment in the construction of concrete sewers, whether laid in sectional pipes or constructed and moulded ''in situ'', is the use of iron or steel bars and wires embedded in the material as a reinforcement. Such conduits can be constructed of any size and designed to withstand high pressures. Fig. 28 is a section of a concrete sewer having a diameter of more than 9 ft. constructed with round rod reinforcement. With regard to the method for calculating the proportions, generally speaking the thickness of the concrete shell should in no place be less than one-twelfth of the greatest in-",
+   "c1c2": "{{c|{{sc|Fig.}} 28.—Reinforced Concrete Sewer. Section.}}",
+   "c1s4": "ternal diameter of the tube, while the steel reinforcement should be designed to resist the whole of the tensile stress. Where the safe tensile stress in the steel is 8 tons per sq. in. <math>\\text{P}=</math>the pressure in pounds per sq. in., and <math>r=</math> the internal radius in inches; the weight of the reinforcement per",
+   "c1s5": "sq. ft <math>= \\text{P}r/450</math>, while its area at each side of the pipe per longitudinal foot, when <math>f</math> = safe tensile stress in the reinforcement in pounds, is <math>12\\,\\text{P}r/f</math>.\n\n'''''Dimensions of sewers.''''' In determining the dimensions of sewers, the amount of sewage proper may be taken as equal to the water supply (generally about 30 gallons per head per diem), and to this must be added (when the “combined” system is adopted) an allowance for the surface water due to rainfall. The latter, which is generally by far the larger constituent, is to be estimated from the maximum rate of rainfall for the district and from the area and character of the surface. In the sewerage of Berlin, for example, the maximum rainfall allowed for is <math>\\tfrac{7}{8}</math> of an inch per hour, of which one-third is supposed to enter the sewers. In any estimate of the size of sewers based on rainfall account must of course be taken of the relief provided by storm-overflows, and also of the capacity of the sewers to become simply charged with water during the short time to which very heavy showers are invariably limited. Rainfall at the rate of 5 or 6 in. per hour has been known to occur for a few minutes, but it is unnecessary to provide (even above storm-overflows) sewers capable of discharging any such amount as this; the time taken by sewers of more moderate size to fill would of itself prevent the discharge from them from reaching a condition of steady flow; and, apart from this, the risk of damage by such an exceptional fall would not warrant so great an initial expenditure. Engineers differ widely in their estimates of the allowance to be made for the discharge of surface water, and no rule can be laid down which would be of general application.\n\nIn order that sewers should be self-cleansing, the mean velocity of flow should be not less than <math>2\\tfrac{1}{2}</math> ft. per second. The gradient",
+   "c2s1": "stated in the article {{sc|Hydraulics}} (''q.v.''). The velocity of flow, V, is\n\n{{block center|<math>\\text{V} = c\\sqrt{im},</math>}}\n\nwhere <math>i</math> is the inclination, or ratio of vertical to horizontal distance; <math>m</math> is the \"hydraulic mean depth,\" or the ratio of area of section of the stream to the wetted perimeter; and <math>c</math> is a coefficient depending on the dimensions and the roughness of the channel and the depth of the stream. A table of values of <math>c</math> will be found in § 98 of the article referred to. This velocity multiplied by the area of the stream gives the rate of discharge. Tables to facilitate the determination of velocity and discharge in sewers of various dimensions, forms and gradients will be found in Latham's and other practical treatises.\n\nWhere the contour of the ground does not admit of a sufficient gradient from the gathering ground to the place of destination, the sewage must be pumped to a higher level at one or more points in its course. To minimize this necessity, and also for other reasons, it is frequently desirable not to gather sewage from the whole area into a single main, but to collect the sewage of higher portions of the town by a separate high-level or interception sewer.\n\nIt is undoubtedly necessary to construct overflows for storm water in connexion with combined systems of sewerage. No combined sewer of such size as will make it comparatively self-cleansing under normal conditions can hope to carry off the volume of water resulting from heavy rain. It might be thought that the overflow resulting from a storm would consist of nearly pure rain-water, but this is not the case, as the pressure of storm water has the effect of scouring out from the sewers a great deal of foul matter that is deposited when the flow is small. This being the case it is obviously bad policy to take the overflow into a stream, which would thereby suffer con-",
+   "c2s2": "tamination. A better plan is to direct the discharge into a dry ditch or channel where the liquid may soak into the soil and the solid particles by contact with the air may quickly become oxidized. In agricultural districts it might be possible by arrangement with farmers to run the overflow over grass-land, as it has good manurial properties.\n\nOccasionally when a sewer has to cross a stream or other obstruction it is found impossible to bridge or carry the pipe across and preserve its proper gradient. In such cases it must be carried under the obstruction by means of an inverted siphon. '''''Inverted siphons.''''' The exact form that should be given to inverted siphons is disputed, but it is generally agreed that they are expedients to be avoided wherever possible. The majority take roughly the form of the stream section, that is, they have two sloping pieces corresponding with the banks with a flat cross-piece under the bed of the stream. The pipes are invariably of iron and should be laid in duplicate, as they are liable to silt up in the flat length. For this reason it is usual in constructing a siphon to place permanent chains in the pipes, and these are periodically pulled backward and forward to stir up the silt. Brushes may also be attached to the chains and pulled through from end to end. At either end of the siphon pipes there are manholes into which the pipes are built. Penstock valves also should be provided at each end so that sewage can be shut out of one or both of the siphons as desired for clearing",
    "c2s3": "",
    "c2s4": ""
   },
@@ -187,44 +187,44 @@
    {
     "box": [
      50,
-     511,
+     512,
      516,
-     1063
+     1062
     ],
     "caption": [
      101,
-     1073,
+     1072,
      453,
-     1109
+     1108
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      44,
-     481,
-     543,
-     1070
+     492,
+     547,
+     1072
     ]
    },
    {
     "box": [
      70,
-     1545,
-     755,
-     2135
+     1546,
+     756,
+     2133
     ],
     "caption": [
      50,
-     2143,
+     2144,
      762,
-     2181
+     2180
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     44,
-     1543,
-     764,
+     49,
+     1546,
+     762,
      2130
     ]
    }
@@ -247,22 +247,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 3,
-    "input_tokens": 6973,
+    "input_tokens": 7085,
     "output_tokens": 173,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 11,
     "input_tokens": 7226,
-    "output_tokens": 4033,
+    "output_tokens": 4419,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 21164
+    "cache_read_input_tokens": 26631
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader||SEWERAGE|741}}</noinclude>sewer of any size may be determined in feet by the formula <math>dr/100</math>, where <math>d</math> = depth of excavation in feet and <math>r</math> = external radius in feet.\n\nAn egg-shaped sewer, made with two thicknesses of brick, an invert block, and a concrete setting, is illustrated in fig. 27.\n\nConcrete is largely used in the Concrete is largely used in the construction of sewers, either in combination with brickwork or alone. For this purpose the concrete consists of from 5 to 7 parts of sand and gravel or broken stone to 1 of Portland cement. It may be used as a cradle for or as a backing to a brick ring, or as the sole material of construction by running it into position round a mould which is removed when the concrete is sufficiently set, the inner surface of the sewer being in this case coated with a thin layer of cement. A development in the construction of concrete sewers, whether laid in sectional pipes or constructed and moulded ''in situ'', is the use of iron or steel bars and wires embedded in the material as a reinforcement. Such conduits can be constructed of any size and designed to withstand high pressures. Fig. 28 is a section of a concrete sewer having a diameter of more than 9 ft. constructed with round rod reinforcement. With regard to the method for calculating the proportions, generally speaking the thickness of the concrete shell should in no place be less than one-twelfth of the greatest internal diameter of the tube, while the steel reinforcement should be designed to resist the whole of the tensile stress. Where the safe tensile stress in the steel is 8 tons per sq. in. <math>\\text{P}=</math> the pressure in pounds per sq. in., and <math>r=</math> the internal radius in inches; the weight of the reinforcement per sq. ft <math>= \\text{P}r/450</math>, while its area at each side of the pipe per longitudinal foot, when <math>f=</math>safe tensile stress in the reinforcement in pounds, is <math>12\\,\\text{P}r/f</math>.\n\n[[File:eb1911 v24 p0771 c1f1.png|center|87px]]\n{{c|{{sc|Fig.}} 27.—Brick Sewer.}}\n\n[[File:eb1911 v24 p0771 c1f2.png|center|125px]]\n{{c|{{sc|Fig.}} 28.—Reinforced Concrete Sewer. Section.}}\n\n''Dimensions of sewers.''—In determining the dimensions of sewers, the amount of sewage proper may be taken as equal to the water supply (generally about 30 gallons per head per diem), and to this must be added (when the “combined” system is adopted) an allowance for the surface water due to rainfall. The latter, which is generally by far the larger constituent, is to be estimated from the maximum rate of rainfall for the district and from the area and character of the surface. In the sewerage of Berlin, for example, the maximum rainfall allowed for is <math>\\tfrac{7}{8}</math> of an inch per hour, of which one-third is supposed to enter the sewers. In any estimate of the size of sewers based on rainfall account must of course be taken of the relief provided by storm-overflows, and also of the capacity of the sewers to become simply charged with water during the short time to which very heavy showers are invariably limited. Rainfall at the rate of 5 or 6 in. per hour has been known to occur for a few minutes, but it is unnecessary to provide (even above storm-overflows) sewers capable of discharging any such amount as this; the time taken by sewers of more moderate size to fill would of itself prevent the discharge from them from reaching a condition of steady flow; and, apart from this, the risk of damage by such an exceptional fall would not warrant so great an initial expenditure. Engineers differ widely in their estimates of the allowance to be made for the discharge of surface water, and no rule can be laid down which would be of general application.\n\nIn order that sewers should be self-cleansing, the mean velocity of flow should be not less than <math>2\\tfrac{1}{2}</math> ft. per second. The gradient necessary to secure this is calculated on principles which are stated in the article {{sc|Hydraulics}} (''q.v.''). The velocity of flow, <math>\\text{V}</math>, is\n{{block center|<math>\\text{V} = c\\sqrt{im},</math>}}\n'''''Velocity of discharge.''''' where <math>i</math> is the inclination, or ratio of vertical to horizontal distance; <math>m</math> is the “hydraulic mean depth,” or the ratio of area of section of the stream to the wetted perimeter; and <math>c</math> is a coefficient depending on the dimensions and the roughness of the channel and the depth of the stream. A table of values of <math>c</math> will be found in § 98 of the article referred to. This velocity multiplied by the area of the stream gives the rate of discharge. Tables to facilitate the determination of velocity and discharge in sewers of various dimensions, forms and gradients will be found in Latham's and other practical treatises.\n\n'''''Interception sewers.''''' Where the contour of the ground does not admit of a sufficient gradient from the gathering ground to the place of destination, the sewage must be pumped to a higher level at one or more points in its course. To minimize this necessity, and also for other reasons, it is frequently desirable not to gather sewage from the whole area into a single main, but to collect the sewage of higher portions of the town by a separate high-level or interception sewer.\n\n'''''Storm-water overflows.''''' It is undoubtedly necessary to construct overflows for storm water in connexion with combined systems of sewerage. No combined sewer of such size as will make it comparatively self-cleansing under normal conditions can hope to carry off the volume of water resulting from heavy rain. It might be thought that the overflow resulting from a storm would consist of nearly pure rain-water, but this is not the case, as the pressure of storm water has the effect of scouring out from the sewers a great deal of foul matter that is deposited when the flow is small. This being the case it is obviously bad policy to take the overflow into a stream, which would thereby suffer contamination. A better plan is to direct the discharge into a dry ditch or channel where the liquid may soak into the soil and the solid particles by contact with the air may quickly become oxidized. In agricultural districts it might be possible by arrangement with farmers to run the overflow over grass-land, as it has good manurial properties.\n\n'''''Inverted siphons.''''' Occasionally when a sewer has to cross a stream or other obstruction it is found impossible to bridge or carry the pipe across and preserve its proper gradient. In such cases it must be carried under the obstruction by means of an inverted siphon. The exact form that should be given to inverted siphons is disputed, but it is generally agreed that they are expedients to be avoided wherever possible. The majority take roughly the form of the stream section, that is, they have two sloping pieces corresponding with the banks with a flat cross-piece under the bed of the stream. The pipes are invariably of iron and should be laid in duplicate, as they are liable to silt up in the flat length. For this reason it is usual in constructing a siphon to place permanent chains in the pipes, and these are periodically pulled backward and forward to stir up the silt. Brushes may also be attached to the chains and pulled through from end to end. At either end of the siphon pipes there are manholes into which the pipes are built. Penstock valves also should be provided at each end so that sewage can be shut out of one or both of the siphons as desired for clearing<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader||SEWERAGE|741}}</noinclude>sewer of any size may be determined in feet by the formula <math>dr/100</math>, where <math>d</math>=depth of excavation in feet and <math>r</math>=external radius in feet.\n\nAn egg-shaped sewer, made with two thicknesses of brick, an invert block, and a concrete setting, is illustrated in fig. 27.\n\nConcrete is largely used in the Concrete is largely used in the construction of sewers, either in combination with brickwork or alone. For this purpose the concrete consists of from 5 to 7 parts of sand and gravel or broken stone to 1 of Portland cement. It may be used as a cradle for or as a backing to a brick ring, or as the sole material of construction by running it into position round a mould which is removed when the concrete is sufficiently set, the inner surface of the sewer being in this case coated with a thin layer of cement. A development in the construction of concrete sewers, whether laid in sectional pipes or constructed and moulded ''in situ'', is the use of iron or steel bars and wires embedded in the material as a reinforcement. Such conduits can be constructed of any size and designed to withstand high pressures. Fig. 28 is a section of a concrete sewer having a diameter of more than 9 ft. constructed with round rod reinforcement. With regard to the method for calculating the proportions, generally speaking the thickness of the concrete shell should in no place be less than one-twelfth of the greatest internal diameter of the tube, while the steel reinforcement should be designed to resist the whole of the tensile stress. Where the safe tensile stress in the steel is 8 tons per sq. in. <math>\\text{P}=</math>the pressure in pounds per sq. in., and <math>r=</math> the internal radius in inches; the weight of the reinforcement per sq. ft <math>= \\text{P}r/450</math>, while its area at each side of the pipe per longitudinal foot, when <math>f</math> = safe tensile stress in the reinforcement in pounds, is <math>12\\,\\text{P}r/f</math>.\n\n[[File:eb1911 v24 p0771 c1f1.png|center|87px]]\n{{c|{{sc|Fig.}} 27.—Brick Sewer.}}\n\n[[File:eb1911 v24 p0771 c1f2.png|center|125px]]\n{{c|{{sc|Fig.}} 28.—Reinforced Concrete Sewer. Section.}}\n\n'''''Dimensions of sewers.''''' In determining the dimensions of sewers, the amount of sewage proper may be taken as equal to the water supply (generally about 30 gallons per head per diem), and to this must be added (when the “combined” system is adopted) an allowance for the surface water due to rainfall. The latter, which is generally by far the larger constituent, is to be estimated from the maximum rate of rainfall for the district and from the area and character of the surface. In the sewerage of Berlin, for example, the maximum rainfall allowed for is <math>\\tfrac{7}{8}</math> of an inch per hour, of which one-third is supposed to enter the sewers. In any estimate of the size of sewers based on rainfall account must of course be taken of the relief provided by storm-overflows, and also of the capacity of the sewers to become simply charged with water during the short time to which very heavy showers are invariably limited. Rainfall at the rate of 5 or 6 in. per hour has been known to occur for a few minutes, but it is unnecessary to provide (even above storm-overflows) sewers capable of discharging any such amount as this; the time taken by sewers of more moderate size to fill would of itself prevent the discharge from them from reaching a condition of steady flow; and, apart from this, the risk of damage by such an exceptional fall would not warrant so great an initial expenditure. Engineers differ widely in their estimates of the allowance to be made for the discharge of surface water, and no rule can be laid down which would be of general application.\n\nIn order that sewers should be self-cleansing, the mean velocity of flow should be not less than <math>2\\tfrac{1}{2}</math> ft. per second. The gradient stated in the article {{sc|Hydraulics}} (''q.v.''). The velocity of flow, V, is\n\n{{block center|<math>\\text{V} = c\\sqrt{im},</math>}}\n\nwhere <math>i</math> is the inclination, or ratio of vertical to horizontal distance; <math>m</math> is the \"hydraulic mean depth,\" or the ratio of area of section of the stream to the wetted perimeter; and <math>c</math> is a coefficient depending on the dimensions and the roughness of the channel and the depth of the stream. A table of values of <math>c</math> will be found in § 98 of the article referred to. This velocity multiplied by the area of the stream gives the rate of discharge. Tables to facilitate the determination of velocity and discharge in sewers of various dimensions, forms and gradients will be found in Latham's and other practical treatises.\n\nWhere the contour of the ground does not admit of a sufficient gradient from the gathering ground to the place of destination, the sewage must be pumped to a higher level at one or more points in its course. To minimize this necessity, and also for other reasons, it is frequently desirable not to gather sewage from the whole area into a single main, but to collect the sewage of higher portions of the town by a separate high-level or interception sewer.\n\nIt is undoubtedly necessary to construct overflows for storm water in connexion with combined systems of sewerage. No combined sewer of such size as will make it comparatively self-cleansing under normal conditions can hope to carry off the volume of water resulting from heavy rain. It might be thought that the overflow resulting from a storm would consist of nearly pure rain-water, but this is not the case, as the pressure of storm water has the effect of scouring out from the sewers a great deal of foul matter that is deposited when the flow is small. This being the case it is obviously bad policy to take the overflow into a stream, which would thereby suffer contamination. A better plan is to direct the discharge into a dry ditch or channel where the liquid may soak into the soil and the solid particles by contact with the air may quickly become oxidized. In agricultural districts it might be possible by arrangement with farmers to run the overflow over grass-land, as it has good manurial properties.\n\nOccasionally when a sewer has to cross a stream or other obstruction it is found impossible to bridge or carry the pipe across and preserve its proper gradient. In such cases it must be carried under the obstruction by means of an inverted siphon. '''''Inverted siphons.''''' The exact form that should be given to inverted siphons is disputed, but it is generally agreed that they are expedients to be avoided wherever possible. The majority take roughly the form of the stream section, that is, they have two sloping pieces corresponding with the banks with a flat cross-piece under the bed of the stream. The pipes are invariably of iron and should be laid in duplicate, as they are liable to silt up in the flat length. For this reason it is usual in constructing a siphon to place permanent chains in the pipes, and these are periodically pulled backward and forward to stir up the silt. Brushes may also be attached to the chains and pulled through from end to end. At either end of the siphon pipes there are manholes into which the pipes are built. Penstock valves also should be provided at each end so that sewage can be shut out of one or both of the siphons as desired for clearing<noinclude><references/></noinclude>"
 }

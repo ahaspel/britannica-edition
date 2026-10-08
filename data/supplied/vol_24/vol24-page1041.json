@@ -22,40 +22,40 @@
     ]
    },
    {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     68,
+     219,
+     1164,
+     580
+    ]
+   },
+   {
     "name": "c1f1",
     "kind": "figure",
     "column": 1,
     "box": [
      68,
-     238,
+     580,
      1164,
      1992
     ]
    },
    {
-    "name": "c1f2",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     68,
-     1989,
-     1164,
-     1992
-    ]
-   },
-   {
-    "name": "c1s3",
+    "name": "c1s2",
     "kind": "text",
     "column": 1,
     "box": [
      68,
-     1989,
+     1735,
      1164,
      2494
     ]
    },
    {
-    "name": "c1s4",
+    "name": "c1s3",
     "kind": "text",
     "column": 1,
     "box": [
@@ -66,25 +66,14 @@
     ]
    },
    {
-    "name": "c2f1",
-    "kind": "figure",
-    "column": 2,
-    "box": [
-     1164,
-     235,
-     2240,
-     3012
-    ]
-   },
-   {
     "name": "c2s1",
     "kind": "text",
     "column": 2,
     "box": [
      1164,
-     3022,
+     219,
      2240,
-     3059
+     1310
     ]
    },
    {
@@ -93,7 +82,40 @@
     "column": 2,
     "box": [
      1164,
-     3059,
+     1310,
+     2240,
+     2092
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1164,
+     2092,
+     2240,
+     3013
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1164,
+     3022,
+     2240,
+     3057
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1164,
+     3057,
      2240,
      3157
     ]
@@ -101,27 +123,68 @@
   ],
   "readings": {
    "head": "{{RunningHeader|COURSE OF CONSTRUCTION]|SHIPBUILDING|969}}",
-   "c1s3": "{{c|horizontal projections of these points are found as indicated in the figure where <math>\\text{Q}'</math> on the middle line of the half breadth is the horizontal projection of <math>\\text{Q}</math>. The line <math>\\text{Q}'q'</math> parallel to <math>\\text{A}'\\text{B}'</math> is the horizontal projection of the line of intersection of the double cant plane with the level plane <math>2\\text{L}</math>, and <math>q</math>, obtained by the construction shown, is the vertical projection of the point where this line of intersection cuts the surface of the ship, <math>q'</math> being the horizontal projection of the same point. The projections of other points in the intersection of the double cant plane with the surface of the ship are found in a similar manner by the help of other level lines; and the projections <math>s'</math> and <math>s</math> of the ending where the line of half siding of the flat keel cuts the double cant plane are found by the construction indicated. The projections of the moulding edge of the double cant frame <math>spqr</math> in the sheer plan and <math>s'p'q'r'</math> in the half-breadth are thus determined.}}",
-   "c1s4": "¶\nThe true form of the moulding edge is laid off in the body plan by a double process of rabatment of the double cant plane, first about the trace <math>\\text{AB}</math> to bring it perpendicular to the sheer plan, and then about a normal to the sheer plan through <math>\\text{A}</math> to bring it parallel to the body plan, in the following manner. Set off <math>\\text{P}_2</math>, <math>\\text{Q}_2</math>, <math>\\text{R}_2</math> on the middle line of the body so that their distances from <math>\\text{A}_2</math> are equal to <math>\\text{AP}</math>, <math>\\text{AQ}</math>, <math>\\text{AR}</math> measured along the trace <math>\\text{AB}</math> in the sheer plan. Draw <math>\\text{AC}</math> in the sheer plan perpendicular to <math>\\text{AB}</math> and measure the heights parallel to <math>\\text{AB}</math> of the points <math>p</math>, <math>q</math> and <math>r</math> above <math>\\text{AC}</math>. Draw level lines <math>1\\text{L}'</math>, <math>2\\text{L}'</math>, <math>3\\text{L}'</math> in the body plan at distances above the base line equal to these heights, and from the centres <math>\\text{P}_2</math>, <math>\\text{Q}_2</math>, <math>\\text{R}_2</math> describe circles cutting <math>1\\text{L}'</math>, <math>2\\text{L}'</math>, <math>3\\text{L}'</math> in <math>p_2</math>, <math>q_2</math>, <math>r_2</math>, &c., so that the radius <math>Q_2q_2</math> is equal to <math>\\text{Q}'q'</math>, &c. The curve <math>p_2q_2r_2</math> is the true form of the moulding edge of the double cant laid off in the body plan.\n\nThe plane of the bevelling edge is parallel to that of the moulding edge and at a perpendicular distance from it suitable for use as the base of a bevelling triangle similar to that which is described for the ordinary frames. The width of the bevelling board is made equal to this perpendicular distance, corresponding to the frame space in the case of the ordinary frames, and the bevelling edge",
-   "c2s1": "{{c|{{sc|Fig.}} 105.}}",
-   "c2s2": "desired. In fig. 105 <math>\\text{AB}</math>, <math>\\text{A}'\\text{B}'</math> are the traces of the double canted plane; <math>cd</math>, <math>c_3d_3</math> are the projections of a diagonal line in the body and"
+   "c1s1": "and bevelling edges respectively; where <math>h_4\\ h_3</math> is equal to <math>ah</math> and <math>k_4k_3</math> to <math>fk</math>.\n\n'''''Double canted frame.''''' In fig. 104 let AB, A′B′ be the traces of the plane of the moulding edge of the frame in the sheer and half-breadth plans respectively. When, as in the figure, neither trace is perpendicular to the base line, the frame is said to be a double canted frame, or a double cant. Let 1L, 2L, 3L be the projections of level lines in the three plans, P, Q, R in the sheer plan being their point of intersection with AB. The",
+   "c1s2": "{{c|{{sc|Fig.}} 104{{sc|a}}.}}\n\nhorizontal projections of these points are found as indicated in the figure where <math>\\text{Q}'</math> on the middle line of the half breadth is the horizontal projection of <math>\\text{Q}</math>. The line <math>\\text{Q}'q'</math> parallel to <math>\\text{A}'\\text{B}'</math> is the horizontal projection of the line of intersection of the double cant plane with the level plane <math>2\\text{L}</math>, and <math>q</math>, obtained by the construction shown, is the vertical projection of the point where this line of intersection cuts the surface of the ship, <math>q'</math> being the horizontal projection of the same point. The projections of other points in the intersection of the double cant plane with the surface of the ship are found in a similar manner by the help of other level lines; and the projections <math>s'</math> and <math>s</math> of the ending where the line of half siding of the flat keel cuts the double cant plane are found by the construction indicated. The projections of the moulding edge of the double cant frame <math>spqr</math> in the sheer plan and <math>s'p'q'r'</math> in the half-breadth are thus determined.",
+   "c1s3": "¶\nThe true form of the moulding edge is laid off in the body plan by a double process of rabatment of the double cant plane, first about the trace <math>\\text{AB}</math> to bring it perpendicular to the sheer plan, and then about a normal to the sheer plan through <math>\\text{A}</math> to bring it parallel to the body plan, in the following manner. Set off <math>\\text{P}_2</math>, <math>\\text{Q}_2</math>, <math>\\text{R}_2</math> on the middle line of the body so that their distances from <math>\\text{A}_2</math> are equal to <math>\\text{AP}</math>, <math>\\text{AQ}</math>, <math>\\text{AR}</math> measured along the trace <math>\\text{AB}</math> in the sheer plan. Draw <math>\\text{AC}</math> in the sheer plan perpendicular to <math>\\text{AB}</math> and measure the heights parallel to <math>\\text{AB}</math> of the points <math>p</math>, <math>q</math> and <math>r</math> above <math>\\text{AC}</math>. Draw level lines <math>1\\text{L}'</math>, <math>2\\text{L}'</math>, <math>3\\text{L}'</math> in the body plan at distances above the base line equal to these heights, and from the centres <math>\\text{P}_2</math>, <math>\\text{Q}_2</math>, <math>\\text{R}_2</math> describe circles cutting <math>1\\text{L}'</math>, <math>2\\text{L}'</math>, <math>3\\text{L}'</math> in <math>p_2</math>, <math>q_2</math>, <math>r_2</math>, &c., so that the radius <math>Q_2q_2</math> is equal to <math>\\text{Q}'q'</math>, &c. The curve <math>p_2q_2r_2</math> is the true form of the moulding edge of the double cant laid off in the body plan.\n\nThe plane of the bevelling edge is parallel to that of the moulding edge and at a perpendicular distance from it suitable for use as the base of a bevelling triangle similar to that which is described for the ordinary frames. The width of the bevelling board is made equal to this perpendicular distance, corresponding to the frame space in the case of the ordinary frames, and the bevelling edge",
+   "c2s1": "must be laid off so that the normal distance between it and the moulding edge can be used for marking the bevelling in the same way as the normal distance between consecutive frames of the square body is used.\n\nTo obtain the traces of the plane of the bevelling edge, in fig. 104a let <math>\\text{AB}</math>, <math>\\text{AB}'</math> be the traces of the moulding edge plane; <math>nm</math> drawn perpendicular to <math>\\text{AB}</math> and <math>mm'</math> perpendicular to the axis are the traces of a plane perpendicular to the plane of the moulding edge and to the vertical or sheer plane. If <math>m\\text{M}</math> be drawn perpendicular to <math>nm</math> and equal to <math>mm'</math>, <math>n\\text{M}</math> is the intersection of the planes <math>\\text{BAB}'</math> and <math>nmm'</math> rabatted on to the sheer plane, and <math>m\\text{H}</math> perpendicular to <math>n\\text{M}</math> is the rabatted position of a line perpendicular to the plane of the moulding edge. Make <math>\\text{HK}</math> equal to the chosen distance of the bevelling edge plane from the moulding edge plane; draw <math>\\text{K}k</math> parallel to <math>\\text{M}n</math> cutting <math>nm</math> in <math>k</math>; through <math>k</math> draw <math>\\text{D}k\\text{E}</math> parallel to <math>\\text{AB}</math> and through <math>\\text{D}</math>, where <math>\\text{DE}</math> meets the base line, draw <math>\\text{DE}'</math> parallel to <math>\\text{AB}'</math>; then <math>\\text{DE}</math>, <math>\\text{DE}'</math> are the traces of the plane of the bevelling edge arranged at the required perpendicular distance from the plane of the moulding edge.\n\nIn laying off the bevelling edge it is first projected on to the plane of the moulding edge, and the latter then rabatted into the body plane. To effect this operation the horizontal trace <math>\\text{A}m'_1</math>, of a plane perpendicular to the double cant plane and intersecting it in the vertical trace <math>\\text{AB}</math> must be drawn, which is done by the construction shown in fig. 104a, where <math>nm</math> is, as before, perpendicular to <math>\\text{AB}</math> through any point <math>n</math> in it other than <math>\\text{A}</math>, and <math>n'm'_1</math>, drawn through <math>n'</math>, the horizontal projection of <math>n</math>, is perpendicular to <math>\\text{AB}'</math>. The projections of the traces with the several level planes of the plane of the bevelling edge, such as <math>\\text{U}'w'</math> and the projections of the bevelling edge <math>ltwv</math> in the",
+   "c2s2": "sheer plan and <math>l't'w'v'</math> in the half-breadth are obtained in exactly the same way as in the case of the moulding edge. The projections such as <math>\\text{Q}'w'_1</math>, of the traces with the several level planes of the plane whose traces are <math>\\text{AB}</math> and <math>\\text{A}m'_1</math>, in fig. 104a are also drawn parallel to <math>\\text{A}m'_1</math>, through the horizontal projections of <math>\\text{P}</math>, <math>\\text{Q}</math>, <math>\\text{R}</math>, &c. The vertical projection <math>w_1</math> of the point <math>w'_1</math>, in which <math>\\text{Q}_1w'_1</math> meets <math>\\text{U}'w'</math> produced, is found and <math>\\text{A}_2\\text{U}_2</math> set up on the middle line of the body equal to the perpendicular distance of <math>w_1</math> from <math>\\text{AC}</math>. A level line <math>2\\text{L}''</math> in the body plan is drawn at a distance from the base line equal to the perpendicular distance of <math>w</math> from <math>\\text{AC}</math> and a point <math>w_2</math> found in it such that the radius <math>\\text{U}_2w_2</math> is equal to <math>w'_1w'</math> in the half-breadth. <math>w_2</math> is then the rabatted position of the projection on the plane of the moulding edge of the point in the bevelling edge whose projections are <math>w</math> and <math>w'</math>. Points <math>l_2</math>, <math>t_2</math> and <math>v_2</math> corresponding to the projections <math>l</math> and <math>l'</math>, <math>t</math> and <math>t'</math>, <math>\\text{v}</math> and <math>v'</math> are found in a similar manner and a curve drawn through <math>l_2t_2w_2v_2</math> is the bevelling edge laid off in the body plan in the correct relation to the laid off position of the moulding edge for the bevellings to be taken.\n\nAdditional points in the rabatted shape of the double canted frame may be obtained by the use of diagonals when",
+   "c2c1": "{{c|{{sc|Fig.}} 105.}}",
+   "c2s3": "desired. In fig. 105 <math>\\text{AB}</math>, <math>\\text{A}'\\text{B}'</math> are the traces of the double canted plane; <math>cd</math>, <math>c_3d_3</math> are the projections of a diagonal line in the body and"
   },
   "figure_files": {
    "c1f1": "eb1911 v24 p1041 c1f1.png",
-   "c1f2": "eb1911 v24 p1041 c1f2.png",
    "c2f1": "eb1911 v24 p1041 c2f1.png"
   },
   "figures": [
    {
     "box": [
-     98,
+     166,
+     583,
+     1184,
+     1523
+    ],
+    "caption": null,
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     210,
+     571,
+     690,
+     1173
+    ]
+   },
+   {
+    "box": [
+     102,
      582,
      1184,
+     1988
+    ],
+    "caption": [
+     918,
+     1701,
+     1061,
+     1735
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     690,
+     580,
+     1301,
+     1682
+    ]
+   },
+   {
+    "box": [
+     105,
+     1230,
+     589,
      1990
     ],
     "caption": [
-     232,
-     1913,
+     231,
+     1916,
      401,
      1945
     ],
@@ -129,53 +192,31 @@
     "inset": false,
     "page_box": [
      133,
-     571,
-     1306,
-     1686
+     1217,
+     690,
+     1881
     ]
    },
    {
     "box": [
-     103,
-     1236,
-     596,
-     1990
+     1266,
+     2120,
+     2168,
+     3010
     ],
     "caption": [
-     230,
-     1914,
-     400,
-     1948
-    ],
-    "column": 1,
-    "inset": false,
-    "page_box": [
-     128,
-     1208,
-     620,
-     1886
-    ]
-   },
-   {
-    "box": [
-     1277,
-     2119,
-     2163,
-     3009
-    ],
-    "caption": [
-     1638,
+     1639,
      3022,
      1785,
-     3059
+     3057
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1255,
-     2113,
-     2231,
-     3010
+     1257,
+     2118,
+     2226,
+     2999
     ]
    }
   ],
@@ -185,7 +226,7 @@
   "rejected": {},
   "disagreements": {
    "1": [
-    2,
+    1,
     0
    ],
    "2": [
@@ -195,22 +236,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
-    "calls": 4,
-    "input_tokens": 9348,
-    "output_tokens": 706,
+    "model": "claude-opus-5-5",
+    "calls": 5,
+    "input_tokens": 11625,
+    "output_tokens": 998,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 5,
-    "input_tokens": 2320,
-    "output_tokens": 2207,
+    "model": "claude-opus-5-5",
+    "calls": 8,
+    "input_tokens": 5887,
+    "output_tokens": 5514,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 9620
+    "cache_read_input_tokens": 19368
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|COURSE OF CONSTRUCTION]|SHIPBUILDING|969}}</noinclude>[[File:eb1911 v24 p1041 c1f1.png|center|356px]]\n\n[[File:eb1911 v24 p1041 c1f2.png|center|356px]]\n{{c|horizontal projections of these points are found as indicated in the figure where <math>\\text{Q}'</math> on the middle line of the half breadth is the horizontal projection of <math>\\text{Q}</math>. The line <math>\\text{Q}'q'</math> parallel to <math>\\text{A}'\\text{B}'</math> is the horizontal projection of the line of intersection of the double cant plane with the level plane <math>2\\text{L}</math>, and <math>q</math>, obtained by the construction shown, is the vertical projection of the point where this line of intersection cuts the surface of the ship, <math>q'</math> being the horizontal projection of the same point. The projections of other points in the intersection of the double cant plane with the surface of the ship are found in a similar manner by the help of other level lines; and the projections <math>s'</math> and <math>s</math> of the ending where the line of half siding of the flat keel cuts the double cant plane are found by the construction indicated. The projections of the moulding edge of the double cant frame <math>spqr</math> in the sheer plan and <math>s'p'q'r'</math> in the half-breadth are thus determined.}}\n\nThe true form of the moulding edge is laid off in the body plan by a double process of rabatment of the double cant plane, first about the trace <math>\\text{AB}</math> to bring it perpendicular to the sheer plan, and then about a normal to the sheer plan through <math>\\text{A}</math> to bring it parallel to the body plan, in the following manner. Set off <math>\\text{P}_2</math>, <math>\\text{Q}_2</math>, <math>\\text{R}_2</math> on the middle line of the body so that their distances from <math>\\text{A}_2</math> are equal to <math>\\text{AP}</math>, <math>\\text{AQ}</math>, <math>\\text{AR}</math> measured along the trace <math>\\text{AB}</math> in the sheer plan. Draw <math>\\text{AC}</math> in the sheer plan perpendicular to <math>\\text{AB}</math> and measure the heights parallel to <math>\\text{AB}</math> of the points <math>p</math>, <math>q</math> and <math>r</math> above <math>\\text{AC}</math>. Draw level lines <math>1\\text{L}'</math>, <math>2\\text{L}'</math>, <math>3\\text{L}'</math> in the body plan at distances above the base line equal to these heights, and from the centres <math>\\text{P}_2</math>, <math>\\text{Q}_2</math>, <math>\\text{R}_2</math> describe circles cutting <math>1\\text{L}'</math>, <math>2\\text{L}'</math>, <math>3\\text{L}'</math> in <math>p_2</math>, <math>q_2</math>, <math>r_2</math>, &c., so that the radius <math>Q_2q_2</math> is equal to <math>\\text{Q}'q'</math>, &c. The curve <math>p_2q_2r_2</math> is the true form of the moulding edge of the double cant laid off in the body plan.\n\nThe plane of the bevelling edge is parallel to that of the moulding edge and at a perpendicular distance from it suitable for use as the base of a bevelling triangle similar to that which is described for the ordinary frames. The width of the bevelling board is made equal to this perpendicular distance, corresponding to the frame space in the case of the ordinary frames, and the bevelling edge desired. In fig. 105 <math>\\text{AB}</math>, <math>\\text{A}'\\text{B}'</math> are the traces of the double canted plane; <math>cd</math>, <math>c_3d_3</math> are the projections of a diagonal line in the body and\n\n[[File:eb1911 v24 p1041 c2f1.png|center|349px]]\n{{c|{{sc|Fig.}} 105.}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|COURSE OF CONSTRUCTION]|SHIPBUILDING|969}}</noinclude>and bevelling edges respectively; where <math>h_4\\ h_3</math> is equal to <math>ah</math> and <math>k_4k_3</math> to <math>fk</math>.\n\n'''''Double canted frame.''''' In fig. 104 let AB, A′B′ be the traces of the plane of the moulding edge of the frame in the sheer and half-breadth plans respectively. When, as in the figure, neither trace is perpendicular to the base line, the frame is said to be a double canted frame, or a double cant. Let 1L, 2L, 3L be the projections of level lines in the three plans, P, Q, R in the sheer plan being their point of intersection with AB. The {{c|{{sc|Fig.}} 104{{sc|a}}.}}\n\n[[File:eb1911 v24 p1041 c1f1.png|center|356px]]\n\nhorizontal projections of these points are found as indicated in the figure where <math>\\text{Q}'</math> on the middle line of the half breadth is the horizontal projection of <math>\\text{Q}</math>. The line <math>\\text{Q}'q'</math> parallel to <math>\\text{A}'\\text{B}'</math> is the horizontal projection of the line of intersection of the double cant plane with the level plane <math>2\\text{L}</math>, and <math>q</math>, obtained by the construction shown, is the vertical projection of the point where this line of intersection cuts the surface of the ship, <math>q'</math> being the horizontal projection of the same point. The projections of other points in the intersection of the double cant plane with the surface of the ship are found in a similar manner by the help of other level lines; and the projections <math>s'</math> and <math>s</math> of the ending where the line of half siding of the flat keel cuts the double cant plane are found by the construction indicated. The projections of the moulding edge of the double cant frame <math>spqr</math> in the sheer plan and <math>s'p'q'r'</math> in the half-breadth are thus determined.\n\nThe true form of the moulding edge is laid off in the body plan by a double process of rabatment of the double cant plane, first about the trace <math>\\text{AB}</math> to bring it perpendicular to the sheer plan, and then about a normal to the sheer plan through <math>\\text{A}</math> to bring it parallel to the body plan, in the following manner. Set off <math>\\text{P}_2</math>, <math>\\text{Q}_2</math>, <math>\\text{R}_2</math> on the middle line of the body so that their distances from <math>\\text{A}_2</math> are equal to <math>\\text{AP}</math>, <math>\\text{AQ}</math>, <math>\\text{AR}</math> measured along the trace <math>\\text{AB}</math> in the sheer plan. Draw <math>\\text{AC}</math> in the sheer plan perpendicular to <math>\\text{AB}</math> and measure the heights parallel to <math>\\text{AB}</math> of the points <math>p</math>, <math>q</math> and <math>r</math> above <math>\\text{AC}</math>. Draw level lines <math>1\\text{L}'</math>, <math>2\\text{L}'</math>, <math>3\\text{L}'</math> in the body plan at distances above the base line equal to these heights, and from the centres <math>\\text{P}_2</math>, <math>\\text{Q}_2</math>, <math>\\text{R}_2</math> describe circles cutting <math>1\\text{L}'</math>, <math>2\\text{L}'</math>, <math>3\\text{L}'</math> in <math>p_2</math>, <math>q_2</math>, <math>r_2</math>, &c., so that the radius <math>Q_2q_2</math> is equal to <math>\\text{Q}'q'</math>, &c. The curve <math>p_2q_2r_2</math> is the true form of the moulding edge of the double cant laid off in the body plan.\n\nThe plane of the bevelling edge is parallel to that of the moulding edge and at a perpendicular distance from it suitable for use as the base of a bevelling triangle similar to that which is described for the ordinary frames. The width of the bevelling board is made equal to this perpendicular distance, corresponding to the frame space in the case of the ordinary frames, and the bevelling edge must be laid off so that the normal distance between it and the moulding edge can be used for marking the bevelling in the same way as the normal distance between consecutive frames of the square body is used.\n\nTo obtain the traces of the plane of the bevelling edge, in fig. 104a let <math>\\text{AB}</math>, <math>\\text{AB}'</math> be the traces of the moulding edge plane; <math>nm</math> drawn perpendicular to <math>\\text{AB}</math> and <math>mm'</math> perpendicular to the axis are the traces of a plane perpendicular to the plane of the moulding edge and to the vertical or sheer plane. If <math>m\\text{M}</math> be drawn perpendicular to <math>nm</math> and equal to <math>mm'</math>, <math>n\\text{M}</math> is the intersection of the planes <math>\\text{BAB}'</math> and <math>nmm'</math> rabatted on to the sheer plane, and <math>m\\text{H}</math> perpendicular to <math>n\\text{M}</math> is the rabatted position of a line perpendicular to the plane of the moulding edge. Make <math>\\text{HK}</math> equal to the chosen distance of the bevelling edge plane from the moulding edge plane; draw <math>\\text{K}k</math> parallel to <math>\\text{M}n</math> cutting <math>nm</math> in <math>k</math>; through <math>k</math> draw <math>\\text{D}k\\text{E}</math> parallel to <math>\\text{AB}</math> and through <math>\\text{D}</math>, where <math>\\text{DE}</math> meets the base line, draw <math>\\text{DE}'</math> parallel to <math>\\text{AB}'</math>; then <math>\\text{DE}</math>, <math>\\text{DE}'</math> are the traces of the plane of the bevelling edge arranged at the required perpendicular distance from the plane of the moulding edge.\n\nIn laying off the bevelling edge it is first projected on to the plane of the moulding edge, and the latter then rabatted into the body plane. To effect this operation the horizontal trace <math>\\text{A}m'_1</math>, of a plane perpendicular to the double cant plane and intersecting it in the vertical trace <math>\\text{AB}</math> must be drawn, which is done by the construction shown in fig. 104a, where <math>nm</math> is, as before, perpendicular to <math>\\text{AB}</math> through any point <math>n</math> in it other than <math>\\text{A}</math>, and <math>n'm'_1</math>, drawn through <math>n'</math>, the horizontal projection of <math>n</math>, is perpendicular to <math>\\text{AB}'</math>. The projections of the traces with the several level planes of the plane of the bevelling edge, such as <math>\\text{U}'w'</math> and the projections of the bevelling edge <math>ltwv</math> in the sheer plan and <math>l't'w'v'</math> in the half-breadth are obtained in exactly the same way as in the case of the moulding edge. The projections such as <math>\\text{Q}'w'_1</math>, of the traces with the several level planes of the plane whose traces are <math>\\text{AB}</math> and <math>\\text{A}m'_1</math>, in fig. 104a are also drawn parallel to <math>\\text{A}m'_1</math>, through the horizontal projections of <math>\\text{P}</math>, <math>\\text{Q}</math>, <math>\\text{R}</math>, &c. The vertical projection <math>w_1</math> of the point <math>w'_1</math>, in which <math>\\text{Q}_1w'_1</math> meets <math>\\text{U}'w'</math> produced, is found and <math>\\text{A}_2\\text{U}_2</math> set up on the middle line of the body equal to the perpendicular distance of <math>w_1</math> from <math>\\text{AC}</math>. A level line <math>2\\text{L}''</math> in the body plan is drawn at a distance from the base line equal to the perpendicular distance of <math>w</math> from <math>\\text{AC}</math> and a point <math>w_2</math> found in it such that the radius <math>\\text{U}_2w_2</math> is equal to <math>w'_1w'</math> in the half-breadth. <math>w_2</math> is then the rabatted position of the projection on the plane of the moulding edge of the point in the bevelling edge whose projections are <math>w</math> and <math>w'</math>. Points <math>l_2</math>, <math>t_2</math> and <math>v_2</math> corresponding to the projections <math>l</math> and <math>l'</math>, <math>t</math> and <math>t'</math>, <math>\\text{v}</math> and <math>v'</math> are found in a similar manner and a curve drawn through <math>l_2t_2w_2v_2</math> is the bevelling edge laid off in the body plan in the correct relation to the laid off position of the moulding edge for the bevellings to be taken.\n\nAdditional points in the rabatted shape of the double canted frame may be obtained by the use of diagonals when desired. In fig. 105 <math>\\text{AB}</math>, <math>\\text{A}'\\text{B}'</math> are the traces of the double canted plane; <math>cd</math>, <math>c_3d_3</math> are the projections of a diagonal line in the body and\n\n[[File:eb1911 v24 p1041 c2f1.png|center|349px]]\n{{c|{{sc|Fig.}} 105.}}<noinclude><references/></noinclude>"
 }

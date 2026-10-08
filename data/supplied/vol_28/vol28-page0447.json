@@ -29,7 +29,7 @@
      0,
      187,
      1151,
-     564
+     566
     ]
    },
    {
@@ -38,9 +38,20 @@
     "column": 1,
     "box": [
      0,
-     564,
+     566,
      782,
-     853
+     854
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     0,
+     871,
+     782,
+     905
     ]
    },
    {
@@ -48,10 +59,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     0,
-     870,
      782,
-     903
+     566,
+     1151,
+     905
     ]
    },
    {
@@ -59,21 +70,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     782,
-     564,
-     1151,
-     903
-    ]
-   },
-   {
-    "name": "c1s4",
-    "kind": "text",
-    "column": 1,
-    "box": [
      0,
-     903,
+     905,
      1151,
-     1804
+     1805
     ]
    },
    {
@@ -82,14 +82,14 @@
     "column": 1,
     "box": [
      0,
-     1804,
+     1805,
      619,
      2184
     ]
    },
    {
-    "name": "c1s5",
-    "kind": "text",
+    "name": "c1c2",
+    "kind": "caption",
     "column": 1,
     "box": [
      0,
@@ -99,18 +99,18 @@
     ]
    },
    {
-    "name": "c1s6",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
      619,
-     1804,
+     1805,
      1151,
      2297
     ]
    },
    {
-    "name": "c1s7",
+    "name": "c1s5",
     "kind": "text",
     "column": 1,
     "box": [
@@ -121,19 +121,30 @@
     ]
    },
    {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1151,
+     187,
+     2232,
+     341
+    ]
+   },
+   {
     "name": "c2f1",
     "kind": "figure",
     "column": 2,
     "box": [
      1151,
-     207,
+     341,
      2232,
-     894
+     893
     ]
    },
    {
-    "name": "c2s1",
-    "kind": "text",
+    "name": "c2c1",
+    "kind": "caption",
     "column": 2,
     "box": [
      1151,
@@ -150,7 +161,7 @@
      1151,
      946,
      2232,
-     1488
+     1592
     ]
    },
    {
@@ -159,14 +170,14 @@
     "column": 2,
     "box": [
      1521,
-     1488,
+     1592,
      2232,
      1661
     ]
    },
    {
-    "name": "c2s3",
-    "kind": "text",
+    "name": "c2c2",
+    "kind": "caption",
     "column": 2,
     "box": [
      1521,
@@ -176,25 +187,25 @@
     ]
    },
    {
-    "name": "c2s4",
+    "name": "c2s3",
     "kind": "text",
     "column": 2,
     "box": [
      1151,
-     1488,
+     1592,
      1521,
      1723
     ]
    },
    {
-    "name": "c2s5",
+    "name": "c2s4",
     "kind": "text",
     "column": 2,
     "box": [
      1151,
      1723,
      2232,
-     1746
+     2234
     ]
    },
    {
@@ -203,9 +214,31 @@
     "column": 2,
     "box": [
      1528,
-     1746,
+     2234,
      2232,
-     2417
+     2418
+    ]
+   },
+   {
+    "name": "c2c3",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1528,
+     2442,
+     2232,
+     2472
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1151,
+     2234,
+     1528,
+     2472
     ]
    },
    {
@@ -213,30 +246,8 @@
     "kind": "text",
     "column": 2,
     "box": [
-     1528,
-     2442,
-     2232,
-     2474
-    ]
-   },
-   {
-    "name": "c2s7",
-    "kind": "text",
-    "column": 2,
-    "box": [
      1151,
-     1746,
-     1528,
-     2474
-    ]
-   },
-   {
-    "name": "c2s8",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1151,
-     2474,
+     2472,
      2232,
      3138
     ]
@@ -244,21 +255,22 @@
   ],
   "readings": {
    "head": "{{RunningHeader||WAVE|429}}",
-   "c1s1": "wave-length <math>\\lambda</math> at points to the right of O is uniform, being that proper to a wave-velocity <math>c</math>, viz. <math>\\lambda = 2\\pi c^2/g</math>. The disturbance is therefore followed by a train of waves of approximately simple-harmonic profile, of the length indicated. An approximate calculation shows that, except in the immediate neighbourhood of the source of disturbance, the surface-elevation is given by\n\n{{block center|<math>\\eta = \\frac{2\\text{P}_0}{\\rho c^2} \\sin\\frac{gx}{c^2},</math> . . . . (18)}}\n\nwhere <math>x</math> is now measured from O, and <math>\\text{P}_0 (= \\textstyle\\int p\\, dx)</math> represents the integral of the disturbing surface pressure over the (infinitely small)",
-   "c1s2": "{{c|{{sc|Fig.}} 4.}}",
-   "c1s3": "breadth of the band on which it acts. The case of a diffused pressure can be inferred by integration. The annexed figure gives a representation of a particular case, obtained by a more exact process. The pressure is here sup-",
-   "c1s4": "posed uniformly distributed over a band of breadth <math>\\text{AB}</math>.\n\nA similar argument can be applied to the case of finite depth (<math>h</math>), but since the wave-velocity cannot exceed <math>\\sqrt{(2gh)}</math> the results are modified if the velocity <math>c</math> of the travelling pressure exceeds this limit. There is then no train of waves generated, the disturbance of level being purely local. It hardly needs stating that the investigation applies also to the case of a stationary surface disturbance on a running stream, and that similar results follow when the disturbance consists in an equality of the bottom. In both cases we have a train of standing waves on the down-stream side, of length corresponding to a wave-velocity equal to that of the stream.\n\nThe effect of a disturbance confined to the neighbourhood of a ''point'' of the surface (of deep water) was also included in the investigations of Cauchy and Poisson already referred to. The formula analogous to (12), in the case of a local impulse, is\n{{block center|<math>\\zeta \\propto \\frac{t^3}{r^4} \\sin \\frac{gt^2}{4r},</math> . . . . (19)}}\nwhere <math>r</math> denotes distance from the source. The interpretation is similar to that of the two-dimensional case, except that the amplitude of the annular waves diminishes outwards, as was to be expected, in a higher ratio.\n\nThe effect of a pressure-point travelling in a straight line over the surface of deep water is interesting, as helping us to account in some degree for the peculiar system of waves which is seen to accompany a ship. The configuration of the wave-system is shown by means of the lines of equal phase in the annexed diagram, due to V. W. Ekman (1906), which",
-   "c1s5": "{{c|After V. Walfrid Ekman, ''On Stationary Waves in Running Water''.}}\n{{c|{{sc|Fig.}} 5.}}",
-   "c1s6": "differs from the drawing originally given by Lord Kelvin (1887) in that it indicates the difference of phase between the transverse and diverging waves at the common boundary of the two series. The two systems of waves are due to the fact that at any given instant there are ''two'' previous positions of the moving pressure-point which have transmitted vibrations of stationary phase to any given point <math>\\text{P}</math> within the range of the figure. When the depth is finite",
-   "c1s7": "the configuration is modified, and if it be less than <math>c^2/g</math>, where <math>c</math> is the velocity of the disturbance, the transversal waves disappear.\n\nThe investigations referred to have a bearing on the wave-resistance of ships. This is accounted for by the energy of the new wave-groups which are continually being started and left behind. Some experiments on torpedo boats moving in shallow water have indicated a falling off in resistance due to the absence of transversal waves just referred to. For the effect of surface-tension and the theory of “ripples” see {{sc|Capillary Action}}.\n\n{{c|§ 5. ''Surface-Waves of Finite Height.''}}\n\nThe foregoing results are based on the assumption that the amplitude may be treated as infinitely small. Various interesting investigations have been made in which this restriction is, more or less, abandoned, but we are far from possessing a complete theory.\n\nA system of exact equations giving a possible type of wave-motion on deep water was obtained by F. J. v. Gerstner in 1802, and rediscovered by W. J. M. Rankine in 1863. The orbits of the particles, in this type, are accurately circular, being defined by the equations\n{{block center|<math>x=a+k^{-1}e^{kb}\\sin k(a-ct),\\ y=b-k^{-1}e^{kb}\\cos k(a-ct),</math> (1)}}\nwhere <math>(a,\\ b)</math> is the mean position of the particle, <math>k=2\\pi/\\lambda</math>; and the wave-velocity is\n{{block center|<math>c=\\sqrt{(g/k)}=\\sqrt{(g\\lambda/2\\pi)}.</math> (2)}}",
-   "c2s1": "{{c|{{sc|Fig.}} 6.}}",
-   "c2s2": "matical elegance and simplicity of the formulae (1) are unfortunately counterbalanced by the fact that the consequent motion of the fluid elements proves to be \"rotational\" (see {{sc|Hydromechanics}}), and therefore not such as could be generated in a previously quiescent liquid by any system of forces applied to the surface.\n\nSir G. Stokes, in a series of papers, applied himself to the determination of the possible \"irrotational\" wave-forms of finite height which satisfy the conditions of uniform propagation without change of type. The equation of the profile, in the case of infinite depth, is obtained in the form of a Fourier series, thus\n{{block center|<math>y = a\\cos kx + \\tfrac{1}{2}ka^2\\cos 2kx + \\tfrac{3}{8}k^2a^3\\cos 3kx + \\dots,</math> . (3)}}\nthe corresponding wave-velocity being approximately\n{{block center|<math>c = \\sqrt{\\left\\{\\frac{g\\lambda}{2\\pi}\\left(1 + \\frac{4\\pi^2a^2}{\\lambda^2}\\right)\\right\\}},</math> . . . . . (4)}}",
-   "c2s3": "{{c|{{sc|Fig.}} 7.}}",
-   "c2s4": "where <math>\\lambda=2\\pi/k</math>. The e velopment, agrees with Gerstner's waves the outline is sharper near the crests and flatter in the troughs than in the case of the simple-",
-   "c2s5": "harmonic curve, and",
-   "c2s6": "{{c|{{sc|Fig.}} 8.}}",
-   "c2s7": "these features become the wave-length increa extreme form of irrotat Gerstner waves in that cording to the calcula then about one-sevent exceeds that of very lo It is to be noticed fur the motion of the wa being on the whole a g propagation. These va way with what is obser\n\nIn the case of finit and we can only here n the wave-length is supposed very great compared with the depth (<math>h</math>). We have then practically the “solitary wave” to which attention was first directed by J.",
-   "c2s8": "Scott Russell (1844) from observation. The theory has been worked out by J. Boussinesq (1871) and Lord Rayleigh. The surface-elevation is given by\n{{block center|<math>\\eta = a\\, \\text{sec h}^2\\, \\tfrac{1}{2}(x/b),</math> . . . . . . (5)}}\nprovided\n{{block center|<math>b^2 = h^2(h+a)/3a,</math> . . . . . . (6)}}\nand the velocity of propagation is\n{{block center|<math>c = \\sqrt{\\{g(h+a)\\}}</math> . . . . . . (7)}}\nIn the extreme form <math>a = h</math> and the crest forms an angle of 120°. It appears that a solitary wave of depression, of permanent type, is impossible.\n\n{{smaller block|{{sc|Bibliography}}.—Experimental researches: E. H. u. W. Weber, ''Wellenlehre'' (Leipzig, 1825); J. Scott Russell, “Report on Waves,” ''Brit. Assoc. Rep.'' (1844). Theoretical works: S. D. Poisson, “Mémoire sur la théorie du son,” ''J. de l’école polyt.'' 7 (1807); “Mém. sur la théorie des ondes,” ''Mém. de l’acad. roy. des sc.'' 1 (1816); A. Cauchy, “Mém. sur la théorie des ondes,” ''Mém. de l’acad. roy. des sc.'' 1 (1827); Sir G. B. Airy, “Tides and Waves,” ''Encycl. Metrop.'' (1845). Many classical investigations are now most conveniently accessible}}"
+   "c1s1": "wave-length <math>\\lambda</math> at points to the right of O is uniform, being that proper to a wave-velocity <math>c</math>, viz. <math>\\lambda = 2\\pi c^2/g</math>. The disturbance is therefore followed by a train of waves of approximately simple-harmonic profile, of the length indicated. An approximate calculation shows that, except in the immediate neighbourhood of the source of disturbance, the surface-elevation is given by\n\n{{block center|<math>\\eta = \\frac{2\\text{P}_0}{\\rho c^2}\\sin\\frac{gx}{c^2},</math> . . . . . (18)}}\n\nwhere <math>x</math> is now measured from O, and <math>\\text{P}_0 (=\\textstyle\\int p\\,dx)</math> represents the integral of the disturbing surface pressure over the (infinitely small)",
+   "c1c1": "{{c|{{sc|Fig.}} 4.}}",
+   "c1s2": "breadth of the band on which it acts. The case of a diffused pressure can be inferred by integration. The annexed figure gives a representation of a particular case, obtained by a more exact process. The pressure is here sup-",
+   "c1s3": "posed uniformly distributed over a band of breadth <math>\\text{AB}</math>.\n\nA similar argument can be applied to the case of finite depth (<math>h</math>), but since the wave-velocity cannot exceed <math>\\sqrt{(2gh)}</math> the results are modified if the velocity <math>c</math> of the travelling pressure exceeds this limit. There is then no train of waves generated, the disturbance of level being purely local. It hardly needs stating that the investigation applies also to the case of a stationary surface disturbance on a running stream, and that similar results follow when the disturbance consists in an equality of the bottom. In both cases we have a train of standing waves on the down-stream side, of length corresponding to a wave-velocity equal to that of the stream.\n\nThe effect of a disturbance confined to the neighbourhood of a ''point'' of the surface (of deep water) was also included in the investigations of Cauchy and Poisson already referred to. The formula analogous to (12), in the case of a local impulse, is\n{{block center|<math>\\zeta \\propto \\frac{t^3}{r^4} \\sin \\frac{gt^2}{4r}</math>, . . . . (19)}}\nwhere <math>r</math> denotes distance from the source. The interpretation is similar to that of the two-dimensional case, except that the amplitude of the annular waves diminishes outwards, as was to be expected, in a higher ratio.\n\nThe effect of a pressure-point travelling in a straight line over the surface of deep water is interesting, as helping us to account in some degree for the peculiar system of waves which is seen to accompany a ship. The configuration of the wave-system is shown by means of the lines of equal phase in the annexed diagram, due to V. W. Ekman (1906), which",
+   "c1c2": "{{c|'''After V. Walfrid Ekman, ''On Stationary Waves in Running Water''.'''}}\n{{c|{{sc|Fig.}} 5.}}",
+   "c1s4": "differs from the drawing originally given by Lord Kelvin (1887) in that it indicates the difference of phase between the transverse and diverging waves at the common boundary of the two series. The two systems of waves are due to the fact that at any given instant there are ''two'' previous positions of the moving pressure-point which have transmitted vibrations of stationary phase to any given point <math>\\text{P}</math> within the range of the figure. When the depth is finite",
+   "c1s5": "the configuration is modified, and if it be less than <math>c^2/g</math>, where <math>c</math> is the velocity of the disturbance, the transversal waves disappear.\n\nThe investigations referred to have a bearing on the wave-resistance of ships. This is accounted for by the energy of the new wave-groups which are continually being started and left behind. Some experiments on torpedo boats moving in shallow water have indicated a falling off in resistance due to the absence of transversal waves just referred to. For the effect of surface-tension and the theory of “ ripples ” see {{sc|Capillary Action}}.\n\n{{c|§ 5. ''Surface-Waves of Finite Height.''}}\n\nThe foregoing results are based on the assumption that the amplitude may be treated as infinitely small. Various interesting investigations have been made in which this restriction is, more or less, abandoned, but we are far from possessing a complete theory.\n\nA system of exact equations giving a possible type of wave-motion on deep water was obtained by F. J. v. Gerstner in 1802, and rediscovered by W. J. M. Rankine in 1863. The orbits of the particles, in this type, are accurately circular, being defined by the equations\n{{block center|<math>x=a+k^{-1}e^{kb}\\sin k(a-ct),\\ y=b-k^{-1}e^{kb}\\cos k(a-ct),</math> . (1)}}\nwhere <math>(a,\\ b)</math> is the mean position of the particle, <math>k=2\\pi/\\lambda</math>; and the wave-velocity is\n{{block center|<math>c=\\sqrt{(g/k)}=\\sqrt{(g\\lambda/2\\pi)}.</math> . . . . (2)}}",
+   "c2s1": "The lines of equal pressure, among which is included of course the surface-profile, are trochoidal curves. The extreme form of wave-profile is the cycloid, with the cusps turned upwards. The mathe-",
+   "c2c1": "{{c|{{sc|Fig.}} 6.}}",
+   "c2s2": "matical elegance and simplicity of the formulae (1) are unfortunately counterbalanced by the fact that the consequent motion of the fluid elements proves to be “ rotational ” (see {{sc|Hydromechanics}}), and therefore not such as could be generated in a previously quiescent liquid by any system of forces applied to the surface.\n\nSir G. Stokes, in a series of papers, applied himself to the determination of the possible “ irrotational ” wave-forms of finite height which satisfy the conditions of uniform propagation without change of type. The equation of the profile, in the case of infinite depth, is obtained in the form of a Fourier series, thus\n{{block center|<math>y = a\\cos kx + \\tfrac{1}{2}ka^2\\cos 2kx + \\tfrac{3}{8}k^2a^3\\cos 3kx + \\dots,</math> . (3)}}\nthe corresponding wave-velocity being approximately\n{{block center|<math>c = \\sqrt{\\left\\{\\frac{g\\lambda}{2\\pi}\\left(1 + \\frac{4\\pi^2a^2}{\\lambda^2}\\right)\\right\\}},</math> . . . . . (4)}}\nwhere <math>\\lambda = 2\\pi/k</math>. The equation (3), so far as we have given the development, agrees with that of a trochoid (fig. 7). As in the case of Gerstner’s waves the",
+   "c2c2": "{{c|{{sc|Fig.}} 7.}}",
+   "c2s3": "outline is sharper near the crests and flatter in the troughs than in the case of the simple-",
+   "c2s4": "harmonic curve, and these features become accentuated as the ratio of the amplitude to the wave-length increases. It has been shown by Stokes that the extreme form of irrotational waves differs from that of the rotational Gerstner waves in that the crests form a blunt angle of 120°. According to the calculations of J. H. Michell (1893), the height is then about one-seventh of the wave-length, and the wave-velocity exceeds that of very low waves of the same length in the ratio 6:5. It is to be noticed further that in these waves of permanent type the motion of the water-particles is not purely oscillatory, there being on the whole a gradual drift at the surface in the direction of propagation. These various conclusions appear to agree in a general way with what is observed in the case of sea-waves.\n\nIn the case of finite depth the calculations are more difficult, and we can only here notice the limiting type which is obtained when the wave-length is",
+   "c2c3": "{{c|{{sc|Fig.}} 8.}}",
+   "c2s5": "supposed very great compared with the depth <math>(h)</math>. We have then practically the \"solitary wave\" to which attention was first directed by J.",
+   "c2s6": "Scott Russell (1844) from observation. The theory has been worked out by J. Boussinesq (1871) and Lord Rayleigh. The surface-elevation is given by\n{{block center|<math>\\eta = a\\,\\text{sec h}^2\\, \\tfrac{1}{2}(x/b),</math> (5)}}\nprovided\n{{block center|<math>b^2 = h^2(h+a)/3a,</math> (6)}}\nand the velocity of propagation is\n{{block center|<math>c = \\sqrt{\\{g(h+a)\\}}</math> (7)}}\nIn the extreme form <math>a = h</math> and the crest forms an angle of 120°. It appears that a solitary wave of depression, of permanent type, is impossible.\n\n{{sc|Bibliography}}.—Experimental researches: E. H. u. W. Weber, ''Wellenlehre'' (Leipzig, 1825); J. Scott Russell, “Report on Waves,” ''Brit. Assoc. Rep.'' (1844). Theoretical works: S. D. Poisson, “Mémoire sur la théorie du son,” ''J. de l’école polyt.'' 7 (1807); “Mém. sur la théorie des ondes,” ''Mém. de l’acad. roy. des sc.'' 1 (1816); A. Cauchy, “Mém. sur la théorie des ondes,” ''Mém. de l’acad. roy. des sc.'' 1 (1827); Sir G. B. Airy, “Tides and Waves,” ''Encycl. Metrop.'' (1845). Many classical investigations are now most conveniently accessible"
   },
   "figure_files": {
    "c1f1": "eb1911 v28 p0447 c1f1.png",
@@ -270,31 +282,31 @@
   "figures": [
    {
     "box": [
-     84,
-     567,
-     774,
-     850
+     82,
+     569,
+     776,
+     851
     ],
     "caption": [
-     386,
-     870,
-     491,
-     903
+     384,
+     871,
+     492,
+     905
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      80,
-     560,
-     854,
-     872
+     567,
+     849,
+     883
     ]
    },
    {
     "box": [
      92,
-     1807,
-     604,
+     1808,
+     606,
      2173
     ],
     "caption": [
@@ -306,18 +318,18 @@
     "column": 1,
     "inset": true,
     "page_box": [
-     84,
+     80,
      1823,
-     667,
-     2230
+     618,
+     2201
     ]
    },
    {
     "box": [
-     1284,
+     1283,
      343,
-     2099,
-     891
+     2101,
+     890
     ],
     "caption": [
      1642,
@@ -329,53 +341,53 @@
     "inset": false,
     "page_box": [
      1279,
-     329,
-     2135,
-     898
+     334,
+     2179,
+     901
     ]
    },
    {
     "box": [
-     1527,
-     1591,
-     2215,
-     1657
+     1526,
+     1595,
+     2217,
+     1659
     ],
     "caption": [
      1819,
-     1691,
+     1690,
      1926,
-     1723
+     1721
     ],
     "column": 2,
     "inset": true,
     "page_box": [
-     1534,
-     1585,
+     1530,
+     1579,
      2224,
-     1690
+     1701
     ]
    },
    {
     "box": [
      1533,
-     2240,
+     2237,
      2219,
-     2414
+     2418
     ],
     "caption": [
-     1794,
+     1819,
      2442,
-     1936,
-     2474
+     1937,
+     2472
     ],
     "column": 2,
     "inset": true,
     "page_box": [
      1534,
      2230,
-     2224,
-     2428
+     2228,
+     2424
     ]
    }
   ],
@@ -395,22 +407,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 6,
-    "input_tokens": 11701,
-    "output_tokens": 423,
+    "input_tokens": 11813,
+    "output_tokens": 422,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 16,
-    "input_tokens": 7345,
-    "output_tokens": 5117,
+    "model": "claude-opus-5-5",
+    "calls": 17,
+    "input_tokens": 8168,
+    "output_tokens": 5063,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 30784
+    "cache_read_input_tokens": 41157
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||WAVE|429}}</noinclude>wave-length <math>\\lambda</math> at points to the right of O is uniform, being that proper to a wave-velocity <math>c</math>, viz. <math>\\lambda = 2\\pi c^2/g</math>. The disturbance is therefore followed by a train of waves of approximately simple-harmonic profile, of the length indicated. An approximate calculation shows that, except in the immediate neighbourhood of the source of disturbance, the surface-elevation is given by\n\n{{block center|<math>\\eta = \\frac{2\\text{P}_0}{\\rho c^2} \\sin\\frac{gx}{c^2},</math> . . . . (18)}}\n\nwhere <math>x</math> is now measured from O, and <math>\\text{P}_0 (= \\textstyle\\int p\\, dx)</math> represents the integral of the disturbing surface pressure over the (infinitely small) breadth of the band on which it acts. The case of a diffused pressure can be inferred by integration. The annexed figure gives a representation of a particular case, obtained by a more exact process. The pressure is here supposed uniformly distributed over a band of breadth <math>\\text{AB}</math>.\n\n[[File:eb1911 v28 p0447 c1f1.png|center|247px]]\n{{c|{{sc|Fig.}} 4.}}\n\nA similar argument can be applied to the case of finite depth (<math>h</math>), but since the wave-velocity cannot exceed <math>\\sqrt{(2gh)}</math> the results are modified if the velocity <math>c</math> of the travelling pressure exceeds this limit. There is then no train of waves generated, the disturbance of level being purely local. It hardly needs stating that the investigation applies also to the case of a stationary surface disturbance on a running stream, and that similar results follow when the disturbance consists in an equality of the bottom. In both cases we have a train of standing waves on the down-stream side, of length corresponding to a wave-velocity equal to that of the stream.\n\nThe effect of a disturbance confined to the neighbourhood of a ''point'' of the surface (of deep water) was also included in the investigations of Cauchy and Poisson already referred to. The formula analogous to (12), in the case of a local impulse, is\n{{block center|<math>\\zeta \\propto \\frac{t^3}{r^4} \\sin \\frac{gt^2}{4r},</math> . . . . (19)}}\nwhere <math>r</math> denotes distance from the source. The interpretation is similar to that of the two-dimensional case, except that the amplitude of the annular waves diminishes outwards, as was to be expected, in a higher ratio.\n\nThe effect of a pressure-point travelling in a straight line over the surface of deep water is interesting, as helping us to account in some degree for the peculiar system of waves which is seen to accompany a ship. The configuration of the wave-system is shown by means of the lines of equal phase in the annexed diagram, due to V. W. Ekman (1906), which differs from the drawing originally given by Lord Kelvin (1887) in that it indicates the difference of phase between the transverse and diverging waves at the common boundary of the two series. The two systems of waves are due to the fact that at any given instant there are ''two'' previous positions of the moving pressure-point which have transmitted vibrations of stationary phase to any given point <math>\\text{P}</math> within the range of the figure. When the depth is finite the configuration is modified, and if it be less than <math>c^2/g</math>, where <math>c</math> is the velocity of the disturbance, the transversal waves disappear.\n\n[[File:eb1911 v28 p0447 c1f2.png|center|195px]]\n{{c|After V. Walfrid Ekman, ''On Stationary Waves in Running Water''.}}\n{{c|{{sc|Fig.}} 5.}}\n\nThe investigations referred to have a bearing on the wave-resistance of ships. This is accounted for by the energy of the new wave-groups which are continually being started and left behind. Some experiments on torpedo boats moving in shallow water have indicated a falling off in resistance due to the absence of transversal waves just referred to. For the effect of surface-tension and the theory of “ripples” see {{sc|Capillary Action}}.\n\n{{c|§ 5. ''Surface-Waves of Finite Height.''}}\n\nThe foregoing results are based on the assumption that the amplitude may be treated as infinitely small. Various interesting investigations have been made in which this restriction is, more or less, abandoned, but we are far from possessing a complete theory.\n\nA system of exact equations giving a possible type of wave-motion on deep water was obtained by F. J. v. Gerstner in 1802, and rediscovered by W. J. M. Rankine in 1863. The orbits of the particles, in this type, are accurately circular, being defined by the equations\n{{block center|<math>x=a+k^{-1}e^{kb}\\sin k(a-ct),\\ y=b-k^{-1}e^{kb}\\cos k(a-ct),</math> (1)}}\nwhere <math>(a,\\ b)</math> is the mean position of the particle, <math>k=2\\pi/\\lambda</math>; and the wave-velocity is\n{{block center|<math>c=\\sqrt{(g/k)}=\\sqrt{(g\\lambda/2\\pi)}.</math> (2)}} matical elegance and simplicity of the formulae (1) are unfortunately counterbalanced by the fact that the consequent motion of the fluid elements proves to be \"rotational\" (see {{sc|Hydromechanics}}), and therefore not such as could be generated in a previously quiescent liquid by any system of forces applied to the surface.\n\n[[File:eb1911 v28 p0447 c2f1.png|center|341px]]\n{{c|{{sc|Fig.}} 6.}}\n\nSir G. Stokes, in a series of papers, applied himself to the determination of the possible \"irrotational\" wave-forms of finite height which satisfy the conditions of uniform propagation without change of type. The equation of the profile, in the case of infinite depth, is obtained in the form of a Fourier series, thus\n{{block center|<math>y = a\\cos kx + \\tfrac{1}{2}ka^2\\cos 2kx + \\tfrac{3}{8}k^2a^3\\cos 3kx + \\dots,</math> . (3)}}\nthe corresponding wave-velocity being approximately\n{{block center|<math>c = \\sqrt{\\left\\{\\frac{g\\lambda}{2\\pi}\\left(1 + \\frac{4\\pi^2a^2}{\\lambda^2}\\right)\\right\\}},</math> . . . . . (4)}} where <math>\\lambda=2\\pi/k</math>. The e velopment, agrees with Gerstner's waves the outline is sharper near the crests and flatter in the troughs than in the case of the simpleharmonic curve, and these features become the wave-length increa extreme form of irrotat Gerstner waves in that cording to the calcula then about one-sevent exceeds that of very lo It is to be noticed fur the motion of the wa being on the whole a g propagation. These va way with what is obser\n\n[[File:eb1911 v28 p0447 c2f2.png|center|225px]]\n{{c|{{sc|Fig.}} 7.}}\n\n[[File:eb1911 v28 p0447 c2f3.png|center|222px]]\n{{c|{{sc|Fig.}} 8.}}\n\nIn the case of finit and we can only here n the wave-length is supposed very great compared with the depth (<math>h</math>). We have then practically the “solitary wave” to which attention was first directed by J. Scott Russell (1844) from observation. The theory has been worked out by J. Boussinesq (1871) and Lord Rayleigh. The surface-elevation is given by\n{{block center|<math>\\eta = a\\, \\text{sec h}^2\\, \\tfrac{1}{2}(x/b),</math> . . . . . . (5)}}\nprovided\n{{block center|<math>b^2 = h^2(h+a)/3a,</math> . . . . . . (6)}}\nand the velocity of propagation is\n{{block center|<math>c = \\sqrt{\\{g(h+a)\\}}</math> . . . . . . (7)}}\nIn the extreme form <math>a = h</math> and the crest forms an angle of 120°. It appears that a solitary wave of depression, of permanent type, is impossible.\n\n{{smaller block|{{sc|Bibliography}}.—Experimental researches: E. H. u. W. Weber, ''Wellenlehre'' (Leipzig, 1825); J. Scott Russell, “Report on Waves,” ''Brit. Assoc. Rep.'' (1844). Theoretical works: S. D. Poisson, “Mémoire sur la théorie du son,” ''J. de l’école polyt.'' 7 (1807); “Mém. sur la théorie des ondes,” ''Mém. de l’acad. roy. des sc.'' 1 (1816); A. Cauchy, “Mém. sur la théorie des ondes,” ''Mém. de l’acad. roy. des sc.'' 1 (1827); Sir G. B. Airy, “Tides and Waves,” ''Encycl. Metrop.'' (1845). Many classical investigations are now most conveniently accessible}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||WAVE|429}}</noinclude>wave-length <math>\\lambda</math> at points to the right of O is uniform, being that proper to a wave-velocity <math>c</math>, viz. <math>\\lambda = 2\\pi c^2/g</math>. The disturbance is therefore followed by a train of waves of approximately simple-harmonic profile, of the length indicated. An approximate calculation shows that, except in the immediate neighbourhood of the source of disturbance, the surface-elevation is given by\n\n{{block center|<math>\\eta = \\frac{2\\text{P}_0}{\\rho c^2}\\sin\\frac{gx}{c^2},</math> . . . . . (18)}}\n\nwhere <math>x</math> is now measured from O, and <math>\\text{P}_0 (=\\textstyle\\int p\\,dx)</math> represents the integral of the disturbing surface pressure over the (infinitely small) breadth of the band on which it acts. The case of a diffused pressure can be inferred by integration. The annexed figure gives a representation of a particular case, obtained by a more exact process. The pressure is here supposed uniformly distributed over a band of breadth <math>\\text{AB}</math>.\n\n[[File:eb1911 v28 p0447 c1f1.png|center|247px]]\n{{c|{{sc|Fig.}} 4.}}\n\nA similar argument can be applied to the case of finite depth (<math>h</math>), but since the wave-velocity cannot exceed <math>\\sqrt{(2gh)}</math> the results are modified if the velocity <math>c</math> of the travelling pressure exceeds this limit. There is then no train of waves generated, the disturbance of level being purely local. It hardly needs stating that the investigation applies also to the case of a stationary surface disturbance on a running stream, and that similar results follow when the disturbance consists in an equality of the bottom. In both cases we have a train of standing waves on the down-stream side, of length corresponding to a wave-velocity equal to that of the stream.\n\nThe effect of a disturbance confined to the neighbourhood of a ''point'' of the surface (of deep water) was also included in the investigations of Cauchy and Poisson already referred to. The formula analogous to (12), in the case of a local impulse, is\n{{block center|<math>\\zeta \\propto \\frac{t^3}{r^4} \\sin \\frac{gt^2}{4r}</math>, . . . . (19)}}\nwhere <math>r</math> denotes distance from the source. The interpretation is similar to that of the two-dimensional case, except that the amplitude of the annular waves diminishes outwards, as was to be expected, in a higher ratio.\n\nThe effect of a pressure-point travelling in a straight line over the surface of deep water is interesting, as helping us to account in some degree for the peculiar system of waves which is seen to accompany a ship. The configuration of the wave-system is shown by means of the lines of equal phase in the annexed diagram, due to V. W. Ekman (1906), which differs from the drawing originally given by Lord Kelvin (1887) in that it indicates the difference of phase between the transverse and diverging waves at the common boundary of the two series. The two systems of waves are due to the fact that at any given instant there are ''two'' previous positions of the moving pressure-point which have transmitted vibrations of stationary phase to any given point <math>\\text{P}</math> within the range of the figure. When the depth is finite the configuration is modified, and if it be less than <math>c^2/g</math>, where <math>c</math> is the velocity of the disturbance, the transversal waves disappear.\n\n[[File:eb1911 v28 p0447 c1f2.png|center|195px]]\n{{c|'''After V. Walfrid Ekman, ''On Stationary Waves in Running Water''.'''}}\n{{c|{{sc|Fig.}} 5.}}\n\nThe investigations referred to have a bearing on the wave-resistance of ships. This is accounted for by the energy of the new wave-groups which are continually being started and left behind. Some experiments on torpedo boats moving in shallow water have indicated a falling off in resistance due to the absence of transversal waves just referred to. For the effect of surface-tension and the theory of “ ripples ” see {{sc|Capillary Action}}.\n\n{{c|§ 5. ''Surface-Waves of Finite Height.''}}\n\nThe foregoing results are based on the assumption that the amplitude may be treated as infinitely small. Various interesting investigations have been made in which this restriction is, more or less, abandoned, but we are far from possessing a complete theory.\n\nA system of exact equations giving a possible type of wave-motion on deep water was obtained by F. J. v. Gerstner in 1802, and rediscovered by W. J. M. Rankine in 1863. The orbits of the particles, in this type, are accurately circular, being defined by the equations\n{{block center|<math>x=a+k^{-1}e^{kb}\\sin k(a-ct),\\ y=b-k^{-1}e^{kb}\\cos k(a-ct),</math> . (1)}}\nwhere <math>(a,\\ b)</math> is the mean position of the particle, <math>k=2\\pi/\\lambda</math>; and the wave-velocity is\n{{block center|<math>c=\\sqrt{(g/k)}=\\sqrt{(g\\lambda/2\\pi)}.</math> . . . . (2)}} The lines of equal pressure, among which is included of course the surface-profile, are trochoidal curves. The extreme form of wave-profile is the cycloid, with the cusps turned upwards. The mathematical elegance and simplicity of the formulae (1) are unfortunately counterbalanced by the fact that the consequent motion of the fluid elements proves to be “ rotational ” (see {{sc|Hydromechanics}}), and therefore not such as could be generated in a previously quiescent liquid by any system of forces applied to the surface.\n\n[[File:eb1911 v28 p0447 c2f1.png|center|341px]]\n{{c|{{sc|Fig.}} 6.}}\n\nSir G. Stokes, in a series of papers, applied himself to the determination of the possible “ irrotational ” wave-forms of finite height which satisfy the conditions of uniform propagation without change of type. The equation of the profile, in the case of infinite depth, is obtained in the form of a Fourier series, thus\n{{block center|<math>y = a\\cos kx + \\tfrac{1}{2}ka^2\\cos 2kx + \\tfrac{3}{8}k^2a^3\\cos 3kx + \\dots,</math> . (3)}}\nthe corresponding wave-velocity being approximately\n{{block center|<math>c = \\sqrt{\\left\\{\\frac{g\\lambda}{2\\pi}\\left(1 + \\frac{4\\pi^2a^2}{\\lambda^2}\\right)\\right\\}},</math> . . . . . (4)}}\nwhere <math>\\lambda = 2\\pi/k</math>. The equation (3), so far as we have given the development, agrees with that of a trochoid (fig. 7). As in the case of Gerstner’s waves the outline is sharper near the crests and flatter in the troughs than in the case of the simpleharmonic curve, and these features become accentuated as the ratio of the amplitude to the wave-length increases. It has been shown by Stokes that the extreme form of irrotational waves differs from that of the rotational Gerstner waves in that the crests form a blunt angle of 120°. According to the calculations of J. H. Michell (1893), the height is then about one-seventh of the wave-length, and the wave-velocity exceeds that of very low waves of the same length in the ratio 6:5. It is to be noticed further that in these waves of permanent type the motion of the water-particles is not purely oscillatory, there being on the whole a gradual drift at the surface in the direction of propagation. These various conclusions appear to agree in a general way with what is observed in the case of sea-waves.\n\n[[File:eb1911 v28 p0447 c2f2.png|center|225px]]\n{{c|{{sc|Fig.}} 7.}}\n\nIn the case of finite depth the calculations are more difficult, and we can only here notice the limiting type which is obtained when the wave-length is supposed very great compared with the depth <math>(h)</math>. We have then practically the \"solitary wave\" to which attention was first directed by J. Scott Russell (1844) from observation. The theory has been worked out by J. Boussinesq (1871) and Lord Rayleigh. The surface-elevation is given by\n{{block center|<math>\\eta = a\\,\\text{sec h}^2\\, \\tfrac{1}{2}(x/b),</math> (5)}}\nprovided\n{{block center|<math>b^2 = h^2(h+a)/3a,</math> (6)}}\nand the velocity of propagation is\n{{block center|<math>c = \\sqrt{\\{g(h+a)\\}}</math> (7)}}\nIn the extreme form <math>a = h</math> and the crest forms an angle of 120°. It appears that a solitary wave of depression, of permanent type, is impossible.\n\n[[File:eb1911 v28 p0447 c2f3.png|center|222px]]\n{{c|{{sc|Fig.}} 8.}}\n\n{{sc|Bibliography}}.—Experimental researches: E. H. u. W. Weber, ''Wellenlehre'' (Leipzig, 1825); J. Scott Russell, “Report on Waves,” ''Brit. Assoc. Rep.'' (1844). Theoretical works: S. D. Poisson, “Mémoire sur la théorie du son,” ''J. de l’école polyt.'' 7 (1807); “Mém. sur la théorie des ondes,” ''Mém. de l’acad. roy. des sc.'' 1 (1816); A. Cauchy, “Mém. sur la théorie des ondes,” ''Mém. de l’acad. roy. des sc.'' 1 (1827); Sir G. B. Airy, “Tides and Waves,” ''Encycl. Metrop.'' (1845). Many classical investigations are now most conveniently accessible<noinclude><references/></noinclude>"
 }

@@ -40,7 +40,7 @@
      118,
      1325,
      1194,
-     2317
+     2369
     ]
    },
    {
@@ -49,9 +49,20 @@
     "column": 1,
     "box": [
      118,
-     2317,
+     2369,
      729,
      2695
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     118,
+     2700,
+     729,
+     2734
     ]
    },
    {
@@ -59,25 +70,14 @@
     "kind": "text",
     "column": 1,
     "box": [
-     118,
-     2695,
      729,
-     2734
-    ]
-   },
-   {
-    "name": "c1s4",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     729,
-     2317,
+     2369,
      1194,
      2798
     ]
    },
    {
-    "name": "c1s5",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
@@ -95,7 +95,7 @@
      1194,
      231,
      2263,
-     614
+     760
     ]
    },
    {
@@ -104,14 +104,14 @@
     "column": 2,
     "box": [
      1860,
-     614,
+     760,
      2263,
      1144
     ]
    },
    {
-    "name": "c2s2",
-    "kind": "text",
+    "name": "c2c1",
+    "kind": "caption",
     "column": 2,
     "box": [
      1860,
@@ -121,14 +121,25 @@
     ]
    },
    {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1194,
+     760,
+     1860,
+     1186
+    ]
+   },
+   {
     "name": "c2s3",
     "kind": "text",
     "column": 2,
     "box": [
      1194,
-     614,
-     1860,
-     1186
+     1186,
+     2263,
+     1542
     ]
    },
    {
@@ -137,9 +148,20 @@
     "column": 2,
     "box": [
      2021,
-     1197,
+     1542,
      2263,
      1883
+    ]
+   },
+   {
+    "name": "c2c2",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     2021,
+     1899,
+     2263,
+     1934
     ]
    },
    {
@@ -147,9 +169,9 @@
     "kind": "text",
     "column": 2,
     "box": [
+     1194,
+     1542,
      2021,
-     1900,
-     2263,
      1934
     ]
    },
@@ -159,9 +181,9 @@
     "column": 2,
     "box": [
      1194,
-     1197,
-     2021,
-     1934
+     1934,
+     2263,
+     2604
     ]
    },
    {
@@ -170,18 +192,7 @@
     "column": 2,
     "box": [
      1194,
-     1934,
-     2263,
-     2149
-    ]
-   },
-   {
-    "name": "c2s7",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1194,
-     2149,
+     2604,
      2263,
      3161
     ]
@@ -189,18 +200,19 @@
   ],
   "readings": {
    "head": "{{RunningHeader|INTERFERENCE]|SOUND|457}}",
-   "c1s1": "¶\n''Singing Tube.''—The maintenance of the vibration of the air in the singing tube has been explained by Lord Rayleigh (''Sound'', vol. ii. § 322 ''h'') as due to the way in which the heat is communicated to the vibrating air. When the air in a pipe open at both ends is vibrating in its simplest mode, the air is alternately moving into and out from the centre. During the quarter swing ending with greatest nodal pressure, the kinetic energy is changed to potential energy manifested in the increase of pressure. This becomes again kinetic in the second quarter swing, then in the third quarter it is changed to potential energy again, but now manifested in the decrease of pressure. In the last quarter it is again turned to the kinetic form. Now suppose that at the end of the first quarter swing, at the instant of greatest pressure, heat is suddenly given to the air. The pressure is further increased and the potential energy is also increased. There will be more kinetic energy formed in the return journey and the vibration tends to grow. But if the heat is given at the instant of greatest rarefaction, the increase of pressure lessens the difference from the undisturbed pressure, and lessens the potential energy, so that during the return less kinetic energy is formed and the vibration tends to die away. And what is true for the extreme points is true for the half periods of which they are the middle points; that is, heat given during the compression half aids the vibration, and during the extension half damps it. Now let us apply this to the singing tube. Let the gas jet tube be of somewhat less than half the length of the singing tube, and let the lower end of the jet tube be in a wider tube or cavity so that it may be regarded as an \"open end.\" When the air in the singing tube is singing, it forces the gas in the jet tube to vibrate in the same period and in such phase that at the nozzle the pressure in both tubes shall be the same. The lower end of the jet tube, being open, is a loop, and the node may be regarded as in an imaginary prolongation of the jet tube above the nozzle. It is evident that the pressure condition will be fulfilled only if",
-   "c1s2": "{{smaller block|the motions in the two tubes are in the same direction at the same time, closing into and opening out from the nodes together. When the motion is upwards gas is emitted; when the motion is downwards it is checked. The gas enters in the half period from least to greatest pressure. But there is a slight delay in ignition, partly due to expulsion of incombustible gas drawn into the jet tube in the previous half period, so that the most copious supply of gas and heat is thrown into the quarter period just preceding greatest pressure, and the vibration is maintained. If the jet tube is somewhat longer than half the sounding tube there will be a node in it, and now the condition of equality of pressure requires opposite motions in the two at the nozzle, for their nodes are situated on opposite sides of that point. The heat communication is then chiefly in the quarter vibration just preceding greatest rarefaction, and the vibration is not maintained.}}\n\n{{c|''Interference of Sound.''}}\n\nWhen two trains of sound waves travel through the same medium, each particle of the air, being simultaneously affected by the disturbances due to the different waves, moves in a different manner than it would if only acted on by each wave singly. The waves are said mutually to interfere. We shall exemplify this subject by considering the case of two waves travelling in the same direction through the air. We shall then obviously be led to the following results:—\n\nIf the two waves are of equal length <math>\\lambda</math>, and are in the same",
-   "c1s3": "{{c|{{sc|Fig.}} 41.}}",
-   "c1s4": "ny given moment the same state of motion in the air particles), their combined effect is equivalent to that of a wave of the same length <math>\\lambda</math>, but by which the excursions of the particles are increased, being the sum of those due to the two component waves",
-   "c1s5": "¶\nIf the two interfering waves, being still of same length <math>\\lambda</math>, be in opposite phases, or so that one is in advance of the other by <math>\\tfrac{1}{2}\\lambda</math>, and consequently one produces in the air the opposite state of motion to the other, then the resultant wave is one of the same length <math>\\lambda</math>, but the excursions of the particles are decreased, being the difference between those due to the component waves as in fig. 41, 2. If the amplitudes of vibration which thus mutually interfere are moreover equal, the effect is the total mutual destruction of the vibratory motion.",
-   "c2s1": "¶\nThus we learn that two musical notes, of the same pitch, conveyed to the ear through the air, will produce the effect of a single note of the same pitch, but of increased loudness, if they are in the same phase, but may affect the ear very slightly, if at all, when in opposite phases. If the difference of phase be varied gradually from zero to <math>\\frac{1}{2}\\lambda</math>, the resulting sound will gradually decrease from a maximum to a minimum.",
-   "c2s2": "{{c|{{sc|Fig.}} 42.}}",
-   "c2s3": "¶\nAmong the many experimental confi adduced of these proportions we will menti\n\nTake a circular plate, such as is availa Chladni's figures, and cut out of a sheet of shape ABOCD (fig. 42), consisting of two circular quadrants of the same diameter as the plate. Let, now, the plate be made in the usual manner to vibrate so as to exhibit two nodal lines coinciding with two rectangular diameters. If the ear be placed right above the centre of the plate, the sound will be scarcely audible. But, if the pasteboard be interposed so as to intercept the vibrating segments AOB, DOC, the note becomes much more distinct. The reason of this is, that the segments of the plate AOD, BOC always",
-   "c2s4": "{{c|{{sc|Fig.}} 43.}}",
-   "c2s5": "sitely to the segments AOB, DOC. Hence, when is in its place, there are two waves of same phase the two former segments, and reaching the ear after of transmission through the air, are again in the sa produce on the ear a conjunct impression. But w board is removed, then there is at the ear oppos between the first and the second pair of waves, an a minimum of sound.\n\nA tubular piece of wood shaped as in fig. 43, and of thin membrane stretched over the opening at th dry sand being strewn over the membrane, is so placed over a circular or rectangular vibrating plate that the ends A, B lie over the segments of the plate, such as AOD, COB in the previous figure, which are in the same state of motion. The sand at C will be set in violent movement. But if the same ends A, B be placed over oppositely vibrating segments (such as AOD, COD), the sand will be scarcely, if at all, affected.\n\nIf a tuning-fork in vibration be turned round before the ear, four positions will be found in which it will be inaudible, owing to the mutual interference",
-   "c2s6": "of the oppositely vibrating prongs of the fork. On interposing the hand between the ear and either prong of the fork when in one of those positions, the sound becomes audible, because then one of the two interfering waves is cut off from the ear. This experiment may be varied by holding the fork over a glass jar into which water is poured to such a depth that the air-column within reinforces the note of the fork when suitably placed, and then",
-   "c2s7": "turning the fork round.\n\nHelmholtz's double siren is well calculated for the investigation of the laws of interference of sound. For this purpose a simple mechanism is found in the instrument, by means of which the fixed upper plate can be turned round and placed in any position relatively to the lower one. If, now, the apparatus be so set that the notes from the upper and lower chest are in unison, the upper fixed plate may be placed in four positions, such as to cause the air-current to be cut off in the one chest at the exact instant when it is freely passing through the other, and vice versa. The two waves, therefore, being in opposite phases, neutralize one another, and the result is a faint sound. On turning round the upper chest into any intermediate position, the intensity of the sound will increase up to a maximum, which occurs when the air in both chests is being admitted and cut off contemporaneously.\n\nIf two organ pipes in unison are mounted side by side on a wind-chest with their ends close together, and are blown for a very short time, they sound. But if the blowing is continued, usually in less than a second the sound dies away to a small fraction of that due to either alone. Yet the air within the pipes is vibrating more vigorously than ever, but in opposite phases in the two pipes. This may be shown by furnishing the pipes with manometric flames placed in the same vertical line. When the flames are viewed in a revolving mirror and the pipes are blown, each image of one flame lies between two images of the other. The essential fact, as pointed out by Lord Rayleigh (''Scientific Papers'', i. 409), is not the common wind chest, but the nearness of the open ends, so that the outrush from one pipe can supply the inrush to the other, and the converse. If, the two pipes are slightly out of tune when sounded separately together they sound a common note which may be higher than that due to either alone. Lord Rayleigh (''loc. cit.'') points out that this"
+   "c1s1": "¶\n'''''Singing Tube.''''' The maintenance of the vibration of the air in the singing tube has been explained by Lord Rayleigh (''Sound'', vol. ii. § 322 ''h'') as due to the way in which the heat is communicated to the vibrating air. When the air in a pipe open at both ends is vibrating in its simplest mode, the air is alternately moving into and out from the centre. During the quarter swing ending with greatest nodal pressure, the kinetic energy is changed to potential energy manifested in the increase of pressure. This becomes again kinetic in the second quarter swing, then in the third quarter it is changed to potential energy again, but now manifested in the decrease of pressure. In the last quarter it is again turned to the kinetic form. Now suppose that at the end of the first quarter swing, at the instant of greatest pressure, heat is suddenly given to the air. The pressure is further increased and the potential energy is also increased. There will be more kinetic energy formed in the return journey and the vibration tends to grow. But if the heat is given at the instant of greatest rarefaction, the increase of pressure lessens the difference from the undisturbed pressure, and lessens the potential energy, so that during the return less kinetic energy is formed and the vibration tends to die away. And what is true for the extreme points is true for the half periods of which they are the middle points; that is, heat given during the compression half aids the vibration, and during the extension half damps it. Now let us apply this to the singing tube. Let the gas jet tube be of somewhat less than half the length of the singing tube, and let the lower end of the jet tube be in a wider tube or cavity so that it may be regarded as an \"open end.\" When the air in the singing tube is singing, it forces the gas in the jet tube to vibrate in the same period and in such phase that at the nozzle the pressure in both tubes shall be the same. The lower end of the jet tube, being open, is a loop, and the node may be regarded as in an imaginary prolongation of the jet tube above the nozzle. It is evident that the pressure condition will be fulfilled only if",
+   "c1s2": "the motions in the two tubes are in the same direction at the same time, closing into and opening out from the nodes together. When the motion is upwards gas is emitted; when the motion is downwards it is checked. The gas enters in the half period from least to greatest pressure. But there is a slight delay in ignition, partly due to expulsion of incombustible gas drawn into the jet tube in the previous half period, so that the most copious supply of gas and heat is thrown into the quarter period just preceding greatest pressure, and the vibration is maintained. If the jet tube is somewhat longer than half the sounding tube there will be a node in it, and now the condition of equality of pressure requires opposite motions in the two at the nozzle, for their nodes are situated on opposite sides of that point. The heat communication is then chiefly in the quarter vibration just preceding greatest rarefaction, and the vibration is not maintained.\n\n{{c|''Interference of Sound.''}}\n\nWhen two trains of sound waves travel through the same medium, each particle of the air, being simultaneously affected by the disturbances due to the different waves, moves in a different manner than it would if only acted on by each wave singly. The waves are said mutually to interfere. We shall exemplify this subject by considering the case of two waves travelling in the same direction through the air. We shall then obviously be led to the following results:—\n\nIf the two waves are of equal length <math>\\lambda</math>, and are in the same phase (that is, each producing at any given moment the same",
+   "c1c1": "{{c|{{sc|Fig.}} 41.}}",
+   "c1s3": "state of motion in the air particles), their combined effect is equivalent to that of a wave of the same length <math>\\lambda</math>, but by which the excursions of the particles are increased, being the sum of those due to the two component waves",
+   "c1s4": "¶\nIf the two interfering waves, being still of same length <math>\\lambda</math>, be in opposite phases, or so that one is in advance of the other by <math>\\tfrac{1}{2}\\lambda</math>, and consequently one produces in the air the opposite state of motion to the other, then the resultant wave is one of the same length <math>\\lambda</math>, but the excursions of the particles are decreased, being the difference between those due to the component waves as in fig. 41, 2. If the amplitudes of vibration which thus mutually interfere are moreover equal, the effect is the total mutual destruction of the vibratory motion.",
+   "c2s1": "¶\nThus we learn that two musical notes, of the same pitch, conveyed to the ear through the air, will produce the effect of a single note of the same pitch, but of increased loudness, if they are in the same phase, but may affect the ear very slightly, if at all, when in opposite phases. If the difference of phase be varied gradually from zero to <math>\\frac{1}{2}\\lambda</math>, the resulting sound will gradually decrease from a maximum to a minimum.\n\nAmong the many experimental confirmations which may be adduced of these proportions we will mention the following:—\n\nTake a circular plate, such as is available for the production of Chladni's figures, and cut out of a sheet of pasteboard a piece of the",
+   "c2c1": "{{c|{{sc|Fig.}} 42.}}",
+   "c2s2": "shape ABOCD (fig. 42), consisting of two circular quadrants of the same diameter as the plate. Let, now, the plate be made in the usual manner to vibrate so as to exhibit two nodal lines coinciding with two rectangular diameters. If the ear be placed right above the centre of the plate, the sound will be scarcely audible. But, if the pasteboard be interposed so as to intercept the vibrating segments AOB, DOC, the note becomes much more distinct. The reason of this is, that the segments of the plate AOD, BOC always",
+   "c2s3": "sitely to the segments AOB, DOC. Hence, when the pasteboard is in its place, there are two waves of same phase starting from the two former segments, and reaching the ear after equal distances of transmission through the air, are again in the same phase, and produce on the ear a conjunct impression. But when the pasteboard is removed, then there is at the ear opposition of phase between the first and the second pair of waves, and consequently a minimum of sound.\n\nA tubular piece of wood shaped as in fig. 43, and having a piece of thin membrane stretched over the opening at the top C, some",
+   "c2c2": "{{c|{{sc|Fig.}} 43.}}",
+   "c2s4": "placed over a circular or rectangular vibrating plate that the ends A, B lie over the segments of the plate, such as AOD, COB in the previous figure, which are in the same state of motion. The sand at C will be set in violent movement. But if the same ends A, B be placed over oppositely vibrating segments (such as AOD, COD), the sand will be scarcely, if at all, affected.\n\nIf a tuning-fork in vibration be turned round before the ear, four positions will be found in which it will be inaudible, owing to the mutual interference",
+   "c2s5": "of the oppositely vibrating prongs of the fork. On interposing the hand between the ear and either prong of the fork when in one of those positions, the sound becomes audible, because then one of the two interfering waves is cut off from the ear. This experiment may be varied by holding the fork over a glass jar into which water is poured to such a depth that the air-column within reinforces the note of the fork when suitably placed, and then turning the fork round.\n\nHelmholtz's double siren is well calculated for the investigation of the laws of interference of sound. For this purpose a simple mechanism is found in the instrument, by means of which the fixed upper plate can be turned round and placed in any position relatively to the lower one. If, now, the apparatus be so set that the notes from the upper and lower chest are in unison, the upper fixed plate may be placed in four positions, such as to cause the air-current to be cut off in the one chest at the exact instant when it is freely passing through the other, and vice versa. The two waves, therefore, being in opposite phases, neutralize one another, and the result is a faint sound. On turning round the upper chest into any intermediate position, the intensity of the sound will increase up to a maximum, which occurs when the air in both chests is being admitted",
+   "c2s6": "and cut off contemporaneously.\n\nIf two organ pipes in unison are mounted side by side on a wind-chest with their ends close together, and are blown for a very short time, they sound. But if the blowing is continued, usually in less than a second the sound dies away to a small fraction of that due to either alone. Yet the air within the pipes is vibrating more vigorously than ever, but in opposite phases in the two pipes. This may be shown by furnishing the pipes with manometric flames placed in the same vertical line. When the flames are viewed in a revolving mirror and the pipes are blown, each image of one flame lies between two images of the other. The essential fact, as pointed out by Lord Rayleigh (''Scientific Papers'', i. 409), is not the common wind chest, but the nearness of the open ends, so that the outrush from one pipe can supply the inrush to the other, and the converse. If, the two pipes are slightly out of tune when sounded separately together they sound a common note which may be higher than that due to either alone. Lord Rayleigh (''loc. cit.'') points out that this"
   },
   "figure_files": {
    "c1f1": "eb1911 v25 p0473 c1f1.png",
@@ -211,37 +223,37 @@
    {
     "box": [
      126,
-     2367,
+     2374,
      714,
      2671
     ],
     "caption": [
-     377,
-     2686,
-     500,
-     2727
+     378,
+     2703,
+     501,
+     2733
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     124,
+     121,
      2359,
-     667,
-     2699
+     674,
+     2683
     ]
    },
    {
     "box": [
      1871,
-     762,
+     763,
      2252,
-     1144
+     1143
     ],
     "caption": [
-     2008,
-     1154,
+     2010,
+     1156,
      2136,
-     1186
+     1185
     ],
     "column": 2,
     "inset": true,
@@ -249,29 +261,29 @@
      1866,
      758,
      2257,
-     1142
+     1144
     ]
    },
    {
     "box": [
-     2032,
+     2031,
      1544,
-     2257,
+     2258,
      1879
     ],
     "caption": [
      2082,
-     1901,
+     1899,
      2208,
      1934
     ],
     "column": 2,
     "inset": true,
     "page_box": [
-     2050,
+     2043,
      1539,
      2235,
-     1882
+     1877
     ]
    }
   ],
@@ -291,22 +303,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 4,
-    "input_tokens": 8129,
-    "output_tokens": 262,
+    "input_tokens": 8241,
+    "output_tokens": 240,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 13,
-    "input_tokens": 8048,
-    "output_tokens": 4201,
+    "model": "claude-opus-5-5",
+    "calls": 14,
+    "input_tokens": 8270,
+    "output_tokens": 5127,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 25012
+    "cache_read_input_tokens": 33894
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|INTERFERENCE]|SOUND|457}}</noinclude>''Singing Tube.''—The maintenance of the vibration of the air in the singing tube has been explained by Lord Rayleigh (''Sound'', vol. ii. § 322 ''h'') as due to the way in which the heat is communicated to the vibrating air. When the air in a pipe open at both ends is vibrating in its simplest mode, the air is alternately moving into and out from the centre. During the quarter swing ending with greatest nodal pressure, the kinetic energy is changed to potential energy manifested in the increase of pressure. This becomes again kinetic in the second quarter swing, then in the third quarter it is changed to potential energy again, but now manifested in the decrease of pressure. In the last quarter it is again turned to the kinetic form. Now suppose that at the end of the first quarter swing, at the instant of greatest pressure, heat is suddenly given to the air. The pressure is further increased and the potential energy is also increased. There will be more kinetic energy formed in the return journey and the vibration tends to grow. But if the heat is given at the instant of greatest rarefaction, the increase of pressure lessens the difference from the undisturbed pressure, and lessens the potential energy, so that during the return less kinetic energy is formed and the vibration tends to die away. And what is true for the extreme points is true for the half periods of which they are the middle points; that is, heat given during the compression half aids the vibration, and during the extension half damps it. Now let us apply this to the singing tube. Let the gas jet tube be of somewhat less than half the length of the singing tube, and let the lower end of the jet tube be in a wider tube or cavity so that it may be regarded as an \"open end.\" When the air in the singing tube is singing, it forces the gas in the jet tube to vibrate in the same period and in such phase that at the nozzle the pressure in both tubes shall be the same. The lower end of the jet tube, being open, is a loop, and the node may be regarded as in an imaginary prolongation of the jet tube above the nozzle. It is evident that the pressure condition will be fulfilled only if {{smaller block|the motions in the two tubes are in the same direction at the same time, closing into and opening out from the nodes together. When the motion is upwards gas is emitted; when the motion is downwards it is checked. The gas enters in the half period from least to greatest pressure. But there is a slight delay in ignition, partly due to expulsion of incombustible gas drawn into the jet tube in the previous half period, so that the most copious supply of gas and heat is thrown into the quarter period just preceding greatest pressure, and the vibration is maintained. If the jet tube is somewhat longer than half the sounding tube there will be a node in it, and now the condition of equality of pressure requires opposite motions in the two at the nozzle, for their nodes are situated on opposite sides of that point. The heat communication is then chiefly in the quarter vibration just preceding greatest rarefaction, and the vibration is not maintained.}}\n\n{{c|''Interference of Sound.''}}\n\nWhen two trains of sound waves travel through the same medium, each particle of the air, being simultaneously affected by the disturbances due to the different waves, moves in a different manner than it would if only acted on by each wave singly. The waves are said mutually to interfere. We shall exemplify this subject by considering the case of two waves travelling in the same direction through the air. We shall then obviously be led to the following results:—\n\nIf the two waves are of equal length <math>\\lambda</math>, and are in the same ny given moment the same state of motion in the air particles), their combined effect is equivalent to that of a wave of the same length <math>\\lambda</math>, but by which the excursions of the particles are increased, being the sum of those due to the two component waves\n\n[[File:eb1911 v25 p0473 c1f1.png|center|202px]]\n{{c|{{sc|Fig.}} 41.}}\n\nIf the two interfering waves, being still of same length <math>\\lambda</math>, be in opposite phases, or so that one is in advance of the other by <math>\\tfrac{1}{2}\\lambda</math>, and consequently one produces in the air the opposite state of motion to the other, then the resultant wave is one of the same length <math>\\lambda</math>, but the excursions of the particles are decreased, being the difference between those due to the component waves as in fig. 41, 2. If the amplitudes of vibration which thus mutually interfere are moreover equal, the effect is the total mutual destruction of the vibratory motion.\n\nThus we learn that two musical notes, of the same pitch, conveyed to the ear through the air, will produce the effect of a single note of the same pitch, but of increased loudness, if they are in the same phase, but may affect the ear very slightly, if at all, when in opposite phases. If the difference of phase be varied gradually from zero to <math>\\frac{1}{2}\\lambda</math>, the resulting sound will gradually decrease from a maximum to a minimum.\n\n[[File:eb1911 v25 p0473 c2f1.png|center|133px]]\n{{c|{{sc|Fig.}} 42.}}\n\nAmong the many experimental confi adduced of these proportions we will menti\n\nTake a circular plate, such as is availa Chladni's figures, and cut out of a sheet of shape ABOCD (fig. 42), consisting of two circular quadrants of the same diameter as the plate. Let, now, the plate be made in the usual manner to vibrate so as to exhibit two nodal lines coinciding with two rectangular diameters. If the ear be placed right above the centre of the plate, the sound will be scarcely audible. But, if the pasteboard be interposed so as to intercept the vibrating segments AOB, DOC, the note becomes much more distinct. The reason of this is, that the segments of the plate AOD, BOC always sitely to the segments AOB, DOC. Hence, when is in its place, there are two waves of same phase the two former segments, and reaching the ear after of transmission through the air, are again in the sa produce on the ear a conjunct impression. But w board is removed, then there is at the ear oppos between the first and the second pair of waves, an a minimum of sound.\n\n[[File:eb1911 v25 p0473 c2f2.png|center|80px]]\n{{c|{{sc|Fig.}} 43.}}\n\nA tubular piece of wood shaped as in fig. 43, and of thin membrane stretched over the opening at th dry sand being strewn over the membrane, is so placed over a circular or rectangular vibrating plate that the ends A, B lie over the segments of the plate, such as AOD, COB in the previous figure, which are in the same state of motion. The sand at C will be set in violent movement. But if the same ends A, B be placed over oppositely vibrating segments (such as AOD, COD), the sand will be scarcely, if at all, affected.\n\nIf a tuning-fork in vibration be turned round before the ear, four positions will be found in which it will be inaudible, owing to the mutual interference of the oppositely vibrating prongs of the fork. On interposing the hand between the ear and either prong of the fork when in one of those positions, the sound becomes audible, because then one of the two interfering waves is cut off from the ear. This experiment may be varied by holding the fork over a glass jar into which water is poured to such a depth that the air-column within reinforces the note of the fork when suitably placed, and then turning the fork round.\n\nHelmholtz's double siren is well calculated for the investigation of the laws of interference of sound. For this purpose a simple mechanism is found in the instrument, by means of which the fixed upper plate can be turned round and placed in any position relatively to the lower one. If, now, the apparatus be so set that the notes from the upper and lower chest are in unison, the upper fixed plate may be placed in four positions, such as to cause the air-current to be cut off in the one chest at the exact instant when it is freely passing through the other, and vice versa. The two waves, therefore, being in opposite phases, neutralize one another, and the result is a faint sound. On turning round the upper chest into any intermediate position, the intensity of the sound will increase up to a maximum, which occurs when the air in both chests is being admitted and cut off contemporaneously.\n\nIf two organ pipes in unison are mounted side by side on a wind-chest with their ends close together, and are blown for a very short time, they sound. But if the blowing is continued, usually in less than a second the sound dies away to a small fraction of that due to either alone. Yet the air within the pipes is vibrating more vigorously than ever, but in opposite phases in the two pipes. This may be shown by furnishing the pipes with manometric flames placed in the same vertical line. When the flames are viewed in a revolving mirror and the pipes are blown, each image of one flame lies between two images of the other. The essential fact, as pointed out by Lord Rayleigh (''Scientific Papers'', i. 409), is not the common wind chest, but the nearness of the open ends, so that the outrush from one pipe can supply the inrush to the other, and the converse. If, the two pipes are slightly out of tune when sounded separately together they sound a common note which may be higher than that due to either alone. Lord Rayleigh (''loc. cit.'') points out that this<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|INTERFERENCE]|SOUND|457}}</noinclude>'''''Singing Tube.''''' The maintenance of the vibration of the air in the singing tube has been explained by Lord Rayleigh (''Sound'', vol. ii. § 322 ''h'') as due to the way in which the heat is communicated to the vibrating air. When the air in a pipe open at both ends is vibrating in its simplest mode, the air is alternately moving into and out from the centre. During the quarter swing ending with greatest nodal pressure, the kinetic energy is changed to potential energy manifested in the increase of pressure. This becomes again kinetic in the second quarter swing, then in the third quarter it is changed to potential energy again, but now manifested in the decrease of pressure. In the last quarter it is again turned to the kinetic form. Now suppose that at the end of the first quarter swing, at the instant of greatest pressure, heat is suddenly given to the air. The pressure is further increased and the potential energy is also increased. There will be more kinetic energy formed in the return journey and the vibration tends to grow. But if the heat is given at the instant of greatest rarefaction, the increase of pressure lessens the difference from the undisturbed pressure, and lessens the potential energy, so that during the return less kinetic energy is formed and the vibration tends to die away. And what is true for the extreme points is true for the half periods of which they are the middle points; that is, heat given during the compression half aids the vibration, and during the extension half damps it. Now let us apply this to the singing tube. Let the gas jet tube be of somewhat less than half the length of the singing tube, and let the lower end of the jet tube be in a wider tube or cavity so that it may be regarded as an \"open end.\" When the air in the singing tube is singing, it forces the gas in the jet tube to vibrate in the same period and in such phase that at the nozzle the pressure in both tubes shall be the same. The lower end of the jet tube, being open, is a loop, and the node may be regarded as in an imaginary prolongation of the jet tube above the nozzle. It is evident that the pressure condition will be fulfilled only if the motions in the two tubes are in the same direction at the same time, closing into and opening out from the nodes together. When the motion is upwards gas is emitted; when the motion is downwards it is checked. The gas enters in the half period from least to greatest pressure. But there is a slight delay in ignition, partly due to expulsion of incombustible gas drawn into the jet tube in the previous half period, so that the most copious supply of gas and heat is thrown into the quarter period just preceding greatest pressure, and the vibration is maintained. If the jet tube is somewhat longer than half the sounding tube there will be a node in it, and now the condition of equality of pressure requires opposite motions in the two at the nozzle, for their nodes are situated on opposite sides of that point. The heat communication is then chiefly in the quarter vibration just preceding greatest rarefaction, and the vibration is not maintained.\n\n{{c|''Interference of Sound.''}}\n\nWhen two trains of sound waves travel through the same medium, each particle of the air, being simultaneously affected by the disturbances due to the different waves, moves in a different manner than it would if only acted on by each wave singly. The waves are said mutually to interfere. We shall exemplify this subject by considering the case of two waves travelling in the same direction through the air. We shall then obviously be led to the following results:—\n\nIf the two waves are of equal length <math>\\lambda</math>, and are in the same phase (that is, each producing at any given moment the same state of motion in the air particles), their combined effect is equivalent to that of a wave of the same length <math>\\lambda</math>, but by which the excursions of the particles are increased, being the sum of those due to the two component waves\n\n[[File:eb1911 v25 p0473 c1f1.png|center|202px]]\n{{c|{{sc|Fig.}} 41.}}\n\nIf the two interfering waves, being still of same length <math>\\lambda</math>, be in opposite phases, or so that one is in advance of the other by <math>\\tfrac{1}{2}\\lambda</math>, and consequently one produces in the air the opposite state of motion to the other, then the resultant wave is one of the same length <math>\\lambda</math>, but the excursions of the particles are decreased, being the difference between those due to the component waves as in fig. 41, 2. If the amplitudes of vibration which thus mutually interfere are moreover equal, the effect is the total mutual destruction of the vibratory motion.\n\nThus we learn that two musical notes, of the same pitch, conveyed to the ear through the air, will produce the effect of a single note of the same pitch, but of increased loudness, if they are in the same phase, but may affect the ear very slightly, if at all, when in opposite phases. If the difference of phase be varied gradually from zero to <math>\\frac{1}{2}\\lambda</math>, the resulting sound will gradually decrease from a maximum to a minimum.\n\nAmong the many experimental confirmations which may be adduced of these proportions we will mention the following:—\n\nTake a circular plate, such as is available for the production of Chladni's figures, and cut out of a sheet of pasteboard a piece of the shape ABOCD (fig. 42), consisting of two circular quadrants of the same diameter as the plate. Let, now, the plate be made in the usual manner to vibrate so as to exhibit two nodal lines coinciding with two rectangular diameters. If the ear be placed right above the centre of the plate, the sound will be scarcely audible. But, if the pasteboard be interposed so as to intercept the vibrating segments AOB, DOC, the note becomes much more distinct. The reason of this is, that the segments of the plate AOD, BOC always sitely to the segments AOB, DOC. Hence, when the pasteboard is in its place, there are two waves of same phase starting from the two former segments, and reaching the ear after equal distances of transmission through the air, are again in the same phase, and produce on the ear a conjunct impression. But when the pasteboard is removed, then there is at the ear opposition of phase between the first and the second pair of waves, and consequently a minimum of sound.\n\n[[File:eb1911 v25 p0473 c2f1.png|center|133px]]\n{{c|{{sc|Fig.}} 42.}}\n\nA tubular piece of wood shaped as in fig. 43, and having a piece of thin membrane stretched over the opening at the top C, some placed over a circular or rectangular vibrating plate that the ends A, B lie over the segments of the plate, such as AOD, COB in the previous figure, which are in the same state of motion. The sand at C will be set in violent movement. But if the same ends A, B be placed over oppositely vibrating segments (such as AOD, COD), the sand will be scarcely, if at all, affected.\n\n[[File:eb1911 v25 p0473 c2f2.png|center|80px]]\n{{c|{{sc|Fig.}} 43.}}\n\nIf a tuning-fork in vibration be turned round before the ear, four positions will be found in which it will be inaudible, owing to the mutual interference of the oppositely vibrating prongs of the fork. On interposing the hand between the ear and either prong of the fork when in one of those positions, the sound becomes audible, because then one of the two interfering waves is cut off from the ear. This experiment may be varied by holding the fork over a glass jar into which water is poured to such a depth that the air-column within reinforces the note of the fork when suitably placed, and then turning the fork round.\n\nHelmholtz's double siren is well calculated for the investigation of the laws of interference of sound. For this purpose a simple mechanism is found in the instrument, by means of which the fixed upper plate can be turned round and placed in any position relatively to the lower one. If, now, the apparatus be so set that the notes from the upper and lower chest are in unison, the upper fixed plate may be placed in four positions, such as to cause the air-current to be cut off in the one chest at the exact instant when it is freely passing through the other, and vice versa. The two waves, therefore, being in opposite phases, neutralize one another, and the result is a faint sound. On turning round the upper chest into any intermediate position, the intensity of the sound will increase up to a maximum, which occurs when the air in both chests is being admitted and cut off contemporaneously.\n\nIf two organ pipes in unison are mounted side by side on a wind-chest with their ends close together, and are blown for a very short time, they sound. But if the blowing is continued, usually in less than a second the sound dies away to a small fraction of that due to either alone. Yet the air within the pipes is vibrating more vigorously than ever, but in opposite phases in the two pipes. This may be shown by furnishing the pipes with manometric flames placed in the same vertical line. When the flames are viewed in a revolving mirror and the pipes are blown, each image of one flame lies between two images of the other. The essential fact, as pointed out by Lord Rayleigh (''Scientific Papers'', i. 409), is not the common wind chest, but the nearness of the open ends, so that the outrush from one pipe can supply the inrush to the other, and the converse. If, the two pipes are slightly out of tune when sounded separately together they sound a common note which may be higher than that due to either alone. Lord Rayleigh (''loc. cit.'') points out that this<noinclude><references/></noinclude>"
 }

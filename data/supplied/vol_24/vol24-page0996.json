@@ -22,6 +22,17 @@
     ]
    },
    {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     200,
+     1180,
+     350
+    ]
+   },
+   {
     "name": "c1f1",
     "kind": "figure",
     "column": 1,
@@ -33,14 +44,14 @@
     ]
    },
    {
-    "name": "c1s1",
-    "kind": "text",
+    "name": "c1c1",
+    "kind": "caption",
     "column": 1,
     "box": [
      117,
-     645,
+     644,
      551,
-     674
+     675
     ]
    },
    {
@@ -49,20 +60,9 @@
     "column": 1,
     "box": [
      551,
-     218,
+     350,
      1180,
      701
-    ]
-   },
-   {
-    "name": "c1f2",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     117,
-     732,
-     540,
-     1683
     ]
    },
    {
@@ -71,8 +71,30 @@
     "column": 1,
     "box": [
      117,
+     701,
+     1180,
+     1530
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     117,
+     1530,
+     542,
+     1683
+    ]
+   },
+   {
+    "name": "c1c2",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     117,
      1686,
-     540,
+     542,
      1721
     ]
    },
@@ -81,8 +103,8 @@
     "kind": "text",
     "column": 1,
     "box": [
-     540,
-     703,
+     542,
+     1530,
      1180,
      1721
     ]
@@ -139,7 +161,7 @@
      1180,
      1871,
      2248,
-     2368
+     2903
     ]
    },
    {
@@ -148,7 +170,7 @@
     "column": 2,
     "box": [
      1180,
-     2368,
+     2903,
      2248,
      3115
     ]
@@ -156,16 +178,18 @@
   ],
   "readings": {
    "head": "{{RunningHeader|934|SHIPBUILDING|[ROLLING OF SHIPS}}",
-   "c1s1": "{{c|{{sc|Fig.}} 26.}}",
-   "c1s2": "constant. If from any point <math>\\text{B}_1'</math> of the a tangent plane be drawn, the perpendicular upon it, <math>\\text{GN}</math>, is proportional to the potential energy, and the stability of the body is thus the same as that of the surface of buoyancy regarded as a solid capable of rolling on a horizontal plane. The locus of the foot of the perpendicular <math>\\text{N}</math> is called the “podaire” (shown dotted in the figure); this surface resembles the surface of buoyancy in its general shape, and touches it when <math>\\text{GB}</math> is normal, ''i.e.'' at positions of equilibrium <math>\\text{B}_1</math>, <math>\\text{B}_2</math>, <math>\\text{B}_3</math>, <math>\\text{B}_4</math>,; it has the",
-   "c1s3": "{{c|{{sc|Fig.}} 27.}}",
-   "c1s4": "property that a radius <math>\\text{GN}</math> drawn al when the body is in the position l has a length proportional to the\n\npposed to move under no external forces, ge in the displacement be neglected, the n can be expressed by <math>\\Sigma mv^2/2g</math>, and the <math>+\\tfrac{1}{2}g\\,.\\,\\Sigma mv^2</math>; the latter is constant when d steadily decreases if resistances are in stance, when the body is momentarily at where <math>l</math> is a linear quantity; and through- than <math>l</math> by <math>\\frac{1}{2g\\text{W}}\\Sigma mv^2</math>. The effect of re- ase <math>l</math> or the maximum value of <math>\\text{GN}</math>; and it y by the following conception. Imagine a at <math>\\text{G}</math>, to be originally entirely within the ble of expanding until the whole surface is ch the podaire at the minimum normal, l lake round it; similar lakes will form absolute stability. Positions of absolute xternally by the sphere, and if the water small islands. At positions of relative n general divide the surface into two fig. 27), and become one or the other of the branches <math>\\text{XX}'</math>, <math>\\text{YY}'</math> according as the size of the sphere is slightly increased or diminished. Let the radius <math>\\text{GN}</math> to the podaire along the edge of the water be represented by <math>l</math>; from the energy equation the radius for any other position of the",
+   "c1s1": "increased by an arbitrary constant. If from any point <math>\\text{B}_1'</math> of the surface of buoyancy (fig. 26) a tangent plane be drawn, the perpendicular upon it, <math>\\text{GN}</math>, is proportional to the potential energy, and the stability",
+   "c1c1": "{{c|{{sc|Fig.}} 26.}}",
+   "c1s2": "of the body is thus the same as that of the surface of buoyancy regarded as a solid capable of rolling on a horizontal plane. The locus of the foot of the perpendicular <math>\\text{N}</math> is called the “podaire” (shown dotted in the figure); this surface resembles the surface of buoyancy in its general shape, and touches it when <math>\\text{GB}</math> is normal, ''i.e.'' at positions of equilibrium <math>\\text{B}_1</math>, <math>\\text{B}_2</math>, <math>\\text{B}_3</math>, <math>\\text{B}_4</math>,; it has the",
+   "c1s3": "property that a radius <math>\\text{GN}</math> drawn from <math>\\text{G}</math> is always vertical when the body is in the position corresponding to <math>\\text{N}</math>, and has a length proportional to the potential energy.\n\nIf the ship or body be supposed to move under no external forces, and the effect of any change in the displacement be neglected, the kinetic energy of the system can be expressed by <math>\\Sigma mv^2/2g</math>, and the total energy by <math>(\\text{W}\\times\\text{GN})+\\tfrac{1}{2}g\\,.\\,\\Sigma mv^2</math>; the latter is constant when there are no resistances, and steadily decreases if resistances are in operation. Neglecting resistance, when the body is momentarily at rest, <math>\\text{W}\\times\\text{GN}</math> becomes <math>\\text{W}.l</math>, where <math>l</math> is a linear quantity; and throughout the motion <math>\\text{GN}</math> is less than <math>l</math> by <math>\\frac{1}{2g\\text{W}}\\Sigma mv^2</math>. The effect of resistance is gradually to decrease <math>l</math> or the maximum value of <math>\\text{GN}</math>; and it may be exhibited graphically by the following conception. Imagine a sphere of water, with centre at <math>\\text{G}</math>, to be originally entirely within the podaire and then to be capable of expanding until the whole surface is submerged. It will first touch the podaire at the minimum normal, and will then form a small lake round it; similar lakes will form later at all other positions of absolute stability. Positions of absolute instability will be touched externally by the sphere, and if the water recede a little, will form small islands. At positions of relative stability the water will in general divide the surface into two parts meeting at an angle (fig. 27), and become one or the other of the branches <math>\\text{XX}'</math>, <math>\\text{YY}'</math> according as",
+   "c1c2": "{{c|{{sc|Fig.}} 27.}}",
+   "c1s4": "the size of the sphere is slightly increased or diminished. Let the radius <math>\\text{GN}</math> to the podaire along the edge of the water be represented by <math>l</math>; from the energy equation the radius for any other position of the",
    "c1s5": "body moving without external forces is less than <math>l</math>, and the position lies within the lake so bounded. The diminution of <math>l</math> due to resistances has the effect of gradually drying the lake. If the body is originally placed near a position of absolute stability, the small lake on drying will leave the body in or very near that position. On the other hand, if the body is placed at rest near a position of absolute instability, the water in drying will necessarily cause the body to move farther and farther from that position. Finally, if moving near a position of relative stability, the body will move freely from side to side until the drying has proceeded so far that separate branches <math>\\text{XX}'</math> or <math>\\text{YY}'</math> are obtained; when this occurs, the body will be fenced, as it were, on one side or the other, and will oscillate until a position of absolute stability is finally attained.",
    "c1s6": "¶\n{{smaller block|With regard to the surface of flotation it has been shown that in order that the displacement shall remain constant, consecutive waterlines must intersect on a line passing through the centre of gravity of the waterline or the centre of flotation. If the inclination take place from a given position in all possible directions, the lines of intersection with the original water-plane will all meet at the centre of flotation, which must, therefore, lie in the envelope of the water-planes, or the surface of flotation. The surface is therefore the locus of the centre of flotation for all possible inclinations. Since the curvature of the curve of flotation, which is the projection of the centre of flotation for inclinations about an axis perpendicular to the plane of projection, may change sign, the surface can also undergo similar changes in curvature and may be synclastic in certain parts and anti-clastic or saddle-shaped in others.}}\n\n{{smaller block|The relation between the surface of flotation and the stability of the ship is similar to that established in the two dimensional cases, ''i.e.'' the projection on the plane of inclination of the curve corresponding to the inclination has a centre of curvature whose height is a measure of the increase or decrease of stability caused by an alteration in displacement; the investigation, however, of the general case and the extension of Leclert's theorem to oblique inclinations contain no features of special interest or importance.}}\n\n{{c|''Rolling of Ships.''}}\n\nThe action of the waves upon a ship at sea is such as to produce rolling or angular oscillations about a horizontal longitudinal axis, pitching or angular oscillations about a horizontal transverse axis, and heaving or translational oscillations in a vertical",
-   "c2s1": "direction; also horizontal translations and rotations about a vertical axis which are not generally of an oscillatory character and will not materially affect the rolling. It is convenient when considering rolling to neglect the influence of the other accompanying oscillations, whose effect in most cases is slight in magnitude although complex in character.\n\n'''''Unresisted rolling.'''''\n\nThe ship is in the first place conceived to be rolling in still water without any resistances operating to diminish the motion. The equation of motion for moderate angles of inclination within which the arm of the righting couple is approximately proportional to the angle of heel (''i.e.'' <math>\\text{GZ} = m \\times \\theta</math>), is\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = -\\frac{g}{\\epsilon^2}m\\,.\\,\\theta,</math> . . . . . (1)}}\nwhere <math>\\epsilon</math> is the radius of gyration of the ship about the axis of rotation, <math>m</math> the metacentric height, <math>\\theta</math> the angle of inclination and <math>g</math> the acceleration produced by gravity. From this the time deduced for a single oscillation, from port to starboard, or vice versa, is\n{{block center|<math>\\text{T} = \\pi\\sqrt{\\frac{\\epsilon^2}{m\\,.\\,g}},</math> . . . . . (2)}}",
+   "c2s1": "direction; also horizontal translations and rotations about a vertical axis which are not generally of an oscillatory character and will not materially affect the rolling. It is convenient when considering rolling to neglect the influence of the other accompanying oscillations, whose effect in most cases is slight in magnitude although complex in character.\n\n'''''Unresisted rolling.'''''\n\nThe ship is in the first place conceived to be rolling in still water without any resistances operating to diminish the motion. The equation of motion for moderate angles of inclination within which the arm of the righting couple is approximately proportional to the angle of heel (''i.e.'' <math>\\text{GZ}=m\\times\\theta</math>), is\n{{block center|<math>\\frac{d^2\\theta}{dt^2}=-\\frac{g}{\\epsilon^2}m.\\theta,</math> . . . . . (1)}}\nwhere <math>\\epsilon</math> is the radius of gyration of the ship about the axis of rotation, <math>m</math> the metacentric height, <math>\\theta</math> the angle of inclination and <math>g</math> the acceleration produced by gravity. From this the time deduced for a single oscillation, from port to starboard, or vice versa, is\n{{block center|<math>\\text{T}=\\pi\\sqrt{\\frac{\\epsilon^2}{m.g}},</math> . . . . . (2)}}",
    "c2s2": "showing that the time of oscillation varies directly as the radius of gyration, and inversely as the square root of the metacentric height.\n\nThe value of <math>\\text{T}</math> is generally about 10 seconds in a large Atlantic liner, 7 to 8 seconds in a battleship, and 5 to 6 seconds in second-class cruisers and ships of similar type. In a large modern warship <math>\\epsilon</math> is about one-third the breadth of the ship.\n\nFor unresisted rolling of ships among waves the theory generally accepted is that due to Froude (see ''Trans. Inst. Nav. Arch.'', 1861 and 1862). Before his work, many eminent mathematicians had attempted to arrive at a solution of this most difficult problem, but for the most part their attempts met with scanty success; wave-motion and wave-structure were imperfectly understood, and the forces impressed on a ship by waves could not be even approximated to. Froude's theory is based on the proposition that, when a ship is among waves, the impressed forces on her tend to place her normal to a wave sub-surface, which is assumed to be the surface passing through the ship's centre of buoyancy, and which is regarded as the effective wave surface, as far as the rolling is concerned. As in water at rest the ship is in equilibrium when her masts are normal to the surface of the water, so in waves she is in equilibrium when her masts are normal, instant by instant, to the effective surface of the wave that is passing her. When she at any instant deviates from this position, the effort by which she endeavours to return to the normal depends on the angle of deviation, in the same manner as the effort to assume an upright position, when forcibly inclined in still water, depends on the angle of inclination. Hence her stability (''i.e.'' her effort to become vertical) in still water measures her effort to become normal to the",
-   "c2s3": "wave at any instant on a wave. Froude made the assumptions that the profile of the wave was a curve of sines, and that the ship was rolling broadside on in a regular series of similar waves of given dimensions and of given period of recurrence. He was aware that the profile of the wave would be better represented by a trochoid, but in his first paper he gave several reasons why he preferred the curve of sines. He also assumed that the ship's rolling in still water was isochronous, and that the period of the rolling was given by <math>\\text{T} = \\pi\\sqrt{\\frac{\\epsilon^2}{m\\,.\\,g}}</math>, as obtained theoretically. On these assumptions the equation of motion is obtained by substituting, for the angle of inclination in still water, the instantaneous angle between the ship and the normal to the wave-slope, and thus becomes\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = \\frac{-gm}{\\epsilon^2}(\\theta - \\theta_1) = -\\frac{\\pi^2}{\\text{T}^2}(\\theta - \\theta_1),</math> . . . (3)}}",
-   "c2s4": "where <math>\\theta</math> = angle of ship's masts to the vertical, and <math>\\theta_1</math> = angle of normal to wave-slope to the vertical at the instant considered. <math>\\theta_1</math> has to be expressed in terms of time, and is given by <math>\\theta_1 = \\Theta_1 \\sin\\frac{\\pi t}{\\text{T}_1}</math>, where <math>\\Theta_1</math> is the maximum wave-slope, <math>\\text{T}_1</math> is the half period of the wave, ''i.e.'' half the time the wave takes to travel a distance equal to its length, and <math>t</math> is the time dating from the mid-trough of the wave. Equation (3) can therefore be written—\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = -\\frac{\\pi^2}{\\text{T}^2}\\left(\\theta - \\Theta_1 . \\sin\\frac{\\pi}{\\text{T}_1}t\\right),</math> . . . (4)}}\nwhich is the general differential equation of the unresisted motion of a ship in regular waves of constant period. The solution of this equation is—\n{{block center|<math>\\theta = \\text{C}_1 . \\sin\\frac{\\pi}{\\text{T}}t + \\text{C}_2\\cos\\frac{\\pi}{\\text{T}}t + \\frac{\\Theta_1}{1 - \\frac{\\text{T}^2}{\\text{T}_1^2}}\\sin\\frac{\\pi}{\\text{T}_1}t,</math> . . (5)}}\nwhere <math>\\text{C}_1</math> and <math>\\text{C}_2</math> are constants depending on the initial movement and attitude of the ship.\n\nThe last term of this expression,\n{{block center|<math>\\frac{\\Theta_1}{1 - \\frac{\\text{T}^2}{\\text{T}_1^2}} . \\sin\\frac{\\pi}{\\text{T}_1}t,</math>}}"
+   "c2s3": "wave at any instant on a wave. Froude made the assumptions that the profile of the wave was a curve of sines, and that the ship was rolling broadside on in a regular series of similar waves of given dimensions and of given period of recurrence. He was aware that the profile of the wave would be better represented by a trochoid, but in his first paper he gave several reasons why he preferred the curve of sines. He also assumed that the ship's rolling in still water was isochronous, and that the period of the rolling was given by <math>\\text{T} = \\pi\\sqrt{\\frac{\\epsilon^2}{m\\,.\\,g}}</math>, as obtained theoretically. On these assumptions the equation of motion is obtained by substituting, for the angle of inclination in still water, the instantaneous angle between the ship and the normal to the wave-slope, and thus becomes\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = \\frac{-gm}{\\epsilon^2}(\\theta - \\theta_1) = -\\frac{\\pi^2}{\\text{T}^2}(\\theta - \\theta_1),</math> . . . . (3)}}\nwhere <math>\\theta</math> = angle of ship's masts to the vertical, and <math>\\theta_1</math> = angle of normal to wave-slope to the vertical at the instant considered. <math>\\theta_1</math> has to be expressed in terms of time, and is given by <math>\\theta_1 = \\Theta_1 \\sin\\frac{\\pi t}{\\text{T}_1}</math>, where <math>\\Theta_1</math> is the maximum wave-slope, <math>\\text{T}_1</math> is the half period of the wave, ''i.e.'' half the time the wave takes to travel a distance equal to its length, and <math>t</math> is the time dating from the mid-trough of the wave. Equation (3) can therefore be written—\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = -\\frac{\\pi^2}{\\text{T}^2}\\left(\\theta - \\Theta_1\\,.\\,\\sin\\frac{\\pi}{\\text{T}_1}t\\right),</math> . . . . (4)}}\nwhich is the general differential equation of the unresisted motion of a ship in regular waves of constant period. The solution of this equation is—\n{{block center|<math>\\theta = \\text{C}_1\\,.\\,\\sin\\frac{\\pi}{\\text{T}}t + \\text{C}_2\\cos\\frac{\\pi}{\\text{T}}t + \\frac{\\Theta_1}{1 - \\frac{\\text{T}^2}{\\text{T}_1{}^2}}\\sin\\frac{\\pi}{\\text{T}_1}t,</math> . . . (5)}}",
+   "c2s4": "where <math>\\text{C}_1</math> and <math>\\text{C}_2</math> are constants depending on the initial movement and attitude of the ship.\n\nThe last term of this expression,\n{{block center|<math>\\frac{\\Theta_1}{1-\\frac{\\text{T}^2}{\\text{T}_1^2}}\\cdot\\sin\\frac{\\pi}{\\text{T}_1}t,</math>}}"
   },
   "figure_files": {
    "c1f1": "eb1911 v24 p0996 c1f1.png",
@@ -174,23 +198,23 @@
   "figures": [
    {
     "box": [
-     127,
+     125,
      352,
-     541,
+     539,
      640
     ],
     "caption": [
-     273,
-     646,
-     395,
-     674
+     275,
+     644,
+     396,
+     675
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     122,
-     343,
-     558,
+     115,
+     337,
+     571,
      642
     ]
    },
@@ -198,13 +222,13 @@
     "box": [
      119,
      1530,
-     525,
+     529,
      1681
     ],
     "caption": [
-     268,
+     269,
      1686,
-     390,
+     391,
      1721
     ],
     "column": 1,
@@ -212,8 +236,8 @@
     "page_box": [
      122,
      1528,
-     549,
-     1661
+     558,
+     1683
     ]
    }
   ],
@@ -229,22 +253,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 3,
-    "input_tokens": 5796,
+    "input_tokens": 5908,
     "output_tokens": 173,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 11,
-    "input_tokens": 7914,
-    "output_tokens": 6232,
+    "model": "claude-opus-5-5",
+    "calls": 13,
+    "input_tokens": 8527,
+    "output_tokens": 6181,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 21164
+    "cache_read_input_tokens": 31473
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|934|SHIPBUILDING|[ROLLING OF SHIPS}}</noinclude>[[File:eb1911 v24 p0996 c1f1.png|center|145px]]\n{{c|{{sc|Fig.}} 26.}}\n\nconstant. If from any point <math>\\text{B}_1'</math> of the a tangent plane be drawn, the perpendicular upon it, <math>\\text{GN}</math>, is proportional to the potential energy, and the stability of the body is thus the same as that of the surface of buoyancy regarded as a solid capable of rolling on a horizontal plane. The locus of the foot of the perpendicular <math>\\text{N}</math> is called the “podaire” (shown dotted in the figure); this surface resembles the surface of buoyancy in its general shape, and touches it when <math>\\text{GB}</math> is normal, ''i.e.'' at positions of equilibrium <math>\\text{B}_1</math>, <math>\\text{B}_2</math>, <math>\\text{B}_3</math>, <math>\\text{B}_4</math>,; it has the property that a radius <math>\\text{GN}</math> drawn al when the body is in the position l has a length proportional to the\n\n[[File:eb1911 v24 p0996 c1f2.png|center|142px]]\n{{c|{{sc|Fig.}} 27.}}\n\npposed to move under no external forces, ge in the displacement be neglected, the n can be expressed by <math>\\Sigma mv^2/2g</math>, and the <math>+\\tfrac{1}{2}g\\,.\\,\\Sigma mv^2</math>; the latter is constant when d steadily decreases if resistances are in stance, when the body is momentarily at where <math>l</math> is a linear quantity; and through- than <math>l</math> by <math>\\frac{1}{2g\\text{W}}\\Sigma mv^2</math>. The effect of re- ase <math>l</math> or the maximum value of <math>\\text{GN}</math>; and it y by the following conception. Imagine a at <math>\\text{G}</math>, to be originally entirely within the ble of expanding until the whole surface is ch the podaire at the minimum normal, l lake round it; similar lakes will form absolute stability. Positions of absolute xternally by the sphere, and if the water small islands. At positions of relative n general divide the surface into two fig. 27), and become one or the other of the branches <math>\\text{XX}'</math>, <math>\\text{YY}'</math> according as the size of the sphere is slightly increased or diminished. Let the radius <math>\\text{GN}</math> to the podaire along the edge of the water be represented by <math>l</math>; from the energy equation the radius for any other position of the body moving without external forces is less than <math>l</math>, and the position lies within the lake so bounded. The diminution of <math>l</math> due to resistances has the effect of gradually drying the lake. If the body is originally placed near a position of absolute stability, the small lake on drying will leave the body in or very near that position. On the other hand, if the body is placed at rest near a position of absolute instability, the water in drying will necessarily cause the body to move farther and farther from that position. Finally, if moving near a position of relative stability, the body will move freely from side to side until the drying has proceeded so far that separate branches <math>\\text{XX}'</math> or <math>\\text{YY}'</math> are obtained; when this occurs, the body will be fenced, as it were, on one side or the other, and will oscillate until a position of absolute stability is finally attained.\n\n{{smaller block|With regard to the surface of flotation it has been shown that in order that the displacement shall remain constant, consecutive waterlines must intersect on a line passing through the centre of gravity of the waterline or the centre of flotation. If the inclination take place from a given position in all possible directions, the lines of intersection with the original water-plane will all meet at the centre of flotation, which must, therefore, lie in the envelope of the water-planes, or the surface of flotation. The surface is therefore the locus of the centre of flotation for all possible inclinations. Since the curvature of the curve of flotation, which is the projection of the centre of flotation for inclinations about an axis perpendicular to the plane of projection, may change sign, the surface can also undergo similar changes in curvature and may be synclastic in certain parts and anti-clastic or saddle-shaped in others.}}\n\n{{smaller block|The relation between the surface of flotation and the stability of the ship is similar to that established in the two dimensional cases, ''i.e.'' the projection on the plane of inclination of the curve corresponding to the inclination has a centre of curvature whose height is a measure of the increase or decrease of stability caused by an alteration in displacement; the investigation, however, of the general case and the extension of Leclert's theorem to oblique inclinations contain no features of special interest or importance.}}\n\n{{c|''Rolling of Ships.''}}\n\nThe action of the waves upon a ship at sea is such as to produce rolling or angular oscillations about a horizontal longitudinal axis, pitching or angular oscillations about a horizontal transverse axis, and heaving or translational oscillations in a vertical direction; also horizontal translations and rotations about a vertical axis which are not generally of an oscillatory character and will not materially affect the rolling. It is convenient when considering rolling to neglect the influence of the other accompanying oscillations, whose effect in most cases is slight in magnitude although complex in character.\n\n'''''Unresisted rolling.'''''\n\nThe ship is in the first place conceived to be rolling in still water without any resistances operating to diminish the motion. The equation of motion for moderate angles of inclination within which the arm of the righting couple is approximately proportional to the angle of heel (''i.e.'' <math>\\text{GZ} = m \\times \\theta</math>), is\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = -\\frac{g}{\\epsilon^2}m\\,.\\,\\theta,</math> . . . . . (1)}}\nwhere <math>\\epsilon</math> is the radius of gyration of the ship about the axis of rotation, <math>m</math> the metacentric height, <math>\\theta</math> the angle of inclination and <math>g</math> the acceleration produced by gravity. From this the time deduced for a single oscillation, from port to starboard, or vice versa, is\n{{block center|<math>\\text{T} = \\pi\\sqrt{\\frac{\\epsilon^2}{m\\,.\\,g}},</math> . . . . . (2)}} showing that the time of oscillation varies directly as the radius of gyration, and inversely as the square root of the metacentric height.\n\nThe value of <math>\\text{T}</math> is generally about 10 seconds in a large Atlantic liner, 7 to 8 seconds in a battleship, and 5 to 6 seconds in second-class cruisers and ships of similar type. In a large modern warship <math>\\epsilon</math> is about one-third the breadth of the ship.\n\nFor unresisted rolling of ships among waves the theory generally accepted is that due to Froude (see ''Trans. Inst. Nav. Arch.'', 1861 and 1862). Before his work, many eminent mathematicians had attempted to arrive at a solution of this most difficult problem, but for the most part their attempts met with scanty success; wave-motion and wave-structure were imperfectly understood, and the forces impressed on a ship by waves could not be even approximated to. Froude's theory is based on the proposition that, when a ship is among waves, the impressed forces on her tend to place her normal to a wave sub-surface, which is assumed to be the surface passing through the ship's centre of buoyancy, and which is regarded as the effective wave surface, as far as the rolling is concerned. As in water at rest the ship is in equilibrium when her masts are normal to the surface of the water, so in waves she is in equilibrium when her masts are normal, instant by instant, to the effective surface of the wave that is passing her. When she at any instant deviates from this position, the effort by which she endeavours to return to the normal depends on the angle of deviation, in the same manner as the effort to assume an upright position, when forcibly inclined in still water, depends on the angle of inclination. Hence her stability (''i.e.'' her effort to become vertical) in still water measures her effort to become normal to the wave at any instant on a wave. Froude made the assumptions that the profile of the wave was a curve of sines, and that the ship was rolling broadside on in a regular series of similar waves of given dimensions and of given period of recurrence. He was aware that the profile of the wave would be better represented by a trochoid, but in his first paper he gave several reasons why he preferred the curve of sines. He also assumed that the ship's rolling in still water was isochronous, and that the period of the rolling was given by <math>\\text{T} = \\pi\\sqrt{\\frac{\\epsilon^2}{m\\,.\\,g}}</math>, as obtained theoretically. On these assumptions the equation of motion is obtained by substituting, for the angle of inclination in still water, the instantaneous angle between the ship and the normal to the wave-slope, and thus becomes\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = \\frac{-gm}{\\epsilon^2}(\\theta - \\theta_1) = -\\frac{\\pi^2}{\\text{T}^2}(\\theta - \\theta_1),</math> . . . (3)}} where <math>\\theta</math> = angle of ship's masts to the vertical, and <math>\\theta_1</math> = angle of normal to wave-slope to the vertical at the instant considered. <math>\\theta_1</math> has to be expressed in terms of time, and is given by <math>\\theta_1 = \\Theta_1 \\sin\\frac{\\pi t}{\\text{T}_1}</math>, where <math>\\Theta_1</math> is the maximum wave-slope, <math>\\text{T}_1</math> is the half period of the wave, ''i.e.'' half the time the wave takes to travel a distance equal to its length, and <math>t</math> is the time dating from the mid-trough of the wave. Equation (3) can therefore be written—\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = -\\frac{\\pi^2}{\\text{T}^2}\\left(\\theta - \\Theta_1 . \\sin\\frac{\\pi}{\\text{T}_1}t\\right),</math> . . . (4)}}\nwhich is the general differential equation of the unresisted motion of a ship in regular waves of constant period. The solution of this equation is—\n{{block center|<math>\\theta = \\text{C}_1 . \\sin\\frac{\\pi}{\\text{T}}t + \\text{C}_2\\cos\\frac{\\pi}{\\text{T}}t + \\frac{\\Theta_1}{1 - \\frac{\\text{T}^2}{\\text{T}_1^2}}\\sin\\frac{\\pi}{\\text{T}_1}t,</math> . . (5)}}\nwhere <math>\\text{C}_1</math> and <math>\\text{C}_2</math> are constants depending on the initial movement and attitude of the ship.\n\nThe last term of this expression,\n{{block center|<math>\\frac{\\Theta_1}{1 - \\frac{\\text{T}^2}{\\text{T}_1^2}} . \\sin\\frac{\\pi}{\\text{T}_1}t,</math>}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|934|SHIPBUILDING|[ROLLING OF SHIPS}}</noinclude>increased by an arbitrary constant. If from any point <math>\\text{B}_1'</math> of the surface of buoyancy (fig. 26) a tangent plane be drawn, the perpendicular upon it, <math>\\text{GN}</math>, is proportional to the potential energy, and the stability of the body is thus the same as that of the surface of buoyancy regarded as a solid capable of rolling on a horizontal plane. The locus of the foot of the perpendicular <math>\\text{N}</math> is called the “podaire” (shown dotted in the figure); this surface resembles the surface of buoyancy in its general shape, and touches it when <math>\\text{GB}</math> is normal, ''i.e.'' at positions of equilibrium <math>\\text{B}_1</math>, <math>\\text{B}_2</math>, <math>\\text{B}_3</math>, <math>\\text{B}_4</math>,; it has the property that a radius <math>\\text{GN}</math> drawn from <math>\\text{G}</math> is always vertical when the body is in the position corresponding to <math>\\text{N}</math>, and has a length proportional to the potential energy.\n\n[[File:eb1911 v24 p0996 c1f1.png|center|145px]]\n{{c|{{sc|Fig.}} 26.}}\n\nIf the ship or body be supposed to move under no external forces, and the effect of any change in the displacement be neglected, the kinetic energy of the system can be expressed by <math>\\Sigma mv^2/2g</math>, and the total energy by <math>(\\text{W}\\times\\text{GN})+\\tfrac{1}{2}g\\,.\\,\\Sigma mv^2</math>; the latter is constant when there are no resistances, and steadily decreases if resistances are in operation. Neglecting resistance, when the body is momentarily at rest, <math>\\text{W}\\times\\text{GN}</math> becomes <math>\\text{W}.l</math>, where <math>l</math> is a linear quantity; and throughout the motion <math>\\text{GN}</math> is less than <math>l</math> by <math>\\frac{1}{2g\\text{W}}\\Sigma mv^2</math>. The effect of resistance is gradually to decrease <math>l</math> or the maximum value of <math>\\text{GN}</math>; and it may be exhibited graphically by the following conception. Imagine a sphere of water, with centre at <math>\\text{G}</math>, to be originally entirely within the podaire and then to be capable of expanding until the whole surface is submerged. It will first touch the podaire at the minimum normal, and will then form a small lake round it; similar lakes will form later at all other positions of absolute stability. Positions of absolute instability will be touched externally by the sphere, and if the water recede a little, will form small islands. At positions of relative stability the water will in general divide the surface into two parts meeting at an angle (fig. 27), and become one or the other of the branches <math>\\text{XX}'</math>, <math>\\text{YY}'</math> according as the size of the sphere is slightly increased or diminished. Let the radius <math>\\text{GN}</math> to the podaire along the edge of the water be represented by <math>l</math>; from the energy equation the radius for any other position of the body moving without external forces is less than <math>l</math>, and the position lies within the lake so bounded. The diminution of <math>l</math> due to resistances has the effect of gradually drying the lake. If the body is originally placed near a position of absolute stability, the small lake on drying will leave the body in or very near that position. On the other hand, if the body is placed at rest near a position of absolute instability, the water in drying will necessarily cause the body to move farther and farther from that position. Finally, if moving near a position of relative stability, the body will move freely from side to side until the drying has proceeded so far that separate branches <math>\\text{XX}'</math> or <math>\\text{YY}'</math> are obtained; when this occurs, the body will be fenced, as it were, on one side or the other, and will oscillate until a position of absolute stability is finally attained.\n\n[[File:eb1911 v24 p0996 c1f2.png|center|142px]]\n{{c|{{sc|Fig.}} 27.}}\n\n{{smaller block|With regard to the surface of flotation it has been shown that in order that the displacement shall remain constant, consecutive waterlines must intersect on a line passing through the centre of gravity of the waterline or the centre of flotation. If the inclination take place from a given position in all possible directions, the lines of intersection with the original water-plane will all meet at the centre of flotation, which must, therefore, lie in the envelope of the water-planes, or the surface of flotation. The surface is therefore the locus of the centre of flotation for all possible inclinations. Since the curvature of the curve of flotation, which is the projection of the centre of flotation for inclinations about an axis perpendicular to the plane of projection, may change sign, the surface can also undergo similar changes in curvature and may be synclastic in certain parts and anti-clastic or saddle-shaped in others.}}\n\n{{smaller block|The relation between the surface of flotation and the stability of the ship is similar to that established in the two dimensional cases, ''i.e.'' the projection on the plane of inclination of the curve corresponding to the inclination has a centre of curvature whose height is a measure of the increase or decrease of stability caused by an alteration in displacement; the investigation, however, of the general case and the extension of Leclert's theorem to oblique inclinations contain no features of special interest or importance.}}\n\n{{c|''Rolling of Ships.''}}\n\nThe action of the waves upon a ship at sea is such as to produce rolling or angular oscillations about a horizontal longitudinal axis, pitching or angular oscillations about a horizontal transverse axis, and heaving or translational oscillations in a vertical direction; also horizontal translations and rotations about a vertical axis which are not generally of an oscillatory character and will not materially affect the rolling. It is convenient when considering rolling to neglect the influence of the other accompanying oscillations, whose effect in most cases is slight in magnitude although complex in character.\n\n'''''Unresisted rolling.'''''\n\nThe ship is in the first place conceived to be rolling in still water without any resistances operating to diminish the motion. The equation of motion for moderate angles of inclination within which the arm of the righting couple is approximately proportional to the angle of heel (''i.e.'' <math>\\text{GZ}=m\\times\\theta</math>), is\n{{block center|<math>\\frac{d^2\\theta}{dt^2}=-\\frac{g}{\\epsilon^2}m.\\theta,</math> . . . . . (1)}}\nwhere <math>\\epsilon</math> is the radius of gyration of the ship about the axis of rotation, <math>m</math> the metacentric height, <math>\\theta</math> the angle of inclination and <math>g</math> the acceleration produced by gravity. From this the time deduced for a single oscillation, from port to starboard, or vice versa, is\n{{block center|<math>\\text{T}=\\pi\\sqrt{\\frac{\\epsilon^2}{m.g}},</math> . . . . . (2)}} showing that the time of oscillation varies directly as the radius of gyration, and inversely as the square root of the metacentric height.\n\nThe value of <math>\\text{T}</math> is generally about 10 seconds in a large Atlantic liner, 7 to 8 seconds in a battleship, and 5 to 6 seconds in second-class cruisers and ships of similar type. In a large modern warship <math>\\epsilon</math> is about one-third the breadth of the ship.\n\nFor unresisted rolling of ships among waves the theory generally accepted is that due to Froude (see ''Trans. Inst. Nav. Arch.'', 1861 and 1862). Before his work, many eminent mathematicians had attempted to arrive at a solution of this most difficult problem, but for the most part their attempts met with scanty success; wave-motion and wave-structure were imperfectly understood, and the forces impressed on a ship by waves could not be even approximated to. Froude's theory is based on the proposition that, when a ship is among waves, the impressed forces on her tend to place her normal to a wave sub-surface, which is assumed to be the surface passing through the ship's centre of buoyancy, and which is regarded as the effective wave surface, as far as the rolling is concerned. As in water at rest the ship is in equilibrium when her masts are normal to the surface of the water, so in waves she is in equilibrium when her masts are normal, instant by instant, to the effective surface of the wave that is passing her. When she at any instant deviates from this position, the effort by which she endeavours to return to the normal depends on the angle of deviation, in the same manner as the effort to assume an upright position, when forcibly inclined in still water, depends on the angle of inclination. Hence her stability (''i.e.'' her effort to become vertical) in still water measures her effort to become normal to the wave at any instant on a wave. Froude made the assumptions that the profile of the wave was a curve of sines, and that the ship was rolling broadside on in a regular series of similar waves of given dimensions and of given period of recurrence. He was aware that the profile of the wave would be better represented by a trochoid, but in his first paper he gave several reasons why he preferred the curve of sines. He also assumed that the ship's rolling in still water was isochronous, and that the period of the rolling was given by <math>\\text{T} = \\pi\\sqrt{\\frac{\\epsilon^2}{m\\,.\\,g}}</math>, as obtained theoretically. On these assumptions the equation of motion is obtained by substituting, for the angle of inclination in still water, the instantaneous angle between the ship and the normal to the wave-slope, and thus becomes\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = \\frac{-gm}{\\epsilon^2}(\\theta - \\theta_1) = -\\frac{\\pi^2}{\\text{T}^2}(\\theta - \\theta_1),</math> . . . . (3)}}\nwhere <math>\\theta</math> = angle of ship's masts to the vertical, and <math>\\theta_1</math> = angle of normal to wave-slope to the vertical at the instant considered. <math>\\theta_1</math> has to be expressed in terms of time, and is given by <math>\\theta_1 = \\Theta_1 \\sin\\frac{\\pi t}{\\text{T}_1}</math>, where <math>\\Theta_1</math> is the maximum wave-slope, <math>\\text{T}_1</math> is the half period of the wave, ''i.e.'' half the time the wave takes to travel a distance equal to its length, and <math>t</math> is the time dating from the mid-trough of the wave. Equation (3) can therefore be written—\n{{block center|<math>\\frac{d^2\\theta}{dt^2} = -\\frac{\\pi^2}{\\text{T}^2}\\left(\\theta - \\Theta_1\\,.\\,\\sin\\frac{\\pi}{\\text{T}_1}t\\right),</math> . . . . (4)}}\nwhich is the general differential equation of the unresisted motion of a ship in regular waves of constant period. The solution of this equation is—\n{{block center|<math>\\theta = \\text{C}_1\\,.\\,\\sin\\frac{\\pi}{\\text{T}}t + \\text{C}_2\\cos\\frac{\\pi}{\\text{T}}t + \\frac{\\Theta_1}{1 - \\frac{\\text{T}^2}{\\text{T}_1{}^2}}\\sin\\frac{\\pi}{\\text{T}_1}t,</math> . . . (5)}} where <math>\\text{C}_1</math> and <math>\\text{C}_2</math> are constants depending on the initial movement and attitude of the ship.\n\nThe last term of this expression,\n{{block center|<math>\\frac{\\Theta_1}{1-\\frac{\\text{T}^2}{\\text{T}_1^2}}\\cdot\\sin\\frac{\\pi}{\\text{T}_1}t,</math>}}<noinclude><references/></noinclude>"
 }

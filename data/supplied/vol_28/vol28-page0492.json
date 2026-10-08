@@ -22,36 +22,14 @@
     ]
    },
    {
-    "name": "c1f1",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     166,
-     242,
-     1269,
-     2522
-    ]
-   },
-   {
     "name": "c1s1",
     "kind": "text",
     "column": 1,
     "box": [
-     166,
-     2522,
-     1269,
-     2594
-    ]
-   },
-   {
-    "name": "c1s3",
-    "kind": "text",
-    "column": 1,
-    "box": [
      174,
-     3170,
-     1269,
-     3333
+     226,
+     1244,
+     629
     ]
    },
    {
@@ -59,10 +37,54 @@
     "kind": "text",
     "column": 2,
     "box": [
-     1269,
+     1244,
      226,
      2366,
-     3068
+     629
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     174,
+     629,
+     2328,
+     2520
+    ]
+   },
+   {
+    "name": "c0c1",
+    "kind": "caption",
+    "column": 0,
+    "box": [
+     174,
+     2524,
+     2328,
+     2595
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     2328,
+     629,
+     2366,
+     2595
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     174,
+     2592,
+     1242,
+     3333
     ]
    },
    {
@@ -70,8 +92,8 @@
     "kind": "text",
     "column": 2,
     "box": [
-     1269,
-     3068,
+     1242,
+     2592,
      2366,
      3333
     ]
@@ -79,33 +101,35 @@
   ],
   "readings": {
    "head": "{{RunningHeader|474|WEIGHING MACHINES|[AUTOMATIC}}",
-   "c1s1": "{{c|From the Notice issued by the Standards Department of the Board o}}\n{{c|{{sc|Fig.}} 14.—Price-computin}}",
-   "c1s3": "",
-   "c2s1": "values are indicated on the chart by the toothed edge of the index arm. On the customer's side of the machine the weight of the goods is indicated on a pair of arcs by a separate index arm precisely in the same manner as on the seller's side.\n\nIn weighing, the goods are placed in the pan of an ordinary lever machine (see fig. 14), and the end of the lever rests on the stirrup end of a short vertical rod. The upper end of this rod is formed into a loop, and this loop pulls upon a knife-edge which is fixed to a short lateral arm rigidly attached to a vertical disk, and this disk turns in bearings formed in the frame of the machine. The same disk carries the index arm, which is rigidly fixed to it and indicates the weight and value of the goods, and also carries the pendulum, which is rigidly attached to it, and regulates the position of the index arm according to the position which it takes up and the leverage which it exerts when swayed out of the vertical position by the action of the lever of the lever machine. This lever is so counterbalanced that when there is no weight in the pan the pendulum is vertical, and the index arm should then stand at zero. The zero adjustment is effected by means of levelling screws in the base of the frame. In order to deaden the vibrations of the index arm when weighing goods a vertical rod is attached to the lever from the lever machine near its left-hand end, and this rod carries on its lower end a plunger which works in a closed cylindrical dash-pot containing oil or glycerin.\n\n''Automatic Computing Weighing Machine'' (''even balance and pendulum'') ''for Retail Purposes'' (fig. 15).—This is an equal-armed inverted counter machine (see fig. 5) arranged to weigh up to 14 ℔ with great accuracy. Up to 2 ℔ the weight of the load is registered automatically on the chart in much the same manner as in the case of the automatic computing weighing machine already described. When the load exceeds 2 ℔ one or more 2-℔ weights are placed in the weights-pan, and the value of the portion of the goods corresponding to these 2-℔ weights is computed, at the rate per ℔, in the ordinary manner; and the value of the balance of the weight of the goods is read off the chart, and the two are added together. The advantage of this is that a very open scale is obtained for reading the value of the balance of the load. Thus, for weighing up to the full load of 14 ℔, six 2-℔ weights are required and no others.\n\nThe manner in which the balance of the load is weighed is as follows: Near the bottom of the vertical leg from the goods-pan, a projecting piece is rigidly attached to it, and as the pan descends with the balance of the load this piece pulls by a hook on a thin band of steel, which\n\n{{c|{{smaller|f Trade, by permission of the Controller of H. M. Stationery Office.}}}}\n{{c|ng Weighing Machine.}}\n\nis led upwards and wraps round the surface of a disk to which it is firmly secured. This disk rotates by rocking on a pair of knife-edges whose bearings are rigidly attached to the frame. The disk carries a weighted brass cylinder rigidly attached to it, which is pulled into an oblique position by the steel band until equilibrium is established. And the disk also carries the index arm which plays past the vertical face of the chart, and indicates the weight and price up to 2-℔ weight. The disk also carries a second and corresponding index arm which indicates the weight on the purchaser's side of the machine. At the bottom of the vertical leg from the goods-pan there is also a projecting piece which is attached to the top of a vertical piston rod, the piston of which plays in a dash-pot of glycerin as the beam sways, and deadens the vibrations of the index arm.",
-   "c2s2": "¶\n''Automatic Tea Weighing Machine'' (fig. 16).—This machine is designed to weigh out tea in quantities of <math>\\frac{1}{4}</math> ℔ each, which are done up in separate packets by hand. A large number of movements"
+   "c1s1": "¶\nOn the outer surface of the drum are printed the weight of the goods in ℔ and oz., and the money value of the goods corresponding to the different rates per ℔. The side of the casing which is next to the seller is pierced centrally by two slots, one a vertical slot through which the weight is read on the drum, and the other a horizontal slot, half of it on each side of the vertical slot, through which the money values of the goods, corresponding to the different rates per ℔, are read. The weight of the goods is recorded by means of an index pointer fixed to the casing on one side of the vertical slot, and the money values are opposite the figures defining the rates per ℔, which are marked on the edge of the casing below the hori-",
+   "c2s1": "values are indicated on the chart by the toothed edge of the index arm. On the customer's side of the machine the weight of the goods is indicated on a pair of arcs by a separate index arm precisely in the same manner as on the seller's side.\n\nIn weighing, the goods are placed in the pan of an ordinary lever machine (see fig. 14), and the end of the lever rests on the stirrup end of a short vertical rod. The upper end of this rod is formed into a loop, and this loop pulls upon a knife-edge which is fixed to a short lateral arm rigidly attached to a vertical disk, and this disk turns in bearings formed in the frame of the machine. The same disk carries the index arm, which is rigidly fixed to it and indicates the weight and value of the goods, and also carries the",
+   "c0c1": "{{c|'''From the Notice issued by the Standards Department of the Board of Trade, by permission of the Controller of H. M. Stationery Office.'''}}\n{{c|{{sc|Fig.}} 14.—Price-computing Weighing Machine.}}",
+   "c0s1": "",
+   "c1s2": "zontal slot. On the side of the casing which is next to the buyer there is a vertical slot through which the weight of the goods can be read on the drum.\n\n''Automatic Computing Weighing Machine for Retail Purposes'' (fig. 14).—The action of the machine shown in fig. 14 depends upon the displacement of a loaded pendulum. And the machine is arranged to weigh goods up to 8 ℔ with the fixed weight only on the pendulum, and up to 16 ℔ with an additional weight which can be readily slipped on to the pendulum rod. The weights and money values are arranged on a vertical chart, the sides of which converge towards the pivoting centre of an index arm which is actuated by the weighing mechanism. The two outer arcs of the chart are occupied by the scales for the weight of the goods in ℔ and oz., and the rest of the chart is occupied by a series of 25 concentric arcs which show the money values of the goods for 25 rates per ℔. The rates per ℔ are inscribed on the index arm at points corresponding to the values on the concentric arcs of the chart, and the",
+   "c2s2": "is led upwards and wraps round the surface of a disk to which it is firmly secured. This disk rotates by rocking on a pair of knife-edges whose bearings are rigidly attached to the frame. The disk carries a weighted brass cylinder rigidly attached to it, which is pulled into an oblique position by the steel band until equilibrium is established. And the disk also carries the index arm which plays past the vertical face of the chart, and indicates the weight and price up to 2-℔ weight. The disk also carries a second and corresponding index arm which indicates the weight on the purchaser's side of the machine. At the bottom of the vertical leg from the goods-pan there is also a projecting piece which is attached to the top of a vertical piston rod, the piston of which plays in a dash-pot of glycerin as the beam sways, and deadens the vibrations of the index arm.\n\n''Automatic Tea Weighing Machine'' (fig. 16).—This machine is designed to weigh out tea in quantities of <math>\\frac{1}{4}</math> ℔ each, which are done up in separate packets by hand. A large number of movements"
   },
   "figure_files": {
-   "c1f1": "eb1911 v28 p0492 c1f1.png"
+   "c0f1": "eb1911 v28 p0492 c0f1.png"
   },
   "figures": [
    {
     "box": [
-     193,
-     620,
-     1288,
-     2519
+     186,
+     626,
+     2328,
+     2517
     ],
     "caption": [
-     478,
-     2519,
-     1288,
-     2593
+     444,
+     2524,
+     2071,
+     2595
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      173,
-     632,
+     629,
      2295,
      2517
     ]
@@ -113,36 +137,37 @@
   ],
   "across": [],
   "refused": [],
-  "unread": {},
+  "unread": {
+   "c0s1": "empty"
+  },
   "rejected": {},
   "disagreements": {
-   "0": [
-    0,
-    2
-   ],
    "1": [
-    1,
-    0
+    0,
+    1
    ]
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 2,
-    "input_tokens": 4040,
-    "output_tokens": 94,
+    "input_tokens": 5341,
+    "output_tokens": 102,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 5,
-    "input_tokens": 4914,
-    "output_tokens": 2069,
+    "model": "claude-opus-5-5",
+    "calls": 8,
+    "input_tokens": 4792,
+    "output_tokens": 1937,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 9620
+    "cache_read_input_tokens": 19368
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|474|WEIGHING MACHINES|[AUTOMATIC}}</noinclude>[[File:eb1911 v28 p0492 c1f1.png|center|358px]]\n{{c|From the Notice issued by the Standards Department of the Board o}}\n{{c|{{sc|Fig.}} 14.—Price-computin}}\n\nvalues are indicated on the chart by the toothed edge of the index arm. On the customer's side of the machine the weight of the goods is indicated on a pair of arcs by a separate index arm precisely in the same manner as on the seller's side.\n\nIn weighing, the goods are placed in the pan of an ordinary lever machine (see fig. 14), and the end of the lever rests on the stirrup end of a short vertical rod. The upper end of this rod is formed into a loop, and this loop pulls upon a knife-edge which is fixed to a short lateral arm rigidly attached to a vertical disk, and this disk turns in bearings formed in the frame of the machine. The same disk carries the index arm, which is rigidly fixed to it and indicates the weight and value of the goods, and also carries the pendulum, which is rigidly attached to it, and regulates the position of the index arm according to the position which it takes up and the leverage which it exerts when swayed out of the vertical position by the action of the lever of the lever machine. This lever is so counterbalanced that when there is no weight in the pan the pendulum is vertical, and the index arm should then stand at zero. The zero adjustment is effected by means of levelling screws in the base of the frame. In order to deaden the vibrations of the index arm when weighing goods a vertical rod is attached to the lever from the lever machine near its left-hand end, and this rod carries on its lower end a plunger which works in a closed cylindrical dash-pot containing oil or glycerin.\n\n''Automatic Computing Weighing Machine'' (''even balance and pendulum'') ''for Retail Purposes'' (fig. 15).—This is an equal-armed inverted counter machine (see fig. 5) arranged to weigh up to 14 ℔ with great accuracy. Up to 2 ℔ the weight of the load is registered automatically on the chart in much the same manner as in the case of the automatic computing weighing machine already described. When the load exceeds 2 ℔ one or more 2-℔ weights are placed in the weights-pan, and the value of the portion of the goods corresponding to these 2-℔ weights is computed, at the rate per ℔, in the ordinary manner; and the value of the balance of the weight of the goods is read off the chart, and the two are added together. The advantage of this is that a very open scale is obtained for reading the value of the balance of the load. Thus, for weighing up to the full load of 14 ℔, six 2-℔ weights are required and no others.\n\nThe manner in which the balance of the load is weighed is as follows: Near the bottom of the vertical leg from the goods-pan, a projecting piece is rigidly attached to it, and as the pan descends with the balance of the load this piece pulls by a hook on a thin band of steel, which\n\n{{c|{{smaller|f Trade, by permission of the Controller of H. M. Stationery Office.}}}}\n{{c|ng Weighing Machine.}}\n\nis led upwards and wraps round the surface of a disk to which it is firmly secured. This disk rotates by rocking on a pair of knife-edges whose bearings are rigidly attached to the frame. The disk carries a weighted brass cylinder rigidly attached to it, which is pulled into an oblique position by the steel band until equilibrium is established. And the disk also carries the index arm which plays past the vertical face of the chart, and indicates the weight and price up to 2-℔ weight. The disk also carries a second and corresponding index arm which indicates the weight on the purchaser's side of the machine. At the bottom of the vertical leg from the goods-pan there is also a projecting piece which is attached to the top of a vertical piston rod, the piston of which plays in a dash-pot of glycerin as the beam sways, and deadens the vibrations of the index arm.\n\n''Automatic Tea Weighing Machine'' (fig. 16).—This machine is designed to weigh out tea in quantities of <math>\\frac{1}{4}</math> ℔ each, which are done up in separate packets by hand. A large number of movements<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|474|WEIGHING MACHINES|[AUTOMATIC}}</noinclude>On the outer surface of the drum are printed the weight of the goods in ℔ and oz., and the money value of the goods corresponding to the different rates per ℔. The side of the casing which is next to the seller is pierced centrally by two slots, one a vertical slot through which the weight is read on the drum, and the other a horizontal slot, half of it on each side of the vertical slot, through which the money values of the goods, corresponding to the different rates per ℔, are read. The weight of the goods is recorded by means of an index pointer fixed to the casing on one side of the vertical slot, and the money values are opposite the figures defining the rates per ℔, which are marked on the edge of the casing below the horivalues are indicated on the chart by the toothed edge of the index arm. On the customer's side of the machine the weight of the goods is indicated on a pair of arcs by a separate index arm precisely in the same manner as on the seller's side.\n\nIn weighing, the goods are placed in the pan of an ordinary lever machine (see fig. 14), and the end of the lever rests on the stirrup end of a short vertical rod. The upper end of this rod is formed into a loop, and this loop pulls upon a knife-edge which is fixed to a short lateral arm rigidly attached to a vertical disk, and this disk turns in bearings formed in the frame of the machine. The same disk carries the index arm, which is rigidly fixed to it and indicates the weight and value of the goods, and also carries the\n\n[[File:eb1911 v28 p0492 c0f1.png|center|699px]]\n{{c|'''From the Notice issued by the Standards Department of the Board of Trade, by permission of the Controller of H. M. Stationery Office.'''}}\n{{c|{{sc|Fig.}} 14.—Price-computing Weighing Machine.}}\n\nzontal slot. On the side of the casing which is next to the buyer there is a vertical slot through which the weight of the goods can be read on the drum.\n\n''Automatic Computing Weighing Machine for Retail Purposes'' (fig. 14).—The action of the machine shown in fig. 14 depends upon the displacement of a loaded pendulum. And the machine is arranged to weigh goods up to 8 ℔ with the fixed weight only on the pendulum, and up to 16 ℔ with an additional weight which can be readily slipped on to the pendulum rod. The weights and money values are arranged on a vertical chart, the sides of which converge towards the pivoting centre of an index arm which is actuated by the weighing mechanism. The two outer arcs of the chart are occupied by the scales for the weight of the goods in ℔ and oz., and the rest of the chart is occupied by a series of 25 concentric arcs which show the money values of the goods for 25 rates per ℔. The rates per ℔ are inscribed on the index arm at points corresponding to the values on the concentric arcs of the chart, and the is led upwards and wraps round the surface of a disk to which it is firmly secured. This disk rotates by rocking on a pair of knife-edges whose bearings are rigidly attached to the frame. The disk carries a weighted brass cylinder rigidly attached to it, which is pulled into an oblique position by the steel band until equilibrium is established. And the disk also carries the index arm which plays past the vertical face of the chart, and indicates the weight and price up to 2-℔ weight. The disk also carries a second and corresponding index arm which indicates the weight on the purchaser's side of the machine. At the bottom of the vertical leg from the goods-pan there is also a projecting piece which is attached to the top of a vertical piston rod, the piston of which plays in a dash-pot of glycerin as the beam sways, and deadens the vibrations of the index arm.\n\n''Automatic Tea Weighing Machine'' (fig. 16).—This machine is designed to weigh out tea in quantities of <math>\\frac{1}{4}</math> ℔ each, which are done up in separate packets by hand. A large number of movements<noinclude><references/></noinclude>"
 }

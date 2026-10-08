@@ -22,25 +22,36 @@
     ]
    },
    {
-    "name": "c1f1",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     115,
-     458,
-     580,
-     1209
-    ]
-   },
-   {
     "name": "c1s1",
     "kind": "text",
     "column": 1,
     "box": [
      115,
+     211,
+     1182,
+     683
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     115,
+     683,
+     580,
+     1209
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     115,
      1209,
      580,
-     1242
+     1243
     ]
    },
    {
@@ -49,9 +60,9 @@
     "column": 1,
     "box": [
      580,
-     231,
+     683,
      1182,
-     1242
+     1243
     ]
    },
    {
@@ -60,9 +71,9 @@
     "column": 1,
     "box": [
      115,
-     1242,
+     1243,
      1182,
-     1360
+     1359
     ]
    },
    {
@@ -71,9 +82,20 @@
     "column": 1,
     "box": [
      115,
-     1360,
+     1359,
      1182,
      1633
+    ]
+   },
+   {
+    "name": "c1c2",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     115,
+     1644,
+     1182,
+     1678
     ]
    },
    {
@@ -82,9 +104,9 @@
     "column": 1,
     "box": [
      115,
-     1644,
+     1678,
      1182,
-     1677
+     2607
     ]
    },
    {
@@ -93,24 +115,24 @@
     "column": 1,
     "box": [
      115,
-     1681,
+     2607,
      1182,
      2704
     ]
    },
    {
-    "name": "c1s5",
-    "kind": "text",
+    "name": "c1c3",
+    "kind": "caption",
     "column": 1,
     "box": [
      115,
-     2715,
+     2714,
      1182,
      2749
     ]
    },
    {
-    "name": "c1s6",
+    "name": "c1s5",
     "kind": "text",
     "column": 1,
     "box": [
@@ -139,7 +161,7 @@
      1182,
      1311,
      2254,
-     1580
+     1579
     ]
    },
    {
@@ -148,9 +170,20 @@
     "column": 2,
     "box": [
      1182,
-     1580,
+     1579,
      2254,
-     1770
+     1763
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1182,
+     1768,
+     2254,
+     1798
     ]
    },
    {
@@ -159,24 +192,13 @@
     "column": 2,
     "box": [
      1182,
-     1776,
-     2254,
-     1803
-    ]
-   },
-   {
-    "name": "c2s4",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1182,
-     1803,
+     1798,
      2254,
      2837
     ]
    },
    {
-    "name": "c2s5",
+    "name": "c2s4",
     "kind": "text",
     "column": 2,
     "box": [
@@ -189,17 +211,19 @@
   ],
   "readings": {
    "head": "{{RunningHeader|454|SOUND|[WIRES AND RODS}}",
-   "c1s1": "{{c|{{sc|Fig.}} 34.}}",
-   "c1s2": "traight string is <math>\\text{T}dx/ds</math>, and when the nall the curve of displacement is so it <math>dx/ds = 1</math>, and this component is <math>\\text{T}</math>. licular to the axis is <math>\\text{T}dy/ds = \\text{T}dy/dx</math>. lisplacements due to the two trains two separate forces are <math>\\text{T}dy_1/dx</math> and <math>y</math> is <math>\\text{T}dy/dx</math>. But since <math>y = y_1 + y_2</math>, or the condition for superposition is so small that we may put <math>dx/ds = 1</math>. lecting <math>\\phi^3</math>. Let two trains of equal ections along such a string of indefinary system of fig. 27. Since the may represent the vibration of a given string by the length between any two nodes. The fundamental mode is that in which <math>\\text{A}</math> and <math>\\text{B}</math> represent the ends of the string. In this case <math>\\text{AB} = \\tfrac{1}{2}\\lambda_1 = l</math> the length, and the frequency <math>n_1 = \\text{U}/\\lambda_1 = \\text{U}/2l = (1/2l)\\sqrt{(\\text{T}/m)}</math>. The middle of the string is a loop. In the next mode <math>\\text{A}</math> and <math>\\text{C}</math> represent the ends and <math>\\text{AC} = \\lambda_2 = l</math> and <math>n_2 = \\text{U}/\\lambda_2 = 2\\text{U}/2l = (2/2l)\\sqrt{(\\text{T}/m)}</math>. In the third mode <math>\\text{A}</math> and <math>\\text{D}</math> represent the ends and <math>\\text{AD} = \\tfrac{3}{2}\\lambda_3 = l</math> and <math>n_3 = \\text{U}/\\lambda_3 = 3\\text{U}/2l = (3/2l)\\sqrt{(\\text{T}/m)}</math> and so on. In fig. 34 the stationary wave systems of the first four modes are represented.\n\nThe complete series of harmonics are possible modes.",
-   "c1s3": "The experimental demonstration of these results is easily made by the sonometer or monochord (fig. 35). A string is fixed at <math>\\text{C}</math> on the top of a hollow box, and",
-   "c1s4": "{{c|{{sc|Fig.}} 35.}}",
-   "c1s5": "{{c|{{sc|Fig.}} 36.}}",
-   "c1s6": "of trisection, &c., as shown in fig. 36, for the fundamental and the first harmonic. When a string is struck or bowed at a point, any harmonic with a node at that point is absent. Since the quality of the note sounded depends on the mixture of harmonics, the quality therefore is to some extent dependent on the point of excitation.\n\nA highly ingenious and instructive method for illustrating the laws of musical strings was contrived by F. E. Melde. It consists in attaching to the loop or ventral segment of a vibrating body, ''e.g.'' a tuning-fork or a bell-glass, a silk or cotton thread, the other extremity being either fixed or passing over a pulley and supporting weights by which the thread may be stretched to any degree required. The vibrations of the larger mass are communicated to the thread, which",
+   "c1s1": "acting parallel to the axis or straight string is <math>\\text{T}dx/ds</math>, and when the disturbance is sufficiently small the curve of displacement is so nearly parallel to the axis that <math>dx/ds = 1</math>, and this component is <math>\\text{T}</math>. The component of <math>\\text{T}</math> perpendicular to the axis is <math>\\text{T}dy/ds = \\text{T}dy/dx</math>. Now if <math>y_1</math> and <math>y_2</math> are the displacements due to the two trains separately, and <math>y = y_1 + y_2</math>, the two separate forces are <math>\\text{T}dy_1/dx</math> and <math>\\text{T}dy_2/dx</math>, while that due to <math>y</math> is <math>\\text{T}dy/dx</math>. But since <math>y = y_1 + y_2</math>, <math>\\text{T}dy/dx = \\text{T}dy_1/dx + \\text{T}dy_2/dx</math>, or the condition for superposition holds when the displacement is so small that we may put <math>dx/ds = 1</math>. Evidently this comes to neglecting <math>\\phi^3</math>. Let two trains of equal waves moving in opposite directions along such a string of indefinite length form the stationary system of fig. 27. Since the nodes are always at rest we may represent the vibration of a given string by the length between",
+   "c1c1": "{{c|{{sc|Fig.}} 34.}}",
+   "c1s2": "any two nodes. The fundamental mode is that in which <math>\\text{A}</math> and <math>\\text{B}</math> represent the ends of the string. In this case <math>\\text{AB} = \\tfrac{1}{2}\\lambda_1 = l</math> the length, and the frequency <math>n_1 = \\text{U}/\\lambda_1 = \\text{U}/2l = (1/2l)\\sqrt{(\\text{T}/m)}</math>. The middle of the string is a loop. In the next mode <math>\\text{A}</math> and <math>\\text{C}</math> represent the ends and <math>\\text{AC} = \\lambda_2 = l</math> and <math>n_2 = \\text{U}/\\lambda_2 = 2\\text{U}/2l = (2/2l)\\sqrt{(\\text{T}/m)}</math>. In the third mode <math>\\text{A}</math> and <math>\\text{D}</math> represent the ends and <math>\\text{AD} = \\tfrac{3}{2}\\lambda_3 = l</math> and <math>n_3 = \\text{U}/\\lambda_3 = 3\\text{U}/2l = (3/2l)\\sqrt{(\\text{T}/m)}</math> and so on. In fig. 34 the stationary wave systems of the first four modes are represented.\n\nThe complete series of harmonics are possible modes.",
+   "c1s3": "The experimental demonstration of these results is easily made by the sonometer or monochord (fig. 35). A string is fixed at C on the top of a hollow box, and",
+   "c1c2": "{{c|{{sc|Fig.}} 35.}}",
+   "c1s4": "passes over two edges <math>\\text{AB}</math>, which serve as the fixed ends, and then over a pulley <math>\\text{P}</math>, being stretched by a weight <math>\\text{W}</math>. Between <math>\\text{A}</math> and <math>\\text{B}</math> a “ bridge ” <math>\\text{D}</math>, ''i.e.'' another edge slightly higher than <math>\\text{A}</math> or <math>\\text{B}</math>, can be inserted in any position, which is determined by a graduated scale. The effective length of the string is then <math>\\text{AD}</math>. Keeping the same tension, it may be shown that <math>nl</math> is constant by finding <math>n</math> for various lengths. Keeping <math>\\text{AD}</math> constant and varying <math>\\text{W}</math> it may be shown that <math>n \\infty \\sqrt{\\text{W}}</math>. Lastly, by using different strings, it may be shown that, with the same <math>\\text{T}</math> and <math>l</math>, <math>n \\propto \\sqrt{(1/m)}</math>.\n\nThe various modes of vibration may also be exhibited. If <math>\\text{D}</math> is removed and the string is bowed in the middle, the fundamental is brought out. If it is touched in the middle with a feather, the edge of a card, or the finger nail, and bowed a quarter of the way along the octave, the first overtone comes out. Each of the first few harmonics may be easily obtained by touching the string at the first node of the harmonic required, and bowing at the first loop, and the presence of the nodes and loops may be verified by putting light paper riders of shape <math>\\wedge</math> on the string at the nodes and loops. When the harmonic is sounded the riders at the loops are thrown off, while those at the nodes remain seated.\n\nNot only may the fundamental and its harmonics be obtained separately, but they are also to be heard simultaneously, particularly the earlier ones, which are usually more prominent than those higher in the series. A practised ear easily discerns the coexistence of these various tones when a pianoforte or violin string is thrown into vibration. It is evident that, in such case, the string, while vibrating as a whole between its fixed extremities, is at the same time executing subsidiary oscillations about its middle point, its points",
+   "c1c3": "{{c|{{sc|Fig.}} 36.}}",
+   "c1s5": "of trisection, &c., as shown in fig. 36, for the fundamental and the first harmonic. When a string is struck or bowed at a point, any harmonic with a node at that point is absent. Since the quality of the note sounded depends on the mixture of harmonics, the quality therefore is to some extent dependent on the point of excitation.\n\nA highly ingenious and instructive method for illustrating the laws of musical strings was contrived by F. E. Melde. It consists in attaching to the loop or ventral segment of a vibrating body, ''e.g.'' a tuning-fork or a bell-glass, a silk or cotton thread, the other extremity being either fixed or passing over a pulley and supporting weights by which the thread may be stretched to any degree required. The vibrations of the larger mass are communicated to the thread, which",
    "c2s1": "{{smaller block|by proper adjustment of its length and tension vibrates in unison and divides itself into one or more loops or ventral segments easily discernible by a spectator. If the length of the thread be kept invariable, a certain tension will give but one ventral segment; the fundamental note of the thread is then of the same pitch as the note of the body to which it is attached. By reducing the tension to one quarter of its previous amount, the number of ventral segments will be seen to be increased to two, indicating that the first harmonic of the thread is now in unison with the solid, and consequently that its fundamental is an octave lower than it was with the former tension; thus confirming the law that <math>n</math> varies as <math>\\sqrt{\\text{T}}</math>. In like manner, on further lowering the tension to one ninth, three ventral segments will be formed, and so on.}}\n\n{{smaller block|The law that, ''caeteris paribus'', <math>n</math> varies inversely as the thickness may be tested by forming a string of four lengths of the single thread used before, and consequently of double the thickness of the latter, when, for the same length and tension, the compound thread will exhibit double the number of ventral segments presented by the single thread.}}\n\n{{smaller block|The other laws admit of similar illustration.}}\n\n{{c|''Longitudinal Vibrations of Wires and Rods.''}}\n\nSubject to a limitation which we shall examine later, the velocity of a longitudinal disturbance along a wire or rod depends only on the material of the rod, and not upon the cross-section. Since the forces called into play by an extension or compression of the material are proportional to the cross-section, it follows that if we consider any case and then another case in which, with the same longitudinal disturbance, the cross-section is doubled, the force in the second case is doubled as well as the mass to be moved. The acceleration therefore remains the same, and the",
    "c2s2": "velocity is unaltered. We shall find the velocity of propagation, just as in previous cases, from the consideration of transfer of momentum.\n\nSuppose that a disturbance is travelling with velocity <math>\\text{U}</math> unchanged in form along a rod from left to right. Let us move the rod from right to left, so that the undisturbed parts move with velocity <math>\\text{U}</math>. Then the disturbance remains fixed in space. Let <math>\\text{A}</math> be a point in",
-   "c2s3": "{{c|{{sc|Fig.}} 37.}}",
-   "c2s4": "the disturbance, and <math>\\text{B}</math> a point in the undisturbed part. The material between <math>\\text{A}</math> and <math>\\text{B}</math>, though continually changing, is always in the same condition, and therefore the momentum within <math>\\text{AB}</math> is constant. Hence the amount carried out at <math>\\text{A}</math> is equal to that carried in at <math>\\text{B}</math>.\n\nNow momentum is transferred in two ways, viz. by the force acting between contiguous portions of a body and by the transfer of moving matter. At <math>\\text{B}</math> there is only the latter kind, and since the transfer of matter is <math>\\rho_0\\hat{\\omega}_0\\text{U}</math>, where <math>\\rho_0</math> is the undisturbed density and <math>\\hat{\\omega}_0</math> is the undisturbed cross-section, since its velocity is <math>\\text{U}</math> the passage of momentum per second is <math>\\rho_0\\hat{\\omega}_0\\text{U}_0^2</math>. At <math>\\text{A}</math>, if the velocity of the disturbance relative to undisturbed parts of the rod is <math>u</math> from left to right, the velocity relative to <math>\\text{A}</math> is <math>\\text{U}-u</math>. If <math>\\rho</math> is the density at <math>\\text{A}</math>, and <math>\\hat{\\omega}</math> the cross-section, then the momentum carried past <math>\\text{A}</math> is <math>\\rho\\hat{\\omega}(\\text{U}-u)^2</math>. But if <math>y</math> is the displacement at <math>\\text{A}</math>, <math>dy/dx</math> is the extension at <math>\\text{A}</math>, and the force acting is a pull across <math>\\text{A}</math> equal to <math>\\text{Y}\\hat{\\omega}_0 dy/dx</math>, where <math>\\text{Y}</math> is Young's modulus of elasticity. Then we have\n{{block center|<math>\\text{Y}\\hat{\\omega}_0 dy/dx+\\rho\\hat{\\omega}(\\text{U}-u)^2=\\rho_0\\hat{\\omega}_0\\text{U}^2.</math> (27)}}\n{{block center|Now <math>u/\\text{U}=-dy/dx,</math> (28)}}\nfor the particle at <math>\\text{A}</math> moves over <math>dy</math> backwards, while the disturbance moves over <math>\\text{U}</math>. Also since <math>dx</math> has been stretched to <math>dx+dy</math>\n{{block center|<math>\\rho\\hat{\\omega}(dx+dy)=\\rho_0\\hat{\\omega}_0 dx</math>}}\n{{block center|or <math>\\rho\\hat{\\omega}(1+dy/dx)=\\rho_0\\hat{\\omega}_0.</math> (29)}}\nSubstituting from (28) in (27)\n{{block center|<math>\\text{Y}\\hat{\\omega}_0\\frac{dy}{dx}+\\rho\\hat{\\omega}\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)^2=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math> (30)}}\nand substituting from (29) in (30)\n{{block center|<math>\\text{Y}\\hat{\\omega}_0\\frac{dy}{dx}+\\rho_0\\hat{\\omega}_0\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math> (31)}}",
-   "c2s5": "{{block center|whence <math>\\text{Y}\\hat{\\omega}_0=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math>}}\n{{block center|or <math>\\text{U}^2=\\text{Y}/\\rho,</math> (32)}}\nwhere now <math>\\rho</math> is the normal density of the rod. The velocity with which the rod must travel in order that the disturbance may be fixed in space is therefore <math>\\text{U}=\\sqrt{(\\text{Y}/\\rho)}</math>, or, if the rod is kept fixed, this is the velocity with which the disturbance travels.\n\nThis investigation is subject to the limitation that the diameter of the cross-section must be small compared with the wave-length. When the rod extends or contracts longitudinally it contracts or"
+   "c2c1": "{{c|{{sc|Fig.}} 37.}}",
+   "c2s3": "the disturbance, and <math>\\text{B}</math> a point in the undisturbed part. The material between <math>\\text{A}</math> and <math>\\text{B}</math>, though continually changing, is always in the same condition, and therefore the momentum within <math>\\text{AB}</math> is constant. Hence the amount carried out at <math>\\text{A}</math> is equal to that carried in at <math>\\text{B}</math>.\n\nNow momentum is transferred in two ways, viz. by the force acting between contiguous portions of a body and by the transfer of moving matter. At <math>\\text{B}</math> there is only the latter kind, and since the transfer of matter is <math>\\rho_0\\hat{\\omega}_0\\text{U}</math>, where <math>\\rho_0</math> is the undisturbed density and <math>\\hat{\\omega}_0</math> is the undisturbed cross-section, since its velocity is <math>\\text{U}</math> the passage of momentum per second is <math>\\rho_0\\hat{\\omega}_0\\text{U}_0^2</math>. At <math>\\text{A}</math>, if the velocity of the disturbance relative to undisturbed parts of the rod is <math>u</math> from left to right, the velocity relative to <math>\\text{A}</math> is <math>\\text{U}-u</math>. If <math>\\rho</math> is the density at <math>\\text{A}</math>, and <math>\\hat{\\omega}</math> the cross-section, then the momentum carried past <math>\\text{A}</math> is <math>\\rho\\hat{\\omega}(\\text{U}-u)^2</math>. But if <math>y</math> is the displacement at <math>\\text{A}</math>, <math>dy/dx</math> is the extension at <math>\\text{A}</math>, and the force acting is a pull across <math>\\text{A}</math> equal to <math>\\text{Y}\\hat{\\omega}_0dy/dx</math>, where <math>\\text{Y}</math> is Young's modulus of elasticity. Then we have\n{{block center|<math>\\text{Y}\\hat{\\omega}_0dy/dx+\\rho\\hat{\\omega}(\\text{U}-u)^2=\\rho_0\\hat{\\omega}_0\\text{U}^2.</math> (27)}}\n{{block center|Now <math>u/\\text{U}=-dy/dx,</math> (28)}}\nfor the particle at <math>\\text{A}</math> moves over <math>dy</math> backwards, while the disturbance moves over <math>\\text{U}</math>. Also since <math>dx</math> has been stretched to <math>dx+dy</math>\n{{block center|<math>\\rho\\hat{\\omega}(dx+dy)=\\rho_0\\hat{\\omega}_0dx</math>}}\n{{block center|or <math>\\rho\\hat{\\omega}(1+dy/dx)=\\rho_0\\hat{\\omega}_0.</math> (29)}}\nSubstituting from (28) in (27)\n{{block center|<math>\\text{Y}\\hat{\\omega}_0\\frac{dy}{dx}+\\rho\\hat{\\omega}\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)^2=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math> (30)}}\nand substituting from (29) in (30)\n{{block center|<math>\\text{Y}\\hat{\\omega}_0\\frac{dy}{dx}+\\rho_0\\hat{\\omega}_0\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math> (31)}}",
+   "c2s4": "whence {{block center|<math>\\text{Y}\\hat{\\omega}_0 = \\rho_0\\hat{\\omega}_0\\text{U}^2</math>,}}\nor {{block center|<math>\\text{U}^2 = \\text{Y}/\\rho</math>, (32)}}\nwhere now <math>\\rho</math> is the normal density of the rod. The velocity with which the rod must travel in order that the disturbance may be fixed in space is therefore <math>\\text{U} = \\sqrt{(\\text{Y}/\\rho)}</math>, or, if the rod is kept fixed, this is the velocity with which the disturbance travels.\n\nThis investigation is subject to the limitation that the diameter of the cross-section must be small compared with the wave-length. When the rod extends or contracts longitudinally it contracts or"
   },
   "figure_files": {
    "c1f1": "eb1911 v25 p0470 c1f1.png",
@@ -210,89 +234,89 @@
   "figures": [
    {
     "box": [
-     121,
+     119,
      684,
-     573,
+     575,
      1200
     ],
     "caption": [
      275,
-     1210,
-     395,
-     1242
+     1206,
+     394,
+     1243
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     115,
+     121,
      658,
-     583,
-     1188
+     579,
+     1199
     ]
    },
    {
     "box": [
-     268,
-     1363,
-     1019,
-     1630
+     271,
+     1362,
+     1027,
+     1632
     ],
     "caption": [
      579,
      1644,
      673,
-     1676
+     1678
     ],
     "column": 1,
     "inset": false,
     "page_box": [
      283,
-     1356,
-     1012,
+     1360,
+     1038,
      1630
     ]
    },
    {
     "box": [
-     359,
-     2609,
+     361,
+     2606,
      951,
      2701
     ],
     "caption": [
      607,
-     2715,
-     728,
-     2745
+     2714,
+     699,
+     2746
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     353,
-     2633,
+     358,
+     2646,
      954,
      2705
     ]
    },
    {
     "box": [
-     1204,
-     1583,
+     1206,
+     1582,
      2230,
-     1767
+     1760
     ],
     "caption": [
-     1659,
-     1776,
-     1787,
-     1803
+     1670,
+     1768,
+     1786,
+     1798
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1201,
-     1581,
-     2248,
+     1204,
+     1586,
+     2242,
      1767
     ]
    }
@@ -313,22 +337,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 5,
-    "input_tokens": 9405,
-    "output_tokens": 339,
+    "input_tokens": 9477,
+    "output_tokens": 309,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 12,
-    "input_tokens": 6224,
-    "output_tokens": 4641,
+    "model": "claude-opus-5-5",
+    "calls": 14,
+    "input_tokens": 7967,
+    "output_tokens": 6557,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 23088
+    "cache_read_input_tokens": 33894
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|454|SOUND|[WIRES AND RODS}}</noinclude>[[File:eb1911 v25 p0470 c1f1.png|center|155px]]\n{{c|{{sc|Fig.}} 34.}}\n\ntraight string is <math>\\text{T}dx/ds</math>, and when the nall the curve of displacement is so it <math>dx/ds = 1</math>, and this component is <math>\\text{T}</math>. licular to the axis is <math>\\text{T}dy/ds = \\text{T}dy/dx</math>. lisplacements due to the two trains two separate forces are <math>\\text{T}dy_1/dx</math> and <math>y</math> is <math>\\text{T}dy/dx</math>. But since <math>y = y_1 + y_2</math>, or the condition for superposition is so small that we may put <math>dx/ds = 1</math>. lecting <math>\\phi^3</math>. Let two trains of equal ections along such a string of indefinary system of fig. 27. Since the may represent the vibration of a given string by the length between any two nodes. The fundamental mode is that in which <math>\\text{A}</math> and <math>\\text{B}</math> represent the ends of the string. In this case <math>\\text{AB} = \\tfrac{1}{2}\\lambda_1 = l</math> the length, and the frequency <math>n_1 = \\text{U}/\\lambda_1 = \\text{U}/2l = (1/2l)\\sqrt{(\\text{T}/m)}</math>. The middle of the string is a loop. In the next mode <math>\\text{A}</math> and <math>\\text{C}</math> represent the ends and <math>\\text{AC} = \\lambda_2 = l</math> and <math>n_2 = \\text{U}/\\lambda_2 = 2\\text{U}/2l = (2/2l)\\sqrt{(\\text{T}/m)}</math>. In the third mode <math>\\text{A}</math> and <math>\\text{D}</math> represent the ends and <math>\\text{AD} = \\tfrac{3}{2}\\lambda_3 = l</math> and <math>n_3 = \\text{U}/\\lambda_3 = 3\\text{U}/2l = (3/2l)\\sqrt{(\\text{T}/m)}</math> and so on. In fig. 34 the stationary wave systems of the first four modes are represented.\n\nThe complete series of harmonics are possible modes. The experimental demonstration of these results is easily made by the sonometer or monochord (fig. 35). A string is fixed at <math>\\text{C}</math> on the top of a hollow box, and of trisection, &c., as shown in fig. 36, for the fundamental and the first harmonic. When a string is struck or bowed at a point, any harmonic with a node at that point is absent. Since the quality of the note sounded depends on the mixture of harmonics, the quality therefore is to some extent dependent on the point of excitation.\n\n[[File:eb1911 v25 p0470 c1f2.png|center|356px]]\n{{c|{{sc|Fig.}} 35.}}\n\n[[File:eb1911 v25 p0470 c1f3.png|center|356px]]\n{{c|{{sc|Fig.}} 36.}}\n\nA highly ingenious and instructive method for illustrating the laws of musical strings was contrived by F. E. Melde. It consists in attaching to the loop or ventral segment of a vibrating body, ''e.g.'' a tuning-fork or a bell-glass, a silk or cotton thread, the other extremity being either fixed or passing over a pulley and supporting weights by which the thread may be stretched to any degree required. The vibrations of the larger mass are communicated to the thread, which {{smaller block|by proper adjustment of its length and tension vibrates in unison and divides itself into one or more loops or ventral segments easily discernible by a spectator. If the length of the thread be kept invariable, a certain tension will give but one ventral segment; the fundamental note of the thread is then of the same pitch as the note of the body to which it is attached. By reducing the tension to one quarter of its previous amount, the number of ventral segments will be seen to be increased to two, indicating that the first harmonic of the thread is now in unison with the solid, and consequently that its fundamental is an octave lower than it was with the former tension; thus confirming the law that <math>n</math> varies as <math>\\sqrt{\\text{T}}</math>. In like manner, on further lowering the tension to one ninth, three ventral segments will be formed, and so on.}}\n\n{{smaller block|The law that, ''caeteris paribus'', <math>n</math> varies inversely as the thickness may be tested by forming a string of four lengths of the single thread used before, and consequently of double the thickness of the latter, when, for the same length and tension, the compound thread will exhibit double the number of ventral segments presented by the single thread.}}\n\n{{smaller block|The other laws admit of similar illustration.}}\n\n{{c|''Longitudinal Vibrations of Wires and Rods.''}}\n\nSubject to a limitation which we shall examine later, the velocity of a longitudinal disturbance along a wire or rod depends only on the material of the rod, and not upon the cross-section. Since the forces called into play by an extension or compression of the material are proportional to the cross-section, it follows that if we consider any case and then another case in which, with the same longitudinal disturbance, the cross-section is doubled, the force in the second case is doubled as well as the mass to be moved. The acceleration therefore remains the same, and the velocity is unaltered. We shall find the velocity of propagation, just as in previous cases, from the consideration of transfer of momentum.\n\nSuppose that a disturbance is travelling with velocity <math>\\text{U}</math> unchanged in form along a rod from left to right. Let us move the rod from right to left, so that the undisturbed parts move with velocity <math>\\text{U}</math>. Then the disturbance remains fixed in space. Let <math>\\text{A}</math> be a point in the disturbance, and <math>\\text{B}</math> a point in the undisturbed part. The material between <math>\\text{A}</math> and <math>\\text{B}</math>, though continually changing, is always in the same condition, and therefore the momentum within <math>\\text{AB}</math> is constant. Hence the amount carried out at <math>\\text{A}</math> is equal to that carried in at <math>\\text{B}</math>.\n\n[[File:eb1911 v25 p0470 c2f1.png|center|358px]]\n{{c|{{sc|Fig.}} 37.}}\n\nNow momentum is transferred in two ways, viz. by the force acting between contiguous portions of a body and by the transfer of moving matter. At <math>\\text{B}</math> there is only the latter kind, and since the transfer of matter is <math>\\rho_0\\hat{\\omega}_0\\text{U}</math>, where <math>\\rho_0</math> is the undisturbed density and <math>\\hat{\\omega}_0</math> is the undisturbed cross-section, since its velocity is <math>\\text{U}</math> the passage of momentum per second is <math>\\rho_0\\hat{\\omega}_0\\text{U}_0^2</math>. At <math>\\text{A}</math>, if the velocity of the disturbance relative to undisturbed parts of the rod is <math>u</math> from left to right, the velocity relative to <math>\\text{A}</math> is <math>\\text{U}-u</math>. If <math>\\rho</math> is the density at <math>\\text{A}</math>, and <math>\\hat{\\omega}</math> the cross-section, then the momentum carried past <math>\\text{A}</math> is <math>\\rho\\hat{\\omega}(\\text{U}-u)^2</math>. But if <math>y</math> is the displacement at <math>\\text{A}</math>, <math>dy/dx</math> is the extension at <math>\\text{A}</math>, and the force acting is a pull across <math>\\text{A}</math> equal to <math>\\text{Y}\\hat{\\omega}_0 dy/dx</math>, where <math>\\text{Y}</math> is Young's modulus of elasticity. Then we have\n{{block center|<math>\\text{Y}\\hat{\\omega}_0 dy/dx+\\rho\\hat{\\omega}(\\text{U}-u)^2=\\rho_0\\hat{\\omega}_0\\text{U}^2.</math> (27)}}\n{{block center|Now <math>u/\\text{U}=-dy/dx,</math> (28)}}\nfor the particle at <math>\\text{A}</math> moves over <math>dy</math> backwards, while the disturbance moves over <math>\\text{U}</math>. Also since <math>dx</math> has been stretched to <math>dx+dy</math>\n{{block center|<math>\\rho\\hat{\\omega}(dx+dy)=\\rho_0\\hat{\\omega}_0 dx</math>}}\n{{block center|or <math>\\rho\\hat{\\omega}(1+dy/dx)=\\rho_0\\hat{\\omega}_0.</math> (29)}}\nSubstituting from (28) in (27)\n{{block center|<math>\\text{Y}\\hat{\\omega}_0\\frac{dy}{dx}+\\rho\\hat{\\omega}\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)^2=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math> (30)}}\nand substituting from (29) in (30)\n{{block center|<math>\\text{Y}\\hat{\\omega}_0\\frac{dy}{dx}+\\rho_0\\hat{\\omega}_0\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math> (31) whence <math>\\text{Y}\\hat{\\omega}_0=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math>}}\n{{block center|or <math>\\text{U}^2=\\text{Y}/\\rho,</math> (32)}}\nwhere now <math>\\rho</math> is the normal density of the rod. The velocity with which the rod must travel in order that the disturbance may be fixed in space is therefore <math>\\text{U}=\\sqrt{(\\text{Y}/\\rho)}</math>, or, if the rod is kept fixed, this is the velocity with which the disturbance travels.\n\nThis investigation is subject to the limitation that the diameter of the cross-section must be small compared with the wave-length. When the rod extends or contracts longitudinally it contracts or<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|454|SOUND|[WIRES AND RODS}}</noinclude>acting parallel to the axis or straight string is <math>\\text{T}dx/ds</math>, and when the disturbance is sufficiently small the curve of displacement is so nearly parallel to the axis that <math>dx/ds = 1</math>, and this component is <math>\\text{T}</math>. The component of <math>\\text{T}</math> perpendicular to the axis is <math>\\text{T}dy/ds = \\text{T}dy/dx</math>. Now if <math>y_1</math> and <math>y_2</math> are the displacements due to the two trains separately, and <math>y = y_1 + y_2</math>, the two separate forces are <math>\\text{T}dy_1/dx</math> and <math>\\text{T}dy_2/dx</math>, while that due to <math>y</math> is <math>\\text{T}dy/dx</math>. But since <math>y = y_1 + y_2</math>, <math>\\text{T}dy/dx = \\text{T}dy_1/dx + \\text{T}dy_2/dx</math>, or the condition for superposition holds when the displacement is so small that we may put <math>dx/ds = 1</math>. Evidently this comes to neglecting <math>\\phi^3</math>. Let two trains of equal waves moving in opposite directions along such a string of indefinite length form the stationary system of fig. 27. Since the nodes are always at rest we may represent the vibration of a given string by the length between any two nodes. The fundamental mode is that in which <math>\\text{A}</math> and <math>\\text{B}</math> represent the ends of the string. In this case <math>\\text{AB} = \\tfrac{1}{2}\\lambda_1 = l</math> the length, and the frequency <math>n_1 = \\text{U}/\\lambda_1 = \\text{U}/2l = (1/2l)\\sqrt{(\\text{T}/m)}</math>. The middle of the string is a loop. In the next mode <math>\\text{A}</math> and <math>\\text{C}</math> represent the ends and <math>\\text{AC} = \\lambda_2 = l</math> and <math>n_2 = \\text{U}/\\lambda_2 = 2\\text{U}/2l = (2/2l)\\sqrt{(\\text{T}/m)}</math>. In the third mode <math>\\text{A}</math> and <math>\\text{D}</math> represent the ends and <math>\\text{AD} = \\tfrac{3}{2}\\lambda_3 = l</math> and <math>n_3 = \\text{U}/\\lambda_3 = 3\\text{U}/2l = (3/2l)\\sqrt{(\\text{T}/m)}</math> and so on. In fig. 34 the stationary wave systems of the first four modes are represented.\n\n[[File:eb1911 v25 p0470 c1f1.png|center|155px]]\n{{c|{{sc|Fig.}} 34.}}\n\nThe complete series of harmonics are possible modes. The experimental demonstration of these results is easily made by the sonometer or monochord (fig. 35). A string is fixed at C on the top of a hollow box, and passes over two edges <math>\\text{AB}</math>, which serve as the fixed ends, and then over a pulley <math>\\text{P}</math>, being stretched by a weight <math>\\text{W}</math>. Between <math>\\text{A}</math> and <math>\\text{B}</math> a “ bridge ” <math>\\text{D}</math>, ''i.e.'' another edge slightly higher than <math>\\text{A}</math> or <math>\\text{B}</math>, can be inserted in any position, which is determined by a graduated scale. The effective length of the string is then <math>\\text{AD}</math>. Keeping the same tension, it may be shown that <math>nl</math> is constant by finding <math>n</math> for various lengths. Keeping <math>\\text{AD}</math> constant and varying <math>\\text{W}</math> it may be shown that <math>n \\infty \\sqrt{\\text{W}}</math>. Lastly, by using different strings, it may be shown that, with the same <math>\\text{T}</math> and <math>l</math>, <math>n \\propto \\sqrt{(1/m)}</math>.\n\n[[File:eb1911 v25 p0470 c1f2.png|center|356px]]\n{{c|{{sc|Fig.}} 35.}}\n\nThe various modes of vibration may also be exhibited. If <math>\\text{D}</math> is removed and the string is bowed in the middle, the fundamental is brought out. If it is touched in the middle with a feather, the edge of a card, or the finger nail, and bowed a quarter of the way along the octave, the first overtone comes out. Each of the first few harmonics may be easily obtained by touching the string at the first node of the harmonic required, and bowing at the first loop, and the presence of the nodes and loops may be verified by putting light paper riders of shape <math>\\wedge</math> on the string at the nodes and loops. When the harmonic is sounded the riders at the loops are thrown off, while those at the nodes remain seated.\n\nNot only may the fundamental and its harmonics be obtained separately, but they are also to be heard simultaneously, particularly the earlier ones, which are usually more prominent than those higher in the series. A practised ear easily discerns the coexistence of these various tones when a pianoforte or violin string is thrown into vibration. It is evident that, in such case, the string, while vibrating as a whole between its fixed extremities, is at the same time executing subsidiary oscillations about its middle point, its points of trisection, &c., as shown in fig. 36, for the fundamental and the first harmonic. When a string is struck or bowed at a point, any harmonic with a node at that point is absent. Since the quality of the note sounded depends on the mixture of harmonics, the quality therefore is to some extent dependent on the point of excitation.\n\n[[File:eb1911 v25 p0470 c1f3.png|center|356px]]\n{{c|{{sc|Fig.}} 36.}}\n\nA highly ingenious and instructive method for illustrating the laws of musical strings was contrived by F. E. Melde. It consists in attaching to the loop or ventral segment of a vibrating body, ''e.g.'' a tuning-fork or a bell-glass, a silk or cotton thread, the other extremity being either fixed or passing over a pulley and supporting weights by which the thread may be stretched to any degree required. The vibrations of the larger mass are communicated to the thread, which {{smaller block|by proper adjustment of its length and tension vibrates in unison and divides itself into one or more loops or ventral segments easily discernible by a spectator. If the length of the thread be kept invariable, a certain tension will give but one ventral segment; the fundamental note of the thread is then of the same pitch as the note of the body to which it is attached. By reducing the tension to one quarter of its previous amount, the number of ventral segments will be seen to be increased to two, indicating that the first harmonic of the thread is now in unison with the solid, and consequently that its fundamental is an octave lower than it was with the former tension; thus confirming the law that <math>n</math> varies as <math>\\sqrt{\\text{T}}</math>. In like manner, on further lowering the tension to one ninth, three ventral segments will be formed, and so on.}}\n\n{{smaller block|The law that, ''caeteris paribus'', <math>n</math> varies inversely as the thickness may be tested by forming a string of four lengths of the single thread used before, and consequently of double the thickness of the latter, when, for the same length and tension, the compound thread will exhibit double the number of ventral segments presented by the single thread.}}\n\n{{smaller block|The other laws admit of similar illustration.}}\n\n{{c|''Longitudinal Vibrations of Wires and Rods.''}}\n\nSubject to a limitation which we shall examine later, the velocity of a longitudinal disturbance along a wire or rod depends only on the material of the rod, and not upon the cross-section. Since the forces called into play by an extension or compression of the material are proportional to the cross-section, it follows that if we consider any case and then another case in which, with the same longitudinal disturbance, the cross-section is doubled, the force in the second case is doubled as well as the mass to be moved. The acceleration therefore remains the same, and the velocity is unaltered. We shall find the velocity of propagation, just as in previous cases, from the consideration of transfer of momentum.\n\nSuppose that a disturbance is travelling with velocity <math>\\text{U}</math> unchanged in form along a rod from left to right. Let us move the rod from right to left, so that the undisturbed parts move with velocity <math>\\text{U}</math>. Then the disturbance remains fixed in space. Let <math>\\text{A}</math> be a point in the disturbance, and <math>\\text{B}</math> a point in the undisturbed part. The material between <math>\\text{A}</math> and <math>\\text{B}</math>, though continually changing, is always in the same condition, and therefore the momentum within <math>\\text{AB}</math> is constant. Hence the amount carried out at <math>\\text{A}</math> is equal to that carried in at <math>\\text{B}</math>.\n\n[[File:eb1911 v25 p0470 c2f1.png|center|358px]]\n{{c|{{sc|Fig.}} 37.}}\n\nNow momentum is transferred in two ways, viz. by the force acting between contiguous portions of a body and by the transfer of moving matter. At <math>\\text{B}</math> there is only the latter kind, and since the transfer of matter is <math>\\rho_0\\hat{\\omega}_0\\text{U}</math>, where <math>\\rho_0</math> is the undisturbed density and <math>\\hat{\\omega}_0</math> is the undisturbed cross-section, since its velocity is <math>\\text{U}</math> the passage of momentum per second is <math>\\rho_0\\hat{\\omega}_0\\text{U}_0^2</math>. At <math>\\text{A}</math>, if the velocity of the disturbance relative to undisturbed parts of the rod is <math>u</math> from left to right, the velocity relative to <math>\\text{A}</math> is <math>\\text{U}-u</math>. If <math>\\rho</math> is the density at <math>\\text{A}</math>, and <math>\\hat{\\omega}</math> the cross-section, then the momentum carried past <math>\\text{A}</math> is <math>\\rho\\hat{\\omega}(\\text{U}-u)^2</math>. But if <math>y</math> is the displacement at <math>\\text{A}</math>, <math>dy/dx</math> is the extension at <math>\\text{A}</math>, and the force acting is a pull across <math>\\text{A}</math> equal to <math>\\text{Y}\\hat{\\omega}_0dy/dx</math>, where <math>\\text{Y}</math> is Young's modulus of elasticity. Then we have\n{{block center|<math>\\text{Y}\\hat{\\omega}_0dy/dx+\\rho\\hat{\\omega}(\\text{U}-u)^2=\\rho_0\\hat{\\omega}_0\\text{U}^2.</math> (27)}}\n{{block center|Now <math>u/\\text{U}=-dy/dx,</math> (28)}}\nfor the particle at <math>\\text{A}</math> moves over <math>dy</math> backwards, while the disturbance moves over <math>\\text{U}</math>. Also since <math>dx</math> has been stretched to <math>dx+dy</math>\n{{block center|<math>\\rho\\hat{\\omega}(dx+dy)=\\rho_0\\hat{\\omega}_0dx</math>}}\n{{block center|or <math>\\rho\\hat{\\omega}(1+dy/dx)=\\rho_0\\hat{\\omega}_0.</math> (29)}}\nSubstituting from (28) in (27)\n{{block center|<math>\\text{Y}\\hat{\\omega}_0\\frac{dy}{dx}+\\rho\\hat{\\omega}\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)^2=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math> (30)}}\nand substituting from (29) in (30)\n{{block center|<math>\\text{Y}\\hat{\\omega}_0\\frac{dy}{dx}+\\rho_0\\hat{\\omega}_0\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)=\\rho_0\\hat{\\omega}_0\\text{U}^2,</math> (31)}} whence {{block center|<math>\\text{Y}\\hat{\\omega}_0 = \\rho_0\\hat{\\omega}_0\\text{U}^2</math>,}}\nor {{block center|<math>\\text{U}^2 = \\text{Y}/\\rho</math>, (32)}}\nwhere now <math>\\rho</math> is the normal density of the rod. The velocity with which the rod must travel in order that the disturbance may be fixed in space is therefore <math>\\text{U} = \\sqrt{(\\text{Y}/\\rho)}</math>, or, if the rod is kept fixed, this is the velocity with which the disturbance travels.\n\nThis investigation is subject to the limitation that the diameter of the cross-section must be small compared with the wave-length. When the rod extends or contracts longitudinally it contracts or<noinclude><references/></noinclude>"
 }

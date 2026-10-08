@@ -22,102 +22,25 @@
     ]
    },
    {
-    "name": "c1s1",
-    "kind": "text",
-    "column": 1,
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
     "box": [
      58,
      235,
-     1209,
-     1154
+     2279,
+     1144
     ]
    },
    {
-    "name": "c1f1",
-    "kind": "figure",
-    "column": 1,
+    "name": "c0c1",
+    "kind": "caption",
+    "column": 0,
     "box": [
      58,
-     1154,
-     1209,
-     1956
-    ]
-   },
-   {
-    "name": "c1s2",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     58,
-     1956,
-     1209,
-     1994
-    ]
-   },
-   {
-    "name": "c1f2",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     58,
-     2012,
-     1209,
-     3024
-    ]
-   },
-   {
-    "name": "c1s3",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     58,
-     3045,
-     1209,
-     3118
-    ]
-   },
-   {
-    "name": "c2f1",
-    "kind": "figure",
-    "column": 2,
-    "box": [
-     1209,
-     235,
+     1150,
      2279,
-     1156
-    ]
-   },
-   {
-    "name": "c2s1",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1209,
-     1156,
-     2279,
-     1194
-    ]
-   },
-   {
-    "name": "c2s2",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1209,
-     1194,
-     2279,
-     2005
-    ]
-   },
-   {
-    "name": "c2s3",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1209,
-     2005,
-     2279,
-     3046
+     1192
     ]
    },
    {
@@ -126,92 +49,133 @@
     "column": 0,
     "box": [
      58,
-     3046,
+     1192,
      2279,
-     3115
+     1994
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     58,
+     1994,
+     1207,
+     2420
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1207,
+     1994,
+     2279,
+     2420
+    ]
+   },
+   {
+    "name": "c0f2",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     58,
+     2424,
+     2279,
+     3009
+    ]
+   },
+   {
+    "name": "c0c2",
+    "kind": "caption",
+    "column": 0,
+    "box": [
+     58,
+     3081,
+     2279,
+     3119
     ]
    }
   ],
   "readings": {
    "head": "{{RunningHeader||TUNNEL|407}}",
-   "c1s1": "",
-   "c1s2": "{{c|{{sc|Fig.}} 13.—Boston Subway, longitu}}",
-   "c1s3": "{{c|(From a diagram in ''Proc. Inst. Civ. Eng.'')}}\n{{c|{{sc|Fig.}} 14.—Longitudinal Section of the Mers}}",
-   "c2s1": "{{c|bway, third phase.}}",
-   "c2s2": "dinal vertical section through shield.",
-   "c2s3": "point entry into the tunnel was effected) to each shore, where a fan 40 ft. in diameter was placed. In this way the vitiated air is drawn from the lowest point of the railway, while fresh air flows in at the stations on each side to replenish the partial vacuum, as indicated by arrows in the accompanying longitudinal section of the tunnel. The principle was that fresh air should enter at each station and “split” each way into the tunnel, and that thus the atmosphere on the station platforms should be maintained in a condition of purity.\n\nThe fans in the Mersey tunnel are somewhat similar to the well-known Guibal fans, with the exception of an important alteration in the shutter. With the Guibal shutter, the top of the opening",
-   "c0s1": "(From a diagram in ''Proc. Inst. Civ. Eng.'')\n\n{{c|{{sc|Fig.}} 14.—Longitudinal Section of the Mersey Tunnel, showing Method of Ventilation.}}"
+   "c0c1": "{{c|{{sc|Fig.}} 12.—Boston Subway, third phase.}}",
+   "c0s1": "{{c|{{sc|Fig.}} 13.—Boston Subway, longitudinal vertical section through shield.}}",
+   "c1s1": "¶\nThe first application of mechanical or fan ventilation to railway tunnels was made in the Lime Street tunnel of the London and North-Western railway at Liverpool, which has since been replaced by an open cutting. At a later date fans were applied to the Severn and Mersey tunnels.\n\nThe principle ordinarily acted upon, where mechanical ventilation has been adopted, is to exhaust the vitiated air at a point midway between the portals of a tunnel, by means of a shaft with which is connected a ventilating fan of suitable power and dimensions. In the case of the tunnel under the river Mersey (fig. 14) such a shaft could not be provided, owing to the river being overhead, but a ventilating heading was driven from the middle of the river (at which",
+   "c2s1": "point entry into the tunnel was effected) to each shore, where a fan 40 ft. in diameter was placed. In this way the vitiated air is drawn from the lowest point of the railway, while fresh air flows in at the stations on each side to replenish the partial vacuum, as indicated by arrows in the accompanying longitudinal section of the tunnel. The principle was that fresh air should enter at each station and “ split ” each way into the tunnel, and that thus the atmosphere on the station platforms should be maintained in a condition of purity.\n\nThe fans in the Mersey tunnel are somewhat similar to the well-known Guibal fans, with the exception of an important alteration in the shutter. With the Guibal shutter, the top of the opening",
+   "c0c2": "{{c|{{sc|Fig.}} 14.—Longitudinal Section of the Mersey Tunnel, showing Method of Ventilation.}}"
   },
   "figure_files": {
-   "c1f1": "eb1911 v27 p0424 c1f1.png",
-   "c1f2": "eb1911 v27 p0424 c1f2.png",
-   "c2f1": "eb1911 v27 p0424 c2f1.png"
+   "c0f1": "eb1911 v27 p0424 c0f1.png",
+   "c0f2": "eb1911 v27 p0424 c0f2.png"
   },
   "figures": [
    {
     "box": [
-     1198,
-     216,
-     2104,
-     1143
+     317,
+     219,
+     2106,
+     1134
     ],
     "caption": [
-     1198,
-     1155,
+     885,
+     1152,
      1497,
-     1194
+     1192
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     386,
+     316,
      206,
-     2101,
-     1087
+     2106,
+     1090
     ]
    },
    {
     "box": [
-     314,
-     1239,
-     1238,
-     1947
+     309,
+     1235,
+     2016,
+     1943
     ],
     "caption": [
-     679,
+     680,
      1955,
-     1238,
-     1993
+     1779,
+     1997
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     310,
-     1239,
-     2041,
+     316,
+     1235,
+     2025,
      1945
     ]
    },
    {
     "box": [
-     141,
-     2431,
-     1238,
+     137,
+     2427,
+     2272,
      3006
     ],
     "caption": [
-     538,
-     3079,
-     1238,
-     3118
+     544,
+     3081,
+     1886,
+     3119
     ],
     "column": 1,
     "inset": false,
     "page_box": [
      136,
-     2426,
-     2257,
-     3015
+     2415,
+     2264,
+     3037
     ]
    }
   ],
@@ -224,38 +188,30 @@
    ]
   ],
   "refused": [],
-  "unread": {
-   "c1s1": "empty"
-  },
+  "unread": {},
   "rejected": {},
-  "disagreements": {
-   "0": [
-    1,
-    2
-   ],
-   "1": [
-    2,
-    0
-   ]
-  },
+  "disagreements": {},
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 4,
-    "input_tokens": 9531,
-    "output_tokens": 290,
+    "input_tokens": 8947,
+    "output_tokens": 257,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 9,
-    "input_tokens": 6546,
-    "output_tokens": 1331,
+    "model": "claude-opus-5-5",
+    "calls": 6,
+    "input_tokens": 4493,
+    "output_tokens": 757,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 17316
+    "cache_read_input_tokens": 14526
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader||TUNNEL|407}}</noinclude>[[File:eb1911 v27 p0424 c1f1.png|center|187px]]\n{{c|{{sc|Fig.}} 13.—Boston Subway, longitu}}\n\n[[File:eb1911 v27 p0424 c1f2.png|center|187px]]\n{{c|(From a diagram in ''Proc. Inst. Civ. Eng.'')}}\n{{c|{{sc|Fig.}} 14.—Longitudinal Section of the Mers}}\n\n[[File:eb1911 v27 p0424 c2f1.png|center|173px]]\n{{c|bway, third phase.}}\n\ndinal vertical section through shield. point entry into the tunnel was effected) to each shore, where a fan 40 ft. in diameter was placed. In this way the vitiated air is drawn from the lowest point of the railway, while fresh air flows in at the stations on each side to replenish the partial vacuum, as indicated by arrows in the accompanying longitudinal section of the tunnel. The principle was that fresh air should enter at each station and “split” each way into the tunnel, and that thus the atmosphere on the station platforms should be maintained in a condition of purity.\n\nThe fans in the Mersey tunnel are somewhat similar to the well-known Guibal fans, with the exception of an important alteration in the shutter. With the Guibal shutter, the top of the opening\n\n(From a diagram in ''Proc. Inst. Civ. Eng.'')\n\n{{c|{{sc|Fig.}} 14.—Longitudinal Section of the Mersey Tunnel, showing Method of Ventilation.}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||TUNNEL|407}}</noinclude>[[File:eb1911 v27 p0424 c0f1.png|center|360px]]\n{{c|{{sc|Fig.}} 12.—Boston Subway, third phase.}}\n\n{{c|{{sc|Fig.}} 13.—Boston Subway, longitudinal vertical section through shield.}}\n\nThe first application of mechanical or fan ventilation to railway tunnels was made in the Lime Street tunnel of the London and North-Western railway at Liverpool, which has since been replaced by an open cutting. At a later date fans were applied to the Severn and Mersey tunnels.\n\nThe principle ordinarily acted upon, where mechanical ventilation has been adopted, is to exhaust the vitiated air at a point midway between the portals of a tunnel, by means of a shaft with which is connected a ventilating fan of suitable power and dimensions. In the case of the tunnel under the river Mersey (fig. 14) such a shaft could not be provided, owing to the river being overhead, but a ventilating heading was driven from the middle of the river (at which point entry into the tunnel was effected) to each shore, where a fan 40 ft. in diameter was placed. In this way the vitiated air is drawn from the lowest point of the railway, while fresh air flows in at the stations on each side to replenish the partial vacuum, as indicated by arrows in the accompanying longitudinal section of the tunnel. The principle was that fresh air should enter at each station and “ split ” each way into the tunnel, and that thus the atmosphere on the station platforms should be maintained in a condition of purity.\n\nThe fans in the Mersey tunnel are somewhat similar to the well-known Guibal fans, with the exception of an important alteration in the shutter. With the Guibal shutter, the top of the opening\n\n[[File:eb1911 v27 p0424 c0f2.png|center|360px]]\n{{c|{{sc|Fig.}} 14.—Longitudinal Section of the Mersey Tunnel, showing Method of Ventilation.}}<noinclude><references/></noinclude>"
 }

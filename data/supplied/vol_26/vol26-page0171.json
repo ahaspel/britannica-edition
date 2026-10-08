@@ -22,25 +22,14 @@
     ]
    },
    {
-    "name": "c1f1",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     91,
-     220,
-     313,
-     1786
-    ]
-   },
-   {
     "name": "c1s1",
     "kind": "text",
     "column": 1,
     "box": [
      91,
-     1796,
-     313,
-     1832
+     197,
+     1164,
+     844
     ]
    },
    {
@@ -48,10 +37,32 @@
     "kind": "text",
     "column": 1,
     "box": [
-     313,
-     213,
+     91,
+     844,
      1164,
-     1832
+     1525
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     91,
+     1525,
+     313,
+     1786
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     91,
+     1793,
+     313,
+     1831
     ]
    },
    {
@@ -59,14 +70,25 @@
     "kind": "text",
     "column": 1,
     "box": [
+     313,
+     1525,
+     1164,
+     1831
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
      91,
-     1832,
+     1831,
      1164,
      2236
     ]
    },
    {
-    "name": "c1s4",
+    "name": "c1s5",
     "kind": "text",
     "column": 1,
     "box": [
@@ -84,7 +106,7 @@
      1164,
      197,
      2246,
-     241
+     410
     ]
    },
    {
@@ -93,24 +115,24 @@
     "column": 2,
     "box": [
      1164,
-     241,
+     410,
      2246,
      1074
     ]
    },
    {
-    "name": "c2s2",
-    "kind": "text",
+    "name": "c2c1",
+    "kind": "caption",
     "column": 2,
     "box": [
      1164,
-     1078,
+     1079,
      2246,
      1111
     ]
    },
    {
-    "name": "c2s3",
+    "name": "c2s2",
     "kind": "text",
     "column": 2,
     "box": [
@@ -121,7 +143,7 @@
     ]
    },
    {
-    "name": "c2s4",
+    "name": "c2s3",
     "kind": "text",
     "column": 2,
     "box": [
@@ -134,14 +156,16 @@
   ],
   "readings": {
    "head": "{{RunningHeader|NAUTICAL]|SURVEYING|153}}",
-   "c1s1": "{{c|{{sc|Fig.}} 5.}}",
-   "c1s2": "s the figure has sides, less four; the second is linear, raical sum of the <math>x</math> co-ordinates and that of the <math>y</math> hould each be = 0. The astronomical test is this: of the traverse the azimuth of a referring mark may l by astronomical observations; the inclination of en the station and the referring mark to the meridian s given by the traverse, the two should differ by the f the meridians of the station and the origin. In ngles of the traverse are usually adjusted to satisfy eometrical and astronomical tests in the first instance, o-ordinates of the stations are calculated and adjusted applied to the longest, that the angles may be least no further corrections are given them.\n\nalue of the convergence, when the distance and azi-uth of the second astronomical station from the first e known, is that of <math>B-(\\pi+A)</math> of equation (5); t, as the first term is sufficient for a traverse, we have\n{{block center|<math>\\text{convergency} = x \\tan \\lambda \\frac{\\text{cosec}\\,1''}{\\nu}</math>,}}\n, the co-ordinate of the second station perpendicular n of the origin, for <math>c \\sin A</math>.\n\nnates of the principal stations of a trigonometrical ally the spherical co-ordinates of latitude and longi-de; those of a traverse survey are always rectangular, ane for a small area but spherical for a large one. is often necessary, therefore, for purposes of com-rison and check at stations common to surveys of oth descriptions, to convert either rectangular co-dinates into latitudes and longitudes, or vice versa, he errors of traverses may be dispersed by proportion dinates of the traverse stations, if desired, or adjusted apping. The latter is generally all that is necessary, arly when the traverses are referred to successive l stations as origins, as the operations are being order to prevent any large accumulation of error. sions are also frequently necessary in map projections. f effecting them will now be indicated.\n\n''Transformation of Co-ordinates.'' <math>B</math> be any two points, <math>Aa</math> the meridian of <math>A</math>, <math>Bb</math> the itude of <math>B</math>; then <math>Ab</math>, <math>Bb</math> will be their differences in latitude and longitude; from <math>B</math> draw <math>BP</math> perpendicular to <math>Aa</math>; then <math>AP</math>, <math>BP</math> will be the rectangular spherical co-ordinates of <math>B</math> relatively to <math>A</math>. Put <math>BP=x</math>, <math>AP=y</math>, the arc <math>Pb=\\eta</math>, and the arc <math>Bb</math>, the difference of longitude, <math>=\\omega</math>; also let <math>\\lambda_a</math>, <math>\\lambda_b</math> and <math>\\lambda_p</math> be the latitudes of <math>A</math>, <math>B</math>, and the point <math>P</math>, <math>\\rho_p</math> the radius of curvature of the meridian, and <math>\\nu_p</math> the normal terminating in the axis minor for the latitude <math>\\lambda_p</math>; and let <math>\\rho_0</math> be the radius of curvature for the latitude",
-   "c1s3": "<math>\\tfrac{1}{2}(\\lambda_a+\\lambda_p)</math>. Then, when the rectangular co-ordinates are given, we have, taking <math>A</math> as the origin, the latitude of which is known,\n\n{{block center|<math>\\left.\\begin{array}{c}\\lambda_p=\\lambda_a+\\frac{y}{\\rho_0}\\text{cosec }1'';\\ \\eta=\\frac{x^2}{2\\rho_p\\nu_p}\\tan\\lambda_p\\text{ cosec }1'';\\\\ \\lambda_b-\\lambda_a=\\frac{y}{\\rho_0}\\text{cosec }1''-\\eta;\\ \\omega=\\frac{x}{\\nu_p}\\sec(\\lambda_b+\\tfrac{1}{3}\\eta)\\text{ cosec }1''\\ \\cdot\\end{array}\\right\\}</math> (19).}}\n\nAnd, when the latitude and longitude are given, we have<sup>1</sup>\n\n{{block center|<math>\\left.\\begin{array}{l}\\eta=\\left(\\frac{\\omega}{2}\\right)^2\\frac{\\nu_b}{\\rho_b}\\sin 2\\ \\lambda_b\\sin\\ 1''\\\\ y=\\rho_0\\{\\lambda_l-\\lambda_a+\\eta\\}\\sin\\ 1''\\\\ x=\\omega\\nu_p\\cos\\ (\\lambda_b+\\tfrac{1}{3}\\eta)\\sin\\ 1''\\end{array}\\right\\}</math> (20).}}",
-   "c1s4": "¶\n''Co-ordinates of Unvisited Point.''—When a hill peak or other prominent object has been observed from a number of stations whose co-ordinates are already fixed, the converging rays may be projected graphically, and from an examination of their several intersections the most probable position of the object may be obtained almost as accurately as by calculations by the method of least squares, which are very laborious and out of place for the determination of a secondary point. The following is a description of the application of this method to points on a plane surface in the calculations of the ordnance survey. Let <math>s_1</math>, <math>s_2</math>, . . . be stations whose rectangular co-ordinates, <math>x_1</math>, <math>x_2</math>, . . . perpendicular, and <math>y_1</math>, <math>y_2</math>, . . . parallel, to the meridian of the origin are given; let <math>a_1</math>, <math>a_2</math>, . . . be the bearings—here the direction-inclinations with the meridian of the origin—of any point <math>P</math>, as observed at the several stations; and let <math>p</math> be an approximate position of <math>P</math>, with co-ordinates <math>x_p</math>, <math>y_p</math>, as determined by graphical projection on a district map or by rough calculation. Construct a diagram of the rays converging around <math>p</math>, by taking a point to represent <math>p</math> and drawing two lines through it at right angles to each other to\n\n{{smaller block|<sup>1</sup> In the Indian survey, tables are employed for these calculations which give the value of <math>1''</math> of arc in feet on the meridian, and on each parallel of latitude, at intervals of <math>5'</math> apart; also a corresponding table of arc-versines (<math>Pb</math>) of spheroidal arcs of parallel (<math>Bb</math>) <math>1^\\circ</math> in length, from which the arc-versines for shorter or longer arcs are obtained proportionally to the squares of the arcs; <math>x</math> is taken as the difference of longitude converted into linear measure.}}",
-   "c2s1": "indicate the directions of north, south, east and west. Calculate",
-   "c2s2": "{{c|{{sc|Fig.}} 6.}}",
-   "c2s3": "the point thus fixed draw the direction <math>a_1</math> with a common protractor. All the other rays around <math>p</math> may be drawn in like manner; they will intersect each other in a number of points, the centre of which may be adopted as the most probable position of <math>P</math>. The co-ordinates of <math>P</math> will then be readily obtained from those of <math>p \\pm</math> the distances on the meridian and perpendicular. In the annexed diagram (fig. 6) <math>P</math> is supposed to have been observed from five stations, giving as many intersecting rays, (1, 1), (2, 2), . . . ; there are ten points of intersection, the mean position of which gives the true position of <math>P</math>, the assumed position being <math>p</math>. The advantages claimed for the method are that, the bearings being independent, an erroneous bearing may be redrawn without disturbing those that are correct; similarly new bearings may be introduced without disturbing previous work, and observations from a large number of stations may be readily utilized, whereas, when calculation is resorted to, observations in excess of the minimum number required are frequently rejected because of the labour of computing them.\n\n{{smaller|{{sc|Authorities}}.—Clarke, ''Geodesy'' (London); Waller, “India's Contribution to Geodesy,” ''Trans. Roy. Soc.'', vol. clxxxvi. (1895); Thuillier, ''Manual of Surveying for India'' (Calcutta); Gore, ''Handbook of Professional Instructions for the Topographical Branch Survey of India Department'' (Calcutta); D'A. Jackson, ''Aid to Survey Practice'' (London, 1899); Woodthorpe, ''Hints to Travellers'' (Plane-tabling section); Grant, “Diagram for Determining Parallaxes,” &c., ''Geog. Journ.'' (June 1896); Pierce, “Economic Use of the Plane-Table,” vol. xcii. pt. ii., ''Pro. Inst. Civ. Eng.''; Bridges-Lee, ''Photographic Surveying'' (1899); London Society of Engineers; Laussedat, ''Recherches sur les instruments les méthodes et le dessin''}}",
-   "c2s4": "''topographique'' (Paris, 1898); H. M. Wilson, ''Topographic Surveying'' (New York, 1905); ''Professional Papers Royal Engineers'' (occasional paper series), vol. xiii. paper v. by Holdich; vol. xiv. paper ii. by Talbot; vol. xxvi. paper i. by MacDonnell (R.E. Institute, Chatham).\n{{right|(T. H. H.*)}}\n\n{{c|6. {{sc|Nautical Surveying}}}}\n\nThe great majority of nautical surveys are carried out by H.M. surveying vessels under the orders of the hydrographer of the admiralty. Plans of harbours and anchorages are also received from H.M. ships in commission on foreign stations, but surveys of an extended nature can hardly be executed except by a ship specially fitted and carrying a trained staff of officers. The introduction of steam placed means at the disposal of nautical surveyors which largely modified the conditions under which they had to work in the earlier days of sailing vessels, and it has enabled the ship to be used in various ways previously impracticable. The heavy draught of ships in the present day, the growing increase of ocean and coasting traffic all over the world, coupled with the desire to save distance by rounding points of land and other dangers as closely as possible, demand surveys on larger scales and in greater detail than was formerly necessary; and to meet these modern requirements resurveys of many parts of the world are continually being called for. Nautical surveys vary much in character according to the nature of the work, its importance to navigation, and the time available. The elaborate methods and rigid accuracy of a triangulation for geodetic purposes on shore are unnecessary,"
+   "c1s1": "right angles as the figure has sides, less four; the second is linear, viz. the algebraical sum of the <math>x</math> co-ordinates and that of the <math>y</math> co-ordinates should each be<math>=0</math>. The astronomical test is this: at any station of the traverse the azimuth of a referring mark may be determined by astronomical observations; the inclination of the line between the station and the referring mark to the meridian of the origin is given by the traverse, the two should differ by the convergency of the meridians of the station and the origin. In practice the angles of the traverse are usually adjusted to satisfy their special geometrical and astronomical tests in the first instance, and then the co-ordinates of the stations are calculated and adjusted by corrections applied to the longest, that the angles may be least disturbed, as no further corrections are given them.\n\n'''''Convergency of Meridians.''''' The exact value of the convergence, when the distance and azimuth of the second astronomical station from the first are known, is that of <math>B-(\\pi+A)</math> of equation (5); but, as the first term is sufficient for a traverse, we have\n{{block center|<math>\\text{convergency} = x \\tan \\lambda \\frac{\\text{cosec}\\,1''}{\\nu}</math>,}}",
+   "c1s2": "substituting <math>x</math>, the co-ordinate of the second station perpendicular to the meridian of the origin, for <math>c \\sin A</math>.\n\n'''''Adjustment of Traverses to Triangulation.''''' The co-ordinates of the principal stations of a trigonometrical survey are usually the spherical co-ordinates of latitude and longitude; those of a traverse survey are always rectangular, plane for a small area but spherical for a large one. It is often necessary, therefore, for purposes of comparison and check at stations common to surveys of both descriptions, to convert either rectangular co-ordinates into latitudes and longitudes, or vice versa, in order that the errors of traverses may be dispersed by proportion over the co-ordinates of the traverse stations, if desired, or adjusted in the final mapping. The latter is generally all that is necessary, more particularly when the traverses are referred to successive trigonometrical stations as origins, as the operations are being extended, in order to prevent any large accumulation of error. Similar conversions are also frequently necessary in map projections. The method of effecting them will now be indicated.\n\nLet <math>A</math> and <math>B</math> be any two points, <math>Aa</math> the meridian of <math>A</math>, <math>Bb</math> the parallel of latitude of <math>B</math>; then <math>Ab</math>, <math>Bb</math> will be their differences in latitude and longitude; from <math>B</math> draw <math>BP</math>",
+   "c1c1": "{{c|{{sc|Fig.}} 5.}}",
+   "c1s3": "'''''Transformation of Co-ordinates.''''' latitude and longitude, from <math>B</math> draw <math>BP</math> perpendicular to <math>Aa</math>; then <math>AP</math>, <math>BP</math> will be the rectangular spherical co-ordinates of <math>B</math> relatively to <math>A</math>. Put <math>BP=x</math>, <math>AP=y</math>, the arc <math>Pb=\\eta</math>, and the arc <math>Bb</math>, the difference of longitude, <math>=\\omega</math>; also let <math>\\lambda_a</math>, <math>\\lambda_b</math> and <math>\\lambda_p</math> be the latitudes of <math>A</math>, <math>B</math>, and the point <math>P</math>, <math>\\rho_p</math> the radius of curvature of the meridian, and <math>\\nu_p</math> the normal terminating in the axis minor for the latitude <math>\\lambda_p</math>; and let <math>\\rho_0</math> be the radius of curvature for the latitude",
+   "c1s4": "<math>\\tfrac{1}{2}(\\lambda_a+\\lambda_p)</math>. Then, when the rectangular co-ordinates are given, we have, taking <math>A</math> as the origin, the latitude of which is known,\n\n{{block center|<math>\\left.\\begin{aligned}\\lambda_p = \\lambda_a + \\frac{y}{\\rho_0}\\text{cosec } 1'';\\ \\eta = \\frac{x^2}{2\\rho_p\\nu_p}\\tan\\lambda_p\\ \\text{cosec } 1'';\\\\ \\lambda_b - \\lambda_a = \\frac{y}{\\rho_0}\\text{cosec } 1'' - \\eta;\\ \\omega = \\frac{x}{\\nu_p}\\sec(\\lambda_b + \\tfrac{1}{3}\\eta)\\ \\text{cosec } 1''\\ \\cdot\\end{aligned}\\right\\}</math> (19).}}\n\nAnd, when the latitude and longitude are given, we have<sup>1</sup>\n\n{{block center|<math>\\left.\\begin{aligned}\\eta &= \\left(\\frac{\\omega}{2}\\right)^2\\frac{\\nu_b}{\\rho_b}\\sin 2\\lambda_b \\sin 1''\\\\ y &= \\rho_0\\{\\lambda_l - \\lambda_a + \\eta\\}\\sin 1''\\\\ x &= \\omega\\nu_p\\cos(\\lambda_b + \\tfrac{1}{3}\\eta)\\sin 1''\\end{aligned}\\right\\}</math> (20).}}",
+   "c1s5": "¶\n'''''Co-ordinates of Unvisited Point.''''' When a hill peak or other prominent object has been observed from a number of stations whose co-ordinates are already fixed, the converging rays may be projected graphically, and from an examination of their several intersections the most probable position of the object may be obtained almost as accurately as by calculations by the method of least squares, which are very laborious and out of place for the determination of a secondary point. The following is a description of the application of this method to points on a plane surface in the calculations of the ordnance survey. Let <math>s_1</math>, <math>s_2</math>, <math>\\dots</math> be stations whose rectangular co-ordinates, <math>x_1</math>, <math>x_2</math>, <math>\\dots</math> perpendicular, and <math>y_1</math>, <math>y_2</math>, <math>\\dots</math> parallel, to the meridian of the origin are given; let <math>a_1</math>, <math>a_2</math>, <math>\\dots</math> be the bearings—here the direction-inclinations with the meridian of the origin—of any point <math>P</math>, as observed at the several stations; and let <math>p</math> be an approximate position of <math>P</math>, with co-ordinates <math>x_p</math>, <math>y_p</math>, as determined by graphical projection on a district map or by rough calculation. Construct a diagram of the rays converging around <math>p</math>, by taking a point to represent <math>p</math> and drawing two lines through it at right angles to each other to\n\n{{smaller block|<sup>1</sup> In the Indian survey, tables are employed for these calculations which give the value of <math>1''</math> of arc in feet on the meridian, and on each parallel of latitude, at intervals of <math>5'</math> apart; also a corresponding table of arc-versines (<math>Pb</math>) of spheroidal arcs of parallel (<math>Bb</math>) <math>1^\\circ</math> in length, from which the arc-versines for shorter or longer arcs are obtained proportionally to the squares of the arcs; <math>x</math> is taken as the difference of longitude converted into linear measure.}}",
+   "c2s1": "indicate the directions of north, south, east and west. Calculate accurately <math>(y_p - y_1) \\tan a_1</math>, and compare with <math>(x_p - x_1)</math>; the difference will show how far the direction of the ray from <math>s_1</math> falls to the east or west of <math>p</math>. Or calculate <math>(x_p - x_1) \\cot a_1</math>, and compare with <math>(y_p - y_1)</math> to find how far the direction falls to the north or south of <math>p</math>. Set off the distance on the corresponding axis of <math>p</math>, and through",
+   "c2c1": "{{c|{{sc|Fig.}} 6.}}",
+   "c2s2": "the point thus fixed draw the direction <math>a_1</math> with a common protractor. All the other rays around <math>p</math> may be drawn in like manner; they will intersect each other in a number of points, the centre of which may be adopted as the most probable position of <math>P</math>. The co-ordinates of <math>P</math> will then be readily obtained from those of <math>p\\pm</math>the distances on the meridian and perpendicular. In the annexed diagram (fig. 6) <math>P</math> is supposed to have been observed from five stations, giving as many intersecting rays, (1, 1), (2, 2), . . . ; there are ten points of intersection, the mean position of which gives the true position of <math>P</math>, the assumed position being <math>p</math>. The advantages claimed for the method are that, the bearings being independent, an erroneous bearing may be redrawn without disturbing those that are correct; similarly new bearings may be introduced without disturbing previous work, and observations from a large number of stations may be readily utilized, whereas, when calculation is resorted to, observations in excess of the minimum number required are frequently rejected because of the labour of computing them.\n\n{{sc|Authorities.}}—Clarke, ''Geodesy'' (London); Waller, \"India's Contribution to Geodesy,\" ''Trans. Roy. Soc.'', vol. clxxxvi. (1895); Thuillier, ''Manual of Surveying for India'' (Calcutta); Gore, ''Handbook of Professional Instructions for the Topographical Branch Survey of India Department'' (Calcutta); D'A. Jackson, ''Aid to Survey Practice'' (London, 1899); Woodthorpe, ''Hints to Travellers'' (Plane-tabling section); Grant, \"Diagram for Determining Parallaxes,\" &c., ''Geog. Journ.'' (June 1896); Pierce, \"Economic Use of the Plane-Table,\" vol. xcii. pt. ii., ''Pro. Inst. Civ. Eng.''; Bridges-Lee, ''Photographic Surveying'' (1899); London Society of Engineers; Laussedat, ''Recherches sur les instruments les méthodes et le dessin''",
+   "c2s3": "topographique'' (Paris, 1898); H. M. Wilson, ''Topographic Surveying'' (New York, 1905); ''Professional Papers Royal Engineers'' (occasional paper series), vol. xiii. paper v. by Holdich; vol. xiv. paper ii. by Talbot; vol. xxvi. paper i. by MacDonnell (R.E. Institute, Chatham).\n\n{{right|(T. H. H.*)}}\n\n{{c|6. {{sc|Nautical Surveying}}}}\n\nThe great majority of nautical surveys are carried out by H.M. surveying vessels under the orders of the hydrographer of the admiralty. Plans of harbours and anchorages are also received from H.M. ships in commission on foreign stations, but surveys of an extended nature can hardly be executed except by a ship specially fitted and carrying a trained staff of officers. The introduction of steam placed means at the disposal of nautical surveyors which largely modified the conditions under which they had to work in the earlier days of sailing vessels, and it has enabled the ship to be used in various ways previously impracticable. The heavy draught of ships in the present day, the growing increase of ocean and coasting traffic all over the world, coupled with the desire to save distance by rounding points of land and other dangers as closely as possible, demand surveys on larger scales and in greater detail than was formerly necessary; and to meet these modern requirements resurveys of many parts of the world are continually being called for. Nautical surveys vary much in character according to the nature of the work, its importance to navigation, and the time available. The elaborate methods and rigid accuracy of a triangulation for geodetic purposes on shore are unnecessary,"
   },
   "figure_files": {
    "c1f1": "eb1911 v26 p0171 c1f1.png",
@@ -150,46 +174,46 @@
   "figures": [
    {
     "box": [
-     1336,
+     1337,
      411,
      2074,
-     1072
+     1071
     ],
     "caption": [
      1649,
-     1078,
-     1761,
+     1079,
+     1760,
      1111
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1319,
-     406,
-     2094,
+     1321,
+     409,
+     2216,
      1078
     ]
    },
    {
     "box": [
-     98,
-     1528,
+     97,
+     1525,
      303,
-     1784
+     1782
     ],
     "caption": [
      175,
-     1798,
-     271,
-     1832
+     1793,
+     308,
+     1831
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     95,
-     1546,
-     318,
-     1789
+     97,
+     1540,
+     309,
+     1780
     ]
    }
   ],
@@ -205,22 +229,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 3,
-    "input_tokens": 6527,
-    "output_tokens": 176,
+    "input_tokens": 6598,
+    "output_tokens": 163,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 9,
-    "input_tokens": 7152,
-    "output_tokens": 5720,
+    "model": "claude-opus-5-5",
+    "calls": 11,
+    "input_tokens": 7890,
+    "output_tokens": 6262,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 17316
+    "cache_read_input_tokens": 26631
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|NAUTICAL]|SURVEYING|153}}</noinclude>[[File:eb1911 v26 p0171 c1f1.png|center|73px]]\n{{c|{{sc|Fig.}} 5.}}\n\ns the figure has sides, less four; the second is linear, raical sum of the <math>x</math> co-ordinates and that of the <math>y</math> hould each be = 0. The astronomical test is this: of the traverse the azimuth of a referring mark may l by astronomical observations; the inclination of en the station and the referring mark to the meridian s given by the traverse, the two should differ by the f the meridians of the station and the origin. In ngles of the traverse are usually adjusted to satisfy eometrical and astronomical tests in the first instance, o-ordinates of the stations are calculated and adjusted applied to the longest, that the angles may be least no further corrections are given them.\n\nalue of the convergence, when the distance and azi-uth of the second astronomical station from the first e known, is that of <math>B-(\\pi+A)</math> of equation (5); t, as the first term is sufficient for a traverse, we have\n{{block center|<math>\\text{convergency} = x \\tan \\lambda \\frac{\\text{cosec}\\,1''}{\\nu}</math>,}}\n, the co-ordinate of the second station perpendicular n of the origin, for <math>c \\sin A</math>.\n\nnates of the principal stations of a trigonometrical ally the spherical co-ordinates of latitude and longi-de; those of a traverse survey are always rectangular, ane for a small area but spherical for a large one. is often necessary, therefore, for purposes of com-rison and check at stations common to surveys of oth descriptions, to convert either rectangular co-dinates into latitudes and longitudes, or vice versa, he errors of traverses may be dispersed by proportion dinates of the traverse stations, if desired, or adjusted apping. The latter is generally all that is necessary, arly when the traverses are referred to successive l stations as origins, as the operations are being order to prevent any large accumulation of error. sions are also frequently necessary in map projections. f effecting them will now be indicated.\n\n''Transformation of Co-ordinates.'' <math>B</math> be any two points, <math>Aa</math> the meridian of <math>A</math>, <math>Bb</math> the itude of <math>B</math>; then <math>Ab</math>, <math>Bb</math> will be their differences in latitude and longitude; from <math>B</math> draw <math>BP</math> perpendicular to <math>Aa</math>; then <math>AP</math>, <math>BP</math> will be the rectangular spherical co-ordinates of <math>B</math> relatively to <math>A</math>. Put <math>BP=x</math>, <math>AP=y</math>, the arc <math>Pb=\\eta</math>, and the arc <math>Bb</math>, the difference of longitude, <math>=\\omega</math>; also let <math>\\lambda_a</math>, <math>\\lambda_b</math> and <math>\\lambda_p</math> be the latitudes of <math>A</math>, <math>B</math>, and the point <math>P</math>, <math>\\rho_p</math> the radius of curvature of the meridian, and <math>\\nu_p</math> the normal terminating in the axis minor for the latitude <math>\\lambda_p</math>; and let <math>\\rho_0</math> be the radius of curvature for the latitude <math>\\tfrac{1}{2}(\\lambda_a+\\lambda_p)</math>. Then, when the rectangular co-ordinates are given, we have, taking <math>A</math> as the origin, the latitude of which is known,\n\n{{block center|<math>\\left.\\begin{array}{c}\\lambda_p=\\lambda_a+\\frac{y}{\\rho_0}\\text{cosec }1'';\\ \\eta=\\frac{x^2}{2\\rho_p\\nu_p}\\tan\\lambda_p\\text{ cosec }1'';\\\\ \\lambda_b-\\lambda_a=\\frac{y}{\\rho_0}\\text{cosec }1''-\\eta;\\ \\omega=\\frac{x}{\\nu_p}\\sec(\\lambda_b+\\tfrac{1}{3}\\eta)\\text{ cosec }1''\\ \\cdot\\end{array}\\right\\}</math> (19).}}\n\nAnd, when the latitude and longitude are given, we have<sup>1</sup>\n\n{{block center|<math>\\left.\\begin{array}{l}\\eta=\\left(\\frac{\\omega}{2}\\right)^2\\frac{\\nu_b}{\\rho_b}\\sin 2\\ \\lambda_b\\sin\\ 1''\\\\ y=\\rho_0\\{\\lambda_l-\\lambda_a+\\eta\\}\\sin\\ 1''\\\\ x=\\omega\\nu_p\\cos\\ (\\lambda_b+\\tfrac{1}{3}\\eta)\\sin\\ 1''\\end{array}\\right\\}</math> (20).}}\n\n''Co-ordinates of Unvisited Point.''—When a hill peak or other prominent object has been observed from a number of stations whose co-ordinates are already fixed, the converging rays may be projected graphically, and from an examination of their several intersections the most probable position of the object may be obtained almost as accurately as by calculations by the method of least squares, which are very laborious and out of place for the determination of a secondary point. The following is a description of the application of this method to points on a plane surface in the calculations of the ordnance survey. Let <math>s_1</math>, <math>s_2</math>, . . . be stations whose rectangular co-ordinates, <math>x_1</math>, <math>x_2</math>, . . . perpendicular, and <math>y_1</math>, <math>y_2</math>, . . . parallel, to the meridian of the origin are given; let <math>a_1</math>, <math>a_2</math>, . . . be the bearings—here the direction-inclinations with the meridian of the origin—of any point <math>P</math>, as observed at the several stations; and let <math>p</math> be an approximate position of <math>P</math>, with co-ordinates <math>x_p</math>, <math>y_p</math>, as determined by graphical projection on a district map or by rough calculation. Construct a diagram of the rays converging around <math>p</math>, by taking a point to represent <math>p</math> and drawing two lines through it at right angles to each other to\n\n{{smaller block|<sup>1</sup> In the Indian survey, tables are employed for these calculations which give the value of <math>1''</math> of arc in feet on the meridian, and on each parallel of latitude, at intervals of <math>5'</math> apart; also a corresponding table of arc-versines (<math>Pb</math>) of spheroidal arcs of parallel (<math>Bb</math>) <math>1^\\circ</math> in length, from which the arc-versines for shorter or longer arcs are obtained proportionally to the squares of the arcs; <math>x</math> is taken as the difference of longitude converted into linear measure.}} indicate the directions of north, south, east and west. Calculate the point thus fixed draw the direction <math>a_1</math> with a common protractor. All the other rays around <math>p</math> may be drawn in like manner; they will intersect each other in a number of points, the centre of which may be adopted as the most probable position of <math>P</math>. The co-ordinates of <math>P</math> will then be readily obtained from those of <math>p \\pm</math> the distances on the meridian and perpendicular. In the annexed diagram (fig. 6) <math>P</math> is supposed to have been observed from five stations, giving as many intersecting rays, (1, 1), (2, 2), . . . ; there are ten points of intersection, the mean position of which gives the true position of <math>P</math>, the assumed position being <math>p</math>. The advantages claimed for the method are that, the bearings being independent, an erroneous bearing may be redrawn without disturbing those that are correct; similarly new bearings may be introduced without disturbing previous work, and observations from a large number of stations may be readily utilized, whereas, when calculation is resorted to, observations in excess of the minimum number required are frequently rejected because of the labour of computing them.\n\n[[File:eb1911 v26 p0171 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 6.}}\n\n{{smaller|{{sc|Authorities}}.—Clarke, ''Geodesy'' (London); Waller, “India's Contribution to Geodesy,” ''Trans. Roy. Soc.'', vol. clxxxvi. (1895); Thuillier, ''Manual of Surveying for India'' (Calcutta); Gore, ''Handbook of Professional Instructions for the Topographical Branch Survey of India Department'' (Calcutta); D'A. Jackson, ''Aid to Survey Practice'' (London, 1899); Woodthorpe, ''Hints to Travellers'' (Plane-tabling section); Grant, “Diagram for Determining Parallaxes,” &c., ''Geog. Journ.'' (June 1896); Pierce, “Economic Use of the Plane-Table,” vol. xcii. pt. ii., ''Pro. Inst. Civ. Eng.''; Bridges-Lee, ''Photographic Surveying'' (1899); London Society of Engineers; Laussedat, ''Recherches sur les instruments les méthodes et le dessin''}} ''topographique'' (Paris, 1898); H. M. Wilson, ''Topographic Surveying'' (New York, 1905); ''Professional Papers Royal Engineers'' (occasional paper series), vol. xiii. paper v. by Holdich; vol. xiv. paper ii. by Talbot; vol. xxvi. paper i. by MacDonnell (R.E. Institute, Chatham).\n{{right|(T. H. H.*)}}\n\n{{c|6. {{sc|Nautical Surveying}}}}\n\nThe great majority of nautical surveys are carried out by H.M. surveying vessels under the orders of the hydrographer of the admiralty. Plans of harbours and anchorages are also received from H.M. ships in commission on foreign stations, but surveys of an extended nature can hardly be executed except by a ship specially fitted and carrying a trained staff of officers. The introduction of steam placed means at the disposal of nautical surveyors which largely modified the conditions under which they had to work in the earlier days of sailing vessels, and it has enabled the ship to be used in various ways previously impracticable. The heavy draught of ships in the present day, the growing increase of ocean and coasting traffic all over the world, coupled with the desire to save distance by rounding points of land and other dangers as closely as possible, demand surveys on larger scales and in greater detail than was formerly necessary; and to meet these modern requirements resurveys of many parts of the world are continually being called for. Nautical surveys vary much in character according to the nature of the work, its importance to navigation, and the time available. The elaborate methods and rigid accuracy of a triangulation for geodetic purposes on shore are unnecessary,<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|NAUTICAL]|SURVEYING|153}}</noinclude>right angles as the figure has sides, less four; the second is linear, viz. the algebraical sum of the <math>x</math> co-ordinates and that of the <math>y</math> co-ordinates should each be<math>=0</math>. The astronomical test is this: at any station of the traverse the azimuth of a referring mark may be determined by astronomical observations; the inclination of the line between the station and the referring mark to the meridian of the origin is given by the traverse, the two should differ by the convergency of the meridians of the station and the origin. In practice the angles of the traverse are usually adjusted to satisfy their special geometrical and astronomical tests in the first instance, and then the co-ordinates of the stations are calculated and adjusted by corrections applied to the longest, that the angles may be least disturbed, as no further corrections are given them.\n\n'''''Convergency of Meridians.''''' The exact value of the convergence, when the distance and azimuth of the second astronomical station from the first are known, is that of <math>B-(\\pi+A)</math> of equation (5); but, as the first term is sufficient for a traverse, we have\n{{block center|<math>\\text{convergency} = x \\tan \\lambda \\frac{\\text{cosec}\\,1''}{\\nu}</math>,}} substituting <math>x</math>, the co-ordinate of the second station perpendicular to the meridian of the origin, for <math>c \\sin A</math>.\n\n'''''Adjustment of Traverses to Triangulation.''''' The co-ordinates of the principal stations of a trigonometrical survey are usually the spherical co-ordinates of latitude and longitude; those of a traverse survey are always rectangular, plane for a small area but spherical for a large one. It is often necessary, therefore, for purposes of comparison and check at stations common to surveys of both descriptions, to convert either rectangular co-ordinates into latitudes and longitudes, or vice versa, in order that the errors of traverses may be dispersed by proportion over the co-ordinates of the traverse stations, if desired, or adjusted in the final mapping. The latter is generally all that is necessary, more particularly when the traverses are referred to successive trigonometrical stations as origins, as the operations are being extended, in order to prevent any large accumulation of error. Similar conversions are also frequently necessary in map projections. The method of effecting them will now be indicated.\n\nLet <math>A</math> and <math>B</math> be any two points, <math>Aa</math> the meridian of <math>A</math>, <math>Bb</math> the parallel of latitude of <math>B</math>; then <math>Ab</math>, <math>Bb</math> will be their differences in latitude and longitude; from <math>B</math> draw <math>BP</math> '''''Transformation of Co-ordinates.''''' latitude and longitude, from <math>B</math> draw <math>BP</math> perpendicular to <math>Aa</math>; then <math>AP</math>, <math>BP</math> will be the rectangular spherical co-ordinates of <math>B</math> relatively to <math>A</math>. Put <math>BP=x</math>, <math>AP=y</math>, the arc <math>Pb=\\eta</math>, and the arc <math>Bb</math>, the difference of longitude, <math>=\\omega</math>; also let <math>\\lambda_a</math>, <math>\\lambda_b</math> and <math>\\lambda_p</math> be the latitudes of <math>A</math>, <math>B</math>, and the point <math>P</math>, <math>\\rho_p</math> the radius of curvature of the meridian, and <math>\\nu_p</math> the normal terminating in the axis minor for the latitude <math>\\lambda_p</math>; and let <math>\\rho_0</math> be the radius of curvature for the latitude <math>\\tfrac{1}{2}(\\lambda_a+\\lambda_p)</math>. Then, when the rectangular co-ordinates are given, we have, taking <math>A</math> as the origin, the latitude of which is known,\n\n[[File:eb1911 v26 p0171 c1f1.png|center|73px]]\n{{c|{{sc|Fig.}} 5.}}\n\n{{block center|<math>\\left.\\begin{aligned}\\lambda_p = \\lambda_a + \\frac{y}{\\rho_0}\\text{cosec } 1'';\\ \\eta = \\frac{x^2}{2\\rho_p\\nu_p}\\tan\\lambda_p\\ \\text{cosec } 1'';\\\\ \\lambda_b - \\lambda_a = \\frac{y}{\\rho_0}\\text{cosec } 1'' - \\eta;\\ \\omega = \\frac{x}{\\nu_p}\\sec(\\lambda_b + \\tfrac{1}{3}\\eta)\\ \\text{cosec } 1''\\ \\cdot\\end{aligned}\\right\\}</math> (19).}}\n\nAnd, when the latitude and longitude are given, we have<sup>1</sup>\n\n{{block center|<math>\\left.\\begin{aligned}\\eta &= \\left(\\frac{\\omega}{2}\\right)^2\\frac{\\nu_b}{\\rho_b}\\sin 2\\lambda_b \\sin 1''\\\\ y &= \\rho_0\\{\\lambda_l - \\lambda_a + \\eta\\}\\sin 1''\\\\ x &= \\omega\\nu_p\\cos(\\lambda_b + \\tfrac{1}{3}\\eta)\\sin 1''\\end{aligned}\\right\\}</math> (20).}}\n\n'''''Co-ordinates of Unvisited Point.''''' When a hill peak or other prominent object has been observed from a number of stations whose co-ordinates are already fixed, the converging rays may be projected graphically, and from an examination of their several intersections the most probable position of the object may be obtained almost as accurately as by calculations by the method of least squares, which are very laborious and out of place for the determination of a secondary point. The following is a description of the application of this method to points on a plane surface in the calculations of the ordnance survey. Let <math>s_1</math>, <math>s_2</math>, <math>\\dots</math> be stations whose rectangular co-ordinates, <math>x_1</math>, <math>x_2</math>, <math>\\dots</math> perpendicular, and <math>y_1</math>, <math>y_2</math>, <math>\\dots</math> parallel, to the meridian of the origin are given; let <math>a_1</math>, <math>a_2</math>, <math>\\dots</math> be the bearings—here the direction-inclinations with the meridian of the origin—of any point <math>P</math>, as observed at the several stations; and let <math>p</math> be an approximate position of <math>P</math>, with co-ordinates <math>x_p</math>, <math>y_p</math>, as determined by graphical projection on a district map or by rough calculation. Construct a diagram of the rays converging around <math>p</math>, by taking a point to represent <math>p</math> and drawing two lines through it at right angles to each other to\n\n{{smaller block|<sup>1</sup> In the Indian survey, tables are employed for these calculations which give the value of <math>1''</math> of arc in feet on the meridian, and on each parallel of latitude, at intervals of <math>5'</math> apart; also a corresponding table of arc-versines (<math>Pb</math>) of spheroidal arcs of parallel (<math>Bb</math>) <math>1^\\circ</math> in length, from which the arc-versines for shorter or longer arcs are obtained proportionally to the squares of the arcs; <math>x</math> is taken as the difference of longitude converted into linear measure.}} indicate the directions of north, south, east and west. Calculate accurately <math>(y_p - y_1) \\tan a_1</math>, and compare with <math>(x_p - x_1)</math>; the difference will show how far the direction of the ray from <math>s_1</math> falls to the east or west of <math>p</math>. Or calculate <math>(x_p - x_1) \\cot a_1</math>, and compare with <math>(y_p - y_1)</math> to find how far the direction falls to the north or south of <math>p</math>. Set off the distance on the corresponding axis of <math>p</math>, and through the point thus fixed draw the direction <math>a_1</math> with a common protractor. All the other rays around <math>p</math> may be drawn in like manner; they will intersect each other in a number of points, the centre of which may be adopted as the most probable position of <math>P</math>. The co-ordinates of <math>P</math> will then be readily obtained from those of <math>p\\pm</math>the distances on the meridian and perpendicular. In the annexed diagram (fig. 6) <math>P</math> is supposed to have been observed from five stations, giving as many intersecting rays, (1, 1), (2, 2), . . . ; there are ten points of intersection, the mean position of which gives the true position of <math>P</math>, the assumed position being <math>p</math>. The advantages claimed for the method are that, the bearings being independent, an erroneous bearing may be redrawn without disturbing those that are correct; similarly new bearings may be introduced without disturbing previous work, and observations from a large number of stations may be readily utilized, whereas, when calculation is resorted to, observations in excess of the minimum number required are frequently rejected because of the labour of computing them.\n\n[[File:eb1911 v26 p0171 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 6.}}\n\n{{sc|Authorities.}}—Clarke, ''Geodesy'' (London); Waller, \"India's Contribution to Geodesy,\" ''Trans. Roy. Soc.'', vol. clxxxvi. (1895); Thuillier, ''Manual of Surveying for India'' (Calcutta); Gore, ''Handbook of Professional Instructions for the Topographical Branch Survey of India Department'' (Calcutta); D'A. Jackson, ''Aid to Survey Practice'' (London, 1899); Woodthorpe, ''Hints to Travellers'' (Plane-tabling section); Grant, \"Diagram for Determining Parallaxes,\" &c., ''Geog. Journ.'' (June 1896); Pierce, \"Economic Use of the Plane-Table,\" vol. xcii. pt. ii., ''Pro. Inst. Civ. Eng.''; Bridges-Lee, ''Photographic Surveying'' (1899); London Society of Engineers; Laussedat, ''Recherches sur les instruments les méthodes et le dessin'' topographique'' (Paris, 1898); H. M. Wilson, ''Topographic Surveying'' (New York, 1905); ''Professional Papers Royal Engineers'' (occasional paper series), vol. xiii. paper v. by Holdich; vol. xiv. paper ii. by Talbot; vol. xxvi. paper i. by MacDonnell (R.E. Institute, Chatham).\n\n{{right|(T. H. H.*)}}\n\n{{c|6. {{sc|Nautical Surveying}}}}\n\nThe great majority of nautical surveys are carried out by H.M. surveying vessels under the orders of the hydrographer of the admiralty. Plans of harbours and anchorages are also received from H.M. ships in commission on foreign stations, but surveys of an extended nature can hardly be executed except by a ship specially fitted and carrying a trained staff of officers. The introduction of steam placed means at the disposal of nautical surveyors which largely modified the conditions under which they had to work in the earlier days of sailing vessels, and it has enabled the ship to be used in various ways previously impracticable. The heavy draught of ships in the present day, the growing increase of ocean and coasting traffic all over the world, coupled with the desire to save distance by rounding points of land and other dangers as closely as possible, demand surveys on larger scales and in greater detail than was formerly necessary; and to meet these modern requirements resurveys of many parts of the world are continually being called for. Nautical surveys vary much in character according to the nature of the work, its importance to navigation, and the time available. The elaborate methods and rigid accuracy of a triangulation for geodetic purposes on shore are unnecessary,<noinclude><references/></noinclude>"
 }

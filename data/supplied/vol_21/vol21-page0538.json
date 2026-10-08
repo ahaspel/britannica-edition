@@ -29,7 +29,7 @@
      106,
      193,
      1167,
-     1145
+     1113
     ]
    },
    {
@@ -38,9 +38,31 @@
     "column": 1,
     "box": [
      106,
-     1145,
+     1113,
      1167,
-     1413
+     1424
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     106,
+     1424,
+     1167,
+     1488
+    ]
+   },
+   {
+    "name": "c1c2",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     106,
+     1421,
+     1167,
+     1487
     ]
    },
    {
@@ -49,31 +71,9 @@
     "column": 1,
     "box": [
      106,
-     1424,
+     1487,
      1167,
-     1482
-    ]
-   },
-   {
-    "name": "c1s3",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     106,
-     1422,
-     1167,
-     1485
-    ]
-   },
-   {
-    "name": "c1s4",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     106,
-     1485,
-     1167,
-     1507
+     2042
     ]
    },
    {
@@ -82,42 +82,42 @@
     "column": 1,
     "box": [
      106,
-     1507,
+     2042,
      540,
-     2330
+     2335
     ]
    },
    {
-    "name": "c1s5",
-    "kind": "text",
+    "name": "c1c3",
+    "kind": "caption",
     "column": 1,
     "box": [
      106,
-     2330,
+     2335,
      540,
      2398
     ]
    },
    {
-    "name": "c1s6",
+    "name": "c1s3",
     "kind": "text",
     "column": 1,
     "box": [
      540,
-     1507,
+     2042,
      1167,
      2398
     ]
    },
    {
-    "name": "c1s7",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
      106,
      2398,
      1167,
-     3155
+     2514
     ]
    },
    {
@@ -128,7 +128,7 @@
      1167,
      193,
      2242,
-     1211
+     1213
     ]
    },
    {
@@ -137,7 +137,7 @@
     "column": 2,
     "box": [
      1167,
-     1211,
+     1213,
      2242,
      1928
     ]
@@ -150,18 +150,40 @@
      1167,
      1928,
      2242,
-     2503
+     2514
     ]
    },
    {
-    "name": "c2f1",
+    "name": "c0f1",
     "kind": "figure",
-    "column": 2,
+    "column": 0,
     "box": [
-     1167,
-     2503,
+     106,
+     2514,
      2242,
      2967
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     106,
+     2977,
+     2242,
+     3006
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     106,
+     3006,
+     1162,
+     3155
     ]
    },
    {
@@ -169,19 +191,8 @@
     "kind": "text",
     "column": 2,
     "box": [
-     1167,
-     2976,
-     2242,
-     3012
-    ]
-   },
-   {
-    "name": "c2s5",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1167,
-     3012,
+     1162,
+     3006,
      2242,
      3155
     ]
@@ -190,110 +201,111 @@
   "readings": {
    "head": "{{RunningHeader|512|PHOTOGRAPHY|[APPARATUS}}",
    "c1s1": "of a central negative lens, with cemented double front and back lenses (fig. 52). The negative lenses are of light silicate flint, the two positive of the heaviest baryta crown. Besides being a rapid universal lens, it is specially suitable for half-tone process work, with a large diaphragm (''E. Jb.'', 1903, p. 117). The “Dynar” (1903), <math>f/6</math>, angle 60°, is of somewhat similar construction, but differs from the “Heliar” in the positive lenses of the cemented pairs being outside instead of towards the central lens. It can only be used as a whole. It is made of hard colourless Jena glasses, giving great brilliancy and uniformity of illumination over a large angle, and is specially adapted for very rapid hand-camera work.\n\nDr R. Steinheil's “Unofocal” (1903), <math>f/4\\cdot5</math> is a symmetrical doublet, each element consisting of two single separated lenses of equal refractive power and of equal focus of opposite signs, hence its name. Each half can be used as a single lens with small stops. In its construction a quite new principle was followed, the separation of the lenses fulfilling an important part in the colour correction, as explained by Conrad Beck in ''Ph. Journ.'' (1904), 44, p. 177. This plan satisfies the Petzval condition and removes its restrictions, so that a lens of <math>f/4\\cdot5</math> can be produced with telescopic central definition, perfect freedom from distortion and flare over a flat field of 60°, with great equality of illumination (fig. 53). They are made by Messrs Beck in two series: II., <math>f/4\\cdot5</math>, for portraiture, rapid hand-camera work, telephotography and projection; and I., <math>f/6</math>, in which the lenses are closer together, for hand-camera work and general purposes. E. Arbeit's “Euryplan” anastigmats (1903), made by Schulze Bros., Potsdam, are apochromatic objectives of quite new construction, giving perfect definition with large apertures over a",
-   "c1s2": "{{c|{{sc|Fig.}} 53.—Beck-Steinheil “Unofocal.”}}\n{{c|{{sc|Fig.}} 54.—Euryplan, ''f''/4·5.}}",
-   "c1s3": "{{c|{{sc|Fig.}} 53.—Beck-Steinheil “Unofocal.”}}\n\n{{c|{{sc|Fig.}} 54.—Euryplan, <math>f/4\\cdot5</math>.}}",
-   "c1s4": "",
-   "c1s5": "{{c|{{sc|Fig.}} 55.—Beck’s “Isostigmar.”}}",
-   "c1s6": "ries: I., <math>f/4{\\cdot}5</math>, angle 80°; II., <math>f/5{\\cdot}6</math>, angle 82°; IV., <math>f/6{\\cdot}5</math>. They are symmetrical isisting of three lenses, a new achromat vy baryta crown of high refractivity and an air-space from a positive meniscus with its concave side towards the dia-, the two positives are placed outside I. they are inside. The single elements tically and chromatically, and can be cus (''E. Jb.'' 1904, p. 35).\n\n07) is a new anastigmat showing a disinary principles of construction, in that al condition that the sum of the focal es multiplied by the reciprocals of their should be equal to zero, or <math>\\Sigma(1/\\mu f) = 0</math>. two separated thin single lenses in the front element and three in the back (fig. 55). In departing from the Petzval condition very low power lenses can be used, thus reducing the initial errors to be corrected; no individual component having a shorter focal length than one-half that of a complete objective. A special feature is the excellent correction of the oblique spherical aberrations and central aberrations, giving a practically flat field",
-   "c1s7": "without astigmatism over angles from 60° to 90°. The half combinations can also be used alone with diaphragms as long focus lenses of different foci (''Ph. Journ.'' 1907, 47, p. 191). It is issued in six series: I. (1908), <math>f</math>/4·5, large aperture, series, for reflex press work and portraiture; I''a''., <math>f</math>/6·5, angle 60°–65°, long focus, for portraiture, &c.; II., <math>f</math>/5·8, angle 70°, for general use, III. <math>f</math>/7·7, angle 65°, similar to II. but less rapid; IV. <math>f</math>/6·3, angle 90°; wide angle, giving satisfactory definition at full aperture over an angle from 80° to 85°. Having such a large reserve of covering power the",
-   "c2s1": "latter is very useful when an extended use of the rising front is required, either at a wide or ordinary angle. V. (1908), <math>f/11</math>, “Process” lenses specially corrected to give a flat field for copying. They can be fitted with suitable reversing prisms. VI. (1908), <math>f/5\\cdot 6</math>, variable portrait lenses, adjustable for sharp or soft definition from the back of the camera while focusing.\n\nThe above represent the principal types of anastigmats, but many more objectives of the kind, triple or quadruple, cemented or uncemented, with air-spaces, in many modifications, have been issued by English and foreign makers.\n\n6. ''Telephotographic Objectives''.—For some years past special objectives, or attachments, have been constructed for photographing near or distant objects on an enlarged scale with an ordinary camera, the extension required being very much less than would be needed to obtain an image of the same size with an ordinary long-focus lens without enlargement. They consist of a combination of a positive converging with a negative dispersing lens, by which the image is picked up and enlarged to varying degrees, according to the system of lenses used and the extension given to the camera, thus producing the same effect as a positive lens of very much longer focus. Enlarged images of this kind can also be made by a combination of two converging lenses, one of them forming an image of the object, which is received on the other of shorter focus and projected on the sensitive plate, being enlarged more or less according to the optical conditions and relative positions of the lenses and sensitive plate. The photoheliographs at Greenwich and other solar observatories, designed by Warren de la Rue, are on this principle. Portable apparatus of the kind was made in 1869 by MM. Borie and de Tournemire, and later by Jarret, but this system requires much greater extension of the camera, entailing more loss of intensity of the image, and has never come into use.",
-   "c2s2": "¶\nThe modern telephotographic combination is generally looked upon as an application of the principle of the “Barlow” lens, but it really goes back to the Galilean telescope (''c.'' 1610). J. B. Porta mentions the combination of concave and convex lenses for giving enlarged and clearer images of near and distant objects (''Magia Naturalis'', lib. 17, cap. 10, 1589). J. Kepler showed that by a combination of a convex with a concave lens images of objects could be depicted on paper of a larger size than by the convex lens alone, but reversed (''Dioptrice'', ''Prob.'' cv. 1611). Christopher Scheiner made use of the same principle in his “Helioscope” for solar observations (''Rosa Ursina'', cap. vii. 1630). F. M. Deschales and P. Z. Traber also dealt with the question, and in J. Zahn's ''Oculus artificialis Teledioptricus'' (1686) we find figured a reflecting camera fitted with a compound enlarging lens on this principle. In his ''Nova Dioptrica'' (1692), W. Molyneux has given some interesting problems for calculating the position of the compound focus of a convex with a concave lens, also the angles subtended by an object on the focal plane. If for the simple uncorrected glasses then used we substitute a system of photographically corrected positive and negative lenses, suitably mounted, and put a sensitive plate in place of the paper, we have the modern telephotographic arrangement. I. Porro seems to have been the first to use a combination of this",
-   "c2s3": "kind for photographing an eclipse in 1857, and later for terrestrial objects. It consisted of a small achromatic single lens combined with a concave lens. Many attempts were afterwards made in France, and also in England, to utilize the principle, but special lenses for the purpose were not available. Ad. Steinheil constructed one in 1889 for the Brussels Observatory, and another in 1890 for the Marine Department in Berlin. In 1891, curiously enough, three such combinations were worked out quite independently and patented, by T. R. Dallmeyer in London, A. Miethe in Berlin and A. Duboscq in Paris. Since that time these combinations have been greatly improved by increase in the working apertures and reduction in size and weight, so that they can be used in hand cameras. They are exceedingly valuable for obtaining details of inaccessible objects at a distance, whether architectural or topographical, and for photographing animals without approaching them too closely. Large portraits can also be taken with much better perspective effects and more conveniently than",
-   "c2s4": "{{c|56.}}",
-   "c2s5": "graphic objectives now available the loss of intensity of illumination, which no doubt was the bar to early progress in this direction, has been overcome, and definition has also been improved, so that snapshots can readily be made with combinations of high intensity, while"
+   "c1c1": "{{c|{{sc|Fig.}} 53.—Beck-Steinheil “Unofocal.”}}\n\n{{c|{{sc|Fig.}} 54.—Euryplan, <math>f</math>/4·5.}}",
+   "c1c2": "{{c|{{sc|Fig.}} 53.—Beck-Steinheil “Unofocal.”}}\n{{c|{{sc|Fig.}} 54.—Euryplan, <math>f</math>/4·5.}}",
+   "c1s2": "wide angle, made in four series: I., <math>f/4{\\cdot}5</math>, angle 80°; II., <math>f/5{\\cdot}6</math>, angle 90°; III., <math>f/6{\\cdot}8</math> to 7·5, angle 82°; IV., <math>f/6{\\cdot}5</math>. They are symmetrical doublets, each element consisting of three lenses, a new achromat formed of a biconvex of heavy baryta crown of high refractivity and low dispersion, separated by an air-space from a positive meniscus of the same baryta crown, with its concave side towards the diaphragm. In series I., <math>f/4{\\cdot}5</math>, the two positives are placed outside (fig. 54), in series II. and III. they are inside. The single elements are fully corrected astigmatically and chromatically, and can be used singly at double the focus (''E. Jb.'' 1904, p. 35).\n\nBeck's \"Isostigmar\" (1907) is a new anastigmat showing a distinct departure from the ordinary principles of construction, in that it does not fulfil the Petzval condition that the sum of the focal powers of its individual lenses multiplied by the reciprocals of their respective refractive indices should be equal to zero, or <math>\\Sigma(1/\\mu\\text{f}) = 0</math>. It is a 5-lens combination, two separated thin single lenses in the",
+   "c1c3": "{{c|{{sc|Fig.}} 55.—Beck's “Isostigmar.”}}",
+   "c1s3": "front element and three in the back (fig. 55). In departing from the Petzval condition very low power lenses can be used, thus reducing the initial errors to be corrected; no individual component having a shorter focal length than one-half that of a complete objective. A special feature is the excellent correction of the oblique spherical aberrations and central aberrations, giving a practically flat field without astigmatism over angles from",
+   "c1s4": "without astigmatism over angles from 60° to 90°. The half combinations can also be used alone with diaphragms as long focus lenses of different foci (''Ph. Journ.'' 1907, 47, p. 191). It is issued in six series: I. (1908), <math>f/4\\cdot5</math>, large aperture,",
+   "c2s1": "latter is very useful when an extended use of the rising front is required, either at a wide or ordinary angle. V. (1908), <math>f/11</math>, “ Process ” lenses specially corrected to give a flat field for copying. They can be fitted with suitable reversing prisms. VI. (1908), <math>f/5\\cdot6</math>, variable portrait lenses, adjustable for sharp or soft definition from the back of the camera while focusing.\n\nThe above represent the principal types of anastigmats, but many more objectives of the kind, triple or quadruple, cemented or uncemented, with air-spaces, in many modifications, have been issued by English and foreign makers.\n\n6. ''Telephotographic Objectives.''—For some years past special objectives, or attachments, have been constructed for photographing near or distant objects on an enlarged scale with an ordinary camera, the extension required being very much less than would be needed to obtain an image of the same size with an ordinary long-focus lens without enlargement. They consist of a combination of a positive converging with a negative dispersing lens, by which the image is picked up and enlarged to varying degrees, according to the system of lenses used and the extension given to the camera, thus producing the same effect as a positive lens of very much longer focus. Enlarged images of this kind can also be made by a combination of two converging lenses, one of them forming an image of the object, which is received on the other of shorter focus and projected on the sensitive plate, being enlarged more or less according to the optical conditions and relative positions of the lenses and sensitive plate. The photoheliographs at Greenwich and other solar observatories, designed by Warren de la Rue, are on this principle. Portable apparatus of the kind was made in 1869 by MM. Borie and de Tournemire, and later by Jarret, but this system requires much greater extension of the camera, entailing more loss of intensity of the image, and has never come into use.",
+   "c2s2": "¶\nThe modern telephotographic combination is generally looked upon as an application of the principle of the “ Barlow ” lens, but it really goes back to the Galilean telescope (''c.'' 1610). J. B. Porta mentions the combination of concave and convex lenses for giving enlarged and clearer images of near and distant objects (''Magia Naturalis'', lib. 17, cap. 10, 1589). J. Kepler showed that by a combination of a convex with a concave lens images of objects could be depicted on paper of a larger size than by the convex lens alone, but reversed (''Dioptrice'', ''Prob.'' cv. 1611). Christopher Scheiner made use of the same principle in his “ Helioscope ” for solar observations (''Rosa Ursina'', cap. vii. 1630). F. M. Deschales and P. Z. Traber also dealt with the question, and in J. Zahn’s ''Oculus artificialis Teledioptricus'' (1686) we find figured a reflecting camera fitted with a compound enlarging lens on this principle. In his ''Nova Dioptrica'' (1692), W. Molyneux has given some interesting problems for calculating the position of the compound focus of a convex with a concave lens, also the angles subtended by an object on the focal plane. If for the simple uncorrected glasses then used we substitute a system of photographically corrected positive and negative lenses, suitably mounted, and put a sensitive plate in place of the paper, we have the modern telephotographic arrangement. I. Porro seems to have been the first to use a combination of this",
+   "c2s3": "kind for photographing an eclipse in 1857, and later for terrestrial objects. It consisted of a small achromatic single lens combined with a concave lens. Many attempts were afterwards made in France, and also in England, to utilize the principle, but special lenses for the purpose were not available. Ad. Steinheil constructed one in 1889 for the Brussels Observatory, and another in 1890 for the Marine Department in Berlin. In 1891, curiously enough, three such combinations were worked out quite independently and patented, by T. R. Dallmeyer in London, A. Miethe in Berlin and A. Duboscq in Paris. Since that time these combinations have been greatly improved by increase in the working apertures and reduction in size and weight, so that they can be used in hand cameras. They are exceedingly valuable for obtaining details of inaccessible objects at a distance, whether architectural or topographical, and for photographing animals without approaching them too closely. Large portraits can also be taken with much better perspective effects and more conveniently than by using long-focus lenses much nearer to",
+   "c0s1": "{{c|{{sc|Fig.}} 56.}}",
+   "c1s5": "long focus, for portraiture, &c.; II., <math>f/5{\\cdot}8</math>, angle 70°, for general use, III. <math>f/7{\\cdot}7</math>, angle 65°, similar to II. but less rapid; IV. <math>f/6{\\cdot}3</math>, angle 90°; wide angle, giving satisfactory definition at full aperture over an angle from 80° to 85°. Having such a large reserve of covering power the",
+   "c2s4": "graphic objectives now available the loss of intensity of illumination, which no doubt was the bar to early progress in this direction, has been overcome, and definition has also been improved, so that snapshots can readily be made with combinations of high intensity, while"
   },
   "figure_files": {
    "c1f1": "eb1911 v21 p0538 c1f1.png",
    "c1f3": "eb1911 v21 p0538 c1f3.png",
-   "c2f1": "eb1911 v21 p0538 c2f1.png"
+   "c0f1": "eb1911 v21 p0538 c0f1.png"
   },
   "figures": [
    {
     "box": [
-     121,
-     1149,
-     527,
+     120,
+     1147,
+     528,
      1413
     ],
     "caption": [
      146,
-     1422,
+     1421,
      534,
-     1485
+     1487
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     105,
-     1127,
-     527,
+     135,
+     1111,
+     534,
      1421
     ]
    },
    {
     "box": [
-     121,
-     1148,
-     527,
-     1410
+     682,
+     1116,
+     1118,
+     1421
     ],
     "caption": [
-     146,
-     1424,
-     534,
-     1482
+     771,
+     1417,
+     1101,
+     1488
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     693,
-     1131,
-     1059,
-     1417
+     682,
+     1116,
+     1118,
+     1421
     ]
    },
    {
     "box": [
      122,
-     2042,
+     2046,
      532,
-     2317
+     2318
     ],
     "caption": [
      134,
-     2331,
-     506,
-     2393
+     2334,
+     507,
+     2394
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     187,
-     2049,
-     514,
-     2327
+     131,
+     2044,
+     540,
+     2323
     ]
    },
    {
     "box": [
-     1147,
-     2506,
-     2107,
-     2966
+     211,
+     2511,
+     2245,
+     2963
     ],
     "caption": [
-     1147,
-     2976,
-     1221,
-     3010
+     1088,
+     2977,
+     1219,
+     3009
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     218,
-     2554,
-     2125,
-     2977
+     214,
+     2506,
+     2110,
+     2975
     ]
    }
   ],
@@ -304,31 +316,40 @@
   "disagreements": {
    "1": [
     3,
-    2
-   ],
-   "2": [
-    1,
     0
    ]
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 5,
-    "input_tokens": 9647,
-    "output_tokens": 985,
+    "input_tokens": 9830,
+    "output_tokens": 1089,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 13,
-    "input_tokens": 7558,
-    "output_tokens": 5019,
+    "model": "claude-opus-5-5",
+    "calls": 14,
+    "input_tokens": 7260,
+    "output_tokens": 5185,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 25012
+    "cache_read_input_tokens": 33894
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [
+   {
+    "kind": "begin",
+    "markup": "<section begin=\"Photography\" />",
+    "headword": ""
+   },
+   {
+    "kind": "end",
+    "markup": "<section end=\"Photography\" />"
+   }
+  ],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|512|PHOTOGRAPHY|[APPARATUS}}</noinclude>of a central negative lens, with cemented double front and back lenses (fig. 52). The negative lenses are of light silicate flint, the two positive of the heaviest baryta crown. Besides being a rapid universal lens, it is specially suitable for half-tone process work, with a large diaphragm (''E. Jb.'', 1903, p. 117). The “Dynar” (1903), <math>f/6</math>, angle 60°, is of somewhat similar construction, but differs from the “Heliar” in the positive lenses of the cemented pairs being outside instead of towards the central lens. It can only be used as a whole. It is made of hard colourless Jena glasses, giving great brilliancy and uniformity of illumination over a large angle, and is specially adapted for very rapid hand-camera work.\n\nDr R. Steinheil's “Unofocal” (1903), <math>f/4\\cdot5</math> is a symmetrical doublet, each element consisting of two single separated lenses of equal refractive power and of equal focus of opposite signs, hence its name. Each half can be used as a single lens with small stops. In its construction a quite new principle was followed, the separation of the lenses fulfilling an important part in the colour correction, as explained by Conrad Beck in ''Ph. Journ.'' (1904), 44, p. 177. This plan satisfies the Petzval condition and removes its restrictions, so that a lens of <math>f/4\\cdot5</math> can be produced with telescopic central definition, perfect freedom from distortion and flare over a flat field of 60°, with great equality of illumination (fig. 53). They are made by Messrs Beck in two series: II., <math>f/4\\cdot5</math>, for portraiture, rapid hand-camera work, telephotography and projection; and I., <math>f/6</math>, in which the lenses are closer together, for hand-camera work and general purposes. E. Arbeit's “Euryplan” anastigmats (1903), made by Schulze Bros., Potsdam, are apochromatic objectives of quite new construction, giving perfect definition with large apertures over a {{c|{{sc|Fig.}} 53.—Beck-Steinheil “Unofocal.”}}\n\n[[File:eb1911 v21 p0538 c1f1.png|center|351px]]\n{{c|{{sc|Fig.}} 53.—Beck-Steinheil “Unofocal.”}}\n{{c|{{sc|Fig.}} 54.—Euryplan, ''f''/4·5.}}\n\n{{c|{{sc|Fig.}} 54.—Euryplan, <math>f/4\\cdot5</math>.}} ries: I., <math>f/4{\\cdot}5</math>, angle 80°; II., <math>f/5{\\cdot}6</math>, angle 82°; IV., <math>f/6{\\cdot}5</math>. They are symmetrical isisting of three lenses, a new achromat vy baryta crown of high refractivity and an air-space from a positive meniscus with its concave side towards the dia-, the two positives are placed outside I. they are inside. The single elements tically and chromatically, and can be cus (''E. Jb.'' 1904, p. 35).\n\n[[File:eb1911 v21 p0538 c1f3.png|center|144px]]\n{{c|{{sc|Fig.}} 55.—Beck’s “Isostigmar.”}}\n\n07) is a new anastigmat showing a disinary principles of construction, in that al condition that the sum of the focal es multiplied by the reciprocals of their should be equal to zero, or <math>\\Sigma(1/\\mu f) = 0</math>. two separated thin single lenses in the front element and three in the back (fig. 55). In departing from the Petzval condition very low power lenses can be used, thus reducing the initial errors to be corrected; no individual component having a shorter focal length than one-half that of a complete objective. A special feature is the excellent correction of the oblique spherical aberrations and central aberrations, giving a practically flat field without astigmatism over angles from 60° to 90°. The half combinations can also be used alone with diaphragms as long focus lenses of different foci (''Ph. Journ.'' 1907, 47, p. 191). It is issued in six series: I. (1908), <math>f</math>/4·5, large aperture, series, for reflex press work and portraiture; I''a''., <math>f</math>/6·5, angle 60°–65°, long focus, for portraiture, &c.; II., <math>f</math>/5·8, angle 70°, for general use, III. <math>f</math>/7·7, angle 65°, similar to II. but less rapid; IV. <math>f</math>/6·3, angle 90°; wide angle, giving satisfactory definition at full aperture over an angle from 80° to 85°. Having such a large reserve of covering power the latter is very useful when an extended use of the rising front is required, either at a wide or ordinary angle. V. (1908), <math>f/11</math>, “Process” lenses specially corrected to give a flat field for copying. They can be fitted with suitable reversing prisms. VI. (1908), <math>f/5\\cdot 6</math>, variable portrait lenses, adjustable for sharp or soft definition from the back of the camera while focusing.\n\nThe above represent the principal types of anastigmats, but many more objectives of the kind, triple or quadruple, cemented or uncemented, with air-spaces, in many modifications, have been issued by English and foreign makers.\n\n6. ''Telephotographic Objectives''.—For some years past special objectives, or attachments, have been constructed for photographing near or distant objects on an enlarged scale with an ordinary camera, the extension required being very much less than would be needed to obtain an image of the same size with an ordinary long-focus lens without enlargement. They consist of a combination of a positive converging with a negative dispersing lens, by which the image is picked up and enlarged to varying degrees, according to the system of lenses used and the extension given to the camera, thus producing the same effect as a positive lens of very much longer focus. Enlarged images of this kind can also be made by a combination of two converging lenses, one of them forming an image of the object, which is received on the other of shorter focus and projected on the sensitive plate, being enlarged more or less according to the optical conditions and relative positions of the lenses and sensitive plate. The photoheliographs at Greenwich and other solar observatories, designed by Warren de la Rue, are on this principle. Portable apparatus of the kind was made in 1869 by MM. Borie and de Tournemire, and later by Jarret, but this system requires much greater extension of the camera, entailing more loss of intensity of the image, and has never come into use.\n\nThe modern telephotographic combination is generally looked upon as an application of the principle of the “Barlow” lens, but it really goes back to the Galilean telescope (''c.'' 1610). J. B. Porta mentions the combination of concave and convex lenses for giving enlarged and clearer images of near and distant objects (''Magia Naturalis'', lib. 17, cap. 10, 1589). J. Kepler showed that by a combination of a convex with a concave lens images of objects could be depicted on paper of a larger size than by the convex lens alone, but reversed (''Dioptrice'', ''Prob.'' cv. 1611). Christopher Scheiner made use of the same principle in his “Helioscope” for solar observations (''Rosa Ursina'', cap. vii. 1630). F. M. Deschales and P. Z. Traber also dealt with the question, and in J. Zahn's ''Oculus artificialis Teledioptricus'' (1686) we find figured a reflecting camera fitted with a compound enlarging lens on this principle. In his ''Nova Dioptrica'' (1692), W. Molyneux has given some interesting problems for calculating the position of the compound focus of a convex with a concave lens, also the angles subtended by an object on the focal plane. If for the simple uncorrected glasses then used we substitute a system of photographically corrected positive and negative lenses, suitably mounted, and put a sensitive plate in place of the paper, we have the modern telephotographic arrangement. I. Porro seems to have been the first to use a combination of this kind for photographing an eclipse in 1857, and later for terrestrial objects. It consisted of a small achromatic single lens combined with a concave lens. Many attempts were afterwards made in France, and also in England, to utilize the principle, but special lenses for the purpose were not available. Ad. Steinheil constructed one in 1889 for the Brussels Observatory, and another in 1890 for the Marine Department in Berlin. In 1891, curiously enough, three such combinations were worked out quite independently and patented, by T. R. Dallmeyer in London, A. Miethe in Berlin and A. Duboscq in Paris. Since that time these combinations have been greatly improved by increase in the working apertures and reduction in size and weight, so that they can be used in hand cameras. They are exceedingly valuable for obtaining details of inaccessible objects at a distance, whether architectural or topographical, and for photographing animals without approaching them too closely. Large portraits can also be taken with much better perspective effects and more conveniently than graphic objectives now available the loss of intensity of illumination, which no doubt was the bar to early progress in this direction, has been overcome, and definition has also been improved, so that snapshots can readily be made with combinations of high intensity, while\n\n[[File:eb1911 v21 p0538 c2f1.png|center|356px]]\n{{c|56.}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|512|PHOTOGRAPHY|[APPARATUS}}</noinclude><section begin=\"Photography\" />of a central negative lens, with cemented double front and back lenses (fig. 52). The negative lenses are of light silicate flint, the two positive of the heaviest baryta crown. Besides being a rapid universal lens, it is specially suitable for half-tone process work, with a large diaphragm (''E. Jb.'', 1903, p. 117). The “Dynar” (1903), <math>f/6</math>, angle 60°, is of somewhat similar construction, but differs from the “Heliar” in the positive lenses of the cemented pairs being outside instead of towards the central lens. It can only be used as a whole. It is made of hard colourless Jena glasses, giving great brilliancy and uniformity of illumination over a large angle, and is specially adapted for very rapid hand-camera work.\n\nDr R. Steinheil's “Unofocal” (1903), <math>f/4\\cdot5</math> is a symmetrical doublet, each element consisting of two single separated lenses of equal refractive power and of equal focus of opposite signs, hence its name. Each half can be used as a single lens with small stops. In its construction a quite new principle was followed, the separation of the lenses fulfilling an important part in the colour correction, as explained by Conrad Beck in ''Ph. Journ.'' (1904), 44, p. 177. This plan satisfies the Petzval condition and removes its restrictions, so that a lens of <math>f/4\\cdot5</math> can be produced with telescopic central definition, perfect freedom from distortion and flare over a flat field of 60°, with great equality of illumination (fig. 53). They are made by Messrs Beck in two series: II., <math>f/4\\cdot5</math>, for portraiture, rapid hand-camera work, telephotography and projection; and I., <math>f/6</math>, in which the lenses are closer together, for hand-camera work and general purposes. E. Arbeit's “Euryplan” anastigmats (1903), made by Schulze Bros., Potsdam, are apochromatic objectives of quite new construction, giving perfect definition with large apertures over a {{c|{{sc|Fig.}} 53.—Beck-Steinheil “Unofocal.”}}\n{{c|{{sc|Fig.}} 54.—Euryplan, <math>f</math>/4·5.}} wide angle, made in four series: I., <math>f/4{\\cdot}5</math>, angle 80°; II., <math>f/5{\\cdot}6</math>, angle 90°; III., <math>f/6{\\cdot}8</math> to 7·5, angle 82°; IV., <math>f/6{\\cdot}5</math>. They are symmetrical doublets, each element consisting of three lenses, a new achromat formed of a biconvex of heavy baryta crown of high refractivity and low dispersion, separated by an air-space from a positive meniscus of the same baryta crown, with its concave side towards the diaphragm. In series I., <math>f/4{\\cdot}5</math>, the two positives are placed outside (fig. 54), in series II. and III. they are inside. The single elements are fully corrected astigmatically and chromatically, and can be used singly at double the focus (''E. Jb.'' 1904, p. 35).\n\n[[File:eb1911 v21 p0538 c1f1.png|center|351px]]\n{{c|{{sc|Fig.}} 53.—Beck-Steinheil “Unofocal.”}}\n\n{{c|{{sc|Fig.}} 54.—Euryplan, <math>f</math>/4·5.}}\n\nBeck's \"Isostigmar\" (1907) is a new anastigmat showing a distinct departure from the ordinary principles of construction, in that it does not fulfil the Petzval condition that the sum of the focal powers of its individual lenses multiplied by the reciprocals of their respective refractive indices should be equal to zero, or <math>\\Sigma(1/\\mu\\text{f}) = 0</math>. It is a 5-lens combination, two separated thin single lenses in the front element and three in the back (fig. 55). In departing from the Petzval condition very low power lenses can be used, thus reducing the initial errors to be corrected; no individual component having a shorter focal length than one-half that of a complete objective. A special feature is the excellent correction of the oblique spherical aberrations and central aberrations, giving a practically flat field without astigmatism over angles from without astigmatism over angles from 60° to 90°. The half combinations can also be used alone with diaphragms as long focus lenses of different foci (''Ph. Journ.'' 1907, 47, p. 191). It is issued in six series: I. (1908), <math>f/4\\cdot5</math>, large aperture, latter is very useful when an extended use of the rising front is required, either at a wide or ordinary angle. V. (1908), <math>f/11</math>, “ Process ” lenses specially corrected to give a flat field for copying. They can be fitted with suitable reversing prisms. VI. (1908), <math>f/5\\cdot6</math>, variable portrait lenses, adjustable for sharp or soft definition from the back of the camera while focusing.\n\n[[File:eb1911 v21 p0538 c1f3.png|center|144px]]\n{{c|{{sc|Fig.}} 55.—Beck's “Isostigmar.”}}\n\nThe above represent the principal types of anastigmats, but many more objectives of the kind, triple or quadruple, cemented or uncemented, with air-spaces, in many modifications, have been issued by English and foreign makers.\n\n6. ''Telephotographic Objectives.''—For some years past special objectives, or attachments, have been constructed for photographing near or distant objects on an enlarged scale with an ordinary camera, the extension required being very much less than would be needed to obtain an image of the same size with an ordinary long-focus lens without enlargement. They consist of a combination of a positive converging with a negative dispersing lens, by which the image is picked up and enlarged to varying degrees, according to the system of lenses used and the extension given to the camera, thus producing the same effect as a positive lens of very much longer focus. Enlarged images of this kind can also be made by a combination of two converging lenses, one of them forming an image of the object, which is received on the other of shorter focus and projected on the sensitive plate, being enlarged more or less according to the optical conditions and relative positions of the lenses and sensitive plate. The photoheliographs at Greenwich and other solar observatories, designed by Warren de la Rue, are on this principle. Portable apparatus of the kind was made in 1869 by MM. Borie and de Tournemire, and later by Jarret, but this system requires much greater extension of the camera, entailing more loss of intensity of the image, and has never come into use.\n\nThe modern telephotographic combination is generally looked upon as an application of the principle of the “ Barlow ” lens, but it really goes back to the Galilean telescope (''c.'' 1610). J. B. Porta mentions the combination of concave and convex lenses for giving enlarged and clearer images of near and distant objects (''Magia Naturalis'', lib. 17, cap. 10, 1589). J. Kepler showed that by a combination of a convex with a concave lens images of objects could be depicted on paper of a larger size than by the convex lens alone, but reversed (''Dioptrice'', ''Prob.'' cv. 1611). Christopher Scheiner made use of the same principle in his “ Helioscope ” for solar observations (''Rosa Ursina'', cap. vii. 1630). F. M. Deschales and P. Z. Traber also dealt with the question, and in J. Zahn’s ''Oculus artificialis Teledioptricus'' (1686) we find figured a reflecting camera fitted with a compound enlarging lens on this principle. In his ''Nova Dioptrica'' (1692), W. Molyneux has given some interesting problems for calculating the position of the compound focus of a convex with a concave lens, also the angles subtended by an object on the focal plane. If for the simple uncorrected glasses then used we substitute a system of photographically corrected positive and negative lenses, suitably mounted, and put a sensitive plate in place of the paper, we have the modern telephotographic arrangement. I. Porro seems to have been the first to use a combination of this kind for photographing an eclipse in 1857, and later for terrestrial objects. It consisted of a small achromatic single lens combined with a concave lens. Many attempts were afterwards made in France, and also in England, to utilize the principle, but special lenses for the purpose were not available. Ad. Steinheil constructed one in 1889 for the Brussels Observatory, and another in 1890 for the Marine Department in Berlin. In 1891, curiously enough, three such combinations were worked out quite independently and patented, by T. R. Dallmeyer in London, A. Miethe in Berlin and A. Duboscq in Paris. Since that time these combinations have been greatly improved by increase in the working apertures and reduction in size and weight, so that they can be used in hand cameras. They are exceedingly valuable for obtaining details of inaccessible objects at a distance, whether architectural or topographical, and for photographing animals without approaching them too closely. Large portraits can also be taken with much better perspective effects and more conveniently than by using long-focus lenses much nearer to\n\n[[File:eb1911 v21 p0538 c0f1.png|center|707px]]\n\n{{c|{{sc|Fig.}} 56.}}\n\nlong focus, for portraiture, &c.; II., <math>f/5{\\cdot}8</math>, angle 70°, for general use, III. <math>f/7{\\cdot}7</math>, angle 65°, similar to II. but less rapid; IV. <math>f/6{\\cdot}3</math>, angle 90°; wide angle, giving satisfactory definition at full aperture over an angle from 80° to 85°. Having such a large reserve of covering power the graphic objectives now available the loss of intensity of illumination, which no doubt was the bar to early progress in this direction, has been overcome, and definition has also been improved, so that snapshots can readily be made with combinations of high intensity, while<section end=\"Photography\" /><noinclude><references/></noinclude>"
 }

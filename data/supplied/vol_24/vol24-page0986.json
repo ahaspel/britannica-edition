@@ -29,7 +29,7 @@
      73,
      182,
      1146,
-     1268
+     1270
     ]
    },
    {
@@ -38,9 +38,20 @@
     "column": 1,
     "box": [
      73,
-     1268,
+     1270,
      1146,
-     2367
+     2368
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     73,
+     2383,
+     1146,
+     2422
     ]
    },
    {
@@ -49,18 +60,7 @@
     "column": 1,
     "box": [
      73,
-     2383,
-     1146,
-     2420
-    ]
-   },
-   {
-    "name": "c1s3",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     73,
-     2420,
+     2422,
      1146,
      3111
     ]
@@ -73,7 +73,7 @@
      1146,
      182,
      2216,
-     475
+     473
     ]
    },
    {
@@ -82,9 +82,20 @@
     "column": 2,
     "box": [
      1146,
-     475,
+     473,
      2216,
      1219
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1146,
+     1222,
+     2216,
+     1258
     ]
    },
    {
@@ -93,9 +104,9 @@
     "column": 2,
     "box": [
      1146,
-     1222,
+     1258,
      2216,
-     1257
+     1702
     ]
    },
    {
@@ -104,9 +115,20 @@
     "column": 2,
     "box": [
      1146,
-     1257,
+     1702,
      2216,
      2822
+    ]
+   },
+   {
+    "name": "c2c2",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1146,
+     2825,
+     2216,
+     2898
     ]
    },
    {
@@ -115,18 +137,7 @@
     "column": 2,
     "box": [
      1146,
-     2826,
-     2216,
-     2896
-    ]
-   },
-   {
-    "name": "c2s4",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1146,
-     2896,
+     2898,
      2216,
      3111
     ]
@@ -134,13 +145,14 @@
   ],
   "readings": {
    "head": "{{RunningHeader|924|SHIPBUILDING|[THEORETICAL}}",
-   "c1s1": "is determined by the disposition of hull material and fittings, machinery, coal and all other movable weights, the position of which is necessarily fixed by other considerations than those of stability; but the height of the metacentre above the centre of buoyancy varies approximately as the cube of the breadth, and any desired value of <math>\\text{GM}</math> is readily obtained by a suitable modification in the beam.\n\nThe metacentric height in various typical classes of ships at “normal load” is as follows:—\n\nClass of Ship. — Approximate <math>\\text{GM}</math> in Ft.\n\nFirst class battleship and cruiser . . <math>3\\tfrac{1}{2}</math> to <math>5</math>\n\nSecond and third class cruiser and scout <math>2</math> to <math>3</math>\n\nTorpedo boat destroyer . . . <math>1\\tfrac{1}{2}</math> to <math>2\\tfrac{1}{2}</math>\n\nFirst class torpedo boat . . . <math>1</math> to <math>1\\tfrac{1}{2}</math>\n\nSteam picket boat or launch . . <math>\\cdot 8</math> to <math>1\\tfrac{1}{2}</math>\n\nRiver gunboat (shallow draught) . . <math>8</math> to <math>20</math>\n\nLarge mail and passenger steamer . <math>\\cdot 5</math> to <math>2</math>\n\nCargo steamer . . . . . . <math>1</math> to <math>2</math>\n\nSailing ship . . . . . . <math>2</math> to <math>6</math>\n\nTug . . . . . . . <math>1\\tfrac{1}{2}</math> to <math>2\\tfrac{1}{2}</math>\n\nThe metacentric height adopted in steamships is governed principally by the following considerations:—\n\n(''a'') It should be sufficiently large to provide such a position of <math>\\text{G}</math> as will give ample stability at considerable angles of inclination and sufficient range.\n\n(''b'') Where ample stability at large angles is obtained by other means, the stability at small angles, which is entirely due to the metacentric height, should be sufficient to prevent forces due to",
-   "c1s2": "{{c|{{sc|Fig.}} 3.—Metacentric Diagram of a Battleship.}}",
-   "c1s3": "wind on upper works, movement of weights athwartships, turning, &c., causing large and uncomfortable angles of heel.\n\n(''c'') It should be sufficient to allow one or more compartments to become opened to the sea, through accidental damage, without risk of capsizing.\n\n(''d'') It should, if possible, be sufficiently large in the normal condition of the ship to permit the greatest possible freedom in the stowage of a miscellaneous cargo without producing instability.\n\n(''e'') On the other hand an excessive value causes rapid and uncomfortable rolling among waves.\n\nA ship having small initial stability is said to be \"crank,\" while one possessed of a large or excessive amount is termed \"stiff.\" The former type is generally found to be steadier and easier in rolling among waves; and for this reason when other circumstances permit, the metacentric height is usually chosen as small as possible consistent with safety and comfort.\n\nThe metacentric height is affected by an alteration in displacement or in position of the centre of gravity caused by loading or unloading cargo, fuel and stores. In consequence the stability has to be investigated for a variety of conditions, particularly",
+   "c1s1": "is determined by the disposition of hull material and fittings, machinery, coal and all other movable weights, the position of which is necessarily fixed by other considerations than those of stability; but the height of the metacentre above the centre of buoyancy varies approximately as the cube of the breadth, and any desired value of <math>\\text{GM}</math> is readily obtained by a suitable modification in the beam.\n\nThe metacentric height in various typical classes of ships at “normal load” is as follows:—\n\n{| style=\"margin:auto\"\n|Class of Ship.||Approximate GM in Ft.\n|-\n|First class battleship and cruiser||3½ to 5\n|-\n|Second and third class cruiser and scout||2 to 3\n|-\n|Torpedo boat destroyer||1½ to 2½\n|-\n|First class torpedo boat||1 to 1½\n|-\n|Steam picket boat or launch||·8 to 1½\n|-\n|River gunboat (shallow draught)||8 to 20\n|-\n|Large mail and passenger steamer||·5 to 2\n|-\n|Cargo steamer||1 to 2\n|-\n|Sailing ship||2 to 6\n|-\n|Tug||1½ to 2½\n|}\n\nThe metacentric height adopted in steamships is governed principally by the following considerations:—\n\n(''a'') It should be sufficiently large to provide such a position of <math>\\text{G}</math> as will give ample stability at considerable angles of inclination and sufficient range.\n\n(''b'') Where ample stability at large angles is obtained by other means, the stability at small angles, which is entirely due to the metacentric height, should be sufficient to prevent forces due to",
+   "c1c1": "{{c|{{sc|Fig.}} 3.—Metacentric Diagram of a Battleship.}}",
+   "c1s2": "wind on upper works, movement of weights athwartships, turning, &c., causing large and uncomfortable angles of heel.\n\n(''c'') It should be sufficient to allow one or more compartments to become opened to the sea, through accidental damage, without risk of capsizing.\n\n(''d'') It should, if possible, be sufficiently large in the normal condition of the ship to permit the greatest possible freedom in the stowage of a miscellaneous cargo without producing instability.\n\n(''e'') On the other hand an excessive value causes rapid and uncomfortable rolling among waves.\n\nA ship having small initial stability is said to be “ crank,” while one possessed of a large or excessive amount is termed “ stiff.” The former type is generally found to be steadier and easier in rolling among waves; and for this reason when other circumstances permit, the metacentric height is usually chosen as small as possible consistent with safety and comfort.\n\nThe metacentric height is affected by an alteration in displacement or in position of the centre of gravity caused by loading or unloading cargo, fuel and stores. In consequence the stability has to be investigated for a variety of conditions, particularly",
    "c2s1": "that in which the metacentric height is a minimum. The change in the position of the centre of gravity can be readily determined from an account of the weights removed, added or shifted; and the height of the metacentre is obtained by calculating its position at a number of water lines, and drawing a curve of heights of metacentre above keel on a base of the draught of water. The results are conveniently embodied in the form of a ''metacentric diagram''; the curves of height of metacentres and vertical positions",
-   "c2s2": "{{c|{{sc|Fig.}} 4.—Metacentric Diagram of a Merchant Vessel.}}",
-   "c2s3": "{{c|{{sc|Fig.}} 5.—Metacentric Diagram of a Sailing Ship of “Symondite” section.}}",
-   "c2s4": "up from its intersection with the 45° line to meet the curve of metacentres.\n\nWith these curves are associated (though usually drawn separately) two others known as the curves of ''Displacement'' and of ''Tons per inch'' and expressed by AA and BB respectively in the above figures. These have the mean draught of water as abscissa (vertical), and"
+   "c2c1": "{{c|{{sc|Fig.}} 4.—Metacentric Diagram of a Merchant Vessel.}}",
+   "c2s2": "of centres of buoyancy being set up from a line intersecting the water lines at <math>45^\\circ</math>.\n\nFigs. 3, 4 and 5 are the metacentric diagrams for a battleship, a vessel sharply curved at the bilge typical of a large number of merchant steamers, and a sailing ship of “Symondite” (or peg top) section; it will be observed that in the first and second the <math>\\text{M}</math> curve is slightly concave upwards, and in the third sharply convex.\n\nThe buoyancy curve in all cases is nearly a straight line whose inclination at a particular water plane to the horizontal is equal to <math>\\tan^{-1}\\text{A}h/\\text{V}</math>; where <math>\\text{A}</math> is the water plane area, and <math>h</math> the depth of the centre of buoyancy below the surface. The position of the metacentre at an intermediate water line is obtained from the diagram by drawing a horizontal line at the draught required, and squaring",
+   "c2c2": "{{c|{{sc|Fig.}} 5.—Metacentric Diagram of a Sailing Ship of “Symondite” section.}}",
+   "c2s3": "up from its intersection with the <math>45^\\circ</math> line to meet the curve of metacentres.\n\nWith these curves are associated (though usually drawn separately) two others known as the curves of ''Displacement'' and of ''Tons per inch'' and expressed by <math>\\text{AA}</math> and <math>\\text{BB}</math> respectively in the above figures. These have the mean draught of water as abscissa (vertical), and"
   },
   "figure_files": {
    "c1f1": "eb1911 v24 p0986 c1f1.png",
@@ -150,68 +162,68 @@
   "figures": [
    {
     "box": [
-     168,
-     1271,
-     1042,
-     2364
+     162,
+     1273,
+     1044,
+     2365
     ],
     "caption": [
      237,
      2383,
-     962,
-     2420
+     961,
+     2422
     ],
     "column": 1,
     "inset": false,
     "page_box": [
      166,
-     1273,
-     1063,
+     1267,
+     1041,
      2365
     ]
    },
    {
     "box": [
-     1269,
-     478,
-     2136,
+     1272,
+     476,
+     2138,
      1216
     ],
     "caption": [
-     1279,
+     1278,
      1222,
      2103,
-     1257
+     1258
     ],
     "column": 2,
     "inset": false,
     "page_box": [
      1273,
-     476,
-     2221,
-     1218
+     474,
+     2192,
+     1213
     ]
    },
    {
     "box": [
-     1198,
-     1704,
-     2173,
-     2816
+     1199,
+     1701,
+     2203,
+     2815
     ],
     "caption": [
-     1265,
-     2826,
-     2182,
-     2896
+     1266,
+     2825,
+     2213,
+     2898
     ],
     "column": 2,
     "inset": false,
     "page_box": [
      1196,
-     1727,
+     1723,
      2159,
-     2823
+     2812
     ]
    }
   ],
@@ -231,22 +243,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 4,
-    "input_tokens": 8903,
-    "output_tokens": 249,
+    "input_tokens": 9055,
+    "output_tokens": 270,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 8,
-    "input_tokens": 3949,
-    "output_tokens": 1906,
+    "model": "claude-opus-5-5",
+    "calls": 9,
+    "input_tokens": 4598,
+    "output_tokens": 2481,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 15392
+    "cache_read_input_tokens": 21789
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|924|SHIPBUILDING|[THEORETICAL}}</noinclude>is determined by the disposition of hull material and fittings, machinery, coal and all other movable weights, the position of which is necessarily fixed by other considerations than those of stability; but the height of the metacentre above the centre of buoyancy varies approximately as the cube of the breadth, and any desired value of <math>\\text{GM}</math> is readily obtained by a suitable modification in the beam.\n\nThe metacentric height in various typical classes of ships at “normal load” is as follows:—\n\nClass of Ship. — Approximate <math>\\text{GM}</math> in Ft.\n\nFirst class battleship and cruiser . . <math>3\\tfrac{1}{2}</math> to <math>5</math>\n\nSecond and third class cruiser and scout <math>2</math> to <math>3</math>\n\nTorpedo boat destroyer . . . <math>1\\tfrac{1}{2}</math> to <math>2\\tfrac{1}{2}</math>\n\nFirst class torpedo boat . . . <math>1</math> to <math>1\\tfrac{1}{2}</math>\n\nSteam picket boat or launch . . <math>\\cdot 8</math> to <math>1\\tfrac{1}{2}</math>\n\nRiver gunboat (shallow draught) . . <math>8</math> to <math>20</math>\n\nLarge mail and passenger steamer . <math>\\cdot 5</math> to <math>2</math>\n\nCargo steamer . . . . . . <math>1</math> to <math>2</math>\n\nSailing ship . . . . . . <math>2</math> to <math>6</math>\n\nTug . . . . . . . <math>1\\tfrac{1}{2}</math> to <math>2\\tfrac{1}{2}</math>\n\nThe metacentric height adopted in steamships is governed principally by the following considerations:—\n\n(''a'') It should be sufficiently large to provide such a position of <math>\\text{G}</math> as will give ample stability at considerable angles of inclination and sufficient range.\n\n(''b'') Where ample stability at large angles is obtained by other means, the stability at small angles, which is entirely due to the metacentric height, should be sufficient to prevent forces due to wind on upper works, movement of weights athwartships, turning, &c., causing large and uncomfortable angles of heel.\n\n[[File:eb1911 v24 p0986 c1f1.png|center|356px]]\n{{c|{{sc|Fig.}} 3.—Metacentric Diagram of a Battleship.}}\n\n(''c'') It should be sufficient to allow one or more compartments to become opened to the sea, through accidental damage, without risk of capsizing.\n\n(''d'') It should, if possible, be sufficiently large in the normal condition of the ship to permit the greatest possible freedom in the stowage of a miscellaneous cargo without producing instability.\n\n(''e'') On the other hand an excessive value causes rapid and uncomfortable rolling among waves.\n\nA ship having small initial stability is said to be \"crank,\" while one possessed of a large or excessive amount is termed \"stiff.\" The former type is generally found to be steadier and easier in rolling among waves; and for this reason when other circumstances permit, the metacentric height is usually chosen as small as possible consistent with safety and comfort.\n\nThe metacentric height is affected by an alteration in displacement or in position of the centre of gravity caused by loading or unloading cargo, fuel and stores. In consequence the stability has to be investigated for a variety of conditions, particularly that in which the metacentric height is a minimum. The change in the position of the centre of gravity can be readily determined from an account of the weights removed, added or shifted; and the height of the metacentre is obtained by calculating its position at a number of water lines, and drawing a curve of heights of metacentre above keel on a base of the draught of water. The results are conveniently embodied in the form of a ''metacentric diagram''; the curves of height of metacentres and vertical positions up from its intersection with the 45° line to meet the curve of metacentres.\n\n[[File:eb1911 v24 p0986 c2f1.png|center|355px]]\n{{c|{{sc|Fig.}} 4.—Metacentric Diagram of a Merchant Vessel.}}\n\n[[File:eb1911 v24 p0986 c2f2.png|center|355px]]\n{{c|{{sc|Fig.}} 5.—Metacentric Diagram of a Sailing Ship of “Symondite” section.}}\n\nWith these curves are associated (though usually drawn separately) two others known as the curves of ''Displacement'' and of ''Tons per inch'' and expressed by AA and BB respectively in the above figures. These have the mean draught of water as abscissa (vertical), and<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|924|SHIPBUILDING|[THEORETICAL}}</noinclude>is determined by the disposition of hull material and fittings, machinery, coal and all other movable weights, the position of which is necessarily fixed by other considerations than those of stability; but the height of the metacentre above the centre of buoyancy varies approximately as the cube of the breadth, and any desired value of <math>\\text{GM}</math> is readily obtained by a suitable modification in the beam.\n\nThe metacentric height in various typical classes of ships at “normal load” is as follows:—\n\n{| style=\"margin:auto\"\n|Class of Ship.||Approximate GM in Ft.\n|-\n|First class battleship and cruiser||3½ to 5\n|-\n|Second and third class cruiser and scout||2 to 3\n|-\n|Torpedo boat destroyer||1½ to 2½\n|-\n|First class torpedo boat||1 to 1½\n|-\n|Steam picket boat or launch||·8 to 1½\n|-\n|River gunboat (shallow draught)||8 to 20\n|-\n|Large mail and passenger steamer||·5 to 2\n|-\n|Cargo steamer||1 to 2\n|-\n|Sailing ship||2 to 6\n|-\n|Tug||1½ to 2½\n|}\n\nThe metacentric height adopted in steamships is governed principally by the following considerations:—\n\n(''a'') It should be sufficiently large to provide such a position of <math>\\text{G}</math> as will give ample stability at considerable angles of inclination and sufficient range.\n\n(''b'') Where ample stability at large angles is obtained by other means, the stability at small angles, which is entirely due to the metacentric height, should be sufficient to prevent forces due to wind on upper works, movement of weights athwartships, turning, &c., causing large and uncomfortable angles of heel.\n\n[[File:eb1911 v24 p0986 c1f1.png|center|356px]]\n{{c|{{sc|Fig.}} 3.—Metacentric Diagram of a Battleship.}}\n\n(''c'') It should be sufficient to allow one or more compartments to become opened to the sea, through accidental damage, without risk of capsizing.\n\n(''d'') It should, if possible, be sufficiently large in the normal condition of the ship to permit the greatest possible freedom in the stowage of a miscellaneous cargo without producing instability.\n\n(''e'') On the other hand an excessive value causes rapid and uncomfortable rolling among waves.\n\nA ship having small initial stability is said to be “ crank,” while one possessed of a large or excessive amount is termed “ stiff.” The former type is generally found to be steadier and easier in rolling among waves; and for this reason when other circumstances permit, the metacentric height is usually chosen as small as possible consistent with safety and comfort.\n\nThe metacentric height is affected by an alteration in displacement or in position of the centre of gravity caused by loading or unloading cargo, fuel and stores. In consequence the stability has to be investigated for a variety of conditions, particularly that in which the metacentric height is a minimum. The change in the position of the centre of gravity can be readily determined from an account of the weights removed, added or shifted; and the height of the metacentre is obtained by calculating its position at a number of water lines, and drawing a curve of heights of metacentre above keel on a base of the draught of water. The results are conveniently embodied in the form of a ''metacentric diagram''; the curves of height of metacentres and vertical positions of centres of buoyancy being set up from a line intersecting the water lines at <math>45^\\circ</math>.\n\n[[File:eb1911 v24 p0986 c2f1.png|center|355px]]\n{{c|{{sc|Fig.}} 4.—Metacentric Diagram of a Merchant Vessel.}}\n\nFigs. 3, 4 and 5 are the metacentric diagrams for a battleship, a vessel sharply curved at the bilge typical of a large number of merchant steamers, and a sailing ship of “Symondite” (or peg top) section; it will be observed that in the first and second the <math>\\text{M}</math> curve is slightly concave upwards, and in the third sharply convex.\n\nThe buoyancy curve in all cases is nearly a straight line whose inclination at a particular water plane to the horizontal is equal to <math>\\tan^{-1}\\text{A}h/\\text{V}</math>; where <math>\\text{A}</math> is the water plane area, and <math>h</math> the depth of the centre of buoyancy below the surface. The position of the metacentre at an intermediate water line is obtained from the diagram by drawing a horizontal line at the draught required, and squaring up from its intersection with the <math>45^\\circ</math> line to meet the curve of metacentres.\n\n[[File:eb1911 v24 p0986 c2f2.png|center|355px]]\n{{c|{{sc|Fig.}} 5.—Metacentric Diagram of a Sailing Ship of “Symondite” section.}}\n\nWith these curves are associated (though usually drawn separately) two others known as the curves of ''Displacement'' and of ''Tons per inch'' and expressed by <math>\\text{AA}</math> and <math>\\text{BB}</math> respectively in the above figures. These have the mean draught of water as abscissa (vertical), and<noinclude><references/></noinclude>"
 }

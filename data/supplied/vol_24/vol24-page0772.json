@@ -29,7 +29,7 @@
      108,
      228,
      1180,
-     1288
+     864
     ]
    },
    {
@@ -38,7 +38,7 @@
     "column": 1,
     "box": [
      108,
-     1288,
+     864,
      1180,
      1836
     ]
@@ -50,8 +50,19 @@
     "box": [
      108,
      1836,
-     843,
+     856,
      2202
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     108,
+     2216,
+     856,
+     2253
     ]
    },
    {
@@ -59,25 +70,14 @@
     "kind": "text",
     "column": 1,
     "box": [
-     108,
-     2217,
-     843,
-     2253
-    ]
-   },
-   {
-    "name": "c1s4",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     843,
+     856,
      1836,
      1180,
      2253
     ]
    },
    {
-    "name": "c1s5",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
@@ -123,11 +123,11 @@
   ],
   "readings": {
    "head": "{{RunningHeader|742|SEWERAGE|}}",
-   "c1s1": "",
-   "c1s2": "up behind the valve either in higher parts of the sewer or in a special flushing chamber, and is then allowed to advance with a rush. Many self-acting arrangements for flushing have been devised which act by allowing a continuous stream of comparatively small volume to accumulate in a tank that discharges itself suddenly when full. A valuable contrivance of this kind is Rogers Field's siphon flush tank. When the liquid in the tank accumulates so that it reaches the top of the annular siphon, and begins to flow over the lip, it carries with it enough air to produce a partial vacuum in the tube. The siphon then bursts into action, and a rapid discharge takes place, which continues till the water-level sinks to the foot of the bell-shaped cover. Adams's \"Monster Flusher\" is constructed on similar principles and is of simple and strong design. Its flushing-power is claimed to be greater than that of the ordinary siphon. By the use of this appliance, which is automatic in action, shallow sewers can be effectively flushed. Fig. 29 is a section of a flushing chamber fitted with this",
-   "c1s3": "{{c|{{sc|Fig.}} 29.—Flushing Chamber for Shallow Sewers.}}",
-   "c1s4": "siphon. Such flushing apparatus may be operated by a water-supply from an ordinary tap which may be regulated for a large or small flow. The capacity of flush tanks is a little difficult to deter-",
-   "c1s5": "mine. As a rule 250 to 400 gallons are allowed for 9-in. sewers, 400 to 600 gallons for 12-in., and 600 to 800 gallons for 15-in. sewers, the amount increasing by 200 gallons for each 3-in. additional diameter.\n\nIII. {{sc|Disposal of Sewage.}}—The composition of domestic sewage is now fairly well known and is generally reduced for the purposes of comparison to a standard; that is to say, ordinary sewage is that due to a water-supply of about 30 gallons per head per diem. If the supply is less, and there is no leakage of subsoil water into the drainage system, the sewage will be stronger; conversely, if there is leakage, &c., the sewage will be more dilute, but obviously, the quantity of impurities will, for any given population, be the same in amount. The subjoined table shows the kind of sewage referred to:—\n\n{{c|''Average Domestic Sewage, in Grains per Gallon.''}}\n\n{{smaller|Total Solids in Solution. Organic Carbon. Organic Nitrogen. Ammonia. Chlorine. Suspended: Mineral. Organic. Total Combined Nitrogen.}}\n\n{{smaller|50·54 3·287 1·543 4·70 7·46 16·92 14·36 5·41}}\n\nFor all practical purposes we may say that average sewage",
+   "c1s1": "only for this reason, but to prevent the air within them from ever having its pressure raised (by sudden influx of water) so considerably as to force the \"traps\" which separate it from the atmosphere of dwellings. The plan of ventilation now most approved is the very simple one of making openings from the sewer to the surface of the street at short distances—generally shafts built of brick and cement—and covering these with metallic gratings. Under each grating it is usual to hang a box or tray to catch any stones or dirt that may fall through from the street, but the passage of air to and from the sewer is left as free as possible. The openings to the street are frequently made large enough to allow a man to go down to examine or clean the sewers, and are then called \"manholes.\" Smaller openings, large enough to allow a lamp to be lowered for purposes of inspection, are called \"lampholes,\" and are often built up of vertical lengths of drain-pipe, 6 in. or 9 in. in diameter, and finished at the surface with a cover similar to that used for a manhole but smaller. A length of 150 ft. of pipe sewer is about the limit that can be sighted through. Lampholes are mostly used in the construction of pipe and other small sewers.",
+   "c1s2": "",
+   "c1c1": "{{c|{{sc|Fig.}} 29.—Flushing Chamber for Shallow Sewers.}}",
+   "c1s3": "siphon. Such flushing apparatus may be operated by a water-supply from an ordinary tap which may be regulated for a large or small flow. The capacity of flush tanks is a little difficult to deter-",
+   "c1s4": "mine. As a rule 250 to 400 gallons are allowed for 9-in. sewers, 400 to 600 gallons for 12-in., and 600 to 800 gallons for 15-in. sewers, the amount increasing by 200 gallons for each 3-in. additional diameter.\n\nIII. {{sc|Disposal of Sewage}}.—The composition of domestic sewage is now fairly well known and is generally reduced for the purposes of comparison to a standard; that is to say, ordinary sewage is that due to a water-supply of about 30 gallons per head per diem. If the supply is less, and there is no leakage of subsoil water into the drainage system, the sewage will be stronger; conversely, if there is leakage, &c., the sewage will be more dilute, but obviously, the quantity of impurities will, for any given population, be the same in amount. The subjoined table shows the kind of sewage referred to:—\n\n{{c|''Average Domestic Sewage, in Grains per Gallon.''}}\n\n{| style=\"margin:auto\"\n|rowspan=2|Total Solids in Solution.||rowspan=2|Organic Carbon.||rowspan=2|Organic Nitrogen.||rowspan=2|Ammonia.||rowspan=2|Chlorine.||colspan=3|Suspended.\n|-\n|Mineral.||Organic.||Total Combined Nitrogen.\n|-\n|50·54||3·287||1·543||4·70||7·46||16·92||14·36||5·41\n|}\n\nFor all practical purposes we may say that average sewage",
    "c2s1": "contains two tons of suspended matters in each million gallons, one-half of which is mineral matter. When, however, we come to a consideration of trade waste, the question becomes difficult in the extreme, because of the great variety of trades, and the ever varying quantities added to the sewage. Some of the principal trade wastes are from dye-works, print-works, bleach-works, chemical works, tanneries, breweries, paper-makers, woollen-works, silk-works, iron-works and many others. In some cases one only of these trade wastes finds its way to the sewers; in others, several of them may be found. In some instances, again, these trade wastes are of an alkaline nature, in others they are acid; the mixtures may be either, and of greatly varying character. Next comes the manner in which sewage is discharged at the works. The flow is variable throughout the entire 24 hours, but in the case of sewers discharging domestic sewage only, such sewage being of the standard strength, it will be a close approximation to the facts to say that about two-thirds is discharged between the hours of 7 {{sc|a.m.}} and 7 {{sc|p.m.}}, one-half during the eight hours of maximum flow, two-fifths during the six hours of maximum flow, and about 7½% per hour during the two hours of maximum flow. These data will be sufficient for the design of the works intended for dealing with the sewage. Separate calculations must be made if there is trade refuse, or much leakage of subsoil water. In very large systems, again, the maxima are rather less because of the time occupied by the sewage in travelling to the outfall from the more remote parts",
    "c2s2": "",
    "c2s3": "well established, and it has been urged by competent authorities that this system is not wasteful, since the organic matter forms the food of the lower organisms, which in turn are devoured by fish. Thus the sea is richer, if the land is the poorer, by the adoption of this cleanly method of disposal. The next step is the partial purification of the sewage by means of a chemical process. When a town lies some distance up an estuary, as for example London, Glasgow, Rochester and many others, the dilution may be insufficient to prevent a nuisance, or the suspended matters may be deposited upon the foreshore to be uncovered at low water. The first stage of purification is then employed, namely, clarification in tanks. Practice varies with regard to tank capacity, but as a general rule it should be at least equal to half a day's dry weather flow. This will enable the works manager to turn out a good effluent, even in wet weather, when the volume is much increased. With regard to the practical effect of any particular treatment, it is now recognized that the matters in solution are scarcely touched by any chemical process that can be employed, but the removal of the suspended matter is a great"
@@ -138,31 +138,31 @@
   "figures": [
    {
     "box": [
-     128,
-     1837,
-     814,
+     121,
+     1835,
+     840,
      2201
     ],
     "caption": [
      110,
-     2217,
+     2216,
      848,
      2253
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     111,
-     1829,
-     881,
-     2205
+     106,
+     1833,
+     886,
+     2192
     ]
    }
   ],
   "across": [],
   "refused": [
-   "c2s2",
-   "c1s1"
+   "c1s2",
+   "c2s2"
   ],
   "unread": {},
   "rejected": {},
@@ -178,22 +178,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 2,
-    "input_tokens": 4439,
-    "output_tokens": 89,
+    "input_tokens": 4551,
+    "output_tokens": 95,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 7,
-    "input_tokens": 6394,
-    "output_tokens": 2191,
+    "input_tokens": 6496,
+    "output_tokens": 2249,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 13468
+    "cache_read_input_tokens": 16947
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|742|SEWERAGE|}}</noinclude>up behind the valve either in higher parts of the sewer or in a special flushing chamber, and is then allowed to advance with a rush. Many self-acting arrangements for flushing have been devised which act by allowing a continuous stream of comparatively small volume to accumulate in a tank that discharges itself suddenly when full. A valuable contrivance of this kind is Rogers Field's siphon flush tank. When the liquid in the tank accumulates so that it reaches the top of the annular siphon, and begins to flow over the lip, it carries with it enough air to produce a partial vacuum in the tube. The siphon then bursts into action, and a rapid discharge takes place, which continues till the water-level sinks to the foot of the bell-shaped cover. Adams's \"Monster Flusher\" is constructed on similar principles and is of simple and strong design. Its flushing-power is claimed to be greater than that of the ordinary siphon. By the use of this appliance, which is automatic in action, shallow sewers can be effectively flushed. Fig. 29 is a section of a flushing chamber fitted with this siphon. Such flushing apparatus may be operated by a water-supply from an ordinary tap which may be regulated for a large or small flow. The capacity of flush tanks is a little difficult to determine. As a rule 250 to 400 gallons are allowed for 9-in. sewers, 400 to 600 gallons for 12-in., and 600 to 800 gallons for 15-in. sewers, the amount increasing by 200 gallons for each 3-in. additional diameter.\n\n[[File:eb1911 v24 p0772 c1f1.png|center|231px]]\n{{c|{{sc|Fig.}} 29.—Flushing Chamber for Shallow Sewers.}}\n\nIII. {{sc|Disposal of Sewage.}}—The composition of domestic sewage is now fairly well known and is generally reduced for the purposes of comparison to a standard; that is to say, ordinary sewage is that due to a water-supply of about 30 gallons per head per diem. If the supply is less, and there is no leakage of subsoil water into the drainage system, the sewage will be stronger; conversely, if there is leakage, &c., the sewage will be more dilute, but obviously, the quantity of impurities will, for any given population, be the same in amount. The subjoined table shows the kind of sewage referred to:—\n\n{{c|''Average Domestic Sewage, in Grains per Gallon.''}}\n\n{{smaller|Total Solids in Solution. Organic Carbon. Organic Nitrogen. Ammonia. Chlorine. Suspended: Mineral. Organic. Total Combined Nitrogen.}}\n\n{{smaller|50·54 3·287 1·543 4·70 7·46 16·92 14·36 5·41}}\n\nFor all practical purposes we may say that average sewage contains two tons of suspended matters in each million gallons, one-half of which is mineral matter. When, however, we come to a consideration of trade waste, the question becomes difficult in the extreme, because of the great variety of trades, and the ever varying quantities added to the sewage. Some of the principal trade wastes are from dye-works, print-works, bleach-works, chemical works, tanneries, breweries, paper-makers, woollen-works, silk-works, iron-works and many others. In some cases one only of these trade wastes finds its way to the sewers; in others, several of them may be found. In some instances, again, these trade wastes are of an alkaline nature, in others they are acid; the mixtures may be either, and of greatly varying character. Next comes the manner in which sewage is discharged at the works. The flow is variable throughout the entire 24 hours, but in the case of sewers discharging domestic sewage only, such sewage being of the standard strength, it will be a close approximation to the facts to say that about two-thirds is discharged between the hours of 7 {{sc|a.m.}} and 7 {{sc|p.m.}}, one-half during the eight hours of maximum flow, two-fifths during the six hours of maximum flow, and about 7½% per hour during the two hours of maximum flow. These data will be sufficient for the design of the works intended for dealing with the sewage. Separate calculations must be made if there is trade refuse, or much leakage of subsoil water. In very large systems, again, the maxima are rather less because of the time occupied by the sewage in travelling to the outfall from the more remote parts well established, and it has been urged by competent authorities that this system is not wasteful, since the organic matter forms the food of the lower organisms, which in turn are devoured by fish. Thus the sea is richer, if the land is the poorer, by the adoption of this cleanly method of disposal. The next step is the partial purification of the sewage by means of a chemical process. When a town lies some distance up an estuary, as for example London, Glasgow, Rochester and many others, the dilution may be insufficient to prevent a nuisance, or the suspended matters may be deposited upon the foreshore to be uncovered at low water. The first stage of purification is then employed, namely, clarification in tanks. Practice varies with regard to tank capacity, but as a general rule it should be at least equal to half a day's dry weather flow. This will enable the works manager to turn out a good effluent, even in wet weather, when the volume is much increased. With regard to the practical effect of any particular treatment, it is now recognized that the matters in solution are scarcely touched by any chemical process that can be employed, but the removal of the suspended matter is a great<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|742|SEWERAGE|}}</noinclude>only for this reason, but to prevent the air within them from ever having its pressure raised (by sudden influx of water) so considerably as to force the \"traps\" which separate it from the atmosphere of dwellings. The plan of ventilation now most approved is the very simple one of making openings from the sewer to the surface of the street at short distances—generally shafts built of brick and cement—and covering these with metallic gratings. Under each grating it is usual to hang a box or tray to catch any stones or dirt that may fall through from the street, but the passage of air to and from the sewer is left as free as possible. The openings to the street are frequently made large enough to allow a man to go down to examine or clean the sewers, and are then called \"manholes.\" Smaller openings, large enough to allow a lamp to be lowered for purposes of inspection, are called \"lampholes,\" and are often built up of vertical lengths of drain-pipe, 6 in. or 9 in. in diameter, and finished at the surface with a cover similar to that used for a manhole but smaller. A length of 150 ft. of pipe sewer is about the limit that can be sighted through. Lampholes are mostly used in the construction of pipe and other small sewers. siphon. Such flushing apparatus may be operated by a water-supply from an ordinary tap which may be regulated for a large or small flow. The capacity of flush tanks is a little difficult to determine. As a rule 250 to 400 gallons are allowed for 9-in. sewers, 400 to 600 gallons for 12-in., and 600 to 800 gallons for 15-in. sewers, the amount increasing by 200 gallons for each 3-in. additional diameter.\n\n[[File:eb1911 v24 p0772 c1f1.png|center|235px]]\n{{c|{{sc|Fig.}} 29.—Flushing Chamber for Shallow Sewers.}}\n\nIII. {{sc|Disposal of Sewage}}.—The composition of domestic sewage is now fairly well known and is generally reduced for the purposes of comparison to a standard; that is to say, ordinary sewage is that due to a water-supply of about 30 gallons per head per diem. If the supply is less, and there is no leakage of subsoil water into the drainage system, the sewage will be stronger; conversely, if there is leakage, &c., the sewage will be more dilute, but obviously, the quantity of impurities will, for any given population, be the same in amount. The subjoined table shows the kind of sewage referred to:—\n\n{{c|''Average Domestic Sewage, in Grains per Gallon.''}}\n\n{| style=\"margin:auto\"\n|rowspan=2|Total Solids in Solution.||rowspan=2|Organic Carbon.||rowspan=2|Organic Nitrogen.||rowspan=2|Ammonia.||rowspan=2|Chlorine.||colspan=3|Suspended.\n|-\n|Mineral.||Organic.||Total Combined Nitrogen.\n|-\n|50·54||3·287||1·543||4·70||7·46||16·92||14·36||5·41\n|}\n\nFor all practical purposes we may say that average sewage contains two tons of suspended matters in each million gallons, one-half of which is mineral matter. When, however, we come to a consideration of trade waste, the question becomes difficult in the extreme, because of the great variety of trades, and the ever varying quantities added to the sewage. Some of the principal trade wastes are from dye-works, print-works, bleach-works, chemical works, tanneries, breweries, paper-makers, woollen-works, silk-works, iron-works and many others. In some cases one only of these trade wastes finds its way to the sewers; in others, several of them may be found. In some instances, again, these trade wastes are of an alkaline nature, in others they are acid; the mixtures may be either, and of greatly varying character. Next comes the manner in which sewage is discharged at the works. The flow is variable throughout the entire 24 hours, but in the case of sewers discharging domestic sewage only, such sewage being of the standard strength, it will be a close approximation to the facts to say that about two-thirds is discharged between the hours of 7 {{sc|a.m.}} and 7 {{sc|p.m.}}, one-half during the eight hours of maximum flow, two-fifths during the six hours of maximum flow, and about 7½% per hour during the two hours of maximum flow. These data will be sufficient for the design of the works intended for dealing with the sewage. Separate calculations must be made if there is trade refuse, or much leakage of subsoil water. In very large systems, again, the maxima are rather less because of the time occupied by the sewage in travelling to the outfall from the more remote parts well established, and it has been urged by competent authorities that this system is not wasteful, since the organic matter forms the food of the lower organisms, which in turn are devoured by fish. Thus the sea is richer, if the land is the poorer, by the adoption of this cleanly method of disposal. The next step is the partial purification of the sewage by means of a chemical process. When a town lies some distance up an estuary, as for example London, Glasgow, Rochester and many others, the dilution may be insufficient to prevent a nuisance, or the suspended matters may be deposited upon the foreshore to be uncovered at low water. The first stage of purification is then employed, namely, clarification in tanks. Practice varies with regard to tank capacity, but as a general rule it should be at least equal to half a day's dry weather flow. This will enable the works manager to turn out a good effluent, even in wet weather, when the volume is much increased. With regard to the practical effect of any particular treatment, it is now recognized that the matters in solution are scarcely touched by any chemical process that can be employed, but the removal of the suspended matter is a great<noinclude><references/></noinclude>"
 }

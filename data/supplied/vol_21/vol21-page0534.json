@@ -29,7 +29,7 @@
      82,
      199,
      1147,
-     805
+     1063
     ]
    },
    {
@@ -38,9 +38,9 @@
     "column": 1,
     "box": [
      82,
-     805,
+     1063,
      1147,
-     1334
+     1335
     ]
    },
    {
@@ -49,9 +49,31 @@
     "column": 1,
     "box": [
      82,
-     1334,
+     1335,
      1147,
-     1608
+     1610
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     82,
+     1616,
+     1147,
+     1680
+    ]
+   },
+   {
+    "name": "c1c2",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     82,
+     1613,
+     1147,
+     1652
     ]
    },
    {
@@ -60,20 +82,9 @@
     "column": 1,
     "box": [
      82,
-     1617,
+     1652,
      1147,
-     1677
-    ]
-   },
-   {
-    "name": "c1s4",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     82,
-     1613,
-     1147,
-     1678
+     2140
     ]
    },
    {
@@ -82,9 +93,31 @@
     "column": 1,
     "box": [
      82,
-     1682,
+     2140,
      630,
      2458
+    ]
+   },
+   {
+    "name": "c1c3",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     82,
+     2468,
+     630,
+     2534
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     630,
+     2140,
+     1147,
+     2534
     ]
    },
    {
@@ -93,20 +126,9 @@
     "column": 1,
     "box": [
      82,
-     2468,
-     630,
-     2530
-    ]
-   },
-   {
-    "name": "c1s6",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     630,
-     1682,
+     2534,
      1147,
-     2530
+     2638
     ]
    },
    {
@@ -115,75 +137,42 @@
     "column": 1,
     "box": [
      82,
-     2530,
-     630,
-     2533
-    ]
-   },
-   {
-    "name": "c1s8",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     630,
-     2530,
-     1147,
-     2531
-    ]
-   },
-   {
-    "name": "c1f5",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     82,
-     2531,
+     2638,
      1147,
      3012
     ]
    },
    {
-    "name": "c1s9",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     82,
-     3017,
-     1147,
-     3018
-    ]
-   },
-   {
-    "name": "c1f6",
-    "kind": "figure",
+    "name": "c1c4",
+    "kind": "caption",
     "column": 1,
     "box": [
      82,
      3018,
      1147,
-     3021
+     3054
     ]
    },
    {
-    "name": "c1s11",
+    "name": "c1c5",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     82,
+     3021,
+     1147,
+     3055
+    ]
+   },
+   {
+    "name": "c1s6",
     "kind": "text",
     "column": 1,
     "box": [
      82,
-     3018,
+     3055,
      1147,
      3133
-    ]
-   },
-   {
-    "name": "c2f1",
-    "kind": "figure",
-    "column": 2,
-    "box": [
-     1147,
-     207,
-     2228,
-     1227
     ]
    },
    {
@@ -192,31 +181,53 @@
     "column": 2,
     "box": [
      1147,
-     1227,
+     199,
+     2228,
+     897
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1147,
+     897,
+     2228,
+     1226
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1147,
+     1226,
      2228,
      1294
     ]
    },
    {
-    "name": "c2f2",
-    "kind": "figure",
+    "name": "c2c2",
+    "kind": "caption",
     "column": 2,
     "box": [
      1147,
-     1294,
+     1230,
      2228,
-     1297
+     1294
     ]
    },
    {
-    "name": "c2s3",
+    "name": "c2s2",
     "kind": "text",
     "column": 2,
     "box": [
      1147,
      1294,
      2228,
-     2355
+     2350
     ]
    },
    {
@@ -225,40 +236,40 @@
     "column": 2,
     "box": [
      1147,
-     2355,
+     2350,
      2228,
      2559
     ]
    },
    {
-    "name": "c2s4",
-    "kind": "text",
+    "name": "c2c3",
+    "kind": "caption",
     "column": 2,
     "box": [
      1147,
-     2569,
+     2572,
      2228,
-     2600
+     2602
     ]
    },
    {
-    "name": "c2s5",
-    "kind": "text",
+    "name": "c2c4",
+    "kind": "caption",
     "column": 2,
     "box": [
      1147,
-     2574,
+     2537,
      2228,
-     2606
+     2609
     ]
    },
    {
-    "name": "c2s6",
+    "name": "c2s3",
     "kind": "text",
     "column": 2,
     "box": [
      1147,
-     2606,
+     2609,
      2228,
      3133
     ]
@@ -266,250 +277,229 @@
   ],
   "readings": {
    "head": "{{RunningHeader|508|PHOTOGRAPHY|[APPARATUS}}",
-   "c1s1": "<math>f/15</math>, angle 90°, with great covering power and depth of focus. T. R. Dallmeyer's \"Rectilinear Landscape Lens\" (1888), <math>f/14</math>, angle 60° (fig. 17), was of novel construction, free from distortion, brilliant in working and useful for copying. Messrs Ross's \"Wide-Angle Landscape Lens\" (1890), <math>f/16</math>, angle 70°, triple cemented and made of Jena glass. Many other excellent objectives of this type have been made by British and foreign makers and are still used, though somewhat superseded by the fully corrected anastigmats specially made to work singly, or as single elements of anastigmatic doublets, as noticed in § 5.\n\n2. ''Unsymmetrical Doublets: Old Types.''—This class includes objectives with comparatively large apertures formed of two dissimilar combinations, in most cases correcting each other, with a diaphragm between them. In some the single elements may be used independently. All the older \"portrait\" lenses, some of the aplanatic doublets and Fr. von Voigtländer's \"Orthoscopic\" Lens (1857), now disused, are of this type. Even with the present improved conditions, the portraitist working in a studio requires",
-   "c1s2": "a quick-acting objective of large effective aperture and comparatively short focus, giving a brilliant well-defined image of near objects in different planes over a restricted field of view. The early single lenses were found to be too slow for portraiture by the daguerreotype and talbotype processes, and the efforts of opticians were directed to the problem of obtaining the maximum amount of light, together with good definition and flatness of field, and about 1840 compound lenses were brought out by Andrew Ross and C. Chevalier, consisting of two achromatic compounds, one at each end of a tube. Ross's lens, made for H. Collen, is interesting as the first lens corrected photographically, so that the visual and chemical foci were coincident (fig. 18). Ch. Chevalier also combined lenses of different foci, as is now done for \"convertible\" objectives, used singly or combined. He also fitted them with iris diaphragms. These forms were soon superseded by the compound portrait lens, calculated by J. Petzval and brought out by",
-   "c1s3": "{{c|{{sc|Fig.}} 18.—First English Portrait Lens.}}\n{{c|{{sc|Fig.}} 19.—Portrait Lens.}}",
-   "c1s4": "{{c|{{sc|Fig.}} 18.—First English Portrait Lens.}} {{c|{{sc|Fig.}} 19.—Portrait Lens.}}",
-   "c1s5": "{{c|{{sc|Fig.}} 20.—Dallmeyer's Patent Portrait Lens.}}",
-   "c1s6": "consists of two dissimilar achroated. At first the diaphragms entral. The front element is a vex crown cemented to a planoment is a double convex, coml by an air-space from a concavo- objective quickly supplanted all rgely used, though it has defects purposes and is being superseded id anastigmats. In his “Quick 4, angle 45°, J. H. Dallmeyer al aberration, and in his “Extra ), <math>f/2\\cdot 2</math>, used for cinematograph In the “Patent Portrait Lens” (1866), <math>f/3</math>, <math>f/4</math> and <math>f/6</math>, angles 50° to 55° (fig. 20), he made great changes in the form and relative positions of the back elements, giving a flatter field and freedom from flare spot. By separating the two components of the back element more or less spherical aberration could be introduced to give softer definition and greater depth of focus. In 1875 Dr. A. Steinheil made an",
-   "c1s8": "",
-   "c1s9": "",
-   "c1s11": "{{c|{{sc|Fig.}} 21.—Portrait Antiplanet. {{sc|Fig.}} 22.—Group Antiplanet.}}\nForm I. of 1874, but was superseded in 1881 by the “Portrait Antiplanet,” <math>f/4</math> and free from astigmatism over an angle of 14°.",
-   "c2s1": "{{c|{{sc|Fig.}} 23.—R. Steinheil's Improved Group Antiplanet.}}\n{{c|{{sc|Fig.}} 24.—Ordinary Angle Actinic Doublet.}}",
-   "c2s3": "Most of the above are portrait objectives of large aperture, but unsymmetrical doublets have also been made for landscape work. J. T. Goddard's \"Combination Landscape Lens\" (1859) was one of the first, and was free from distortion, gave a flat field, and could be used as a convertible lens. In 1864 T. Ross issued his \"Actinic Doublets,\" modified from the Collen lens, in three series—\"small angle,\" <math>f/8</math>, angle 40° to 50°; \"ordinary angle,\" <math>f/14</math>, angle 60° to 75° (fig. 24); \"large angle,\" <math>f/16</math>, angle 80° to 95°. These lenses were similar to the \"Globe,\" but unsymmetrical and more rapid. The separate elements could be used alone. Some of them were fitted with a shutter near the diaphragm. They were superseded by the \"Symmetrical\" lenses.\n\n3. ''Symmetrical Doublets''.—This class includes objectives formed of two similar combinations of lenses, usually of the convergent meniscus form, with their concave surfaces inwards and a diaphragm between them; consequently they are rectilinear and practically free from marginal distortion. Until the introduction of anastigmatic doublets they were in general use for all purposes under the names \"Aplanat,\" \"Rectilinear,\" \"Symmetrical,\" \"Euryscope,\" &c. They are still largely used and have been improved by the use of Jena glasses in their construction.\n\nThe first recorded lens of this type was Dr J. W. Draper's combination used in 1839 for daguerreotype portraits, consisting of two double-convex lenses 4 in. diameter, with a united focus of 8 in., mounted in a tube with a diaphragm 3½ in. in front. In 1841 T. Davidson made a combination of two single landscape lenses very similar to the later rectilinear doublets. Being slower than the Petzval portrait lens its value as a non-distorting lens for general purposes was not recognized. G. S. Cundell (1844) combined two uncorrected meniscus lenses with a diaphragm between them. In 1860 T. Sutton brought out his \"Panoramic Lens,\" which worked on curved plates covering about 100°. It was followed",
-   "c2s4": "{{c|“Periskop.”}}\n{{c|{{sc|Fig.}} 26.—A. Steinheil's “Aplanat.”}}",
-   "c2s5": "\" Periskop.\"\n\n{{sc|Fig.}} 26.—A. Steinheil's \"Aplanat.\"",
-   "c2s6": "by C. C. Harrison's “Globe Lens” (1862), angle 75°, composed of a symmetrical pair of deep compound menisci, the exterior surfaces forming part of a sphere. Though defective and slow it was popular for a time. C. A. Steinheil's “Periskop” (1865, <math>f/13{\\cdot}5</math>, angle 90°, was a symmetrical doublet formed of two plain crown menisci with central diaphragm (fig. 25). It gave a larger field than the “Globe,” the lenses being closer together. Being nonachromatic it had to be adjusted for chemical focus. It was quite free from distortion, with a very flat field, and both nodal points together. It is considered the best possible combination of two plain lenses, and is still used in some of the cheaper hand cameras with fixed focus, the difference of the chemical and visual foci being allowed for in the camera or by adjustable lens mounts. G. Rodenstock's “Bistigmats” are of this class. J. Zentmayer made a similar unsymmetrical lens. In A. Steinheil's “Aplanat” (1866) the same principle was carried out with achromatized lenses, and a great"
+   "c1s1": "<math>f/15</math>, angle 90°, with great covering power and depth of focus. T. R. Dallmeyer's “Rectilinear Landscape Lens” (1888), <math>f/14</math>, angle 60° (fig. 17), was of novel construction, free from distortion, brilliant in working and useful for copying. Messrs Ross's “Wide-Angle Landscape Lens” (1890), <math>f/16</math>, angle 70°, triple cemented and made of Jena glass. Many other excellent objectives of this type have been made by British and foreign makers and are still used, though somewhat superseded by the fully corrected anastigmats specially made to work singly, or as single elements of anastigmatic doublets, as noticed in § 5.\n\n2. ''Unsymmetrical Doublets: Old Types.''—This class includes objectives with comparatively large apertures formed of two dissimilar combinations, in most cases correcting each other, with a diaphragm between them. In some the single elements may be used independently. All the older “portrait” lenses, some of the aplanatic doublets and Fr. von Voigtländer's “Orthoscopic” Lens (1857), now disused, are of this type. Even with the present improved conditions, the portraitist working in a studio requires a quick-acting objective of large effective aperture and comparatively short focus, giving a brilliant well-defined image of near objects in different planes over a restricted field of view. The early single lenses were found to be too slow for portraiture by the daguerreotype and talbotype processes, and the efforts of opticians were directed to the problem of obtaining the maximum amount of light, together with good definition and flatness of field, and about 1840 compound lenses were brought out by Andrew Ross and",
+   "c1s2": "C. Chevalier, consisting of two achromatic compounds, one at each end of a tube. Ross's lens, made for H. Collen, is interesting as the first lens corrected photographically, so that the visual and chemical foci were coincident (fig. 18). Ch. Chevalier also combined lenses of different foci, as is now done for \"convertible\" objectives, used singly or combined. He also fitted them with iris diaphragms. These forms were soon superseded by the compound portrait lens, calculated by J. Petzval and brought out by",
+   "c1c1": "{{c|{{sc|Fig.}} 18.—First English Portrait Lens.}}\n{{c|{{sc|Fig.}} 19.—Portrait Lens.}}",
+   "c1c2": "{{c|{{sc|Fig.}} 18.—First English}}",
+   "c1s3": "{{c|Portrait Lens.}}\n\n{{c|{{sc|Fig.}} 19.—Portrait Lens.}}\n\nFr. von Voigtländer in 1841. It consists of two dissimilar achromatic combinations widely separated. At first the diaphragms were in front, but now they are central. The front element is a plano-convex composed of a biconvex crown cemented to a plano-concave flint, while the back element is a double convex, composed of a biconvex crown separated by an air-space from a concavo-convex flint (fig. 19). This form of objective quickly supplanted all other for portraitures, and is still largely used, though it has defects which prevent its use for general purposes and is being superseded for portraiture by some of the rapid anastigmats. In his “Quick Acting Portrait Lens” (1860), <math>f/4</math>, angle 45°, J. H. Dallmeyer improved the correction for spherical aberration, and in his “Extra Quick Acting Portrait Lens” (1860), <math>f/2{\\cdot}2</math>, used for cinematograph work, attained greater rapidity. In the “Patent Portrait Lens”",
+   "c1c3": "{{c|{{sc|Fig.}} 20.—Dallmeyer's Patent Portrait Lens.}}",
+   "c1s4": "<math>f/3</math>, <math>f/4</math> and <math>f/6</math>, angles 50° to 55° (fig. 20), he made great changes in the form and relative positions of the back elements, giving a flatter field and freedom from flare spot. By separating the two components of the back element more or less spherical aberration could be introduced to give softer definition and greater depth of focus. In 1875 Dr. A. Steinheil made an\n\nWait—the strip begins with \"(1866),\" so:\n\n(1866), <math>f/3</math>, <math>f/4</math> and <math>f/6</math>, angles 50° to 55° (fig. 20), he made great changes in the form and relative positions of the back elements, giving a flatter field and freedom from flare spot. By separating the two components of the back element more or less spherical aberration could be introduced to give softer definition and greater depth of focus. In 1875 Dr. A. Steinheil made an",
+   "c1s5": "unsymmetrical aplanatic portrait combination of peculiar construction, working at <math>f/3\\cdot 2</math>. It was an improvement on his similar symmetrical “Portrait-Aplanat,”",
+   "c1c4": "{{c|{{sc|Fig.}} 21.—Portrait Antiplanet. {{sc|Fig.}} 22.—Group Antiplanet.}}",
+   "c1c5": "{{c|{{sc|Fig.}} 21.—Portrait Antiplanet. {{sc|Fig.}} 22.—Group Antiplanet.}}",
+   "c1s6": "Form I. of 1874, but was superseded in 1881 by the \"Portrait Antiplanet,\" <math>f/4</math> and free from astigmatism over an angle of 14°.",
+   "c2s1": "It had six reflecting surfaces and nearly approached a triplet (fig. 21). Steinheil's \"Group Aplanats\" (1879), <math>f/6\\cdot4</math>, angle 70°, were an improvement on the ordinary \"Aplanats,\" but were superseded in 1881 by the \"Group Antiplanets,\" <math>f/5</math>, angle 70°, lenses of a distinct type (fig. 22). They were a further advance on the \"Aplanats,\" working at larger apertures and giving better definition. This lens is interesting as the first in which astigmatism was eliminated by combining a \"crown-shaped\" lens of high refractivity, with a \"flint-shaped\" of lower refractivity, though made of the old glasses. In his \"Rapid Antiplanet\" (1893), <math>f/6\\cdot5</math>, angle 30°, Dr R. Steinheil improved the \"Group Antiplanet\" as regards astigmatism and covering power by replacing the thick back combination by a triple long-focus negative element consisting of a crown between two flints, with a heavy barium crown in the front element instead of a flint (fig. 23). Voigtländer, who originally constructed the Petzval portrait lens, improved it in 1878 and 1885, and now makes two lenses on the same principle, series I. <math>f/3\\cdot2</math>, angle 28°, for ordinary portraiture and projection, and series I''a''., <math>f/2\\cdot3</math>, angle 22° (1900) for astrophotography, cinematography, &c., when intense illumination is required over a small field. Both are quite free from coma.",
+   "c2c1": "{{c|{{sc|Fig.}} 23.—R. Steinheil's Improved Group Antiplanet.}}\n{{c|{{sc|Fig.}} 24.—Ordinary Angle Actinic Doublet.}}",
+   "c2c2": "{{c|{{sc|Fig.}} 23.—R. Steinheil's Improved Group Antiplanet.}}\n{{c|{{sc|Fig.}} 24.—Ordinary Angle Actinic Doublet.}}",
+   "c2s2": "Most of the above are portrait objectives of large aperture, but unsymmetrical doublets have also been made for landscape work. J. T. Goddard's \"Combination Landscape Lens\" (1859) was one of the first, and was free from distortion, gave a flat field, and could be used as a convertible lens. In 1864 T. Ross issued his \"Actinic Doublets,\" modified from the Collen lens, in three series—\"small angle,\" <math>f/8</math>, angle 40° to 50°; \"ordinary angle,\" <math>f/14</math>, angle 60° to 75° (fig. 24); \"large angle,\" <math>f/16</math>, angle 80° to 95°. These lenses were similar to the \"Globe,\" but unsymmetrical and more rapid. The separate elements could be used alone. Some of them were fitted with a shutter near the diaphragm. They were superseded by the \"Symmetrical\" lenses.\n\n3. ''Symmetrical Doublets''.—This class includes objectives formed of two similar combinations of lenses, usually of the convergent meniscus form, with their concave surfaces inwards and a diaphragm between them; consequently they are rectilinear and practically free from marginal distortion. Until the introduction of anastigmatic doublets they were in general use for all purposes under the names \"Aplanat,\" \"Rectilinear,\" \"Symmetrical,\" \"Euryscope,\" &c. They are still largely used and have been improved by the use of Jena glasses in their construction.\n\nThe first recorded lens of this type was Dr J. W. Draper's combination used in 1839 for daguerreotype portraits, consisting of two double-convex lenses 4 in. diameter, with a united focus of 8 in., mounted in a tube with a diaphragm 3½ in. in front. In 1841 T. Davidson made a combination of two single landscape lenses very similar to the later rectilinear doublets. Being slower than the Petzval portrait lens its value as a non-distorting lens for general purposes was not recognized. G. S. Cundell (1844) combined two uncorrected meniscus lenses with a diaphragm between them. In 1860 T. Sutton brought out his \"Panoramic Lens,\" which worked on curved plates covering about 100°. It was followed",
+   "c2c3": "{{c|“Periskop.” {{sc|Fig.}} 26.—A. Steinheil's “Aplanat.”}}",
+   "c2c4": "{{c|{{sc|Fig.}} 25.—C. A. Steinheil's \"Periskop.\"}}\n{{c|{{sc|Fig.}} 26.—A. Steinheil's \"Aplanat.\"}}",
+   "c2s3": "by C. C. Harrison's “Globe Lens” (1862), angle 75°, composed of a symmetrical pair of deep compound menisci, the exterior surfaces forming part of a sphere. Though defective and slow it was popular for a time. C. A. Steinheil's “Periskop” (1865, <math>f/13\\cdot5</math>, angle 90°, was a symmetrical doublet formed of two plain crown menisci with central diaphragm (fig. 25). It gave a larger field than the “Globe,” the lenses being closer together. Being nonachromatic it had to be adjusted for chemical focus. It was quite free from distortion, with a very flat field, and both nodal points together. It is considered the best possible combination of two plain lenses, and is still used in some of the cheaper hand cameras with fixed focus, the difference of the chemical and visual foci being allowed for in the camera or by adjustable lens mounts. G. Rodenstock's “Bistigmats” are of this class. J. Zentmayer made a similar unsymmetrical lens. In A. Steinheil's “Aplanat” (1866) the same principle was carried out with achromatized lenses, and a great"
   },
   "figure_files": {
    "c1f1": "eb1911 v21 p0534 c1f1.png",
    "c1f3": "eb1911 v21 p0534 c1f3.png",
    "c1f4": "eb1911 v21 p0534 c1f4.png",
-   "c1f5": "eb1911 v21 p0534 c1f5.png",
-   "c1f6": "eb1911 v21 p0534 c1f6.png",
    "c2f1": "eb1911 v21 p0534 c2f1.png",
-   "c2f2": "eb1911 v21 p0534 c2f2.png",
    "c2f3": "eb1911 v21 p0534 c2f3.png"
   },
   "figures": [
    {
     "box": [
      154,
-     1337,
+     1338,
      598,
-     1605
+     1607
     ],
     "caption": [
-     206,
-     1617,
+     198,
+     1616,
      550,
-     1677
+     1680
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     120,
-     1325,
-     588,
+     96,
+     1329,
+     658,
      1613
     ]
    },
    {
     "box": [
-     154,
-     1337,
-     598,
-     1604
+     730,
+     1356,
+     1068,
+     1552
     ],
     "caption": [
-     196,
+     708,
      1613,
-     550,
-     1678
+     1133,
+     1652
     ],
     "column": 1,
     "inset": false,
     "page_box": [
      730,
      1356,
-     1079,
-     1573
-    ]
-   },
-   {
-    "box": [
-     1245,
-     896,
-     2149,
-     1216
-    ],
-    "caption": [
-     1192,
-     1226,
-     2127,
-     1296
-    ],
-    "column": 2,
-    "inset": false,
-    "page_box": [
-     1271,
-     981,
-     1558,
-     1225
-    ]
-   },
-   {
-    "box": [
-     1718,
-     899,
-     2150,
-     1211
-    ],
-    "caption": [
-     1734,
-     1226,
-     2128,
-     1291
-    ],
-    "column": 2,
-    "inset": false,
-    "page_box": [
-     1689,
-     915,
-     2190,
-     1247
+     1068,
+     1552
     ]
    },
    {
     "box": [
      92,
-     2141,
-     627,
-     2455
+     2139,
+     628,
+     2454
     ],
     "caption": [
      134,
      2468,
-     589,
-     2531
+     588,
+     2534
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     131,
-     2173,
-     567,
+     92,
+     2186,
+     632,
      2463
     ]
    },
    {
     "box": [
-     92,
-     2140,
+     153,
+     2638,
+     663,
+     3005
+    ],
+    "caption": [
+     137,
+     3018,
      628,
-     2452
-    ],
-    "caption": [
-     134,
-     2468,
-     589,
-     2530
-    ],
-    "column": 1,
-    "inset": true,
-    "page_box": [
-     806,
-     2120,
-     1133,
-     2402
-    ]
-   },
-   {
-    "box": [
-     155,
-     2640,
-     662,
-     3006
-    ],
-    "caption": [
-     166,
-     3016,
-     660,
-     3051
-    ],
-    "column": 1,
-    "inset": false,
-    "page_box": [
-     196,
-     2648,
-     610,
-     3029
-    ]
-   },
-   {
-    "box": [
-     154,
-     2639,
-     1074,
-     3008
-    ],
-    "caption": [
-     165,
-     3017,
-     1118,
      3054
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     708,
-     2715,
-     1116,
-     3025
+     170,
+     2626,
+     643,
+     3018
     ]
    },
    {
     "box": [
-     1684,
-     2359,
-     2183,
-     2556
+     737,
+     2742,
+     1063,
+     3018
     ],
     "caption": [
-     1673,
-     2574,
-     2223,
-     2606
+     680,
+     3021,
+     1116,
+     3055
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     737,
+     2742,
+     1063,
+     3018
+    ]
+   },
+   {
+    "box": [
+     1260,
+     981,
+     1504,
+     1227
+    ],
+    "caption": [
+     1190,
+     1227,
+     1621,
+     1297
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1220,
-     2365,
-     1547,
-     2528
+     1260,
+     981,
+     1504,
+     1227
+    ]
+   },
+   {
+    "box": [
+     1719,
+     899,
+     2150,
+     1209
+    ],
+    "caption": [
+     1734,
+     1225,
+     2127,
+     1291
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1709,
+     915,
+     2179,
+     1225
+    ]
+   },
+   {
+    "box": [
+     1233,
+     2360,
+     1626,
+     2532
+    ],
+    "caption": [
+     1168,
+     2537,
+     1587,
+     2609
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1233,
+     2360,
+     1626,
+     2532
     ]
    },
    {
     "box": [
      1683,
-     2358,
+     2353,
      2188,
      2556
     ],
     "caption": [
-     1674,
-     2569,
-     2191,
-     2600
+     1673,
+     2572,
+     2196,
+     2602
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1733,
-     2354,
-     2092,
-     2572
+     1695,
+     2360,
+     2188,
+     2563
     ]
    }
   ],
@@ -519,7 +509,7 @@
   "rejected": {},
   "disagreements": {
    "1": [
-    6,
+    5,
     1
    ],
    "2": [
@@ -529,22 +519,35 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
-    "calls": 11,
-    "input_tokens": 19615,
-    "output_tokens": 3023,
+    "model": "claude-opus-5-5",
+    "calls": 10,
+    "input_tokens": 18009,
+    "output_tokens": 3120,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 15,
-    "input_tokens": 6234,
-    "output_tokens": 4579,
+    "model": "claude-opus-5-5",
+    "calls": 19,
+    "input_tokens": 8002,
+    "output_tokens": 6208,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 28860
+    "cache_read_input_tokens": 45999
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [
+   {
+    "kind": "begin",
+    "markup": "<section begin=\"Photography\" />",
+    "headword": ""
+   },
+   {
+    "kind": "end",
+    "markup": "<section end=\"Photography\" />"
+   }
+  ],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|508|PHOTOGRAPHY|[APPARATUS}}</noinclude><math>f/15</math>, angle 90°, with great covering power and depth of focus. T. R. Dallmeyer's \"Rectilinear Landscape Lens\" (1888), <math>f/14</math>, angle 60° (fig. 17), was of novel construction, free from distortion, brilliant in working and useful for copying. Messrs Ross's \"Wide-Angle Landscape Lens\" (1890), <math>f/16</math>, angle 70°, triple cemented and made of Jena glass. Many other excellent objectives of this type have been made by British and foreign makers and are still used, though somewhat superseded by the fully corrected anastigmats specially made to work singly, or as single elements of anastigmatic doublets, as noticed in § 5.\n\n2. ''Unsymmetrical Doublets: Old Types.''—This class includes objectives with comparatively large apertures formed of two dissimilar combinations, in most cases correcting each other, with a diaphragm between them. In some the single elements may be used independently. All the older \"portrait\" lenses, some of the aplanatic doublets and Fr. von Voigtländer's \"Orthoscopic\" Lens (1857), now disused, are of this type. Even with the present improved conditions, the portraitist working in a studio requires a quick-acting objective of large effective aperture and comparatively short focus, giving a brilliant well-defined image of near objects in different planes over a restricted field of view. The early single lenses were found to be too slow for portraiture by the daguerreotype and talbotype processes, and the efforts of opticians were directed to the problem of obtaining the maximum amount of light, together with good definition and flatness of field, and about 1840 compound lenses were brought out by Andrew Ross and C. Chevalier, consisting of two achromatic compounds, one at each end of a tube. Ross's lens, made for H. Collen, is interesting as the first lens corrected photographically, so that the visual and chemical foci were coincident (fig. 18). Ch. Chevalier also combined lenses of different foci, as is now done for \"convertible\" objectives, used singly or combined. He also fitted them with iris diaphragms. These forms were soon superseded by the compound portrait lens, calculated by J. Petzval and brought out by {{c|{{sc|Fig.}} 18.—First English Portrait Lens.}} {{c|{{sc|Fig.}} 19.—Portrait Lens.}} consists of two dissimilar achroated. At first the diaphragms entral. The front element is a vex crown cemented to a planoment is a double convex, coml by an air-space from a concavo- objective quickly supplanted all rgely used, though it has defects purposes and is being superseded id anastigmats. In his “Quick 4, angle 45°, J. H. Dallmeyer al aberration, and in his “Extra ), <math>f/2\\cdot 2</math>, used for cinematograph In the “Patent Portrait Lens” (1866), <math>f/3</math>, <math>f/4</math> and <math>f/6</math>, angles 50° to 55° (fig. 20), he made great changes in the form and relative positions of the back elements, giving a flatter field and freedom from flare spot. By separating the two components of the back element more or less spherical aberration could be introduced to give softer definition and greater depth of focus. In 1875 Dr. A. Steinheil made an \" Periskop.\"\n\n[[File:eb1911 v21 p0534 c1f1.png|center|350px]]\n{{c|{{sc|Fig.}} 18.—First English Portrait Lens.}}\n{{c|{{sc|Fig.}} 19.—Portrait Lens.}}\n\n[[File:eb1911 v21 p0534 c1f3.png|center|180px]]\n{{c|{{sc|Fig.}} 20.—Dallmeyer's Patent Portrait Lens.}}\n\n[[File:eb1911 v21 p0534 c1f4.png|center|180px]]\n\n[[File:eb1911 v21 p0534 c1f5.png|center|350px]]\n\n\n[[File:eb1911 v21 p0534 c1f6.png|center|350px]]\n{{c|{{sc|Fig.}} 21.—Portrait Antiplanet. {{sc|Fig.}} 22.—Group Antiplanet.}}\nForm I. of 1874, but was superseded in 1881 by the “Portrait Antiplanet,” <math>f/4</math> and free from astigmatism over an angle of 14°.\n\n[[File:eb1911 v21 p0534 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 23.—R. Steinheil's Improved Group Antiplanet.}}\n{{c|{{sc|Fig.}} 24.—Ordinary Angle Actinic Doublet.}}\n\n[[File:eb1911 v21 p0534 c2f2.png|center|356px]]\nMost of the above are portrait objectives of large aperture, but unsymmetrical doublets have also been made for landscape work. J. T. Goddard's \"Combination Landscape Lens\" (1859) was one of the first, and was free from distortion, gave a flat field, and could be used as a convertible lens. In 1864 T. Ross issued his \"Actinic Doublets,\" modified from the Collen lens, in three series—\"small angle,\" <math>f/8</math>, angle 40° to 50°; \"ordinary angle,\" <math>f/14</math>, angle 60° to 75° (fig. 24); \"large angle,\" <math>f/16</math>, angle 80° to 95°. These lenses were similar to the \"Globe,\" but unsymmetrical and more rapid. The separate elements could be used alone. Some of them were fitted with a shutter near the diaphragm. They were superseded by the \"Symmetrical\" lenses.\n\n3. ''Symmetrical Doublets''.—This class includes objectives formed of two similar combinations of lenses, usually of the convergent meniscus form, with their concave surfaces inwards and a diaphragm between them; consequently they are rectilinear and practically free from marginal distortion. Until the introduction of anastigmatic doublets they were in general use for all purposes under the names \"Aplanat,\" \"Rectilinear,\" \"Symmetrical,\" \"Euryscope,\" &c. They are still largely used and have been improved by the use of Jena glasses in their construction.\n\nThe first recorded lens of this type was Dr J. W. Draper's combination used in 1839 for daguerreotype portraits, consisting of two double-convex lenses 4 in. diameter, with a united focus of 8 in., mounted in a tube with a diaphragm 3½ in. in front. In 1841 T. Davidson made a combination of two single landscape lenses very similar to the later rectilinear doublets. Being slower than the Petzval portrait lens its value as a non-distorting lens for general purposes was not recognized. G. S. Cundell (1844) combined two uncorrected meniscus lenses with a diaphragm between them. In 1860 T. Sutton brought out his \"Panoramic Lens,\" which worked on curved plates covering about 100°. It was followed\n\n[[File:eb1911 v21 p0534 c2f3.png|center|356px]]\n{{c|“Periskop.”}}\n{{c|{{sc|Fig.}} 26.—A. Steinheil's “Aplanat.”}}\n\n{{sc|Fig.}} 26.—A. Steinheil's \"Aplanat.\" by C. C. Harrison's “Globe Lens” (1862), angle 75°, composed of a symmetrical pair of deep compound menisci, the exterior surfaces forming part of a sphere. Though defective and slow it was popular for a time. C. A. Steinheil's “Periskop” (1865, <math>f/13{\\cdot}5</math>, angle 90°, was a symmetrical doublet formed of two plain crown menisci with central diaphragm (fig. 25). It gave a larger field than the “Globe,” the lenses being closer together. Being nonachromatic it had to be adjusted for chemical focus. It was quite free from distortion, with a very flat field, and both nodal points together. It is considered the best possible combination of two plain lenses, and is still used in some of the cheaper hand cameras with fixed focus, the difference of the chemical and visual foci being allowed for in the camera or by adjustable lens mounts. G. Rodenstock's “Bistigmats” are of this class. J. Zentmayer made a similar unsymmetrical lens. In A. Steinheil's “Aplanat” (1866) the same principle was carried out with achromatized lenses, and a great<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|508|PHOTOGRAPHY|[APPARATUS}}</noinclude><section begin=\"Photography\" /><math>f/15</math>, angle 90°, with great covering power and depth of focus. T. R. Dallmeyer's “Rectilinear Landscape Lens” (1888), <math>f/14</math>, angle 60° (fig. 17), was of novel construction, free from distortion, brilliant in working and useful for copying. Messrs Ross's “Wide-Angle Landscape Lens” (1890), <math>f/16</math>, angle 70°, triple cemented and made of Jena glass. Many other excellent objectives of this type have been made by British and foreign makers and are still used, though somewhat superseded by the fully corrected anastigmats specially made to work singly, or as single elements of anastigmatic doublets, as noticed in § 5.\n\n2. ''Unsymmetrical Doublets: Old Types.''—This class includes objectives with comparatively large apertures formed of two dissimilar combinations, in most cases correcting each other, with a diaphragm between them. In some the single elements may be used independently. All the older “portrait” lenses, some of the aplanatic doublets and Fr. von Voigtländer's “Orthoscopic” Lens (1857), now disused, are of this type. Even with the present improved conditions, the portraitist working in a studio requires a quick-acting objective of large effective aperture and comparatively short focus, giving a brilliant well-defined image of near objects in different planes over a restricted field of view. The early single lenses were found to be too slow for portraiture by the daguerreotype and talbotype processes, and the efforts of opticians were directed to the problem of obtaining the maximum amount of light, together with good definition and flatness of field, and about 1840 compound lenses were brought out by Andrew Ross and C. Chevalier, consisting of two achromatic compounds, one at each end of a tube. Ross's lens, made for H. Collen, is interesting as the first lens corrected photographically, so that the visual and chemical foci were coincident (fig. 18). Ch. Chevalier also combined lenses of different foci, as is now done for \"convertible\" objectives, used singly or combined. He also fitted them with iris diaphragms. These forms were soon superseded by the compound portrait lens, calculated by J. Petzval and brought out by {{c|{{sc|Fig.}} 18.—First English Portrait Lens.}}\n\n[[File:eb1911 v21 p0534 c1f1.png|center|350px]]\n{{c|{{sc|Fig.}} 18.—First English Portrait Lens.}}\n{{c|{{sc|Fig.}} 19.—Portrait Lens.}}\n\n{{c|{{sc|Fig.}} 19.—Portrait Lens.}}\n\nFr. von Voigtländer in 1841. It consists of two dissimilar achromatic combinations widely separated. At first the diaphragms were in front, but now they are central. The front element is a plano-convex composed of a biconvex crown cemented to a plano-concave flint, while the back element is a double convex, composed of a biconvex crown separated by an air-space from a concavo-convex flint (fig. 19). This form of objective quickly supplanted all other for portraitures, and is still largely used, though it has defects which prevent its use for general purposes and is being superseded for portraiture by some of the rapid anastigmats. In his “Quick Acting Portrait Lens” (1860), <math>f/4</math>, angle 45°, J. H. Dallmeyer improved the correction for spherical aberration, and in his “Extra Quick Acting Portrait Lens” (1860), <math>f/2{\\cdot}2</math>, used for cinematograph work, attained greater rapidity. In the “Patent Portrait Lens” <math>f/3</math>, <math>f/4</math> and <math>f/6</math>, angles 50° to 55° (fig. 20), he made great changes in the form and relative positions of the back elements, giving a flatter field and freedom from flare spot. By separating the two components of the back element more or less spherical aberration could be introduced to give softer definition and greater depth of focus. In 1875 Dr. A. Steinheil made an\n\n[[File:eb1911 v21 p0534 c1f3.png|center|180px]]\n{{c|{{sc|Fig.}} 20.—Dallmeyer's Patent Portrait Lens.}}\n\nWait—the strip begins with \"(1866),\" so:\n\n(1866), <math>f/3</math>, <math>f/4</math> and <math>f/6</math>, angles 50° to 55° (fig. 20), he made great changes in the form and relative positions of the back elements, giving a flatter field and freedom from flare spot. By separating the two components of the back element more or less spherical aberration could be introduced to give softer definition and greater depth of focus. In 1875 Dr. A. Steinheil made an unsymmetrical aplanatic portrait combination of peculiar construction, working at <math>f/3\\cdot 2</math>. It was an improvement on his similar symmetrical “Portrait-Aplanat,” {{c|{{sc|Fig.}} 21.—Portrait Antiplanet. {{sc|Fig.}} 22.—Group Antiplanet.}} Form I. of 1874, but was superseded in 1881 by the \"Portrait Antiplanet,\" <math>f/4</math> and free from astigmatism over an angle of 14°. It had six reflecting surfaces and nearly approached a triplet (fig. 21). Steinheil's \"Group Aplanats\" (1879), <math>f/6\\cdot4</math>, angle 70°, were an improvement on the ordinary \"Aplanats,\" but were superseded in 1881 by the \"Group Antiplanets,\" <math>f/5</math>, angle 70°, lenses of a distinct type (fig. 22). They were a further advance on the \"Aplanats,\" working at larger apertures and giving better definition. This lens is interesting as the first in which astigmatism was eliminated by combining a \"crown-shaped\" lens of high refractivity, with a \"flint-shaped\" of lower refractivity, though made of the old glasses. In his \"Rapid Antiplanet\" (1893), <math>f/6\\cdot5</math>, angle 30°, Dr R. Steinheil improved the \"Group Antiplanet\" as regards astigmatism and covering power by replacing the thick back combination by a triple long-focus negative element consisting of a crown between two flints, with a heavy barium crown in the front element instead of a flint (fig. 23). Voigtländer, who originally constructed the Petzval portrait lens, improved it in 1878 and 1885, and now makes two lenses on the same principle, series I. <math>f/3\\cdot2</math>, angle 28°, for ordinary portraiture and projection, and series I''a''., <math>f/2\\cdot3</math>, angle 22° (1900) for astrophotography, cinematography, &c., when intense illumination is required over a small field. Both are quite free from coma. {{c|{{sc|Fig.}} 23.—R. Steinheil's Improved Group Antiplanet.}}\n{{c|{{sc|Fig.}} 24.—Ordinary Angle Actinic Doublet.}} Most of the above are portrait objectives of large aperture, but unsymmetrical doublets have also been made for landscape work. J. T. Goddard's \"Combination Landscape Lens\" (1859) was one of the first, and was free from distortion, gave a flat field, and could be used as a convertible lens. In 1864 T. Ross issued his \"Actinic Doublets,\" modified from the Collen lens, in three series—\"small angle,\" <math>f/8</math>, angle 40° to 50°; \"ordinary angle,\" <math>f/14</math>, angle 60° to 75° (fig. 24); \"large angle,\" <math>f/16</math>, angle 80° to 95°. These lenses were similar to the \"Globe,\" but unsymmetrical and more rapid. The separate elements could be used alone. Some of them were fitted with a shutter near the diaphragm. They were superseded by the \"Symmetrical\" lenses.\n\n[[File:eb1911 v21 p0534 c1f4.png|center|350px]]\n{{c|{{sc|Fig.}} 21.—Portrait Antiplanet. {{sc|Fig.}} 22.—Group Antiplanet.}}\n\n[[File:eb1911 v21 p0534 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 23.—R. Steinheil's Improved Group Antiplanet.}}\n{{c|{{sc|Fig.}} 24.—Ordinary Angle Actinic Doublet.}}\n\n3. ''Symmetrical Doublets''.—This class includes objectives formed of two similar combinations of lenses, usually of the convergent meniscus form, with their concave surfaces inwards and a diaphragm between them; consequently they are rectilinear and practically free from marginal distortion. Until the introduction of anastigmatic doublets they were in general use for all purposes under the names \"Aplanat,\" \"Rectilinear,\" \"Symmetrical,\" \"Euryscope,\" &c. They are still largely used and have been improved by the use of Jena glasses in their construction.\n\nThe first recorded lens of this type was Dr J. W. Draper's combination used in 1839 for daguerreotype portraits, consisting of two double-convex lenses 4 in. diameter, with a united focus of 8 in., mounted in a tube with a diaphragm 3½ in. in front. In 1841 T. Davidson made a combination of two single landscape lenses very similar to the later rectilinear doublets. Being slower than the Petzval portrait lens its value as a non-distorting lens for general purposes was not recognized. G. S. Cundell (1844) combined two uncorrected meniscus lenses with a diaphragm between them. In 1860 T. Sutton brought out his \"Panoramic Lens,\" which worked on curved plates covering about 100°. It was followed {{c|{{sc|Fig.}} 25.—C. A. Steinheil's \"Periskop.\"}}\n{{c|{{sc|Fig.}} 26.—A. Steinheil's \"Aplanat.\"}} by C. C. Harrison's “Globe Lens” (1862), angle 75°, composed of a symmetrical pair of deep compound menisci, the exterior surfaces forming part of a sphere. Though defective and slow it was popular for a time. C. A. Steinheil's “Periskop” (1865, <math>f/13\\cdot5</math>, angle 90°, was a symmetrical doublet formed of two plain crown menisci with central diaphragm (fig. 25). It gave a larger field than the “Globe,” the lenses being closer together. Being nonachromatic it had to be adjusted for chemical focus. It was quite free from distortion, with a very flat field, and both nodal points together. It is considered the best possible combination of two plain lenses, and is still used in some of the cheaper hand cameras with fixed focus, the difference of the chemical and visual foci being allowed for in the camera or by adjustable lens mounts. G. Rodenstock's “Bistigmats” are of this class. J. Zentmayer made a similar unsymmetrical lens. In A. Steinheil's “Aplanat” (1866) the same principle was carried out with achromatized lenses, and a great\n\n[[File:eb1911 v21 p0534 c2f3.png|center|356px]]\n{{c|“Periskop.” {{sc|Fig.}} 26.—A. Steinheil's “Aplanat.”}}<section end=\"Photography\" /><noinclude><references/></noinclude>"
 }

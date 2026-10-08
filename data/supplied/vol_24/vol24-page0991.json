@@ -40,7 +40,18 @@
      70,
      635,
      1134,
-     1675
+     1676
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     70,
+     1682,
+     1134,
+     1720
     ]
    },
    {
@@ -49,20 +60,9 @@
     "column": 1,
     "box": [
      70,
-     1686,
+     1720,
      1134,
-     1717
-    ]
-   },
-   {
-    "name": "c1s3",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     70,
-     1717,
-     1134,
-     1990
+     2323
     ]
    },
    {
@@ -71,35 +71,35 @@
     "column": 1,
     "box": [
      70,
-     1990,
-     438,
+     2323,
+     433,
      2721
     ]
    },
    {
-    "name": "c1s4",
-    "kind": "text",
+    "name": "c1c2",
+    "kind": "caption",
     "column": 1,
     "box": [
      70,
-     2739,
-     438,
+     2736,
+     433,
      2772
     ]
    },
    {
-    "name": "c1s5",
+    "name": "c1s3",
     "kind": "text",
     "column": 1,
     "box": [
-     438,
-     1990,
+     433,
+     2323,
      1134,
      2772
     ]
    },
    {
-    "name": "c1s6",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
@@ -132,18 +132,18 @@
     ]
    },
    {
-    "name": "c2s2",
-    "kind": "text",
+    "name": "c2c1",
+    "kind": "caption",
     "column": 2,
     "box": [
      1763,
-     1386,
+     1385,
      2207,
      1417
     ]
    },
    {
-    "name": "c2s3",
+    "name": "c2s2",
     "kind": "text",
     "column": 2,
     "box": [
@@ -154,14 +154,14 @@
     ]
    },
    {
-    "name": "c2s4",
+    "name": "c2s3",
     "kind": "text",
     "column": 2,
     "box": [
      1134,
      1417,
      2207,
-     1893
+     1888
     ]
    },
    {
@@ -170,14 +170,14 @@
     "column": 2,
     "box": [
      2006,
-     1893,
+     1888,
      2207,
-     2289
+     2288
     ]
    },
    {
-    "name": "c2s5",
-    "kind": "text",
+    "name": "c2c2",
+    "kind": "caption",
     "column": 2,
     "box": [
      2006,
@@ -187,18 +187,18 @@
     ]
    },
    {
-    "name": "c2s6",
+    "name": "c2s4",
     "kind": "text",
     "column": 2,
     "box": [
      1134,
-     1893,
+     1888,
      2006,
      2341
     ]
    },
    {
-    "name": "c2s7",
+    "name": "c2s5",
     "kind": "text",
     "column": 2,
     "box": [
@@ -211,19 +211,19 @@
   ],
   "readings": {
    "head": "{{RunningHeader|THEORETICAL]|SHIPBUILDING|929}}",
-   "c1s1": "centre of gravity, or, as it is termed, the centre of flotation, the curve of flotation will be the locus of the projections of the centres of flotation on the plane of the figure, which curve touches each water-line.\n\nFrom consideration of the slope of a ship's side around the periphery of a water-line, Dupin obtained the following expression for <math>\\rho'</math>, the radius of curvature of the curve of flotation,\n{{block center|<math>\\rho' = \\frac{\\int y^2 \\tan \\alpha.\\, ds}{\\text{area of water-plane}}</math> for both sides,}}\nwhere <math>ds</math> is an element of the perimeter, <math>\\alpha</math> the inclination of the ship's side to the vertical, and <math>y</math> its distance from the longitudinal axis",
-   "c1s2": "{{c|{{sc|Fig.}} 16.}}",
-   "c1s3": "through the centre of flotation. M. Emile Leclert, in a paper read at the Institution of Naval Architects, 1870, proved the equivalence of the above formula to the two following, which are known as Leclert's Theorem:\n\n{{block center|<math>\\rho' = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}}</math> and <math>\\rho' = \\frac{d\\text{I}}{d\\text{V}},</math>}}",
-   "c1s4": "{{c|{{sc|Fig.}} 17.}}",
-   "c1s5": "ectively the moment of inertia of the water-of displacement, and <math>\\rho</math> is the radius of the <math>\\text{B}'\\text{M}'</math>. Independent analytical proofs of the the paper referred to; and (''Trans. I.N.A.'', ant geometrical theorems in connexion with A. G. Greenhill, include a demonstration of llows (in abbreviated form):\n\ne the centres of buoyancy of a ship in two sitions, and <math>\\text{F}</math>, <math>\\text{F}_1</math> the corresponding centres of flotation. Draw normals <math>\\text{BM}</math>, <math>\\text{B}_1\\text{M}</math>, meeting at the pro-metacentre <math>\\text{M}</math>, and <math>\\text{FC}</math>, <math>\\text{F}_1\\text{C}</math>, meeting at the centre of curvature <math>\\text{C}</math>. Produce <math>\\text{FB}</math>, <math>\\text{F}_1\\text{B}_1</math> to meet at <math>\\text{O}</math>; join <math>\\text{OM}</math>, <math>\\text{MC}</math>.\n\nThen <math>\\text{BM}</math>, <math>\\text{CF}</math> and <math>\\text{B}_1\\text{M}</math>, <math>\\text{CF}_1</math> are respectively parallel, and ultimately also <math>\\text{BB}_1</math>, <math>\\text{FF}_1</math>; hence the triangles <math>\\text{MBB}_1</math>, <math>\\text{CFF}_1</math> are similar and\n{{block center|<math>\\frac{\\text{BM}}{\\text{CF}} = \\frac{\\text{BB}_1}{\\text{FF}_1} = \\frac{\\text{OB}}{\\text{OF}}</math>,}}\nso that <math>\\text{O}</math>, <math>\\text{M}</math> and <math>\\text{C}</math> are collinear.\n\nIf the displacement <math>\\text{V}</math> be now increased by <math>d\\text{V}</math>, changing <math>\\text{B}</math> to <math>\\text{B}'</math>, and <math>\\text{M}</math> to <math>\\text{M}'</math>",
-   "c1s6": "then since the added displacement <math>d\\text{V}</math> may be supposed concentrated at F, B′ will lie on OBF, and it may be shown similarly as before that M′ lies on OC. Further, considering the transference of moments, <math>\\text{BB}'\\times\\text{V}=\\text{BF}\\times d\\text{V}</math>.\n\nDraw MED parallel to BF, then\n{{block center|<math>\\frac{d\\text{V}}{\\text{V}}=\\frac{\\text{BB}'}{\\text{BF}}=\\frac{\\text{ME}}{\\text{MD}}=\\frac{\\text{M}'\\text{E}}{\\text{CD}}=\\frac{d\\rho}{\\rho'-\\rho};</math>}}\n{{block center|<math>\\therefore\\frac{d\\rho}{d\\text{V}}=\\frac{\\rho'-\\rho}{\\text{V}}\\text{ or }\\rho'=\\rho+\\text{V}\\frac{d\\rho}{d\\text{V}},</math>}}\n\nXXIV. 30",
-   "c2s1": "giving Leclert's first expression; also, since <math>\\rho = \\frac{\\text{I}}{\\text{V}}</math>,\n\n{{block center|<math>\\frac{d\\text{I}}{d\\text{V}} = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}} = \\rho',</math>}}\n\nwhich is Leclert's second expression for <math>\\rho'</math>.\n\nThe value of <math>\\rho'</math> at the upright can be obtained from the metacentric diagram by the following simple construction. Let <math>\\text{M}</math> and <math>\\text{B}</math> be the metacentre and the centre of buoyancy for a water-line <math>\\text{WL}</math> on the metacentric diagram (fig. 18); draw the tangent to the <math>\\text{B}</math> curve meeting <math>\\text{WL}</math> at <math>\\text{Q}</math>, and through <math>\\text{Q}</math> draw <math>\\text{QR}</math> to meet <math>\\text{MB}</math> and parallel to the tangent to the <math>\\text{M}</math> curve at <math>\\text{M}</math>. Let <math>\\text{BP} = h</math>, and area of water-line be <math>\\text{A}</math>. Then\n\n{{block center|<math>\\text{PQ} = h \\cot \\theta = h\\frac{\\text{V}}{\\text{A}h} = \\frac{\\text{V}}{\\text{A}};</math>}}\n\nalso\n\n{{block center|<math>\\text{MR} = \\text{BM} - (\\text{BP} + \\text{PR}) = \\rho - \\frac{\\text{V}}{\\text{A}} (\\tan \\theta + \\tan \\phi).</math>}}\n\nIf <math>\\text{D}</math> be the draught,\n\n{{block center|<math>\\tan \\theta + \\tan \\phi = -\\frac{d\\rho}{d\\text{D}} = -\\text{A}\\cdot\\frac{d\\rho}{d\\text{V}},</math>}}\n\nwhence\n\n{{block center|<math>\\text{MR} = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}} = \\rho'</math>}}\n\nthe curve of flota-",
-   "c2s2": "{{c|{{sc|Fig.}} 18.}}",
-   "c2s3": "tion being concave upwards if <math>\\text{R}</math> is below <math>\\text{M}</math>.\n\nFor moderate inclinations from the upright, the buoyancy of the added layer due to a small additional submersion will act through the centre of curvature of the curve",
-   "c2s4": "of flotation; this point may be regarded as that at which any additional weight will, on being placed on a ship, cause no difference to the values of the righting moment at moderate angles of inclination. The curve of flotation, therefore, and its evolute bear similar relations to the increase or decrease of the stability of a ship due to alteration of draught, as the curves of buoyancy and of pro-metacentres do to the actual amount of the stability.\n\nThe curve of flotation resembles the curve of buoyancy in that not more than two tangents can be drawn to it in any given direction, but it differs in that its radius of curvature can become infinite or change sign. It contains a number of",
-   "c2s5": "{{c|{{sc|Fig.}} 19.}}",
-   "c2s6": "cusps determined by <math>\\rho' = \\frac{d\\text{I}}{d\\text{V}} = 0</math>. These occur in an ordinary ship-shape body at positions: (1) at or near the angles at which the deck is immersed or emerged (four in number); and (2) at or near the angles 90° and 270°. There are, therefore, six cusps in the curve of flotation of an ordinary ship; they are shown in figs. 15 and 16 by the points <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, <math>\\text{F}_4</math>, <math>\\text{F}_6</math>, <math>\\text{F}_7</math>, <math>\\text{F}_8</math>.\n\nThe following relations between the curves of buoyancy and of pro-metacentres and the curve of statical stability are of interest, and enable the former curves to be constructed when the latter have been obtained. If <math>\\text{GZ}'</math>, <math>\\text{GZ}''</math> (fig. 19) are the righting levers",
-   "c2s7": "corresponding to inclinations <math>\\theta</math>, <math>\\theta + d\\theta</math>, where <math>d\\theta</math> vanishes in the limit; <math>\\text{B}'</math>, <math>\\text{B}''</math>, the centres of buoyancy, <math>\\text{M}'</math> the prometacentre; produce <math>\\text{GZ}'</math> to meet <math>\\text{B}''\\text{M}'</math> in <math>\\text{U}</math>.\n\nThen, neglecting squares of small quantities,\n{{block center|<math>d(\\text{GZ}') = \\text{Z}'\\text{U} = \\text{M}'\\text{Z}'.d\\theta,</math>}}\nor vertical distance of <math>\\text{M}'</math> above <math>\\text{G} = \\frac{d(\\text{GZ}')}{d\\theta}</math>. Also <math>\\text{M}'\\text{B}' = \\text{M}'\\text{B}''</math>; hence\n{{block center|<math>\\text{Z}''\\text{B}'' - \\text{Z}'\\text{B}' = \\text{MZ}' - \\text{MZ}'' = \\text{Z}''\\text{U} = \\text{GZ}'.d\\theta,</math>}}\nor\n{{block center|<math>\\text{GZ} = \\frac{d(\\text{B}'\\text{Z}')}{d\\theta},</math>}}\n''i.e.'' the vertical distance <math>(\\text{B}'\\text{Z}')</math> of <math>\\text{G}</math> over <math>\\text{B}</math> is equal to <math>\\int \\text{GZ}.d\\theta</math>.\n\nIt follows that by differentiating the levers of statical stability and finding the slope at each ordinate the vertical distance of <math>\\text{M}'</math> over <math>\\text{G}</math> is obtained, and <math>\\text{M}'</math> may be plotted by setting up this value from <math>\\text{Z}'</math> above <math>\\text{GZ}'</math> drawn at the correct inclination; also that by integrating the curve of statical stability and finding its area up to any angle, the vertical separation of <math>\\text{G}</math> and <math>\\text{B}'</math> is obtained, and <math>\\text{B}'</math> may be plotted by setting down this value increased by <math>\\text{BG}</math> below <math>\\text{Z}'</math>."
+   "c1s1": "centre of gravity, or, as it is termed, the centre of flotation, the curve of flotation will be the locus of the projections of the centres of flotation on the plane of the figure, which curve touches each water-line.\n\nFrom consideration of the slope of a ship's side around the periphery of a water-line, Dupin obtained the following expression for <math>\\rho'</math>, the radius of curvature of the curve of flotation,\n\n{{block center|<math>\\rho' = \\frac{\\int y^2 \\tan \\alpha.\\ ds}{\\text{area of water-plane}}</math> for both sides,}}\n\nwhere <math>ds</math> is an element of the perimeter, <math>\\alpha</math> the inclination of the ship's side to the vertical, and <math>y</math> its distance from the longitudinal axis",
+   "c1c1": "{{c|{{sc|Fig.}} 16.}}",
+   "c1s2": "through the centre of flotation. M. Emile Leclert, in a paper read at the Institution of Naval Architects, 1870, proved the equivalence of the above formula to the two following, which are known as Leclert's Theorem:\n\n{{block center|<math>\\rho' = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}}</math> and <math>\\rho' = \\frac{d\\text{I}}{d\\text{V}}</math>,}}\n\nwhere <math>\\text{I}</math> and <math>\\text{V}</math> are respectively the moment of inertia of the water-plane and the volume of displacement, and <math>\\rho</math> is the radius of the curve of buoyancy or <math>\\text{B}'\\text{M}'</math>. Independent analytical proofs of the formulae were given in the paper referred to; and (''Trans. I.N.A.'', 1894) a number of elegant geometricai theorems in connexion with stability, given by Sir A. G. Greenhill, include a demonstration of Leclert's Theorem as follows (in abbreviated form):\n\nLet <math>\\text{B}</math>, <math>\\text{B}_1</math> (fig. 17) be the centres of buoyancy of a ship in two consecutive inclined positions, and <math>\\text{F}</math>, <math>\\text{F}_1</math> the corresponding centres of flotation. Draw normals <math>\\text{BM}</math>, <math>\\text{B}_1\\text{M}</math>,",
+   "c1c2": "{{c|{{sc|Fig.}} 17.}}",
+   "c1s3": "meeting at the pro-metacentre <math>\\text{M}</math>, and <math>\\text{FC}</math>, <math>\\text{F}_1\\text{C}</math>, meeting at the centre of curvature <math>\\text{C}</math>. Produce <math>\\text{FB}</math>, <math>\\text{F}_1\\text{B}_1</math> to meet at <math>\\text{O}</math>; join <math>\\text{OM}</math>, <math>\\text{MC}</math>.\n\nThen <math>\\text{BM}</math>, <math>\\text{CF}</math> and <math>\\text{B}_1\\text{M}</math>, <math>\\text{CF}_1</math> are respectively parallel, and ultimately also <math>\\text{BB}_1</math>, <math>\\text{FF}_1</math>; hence the triangles <math>\\text{MBB}_1</math>, <math>\\text{CFF}_1</math> are similar and\n{{block center|<math>\\frac{\\text{BM}}{\\text{CF}}=\\frac{\\text{BB}_1}{\\text{FF}_1}=\\frac{\\text{OB}}{\\text{OF}}</math>,}}\nso that <math>\\text{O}</math>, <math>\\text{M}</math> and <math>\\text{C}</math> are collinear.\n\nIf the displacement <math>\\text{V}</math> be now increased by <math>d\\text{V}</math>, changing <math>\\text{B}</math> to <math>\\text{B}'</math>, and <math>\\text{M}</math> to <math>\\text{M}'</math>,",
+   "c1s4": "then since the added displacement <math>d\\text{V}</math> may be supposed concentrated at <math>\\text{F}</math>, <math>\\text{B}'</math> will lie on <math>\\text{OBF}</math>, and it may be shown similarly as before that <math>\\text{M}'</math> lies on <math>\\text{OC}</math>. Further, considering the transference of moments, <math>\\text{BB}' \\times \\text{V} = \\text{BF} \\times d\\text{V}</math>.\n\nDraw <math>\\text{MED}</math> parallel to <math>\\text{BF}</math>, then\n{{block center|<math>\\frac{d\\text{V}}{\\text{V}} = \\frac{\\text{BB}'}{\\text{BF}} = \\frac{\\text{ME}}{\\text{MD}} = \\frac{\\text{M}'\\text{E}}{\\text{CD}} = \\frac{d\\rho}{\\rho' - \\rho}</math>;}}\n{{block center|<math>\\therefore \\frac{d\\rho}{d\\text{V}} = \\frac{\\rho' - \\rho}{\\text{V}}</math> or <math>\\rho' = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}}</math>,}}\n\nXXIV. 30",
+   "c2s1": "giving Leclert's first expression; also, since <math>\\rho = \\frac{\\text{I}}{\\text{V}}</math>,\n{{block center|<math>\\frac{d\\text{I}}{d\\text{V}} = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}} = \\rho',</math>}}\nwhich is Leclert's second expression for <math>\\rho'</math>.\n\nThe value of <math>\\rho'</math> at the upright can be obtained from the metacentric diagram by the following simple construction. Let <math>\\text{M}</math> and <math>\\text{B}</math> be the metacentre and the centre of buoyancy for a water-line <math>\\text{WL}</math> on the metacentric diagram (fig. 18); draw the tangent to the <math>\\text{B}</math> curve meeting <math>\\text{WL}</math> at <math>\\text{Q}</math>, and through <math>\\text{Q}</math> draw <math>\\text{QR}</math> to meet <math>\\text{MB}</math> and parallel to the tangent to the <math>\\text{M}</math> curve at <math>\\text{M}</math>. Let <math>\\text{BP} = h</math>, and area of water-line be <math>\\text{A}</math>. Then\n{{block center|<math>\\text{PQ} = h \\cot\\theta = h\\frac{\\text{V}}{\\text{A}h} = \\frac{\\text{V}}{\\text{A}};</math>}}\nalso,\n{{block center|<math>\\text{MR} = \\text{BM} - (\\text{BP} + \\text{PR}) = \\rho - \\frac{\\text{V}}{\\text{A}} (\\tan\\theta + \\tan\\phi).</math>}}\nIf <math>\\text{D}</math> be the draught,\n{{block center|<math>\\tan\\theta + \\tan\\phi = -\\frac{d\\rho}{d\\text{D}} = -\\text{A}\\cdot\\frac{d\\rho}{d\\text{V}},</math>}}\nwhence\n{{block center|<math>\\text{MR} = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}} = \\rho'</math>}}\nthe curve of flota-",
+   "c2c1": "{{c|{{sc|Fig.}} 18.}}",
+   "c2s2": "tion being concave upwards if <math>\\text{R}</math> is below <math>\\text{M}</math>.\n\nFor moderate inclinations from the upright, the buoyancy of the added layer due to a small additional submersion will act through the centre of curvature of the curve",
+   "c2s3": "of flotation; this point may be regarded as that at which any additional weight will, on being placed on a ship, cause no difference to the values of the righting moment at moderate angles of inclination. The curve of flotation, therefore, and its evolute bear similar relations to the increase or decrease of the stability of a ship due to alteration of draught, as the curves of buoyancy and of pro-metacentres do to the actual amount of the stability.\n\nThe curve of flotation resembles the curve of buoyancy in that not more than two tangents can be drawn to it in any given direction, but it differs in that its radius of curvature can become infinite or change sign. It contains a number of",
+   "c2c2": "{{c|{{sc|Fig.}} 19.}}",
+   "c2s4": "cusps determined by <math>\\rho' = \\frac{d\\text{I}}{d\\text{V}} = 0</math>. These occur in an ordinary ship-shape body at positions: (1) at or near the angles at which the deck is immersed or emerged (four in number); and (2) at or near the angles 90° and 270°. There are, therefore, six cusps in the curve of flotation of an ordinary ship; they are shown in figs. 15 and 16 by the points <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, <math>\\text{F}_4</math>, <math>\\text{F}_6</math>, <math>\\text{F}_7</math>, <math>\\text{F}_8</math>.\n\nThe following relations between the curves of buoyancy and of pro-metacentres and the curve of statical stability are of interest, and enable the former curves to be constructed when the latter have been obtained. If <math>\\text{GZ}'</math>, <math>\\text{GZ}''</math> (fig. 19) are the righting levers",
+   "c2s5": "corresponding to inclinations <math>\\theta</math>, <math>\\theta + d\\theta</math>, where <math>d\\theta</math> vanishes in the limit; <math>\\text{B}'</math>, <math>\\text{B}''</math>, the centres of buoyancy, <math>\\text{M}'</math> the prometacentre; produce <math>\\text{GZ}'</math> to meet <math>\\text{B}''\\text{M}'</math> in <math>\\text{U}</math>.\n\nThen, neglecting squares of small quantities,\n{{block center|<math>d(\\text{GZ}') = \\text{Z}'\\text{U} = \\text{M}'\\text{Z}'.d\\theta</math>,}}\nor vertical distance of <math>\\text{M}'</math> above <math>\\text{G} = \\frac{d(\\text{GZ}')}{d\\theta}</math>. Also <math>\\text{M}'\\text{B}' = \\text{M}'\\text{B}''</math>; hence\n{{block center|<math>\\text{Z}''\\text{B}'' - \\text{Z}'\\text{B}' = \\text{MZ}' - \\text{MZ}'' = \\text{Z}''\\text{U} = \\text{GZ}'.d\\theta</math>,}}\nor\n{{block center|<math>\\text{GZ} = \\frac{d(\\text{B}'\\text{Z}')}{d\\theta}</math>,}}\n''i.e.'' the vertical distance <math>(\\text{B}'\\text{Z}')</math> of <math>\\text{G}</math> over <math>\\text{B}</math> is equal to <math>\\int \\text{GZ}.d\\theta</math>.\n\nIt follows that by differentiating the levers of statical stability and finding the slope at each ordinate the vertical distance of <math>\\text{M}'</math> over <math>\\text{G}</math> is obtained, and <math>\\text{M}'</math> may be plotted by setting up this value from <math>\\text{Z}'</math> above <math>\\text{GZ}'</math> drawn at the correct inclination; also that by integrating the curve of statical stability and finding its area up to any angle, the vertical separation of <math>\\text{G}</math> and <math>\\text{B}'</math> is obtained, and <math>\\text{B}'</math> may be plotted by setting down this value increased by <math>\\text{BG}</math> below <math>\\text{Z}'</math>."
   },
   "figure_files": {
    "c1f1": "eb1911 v24 p0991 c1f1.png",
@@ -234,90 +234,90 @@
   "figures": [
    {
     "box": [
-     112,
-     636,
-     1154,
-     1675
+     108,
+     634,
+     1385,
+     1676
     ],
     "caption": [
-     682,
-     1686,
+     680,
+     1682,
      805,
-     1717
+     1720
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     75,
-     633,
+     80,
+     636,
      1417,
-     1678
+     1665
     ]
    },
    {
     "box": [
-     1776,
-     1016,
-     2204,
-     1357
+     1775,
+     1019,
+     2203,
+     1362
     ],
     "caption": [
      1934,
-     1386,
-     2058,
+     1385,
+     2057,
      1417
     ],
     "column": 2,
     "inset": true,
     "page_box": [
      1767,
-     1014,
+     1019,
      2214,
      1342
     ]
    },
    {
     "box": [
-     72,
-     2326,
-     422,
+     2017,
+     1887,
+     2176,
+     2287
+    ],
+    "caption": [
+     2051,
+     2307,
+     2146,
+     2339
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     2059,
+     1889,
+     2225,
+     2287
+    ]
+   },
+   {
+    "box": [
+     74,
+     2324,
+     412,
      2716
     ],
     "caption": [
-     178,
-     2741,
-     302,
+     179,
+     2736,
+     288,
      2769
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     73,
-     2310,
-     465,
+     75,
+     2314,
+     461,
      2724
-    ]
-   },
-   {
-    "box": [
-     2016,
-     1895,
-     2194,
-     2289
-    ],
-    "caption": [
-     2052,
-     2307,
-     2174,
-     2341
-    ],
-    "column": 2,
-    "inset": true,
-    "page_box": [
-     2055,
-     1949,
-     2225,
-     2292
     ]
    }
   ],
@@ -337,22 +337,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 5,
-    "input_tokens": 10228,
-    "output_tokens": 318,
+    "input_tokens": 10961,
+    "output_tokens": 315,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 14,
-    "input_tokens": 6860,
-    "output_tokens": 6166,
+    "input_tokens": 7088,
+    "output_tokens": 6548,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 26936
+    "cache_read_input_tokens": 33894
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|THEORETICAL]|SHIPBUILDING|929}}</noinclude>centre of gravity, or, as it is termed, the centre of flotation, the curve of flotation will be the locus of the projections of the centres of flotation on the plane of the figure, which curve touches each water-line.\n\nFrom consideration of the slope of a ship's side around the periphery of a water-line, Dupin obtained the following expression for <math>\\rho'</math>, the radius of curvature of the curve of flotation,\n{{block center|<math>\\rho' = \\frac{\\int y^2 \\tan \\alpha.\\, ds}{\\text{area of water-plane}}</math> for both sides,}}\nwhere <math>ds</math> is an element of the perimeter, <math>\\alpha</math> the inclination of the ship's side to the vertical, and <math>y</math> its distance from the longitudinal axis through the centre of flotation. M. Emile Leclert, in a paper read at the Institution of Naval Architects, 1870, proved the equivalence of the above formula to the two following, which are known as Leclert's Theorem:\n\n[[File:eb1911 v24 p0991 c1f1.png|center|355px]]\n{{c|{{sc|Fig.}} 16.}}\n\n{{block center|<math>\\rho' = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}}</math> and <math>\\rho' = \\frac{d\\text{I}}{d\\text{V}},</math>}} ectively the moment of inertia of the water-of displacement, and <math>\\rho</math> is the radius of the <math>\\text{B}'\\text{M}'</math>. Independent analytical proofs of the the paper referred to; and (''Trans. I.N.A.'', ant geometrical theorems in connexion with A. G. Greenhill, include a demonstration of llows (in abbreviated form):\n\n[[File:eb1911 v24 p0991 c1f2.png|center|123px]]\n{{c|{{sc|Fig.}} 17.}}\n\ne the centres of buoyancy of a ship in two sitions, and <math>\\text{F}</math>, <math>\\text{F}_1</math> the corresponding centres of flotation. Draw normals <math>\\text{BM}</math>, <math>\\text{B}_1\\text{M}</math>, meeting at the pro-metacentre <math>\\text{M}</math>, and <math>\\text{FC}</math>, <math>\\text{F}_1\\text{C}</math>, meeting at the centre of curvature <math>\\text{C}</math>. Produce <math>\\text{FB}</math>, <math>\\text{F}_1\\text{B}_1</math> to meet at <math>\\text{O}</math>; join <math>\\text{OM}</math>, <math>\\text{MC}</math>.\n\nThen <math>\\text{BM}</math>, <math>\\text{CF}</math> and <math>\\text{B}_1\\text{M}</math>, <math>\\text{CF}_1</math> are respectively parallel, and ultimately also <math>\\text{BB}_1</math>, <math>\\text{FF}_1</math>; hence the triangles <math>\\text{MBB}_1</math>, <math>\\text{CFF}_1</math> are similar and\n{{block center|<math>\\frac{\\text{BM}}{\\text{CF}} = \\frac{\\text{BB}_1}{\\text{FF}_1} = \\frac{\\text{OB}}{\\text{OF}}</math>,}}\nso that <math>\\text{O}</math>, <math>\\text{M}</math> and <math>\\text{C}</math> are collinear.\n\nIf the displacement <math>\\text{V}</math> be now increased by <math>d\\text{V}</math>, changing <math>\\text{B}</math> to <math>\\text{B}'</math>, and <math>\\text{M}</math> to <math>\\text{M}'</math> then since the added displacement <math>d\\text{V}</math> may be supposed concentrated at F, B′ will lie on OBF, and it may be shown similarly as before that M′ lies on OC. Further, considering the transference of moments, <math>\\text{BB}'\\times\\text{V}=\\text{BF}\\times d\\text{V}</math>.\n\nDraw MED parallel to BF, then\n{{block center|<math>\\frac{d\\text{V}}{\\text{V}}=\\frac{\\text{BB}'}{\\text{BF}}=\\frac{\\text{ME}}{\\text{MD}}=\\frac{\\text{M}'\\text{E}}{\\text{CD}}=\\frac{d\\rho}{\\rho'-\\rho};</math>}}\n{{block center|<math>\\therefore\\frac{d\\rho}{d\\text{V}}=\\frac{\\rho'-\\rho}{\\text{V}}\\text{ or }\\rho'=\\rho+\\text{V}\\frac{d\\rho}{d\\text{V}},</math>}}\n\nXXIV. 30 giving Leclert's first expression; also, since <math>\\rho = \\frac{\\text{I}}{\\text{V}}</math>,\n\n{{block center|<math>\\frac{d\\text{I}}{d\\text{V}} = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}} = \\rho',</math>}}\n\nwhich is Leclert's second expression for <math>\\rho'</math>.\n\nThe value of <math>\\rho'</math> at the upright can be obtained from the metacentric diagram by the following simple construction. Let <math>\\text{M}</math> and <math>\\text{B}</math> be the metacentre and the centre of buoyancy for a water-line <math>\\text{WL}</math> on the metacentric diagram (fig. 18); draw the tangent to the <math>\\text{B}</math> curve meeting <math>\\text{WL}</math> at <math>\\text{Q}</math>, and through <math>\\text{Q}</math> draw <math>\\text{QR}</math> to meet <math>\\text{MB}</math> and parallel to the tangent to the <math>\\text{M}</math> curve at <math>\\text{M}</math>. Let <math>\\text{BP} = h</math>, and area of water-line be <math>\\text{A}</math>. Then\n\n{{block center|<math>\\text{PQ} = h \\cot \\theta = h\\frac{\\text{V}}{\\text{A}h} = \\frac{\\text{V}}{\\text{A}};</math>}}\n\nalso\n\n{{block center|<math>\\text{MR} = \\text{BM} - (\\text{BP} + \\text{PR}) = \\rho - \\frac{\\text{V}}{\\text{A}} (\\tan \\theta + \\tan \\phi).</math>}}\n\nIf <math>\\text{D}</math> be the draught,\n\n{{block center|<math>\\tan \\theta + \\tan \\phi = -\\frac{d\\rho}{d\\text{D}} = -\\text{A}\\cdot\\frac{d\\rho}{d\\text{V}},</math>}}\n\nwhence\n\n{{block center|<math>\\text{MR} = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}} = \\rho'</math>}}\n\nthe curve of flotation being concave upwards if <math>\\text{R}</math> is below <math>\\text{M}</math>.\n\n[[File:eb1911 v24 p0991 c2f1.png|center|148px]]\n{{c|{{sc|Fig.}} 18.}}\n\nFor moderate inclinations from the upright, the buoyancy of the added layer due to a small additional submersion will act through the centre of curvature of the curve of flotation; this point may be regarded as that at which any additional weight will, on being placed on a ship, cause no difference to the values of the righting moment at moderate angles of inclination. The curve of flotation, therefore, and its evolute bear similar relations to the increase or decrease of the stability of a ship due to alteration of draught, as the curves of buoyancy and of pro-metacentres do to the actual amount of the stability.\n\nThe curve of flotation resembles the curve of buoyancy in that not more than two tangents can be drawn to it in any given direction, but it differs in that its radius of curvature can become infinite or change sign. It contains a number of cusps determined by <math>\\rho' = \\frac{d\\text{I}}{d\\text{V}} = 0</math>. These occur in an ordinary ship-shape body at positions: (1) at or near the angles at which the deck is immersed or emerged (four in number); and (2) at or near the angles 90° and 270°. There are, therefore, six cusps in the curve of flotation of an ordinary ship; they are shown in figs. 15 and 16 by the points <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, <math>\\text{F}_4</math>, <math>\\text{F}_6</math>, <math>\\text{F}_7</math>, <math>\\text{F}_8</math>.\n\n[[File:eb1911 v24 p0991 c2f2.png|center|67px]]\n{{c|{{sc|Fig.}} 19.}}\n\nThe following relations between the curves of buoyancy and of pro-metacentres and the curve of statical stability are of interest, and enable the former curves to be constructed when the latter have been obtained. If <math>\\text{GZ}'</math>, <math>\\text{GZ}''</math> (fig. 19) are the righting levers corresponding to inclinations <math>\\theta</math>, <math>\\theta + d\\theta</math>, where <math>d\\theta</math> vanishes in the limit; <math>\\text{B}'</math>, <math>\\text{B}''</math>, the centres of buoyancy, <math>\\text{M}'</math> the prometacentre; produce <math>\\text{GZ}'</math> to meet <math>\\text{B}''\\text{M}'</math> in <math>\\text{U}</math>.\n\nThen, neglecting squares of small quantities,\n{{block center|<math>d(\\text{GZ}') = \\text{Z}'\\text{U} = \\text{M}'\\text{Z}'.d\\theta,</math>}}\nor vertical distance of <math>\\text{M}'</math> above <math>\\text{G} = \\frac{d(\\text{GZ}')}{d\\theta}</math>. Also <math>\\text{M}'\\text{B}' = \\text{M}'\\text{B}''</math>; hence\n{{block center|<math>\\text{Z}''\\text{B}'' - \\text{Z}'\\text{B}' = \\text{MZ}' - \\text{MZ}'' = \\text{Z}''\\text{U} = \\text{GZ}'.d\\theta,</math>}}\nor\n{{block center|<math>\\text{GZ} = \\frac{d(\\text{B}'\\text{Z}')}{d\\theta},</math>}}\n''i.e.'' the vertical distance <math>(\\text{B}'\\text{Z}')</math> of <math>\\text{G}</math> over <math>\\text{B}</math> is equal to <math>\\int \\text{GZ}.d\\theta</math>.\n\nIt follows that by differentiating the levers of statical stability and finding the slope at each ordinate the vertical distance of <math>\\text{M}'</math> over <math>\\text{G}</math> is obtained, and <math>\\text{M}'</math> may be plotted by setting up this value from <math>\\text{Z}'</math> above <math>\\text{GZ}'</math> drawn at the correct inclination; also that by integrating the curve of statical stability and finding its area up to any angle, the vertical separation of <math>\\text{G}</math> and <math>\\text{B}'</math> is obtained, and <math>\\text{B}'</math> may be plotted by setting down this value increased by <math>\\text{BG}</math> below <math>\\text{Z}'</math>.<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|THEORETICAL]|SHIPBUILDING|929}}</noinclude>centre of gravity, or, as it is termed, the centre of flotation, the curve of flotation will be the locus of the projections of the centres of flotation on the plane of the figure, which curve touches each water-line.\n\nFrom consideration of the slope of a ship's side around the periphery of a water-line, Dupin obtained the following expression for <math>\\rho'</math>, the radius of curvature of the curve of flotation,\n\n{{block center|<math>\\rho' = \\frac{\\int y^2 \\tan \\alpha.\\ ds}{\\text{area of water-plane}}</math> for both sides,}}\n\nwhere <math>ds</math> is an element of the perimeter, <math>\\alpha</math> the inclination of the ship's side to the vertical, and <math>y</math> its distance from the longitudinal axis through the centre of flotation. M. Emile Leclert, in a paper read at the Institution of Naval Architects, 1870, proved the equivalence of the above formula to the two following, which are known as Leclert's Theorem:\n\n[[File:eb1911 v24 p0991 c1f1.png|center|355px]]\n{{c|{{sc|Fig.}} 16.}}\n\n{{block center|<math>\\rho' = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}}</math> and <math>\\rho' = \\frac{d\\text{I}}{d\\text{V}}</math>,}}\n\nwhere <math>\\text{I}</math> and <math>\\text{V}</math> are respectively the moment of inertia of the water-plane and the volume of displacement, and <math>\\rho</math> is the radius of the curve of buoyancy or <math>\\text{B}'\\text{M}'</math>. Independent analytical proofs of the formulae were given in the paper referred to; and (''Trans. I.N.A.'', 1894) a number of elegant geometricai theorems in connexion with stability, given by Sir A. G. Greenhill, include a demonstration of Leclert's Theorem as follows (in abbreviated form):\n\nLet <math>\\text{B}</math>, <math>\\text{B}_1</math> (fig. 17) be the centres of buoyancy of a ship in two consecutive inclined positions, and <math>\\text{F}</math>, <math>\\text{F}_1</math> the corresponding centres of flotation. Draw normals <math>\\text{BM}</math>, <math>\\text{B}_1\\text{M}</math>, meeting at the pro-metacentre <math>\\text{M}</math>, and <math>\\text{FC}</math>, <math>\\text{F}_1\\text{C}</math>, meeting at the centre of curvature <math>\\text{C}</math>. Produce <math>\\text{FB}</math>, <math>\\text{F}_1\\text{B}_1</math> to meet at <math>\\text{O}</math>; join <math>\\text{OM}</math>, <math>\\text{MC}</math>.\n\n[[File:eb1911 v24 p0991 c1f2.png|center|121px]]\n{{c|{{sc|Fig.}} 17.}}\n\nThen <math>\\text{BM}</math>, <math>\\text{CF}</math> and <math>\\text{B}_1\\text{M}</math>, <math>\\text{CF}_1</math> are respectively parallel, and ultimately also <math>\\text{BB}_1</math>, <math>\\text{FF}_1</math>; hence the triangles <math>\\text{MBB}_1</math>, <math>\\text{CFF}_1</math> are similar and\n{{block center|<math>\\frac{\\text{BM}}{\\text{CF}}=\\frac{\\text{BB}_1}{\\text{FF}_1}=\\frac{\\text{OB}}{\\text{OF}}</math>,}}\nso that <math>\\text{O}</math>, <math>\\text{M}</math> and <math>\\text{C}</math> are collinear.\n\nIf the displacement <math>\\text{V}</math> be now increased by <math>d\\text{V}</math>, changing <math>\\text{B}</math> to <math>\\text{B}'</math>, and <math>\\text{M}</math> to <math>\\text{M}'</math>, then since the added displacement <math>d\\text{V}</math> may be supposed concentrated at <math>\\text{F}</math>, <math>\\text{B}'</math> will lie on <math>\\text{OBF}</math>, and it may be shown similarly as before that <math>\\text{M}'</math> lies on <math>\\text{OC}</math>. Further, considering the transference of moments, <math>\\text{BB}' \\times \\text{V} = \\text{BF} \\times d\\text{V}</math>.\n\nDraw <math>\\text{MED}</math> parallel to <math>\\text{BF}</math>, then\n{{block center|<math>\\frac{d\\text{V}}{\\text{V}} = \\frac{\\text{BB}'}{\\text{BF}} = \\frac{\\text{ME}}{\\text{MD}} = \\frac{\\text{M}'\\text{E}}{\\text{CD}} = \\frac{d\\rho}{\\rho' - \\rho}</math>;}}\n{{block center|<math>\\therefore \\frac{d\\rho}{d\\text{V}} = \\frac{\\rho' - \\rho}{\\text{V}}</math> or <math>\\rho' = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}}</math>,}}\n\nXXIV. 30 giving Leclert's first expression; also, since <math>\\rho = \\frac{\\text{I}}{\\text{V}}</math>,\n{{block center|<math>\\frac{d\\text{I}}{d\\text{V}} = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}} = \\rho',</math>}}\nwhich is Leclert's second expression for <math>\\rho'</math>.\n\nThe value of <math>\\rho'</math> at the upright can be obtained from the metacentric diagram by the following simple construction. Let <math>\\text{M}</math> and <math>\\text{B}</math> be the metacentre and the centre of buoyancy for a water-line <math>\\text{WL}</math> on the metacentric diagram (fig. 18); draw the tangent to the <math>\\text{B}</math> curve meeting <math>\\text{WL}</math> at <math>\\text{Q}</math>, and through <math>\\text{Q}</math> draw <math>\\text{QR}</math> to meet <math>\\text{MB}</math> and parallel to the tangent to the <math>\\text{M}</math> curve at <math>\\text{M}</math>. Let <math>\\text{BP} = h</math>, and area of water-line be <math>\\text{A}</math>. Then\n{{block center|<math>\\text{PQ} = h \\cot\\theta = h\\frac{\\text{V}}{\\text{A}h} = \\frac{\\text{V}}{\\text{A}};</math>}}\nalso,\n{{block center|<math>\\text{MR} = \\text{BM} - (\\text{BP} + \\text{PR}) = \\rho - \\frac{\\text{V}}{\\text{A}} (\\tan\\theta + \\tan\\phi).</math>}}\nIf <math>\\text{D}</math> be the draught,\n{{block center|<math>\\tan\\theta + \\tan\\phi = -\\frac{d\\rho}{d\\text{D}} = -\\text{A}\\cdot\\frac{d\\rho}{d\\text{V}},</math>}}\nwhence\n{{block center|<math>\\text{MR} = \\rho + \\text{V}\\frac{d\\rho}{d\\text{V}} = \\rho'</math>}}\nthe curve of flotation being concave upwards if <math>\\text{R}</math> is below <math>\\text{M}</math>.\n\n[[File:eb1911 v24 p0991 c2f1.png|center|148px]]\n{{c|{{sc|Fig.}} 18.}}\n\nFor moderate inclinations from the upright, the buoyancy of the added layer due to a small additional submersion will act through the centre of curvature of the curve of flotation; this point may be regarded as that at which any additional weight will, on being placed on a ship, cause no difference to the values of the righting moment at moderate angles of inclination. The curve of flotation, therefore, and its evolute bear similar relations to the increase or decrease of the stability of a ship due to alteration of draught, as the curves of buoyancy and of pro-metacentres do to the actual amount of the stability.\n\nThe curve of flotation resembles the curve of buoyancy in that not more than two tangents can be drawn to it in any given direction, but it differs in that its radius of curvature can become infinite or change sign. It contains a number of cusps determined by <math>\\rho' = \\frac{d\\text{I}}{d\\text{V}} = 0</math>. These occur in an ordinary ship-shape body at positions: (1) at or near the angles at which the deck is immersed or emerged (four in number); and (2) at or near the angles 90° and 270°. There are, therefore, six cusps in the curve of flotation of an ordinary ship; they are shown in figs. 15 and 16 by the points <math>\\text{F}_2</math>, <math>\\text{F}_3</math>, <math>\\text{F}_4</math>, <math>\\text{F}_6</math>, <math>\\text{F}_7</math>, <math>\\text{F}_8</math>.\n\n[[File:eb1911 v24 p0991 c2f2.png|center|67px]]\n{{c|{{sc|Fig.}} 19.}}\n\nThe following relations between the curves of buoyancy and of pro-metacentres and the curve of statical stability are of interest, and enable the former curves to be constructed when the latter have been obtained. If <math>\\text{GZ}'</math>, <math>\\text{GZ}''</math> (fig. 19) are the righting levers corresponding to inclinations <math>\\theta</math>, <math>\\theta + d\\theta</math>, where <math>d\\theta</math> vanishes in the limit; <math>\\text{B}'</math>, <math>\\text{B}''</math>, the centres of buoyancy, <math>\\text{M}'</math> the prometacentre; produce <math>\\text{GZ}'</math> to meet <math>\\text{B}''\\text{M}'</math> in <math>\\text{U}</math>.\n\nThen, neglecting squares of small quantities,\n{{block center|<math>d(\\text{GZ}') = \\text{Z}'\\text{U} = \\text{M}'\\text{Z}'.d\\theta</math>,}}\nor vertical distance of <math>\\text{M}'</math> above <math>\\text{G} = \\frac{d(\\text{GZ}')}{d\\theta}</math>. Also <math>\\text{M}'\\text{B}' = \\text{M}'\\text{B}''</math>; hence\n{{block center|<math>\\text{Z}''\\text{B}'' - \\text{Z}'\\text{B}' = \\text{MZ}' - \\text{MZ}'' = \\text{Z}''\\text{U} = \\text{GZ}'.d\\theta</math>,}}\nor\n{{block center|<math>\\text{GZ} = \\frac{d(\\text{B}'\\text{Z}')}{d\\theta}</math>,}}\n''i.e.'' the vertical distance <math>(\\text{B}'\\text{Z}')</math> of <math>\\text{G}</math> over <math>\\text{B}</math> is equal to <math>\\int \\text{GZ}.d\\theta</math>.\n\nIt follows that by differentiating the levers of statical stability and finding the slope at each ordinate the vertical distance of <math>\\text{M}'</math> over <math>\\text{G}</math> is obtained, and <math>\\text{M}'</math> may be plotted by setting up this value from <math>\\text{Z}'</math> above <math>\\text{GZ}'</math> drawn at the correct inclination; also that by integrating the curve of statical stability and finding its area up to any angle, the vertical separation of <math>\\text{G}</math> and <math>\\text{B}'</math> is obtained, and <math>\\text{B}'</math> may be plotted by setting down this value increased by <math>\\text{BG}</math> below <math>\\text{Z}'</math>.<noinclude><references/></noinclude>"
 }

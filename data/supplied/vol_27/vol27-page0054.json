@@ -77,14 +77,25 @@
     ]
    },
    {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1219,
+     681,
+     2371,
+     750
+    ]
+   },
+   {
     "name": "c2s2",
     "kind": "text",
     "column": 2,
     "box": [
      1219,
-     683,
+     750,
      2371,
-     750
+     1496
     ]
    },
    {
@@ -93,9 +104,20 @@
     "column": 2,
     "box": [
      1219,
-     750,
+     1496,
      2371,
      2162
+    ]
+   },
+   {
+    "name": "c2c2",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1219,
+     2176,
+     2371,
+     2395
     ]
    },
    {
@@ -104,18 +126,7 @@
     "column": 2,
     "box": [
      1219,
-     2178,
-     2371,
-     2394
-    ]
-   },
-   {
-    "name": "c2s4",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1219,
-     2394,
+     2395,
      2371,
      3248
     ]
@@ -127,9 +138,10 @@
    "c1s2": "work formerly done on massive constructions.\n\nThe principal operations for which portable tools are designed are the following: Drilling, screwing, cutting the seatings for keys, planing short portions of work, facings for the attachment of other pieces, as brackets and bearings, hammering operations, as in making welded joints, caulking the edges of boiler plates, chipping with hammer and chisel, riveting, ramming sand in foundry moulds, planing ships' decks, and some operations of lesser magnitude.\n\nPortable tools are used in various ways. The first and most obvious is to attach them directly to the casting, forging or machine which is being built up. Thus a drilling machine will be clamped just where it is required to operate. Or if it has to be used on a large plane surface as a ship's deck, an electrical machine is suitable, in which magnetic attraction is set up between the foot of the machine and the deck sufficient to hold it down. A key-seating machine will be clamped on the shaft in which a keygroove has to be cut. A drilling machine may be fastened to a pipe with a chain embracing the pipe. Very many of the drills, and all the caulking and chipping hammers, are grasped in the hands and so thrust to their work. The tapping of screw holes is mostly done in this way, a common example being the holes for the stay bolts in the fire-boxes of steam boilers.\n\nAnother later method which has been introduced and practised in a few shops consists in installing a cast-iron floor-plate of large area, planed truly and provided with bolt holes and slots. On this a massive casting, forging or piece of work undergoing erection will be bolted. Then the portable tools—planers, drills, &c., as required—will be bolted to the table and brought into operation on the various sections of the work, several sometimes operating simultaneously. This method is to a certain extent coming into rivalry with the abnormal growth of machine tools, the development of which has been greatly accelerated by the massive dimensions of productions which only became possible by the substitution of steel made by the Bessemer and Siemens processes for iron.",
    "c1s3": "¶\nThe reciprocating motion necessary to effect hammering, chipping or caulking operations is produced by the action of a solid piston, sliding in a cylinder (fig. 63) and driven sharply against the end of the tool by the inrush of compressed air, being then returned for another stroke. The strokes range in number up to as many as 2000 per minute in some cases. For heavy riveting a “long-stroke” hammer is employed, having a longer barrel than the chipping hammer shown in fig. 63, in order to obtain a greater force of blow. The operator grasps the hammer by the handle, with his fingers or thumb on the controlling lever, and as long as this is held down the blows continue. The air-supply pipe is flexible, so that it does not impede the movements of the workman. The tools at the end of the cylinder are simply held in a socket, so that they can be changed rapidly.\n\nRotative motion can be produced either by electric or pneumatic motors, and both systems are in wide use. Pneumatic motors are very suitable when an air-compressing plant is already laid down for other tools, while if electricity is used in the works portable tools operated by this agent may be employed instead of the pneumatic ones. In the electric drills (fig. 64) a small motor is fitted within the body and connected by spur-gears to the spindle to effect suitable speed reduction. A switch provides for stopping and starting the motor; the current is brought through a flexible cable which, like",
    "c2s1": "pneumatic hose, is armoured with wire to protect it from damage. The smallest drills are simply gripped in the operator's hand and",
-   "c2s2": "{{c|{{sc|Fig.}} 63.—Tierney Pneumatic Chipping Hammer. (The Globe Pneumatic Engineering Co., Ltd.)}}",
-   "c2s3": "{{c|{{sc|Fig.}} 64.—Electrically-driven Hand Drill. (Kramos Ltd., Bath.)}}\n\n{{c|''A'', Body, cast in aluminium, with handles ''a'', ''a''.}}\n\n{{c|''B'', Motor, with revolving armature ''C'', connected by spur-gears ''D'', to the drill spindle ''E'', fitted with ball thrust bearings.}}\n\n{{c|''F'', Switch, operated by attendant pushing in a plug; the current is brought by flexible wires through the right-hand handle ''a''.}}",
-   "c2s4": "¶\nPneumatic drills are usually worked by little motors having oscillating cylinders, by which the air and exhaust ports are covered and uncovered. They run at a high speed and are geared down to the spindle. In some cases two cylinders are used, but often four are fitted to give a powerful and equable turning moment. Grinding machines are also built with air motors directly coupled to the wheel spindle, the machines being moved about over the work by handles.\n\nAnother class of portable tools is driven, not by self-contained motors, but from an outside source of power, which is conveyed to the tools through flexible shafts built up of a series of spiral springs, or through flexible joints which form a connexion that permits the shaft to bend round corners and accommodate itself to any position in which the tool may be placed. The advantage of this is that the tool itself is much lightened, since there is no motor, and it can therefore be easily handled. Thus a drill simply contains the spindle, running in a frame which carries bevel-gears for transmitting the motion of the flexible shaft. Portable grinders also have nothing but the spindle, wheel and frame.\n\n{{c|XI.—{{sc|Appliances}}}}\n\nAppliances are vastly more numerous in a modern shop than in the older works, largely on account of the more repetitive character"
+   "c2c1": "{{c|{{sc|Fig.}} 63.—Tierney Pneumatic Chipping Hammer. (The Globe Pneumatic Engineering Co., Ltd.)}}",
+   "c2s2": "¶\n{{smaller block|''A'', Cylinder.\n\n''B'', Tool socket, carrying chisel ''C''.\n\n''D'', Piston, which strikes the back of ''C''.\n\n''E'', Handle, screwed and clamped to ''A''.\n\n''F'', Trigger or lever clasped by operator’s hand and opening valve ''G'', admitting compressed air through connexion ''H'', up passage ''J'', through valve-box ''K'', past valve ''L'', and so against end of ''D'', moving it towards ''C''. As soon as the groove in the piston ''D'' registers with the hole ''M'', air is admitted from a small hole (not shown), passes round the groove through hole ''M'' and passage ''N'' to the rear of the valve. This acting on the back of the valve throws it forward, thus shutting off the supply to the rear of the piston and permitting a small quantity of air to flow to the forward end of the piston for driving it in a backward direction. As soon as the air pressure is relieved on the back of the valve by the uncovering of exhaust holes (not seen) by the piston ''D'', the valve is returned to the original position, owing to the air constantly pressing on the small area of the valve.}}\n\npushed up to the work; larger ones are supported by a pillar and arm, against which the thrust is taken, and the feed given by turning a screw at intervals.",
+   "c2c2": "{{c|{{sc|Fig.}} 64.—Electrically-driven Hand Drill. (Kramos Ltd., Bath.)}}\n\n{{c|''A'', Body, cast in aluminium, with handles ''a'', ''a''.}}\n\n{{c|''B'', Motor, with revolving armature ''C'', connected by spur-gears ''D'', to the drill spindle ''E'', fitted with ball thrust bearings.}}\n\n{{c|''F'', Switch, operated by attendant pushing in a plug; the current is brought by flexible wires through the right-hand handle ''a''.}}",
+   "c2s3": "¶\nPneumatic drills are usually worked by little motors having oscillating cylinders, by which the air and exhaust ports are covered and uncovered. They run at a high speed and are geared down to the spindle. In some cases two cylinders are used, but often four are fitted to give a powerful and equable turning moment. Grinding machines are also built with air motors directly coupled to the wheel spindle, the machines being moved about over the work by handles.\n\nAnother class of portable tools is driven, not by self-contained motors, but from an outside source of power, which is conveyed to the tools through flexible shafts built up of a series of spiral springs, or through flexible joints which form a connexion that permits the shaft to bend round corners and accommodate itself to any position in which the tool may be placed. The advantage of this is that the tool itself is much lightened, since there is no motor, and it can therefore be easily handled. Thus a drill simply contains the spindle, running in a frame which carries bevel-gears for transmitting the motion of the flexible shaft. Portable grinders also have nothing but the spindle, wheel and frame.\n\n{{c|XI.—{{sc|Appliances}}}}\n\nAppliances are vastly more numerous in a modern shop than in the older works, largely on account of the more repetitive character"
   },
   "figure_files": {
    "c2f1": "eb1911 v27 p0054 c2f1.png",
@@ -139,45 +151,45 @@
    {
     "box": [
      1254,
-     326,
-     2282,
-     670
+     325,
+     2287,
+     675
     ],
     "caption": [
-     1271,
-     683,
-     2287,
+     1272,
+     681,
+     2286,
      750
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1256,
-     321,
-     2279,
+     1252,
+     314,
+     2292,
      676
     ]
    },
    {
     "box": [
-     1261,
-     1503,
-     2275,
+     1260,
+     1499,
+     2276,
      2159
     ],
     "caption": [
-     1237,
-     2178,
-     2289,
-     2394
+     1239,
+     2176,
+     2292,
+     2395
     ],
     "column": 2,
     "inset": false,
     "page_box": [
      1252,
-     1501,
-     2296,
-     2149
+     1510,
+     2275,
+     2160
     ]
    }
   ],
@@ -197,22 +209,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 3,
-    "input_tokens": 6967,
-    "output_tokens": 186,
+    "input_tokens": 7415,
+    "output_tokens": 182,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 8,
-    "input_tokens": 6559,
-    "output_tokens": 2821,
+    "model": "claude-opus-5-5",
+    "calls": 9,
+    "input_tokens": 7718,
+    "output_tokens": 3670,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 15392
+    "cache_read_input_tokens": 21789
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|40|TOOL|[PORTABLE TOOLS}}</noinclude>are employed whenever possible. A good deal of work is produced from flat sheet, supplied in the form of a roll and fed through rollers by intermittent movements to the dies. Circular turn-tables are also used, operated by ratchet devices, which turn the tables round to bring a ring of pockets, carrying the pieces, successively under the dies; the attendant keeps the pockets supplied, but his hands do not come near the dies.\n\n{{c|X.—{{sc|Portable Tools}}}}\n\nThe growth of portable machine tools is one of the remarkable movements of the present day. To some extent they have always been used, notably in the drilling and tapping operations of locomotive fire-boxes, but not until recently to any important extent in the ordinary fitting and erecting shops. The main reason lay in the difficulties due to transmission of power by ropes or shafts. The employment of compressed air, water, electricity and flexible shafts, by which long distances can be covered, has given new life to the portable system, which is destined to occupy a place of even greater importance than it does at present. The reason for the growing desirability of these tools is to be seen in the massive character of much engine and machine construction of the present time. Although firms that undertake the largest work can generally arrange to tool the individual parts on machines of massive sizes, that only meets a part of the difficulty. Very big work cannot be treated like that of small or even medium dimensions, done repetitively; that is, it is not practicable to drill and bore and ream and provide for the fitting of every piece by the aid of templets and jigs, while the work lies on the machine, but a great deal of adjustment and mutual fitting has to be accomplished in the course of erection. Therein lies the opportunity for the portable machine. If this is not used the alternatives are partial dismantling of the work and the transference of certain portions to machines or hand work. Another cause has been the substitution of machining for much hand work formerly done on massive constructions.\n\nThe principal operations for which portable tools are designed are the following: Drilling, screwing, cutting the seatings for keys, planing short portions of work, facings for the attachment of other pieces, as brackets and bearings, hammering operations, as in making welded joints, caulking the edges of boiler plates, chipping with hammer and chisel, riveting, ramming sand in foundry moulds, planing ships' decks, and some operations of lesser magnitude.\n\nPortable tools are used in various ways. The first and most obvious is to attach them directly to the casting, forging or machine which is being built up. Thus a drilling machine will be clamped just where it is required to operate. Or if it has to be used on a large plane surface as a ship's deck, an electrical machine is suitable, in which magnetic attraction is set up between the foot of the machine and the deck sufficient to hold it down. A key-seating machine will be clamped on the shaft in which a keygroove has to be cut. A drilling machine may be fastened to a pipe with a chain embracing the pipe. Very many of the drills, and all the caulking and chipping hammers, are grasped in the hands and so thrust to their work. The tapping of screw holes is mostly done in this way, a common example being the holes for the stay bolts in the fire-boxes of steam boilers.\n\nAnother later method which has been introduced and practised in a few shops consists in installing a cast-iron floor-plate of large area, planed truly and provided with bolt holes and slots. On this a massive casting, forging or piece of work undergoing erection will be bolted. Then the portable tools—planers, drills, &c., as required—will be bolted to the table and brought into operation on the various sections of the work, several sometimes operating simultaneously. This method is to a certain extent coming into rivalry with the abnormal growth of machine tools, the development of which has been greatly accelerated by the massive dimensions of productions which only became possible by the substitution of steel made by the Bessemer and Siemens processes for iron.\n\nThe reciprocating motion necessary to effect hammering, chipping or caulking operations is produced by the action of a solid piston, sliding in a cylinder (fig. 63) and driven sharply against the end of the tool by the inrush of compressed air, being then returned for another stroke. The strokes range in number up to as many as 2000 per minute in some cases. For heavy riveting a “long-stroke” hammer is employed, having a longer barrel than the chipping hammer shown in fig. 63, in order to obtain a greater force of blow. The operator grasps the hammer by the handle, with his fingers or thumb on the controlling lever, and as long as this is held down the blows continue. The air-supply pipe is flexible, so that it does not impede the movements of the workman. The tools at the end of the cylinder are simply held in a socket, so that they can be changed rapidly.\n\nRotative motion can be produced either by electric or pneumatic motors, and both systems are in wide use. Pneumatic motors are very suitable when an air-compressing plant is already laid down for other tools, while if electricity is used in the works portable tools operated by this agent may be employed instead of the pneumatic ones. In the electric drills (fig. 64) a small motor is fitted within the body and connected by spur-gears to the spindle to effect suitable speed reduction. A switch provides for stopping and starting the motor; the current is brought through a flexible cable which, like pneumatic hose, is armoured with wire to protect it from damage. The smallest drills are simply gripped in the operator's hand and\n\n[[File:eb1911 v27 p0054 c2f1.png|center|364px]]\n{{c|{{sc|Fig.}} 63.—Tierney Pneumatic Chipping Hammer. (The Globe Pneumatic Engineering Co., Ltd.)}}\n\n[[File:eb1911 v27 p0054 c2f2.png|center|364px]]\n{{c|{{sc|Fig.}} 64.—Electrically-driven Hand Drill. (Kramos Ltd., Bath.)}}\n\n{{c|''A'', Body, cast in aluminium, with handles ''a'', ''a''.}}\n\n{{c|''B'', Motor, with revolving armature ''C'', connected by spur-gears ''D'', to the drill spindle ''E'', fitted with ball thrust bearings.}}\n\n{{c|''F'', Switch, operated by attendant pushing in a plug; the current is brought by flexible wires through the right-hand handle ''a''.}}\n\nPneumatic drills are usually worked by little motors having oscillating cylinders, by which the air and exhaust ports are covered and uncovered. They run at a high speed and are geared down to the spindle. In some cases two cylinders are used, but often four are fitted to give a powerful and equable turning moment. Grinding machines are also built with air motors directly coupled to the wheel spindle, the machines being moved about over the work by handles.\n\nAnother class of portable tools is driven, not by self-contained motors, but from an outside source of power, which is conveyed to the tools through flexible shafts built up of a series of spiral springs, or through flexible joints which form a connexion that permits the shaft to bend round corners and accommodate itself to any position in which the tool may be placed. The advantage of this is that the tool itself is much lightened, since there is no motor, and it can therefore be easily handled. Thus a drill simply contains the spindle, running in a frame which carries bevel-gears for transmitting the motion of the flexible shaft. Portable grinders also have nothing but the spindle, wheel and frame.\n\n{{c|XI.—{{sc|Appliances}}}}\n\nAppliances are vastly more numerous in a modern shop than in the older works, largely on account of the more repetitive character<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|40|TOOL|[PORTABLE TOOLS}}</noinclude>are employed whenever possible. A good deal of work is produced from flat sheet, supplied in the form of a roll and fed through rollers by intermittent movements to the dies. Circular turn-tables are also used, operated by ratchet devices, which turn the tables round to bring a ring of pockets, carrying the pieces, successively under the dies; the attendant keeps the pockets supplied, but his hands do not come near the dies.\n\n{{c|X.—{{sc|Portable Tools}}}}\n\nThe growth of portable machine tools is one of the remarkable movements of the present day. To some extent they have always been used, notably in the drilling and tapping operations of locomotive fire-boxes, but not until recently to any important extent in the ordinary fitting and erecting shops. The main reason lay in the difficulties due to transmission of power by ropes or shafts. The employment of compressed air, water, electricity and flexible shafts, by which long distances can be covered, has given new life to the portable system, which is destined to occupy a place of even greater importance than it does at present. The reason for the growing desirability of these tools is to be seen in the massive character of much engine and machine construction of the present time. Although firms that undertake the largest work can generally arrange to tool the individual parts on machines of massive sizes, that only meets a part of the difficulty. Very big work cannot be treated like that of small or even medium dimensions, done repetitively; that is, it is not practicable to drill and bore and ream and provide for the fitting of every piece by the aid of templets and jigs, while the work lies on the machine, but a great deal of adjustment and mutual fitting has to be accomplished in the course of erection. Therein lies the opportunity for the portable machine. If this is not used the alternatives are partial dismantling of the work and the transference of certain portions to machines or hand work. Another cause has been the substitution of machining for much hand work formerly done on massive constructions.\n\nThe principal operations for which portable tools are designed are the following: Drilling, screwing, cutting the seatings for keys, planing short portions of work, facings for the attachment of other pieces, as brackets and bearings, hammering operations, as in making welded joints, caulking the edges of boiler plates, chipping with hammer and chisel, riveting, ramming sand in foundry moulds, planing ships' decks, and some operations of lesser magnitude.\n\nPortable tools are used in various ways. The first and most obvious is to attach them directly to the casting, forging or machine which is being built up. Thus a drilling machine will be clamped just where it is required to operate. Or if it has to be used on a large plane surface as a ship's deck, an electrical machine is suitable, in which magnetic attraction is set up between the foot of the machine and the deck sufficient to hold it down. A key-seating machine will be clamped on the shaft in which a keygroove has to be cut. A drilling machine may be fastened to a pipe with a chain embracing the pipe. Very many of the drills, and all the caulking and chipping hammers, are grasped in the hands and so thrust to their work. The tapping of screw holes is mostly done in this way, a common example being the holes for the stay bolts in the fire-boxes of steam boilers.\n\nAnother later method which has been introduced and practised in a few shops consists in installing a cast-iron floor-plate of large area, planed truly and provided with bolt holes and slots. On this a massive casting, forging or piece of work undergoing erection will be bolted. Then the portable tools—planers, drills, &c., as required—will be bolted to the table and brought into operation on the various sections of the work, several sometimes operating simultaneously. This method is to a certain extent coming into rivalry with the abnormal growth of machine tools, the development of which has been greatly accelerated by the massive dimensions of productions which only became possible by the substitution of steel made by the Bessemer and Siemens processes for iron.\n\nThe reciprocating motion necessary to effect hammering, chipping or caulking operations is produced by the action of a solid piston, sliding in a cylinder (fig. 63) and driven sharply against the end of the tool by the inrush of compressed air, being then returned for another stroke. The strokes range in number up to as many as 2000 per minute in some cases. For heavy riveting a “long-stroke” hammer is employed, having a longer barrel than the chipping hammer shown in fig. 63, in order to obtain a greater force of blow. The operator grasps the hammer by the handle, with his fingers or thumb on the controlling lever, and as long as this is held down the blows continue. The air-supply pipe is flexible, so that it does not impede the movements of the workman. The tools at the end of the cylinder are simply held in a socket, so that they can be changed rapidly.\n\nRotative motion can be produced either by electric or pneumatic motors, and both systems are in wide use. Pneumatic motors are very suitable when an air-compressing plant is already laid down for other tools, while if electricity is used in the works portable tools operated by this agent may be employed instead of the pneumatic ones. In the electric drills (fig. 64) a small motor is fitted within the body and connected by spur-gears to the spindle to effect suitable speed reduction. A switch provides for stopping and starting the motor; the current is brought through a flexible cable which, like pneumatic hose, is armoured with wire to protect it from damage. The smallest drills are simply gripped in the operator's hand and\n\n[[File:eb1911 v27 p0054 c2f1.png|center|364px]]\n{{c|{{sc|Fig.}} 63.—Tierney Pneumatic Chipping Hammer. (The Globe Pneumatic Engineering Co., Ltd.)}}\n\n{{smaller block|''A'', Cylinder.\n\n''B'', Tool socket, carrying chisel ''C''.\n\n''D'', Piston, which strikes the back of ''C''.\n\n''E'', Handle, screwed and clamped to ''A''.\n\n''F'', Trigger or lever clasped by operator’s hand and opening valve ''G'', admitting compressed air through connexion ''H'', up passage ''J'', through valve-box ''K'', past valve ''L'', and so against end of ''D'', moving it towards ''C''. As soon as the groove in the piston ''D'' registers with the hole ''M'', air is admitted from a small hole (not shown), passes round the groove through hole ''M'' and passage ''N'' to the rear of the valve. This acting on the back of the valve throws it forward, thus shutting off the supply to the rear of the piston and permitting a small quantity of air to flow to the forward end of the piston for driving it in a backward direction. As soon as the air pressure is relieved on the back of the valve by the uncovering of exhaust holes (not seen) by the piston ''D'', the valve is returned to the original position, owing to the air constantly pressing on the small area of the valve.}}\n\npushed up to the work; larger ones are supported by a pillar and arm, against which the thrust is taken, and the feed given by turning a screw at intervals.\n\n[[File:eb1911 v27 p0054 c2f2.png|center|364px]]\n{{c|{{sc|Fig.}} 64.—Electrically-driven Hand Drill. (Kramos Ltd., Bath.)}}\n\n{{c|''A'', Body, cast in aluminium, with handles ''a'', ''a''.}}\n\n{{c|''B'', Motor, with revolving armature ''C'', connected by spur-gears ''D'', to the drill spindle ''E'', fitted with ball thrust bearings.}}\n\n{{c|''F'', Switch, operated by attendant pushing in a plug; the current is brought by flexible wires through the right-hand handle ''a''.}}\n\nPneumatic drills are usually worked by little motors having oscillating cylinders, by which the air and exhaust ports are covered and uncovered. They run at a high speed and are geared down to the spindle. In some cases two cylinders are used, but often four are fitted to give a powerful and equable turning moment. Grinding machines are also built with air motors directly coupled to the wheel spindle, the machines being moved about over the work by handles.\n\nAnother class of portable tools is driven, not by self-contained motors, but from an outside source of power, which is conveyed to the tools through flexible shafts built up of a series of spiral springs, or through flexible joints which form a connexion that permits the shaft to bend round corners and accommodate itself to any position in which the tool may be placed. The advantage of this is that the tool itself is much lightened, since there is no motor, and it can therefore be easily handled. Thus a drill simply contains the spindle, running in a frame which carries bevel-gears for transmitting the motion of the flexible shaft. Portable grinders also have nothing but the spindle, wheel and frame.\n\n{{c|XI.—{{sc|Appliances}}}}\n\nAppliances are vastly more numerous in a modern shop than in the older works, largely on account of the more repetitive character<noinclude><references/></noinclude>"
 }

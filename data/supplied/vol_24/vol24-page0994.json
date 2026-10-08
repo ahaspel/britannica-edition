@@ -22,25 +22,36 @@
     ]
    },
    {
-    "name": "c1f1",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     133,
-     236,
-     1195,
-     1116
-    ]
-   },
-   {
     "name": "c1s1",
     "kind": "text",
     "column": 1,
     "box": [
      133,
-     1136,
+     217,
      1195,
-     1171
+     399
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     133,
+     399,
+     1195,
+     1116
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     133,
+     1135,
+     1195,
+     1169
     ]
    },
    {
@@ -49,7 +60,7 @@
     "column": 1,
     "box": [
      133,
-     1171,
+     1169,
      1195,
      2236
     ]
@@ -66,25 +77,14 @@
     ]
    },
    {
-    "name": "c2f1",
-    "kind": "figure",
-    "column": 2,
-    "box": [
-     1654,
-     233,
-     2268,
-     2017
-    ]
-   },
-   {
     "name": "c2s1",
     "kind": "text",
     "column": 2,
     "box": [
-     1654,
-     2022,
+     1195,
+     217,
      2268,
-     2057
+     852
     ]
    },
    {
@@ -93,13 +93,46 @@
     "column": 2,
     "box": [
      1195,
-     233,
+     852,
+     2268,
+     1757
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
      1654,
+     1757,
+     2268,
+     2017
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1654,
+     2019,
+     2268,
      2057
     ]
    },
    {
     "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1195,
+     1757,
+     1654,
+     2057
+    ]
+   },
+   {
+    "name": "c2s4",
     "kind": "text",
     "column": 2,
     "box": [
@@ -112,12 +145,15 @@
   ],
   "readings": {
    "head": "{{RunningHeader|932|SHIPBUILDING|[THEORETICAL}}",
-   "c1s1": "{{c|{{sc|Fig.}} 23.}}",
-   "c1s2": "of the vessel and tank, <math>\\text{G}</math> the centre of gravity of the vessel and water combined, <math>\\text{B}</math> the centre of buoyancy of the vessel, and <math>b</math> the centre of gravity of the water.\n\nAs the ship is inclined successively through angles <math>\\theta_1</math>, <math>\\theta_2</math>, . . . the centre of buoyancy <math>\\text{B}</math> moves along the curve of buoyancy to <math>\\text{B}_1</math>, <math>\\text{B}_2</math>,... the normals at which are tangential to the metacentric curve <math>\\text{M}_1\\ \\text{M}_1</math>,... those at small angles passing through the metacentre <math>\\text{M}</math>. If the water in the tank could be kept from moving as the inclination proceeded, <math>\\text{G}</math> would be fixed in the ship, and the righting levers would be <math>\\text{GZ}_1</math>, <math>\\text{GZ}_2</math>, ... those at small angles being equal to <math>\\text{GM} \\sin \\theta</math>. Actually, if the inclination be slowly performed, the water-level in the tank changes successively to <math>w_1l_1</math>, <math>w_2l_2</math>,... maintaining a level surface at all times; its centre of gravity moves to <math>b_1</math>, <math>b_2</math>,... thereby causing a corresponding alteration in the combined centre of gravity <math>\\text{G}</math>. Drawing <math>br_1</math>, <math>br_2</math>,... perpendicular to the verticals through <math>b_1</math>, <math>b_2</math>,. . . and calling <math>w</math>, <math>\\text{W}</math> the weights of the water and of the water and ship combined, then at the angle <math>\\theta_2</math> the line of action of the weight of the water <math>w</math> has moved through a distance <math>br_2</math> and the righting moment of the ship is diminished by an amount <math>w \\times br_2</math>. It is evident that the movement of the centre of gravity of the water in the tank is the same as would be the movement of the C.B. of a ship having the same form as the tank and water-lines corresponding to <math>wl</math>, <math>w_1l_1</math>, <math>w_2l_2</math>, &c. The values of the levers <math>br_1</math>, <math>br_2</math>. . . can therefore be obtained by a process similar to that used for obtaining the righting levers of the ship; cross curves and thence ordinary stability curves being drawn for various heights of water and inclinations. If <math>\\theta_1</math> be a small angle of inclination, the line of action of the weight <math>b_1m</math> will be such as to pass through the metacentre <math>m</math> corresponding to the water-line <math>wl</math>, and determined by the formula <math>bm = \\frac{i}{v}</math> where <math>i</math> is the moment of inertia of the water-plane <math>wl</math>",
-   "c1s3": "about a longitudinal axis through its centre of gravity and <math>v</math> the volume of water contained. The moving weight <math>w</math> at <math>b</math> may therefore be replaced by an equal weight fixed at <math>m</math>, which is the virtual centre of gravity of the water; and the centre of gravity <math>\\text{G}</math> of ship and water is likewise raised to a virtual position <math>\\text{G}'</math> where\n\n{{block center|<math>\\text{GG}' = \\frac{w}{\\text{W}} \\cdot bm = \\frac{v}{\\text{V}} \\cdot \\frac{i}{v} = \\frac{i}{\\text{V}}.</math>}}\n\nIf the tank contain a fluid of specific gravity <math>\\rho</math> the virtual rise of the centre of gravity is <math>\\frac{\\rho i}{\\text{V}}</math>. The loss of stability at small angles due to the mobility of the water is thus independent of the quantity in the tank, but is proportional to the moment of inertia of its free surface. It is possible for a small quantity of water with an extensive free surface to render a ship unstable in the upright condition; the angle to which this large loss of stability extends depends, however, on the quantity of water in the tank, for the extent of the sideways movement of the centre of gravity <math>\\text{G}</math> of ship and water is minute if the tank be either nearly empty or nearly full, and the loss of stability at all angles above a small amount will then be inappreciable; the loss at moderate angles is usually a maximum when the tanks are about half full.\n\nThe assumption made above, viz. that the ship is inclined so gradually as to maintain a level water surface in the tank, is by no means in accordance with the actual circumstances during rolling; waves are then set up in the water, causing it to wash from side to side, so that the loss of stability may be either more or less than the",
-   "c2s1": "{{c|{{sc|Fig.}} 24.}}",
-   "c2s2": "amount calculated. To av large tanks in a ship are f possible, so that not more th time. Water-tight longitud tanks in order to reduce th On the other hand tanks, p and found effective in cert oscillations among waves. (\n\nHitherto the stability of reference to inclinations ab axis. These are the only c deal with in practice for th probable qualities as regar comparing the elements of it with those of existing ship experience. For the exact t of a ship or any floating b account of the true line of th of its projection on the plane part of the subject has largel ''de la stabilité des corps flotta navire.'' If a ship is incline displacement constant, the closed surface which is know of buoyancy for two-dimen on the plane of rotation of th buoyancy. Similarly the en as the surface of flotation. known when (''a'') the forms an and (''b'') the position of the c obtained; the former depe of the ship and on the cons and the latter has referenc tude of the component weig infinitesimal inclination the l upright and inclined is para plane to the surface of buoy plane, ''i.e.'' it is horizontal, a If the initial position is one o lie on the normal. To dete from the position of equilibr inclinations already conside buoyancy for adjacent positi face of buoyancy. Consecut general, intersect; but, from there are two particular dire normals to the surface will intersect the original normal, these directions being perpendicular to one another and parallel to the principal axes of the indicatrix of the surface of buoyancy.\n\nIf fig. 24 be a plan of the water-plane, <math>\\text{O}x^1</math> the axis of",
-   "c2s3": "inclination passing through <math>\\text{O}</math> the centre of flotation, <math>\\text{O}y'</math> and <math>\\text{O}z</math> perpendicular axes in and at right angles to the plane of flotation, then, from a consideration of the wedges of immersion and emersion for a small inclination <math>\\theta</math>, the travel of the centre of buoyancy <math>\\text{B}</math> becomes:—\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\int\\!\\!\\int y'^2.dx'.dy'</math> (or <math>\\text{BB}_1</math> in fig. 24) parallel to <math>\\text{O}y'</math>}}\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\int\\!\\!\\int x'y'.dx'.dy'</math> (or<math>-\\text{B}_1\\text{B}_2</math>) parallel to <math>\\text{O}x'</math>}}\n\nand\n\n{{block center|<math>\\tfrac{1}{2}\\cdot\\frac{\\theta^2}{\\text{V}}\\int\\!\\!\\int y'^2.dx'.dy'</math> (or <math>\\text{B}_2\\text{B}'</math>) parallel to <math>\\text{O}z</math>.}}\n\nThese may be written:—\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\cdot\\text{I}_x'</math>; <math>\\frac{\\theta}{\\text{V}}\\cdot\\text{P}</math>; and<math>\\frac{\\theta^2}{2\\text{V}}\\text{I}_x'</math> respectively}}\n\nwhere <math>\\text{I}_x'</math> is the moment of inertia of the water-plane about <math>\\text{O}x'</math>, and <math>\\text{P}</math> the product of inertia about <math>\\text{O}x'</math>, <math>\\text{O}y'</math>. If the principal axes of inertia of the water-plane <math>\\text{O}x</math>, <math>\\text{O}y</math> make an angle <math>\\phi</math> with <math>\\text{O}x'</math>, <math>\\text{O}y'</math>, and if, from <math>\\text{B}</math> as origin, axes <math>\\text{B}x</math>, <math>\\text{B}y</math>, <math>\\text{B}z</math> are drawn parallel to <math>\\text{O}x</math>, <math>\\text{O}y</math>, <math>\\text{O}z</math>, then the co-ordinates of <math>\\text{B}'</math> are as follows:—\n\n{{block center|<math>x = -\\text{B}_1\\text{B}_2\\cos\\phi - \\text{BB}_1\\sin\\phi = \\frac{\\theta}{\\text{V}}(\\text{P}\\cos\\phi - \\text{I}_x'\\sin\\phi);</math>}}\n\n{{block center|<math>y = \\quad \\text{BB}_1\\cos\\phi - \\text{B}_1\\text{B}_2\\sin\\phi = \\frac{\\theta}{\\text{V}}(\\text{I}_x'\\cos\\phi + \\text{P}\\sin\\phi);</math>}}\n\n{{block center|<math>z = \\quad \\text{B}_2\\text{B}' = \\frac{\\theta^2}{2\\text{V}}\\cdot\\text{I}_x'.</math>}}\n\nAlso\n\n{{block center|<math>\\text{I}_x' = \\text{I}_x\\cos^2\\phi + \\text{I}_y\\sin^2\\phi;</math>}}\n\n{{block center|<math>\\text{P} = (\\text{I}_x - \\text{I}_y)\\sin\\phi\\cos\\phi;</math>}}"
+   "c1s1": "emptying of water-ballast and oil-fuel tanks, and particularly in the case of ships fitted to carry large quantities of oil in bulk.\n\nLet fig. 23 represent the section of a vessel fitted with a tank <math>\\text{PQRS}</math> partly full of water. Let <math>\\text{WL}</math>, <math>wl</math> be the upright water-lines",
+   "c1c1": "{{c|{{sc|Fig.}} 23.}}",
+   "c1s2": "of the vessel and tank, <math>\\text{G}</math> the centre of gravity of the vessel and water combined, <math>\\text{B}</math> the centre of buoyancy of the vessel, and <math>b</math> the centre of gravity of the water.\n\nAs the ship is inclined successively through angles <math>\\theta_1</math>, <math>\\theta_2</math>, . . . the centre of buoyancy <math>\\text{B}</math> moves along the curve of buoyancy to <math>\\text{B}_1</math>, <math>\\text{B}_2</math>,... the normals at which are tangential to the metacentric curve <math>\\text{M}_1\\ \\text{M}_1</math>,... those at small angles passing through the metacentre <math>\\text{M}</math>. If the water in the tank could be kept from moving as the inclination proceeded, <math>\\text{G}</math> would be fixed in the ship, and the righting levers would be <math>\\text{GZ}_1</math>, <math>\\text{GZ}_2</math>, ... those at small angles being equal to <math>\\text{GM} \\sin \\theta</math>. Actually, if the inclination be slowly performed, the water-level in the tank changes successively to <math>w_1l_1</math>, <math>w_2l_2</math>,... maintaining a level surface at all times; its centre of gravity moves to <math>b_1</math>, <math>b_2</math>,... thereby causing a corresponding alteration in the combined centre of gravity <math>\\text{G}</math>. Drawing <math>br_1</math>, <math>br_2</math>,... perpendicular to the verticals through <math>b_1</math>, <math>b_2</math>,... and calling <math>w</math>, <math>\\text{W}</math> the weights of the water and of the water and ship combined, then at the angle <math>\\theta_2</math> the line of action of the weight of the water <math>w</math> has moved through a distance <math>br_2</math> and the righting moment of the ship is diminished by an amount <math>w \\times br_2</math>. It is evident that the movement of the centre of gravity of the water in the tank is the same as would be the movement of the C.B. of a ship having the same form as the tank and water-lines corresponding to <math>wl</math>, <math>w_1l_1</math>, <math>w_2l_2</math>, &c. The values of the levers <math>br_1</math>, <math>br_2</math>... can therefore be obtained by a process similar to that used for obtaining the righting levers of the ship; cross curves and thence ordinary stability curves being drawn for various heights of water and inclinations. If <math>\\theta_1</math> be a small angle of inclination, the line of action of the weight <math>b_1m</math> will be such as to pass through the metacentre <math>m</math> corresponding to the water-line <math>wl</math>, and determined by the formula <math>bm = \\frac{i}{v}</math> where <math>i</math> is the moment of inertia of the water-plane <math>wl</math>",
+   "c1s3": "about a longitudinal axis through its centre of gravity and <math>v</math> the volume of water contained. The moving weight <math>w</math> at <math>b</math> may therefore be replaced by an equal weight fixed at <math>m</math>, which is the virtual centre of gravity of the water; and the centre of gravity <math>\\text{G}</math> of ship and water is likewise raised to a virtual position <math>\\text{G}'</math> where\n\n{{block center|<math>\\text{GG}' = \\frac{w}{\\text{W}} \\cdot bm = \\frac{v}{\\text{V}} \\cdot \\frac{i}{v} = \\frac{i}{\\text{V}}</math>.}}\n\nIf the tank contain a fluid of specific gravity <math>\\rho</math> the virtual rise of the centre of gravity is <math>\\frac{\\rho i}{\\text{V}}</math>. The loss of stability at small angles due to the mobility of the water is thus independent of the quantity in the tank, but is proportional to the moment of inertia of its free surface. It is possible for a small quantity of water with an extensive free surface to render a ship unstable in the upright condition; the angle to which this large loss of stability extends depends, however, on the quantity of water in the tank, for the extent of the sideways movement of the centre of gravity <math>\\text{G}</math> of ship and water is minute if the tank be either nearly empty or nearly full, and the loss of stability at all angles above a small amount will then be inappreciable; the loss at moderate angles is usually a maximum when the tanks are about half full.\n\nThe assumption made above, viz. that the ship is inclined so gradually as to maintain a level water surface in the tank, is by no means in accordance with the actual circumstances during rolling; waves are then set up in the water, causing it to wash from side to side, so that the loss of stability may be either more or less than the",
+   "c2s1": "amount calculated. To avoid danger of capsizing in still water, large tanks in a ship are filled or emptied in succession as far as possible, so that not more than one or two are partly full at the same time. Water-tight longitudinal partitions are also fitted in wide tanks in order to reduce the moment of inertia of the free surface. On the other hand tanks, partly filled with water, have been fitted and found effective in certain ships in order to reduce the rolling oscillations among waves. (See § ''Rolling''.)\n\n''Stability in any direction.'' Hitherto the stability of a ship has been considered only with reference to inclinations about either a longitudinal or transverse axis. These are the only cases which it is necessary to deal with in practice for the purpose of ascertaining the probable qualities as regards stability of a vessel by comparing the elements of its stability in the design stage with those of existing ships whose qualities have been tested by experience. For the exact theoretical consideration of the stability of a ship or any floating body, however, it is necessary to take account of the true line of the action of the buoyancy and not merely of its projection on the plane of inclination. The development of this",
+   "c2s2": "part of the subject has largely been due to M. Dupin in his ''Mémoire de la stabilité des corps flottants'' and to M. Guyou in his ''Théorie du navire.'' If a ship is inclined in all possible positions, keeping the displacement constant, the locus of the centre of buoyancy is a closed surface which is known as the surface of buoyancy; the curve of buoyancy for two-dimensional inclinations being the projection on the plane of rotation of the corresponding points on the surface of buoyancy. Similarly the envelope of all the water-planes is defined as the surface of flotation. The stability of a ship in all positions is known when (<math>a</math>) the forms and dimensions of the surface of buoyancy, and (<math>b</math>) the position of the centre of gravity relative to it, have been obtained; the former depends entirely on the geometrical form of the ship and on the constant volume of displacement assumed, and the latter has reference only to the arrangement and magnitude of the component weights of the structure and lading. For an infinitesimal inclination the line joining the centres of buoyancy when upright and inclined is parallel to the water-plane, and the tangent plane to the surface of buoyancy is therefore parallel to the water-plane, ''i.e.'' it is horizontal, and the normal to the surface is vertical. If the initial position is one of equilibrium, the centre of gravity must lie on the normal. To determine the effect of a small disturbance from the position of equilibrium, it is necessary, as in the particular inclinations already considered, to find the line of action of the buoyancy for adjacent positions, ''i.e.'' to trace the normals to the surface of buoyancy. Consecutive normals to this surface will not, in general, intersect; but, from the properties of curvature of surfaces, there are two particular directions of inclination for which adjacent normals to the surface will",
+   "c2c1": "{{c|{{sc|Fig.}} 24.}}",
+   "c2s3": "intersect the original normal, these directions being perpendicular to one another and parallel to the principal axes of the indicatrix of the surface of buoyancy.\n\nIf fig. 24 be a plan of the water-plane, <math>\\text{O}x^1</math> the axis of",
+   "c2s4": "inclination passing through O the centre of flotation, O<math>y'</math> and O<math>z</math> perpendicular axes in and at right angles to the plane of flotation, then, from a consideration of the wedges of immersion and emersion for a small inclination <math>\\theta</math>, the travel of the centre of buoyancy B becomes:—\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\int\\!\\!\\int y'^2.dx'.dy'\\ (\\text{or BB}_1\\text{ in fig. 24) parallel to O}y'</math>}}\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\int\\!\\!\\int x'y'.dx'.dy'\\ (\\text{or} - \\text{B}_1\\text{B}_2)\\text{ parallel to O}x'</math>}}\n\nand\n\n{{block center|<math>\\tfrac{1}{2}\\cdot\\frac{\\theta^2}{\\text{V}}\\int\\!\\!\\int y'^2.dx'.dy'\\ (\\text{or B}_2\\text{B}')\\text{ parallel to O}z.</math>}}\n\nThese may be written:—\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\cdot\\text{I}_x';\\ \\frac{\\theta}{\\text{V}}\\cdot\\text{P};\\ \\text{and}\\frac{\\theta^2}{2\\text{V}}\\text{I}_x'</math> respectively}}\n\nwhere <math>\\text{I}_x'</math> is the moment of inertia of the water-plane about O<math>x'</math>, and P the product of inertia about O<math>x'</math>, O<math>y'</math>. If the principal axes of inertia of the water-plane O<math>x</math>, O<math>y</math> make an angle <math>\\phi</math> with O<math>x'</math>, O<math>y'</math>, and if, from B as origin, axes B<math>x</math>, B<math>y</math>, B<math>z</math> are drawn parallel to O<math>x</math>, O<math>y</math>, O<math>z</math>, then the co-ordinates of B′ are as follows:—\n\n{{block center|<math>x = -\\text{B}_1\\text{B}_2 \\cos\\phi - \\text{BB}_1 \\sin\\phi = \\frac{\\theta}{\\text{V}}(\\text{P} \\cos\\phi - \\text{I}_x' \\sin\\phi);</math>}}\n\n{{block center|<math>y = \\text{BB}_1 \\cos\\phi - \\text{B}_1\\text{B}_2 \\sin\\phi = \\frac{\\theta}{\\text{V}}(\\text{I}_x' \\cos\\phi + \\text{P} \\sin\\phi);</math>}}\n\n{{block center|<math>z = \\text{B}_2\\text{B}' = \\frac{\\theta^2}{2\\text{V}}\\cdot\\text{I}_x'.</math>}}\n\nAlso\n\n{{block center|<math>\\text{I}_x' = \\text{I}_x \\cos^2\\phi + \\text{I}_y \\sin^2\\phi;</math>}}\n\n{{block center|<math>\\text{P} = (\\text{I}_x - \\text{I}_y) \\sin\\phi \\cos\\phi;</math>}}"
   },
   "figure_files": {
    "c1f1": "eb1911 v24 p0994 c1f1.png",
@@ -127,45 +163,45 @@
    {
     "box": [
      201,
-     399,
+     401,
      1131,
-     1113
+     1115
     ],
     "caption": [
      599,
-     1136,
-     719,
-     1171
+     1135,
+     721,
+     1167
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     221,
-     461,
-     1151,
-     1058
+     206,
+     465,
+     1163,
+     1063
     ]
    },
    {
     "box": [
-     1668,
-     1764,
+     1669,
+     1761,
      2255,
-     2013
+     2011
     ],
     "caption": [
-     1880,
-     2024,
+     1824,
+     2019,
      1993,
-     2054
+     2051
     ],
     "column": 2,
     "inset": true,
     "page_box": [
-     1665,
-     1754,
+     1672,
+     1749,
      2263,
-     1997
+     2004
     ]
    }
   ],
@@ -181,22 +217,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 3,
-    "input_tokens": 6517,
+    "input_tokens": 6629,
     "output_tokens": 179,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 7,
-    "input_tokens": 5912,
-    "output_tokens": 4045,
+    "model": "claude-opus-5-5",
+    "calls": 10,
+    "input_tokens": 7502,
+    "output_tokens": 5713,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 13468
+    "cache_read_input_tokens": 24210
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|932|SHIPBUILDING|[THEORETICAL}}</noinclude>[[File:eb1911 v24 p0994 c1f1.png|center|353px]]\n{{c|{{sc|Fig.}} 23.}}\n\nof the vessel and tank, <math>\\text{G}</math> the centre of gravity of the vessel and water combined, <math>\\text{B}</math> the centre of buoyancy of the vessel, and <math>b</math> the centre of gravity of the water.\n\nAs the ship is inclined successively through angles <math>\\theta_1</math>, <math>\\theta_2</math>, . . . the centre of buoyancy <math>\\text{B}</math> moves along the curve of buoyancy to <math>\\text{B}_1</math>, <math>\\text{B}_2</math>,... the normals at which are tangential to the metacentric curve <math>\\text{M}_1\\ \\text{M}_1</math>,... those at small angles passing through the metacentre <math>\\text{M}</math>. If the water in the tank could be kept from moving as the inclination proceeded, <math>\\text{G}</math> would be fixed in the ship, and the righting levers would be <math>\\text{GZ}_1</math>, <math>\\text{GZ}_2</math>, ... those at small angles being equal to <math>\\text{GM} \\sin \\theta</math>. Actually, if the inclination be slowly performed, the water-level in the tank changes successively to <math>w_1l_1</math>, <math>w_2l_2</math>,... maintaining a level surface at all times; its centre of gravity moves to <math>b_1</math>, <math>b_2</math>,... thereby causing a corresponding alteration in the combined centre of gravity <math>\\text{G}</math>. Drawing <math>br_1</math>, <math>br_2</math>,... perpendicular to the verticals through <math>b_1</math>, <math>b_2</math>,. . . and calling <math>w</math>, <math>\\text{W}</math> the weights of the water and of the water and ship combined, then at the angle <math>\\theta_2</math> the line of action of the weight of the water <math>w</math> has moved through a distance <math>br_2</math> and the righting moment of the ship is diminished by an amount <math>w \\times br_2</math>. It is evident that the movement of the centre of gravity of the water in the tank is the same as would be the movement of the C.B. of a ship having the same form as the tank and water-lines corresponding to <math>wl</math>, <math>w_1l_1</math>, <math>w_2l_2</math>, &c. The values of the levers <math>br_1</math>, <math>br_2</math>. . . can therefore be obtained by a process similar to that used for obtaining the righting levers of the ship; cross curves and thence ordinary stability curves being drawn for various heights of water and inclinations. If <math>\\theta_1</math> be a small angle of inclination, the line of action of the weight <math>b_1m</math> will be such as to pass through the metacentre <math>m</math> corresponding to the water-line <math>wl</math>, and determined by the formula <math>bm = \\frac{i}{v}</math> where <math>i</math> is the moment of inertia of the water-plane <math>wl</math> about a longitudinal axis through its centre of gravity and <math>v</math> the volume of water contained. The moving weight <math>w</math> at <math>b</math> may therefore be replaced by an equal weight fixed at <math>m</math>, which is the virtual centre of gravity of the water; and the centre of gravity <math>\\text{G}</math> of ship and water is likewise raised to a virtual position <math>\\text{G}'</math> where\n\n{{block center|<math>\\text{GG}' = \\frac{w}{\\text{W}} \\cdot bm = \\frac{v}{\\text{V}} \\cdot \\frac{i}{v} = \\frac{i}{\\text{V}}.</math>}}\n\nIf the tank contain a fluid of specific gravity <math>\\rho</math> the virtual rise of the centre of gravity is <math>\\frac{\\rho i}{\\text{V}}</math>. The loss of stability at small angles due to the mobility of the water is thus independent of the quantity in the tank, but is proportional to the moment of inertia of its free surface. It is possible for a small quantity of water with an extensive free surface to render a ship unstable in the upright condition; the angle to which this large loss of stability extends depends, however, on the quantity of water in the tank, for the extent of the sideways movement of the centre of gravity <math>\\text{G}</math> of ship and water is minute if the tank be either nearly empty or nearly full, and the loss of stability at all angles above a small amount will then be inappreciable; the loss at moderate angles is usually a maximum when the tanks are about half full.\n\nThe assumption made above, viz. that the ship is inclined so gradually as to maintain a level water surface in the tank, is by no means in accordance with the actual circumstances during rolling; waves are then set up in the water, causing it to wash from side to side, so that the loss of stability may be either more or less than the amount calculated. To av large tanks in a ship are f possible, so that not more th time. Water-tight longitud tanks in order to reduce th On the other hand tanks, p and found effective in cert oscillations among waves. (\n\n[[File:eb1911 v24 p0994 c2f1.png|center|204px]]\n{{c|{{sc|Fig.}} 24.}}\n\nHitherto the stability of reference to inclinations ab axis. These are the only c deal with in practice for th probable qualities as regar comparing the elements of it with those of existing ship experience. For the exact t of a ship or any floating b account of the true line of th of its projection on the plane part of the subject has largel ''de la stabilité des corps flotta navire.'' If a ship is incline displacement constant, the closed surface which is know of buoyancy for two-dimen on the plane of rotation of th buoyancy. Similarly the en as the surface of flotation. known when (''a'') the forms an and (''b'') the position of the c obtained; the former depe of the ship and on the cons and the latter has referenc tude of the component weig infinitesimal inclination the l upright and inclined is para plane to the surface of buoy plane, ''i.e.'' it is horizontal, a If the initial position is one o lie on the normal. To dete from the position of equilibr inclinations already conside buoyancy for adjacent positi face of buoyancy. Consecut general, intersect; but, from there are two particular dire normals to the surface will intersect the original normal, these directions being perpendicular to one another and parallel to the principal axes of the indicatrix of the surface of buoyancy.\n\nIf fig. 24 be a plan of the water-plane, <math>\\text{O}x^1</math> the axis of inclination passing through <math>\\text{O}</math> the centre of flotation, <math>\\text{O}y'</math> and <math>\\text{O}z</math> perpendicular axes in and at right angles to the plane of flotation, then, from a consideration of the wedges of immersion and emersion for a small inclination <math>\\theta</math>, the travel of the centre of buoyancy <math>\\text{B}</math> becomes:—\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\int\\!\\!\\int y'^2.dx'.dy'</math> (or <math>\\text{BB}_1</math> in fig. 24) parallel to <math>\\text{O}y'</math>}}\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\int\\!\\!\\int x'y'.dx'.dy'</math> (or<math>-\\text{B}_1\\text{B}_2</math>) parallel to <math>\\text{O}x'</math>}}\n\nand\n\n{{block center|<math>\\tfrac{1}{2}\\cdot\\frac{\\theta^2}{\\text{V}}\\int\\!\\!\\int y'^2.dx'.dy'</math> (or <math>\\text{B}_2\\text{B}'</math>) parallel to <math>\\text{O}z</math>.}}\n\nThese may be written:—\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\cdot\\text{I}_x'</math>; <math>\\frac{\\theta}{\\text{V}}\\cdot\\text{P}</math>; and<math>\\frac{\\theta^2}{2\\text{V}}\\text{I}_x'</math> respectively}}\n\nwhere <math>\\text{I}_x'</math> is the moment of inertia of the water-plane about <math>\\text{O}x'</math>, and <math>\\text{P}</math> the product of inertia about <math>\\text{O}x'</math>, <math>\\text{O}y'</math>. If the principal axes of inertia of the water-plane <math>\\text{O}x</math>, <math>\\text{O}y</math> make an angle <math>\\phi</math> with <math>\\text{O}x'</math>, <math>\\text{O}y'</math>, and if, from <math>\\text{B}</math> as origin, axes <math>\\text{B}x</math>, <math>\\text{B}y</math>, <math>\\text{B}z</math> are drawn parallel to <math>\\text{O}x</math>, <math>\\text{O}y</math>, <math>\\text{O}z</math>, then the co-ordinates of <math>\\text{B}'</math> are as follows:—\n\n{{block center|<math>x = -\\text{B}_1\\text{B}_2\\cos\\phi - \\text{BB}_1\\sin\\phi = \\frac{\\theta}{\\text{V}}(\\text{P}\\cos\\phi - \\text{I}_x'\\sin\\phi);</math>}}\n\n{{block center|<math>y = \\quad \\text{BB}_1\\cos\\phi - \\text{B}_1\\text{B}_2\\sin\\phi = \\frac{\\theta}{\\text{V}}(\\text{I}_x'\\cos\\phi + \\text{P}\\sin\\phi);</math>}}\n\n{{block center|<math>z = \\quad \\text{B}_2\\text{B}' = \\frac{\\theta^2}{2\\text{V}}\\cdot\\text{I}_x'.</math>}}\n\nAlso\n\n{{block center|<math>\\text{I}_x' = \\text{I}_x\\cos^2\\phi + \\text{I}_y\\sin^2\\phi;</math>}}\n\n{{block center|<math>\\text{P} = (\\text{I}_x - \\text{I}_y)\\sin\\phi\\cos\\phi;</math>}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|932|SHIPBUILDING|[THEORETICAL}}</noinclude>emptying of water-ballast and oil-fuel tanks, and particularly in the case of ships fitted to carry large quantities of oil in bulk.\n\nLet fig. 23 represent the section of a vessel fitted with a tank <math>\\text{PQRS}</math> partly full of water. Let <math>\\text{WL}</math>, <math>wl</math> be the upright water-lines of the vessel and tank, <math>\\text{G}</math> the centre of gravity of the vessel and water combined, <math>\\text{B}</math> the centre of buoyancy of the vessel, and <math>b</math> the centre of gravity of the water.\n\n[[File:eb1911 v24 p0994 c1f1.png|center|353px]]\n{{c|{{sc|Fig.}} 23.}}\n\nAs the ship is inclined successively through angles <math>\\theta_1</math>, <math>\\theta_2</math>, . . . the centre of buoyancy <math>\\text{B}</math> moves along the curve of buoyancy to <math>\\text{B}_1</math>, <math>\\text{B}_2</math>,... the normals at which are tangential to the metacentric curve <math>\\text{M}_1\\ \\text{M}_1</math>,... those at small angles passing through the metacentre <math>\\text{M}</math>. If the water in the tank could be kept from moving as the inclination proceeded, <math>\\text{G}</math> would be fixed in the ship, and the righting levers would be <math>\\text{GZ}_1</math>, <math>\\text{GZ}_2</math>, ... those at small angles being equal to <math>\\text{GM} \\sin \\theta</math>. Actually, if the inclination be slowly performed, the water-level in the tank changes successively to <math>w_1l_1</math>, <math>w_2l_2</math>,... maintaining a level surface at all times; its centre of gravity moves to <math>b_1</math>, <math>b_2</math>,... thereby causing a corresponding alteration in the combined centre of gravity <math>\\text{G}</math>. Drawing <math>br_1</math>, <math>br_2</math>,... perpendicular to the verticals through <math>b_1</math>, <math>b_2</math>,... and calling <math>w</math>, <math>\\text{W}</math> the weights of the water and of the water and ship combined, then at the angle <math>\\theta_2</math> the line of action of the weight of the water <math>w</math> has moved through a distance <math>br_2</math> and the righting moment of the ship is diminished by an amount <math>w \\times br_2</math>. It is evident that the movement of the centre of gravity of the water in the tank is the same as would be the movement of the C.B. of a ship having the same form as the tank and water-lines corresponding to <math>wl</math>, <math>w_1l_1</math>, <math>w_2l_2</math>, &c. The values of the levers <math>br_1</math>, <math>br_2</math>... can therefore be obtained by a process similar to that used for obtaining the righting levers of the ship; cross curves and thence ordinary stability curves being drawn for various heights of water and inclinations. If <math>\\theta_1</math> be a small angle of inclination, the line of action of the weight <math>b_1m</math> will be such as to pass through the metacentre <math>m</math> corresponding to the water-line <math>wl</math>, and determined by the formula <math>bm = \\frac{i}{v}</math> where <math>i</math> is the moment of inertia of the water-plane <math>wl</math> about a longitudinal axis through its centre of gravity and <math>v</math> the volume of water contained. The moving weight <math>w</math> at <math>b</math> may therefore be replaced by an equal weight fixed at <math>m</math>, which is the virtual centre of gravity of the water; and the centre of gravity <math>\\text{G}</math> of ship and water is likewise raised to a virtual position <math>\\text{G}'</math> where\n\n{{block center|<math>\\text{GG}' = \\frac{w}{\\text{W}} \\cdot bm = \\frac{v}{\\text{V}} \\cdot \\frac{i}{v} = \\frac{i}{\\text{V}}</math>.}}\n\nIf the tank contain a fluid of specific gravity <math>\\rho</math> the virtual rise of the centre of gravity is <math>\\frac{\\rho i}{\\text{V}}</math>. The loss of stability at small angles due to the mobility of the water is thus independent of the quantity in the tank, but is proportional to the moment of inertia of its free surface. It is possible for a small quantity of water with an extensive free surface to render a ship unstable in the upright condition; the angle to which this large loss of stability extends depends, however, on the quantity of water in the tank, for the extent of the sideways movement of the centre of gravity <math>\\text{G}</math> of ship and water is minute if the tank be either nearly empty or nearly full, and the loss of stability at all angles above a small amount will then be inappreciable; the loss at moderate angles is usually a maximum when the tanks are about half full.\n\nThe assumption made above, viz. that the ship is inclined so gradually as to maintain a level water surface in the tank, is by no means in accordance with the actual circumstances during rolling; waves are then set up in the water, causing it to wash from side to side, so that the loss of stability may be either more or less than the amount calculated. To avoid danger of capsizing in still water, large tanks in a ship are filled or emptied in succession as far as possible, so that not more than one or two are partly full at the same time. Water-tight longitudinal partitions are also fitted in wide tanks in order to reduce the moment of inertia of the free surface. On the other hand tanks, partly filled with water, have been fitted and found effective in certain ships in order to reduce the rolling oscillations among waves. (See § ''Rolling''.)\n\n''Stability in any direction.'' Hitherto the stability of a ship has been considered only with reference to inclinations about either a longitudinal or transverse axis. These are the only cases which it is necessary to deal with in practice for the purpose of ascertaining the probable qualities as regards stability of a vessel by comparing the elements of its stability in the design stage with those of existing ships whose qualities have been tested by experience. For the exact theoretical consideration of the stability of a ship or any floating body, however, it is necessary to take account of the true line of the action of the buoyancy and not merely of its projection on the plane of inclination. The development of this part of the subject has largely been due to M. Dupin in his ''Mémoire de la stabilité des corps flottants'' and to M. Guyou in his ''Théorie du navire.'' If a ship is inclined in all possible positions, keeping the displacement constant, the locus of the centre of buoyancy is a closed surface which is known as the surface of buoyancy; the curve of buoyancy for two-dimensional inclinations being the projection on the plane of rotation of the corresponding points on the surface of buoyancy. Similarly the envelope of all the water-planes is defined as the surface of flotation. The stability of a ship in all positions is known when (<math>a</math>) the forms and dimensions of the surface of buoyancy, and (<math>b</math>) the position of the centre of gravity relative to it, have been obtained; the former depends entirely on the geometrical form of the ship and on the constant volume of displacement assumed, and the latter has reference only to the arrangement and magnitude of the component weights of the structure and lading. For an infinitesimal inclination the line joining the centres of buoyancy when upright and inclined is parallel to the water-plane, and the tangent plane to the surface of buoyancy is therefore parallel to the water-plane, ''i.e.'' it is horizontal, and the normal to the surface is vertical. If the initial position is one of equilibrium, the centre of gravity must lie on the normal. To determine the effect of a small disturbance from the position of equilibrium, it is necessary, as in the particular inclinations already considered, to find the line of action of the buoyancy for adjacent positions, ''i.e.'' to trace the normals to the surface of buoyancy. Consecutive normals to this surface will not, in general, intersect; but, from the properties of curvature of surfaces, there are two particular directions of inclination for which adjacent normals to the surface will intersect the original normal, these directions being perpendicular to one another and parallel to the principal axes of the indicatrix of the surface of buoyancy.\n\n[[File:eb1911 v24 p0994 c2f1.png|center|204px]]\n{{c|{{sc|Fig.}} 24.}}\n\nIf fig. 24 be a plan of the water-plane, <math>\\text{O}x^1</math> the axis of inclination passing through O the centre of flotation, O<math>y'</math> and O<math>z</math> perpendicular axes in and at right angles to the plane of flotation, then, from a consideration of the wedges of immersion and emersion for a small inclination <math>\\theta</math>, the travel of the centre of buoyancy B becomes:—\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\int\\!\\!\\int y'^2.dx'.dy'\\ (\\text{or BB}_1\\text{ in fig. 24) parallel to O}y'</math>}}\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\int\\!\\!\\int x'y'.dx'.dy'\\ (\\text{or} - \\text{B}_1\\text{B}_2)\\text{ parallel to O}x'</math>}}\n\nand\n\n{{block center|<math>\\tfrac{1}{2}\\cdot\\frac{\\theta^2}{\\text{V}}\\int\\!\\!\\int y'^2.dx'.dy'\\ (\\text{or B}_2\\text{B}')\\text{ parallel to O}z.</math>}}\n\nThese may be written:—\n\n{{block center|<math>\\frac{\\theta}{\\text{V}}\\cdot\\text{I}_x';\\ \\frac{\\theta}{\\text{V}}\\cdot\\text{P};\\ \\text{and}\\frac{\\theta^2}{2\\text{V}}\\text{I}_x'</math> respectively}}\n\nwhere <math>\\text{I}_x'</math> is the moment of inertia of the water-plane about O<math>x'</math>, and P the product of inertia about O<math>x'</math>, O<math>y'</math>. If the principal axes of inertia of the water-plane O<math>x</math>, O<math>y</math> make an angle <math>\\phi</math> with O<math>x'</math>, O<math>y'</math>, and if, from B as origin, axes B<math>x</math>, B<math>y</math>, B<math>z</math> are drawn parallel to O<math>x</math>, O<math>y</math>, O<math>z</math>, then the co-ordinates of B′ are as follows:—\n\n{{block center|<math>x = -\\text{B}_1\\text{B}_2 \\cos\\phi - \\text{BB}_1 \\sin\\phi = \\frac{\\theta}{\\text{V}}(\\text{P} \\cos\\phi - \\text{I}_x' \\sin\\phi);</math>}}\n\n{{block center|<math>y = \\text{BB}_1 \\cos\\phi - \\text{B}_1\\text{B}_2 \\sin\\phi = \\frac{\\theta}{\\text{V}}(\\text{I}_x' \\cos\\phi + \\text{P} \\sin\\phi);</math>}}\n\n{{block center|<math>z = \\text{B}_2\\text{B}' = \\frac{\\theta^2}{2\\text{V}}\\cdot\\text{I}_x'.</math>}}\n\nAlso\n\n{{block center|<math>\\text{I}_x' = \\text{I}_x \\cos^2\\phi + \\text{I}_y \\sin^2\\phi;</math>}}\n\n{{block center|<math>\\text{P} = (\\text{I}_x - \\text{I}_y) \\sin\\phi \\cos\\phi;</math>}}<noinclude><references/></noinclude>"
 }

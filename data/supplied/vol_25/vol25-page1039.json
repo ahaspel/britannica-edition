@@ -29,7 +29,7 @@
      99,
      137,
      1173,
-     162
+     341
     ]
    },
    {
@@ -38,9 +38,20 @@
     "column": 1,
     "box": [
      99,
-     242,
-     1025,
+     341,
+     1026,
      1001
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     99,
+     1005,
+     1026,
+     1039
     ]
    },
    {
@@ -48,36 +59,14 @@
     "kind": "text",
     "column": 1,
     "box": [
-     99,
-     1005,
-     1025,
-     1039
-    ]
-   },
-   {
-    "name": "c1s3",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     1025,
-     162,
+     1026,
+     341,
      1173,
      1039
     ]
    },
    {
-    "name": "c1f2",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     99,
-     1039,
-     1031,
-     1042
-    ]
-   },
-   {
-    "name": "c1s6",
+    "name": "c1s3",
     "kind": "text",
     "column": 1,
     "box": [
@@ -88,7 +77,7 @@
     ]
    },
    {
-    "name": "c1s7",
+    "name": "c1s4",
     "kind": "text",
     "column": 1,
     "box": [
@@ -99,25 +88,36 @@
     ]
    },
    {
-    "name": "c2f1",
-    "kind": "figure",
-    "column": 2,
-    "box": [
-     1173,
-     156,
-     2249,
-     1195
-    ]
-   },
-   {
     "name": "c2s1",
     "kind": "text",
     "column": 2,
     "box": [
      1173,
-     1202,
+     137,
      2249,
-     1233
+     796
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1173,
+     796,
+     2249,
+     1195
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1173,
+     1200,
+     2249,
+     1234
     ]
    },
    {
@@ -126,9 +126,9 @@
     "column": 2,
     "box": [
      1173,
-     1233,
+     1234,
      2249,
-     1616
+     1615
     ]
    },
    {
@@ -137,9 +137,20 @@
     "column": 2,
     "box": [
      1173,
-     1616,
+     1615,
      2249,
-     2282
+     2280
+    ]
+   },
+   {
+    "name": "c2c2",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1173,
+     2293,
+     2249,
+     2323
     ]
    },
    {
@@ -148,18 +159,7 @@
     "column": 2,
     "box": [
      1173,
-     2293,
-     2249,
-     2324
-    ]
-   },
-   {
-    "name": "c2s4",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1173,
-     2324,
+     2323,
      2249,
      2440
     ]
@@ -176,34 +176,34 @@
     ]
    },
    {
-    "name": "c2s5",
-    "kind": "text",
+    "name": "c2c3",
+    "kind": "caption",
     "column": 2,
     "box": [
      1755,
-     2992,
+     2993,
      2249,
-     3026
+     3027
     ]
    },
    {
-    "name": "c2s6",
+    "name": "c2s4",
     "kind": "text",
     "column": 2,
     "box": [
      1173,
      2440,
      1755,
-     3026
+     3027
     ]
    },
    {
-    "name": "c2s7",
+    "name": "c2s5",
     "kind": "text",
     "column": 2,
     "box": [
      1173,
-     3026,
+     3027,
      2249,
      3088
     ]
@@ -211,22 +211,22 @@
   ],
   "readings": {
    "head": "{{RunningHeader||STRENGTH OF MATERIALS|1013}}",
-   "c1s1": "",
-   "c1s2": "{{c|{{sc|Fig.}} 13.     {{sc|Fig.}} 14.}}",
-   "c1s3": "made to greater exhibits vire. A",
-   "c1s6": "load of <math>23\\tfrac{1}{2}</math> tons per square inch was reached in both cases; <math>ab</math> shows the result of continuing to load after an interval of five minutes, and <math>acd</math> after an interval of <math>45\\tfrac{1}{2}</math> hours, the stress of <math>23\\tfrac{1}{2}</math> tons being maintained during the interval in both cases.<sup>1</sup>\n\nIt may be concluded that, when a piece of metal has in any way been overstrained by stress exceeding its limits of elasticity, it is hardened, and (in some cases at least) its physical properties go on slowly changing for days or even months. Instances of the hardening effect of permanent set occur when plates or bars are rolled cold, hammered cold, or bent cold, or when wire is drawn. When a hole is punched in a plate the material contiguous to the hole is severely distorted by shear, and is so much hardened in consequence that when a strip containing the punched hole is broken by tensile stress the hardened portion, being unable to extend so much as the rest, receives an undue proportion of the stress, and the strip breaks with a smaller load than it would have borne had the stress been uniformly distributed. This bad effect of punching is especially noticeable in thick plates of mild steel. It disappears when a narrow ring of material surrounding the hole is removed by means of a rimer, so that the material that is left is homogeneous. Another remarkable instance of the same kind of action is seen when a mild-steel plate which is to be tested by bending has a piece cut from its edge by a shearing machine. The result of the shear is that the metal close to the edge is hardened, and, when the",
-   "c1s7": "plate is bent, this part, being unable to stretch like the rest, starts a crack or tear which quickly spreads across the plate on account of the fact that in the metal at the end of the crack there is an enormously high local intensity of stress. By the simple expedient of planing off the hardened edge before bending the plate homogeneity is restored, and the plate will then bend without damage.\n\n''Annealing''.—The hardening effect of overstrain is removed by the process of annealing, that is, by heating to redness and cooling slowly. In the ordinary process of rolling plates or bars of iron or mild steel the metal leaves the rolls at so high a temperature that it is virtually annealed, or pretty nearly so. The case is different with plates and bars that are rolled cold: they, like wire supplied in the hard-drawn state (that is, without being annealed after it leaves the draw-plate), exhibit the higher strength and greatly reduced plasticity which result from permanent set.\n\n''Extensometers''.—Much attention has been paid to the design of extensometers, or apparatus for observing the small deformation which a test-piece in tension or compression undergoes before its limit of elasticity is reached. Such observations afford the most direct means of measuring the modulus of longitudinal elasticity of the material, and they serve also to determine the limits within which the material is elastic. In such a material\n\n{{smaller|<sup>1</sup> J. A. Ewing, ''Proc. Roy. Soc.'' (June, 1880).}}",
-   "c2s1": "{{c|{{sc|Fig.}} 15.}}",
-   "c2s2": "which the extension is to be measured. The clip <math>b</math> carries two small rollers <math>d_1\\ d_2</math> which are free to rotate on centres fixed in the clip. These rollers press on two plane strips <math>c_1\\ c_2</math> attached to the other clip. When the specimen is stretched the rollers consequently turn through angles proportional to the strain, and the amount of turning is read by means of small mirrors <math>g_1</math> and <math>g_2</math>, fixed to the rollers, which reflect the divisions of a fixed scale <math>f</math> into the reading telescopes <math>e_1\\ e_2</math>. In Martens's extensometer each of the rollers is replaced by a rhombic piece of steel with sharp edges, one of which bears against the test-piece, while the other rests in a groove formed in the spring projecting parallel to the test-piece from the distant clip. Much",
-   "c2s3": "{{c|{{sc|Fig.}} 16.}}",
-   "c2s4": "excellent work has been done by extensometers of this class, but in point of convenience of manipulation it is of great advantage to have the apparatus self-contained. J. A. Ewing has introduced a",
-   "c2s5": "{{c|{{sc|Fig.}} 17.}}",
-   "c2s6": "microscope extensometer of the self-contained type which is shown in fig. 16; its action will be seen by reference to the diagram fig. 17. Two clips <math>\\text{B}</math> and <math>\\text{C}</math> are secured on the bar, each by means of a pair of opposed set-screws. Between the two is a rod <math>\\text{B}'</math> which is hinged to <math>\\text{B}</math> and has a blunt pointed upper end which makes a ball-and-socket joint with <math>\\text{C}</math> at <math>\\text{P}</math>. Another bar <math>\\text{R}</math> hangs from <math>\\text{C}</math>, and carries a mark which is read by a microscope attached to <math>\\text{B}</math>. Hence, when the specimen stretches, the length of <math>\\text{B}'</math> being fixed, the bar <math>\\text{R}</math> is pulled up relatively to the microscope, and the amount of the movement",
-   "c2s7": "is measured by a micrometer scale in the eyepiece. A screw at P serves to bring the mark on R into"
+   "c1s1": "is found only after a considerable addition has been made to the load. The result is, as in the former case, to give greater ultimate strength and less ultimate elongation. Fig. 14 exhibits two experiments of this kind, made with annealed iron wire. A",
+   "c1c1": "{{c|{{sc|Fig.}} 13. {{sc|Fig.}} 14.}}",
+   "c1s2": "",
+   "c1s3": "load of 23½ tons per square inch was reached in both cases; <math>ab</math> shows the result of continuing to load after an interval of five minutes, and <math>acd</math> after an interval of 45½ hours, the stress of 23½ tons being maintained during the interval in both cases.<sup>1</sup>\n\nIt may be concluded that, when a piece of metal has in any way been overstrained by stress exceeding its limits of elasticity, it is hardened, and (in some cases at least) its physical properties go on slowly changing for days or even months. Instances of the hardening effect of permanent set occur when plates or bars are rolled cold, hammered cold, or bent cold, or when wire is drawn. When a hole is punched in a plate the material contiguous to the hole is severely distorted by shear, and is so much hardened in consequence that when a strip containing the punched hole is broken by tensile stress the hardened portion, being unable to extend so much as the rest, receives an undue proportion of the stress, and the strip breaks with a smaller load than it would have borne had the stress been uniformly distributed. This bad effect of punching is especially noticeable in thick plates of mild steel. It disappears when a narrow ring of material surrounding the hole is removed by means of a rimer, so that the material that is left is homogeneous. Another remarkable instance of the same kind of action is seen when a mild-steel plate which is to be tested by bending has a piece cut from its edge by a shearing machine. The result of the shear is that the metal close to the edge is hardened, and, when the",
+   "c1s4": "plate is bent, this part, being unable to stretch like the rest, starts a crack or tear which quickly spreads across the plate on account of the fact that in the metal at the end of the crack there is an enormously high local intensity of stress. By the simple expedient of planing off the hardened edge before bending the plate homogeneity is restored, and the plate will then bend without damage.\n\n''Annealing''.—The hardening effect of overstrain is removed by the process of annealing, that is, by heating to redness and cooling slowly. In the ordinary process of rolling plates or bars of iron or mild steel the metal leaves the rolls at so high a temperature that it is virtually annealed, or pretty nearly so. The case is different with plates and bars that are rolled cold: they, like wire supplied in the hard-drawn state (that is, without being annealed after it leaves the draw-plate), exhibit the higher strength and greatly reduced plasticity which result from permanent set.\n\n''Extensometers''.—Much attention has been paid to the design of extensometers, or apparatus for observing the small deformation which a test-piece in tension or compression undergoes before its limit of elasticity is reached. Such observations afford the most direct means of measuring the modulus of longitudinal elasticity of the material, and they serve also to determine the limits within which the material is elastic. In such a material\n\n{{smaller|<sup>1</sup> J. A. Ewing, ''Proc. Roy. Soc.'' (June, 1880).}}",
+   "c2s1": "as wrought iron the elastic extension is only about <math>\\frac{1}{12000}</math> of the length for each ton per square inch of load, and the whole amount up to the elastic limit is perhaps <math>\\frac{1}{1000}</math> of the length; with a length of 8 in., which is usual in tensile tests, it is desirable to read the extension to, say, <math>\\frac{1}{50000}</math> in. if the modulus of elasticity is to be found with fair accuracy, or if the limits of proportionality between strain to stress are under examination. Measurements taken between marks on one side of the bar only are liable to be affected by bending of the piece, and it is essential either to make independent measurements on both sides or to measure the displacement between two pieces which are attached to the bar in such a manner as to share equally the strain on both sides.\n\nIn experiments carried out by Bauschinger, independent measurements of the strains on both sides of the bar were made by using mirror micrometers of the type illustrated diagrammatically in fig. 15. Two clips <math>a</math> and <math>b</math> clasp the test-piece at the place between",
+   "c2c1": "{{c|{{sc|Fig.}} 15.}}",
+   "c2s2": "which the extension is to be measured. The clip <math>b</math> carries two small rollers <math>d_1</math> <math>d_2</math> which are free to rotate on centres fixed in the clip. These rollers press on two plane strips <math>c_1</math> <math>c_2</math> attached to the other clip. When the specimen is stretched the rollers consequently turn through angles proportional to the strain, and the amount of turning is read by means of small mirrors <math>g_1</math> and <math>g_2</math>, fixed to the rollers, which reflect the divisions of a fixed scale <math>f</math> into the reading telescopes <math>e_1</math> <math>e_2</math>. In Martens's extensometer each of the rollers is replaced by a rhombic piece of steel with sharp edges, one of which bears against the test-piece, while the other rests in a groove formed in the spring projecting parallel to the test-piece from the distant clip. Much",
+   "c2c2": "{{c|{{sc|Fig.}} 16.}}",
+   "c2s3": "excellent work has been done by extensometers of this class, but in point of convenience of manipulation it is of great advantage to have the apparatus self-contained. J. A. Ewing has introduced a",
+   "c2c3": "{{c|{{sc|Fig.}} 17.}}",
+   "c2s4": "microscope extensometer of the self-contained type which is shown in fig. 16; its action will be seen by reference to the diagram fig. 17. Two clips <math>\\text{B}</math> and <math>\\text{C}</math> are secured on the bar, each by means of a pair of opposed set-screws. Between the two is a rod <math>\\text{B}'</math> which is hinged to <math>\\text{B}</math> and has a blunt pointed upper end which makes a ball-and-socket joint with <math>\\text{C}</math> at <math>\\text{P}</math>. Another bar <math>\\text{R}</math> hangs from <math>\\text{C}</math>, and carries a mark which is read by a microscope attached to <math>\\text{B}</math>. Hence, when the specimen stretches, the length of <math>\\text{B}'</math> being fixed, the bar <math>\\text{R}</math> is pulled up relatively to the microscope, and the amount of the movement",
+   "c2s5": "is measured by a micrometer scale in the eyepiece. A screw at <math>\\text{P}</math> serves to bring the mark on <math>\\text{R}</math> into"
   },
   "figure_files": {
    "c1f1": "eb1911 v25 p1039 c1f1.png",
-   "c1f2": "eb1911 v25 p1039 c1f2.png",
    "c2f1": "eb1911 v25 p1039 c2f1.png",
    "c2f2": "eb1911 v25 p1039 c2f2.png",
    "c2f3": "eb1911 v25 p1039 c2f3.png"
@@ -235,12 +235,12 @@
    {
     "box": [
      229,
-     342,
+     340,
      1005,
-     998
+     997
     ],
     "caption": [
-     394,
+     395,
      1005,
      925,
      1038
@@ -248,51 +248,51 @@
     "column": 1,
     "inset": true,
     "page_box": [
-     227,
-     338,
-     596,
+     230,
+     342,
+     614,
      998
     ]
    },
    {
     "box": [
      229,
-     343,
-     1017,
+     340,
+     1007,
      998
     ],
     "caption": [
      393,
-     1005,
+     1004,
      925,
-     1038
+     1040
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      676,
-     338,
+     342,
      1020,
      998
     ]
    },
    {
     "box": [
-     1205,
+     1203,
      800,
-     2245,
+     2243,
      1192
     ],
     "caption": [
-     1693,
-     1202,
+     1692,
+     1200,
      1817,
-     1233
+     1234
     ],
     "column": 2,
     "inset": false,
     "page_box": [
-     1193,
+     1195,
      800,
      2248,
      1188
@@ -301,45 +301,45 @@
    {
     "box": [
      1431,
-     1619,
+     1618,
      2015,
-     2279
+     2277
     ],
     "caption": [
      1702,
      2293,
      1823,
-     2324
+     2323
     ],
     "column": 2,
     "inset": false,
     "page_box": [
      1425,
-     1617,
-     2222,
-     2271
+     1623,
+     2116,
+     2275
     ]
    },
    {
     "box": [
-     1757,
+     1759,
      2453,
-     2240,
-     2980
+     2241,
+     2981
     ],
     "caption": [
-     1902,
-     2992,
+     1901,
+     2993,
      2027,
-     3025
+     3027
     ],
     "column": 2,
     "inset": true,
     "page_box": [
-     1763,
-     2527,
-     2235,
-     2995
+     1758,
+     2525,
+     1997,
+     2982
     ]
    }
   ],
@@ -349,7 +349,7 @@
   "rejected": {},
   "disagreements": {
    "1": [
-    2,
+    1,
     0
    ],
    "2": [
@@ -359,22 +359,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 6,
-    "input_tokens": 13125,
-    "output_tokens": 755,
+    "input_tokens": 13237,
+    "output_tokens": 894,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 13,
-    "input_tokens": 5280,
-    "output_tokens": 2250,
+    "model": "claude-opus-5-5",
+    "calls": 14,
+    "input_tokens": 6472,
+    "output_tokens": 3228,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 25012
+    "cache_read_input_tokens": 33894
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||STRENGTH OF MATERIALS|1013}}</noinclude>[[File:eb1911 v25 p1039 c1f1.png|center|307px]]\n{{c|{{sc|Fig.}} 13.     {{sc|Fig.}} 14.}}\n\nmade to greater exhibits vire. A load of <math>23\\tfrac{1}{2}</math> tons per square inch was reached in both cases; <math>ab</math> shows the result of continuing to load after an interval of five minutes, and <math>acd</math> after an interval of <math>45\\tfrac{1}{2}</math> hours, the stress of <math>23\\tfrac{1}{2}</math> tons being maintained during the interval in both cases.<sup>1</sup>\n\n[[File:eb1911 v25 p1039 c1f2.png|center|309px]]\n\nIt may be concluded that, when a piece of metal has in any way been overstrained by stress exceeding its limits of elasticity, it is hardened, and (in some cases at least) its physical properties go on slowly changing for days or even months. Instances of the hardening effect of permanent set occur when plates or bars are rolled cold, hammered cold, or bent cold, or when wire is drawn. When a hole is punched in a plate the material contiguous to the hole is severely distorted by shear, and is so much hardened in consequence that when a strip containing the punched hole is broken by tensile stress the hardened portion, being unable to extend so much as the rest, receives an undue proportion of the stress, and the strip breaks with a smaller load than it would have borne had the stress been uniformly distributed. This bad effect of punching is especially noticeable in thick plates of mild steel. It disappears when a narrow ring of material surrounding the hole is removed by means of a rimer, so that the material that is left is homogeneous. Another remarkable instance of the same kind of action is seen when a mild-steel plate which is to be tested by bending has a piece cut from its edge by a shearing machine. The result of the shear is that the metal close to the edge is hardened, and, when the plate is bent, this part, being unable to stretch like the rest, starts a crack or tear which quickly spreads across the plate on account of the fact that in the metal at the end of the crack there is an enormously high local intensity of stress. By the simple expedient of planing off the hardened edge before bending the plate homogeneity is restored, and the plate will then bend without damage.\n\n''Annealing''.—The hardening effect of overstrain is removed by the process of annealing, that is, by heating to redness and cooling slowly. In the ordinary process of rolling plates or bars of iron or mild steel the metal leaves the rolls at so high a temperature that it is virtually annealed, or pretty nearly so. The case is different with plates and bars that are rolled cold: they, like wire supplied in the hard-drawn state (that is, without being annealed after it leaves the draw-plate), exhibit the higher strength and greatly reduced plasticity which result from permanent set.\n\n''Extensometers''.—Much attention has been paid to the design of extensometers, or apparatus for observing the small deformation which a test-piece in tension or compression undergoes before its limit of elasticity is reached. Such observations afford the most direct means of measuring the modulus of longitudinal elasticity of the material, and they serve also to determine the limits within which the material is elastic. In such a material\n\n{{smaller|<sup>1</sup> J. A. Ewing, ''Proc. Roy. Soc.'' (June, 1880).}} which the extension is to be measured. The clip <math>b</math> carries two small rollers <math>d_1\\ d_2</math> which are free to rotate on centres fixed in the clip. These rollers press on two plane strips <math>c_1\\ c_2</math> attached to the other clip. When the specimen is stretched the rollers consequently turn through angles proportional to the strain, and the amount of turning is read by means of small mirrors <math>g_1</math> and <math>g_2</math>, fixed to the rollers, which reflect the divisions of a fixed scale <math>f</math> into the reading telescopes <math>e_1\\ e_2</math>. In Martens's extensometer each of the rollers is replaced by a rhombic piece of steel with sharp edges, one of which bears against the test-piece, while the other rests in a groove formed in the spring projecting parallel to the test-piece from the distant clip. Much excellent work has been done by extensometers of this class, but in point of convenience of manipulation it is of great advantage to have the apparatus self-contained. J. A. Ewing has introduced a microscope extensometer of the self-contained type which is shown in fig. 16; its action will be seen by reference to the diagram fig. 17. Two clips <math>\\text{B}</math> and <math>\\text{C}</math> are secured on the bar, each by means of a pair of opposed set-screws. Between the two is a rod <math>\\text{B}'</math> which is hinged to <math>\\text{B}</math> and has a blunt pointed upper end which makes a ball-and-socket joint with <math>\\text{C}</math> at <math>\\text{P}</math>. Another bar <math>\\text{R}</math> hangs from <math>\\text{C}</math>, and carries a mark which is read by a microscope attached to <math>\\text{B}</math>. Hence, when the specimen stretches, the length of <math>\\text{B}'</math> being fixed, the bar <math>\\text{R}</math> is pulled up relatively to the microscope, and the amount of the movement is measured by a micrometer scale in the eyepiece. A screw at P serves to bring the mark on R into\n\n[[File:eb1911 v25 p1039 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 15.}}\n\n[[File:eb1911 v25 p1039 c2f2.png|center|356px]]\n{{c|{{sc|Fig.}} 16.}}\n\n[[File:eb1911 v25 p1039 c2f3.png|center|164px]]\n{{c|{{sc|Fig.}} 17.}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||STRENGTH OF MATERIALS|1013}}</noinclude>is found only after a considerable addition has been made to the load. The result is, as in the former case, to give greater ultimate strength and less ultimate elongation. Fig. 14 exhibits two experiments of this kind, made with annealed iron wire. A load of 23½ tons per square inch was reached in both cases; <math>ab</math> shows the result of continuing to load after an interval of five minutes, and <math>acd</math> after an interval of 45½ hours, the stress of 23½ tons being maintained during the interval in both cases.<sup>1</sup>\n\n[[File:eb1911 v25 p1039 c1f1.png|center|307px]]\n{{c|{{sc|Fig.}} 13. {{sc|Fig.}} 14.}}\n\nIt may be concluded that, when a piece of metal has in any way been overstrained by stress exceeding its limits of elasticity, it is hardened, and (in some cases at least) its physical properties go on slowly changing for days or even months. Instances of the hardening effect of permanent set occur when plates or bars are rolled cold, hammered cold, or bent cold, or when wire is drawn. When a hole is punched in a plate the material contiguous to the hole is severely distorted by shear, and is so much hardened in consequence that when a strip containing the punched hole is broken by tensile stress the hardened portion, being unable to extend so much as the rest, receives an undue proportion of the stress, and the strip breaks with a smaller load than it would have borne had the stress been uniformly distributed. This bad effect of punching is especially noticeable in thick plates of mild steel. It disappears when a narrow ring of material surrounding the hole is removed by means of a rimer, so that the material that is left is homogeneous. Another remarkable instance of the same kind of action is seen when a mild-steel plate which is to be tested by bending has a piece cut from its edge by a shearing machine. The result of the shear is that the metal close to the edge is hardened, and, when the plate is bent, this part, being unable to stretch like the rest, starts a crack or tear which quickly spreads across the plate on account of the fact that in the metal at the end of the crack there is an enormously high local intensity of stress. By the simple expedient of planing off the hardened edge before bending the plate homogeneity is restored, and the plate will then bend without damage.\n\n''Annealing''.—The hardening effect of overstrain is removed by the process of annealing, that is, by heating to redness and cooling slowly. In the ordinary process of rolling plates or bars of iron or mild steel the metal leaves the rolls at so high a temperature that it is virtually annealed, or pretty nearly so. The case is different with plates and bars that are rolled cold: they, like wire supplied in the hard-drawn state (that is, without being annealed after it leaves the draw-plate), exhibit the higher strength and greatly reduced plasticity which result from permanent set.\n\n''Extensometers''.—Much attention has been paid to the design of extensometers, or apparatus for observing the small deformation which a test-piece in tension or compression undergoes before its limit of elasticity is reached. Such observations afford the most direct means of measuring the modulus of longitudinal elasticity of the material, and they serve also to determine the limits within which the material is elastic. In such a material\n\n{{smaller|<sup>1</sup> J. A. Ewing, ''Proc. Roy. Soc.'' (June, 1880).}} as wrought iron the elastic extension is only about <math>\\frac{1}{12000}</math> of the length for each ton per square inch of load, and the whole amount up to the elastic limit is perhaps <math>\\frac{1}{1000}</math> of the length; with a length of 8 in., which is usual in tensile tests, it is desirable to read the extension to, say, <math>\\frac{1}{50000}</math> in. if the modulus of elasticity is to be found with fair accuracy, or if the limits of proportionality between strain to stress are under examination. Measurements taken between marks on one side of the bar only are liable to be affected by bending of the piece, and it is essential either to make independent measurements on both sides or to measure the displacement between two pieces which are attached to the bar in such a manner as to share equally the strain on both sides.\n\nIn experiments carried out by Bauschinger, independent measurements of the strains on both sides of the bar were made by using mirror micrometers of the type illustrated diagrammatically in fig. 15. Two clips <math>a</math> and <math>b</math> clasp the test-piece at the place between which the extension is to be measured. The clip <math>b</math> carries two small rollers <math>d_1</math> <math>d_2</math> which are free to rotate on centres fixed in the clip. These rollers press on two plane strips <math>c_1</math> <math>c_2</math> attached to the other clip. When the specimen is stretched the rollers consequently turn through angles proportional to the strain, and the amount of turning is read by means of small mirrors <math>g_1</math> and <math>g_2</math>, fixed to the rollers, which reflect the divisions of a fixed scale <math>f</math> into the reading telescopes <math>e_1</math> <math>e_2</math>. In Martens's extensometer each of the rollers is replaced by a rhombic piece of steel with sharp edges, one of which bears against the test-piece, while the other rests in a groove formed in the spring projecting parallel to the test-piece from the distant clip. Much excellent work has been done by extensometers of this class, but in point of convenience of manipulation it is of great advantage to have the apparatus self-contained. J. A. Ewing has introduced a microscope extensometer of the self-contained type which is shown in fig. 16; its action will be seen by reference to the diagram fig. 17. Two clips <math>\\text{B}</math> and <math>\\text{C}</math> are secured on the bar, each by means of a pair of opposed set-screws. Between the two is a rod <math>\\text{B}'</math> which is hinged to <math>\\text{B}</math> and has a blunt pointed upper end which makes a ball-and-socket joint with <math>\\text{C}</math> at <math>\\text{P}</math>. Another bar <math>\\text{R}</math> hangs from <math>\\text{C}</math>, and carries a mark which is read by a microscope attached to <math>\\text{B}</math>. Hence, when the specimen stretches, the length of <math>\\text{B}'</math> being fixed, the bar <math>\\text{R}</math> is pulled up relatively to the microscope, and the amount of the movement is measured by a micrometer scale in the eyepiece. A screw at <math>\\text{P}</math> serves to bring the mark on <math>\\text{R}</math> into\n\n[[File:eb1911 v25 p1039 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 15.}}\n\n[[File:eb1911 v25 p1039 c2f2.png|center|356px]]\n{{c|{{sc|Fig.}} 16.}}\n\n[[File:eb1911 v25 p1039 c2f3.png|center|164px]]\n{{c|{{sc|Fig.}} 17.}}<noinclude><references/></noinclude>"
 }

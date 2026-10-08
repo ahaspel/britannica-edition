@@ -22,12 +22,34 @@
     ]
    },
    {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     90,
+     196,
+     1155,
+     466
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1155,
+     196,
+     2224,
+     466
+    ]
+   },
+   {
     "name": "c0s1",
     "kind": "text",
     "column": 0,
     "box": [
      90,
-     196,
+     466,
      2224,
      1197
     ]
@@ -38,18 +60,18 @@
     "column": 1,
     "box": [
      90,
-     1211,
+     1303,
      624,
-     1495
+     1503
     ]
    },
    {
-    "name": "c1s1",
-    "kind": "text",
+    "name": "c1c1",
+    "kind": "caption",
     "column": 1,
     "box": [
      90,
-     1495,
+     1503,
      624,
      1623
     ]
@@ -60,20 +82,9 @@
     "column": 1,
     "box": [
      624,
-     1211,
+     1212,
      1153,
      1623
-    ]
-   },
-   {
-    "name": "c1f2",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     90,
-     1623,
-     1153,
-     2002
     ]
    },
    {
@@ -82,7 +93,29 @@
     "column": 1,
     "box": [
      90,
-     2010,
+     1623,
+     1153,
+     1809
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     90,
+     1809,
+     1153,
+     2002
+    ]
+   },
+   {
+    "name": "c1c2",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     90,
+     2009,
      1153,
      2050
     ]
@@ -93,20 +126,31 @@
     "column": 1,
     "box": [
      90,
-     2050,
-     1153,
-     2053
+     2130,
+     636,
+     2356
     ]
    },
    {
-    "name": "c1f4",
-    "kind": "figure",
+    "name": "c1c3",
+    "kind": "caption",
     "column": 1,
     "box": [
      90,
-     2050,
+     2358,
      636,
-     2356
+     2427
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     636,
+     2050,
+     1153,
+     2427
     ]
    },
    {
@@ -115,9 +159,31 @@
     "column": 1,
     "box": [
      90,
-     2357,
-     636,
-     2426
+     2427,
+     1153,
+     2552
+    ]
+   },
+   {
+    "name": "c1f4",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     90,
+     2552,
+     1153,
+     2737
+    ]
+   },
+   {
+    "name": "c1c4",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     90,
+     2755,
+     1153,
+     2852
     ]
    },
    {
@@ -125,21 +191,10 @@
     "kind": "text",
     "column": 1,
     "box": [
-     636,
-     2050,
-     1153,
-     2426
-    ]
-   },
-   {
-    "name": "c1s7",
-    "kind": "text",
-    "column": 1,
-    "box": [
      90,
-     2426,
+     2852,
      1153,
-     2549
+     2943
     ]
    },
    {
@@ -148,64 +203,20 @@
     "column": 1,
     "box": [
      90,
-     2549,
+     2943,
      1153,
-     2730
+     3064
     ]
    },
    {
-    "name": "c1s8",
-    "kind": "text",
+    "name": "c1c5",
+    "kind": "caption",
     "column": 1,
     "box": [
      90,
-     2760,
+     3073,
      1153,
-     2853
-    ]
-   },
-   {
-    "name": "c1s9",
-    "kind": "text",
-    "column": 1,
-    "box": [
-     90,
-     2853,
-     1153,
-     2945
-    ]
-   },
-   {
-    "name": "c1f6",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     90,
-     2945,
-     1153,
-     3114
-    ]
-   },
-   {
-    "name": "c1f7",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     90,
-     3112,
-     1153,
-     3114
-    ]
-   },
-   {
-    "name": "c2s1",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1153,
-     1197,
-     2224,
-     2189
+     3112
     ]
    },
    {
@@ -214,7 +225,18 @@
     "column": 2,
     "box": [
      1153,
-     2189,
+     1197,
+     2224,
+     2193
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1153,
+     2193,
      2224,
      3114
     ]
@@ -222,46 +244,48 @@
   ],
   "readings": {
    "head": "{{RunningHeader|956|SHIPBUILDING|[STEERING}}",
-   "c0s1": "on rudder, the turning moment on the rudder head, and the power required for working the rudder are also less. A type of balanced rudder devised by Professor Biles and adopted in some large Atlantic liners is shown in fig. 66.\n\nBroader and shallower rudders are adopted in warships owing to the necessity of keeping the whole of the steering gear below the water-line for protection.\n\n(fig. 74), which had, in addition to the usual rudder at the stern, a double-balanced rudder in the bow, which could be drawn up into recesses in the hull; the two rudders were about 3 ft. apart and when in use worked together.\n\n'''''Experimental results.'''''\n\nThe results of the turning trials of some of the principal classes of warships are given in the following table:\n\nShip or Class. — Displacement in Tons. — Length in Feet. — Area of Immersed Longitudinal Plane divided by Area of Rudder. — Speed in Knots at Commencement of Turn. — Advance in Yards. — Tactical Diameter in Yards. — Tactical Diameter divided by Length.\n\nDreadnought . . . . . 17,900 — 490 — 37·5 — 19 — 490 — 440 — 2·7\n\nLord Nelson . . . . . 16,500 — 410 — 40·5 — 17 — 400 — 370 — 2·7\n\nKing Edward VII. . . . 16,350 — 425 — 44·8 — 16½ — 450 — 440 — 3·1\n\nFormidable . . . . . 15,000 — 400 — 45·2 — 14½ — 440 — 500 — 3·7\n\nMajestic . . . . . 14,900 — 390 — 47·8 — 16 — 450 — 500 — 3·9\n\nMinotaur . . . . . 14,600 — 490 — 48·4 — 19 — 480 — 600 — 3·7\n\nMonmouth . . . . . 9,800 — 440 — 44·4 — 23½ — 590 — 790 — 5·4\n\nDrake . . . . . 14,100 — 500 — 46·8 — 23½ — 700 — 810 — 4·9\n\nDiadem . . . . . 11,000 — 435 — 44·5 — 20½ — 650 — 920 — 6·3\n\nPowerful . . . . . 14,200 — 500 — 50·3 — 22 — 800 — 1120 — 6·7\n\nMinerva . . . . . 5,600 — 350 — 48·3 — 18 — 540 — 770 — 6·6\n\nArrogant . . . . . 5,750 — 320 — 33·5 — 17 — 350 — 380 — 3·6\n\n{{c|Helm angle about 35° in all cases.}}",
-   "c1s1": "{{c|{{sc|Fig.}} 69.—H.M.S. “Lord Nelson.” “Yashima” and H.M.Ss. “Swiftsure,” “Warrior” and “Minotaur” similar.}}",
-   "c1s2": "y used in British battleships up to “Duncan” (1903) (fig. 67). In the “King Edward VII.” class (1905) (fig. 68) the rudder was balanced, about one-fourth of its area being placed before the axis; balanced rudders supported at about mid-depth were fitted in the “Yashima” (1897) and the “Lord Nelson” class (1905) (fig. 69). In H.M.S. “Dreadnought” (1906) and recent battleships twin-balanced",
-   "c1s3": "{{c|Section at A.P. {{sc|Fig.}} 70.—H.M.S. “Dreadnought.”}}",
-   "c1s5": "{{c|{{sc|Fig.}} 71.—H.M.S. “Powerful.”<br>H.M.S. “Diadem” similar.}}\n\nHmm, <br> not allowed. Two lines in caption... join them.\n\n{{c|{{sc|Fig.}} 71.—H.M.S. “Powerful.” H.M.S. “Diadem” similar.}}\n\nWait, only one output.",
-   "c1s6": "0) are shown in fig. 71, and for Devonshire\" classes (1901–1905) in fig. 72. In \"Warrior\" and \"Minotaur\" classes (1907–1908) the rudders are as shown in fig. 69. The older second-class cruisers had rudders and sterns of the type shown for H.M.S. \"Powerful\" in fig. 71, with the exception of the \"Arrogant\" class (1898), in",
-   "c1s7": "which two rudders were fitted in conjunction with a considerable cut-up at the stern in order to obtain increased manœuvring capacity (fig. 73). Recent second-class cruisers have rudders of the type shown in fig. 69.",
-   "c1s8": "{{c|{{sc|Fig.}} 72.—H.M.S. “ Devonshire.” H.M.Ss.“Cressy”and“ Monmouth” similar.}}\n\n{{c|{{sc|Fig.}} 73.—H.M.S. “ Arrogant.”}}",
-   "c1s9": "¶\nAuxiliary rudders have been fitted in H.M. ships in a few instances. An interesting example was that of H.M.S. “Polyphemus”",
-   "c2s1": "¶\nIn the last column the tactical diameter is expressed in terms of the length of the ship; this ratio enables a rough comparison between the steering capacities of different ships to be expressed. The improvement in turning in modern warships has been due largely to the increase of rudder area in relation to the area of the immersed middle-line plane, which has been made possible by the adoption of balanced rudders. Considerable improvement has also been effected by cutting away the after deadwood; this will be seen on comparing the performances of H.M.Ss. “Monmouth” and “Diadem,” and “Drake” and “Powerful”; the former ship of each pair has her after deadwood partially cut away and has a smaller tactical diameter. In the “Yashima” the whole of the deadwood is removed and a very large rudder fitted; her tactical diameter is twice her length.\n\nThe rudder area is relatively much less in merchant vessels, where the necessity for a small tactical diameter does not arise.\n\nExperiments have been made to ascertain separate effects of angle of helm, time of putting helm over, and draught and trim of ship.\n\nThe effect of variation of helm angle is shown in table below:\n\n{{c|Tactical Diameter in Yards at about 12 knots speed.}}\n\nShip. — Battleship. — First-Class Cruiser. — Second-Class Cruiser. — Torpedo-Boat Destroyer.\n\n10° helm — 750 — 1400 — 1600 — 700\n\n20° helm — 550 — 1000 — 1000 — 500\n\n35° helm — 450 — 750 — 800 — 300",
-   "c2s2": "¶\nIn ships having unbalanced rudders and fitted with hand-steering gear considerable time is required to put the helm hard over at full speed; and consequently the tactical diameter and the advance are greater at high speeds than at low speeds. When steam-steering gear is provided the helm can usually be put hard over in from 10 to 20 seconds at any speed; and in modern warships the speed is found to have little influence on the path described when turning. In the case of torpedo-boat destroyers marked increases in the tactical diameter and in the advance occur at high speeds, the cause of which is not fully known. In such vessels of length 270 ft. and displacement 900 tons, the tactical diameter is about 550 yds. at 30 knots and 300 yds. at 15 knots.\n\nA moderate variation in the mean draught has little effect on the course, but additional trim by the stern results in a greater space being required for turning.\n\nBy working one propeller ahead and the other astern the space required for turning may be shortened, but the time of turning is frequently increased. The character of the path described depends on the relation between the revolutions of the screws.\n\nIn a single-screw ship, with the propeller well immersed, the upper blades experience greater resistance to rotation than the lower blades, since the forward velocity of the frictional wake is greatest at the surface; hence a right-handed screw tends to turn the ship's head to starboard, and requires starboard helm. The reverse is occasionally experienced when the upper portion of the screw is incompletely immersed.\n\nWhen a ship is going astern manœuvring is performed with some uncertainty, as the rudder is near the pivoting point."
+   "c1s1": "on rudder, the turning moment on the rudder head, and the power required for working the rudder are also less. A type of balanced rudder devised by Professor Biles and adopted in some large Atlantic liners is shown in fig. 66.\n\nBroader and shallower rudders are adopted in warships owing to the necessity of keeping the whole of the steering gear below the water-line for protection.",
+   "c2s1": "(fig. 74), which had, in addition to the usual rudder at the stern, a double-balanced rudder in the bow, which could be drawn up into recesses in the hull; the two rudders were about 3 ft. apart and when in use worked together.\n\n'''''Experimental results.''''' The results of the turning trials of some of the principal classes of warships are given in the following table:",
+   "c0s1": "{| style=\"margin:auto\"\n|Ship or Class.||Displacement in Tons.||Length in Feet.||Area of Immersed Longitudinal Plane divided by Area of Rudder.||Speed in Knots at Commencement of Turn.||Advance in Yards.||Tactical Diameter in Yards.||Tactical Diameter divided by Length.\n|-\n|Dreadnought . . . .||17,900||490||37·5||19||490||440||2·7\n|-\n|Lord Nelson . . . .||16,500||410||40·5||17||400||370||2·7\n|-\n|King Edward VII.||16,350||425||44·8||16½||450||440||3·1\n|-\n|Formidable . . . .||15,000||400||45·2||14½||440||500||3·7\n|-\n|Majestic . . . .||14,900||390||47·8||16||450||500||3·9\n|-\n|Minotaur . . . .||14,600||490||48·4||19||480||600||3·7\n|-\n|Monmouth . . . .||9,800||440||44·4||23½||590||790||5·4\n|-\n|Drake . . . .||14,100||500||46·8||23½||700||810||4·9\n|-\n|Diadem . . . .||11,000||435||44·5||20½||650||920||6·3\n|-\n|Powerful . . . .||14,200||500||50·3||22||800||1120||6·7\n|-\n|Minerva . . . .||5,600||350||48·3||18||540||770||6·6\n|-\n|Arrogant . . . .||5,750||320||33·5||17||350||380||3·6\n|}\n\n{{c|Helm angle about 35° in all cases.}}",
+   "c1c1": "{{c|{{sc|Fig.}} 69.—H.M.S. \"Lord Nelson.\" \"Yashima\" and H.M.Ss. \"Swiftsure,\" \"Warrior\" and \"Minotaur\" similar.}}",
+   "c1s2": "y used in British battleships up to \"Duncan\" (1903) (fig. 67). In the \"King Edward VII.\" class (1905) (fig. 68) the rudder was balanced, about one-fourth of its area being placed before the axis; balanced rudders supported at about mid-depth were fitted in the \"Yashima\" (1897) and the \"Lord Nelson\" class (1905) (fig. 69). In H.M.S. \"Dreadnought\" (1906) and recent battleships twin-balanced",
+   "c1s3": "battleships, twin-balanced rudders are fitted immediately behind the inner propellers (fig. 70), to obtain additional steering effect from the propeller race, and to enable the ship to be steered from rest in getting under way. Owing to the higher speeds of first-class cruisers, balanced rudders were used; those fitted in “Diadem”",
+   "c1c2": "{{c|Section at A.P. {{sc|Fig.}} 70.—H.M.S. “Dreadnought.”}}",
+   "c1c3": "{{c|{{sc|Fig.}} 71.—H.M.S. \"Powerful.\" H.M.S. \"Diadem\" similar.}}",
+   "c1s4": "o) are shown in fig. 71, and for \"Devonshire\" classes (1901–1905) in fig. 72. In \"Warrior\" and \"Minotaur\" classes (1907–1908) the rudders are as shown in fig. 69. The older second-class cruisers had rudders and sterns of the type shown for H.M.S. \"Powerful\" in fig. 71, with the exception of the \"Arrogant\" class (1898), in which two rudders were fitted",
+   "c1s5": "which two rudders were fitted in conjunction with a considerable cut-up at the stern in order to obtain increased manœuvring capacity (fig. 73). Recent second-class cruisers have rudders of the type shown in fig. 69.",
+   "c1c4": "{{c|{{sc|Fig.}} 72.—H.M.S. “Devonshire.” H.M.Ss. “Cressy” and “Monmouth” similar.}}\n\n{{c|{{sc|Fig.}} 73.—H.M.S. “Arrogant.”}}",
+   "c1s6": "¶\nAuxiliary rudders have been fitted in H.M. ships in a few instances. An interesting example was that of H.M.S. “Polyphemus”",
+   "c1c5": "{{c|{{sc|Fig.}} 74.—H.M.S. “Polyphemus.”}}",
+   "c2s2": "¶\nIn the last column the tactical diameter is expressed in terms of the length of the ship; this ratio enables a rough comparison between the steering capacities of different ships to be expressed. The improvement in turning in modern warships has been due largely to the increase of rudder area in relation to the area of the immersed middle-line plane, which has been made possible by the adoption of balanced rudders. Considerable improvement has also been effected by cutting away the after deadwood; this will be seen on comparing the performances of H.M.Ss. “Monmouth” and “Diadem,” and “Drake” and “Powerful”; the former ship of each pair has her after deadwood partially cut away and has a smaller tactical diameter. In the “Yashima” the whole of the deadwood is removed and a very large rudder fitted; her tactical diameter is twice her length.\n\nThe rudder area is relatively much less in merchant vessels, where the necessity for a small tactical diameter does not arise.\n\nExperiments have been made to ascertain separate effects of angle of helm, time of putting helm over, and draught and trim of ship.\n\nThe effect of variation of helm angle is shown in table below:\n\n{| style=\"margin:auto\"\n|colspan=5|Tactical Diameter in Yards at about 12 knots speed.\n|-\n|Ship.||Battleship.||First-Class Cruiser.||Second-Class Cruiser.||Torpedo-Boat Destroyer.\n|-\n|10° helm||750||1400||1600||700\n|-\n|20° helm||550||1000||1000||500\n|-\n|35° helm||450||750||800||300\n|}",
+   "c2s3": "¶\nIn ships having unbalanced rudders and fitted with hand-steering gear considerable time is required to put the helm hard over at full speed; and consequently the tactical diameter and the advance are greater at high speeds than at low speeds. When steam-steering gear is provided the helm can usually be put hard over in from 10 to 20 seconds at any speed; and in modern warships the speed is found to have little influence on the path described when turning. In the case of torpedo-boat destroyers marked increases in the tactical diameter and in the advance occur at high speeds, the cause of which is not fully known. In such vessels of length 270 ft. and displacement 900 tons, the tactical diameter is about 550 yds. at 30 knots and 300 yds. at 15 knots.\n\nA moderate variation in the mean draught has little effect on the course, but additional trim by the stern results in a greater space being required for turning.\n\nBy working one propeller ahead and the other astern the space required for turning may be shortened, but the time of turning is frequently increased. The character of the path described depends on the relation between the revolutions of the screws.\n\nIn a single-screw ship, with the propeller well immersed, the upper blades experience greater resistance to rotation than the lower blades, since the forward velocity of the frictional wake is greatest at the surface; hence a right-handed screw tends to turn the ship's head to starboard, and requires starboard helm. The reverse is occasionally experienced when the upper portion of the screw is incompletely immersed.\n\nWhen a ship is going astern manœuvring is performed with some uncertainty, as the rudder is near the pivoting point."
   },
   "figure_files": {
    "c1f1": "eb1911 v24 p1025 c1f1.png",
    "c1f2": "eb1911 v24 p1025 c1f2.png",
    "c1f3": "eb1911 v24 p1025 c1f3.png",
    "c1f4": "eb1911 v24 p1025 c1f4.png",
-   "c1f5": "eb1911 v24 p1025 c1f5.png",
-   "c1f6": "eb1911 v24 p1025 c1f6.png",
-   "c1f7": "eb1911 v24 p1025 c1f7.png"
+   "c1f5": "eb1911 v24 p1025 c1f5.png"
   },
   "figures": [
    {
     "box": [
-     102,
-     1305,
-     626,
-     1483
+     103,
+     1304,
+     619,
+     1477
     ],
     "caption": [
      92,
-     1495,
-     626,
-     1615
+     1502,
+     623,
+     1622
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      93,
-     1333,
+     1324,
      638,
      1528
     ]
@@ -269,133 +293,89 @@
    {
     "box": [
      250,
-     1808,
-     983,
-     1985
-    ],
-    "caption": [
-     195,
-     2010,
-     1018,
-     2045
-    ],
-    "column": 1,
-    "inset": false,
-    "page_box": [
-     255,
-     1805,
-     438,
-     1982
-    ]
-   },
-   {
-    "box": [
-     265,
-     1809,
+     1811,
      986,
-     1989
+     2001
     ],
     "caption": [
      195,
-     2010,
-     1044,
-     2049
+     2009,
+     1016,
+     2051
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     565,
-     1809,
-     1136,
-     2006
+     210,
+     1811,
+     1134,
+     1993
     ]
    },
    {
     "box": [
-     97,
-     2132,
-     631,
-     2350
+     96,
+     2131,
+     629,
+     2353
     ],
     "caption": [
      127,
-     2357,
-     603,
-     2426
+     2358,
+     598,
+     2427
     ],
     "column": 1,
     "inset": true,
     "page_box": [
      221,
-     2143,
-     664,
-     2361
+     2139,
+     669,
+     2374
     ]
    },
    {
     "box": [
-     209,
-     2954,
-     1016,
-     3058
-    ],
-    "caption": [
-     338,
-     3072,
-     874,
-     3111
-    ],
-    "column": 1,
-    "inset": false,
-    "page_box": [
-     93,
-     2538,
-     664,
-     2757
-    ]
-   },
-   {
-    "box": [
-     92,
-     2552,
-     616,
-     2727
-    ],
-    "caption": [
      90,
-     2760,
-     633,
-     2853
+     2555,
+     619,
+     2734
+    ],
+    "caption": [
+     88,
+     2755,
+     630,
+     2852
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     704,
-     2547,
-     1136,
+     97,
+     2562,
+     1134,
      2757
     ]
    },
    {
     "box": [
-     210,
-     2948,
-     1015,
-     3062
+     208,
+     2946,
+     1014,
+     3061
     ],
     "caption": [
-     345,
-     3074,
-     876,
-     3110
+     347,
+     3073,
+     874,
+     3108
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     204,
-     2936,
-     1132,
-     3074
+     210,
+     2941,
+     1134,
+     3078
     ]
    }
   ],
@@ -403,7 +383,7 @@
    [
     115,
     469,
-    2199,
+    2203,
     1147
    ],
    [
@@ -418,28 +398,31 @@
   "rejected": {},
   "disagreements": {
    "1": [
-    7,
+    5,
     0
    ]
   },
   "usage": {
    "figures": {
-    "batch": true,
-    "calls": 8,
-    "input_tokens": 13741,
-    "output_tokens": 2169,
+    "model": "claude-opus-5-5",
+    "calls": 6,
+    "input_tokens": 10538,
+    "output_tokens": 1107,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 12,
-    "input_tokens": 7323,
-    "output_tokens": 4396,
+    "model": "claude-opus-5-5",
+    "calls": 16,
+    "input_tokens": 7814,
+    "output_tokens": 4406,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 23088
+    "cache_read_input_tokens": 38736
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|956|SHIPBUILDING|[STEERING}}</noinclude>on rudder, the turning moment on the rudder head, and the power required for working the rudder are also less. A type of balanced rudder devised by Professor Biles and adopted in some large Atlantic liners is shown in fig. 66.\n\nBroader and shallower rudders are adopted in warships owing to the necessity of keeping the whole of the steering gear below the water-line for protection.\n\n(fig. 74), which had, in addition to the usual rudder at the stern, a double-balanced rudder in the bow, which could be drawn up into recesses in the hull; the two rudders were about 3 ft. apart and when in use worked together.\n\n'''''Experimental results.'''''\n\nThe results of the turning trials of some of the principal classes of warships are given in the following table:\n\nShip or Class. — Displacement in Tons. — Length in Feet. — Area of Immersed Longitudinal Plane divided by Area of Rudder. — Speed in Knots at Commencement of Turn. — Advance in Yards. — Tactical Diameter in Yards. — Tactical Diameter divided by Length.\n\nDreadnought . . . . . 17,900 — 490 — 37·5 — 19 — 490 — 440 — 2·7\n\nLord Nelson . . . . . 16,500 — 410 — 40·5 — 17 — 400 — 370 — 2·7\n\nKing Edward VII. . . . 16,350 — 425 — 44·8 — 16½ — 450 — 440 — 3·1\n\nFormidable . . . . . 15,000 — 400 — 45·2 — 14½ — 440 — 500 — 3·7\n\nMajestic . . . . . 14,900 — 390 — 47·8 — 16 — 450 — 500 — 3·9\n\nMinotaur . . . . . 14,600 — 490 — 48·4 — 19 — 480 — 600 — 3·7\n\nMonmouth . . . . . 9,800 — 440 — 44·4 — 23½ — 590 — 790 — 5·4\n\nDrake . . . . . 14,100 — 500 — 46·8 — 23½ — 700 — 810 — 4·9\n\nDiadem . . . . . 11,000 — 435 — 44·5 — 20½ — 650 — 920 — 6·3\n\nPowerful . . . . . 14,200 — 500 — 50·3 — 22 — 800 — 1120 — 6·7\n\nMinerva . . . . . 5,600 — 350 — 48·3 — 18 — 540 — 770 — 6·6\n\nArrogant . . . . . 5,750 — 320 — 33·5 — 17 — 350 — 380 — 3·6\n\n{{c|Helm angle about 35° in all cases.}}\n\n[[File:eb1911 v24 p1025 c1f1.png|center|178px]]\n{{c|{{sc|Fig.}} 69.—H.M.S. “Lord Nelson.” “Yashima” and H.M.Ss. “Swiftsure,” “Warrior” and “Minotaur” similar.}}\n\ny used in British battleships up to “Duncan” (1903) (fig. 67). In the “King Edward VII.” class (1905) (fig. 68) the rudder was balanced, about one-fourth of its area being placed before the axis; balanced rudders supported at about mid-depth were fitted in the “Yashima” (1897) and the “Lord Nelson” class (1905) (fig. 69). In H.M.S. “Dreadnought” (1906) and recent battleships twin-balanced 0) are shown in fig. 71, and for Devonshire\" classes (1901–1905) in fig. 72. In \"Warrior\" and \"Minotaur\" classes (1907–1908) the rudders are as shown in fig. 69. The older second-class cruisers had rudders and sterns of the type shown for H.M.S. \"Powerful\" in fig. 71, with the exception of the \"Arrogant\" class (1898), in which two rudders were fitted in conjunction with a considerable cut-up at the stern in order to obtain increased manœuvring capacity (fig. 73). Recent second-class cruisers have rudders of the type shown in fig. 69.\n\n[[File:eb1911 v24 p1025 c1f2.png|center|353px]]\n{{c|Section at A.P. {{sc|Fig.}} 70.—H.M.S. “Dreadnought.”}}\n\n[[File:eb1911 v24 p1025 c1f3.png|center|353px]]\n\n[[File:eb1911 v24 p1025 c1f4.png|center|181px]]\n{{c|{{sc|Fig.}} 71.—H.M.S. “Powerful.”<br>H.M.S. “Diadem” similar.}}\n\nHmm, <br> not allowed. Two lines in caption... join them.\n\n{{c|{{sc|Fig.}} 71.—H.M.S. “Powerful.” H.M.S. “Diadem” similar.}}\n\nWait, only one output.\n\n[[File:eb1911 v24 p1025 c1f5.png|center|353px]]\n{{c|{{sc|Fig.}} 72.—H.M.S. “ Devonshire.” H.M.Ss.“Cressy”and“ Monmouth” similar.}}\n\n{{c|{{sc|Fig.}} 73.—H.M.S. “ Arrogant.”}}\n\nAuxiliary rudders have been fitted in H.M. ships in a few instances. An interesting example was that of H.M.S. “Polyphemus”\n\n[[File:eb1911 v24 p1025 c1f6.png|center|353px]]\n\n[[File:eb1911 v24 p1025 c1f7.png|center|353px]]\n\nIn the last column the tactical diameter is expressed in terms of the length of the ship; this ratio enables a rough comparison between the steering capacities of different ships to be expressed. The improvement in turning in modern warships has been due largely to the increase of rudder area in relation to the area of the immersed middle-line plane, which has been made possible by the adoption of balanced rudders. Considerable improvement has also been effected by cutting away the after deadwood; this will be seen on comparing the performances of H.M.Ss. “Monmouth” and “Diadem,” and “Drake” and “Powerful”; the former ship of each pair has her after deadwood partially cut away and has a smaller tactical diameter. In the “Yashima” the whole of the deadwood is removed and a very large rudder fitted; her tactical diameter is twice her length.\n\nThe rudder area is relatively much less in merchant vessels, where the necessity for a small tactical diameter does not arise.\n\nExperiments have been made to ascertain separate effects of angle of helm, time of putting helm over, and draught and trim of ship.\n\nThe effect of variation of helm angle is shown in table below:\n\n{{c|Tactical Diameter in Yards at about 12 knots speed.}}\n\nShip. — Battleship. — First-Class Cruiser. — Second-Class Cruiser. — Torpedo-Boat Destroyer.\n\n10° helm — 750 — 1400 — 1600 — 700\n\n20° helm — 550 — 1000 — 1000 — 500\n\n35° helm — 450 — 750 — 800 — 300\n\nIn ships having unbalanced rudders and fitted with hand-steering gear considerable time is required to put the helm hard over at full speed; and consequently the tactical diameter and the advance are greater at high speeds than at low speeds. When steam-steering gear is provided the helm can usually be put hard over in from 10 to 20 seconds at any speed; and in modern warships the speed is found to have little influence on the path described when turning. In the case of torpedo-boat destroyers marked increases in the tactical diameter and in the advance occur at high speeds, the cause of which is not fully known. In such vessels of length 270 ft. and displacement 900 tons, the tactical diameter is about 550 yds. at 30 knots and 300 yds. at 15 knots.\n\nA moderate variation in the mean draught has little effect on the course, but additional trim by the stern results in a greater space being required for turning.\n\nBy working one propeller ahead and the other astern the space required for turning may be shortened, but the time of turning is frequently increased. The character of the path described depends on the relation between the revolutions of the screws.\n\nIn a single-screw ship, with the propeller well immersed, the upper blades experience greater resistance to rotation than the lower blades, since the forward velocity of the frictional wake is greatest at the surface; hence a right-handed screw tends to turn the ship's head to starboard, and requires starboard helm. The reverse is occasionally experienced when the upper portion of the screw is incompletely immersed.\n\nWhen a ship is going astern manœuvring is performed with some uncertainty, as the rudder is near the pivoting point.<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|956|SHIPBUILDING|[STEERING}}</noinclude>on rudder, the turning moment on the rudder head, and the power required for working the rudder are also less. A type of balanced rudder devised by Professor Biles and adopted in some large Atlantic liners is shown in fig. 66.\n\nBroader and shallower rudders are adopted in warships owing to the necessity of keeping the whole of the steering gear below the water-line for protection. (fig. 74), which had, in addition to the usual rudder at the stern, a double-balanced rudder in the bow, which could be drawn up into recesses in the hull; the two rudders were about 3 ft. apart and when in use worked together.\n\n'''''Experimental results.''''' The results of the turning trials of some of the principal classes of warships are given in the following table:\n\n{| style=\"margin:auto\"\n|Ship or Class.||Displacement in Tons.||Length in Feet.||Area of Immersed Longitudinal Plane divided by Area of Rudder.||Speed in Knots at Commencement of Turn.||Advance in Yards.||Tactical Diameter in Yards.||Tactical Diameter divided by Length.\n|-\n|Dreadnought . . . .||17,900||490||37·5||19||490||440||2·7\n|-\n|Lord Nelson . . . .||16,500||410||40·5||17||400||370||2·7\n|-\n|King Edward VII.||16,350||425||44·8||16½||450||440||3·1\n|-\n|Formidable . . . .||15,000||400||45·2||14½||440||500||3·7\n|-\n|Majestic . . . .||14,900||390||47·8||16||450||500||3·9\n|-\n|Minotaur . . . .||14,600||490||48·4||19||480||600||3·7\n|-\n|Monmouth . . . .||9,800||440||44·4||23½||590||790||5·4\n|-\n|Drake . . . .||14,100||500||46·8||23½||700||810||4·9\n|-\n|Diadem . . . .||11,000||435||44·5||20½||650||920||6·3\n|-\n|Powerful . . . .||14,200||500||50·3||22||800||1120||6·7\n|-\n|Minerva . . . .||5,600||350||48·3||18||540||770||6·6\n|-\n|Arrogant . . . .||5,750||320||33·5||17||350||380||3·6\n|}\n\n{{c|Helm angle about 35° in all cases.}}\n\n[[File:eb1911 v24 p1025 c1f1.png|center|178px]]\n{{c|{{sc|Fig.}} 69.—H.M.S. \"Lord Nelson.\" \"Yashima\" and H.M.Ss. \"Swiftsure,\" \"Warrior\" and \"Minotaur\" similar.}}\n\ny used in British battleships up to \"Duncan\" (1903) (fig. 67). In the \"King Edward VII.\" class (1905) (fig. 68) the rudder was balanced, about one-fourth of its area being placed before the axis; balanced rudders supported at about mid-depth were fitted in the \"Yashima\" (1897) and the \"Lord Nelson\" class (1905) (fig. 69). In H.M.S. \"Dreadnought\" (1906) and recent battleships twin-balanced battleships, twin-balanced rudders are fitted immediately behind the inner propellers (fig. 70), to obtain additional steering effect from the propeller race, and to enable the ship to be steered from rest in getting under way. Owing to the higher speeds of first-class cruisers, balanced rudders were used; those fitted in “Diadem” o) are shown in fig. 71, and for \"Devonshire\" classes (1901–1905) in fig. 72. In \"Warrior\" and \"Minotaur\" classes (1907–1908) the rudders are as shown in fig. 69. The older second-class cruisers had rudders and sterns of the type shown for H.M.S. \"Powerful\" in fig. 71, with the exception of the \"Arrogant\" class (1898), in which two rudders were fitted which two rudders were fitted in conjunction with a considerable cut-up at the stern in order to obtain increased manœuvring capacity (fig. 73). Recent second-class cruisers have rudders of the type shown in fig. 69.\n\n[[File:eb1911 v24 p1025 c1f2.png|center|353px]]\n{{c|Section at A.P. {{sc|Fig.}} 70.—H.M.S. “Dreadnought.”}}\n\n[[File:eb1911 v24 p1025 c1f3.png|center|181px]]\n{{c|{{sc|Fig.}} 71.—H.M.S. \"Powerful.\" H.M.S. \"Diadem\" similar.}}\n\n[[File:eb1911 v24 p1025 c1f4.png|center|353px]]\n{{c|{{sc|Fig.}} 72.—H.M.S. “Devonshire.” H.M.Ss. “Cressy” and “Monmouth” similar.}}\n\n{{c|{{sc|Fig.}} 73.—H.M.S. “Arrogant.”}}\n\nAuxiliary rudders have been fitted in H.M. ships in a few instances. An interesting example was that of H.M.S. “Polyphemus”\n\n[[File:eb1911 v24 p1025 c1f5.png|center|353px]]\n{{c|{{sc|Fig.}} 74.—H.M.S. “Polyphemus.”}}\n\nIn the last column the tactical diameter is expressed in terms of the length of the ship; this ratio enables a rough comparison between the steering capacities of different ships to be expressed. The improvement in turning in modern warships has been due largely to the increase of rudder area in relation to the area of the immersed middle-line plane, which has been made possible by the adoption of balanced rudders. Considerable improvement has also been effected by cutting away the after deadwood; this will be seen on comparing the performances of H.M.Ss. “Monmouth” and “Diadem,” and “Drake” and “Powerful”; the former ship of each pair has her after deadwood partially cut away and has a smaller tactical diameter. In the “Yashima” the whole of the deadwood is removed and a very large rudder fitted; her tactical diameter is twice her length.\n\nThe rudder area is relatively much less in merchant vessels, where the necessity for a small tactical diameter does not arise.\n\nExperiments have been made to ascertain separate effects of angle of helm, time of putting helm over, and draught and trim of ship.\n\nThe effect of variation of helm angle is shown in table below:\n\n{| style=\"margin:auto\"\n|colspan=5|Tactical Diameter in Yards at about 12 knots speed.\n|-\n|Ship.||Battleship.||First-Class Cruiser.||Second-Class Cruiser.||Torpedo-Boat Destroyer.\n|-\n|10° helm||750||1400||1600||700\n|-\n|20° helm||550||1000||1000||500\n|-\n|35° helm||450||750||800||300\n|}\n\nIn ships having unbalanced rudders and fitted with hand-steering gear considerable time is required to put the helm hard over at full speed; and consequently the tactical diameter and the advance are greater at high speeds than at low speeds. When steam-steering gear is provided the helm can usually be put hard over in from 10 to 20 seconds at any speed; and in modern warships the speed is found to have little influence on the path described when turning. In the case of torpedo-boat destroyers marked increases in the tactical diameter and in the advance occur at high speeds, the cause of which is not fully known. In such vessels of length 270 ft. and displacement 900 tons, the tactical diameter is about 550 yds. at 30 knots and 300 yds. at 15 knots.\n\nA moderate variation in the mean draught has little effect on the course, but additional trim by the stern results in a greater space being required for turning.\n\nBy working one propeller ahead and the other astern the space required for turning may be shortened, but the time of turning is frequently increased. The character of the path described depends on the relation between the revolutions of the screws.\n\nIn a single-screw ship, with the propeller well immersed, the upper blades experience greater resistance to rotation than the lower blades, since the forward velocity of the frictional wake is greatest at the surface; hence a right-handed screw tends to turn the ship's head to starboard, and requires starboard helm. The reverse is occasionally experienced when the upper portion of the screw is incompletely immersed.\n\nWhen a ship is going astern manœuvring is performed with some uncertainty, as the rudder is near the pivoting point.<noinclude><references/></noinclude>"
 }

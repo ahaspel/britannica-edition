@@ -22,24 +22,35 @@
     ]
    },
    {
-    "name": "c1f1",
-    "kind": "figure",
-    "column": 1,
-    "box": [
-     50,
-     207,
-     391,
-     2022
-    ]
-   },
-   {
     "name": "c1s1",
     "kind": "text",
     "column": 1,
     "box": [
      50,
-     2028,
-     391,
+     193,
+     1140,
+     1247
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     50,
+     1247,
+     395,
+     2022
+    ]
+   },
+   {
+    "name": "c1c1",
+    "kind": "caption",
+    "column": 1,
+    "box": [
+     50,
+     2025,
+     395,
      2094
     ]
    },
@@ -48,8 +59,8 @@
     "kind": "text",
     "column": 1,
     "box": [
-     391,
-     207,
+     395,
+     1247,
      1140,
      2094
     ]
@@ -73,7 +84,7 @@
      1140,
      193,
      2204,
-     378
+     1188
     ]
    },
    {
@@ -82,24 +93,13 @@
     "column": 2,
     "box": [
      1140,
-     378,
-     2204,
-     1410
-    ]
-   },
-   {
-    "name": "c2s3",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1140,
-     1410,
+     1188,
      2204,
      2033
     ]
    },
    {
-    "name": "c2s4",
+    "name": "c2s3",
     "kind": "text",
     "column": 2,
     "box": [
@@ -117,20 +117,44 @@
      50,
      2676,
      2204,
+     2869
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     50,
+     2869,
+     1138,
+     3114
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1138,
+     2869,
+     2204,
      3114
     ]
    }
   ],
   "readings": {
    "head": "{{RunningHeader|MERCURIAL]|THERMOMETRY|823}}",
-   "c1s1": "{{c|{{sc|Fig. 1.}}—Hypsometer.}}",
-   "c1s2": "in so complicated a manner on the past history It is a most serious difficulty in accurate mer-, especially at high temperatures. The most l of correction appears to be to observe the ''er each reading'', and to reckon the temperature ero thus observed. The rationale of this pro- lepression is produced at the high temperature han the subsequent recovery at the low tempera- neter is taken from the bath and allowed to e exposure to the air. As soon as it reaches lunged in the melting ice, and the lowest point the temporary zero.\n\nmulae have been proposed by various observers ression of zero for different kinds of glass:—\n\n{{block center|''al'', <math>dz=0\\cdot0040(t/100)^2</math> . . .}}\n{{block center|''r'', 0−100° C., <math>dz=(8886t+10\\cdot84t^2)\\,10^{-7}</math>}}\n{{block center|, 0−190° C., <math>dz=(7970t+329t^2)10^{-7}</math> (4)}}\n{{block center|ii., <math>dz=(7100t-8t^2)\\,10^{-7}</math> . . .}}\n\nn these formulae stands for the depression of n exposure to a temperature <math>t</math>. The depression s as large in French crystal as in English flint ughly as the square of <math>t</math>. ''Verre dur'' and Jena, s of hard glass chosen as standards in France ctively, on account of the comparatively small o which they are liable. At low temperatures, epression is very nearly proportional to <math>t</math>, but ove 100° C. it is necessary to adopt another e term depending upon <math>t^2</math> is more important. useful as giving an idea of the probable size n any case, but they cannot be employed in practice except in the simplest cases and at low temperatures. On account of these temporary changes of zero, a mercury thermometer intended for the most accurate work at ordinary temperatures (as in calorimetry) should preferably never be heated above 40° or 50° C., and certainly never above 100° C. Above 100° C. the changes of zero become more irregular and more variable, depending on the rate of cooling and on the sequence of previous observations, so that even if the method of observing the zero after each reading is adopted, the order of precision attainable rapidly diminishes.\n\n(II) ''Fundamental Interval''.—The thermometer to be tested is exposed to steam condensing at atmospheric pressure in an apparatus which is often called a “hypsometer,” constructed with double walls to protect the inner tube containing the thermometer from any cooling by radiation. The standard atmospheric pressure at which the temperature of the steam is by definition equal to 100° C. is equivalent to that produced by a column of mercury at 0° C. and 760 millimetres high, the force of gravitation being equal to that at sea-level in latitude",
+   "c1s1": "because it depends in so complicated a manner on the past history and on the time. It is a most serious difficulty in accurate mercurial thermometry, especially at high temperatures. The most satisfactory method of correction appears to be to observe the zero ''immediately after each reading'', and to reckon the temperature from the variable zero thus observed. The rationale of this procedure is that the depression is produced at the high temperature much more rapidly than the subsequent recovery at the low temperature. The thermometer is taken from the bath and allowed to cool rapidly by free exposure to the air. As soon as it reaches 40° or 50° C., it is plunged in the melting ice, and the lowest point reached is taken as the temporary zero.\n\nThe following formulae have been proposed by various observers to represent the depression of zero for different kinds of glass:—\n\n{{block center|<math>\\left.\\begin{array}{l}\\text{Pernet, French }\\textit{cristal}\\text{, } dz=0\\cdot0040(t/100)^2 \\quad . \\quad . \\quad . \\\\ \\text{Guillaume, }\\textit{Verre dur}\\text{, }0-100^\\circ\\ \\text{C., } dz=(8886t+10\\cdot84t^2)\\ 10^{-7} \\\\ \\text{Bottcher, }\\textit{Cristal dur}\\text{, }0-190^\\circ\\ \\text{C., } dz=(7970t+329t^2)10^{-7} \\\\ \\text{,,} \\quad \\text{Jena, 16, iii., } dz=(7100t-8t^2)\\ 10^{-7} \\quad . \\quad . \\quad . \\end{array}\\right\\}.</math> (4)}}\n\nThe symbol <math>dz</math> in these formulae stands for the depression of zero produced by an exposure to a temperature <math>t</math>. The depression is about three times as large in French crystal as in English flint glass, and varies roughly as the square of <math>t</math>. ''Verre dur'' and Jena, 16, iii., are varieties of hard glass chosen as standards in France and Germany respectively, on account of the comparatively small depression of zero to which they are liable. At low temperatures, up to 50° C., the depression is very nearly proportional to <math>t</math>, but at temperatures above 100° C. it is necessary to adopt another formula in which the term depending upon <math>t^2</math> is more important. These formulae are useful as giving an idea of the probable size of the correction in any case, but they cannot be employed in practice except in the simplest cases and at",
+   "c1c1": "{{c|{{sc|Fig.}} 1.—Hypsometer.}}",
+   "c1s2": "practice except in the simplest cases and at low temperatures. On account of these temporary changes of zero, a mercury thermometer intended for the most accurate work at ordinary temperatures (as in calorimetry) should preferably never be heated above 40° or 50° C., and certainly never above 100° C. Above 100° C. the changes of zero become more irregular and more variable, depending on the rate of cooling and on the sequence of previous observations, so that even if the method of observing the zero after each reading is adopted, the order of precision attainable rapidly diminishes.\n\n(II) ''Fundamental Interval''.—The thermometer to be tested is exposed to steam condensing at atmospheric pressure in an apparatus which is often called a “hypsometer,” constructed with double walls to protect the inner tube containing the thermometer from any cooling by radiation. The standard atmospheric pressure at which the temperature of the steam is by definition equal to 100° C. is equivalent to that produced by a column of mercury at 0° C. and 760 millimetres high, the force of gravitation being equal to that at sea-level in latitude",
    "c1s3": "45°. The atmospheric pressure at the time of observation is reduced to these units by applying the usual corrections for temperature and gravitation. If the pressure is near 760 mm., the temperature of the steam may be deduced by assuming that it increases at the rate of 1° C. for 27·2 mm. of pressure. If the pressure is not near 760 mm., the application of the correction is less certain, but is generally taken from Regnault's tables, from which the following data are extracted. Thermometers cannot be satisfactorily tested at an elevated station where the height of the barometer <math>\\text{H}</math> is less than 700 mm., as the steam point is too uncertain.\n\nA convenient type of hypsometer is shown in fig. 1. The boiler B is separate from the steam-jacket A surrounding the thermometer. A gauge G is provided for indicating the steam pressure (difference from atmospheric) and a condenser C for returning the condensed steam to the boiler. The thermometer is observed by the microscope M.",
-   "c2s1": "steam point. If <math>n</math> be the interval in degrees of the scale between the two observations, and if <math>t_1</math> be the temperature of the steam, the fundamental interval of the thermometer may be taken as <math>100\\ n/t_1</math>, provided that <math>t_1</math> is nearly 100° C. Since all the readings of a thermometer have to be corrected for the error of the funda-",
-   "c2s2": "mental interval, by dividing by the fundamental interval thus observed and multiplying by 100, it is a matter of some convenience in practice to have the instrument graduated so that the difference between the readings in ice and at 100° C. is very nearly 100° of the stem. The correction can then be applied as a small percentage independently of the other corrections. The method of determining the fundamental interval above described applies to all other kinds of thermometers, except that it is not generally necessary to observe the zero ''after'' the steam point. The temperature of the steam <math>t_1</math> should be expressed in the scale of the thermometer tested, if the scale differs appreciably from that of Regnault.\n\n(III) ''Pressure Correction.''—The corrections for variations of internal and external pressure on the bulb are of some importance in accurate thermometry, but can be applied with considerable certainty at moderate temperatures. The correction for external pressure is assumed to be proportional to the change of pressure, and to be independent of the temperature. It is generally determined by enclosing the thermometer to be tested in a vessel of water, and observing the change of reading on exhausting or readmitting the air. The correction is generally between one and two thousandths of a degree per centimetre of mercury change of pressure, but must be determined for each thermometer, as it depends on the nature of the glass and on the form and thickness of the walls of the bulb. The coefficient of the correction for internal pressure is greater than that for external pressure by the difference between the compressibility of mercury and that of glass, and may be calculated from it by assuming this relation. If <math>b_0</math>, <math>b_1</math>, are the external and internal coefficients, expressed in degrees of temperature per centimetre of mercury, we have the relation\n{{block center|<math>b_1 = b_0 + 0{\\cdot}00015</math>, degrees per cm. of mercury . . (6)}}",
-   "c2s3": "The coefficient of internal pressure can also be determined by taking readings in the horizontal and vertical positions when the thermometer is at some steady temperature such as that of ice or steam. The reading of the thermometer is generally reduced to an external pressure of one standard atmosphere, and to an internal pressure corresponding to the horizontal position. It is also possible to include the internal pressure correction in the scale correction, if the thermometer is always read in the vertical position. In addition to the variations of internal pressure due to the column of mercury in the stem, there are variations due to capillarity. The internal pressure is greater when the mercury is rising than when it is falling, and the reading is depressed to an extent depending on the fineness of the bore and the thinness of the walls of the bulb. The capillary pressure does not depend only on the bore of the tube, but also apparently to an even greater extent on the state of the walls of the tube. The least trace of dirt on the glass or on the mercury is capable of producing capillary pressures much greater than would be calculated from the diameter of the tube. Even in the best thermometers, when there are no in-",
-   "c2s4": "equalities of bore sufficient to account for the observed variations, it is seldom found that the mercury runs equally easily in all parts of the stem. These variations of capillary pressure are somewhat capricious, and set a limit to the order of accuracy attainable with the mercury thermometer. It appears that the difference of reading of a good thermometer between a rising and falling meniscus may amount to five or ten thousandths of a degree. The difference may be reduced by continuous tapping, but it is generally best to take readings always on a rising column, especially as the variations in the angle of contact, and therefore in the capillary pressure, appear to be much smaller for the rising meniscus. In ordinary work the zero reading and the steam reading would both generally correspond to a falling meniscus; the former necessarily, the latter on account of the phenomenon of the temporary depression of zero, which causes the thermometer to read higher during the first moments of its exposure to steam than it does when the expansion of the bulb has reached its limit. It is easy to secure a rising meniscus at the steam point by momentarily cooling the thermometer. At the zero point the meniscus generally begins to rise",
-   "c0s1": "{{c|{{sc|Table}} I.—''Temperature of Steam at pressures from 790 to 710 mm.''}}\n\nPressure (corrected) . . . 790 780 770 760 750 740 730 720 710\n\nSteam temp. = 100° C. + . . +1·083 +·726 +·365 0 −·369 −·742 −1·120 −1·502 −1·888\n\n{{block center|Approximate formula <math>dt_1 = \\cdot0367(\\text{H}-760) - \\cdot000020(\\text{H}-760)^2</math> . . . . . . . (5)}}\n\nIf the barometer has a brass scale correct at 0° C., and <math>\\text{H}</math> be the reading in millimetres, the correction for temperature is made approximately by subtracting <math>0\\cdot00163\\,\\text{H}</math> mm.\n\nIf <math>\\text{L}</math> is the latitude and <math>\\text{M}</math> the height of the station in metres above the sea-level, the correction for gravitation is approximately made by subtracting <math>(0\\cdot0026 \\cos 2\\text{L}+0\\cdot0000002\\text{M})\\,\\text{H}</math> mm.\n\nThe zero of the thermometer is observed immediately after the after five or ten minutes. The question, however, is not of much importance, as the error, if any, is regular, and the correction for capillarity is necessarily uncertain.\n\n(IV) ''Stem-Exposure Correction.''—When the bulb of a mercury thermometer is immersed in a bath at a temperature <math>t</math>, and a part of the column of mercury having a length of <math>n</math> degrees is exposed to a lower temperature <math>t_2</math>, the reading of the thermometer will be"
+   "c2s1": "steam point. If <math>n</math> be the interval in degrees of the scale between the two observations, and if <math>t_1</math> be the temperature of the steam, the fundamental interval of the thermometer may be taken as <math>100\\ n/t_1</math>, provided that <math>t_1</math> is nearly 100° C. Since all the readings of a thermometer have to be corrected for the error of the fundamental interval, by dividing by the fundamental interval thus observed and multiplying by 100, it is a matter of some convenience in practice to have the instrument graduated so that the difference between the readings in ice and at 100° C. is very nearly 100° of the stem. The correction can then be applied as a small percentage independently of the other corrections. The method of determining the fundamental interval above described applies to all other kinds of thermometers, except that it is not generally necessary to observe the zero ''after'' the steam point. The temperature of the steam <math>t_1</math> should be expressed in the scale of the thermometer tested, if the scale differs appreciably from that of Regnault.\n\n(III) ''Pressure Correction''.—The corrections for variations of internal and external pressure on the bulb are of some importance in accurate thermometry, but can be applied with considerable certainty at moderate temperatures. The correction for external pressure is assumed to be proportional to the change of pressure, and to be independent of the temperature. It is generally determined by enclosing the thermometer to be tested in a vessel of water, and observing the change of reading on exhausting or readmitting the air. The correction is generally between one and two thousandths of a degree per centimetre of mercury change of pressure, but must be determined for each thermometer, as it depends on the nature of the glass and on the form and thickness of the walls of the bulb. The coefficient of the correction for",
+   "c2s2": "internal pressure is greater than that for external pressure by the difference between the compressibility of mercury and that of glass, and may be calculated from it by assuming this relation. If <math>b_0</math>, <math>b_1</math>, are the external and internal coefficients, expressed in degrees of temperature per centimetre of mercury, we have the relation\n\n{{block center|<math>b_1 = b_0 + 0{\\cdot}00015</math>, degrees per cm. of mercury . . (6)}}\n\nThe coefficient of internal pressure can also be determined by taking readings in the horizontal and vertical positions when the thermometer is at some steady temperature such as that of ice or steam. The reading of the thermometer is generally reduced to an external pressure of one standard atmosphere, and to an internal pressure corresponding to the horizontal position. It is also possible to include the internal pressure correction in the scale correction, if the thermometer is always read in the vertical position. In addition to the variations of internal pressure due to the column of mercury in the stem, there are variations due to capillarity. The internal pressure is greater when the mercury is rising than when it is falling, and the reading is depressed to an extent depending on the fineness of the bore and the thinness of the walls of the bulb. The capillary pressure does not depend only on the bore of the tube, but also apparently to an even greater extent on the state of the walls of the tube. The least trace of dirt on the glass or on the mercury is capable of producing capillary pressures much greater than would be calculated from the diameter of the tube. Even in the best thermometers, when there are no in-",
+   "c2s3": "equalities of bore sufficient to account for the observed variations, it is seldom found that the mercury runs equally easily in all parts of the stem. These variations of capillary pressure are somewhat capricious, and set a limit to the order of accuracy attainable with the mercury thermometer. It appears that the difference of reading of a good thermometer between a rising and falling meniscus may amount to five or ten thousandths of a degree. The difference may be reduced by continuous tapping, but it is generally best to take readings always on a rising column, especially as the variations in the angle of contact, and therefore in the capillary pressure, appear to be much smaller for the rising meniscus. In ordinary work the zero reading and the steam reading would both generally correspond to a falling meniscus; the former necessarily, the latter on account of the phenomenon of the temporary depression of zero, which causes the thermometer to read higher during the first moments of its exposure to steam than it does when the expansion of the bulb has reached its limit. It is easy to secure a rising meniscus at the steam point by momentarily cooling the thermometer. At the zero point the meniscus generally begins to rise",
+   "c0s1": "{{c|{{sc|Table I}}.—''Temperature of Steam at pressures from 790 to 710 mm.''}}\n\n{| style=\"margin:auto\"\n|Pressure (corrected)||790||780||770||760||750||740||730||720||710\n|-\n|Steam temp. = 100° C. +||+1·083||+·726||+·365||0||−·369||−·742||−1·120||−1·502||−1·888\n|}\n\n{{block center|Approximate formula <math>dt_1 = \\cdot 0367(\\text{H}-760) - \\cdot 000020(\\text{H}-760)^2</math> (5)}}",
+   "c1s4": "¶\nIf the barometer has a brass scale correct at 0° C., and <math>\\text{H}</math> be the reading in millimetres, the correction for temperature is made approximately by subtracting <math>0\\cdot00163\\,\\text{H}</math> mm.\n\nIf <math>\\text{L}</math> is the latitude and <math>\\text{M}</math> the height of the station in metres above the sea-level, the correction for gravitation is approximately made by subtracting <math>(0\\cdot0026 \\cos 2\\text{L} + 0\\cdot0000002\\text{M})\\,\\text{H}</math> mm.\n\nThe zero of the thermometer is observed immediately after the",
+   "c2s4": "after five or ten minutes. The question, however, is not of much importance, as the error, if any, is regular, and the correction for capillarity is necessarily uncertain.\n\n(IV) ''Stem-Exposure Correction.''—When the bulb of a mercury thermometer is immersed in a bath at a temperature <math>t</math>, and a part of the column of mercury having a length of <math>n</math> degrees is exposed to a lower temperature <math>t_2</math>, the reading of the thermometer will be"
   },
   "figure_files": {
    "c1f1": "eb1911 v26 p0863 c1f1.png"
@@ -138,30 +162,30 @@
   "figures": [
    {
     "box": [
-     104,
+     105,
      1248,
-     370,
-     2019
+     388,
+     2020
     ],
     "caption": [
-     117,
-     2028,
-     370,
+     116,
+     2025,
+     372,
      2094
     ],
     "column": 1,
     "inset": true,
     "page_box": [
-     80,
-     1248,
-     402,
+     77,
+     1241,
+     393,
      2015
     ]
    }
   ],
   "across": [
    [
-    80,
+    77,
     2673,
     2209,
     2872
@@ -178,22 +202,25 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
     "calls": 2,
-    "input_tokens": 4959,
-    "output_tokens": 202,
+    "input_tokens": 5017,
+    "output_tokens": 122,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 9,
-    "input_tokens": 7808,
-    "output_tokens": 5425,
+    "model": "claude-opus-5-5",
+    "calls": 11,
+    "input_tokens": 8350,
+    "output_tokens": 5664,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 17316
+    "cache_read_input_tokens": 26631
    }
-  }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|MERCURIAL]|THERMOMETRY|823}}</noinclude>[[File:eb1911 v26 p0863 c1f1.png|center|111px]]\n{{c|{{sc|Fig. 1.}}—Hypsometer.}}\n\nin so complicated a manner on the past history It is a most serious difficulty in accurate mer-, especially at high temperatures. The most l of correction appears to be to observe the ''er each reading'', and to reckon the temperature ero thus observed. The rationale of this pro- lepression is produced at the high temperature han the subsequent recovery at the low tempera- neter is taken from the bath and allowed to e exposure to the air. As soon as it reaches lunged in the melting ice, and the lowest point the temporary zero.\n\nmulae have been proposed by various observers ression of zero for different kinds of glass:—\n\n{{block center|''al'', <math>dz=0\\cdot0040(t/100)^2</math> . . .}}\n{{block center|''r'', 0−100° C., <math>dz=(8886t+10\\cdot84t^2)\\,10^{-7}</math>}}\n{{block center|, 0−190° C., <math>dz=(7970t+329t^2)10^{-7}</math> (4)}}\n{{block center|ii., <math>dz=(7100t-8t^2)\\,10^{-7}</math> . . .}}\n\nn these formulae stands for the depression of n exposure to a temperature <math>t</math>. The depression s as large in French crystal as in English flint ughly as the square of <math>t</math>. ''Verre dur'' and Jena, s of hard glass chosen as standards in France ctively, on account of the comparatively small o which they are liable. At low temperatures, epression is very nearly proportional to <math>t</math>, but ove 100° C. it is necessary to adopt another e term depending upon <math>t^2</math> is more important. useful as giving an idea of the probable size n any case, but they cannot be employed in practice except in the simplest cases and at low temperatures. On account of these temporary changes of zero, a mercury thermometer intended for the most accurate work at ordinary temperatures (as in calorimetry) should preferably never be heated above 40° or 50° C., and certainly never above 100° C. Above 100° C. the changes of zero become more irregular and more variable, depending on the rate of cooling and on the sequence of previous observations, so that even if the method of observing the zero after each reading is adopted, the order of precision attainable rapidly diminishes.\n\n(II) ''Fundamental Interval''.—The thermometer to be tested is exposed to steam condensing at atmospheric pressure in an apparatus which is often called a “hypsometer,” constructed with double walls to protect the inner tube containing the thermometer from any cooling by radiation. The standard atmospheric pressure at which the temperature of the steam is by definition equal to 100° C. is equivalent to that produced by a column of mercury at 0° C. and 760 millimetres high, the force of gravitation being equal to that at sea-level in latitude 45°. The atmospheric pressure at the time of observation is reduced to these units by applying the usual corrections for temperature and gravitation. If the pressure is near 760 mm., the temperature of the steam may be deduced by assuming that it increases at the rate of 1° C. for 27·2 mm. of pressure. If the pressure is not near 760 mm., the application of the correction is less certain, but is generally taken from Regnault's tables, from which the following data are extracted. Thermometers cannot be satisfactorily tested at an elevated station where the height of the barometer <math>\\text{H}</math> is less than 700 mm., as the steam point is too uncertain.\n\nA convenient type of hypsometer is shown in fig. 1. The boiler B is separate from the steam-jacket A surrounding the thermometer. A gauge G is provided for indicating the steam pressure (difference from atmospheric) and a condenser C for returning the condensed steam to the boiler. The thermometer is observed by the microscope M. steam point. If <math>n</math> be the interval in degrees of the scale between the two observations, and if <math>t_1</math> be the temperature of the steam, the fundamental interval of the thermometer may be taken as <math>100\\ n/t_1</math>, provided that <math>t_1</math> is nearly 100° C. Since all the readings of a thermometer have to be corrected for the error of the fundamental interval, by dividing by the fundamental interval thus observed and multiplying by 100, it is a matter of some convenience in practice to have the instrument graduated so that the difference between the readings in ice and at 100° C. is very nearly 100° of the stem. The correction can then be applied as a small percentage independently of the other corrections. The method of determining the fundamental interval above described applies to all other kinds of thermometers, except that it is not generally necessary to observe the zero ''after'' the steam point. The temperature of the steam <math>t_1</math> should be expressed in the scale of the thermometer tested, if the scale differs appreciably from that of Regnault.\n\n(III) ''Pressure Correction.''—The corrections for variations of internal and external pressure on the bulb are of some importance in accurate thermometry, but can be applied with considerable certainty at moderate temperatures. The correction for external pressure is assumed to be proportional to the change of pressure, and to be independent of the temperature. It is generally determined by enclosing the thermometer to be tested in a vessel of water, and observing the change of reading on exhausting or readmitting the air. The correction is generally between one and two thousandths of a degree per centimetre of mercury change of pressure, but must be determined for each thermometer, as it depends on the nature of the glass and on the form and thickness of the walls of the bulb. The coefficient of the correction for internal pressure is greater than that for external pressure by the difference between the compressibility of mercury and that of glass, and may be calculated from it by assuming this relation. If <math>b_0</math>, <math>b_1</math>, are the external and internal coefficients, expressed in degrees of temperature per centimetre of mercury, we have the relation\n{{block center|<math>b_1 = b_0 + 0{\\cdot}00015</math>, degrees per cm. of mercury . . (6)}} The coefficient of internal pressure can also be determined by taking readings in the horizontal and vertical positions when the thermometer is at some steady temperature such as that of ice or steam. The reading of the thermometer is generally reduced to an external pressure of one standard atmosphere, and to an internal pressure corresponding to the horizontal position. It is also possible to include the internal pressure correction in the scale correction, if the thermometer is always read in the vertical position. In addition to the variations of internal pressure due to the column of mercury in the stem, there are variations due to capillarity. The internal pressure is greater when the mercury is rising than when it is falling, and the reading is depressed to an extent depending on the fineness of the bore and the thinness of the walls of the bulb. The capillary pressure does not depend only on the bore of the tube, but also apparently to an even greater extent on the state of the walls of the tube. The least trace of dirt on the glass or on the mercury is capable of producing capillary pressures much greater than would be calculated from the diameter of the tube. Even in the best thermometers, when there are no inequalities of bore sufficient to account for the observed variations, it is seldom found that the mercury runs equally easily in all parts of the stem. These variations of capillary pressure are somewhat capricious, and set a limit to the order of accuracy attainable with the mercury thermometer. It appears that the difference of reading of a good thermometer between a rising and falling meniscus may amount to five or ten thousandths of a degree. The difference may be reduced by continuous tapping, but it is generally best to take readings always on a rising column, especially as the variations in the angle of contact, and therefore in the capillary pressure, appear to be much smaller for the rising meniscus. In ordinary work the zero reading and the steam reading would both generally correspond to a falling meniscus; the former necessarily, the latter on account of the phenomenon of the temporary depression of zero, which causes the thermometer to read higher during the first moments of its exposure to steam than it does when the expansion of the bulb has reached its limit. It is easy to secure a rising meniscus at the steam point by momentarily cooling the thermometer. At the zero point the meniscus generally begins to rise\n\n{{c|{{sc|Table}} I.—''Temperature of Steam at pressures from 790 to 710 mm.''}}\n\nPressure (corrected) . . . 790 780 770 760 750 740 730 720 710\n\nSteam temp. = 100° C. + . . +1·083 +·726 +·365 0 −·369 −·742 −1·120 −1·502 −1·888\n\n{{block center|Approximate formula <math>dt_1 = \\cdot0367(\\text{H}-760) - \\cdot000020(\\text{H}-760)^2</math> . . . . . . . (5)}}\n\nIf the barometer has a brass scale correct at 0° C., and <math>\\text{H}</math> be the reading in millimetres, the correction for temperature is made approximately by subtracting <math>0\\cdot00163\\,\\text{H}</math> mm.\n\nIf <math>\\text{L}</math> is the latitude and <math>\\text{M}</math> the height of the station in metres above the sea-level, the correction for gravitation is approximately made by subtracting <math>(0\\cdot0026 \\cos 2\\text{L}+0\\cdot0000002\\text{M})\\,\\text{H}</math> mm.\n\nThe zero of the thermometer is observed immediately after the after five or ten minutes. The question, however, is not of much importance, as the error, if any, is regular, and the correction for capillarity is necessarily uncertain.\n\n(IV) ''Stem-Exposure Correction.''—When the bulb of a mercury thermometer is immersed in a bath at a temperature <math>t</math>, and a part of the column of mercury having a length of <math>n</math> degrees is exposed to a lower temperature <math>t_2</math>, the reading of the thermometer will be<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|MERCURIAL]|THERMOMETRY|823}}</noinclude>because it depends in so complicated a manner on the past history and on the time. It is a most serious difficulty in accurate mercurial thermometry, especially at high temperatures. The most satisfactory method of correction appears to be to observe the zero ''immediately after each reading'', and to reckon the temperature from the variable zero thus observed. The rationale of this procedure is that the depression is produced at the high temperature much more rapidly than the subsequent recovery at the low temperature. The thermometer is taken from the bath and allowed to cool rapidly by free exposure to the air. As soon as it reaches 40° or 50° C., it is plunged in the melting ice, and the lowest point reached is taken as the temporary zero.\n\nThe following formulae have been proposed by various observers to represent the depression of zero for different kinds of glass:—\n\n{{block center|<math>\\left.\\begin{array}{l}\\text{Pernet, French }\\textit{cristal}\\text{, } dz=0\\cdot0040(t/100)^2 \\quad . \\quad . \\quad . \\\\ \\text{Guillaume, }\\textit{Verre dur}\\text{, }0-100^\\circ\\ \\text{C., } dz=(8886t+10\\cdot84t^2)\\ 10^{-7} \\\\ \\text{Bottcher, }\\textit{Cristal dur}\\text{, }0-190^\\circ\\ \\text{C., } dz=(7970t+329t^2)10^{-7} \\\\ \\text{,,} \\quad \\text{Jena, 16, iii., } dz=(7100t-8t^2)\\ 10^{-7} \\quad . \\quad . \\quad . \\end{array}\\right\\}.</math> (4)}}\n\nThe symbol <math>dz</math> in these formulae stands for the depression of zero produced by an exposure to a temperature <math>t</math>. The depression is about three times as large in French crystal as in English flint glass, and varies roughly as the square of <math>t</math>. ''Verre dur'' and Jena, 16, iii., are varieties of hard glass chosen as standards in France and Germany respectively, on account of the comparatively small depression of zero to which they are liable. At low temperatures, up to 50° C., the depression is very nearly proportional to <math>t</math>, but at temperatures above 100° C. it is necessary to adopt another formula in which the term depending upon <math>t^2</math> is more important. These formulae are useful as giving an idea of the probable size of the correction in any case, but they cannot be employed in practice except in the simplest cases and at practice except in the simplest cases and at low temperatures. On account of these temporary changes of zero, a mercury thermometer intended for the most accurate work at ordinary temperatures (as in calorimetry) should preferably never be heated above 40° or 50° C., and certainly never above 100° C. Above 100° C. the changes of zero become more irregular and more variable, depending on the rate of cooling and on the sequence of previous observations, so that even if the method of observing the zero after each reading is adopted, the order of precision attainable rapidly diminishes.\n\n[[File:eb1911 v26 p0863 c1f1.png|center|113px]]\n{{c|{{sc|Fig.}} 1.—Hypsometer.}}\n\n(II) ''Fundamental Interval''.—The thermometer to be tested is exposed to steam condensing at atmospheric pressure in an apparatus which is often called a “hypsometer,” constructed with double walls to protect the inner tube containing the thermometer from any cooling by radiation. The standard atmospheric pressure at which the temperature of the steam is by definition equal to 100° C. is equivalent to that produced by a column of mercury at 0° C. and 760 millimetres high, the force of gravitation being equal to that at sea-level in latitude 45°. The atmospheric pressure at the time of observation is reduced to these units by applying the usual corrections for temperature and gravitation. If the pressure is near 760 mm., the temperature of the steam may be deduced by assuming that it increases at the rate of 1° C. for 27·2 mm. of pressure. If the pressure is not near 760 mm., the application of the correction is less certain, but is generally taken from Regnault's tables, from which the following data are extracted. Thermometers cannot be satisfactorily tested at an elevated station where the height of the barometer <math>\\text{H}</math> is less than 700 mm., as the steam point is too uncertain.\n\nA convenient type of hypsometer is shown in fig. 1. The boiler B is separate from the steam-jacket A surrounding the thermometer. A gauge G is provided for indicating the steam pressure (difference from atmospheric) and a condenser C for returning the condensed steam to the boiler. The thermometer is observed by the microscope M. steam point. If <math>n</math> be the interval in degrees of the scale between the two observations, and if <math>t_1</math> be the temperature of the steam, the fundamental interval of the thermometer may be taken as <math>100\\ n/t_1</math>, provided that <math>t_1</math> is nearly 100° C. Since all the readings of a thermometer have to be corrected for the error of the fundamental interval, by dividing by the fundamental interval thus observed and multiplying by 100, it is a matter of some convenience in practice to have the instrument graduated so that the difference between the readings in ice and at 100° C. is very nearly 100° of the stem. The correction can then be applied as a small percentage independently of the other corrections. The method of determining the fundamental interval above described applies to all other kinds of thermometers, except that it is not generally necessary to observe the zero ''after'' the steam point. The temperature of the steam <math>t_1</math> should be expressed in the scale of the thermometer tested, if the scale differs appreciably from that of Regnault.\n\n(III) ''Pressure Correction''.—The corrections for variations of internal and external pressure on the bulb are of some importance in accurate thermometry, but can be applied with considerable certainty at moderate temperatures. The correction for external pressure is assumed to be proportional to the change of pressure, and to be independent of the temperature. It is generally determined by enclosing the thermometer to be tested in a vessel of water, and observing the change of reading on exhausting or readmitting the air. The correction is generally between one and two thousandths of a degree per centimetre of mercury change of pressure, but must be determined for each thermometer, as it depends on the nature of the glass and on the form and thickness of the walls of the bulb. The coefficient of the correction for internal pressure is greater than that for external pressure by the difference between the compressibility of mercury and that of glass, and may be calculated from it by assuming this relation. If <math>b_0</math>, <math>b_1</math>, are the external and internal coefficients, expressed in degrees of temperature per centimetre of mercury, we have the relation\n\n{{block center|<math>b_1 = b_0 + 0{\\cdot}00015</math>, degrees per cm. of mercury . . (6)}}\n\nThe coefficient of internal pressure can also be determined by taking readings in the horizontal and vertical positions when the thermometer is at some steady temperature such as that of ice or steam. The reading of the thermometer is generally reduced to an external pressure of one standard atmosphere, and to an internal pressure corresponding to the horizontal position. It is also possible to include the internal pressure correction in the scale correction, if the thermometer is always read in the vertical position. In addition to the variations of internal pressure due to the column of mercury in the stem, there are variations due to capillarity. The internal pressure is greater when the mercury is rising than when it is falling, and the reading is depressed to an extent depending on the fineness of the bore and the thinness of the walls of the bulb. The capillary pressure does not depend only on the bore of the tube, but also apparently to an even greater extent on the state of the walls of the tube. The least trace of dirt on the glass or on the mercury is capable of producing capillary pressures much greater than would be calculated from the diameter of the tube. Even in the best thermometers, when there are no inequalities of bore sufficient to account for the observed variations, it is seldom found that the mercury runs equally easily in all parts of the stem. These variations of capillary pressure are somewhat capricious, and set a limit to the order of accuracy attainable with the mercury thermometer. It appears that the difference of reading of a good thermometer between a rising and falling meniscus may amount to five or ten thousandths of a degree. The difference may be reduced by continuous tapping, but it is generally best to take readings always on a rising column, especially as the variations in the angle of contact, and therefore in the capillary pressure, appear to be much smaller for the rising meniscus. In ordinary work the zero reading and the steam reading would both generally correspond to a falling meniscus; the former necessarily, the latter on account of the phenomenon of the temporary depression of zero, which causes the thermometer to read higher during the first moments of its exposure to steam than it does when the expansion of the bulb has reached its limit. It is easy to secure a rising meniscus at the steam point by momentarily cooling the thermometer. At the zero point the meniscus generally begins to rise\n\n{{c|{{sc|Table I}}.—''Temperature of Steam at pressures from 790 to 710 mm.''}}\n\n{| style=\"margin:auto\"\n|Pressure (corrected)||790||780||770||760||750||740||730||720||710\n|-\n|Steam temp. = 100° C. +||+1·083||+·726||+·365||0||−·369||−·742||−1·120||−1·502||−1·888\n|}\n\n{{block center|Approximate formula <math>dt_1 = \\cdot 0367(\\text{H}-760) - \\cdot 000020(\\text{H}-760)^2</math> (5)}}\n\nIf the barometer has a brass scale correct at 0° C., and <math>\\text{H}</math> be the reading in millimetres, the correction for temperature is made approximately by subtracting <math>0\\cdot00163\\,\\text{H}</math> mm.\n\nIf <math>\\text{L}</math> is the latitude and <math>\\text{M}</math> the height of the station in metres above the sea-level, the correction for gravitation is approximately made by subtracting <math>(0\\cdot0026 \\cos 2\\text{L} + 0\\cdot0000002\\text{M})\\,\\text{H}</math> mm.\n\nThe zero of the thermometer is observed immediately after the after five or ten minutes. The question, however, is not of much importance, as the error, if any, is regular, and the correction for capillarity is necessarily uncertain.\n\n(IV) ''Stem-Exposure Correction.''—When the bulb of a mercury thermometer is immersed in a bath at a temperature <math>t</math>, and a part of the column of mercury having a length of <math>n</math> degrees is exposed to a lower temperature <math>t_2</math>, the reading of the thermometer will be<noinclude><references/></noinclude>"
 }
