@@ -6,7 +6,7 @@
  "provenance": {
   "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n368",
   "model": "claude-opus-5-5",
-  "transcribed": "2026-10-07",
+  "transcribed": "2026-10-09",
   "angle": 0.0,
   "column_width": 1090,
   "items": [
@@ -22,19 +22,30 @@
     ]
    },
    {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     201,
+     1189,
+     697
+    ]
+   },
+   {
     "name": "c1f1",
     "kind": "figure",
     "column": 1,
     "box": [
      121,
-     214,
+     697,
      1189,
      1884
     ]
    },
    {
-    "name": "c1s1",
-    "kind": "text",
+    "name": "c1c1",
+    "kind": "caption",
     "column": 1,
     "box": [
      121,
@@ -51,7 +62,18 @@
      121,
      2015,
      1189,
-     3109
+     2420
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     121,
+     2420,
+     1189,
+     3120
     ]
    },
    {
@@ -73,7 +95,7 @@
      1189,
      1248,
      2267,
-     1421
+     1424
     ]
    },
    {
@@ -82,30 +104,32 @@
     "column": 2,
     "box": [
      1189,
-     1421,
+     1424,
      2267,
-     2525
+     2517
     ]
    },
    {
-    "name": "c2s3",
-    "kind": "text",
+    "name": "c2c1",
+    "kind": "caption",
     "column": 2,
     "box": [
      1189,
-     2525,
+     2519,
      2267,
-     3126
+     3127
     ]
    }
   ],
   "readings": {
    "head": "{{RunningHeader|344|TRYPANOSOMES|}}",
-   "c1s1": "{{c|'''(A–E, after Lav. and Mesnil; F, after Wasiel and Senn.)'''}}\n{{c|{{sc|Fig.}} 6.—Unequal Division and “Budding” process in ''T. lewisi.'' ''m'', Parent-individual; ''d'', Daughter-individual; ''d′'', Daughter-individual dividing. (× 2000.)}}",
-   "c1s2": "G. Keysselitz (16), from fishes; also several other piscine Trypanosomes have their development phases in leeches worked on by Brumpt (5''a''). In addition, a Trypanosome whose vertebrate host is yet unknown (''T. grayi'') has been studied in detail by Minchin (41''a'').\n\nIt is impracticable here to consider fully all the various developmental phases and modifications of the life-cycle described as occurring in the above parasites. In view, however, of the great interest excited by Schaudinn's work on avian parasites, as well as on account of the far-reaching importance of his conclusions to the study of the Haematozoa, a brief summary of his celebrated research is necessary.\n\nAccording to Schaudinn's account, he was dealing with two separate Trypanosome parasites of the Little Owl (''Athene noctua''), viz. ''Trypanomorpha'' (''Trypanosoma'') ''noctuae'' and ''Trypanosoma'' (''Spirochaete'') ''ziemanni''. The latter organism, in certain phases, very closely resembles a ''Spirochaete''. In the blood of the owl resting, intracellular phases of both parasites alternate with active trypaniform ones; and, when in the former condition, Schaudinn considers that the parasites are identical with what have been formerly regarded as distinct Haemosporidia, ''Halteridium'' and a ''Leucocytozoon'' respectively. In other words, he considers that these two Haemosporidian forms are really only phases in the life-history of particular Trypanosomes. To this life-cycle belongs the formation of sexual individuals and their conjugation on arrival in the gnat (''Culex''); the process is described as agreeing in the main, in both cases, with what has already been made known by MacCallum for another species of ''Halteridium''. The male gametes, it may be noted, are said to possess the essential characters of a Trypanosome. The motile copula or ookinete formed in the gnat gives\n\n{{smaller|<sup>1</sup> ''T. brucei'' has also been studied in a Tsetse-fly (''G. fusca'') by Stuhlmann (54''a'').}}",
+   "c1s1": "rise to little fusiform parasites; with growth, these gradually assume the adult appearance.\n\n'''''Development and Life-cycle.''''' Comprehensive researches (1905, seq.) have made it evident that Trypanosomes have a much more varied and complex development and life-history than was previously supposed. This has now been found to be the case in widely-differing parasites, occurring in widely-different hosts. The following examples have been investigated: ''Trypanosoma lewisi'' (also, but much less completely, ''T. brucei''),<sup>1</sup> among mammalian forms, described by Prowazek (47); ''T. ziemanni'' and ''Trypanomorpha noctuae'', among avian parasites, described by Schaudinn (50); ''Trypanosoma inopinatum'', among batrachian forms, described by A. Billet (1''a'' and 2), ''T. barbatulae'' and ''Trypanoplasma varium'', described by Léger (32 and 33), and ''T. borreli'', by",
+   "c1c1": "{{c|'''(A–E, after Lav. and Mesnil; F, after Wasiel and Senn.)'''<br />{{sc|Fig.}} 6.—Unequal Division and “Budding” process in ''T. lewisi''. ''m'', Parent-individual; ''d'', Daughter-individual; ''d′'', Daughter-individual dividing. (× 2000.)}}",
+   "c1s2": "G. Keysselitz (16), from fishes; also several other piscine Trypanosomes have their development phases in leeches worked on by Brumpt (5''a''). In addition, a Trypanosome whose vertebrate host is yet unknown (''T. grayi'') has been studied in detail by Minchin (41''a'').\n\nIt is impracticable here to consider fully all the various developmental phases and modifications of the life-cycle described as occurring in the above parasites. In view, however, of the great interest excited by Schaudinn's work on avian parasites, as well as on account of the far-reaching importance of his conclusions to the study of the Haematozoa, a brief summary of his celebrated research",
+   "c1s3": "is necessary.\n\nAccording to Schaudinn's account, he was dealing with two separate Trypanosome parasites of the Little Owl (''Athene noctua''), viz. ''Trypanomorpha'' (''Trypanosoma'') ''noctuae'' and ''Trypanosoma'' (''Spirochaete'') ''ziemanni''. The latter organism, in certain phases, very closely resembles a ''Spirochaete''. In the blood of the owl resting, intracellular phases of both parasites alternate with active trypaniform ones; and, when in the former condition, Schaudinn considers that the parasites are identical with what have been formerly regarded as distinct Haemosporidia, ''Halteridium'' and a ''Leucocytozoon'' respectively. In other words, he considers that these two Haemosporidian forms are really only phases in the life-history of particular Trypanosomes. To this life-cycle belongs the formation of sexual individuals and their conjugation on arrival in the gnat (''Culex''); the process is described as agreeing in the main, in both cases, with what has already been made known by MacCallum for another species of ''Halteridium''. The male gametes, it may be noted, are said to possess the essential characters of a Trypanosome. The motile copula or ookinete formed in the gnat gives\n\n{{smaller block|<sup>1</sup> ''T. brucei'' has also been studied in a Tsetse-fly (''G. fusca'') by Stuhlmann (54''a'').}}",
    "c2s1": "rise to one of three types of Trypanosome individual: indifferent, male or female. The development of an indifferent ookinete into an indifferent Trypanosome is shown in fig. 7, from which it will be seen that the cytological details are very complex. The indifferent parasites exhibit an alternation of resting, attached phases with active periods, during which they multiply actively and become very abundant in the insect. The male forms, which are very small and the homologues of the microgametes developed in the blood, appear to die off soon. The female Trypanosomes, on the other hand, grow to a large size, laying up a store of reserve nutriment. They are very sluggish and do not divide. They are the most resistant to unfavourable conditions of environment, and are able, by a process of parthenogenesis, to give rise to ordinary, indifferent forms again, which can repopulate the gnat.\n\nSo far as regards the remarkable connexion between Trypanosomes and Haemosporidia indicated by Schaudinn, this has met with a great deal of criticism on the part of Novy and McNeal among others, and it must be admitted that up to 1909 no definite corroboration can be said to have been brought forward. Again, the spirochaetiform ''Trypanosoma'' (''T. ziemanni'') described may have been really a true ''Spirochaete'', ''i.e.'' a Bacterium. In short, it is quite possible Schaudinn did not sufficiently distinguish between the life-cycles of four distinct parasites of the Little Owl: a Trypanosome, a ''Spirochaete'', a ''Halteridium'' and a ''Leucocytozoon''; though, on the other hand, this is by no means proved. However this may be, the research of subsequent workers—''e.g.'' Brumpt (5a), Léger (32, 33), Keysselitz (16), Prowazek (47), Minchin (41b) and others—has undoubtedly shown that much of Schaudinn's scheme of the life-history of a Trypanosome is well-founded. It is certain, for instance, that the three types of form which he discovered, viz. indifferent, male or female, can be recognized in many cases, often in the vertebrate, but always more sharply differentiated in",
    "c2s2": "the invertebrate. Moreover, it is very probable that conjugation occurs soon after the arrival of the parasites in their specific invertebrate host; and this act may perhaps give rise to an aflagellar copula, which is gregariniform and comparable to an ookinete. Different investigators, it may be noted, have described various",
-   "c2s3": "{{c|(After Schaudinn.)}}\n\n{{c|{{sc|Fig. 7.}}—Development of an Ookinete (of ''Halteridium'') into an indifferent Trypanosome (''Trypanomorpha'').}}\n\n{{c|A–D shows the formation of the two nuclear elements (trophonucleus and kinetonucleus) from the definitive nucleus (synkaryon) of the ookinete.}}\n\n{{c|E–H shows the formation of the myonemes and the flagellar border (flagellum) of the undulating membrane, by means of a greatly elongated nuclear-spindle.}}\n\n{{c|''t.chr'', Trophonuclear chromosome.<br>''k.chr'', Kinetonuclear do.<br>''c'', Centrosomic granule.<br>''a.s'', First axial spindle.<br>''a.s''<sup>2</sup>, ''a.s''<sup>3</sup>, Second and third do.<br>''t'', Trophonucleus.<br>''k'', Kinetonucleus.<br>''k.c'', Kinetonuclear centrosome.<br>''t.c'', Trophonuclear centrosome.<br>''m'', Myonemes.<br>''f.b'', Flagellar border of undulating-membrane (3rd axial spindle).<br>''c.''<sup>3</sup>, Its proximal centrosome (its distal one vanishing as such).}}"
+   "c2c1": "{{c|'''(After Schaudinn.)'''}}\n\n{{c|{{sc|Fig.}} 7.—Development of an Ookinete (of ''Halteridium'') into an indifferent Trypanosome (''Trypanomorpha'').}}\n\n{{c|A–D shows the formation of the two nuclear elements (trophonucleus and kinetonucleus) from the definitive nucleus (synkaryon) of the ookinete.}}\n\n{{c|E–H shows the formation of the myonemes and the flagellar border (flagellum) of the undulating membrane, by means of a greatly elongated nuclear-spindle.}}\n\n{| style=\"margin:auto\"\n|''t.chr'',||Trophonuclear chromosome.||''t.c'',||Trophonuclear centrosome.\n|-\n|''k.chr'',||Kinetonuclear do.||''m'',||Myonemes.\n|-\n|''c'',||Centrosomic granule.||rowspan=3|''f.b'',||rowspan=3|Flagellar border of undulating-membrane (3rd axial spindle).\n|-\n|''a.s'',||First axial spindle.\n|-\n|''a.s''<sup>2</sup>, ''a.s''<sup>3</sup>,||Second and third do.\n|-\n|''t'',||Trophonucleus.||rowspan=3|''c.''<sup>3</sup>,||rowspan=3|Its proximal centrosome (its distal one vanishing as such).\n|-\n|''k'',||Kinetonucleus.\n|-\n|''k.c'',||Kinetonuclear centrosome.\n|}"
   },
   "figure_files": {
    "c1f1": "eb1911 v27 p0361 c1f1.png",
@@ -115,44 +139,44 @@
    {
     "box": [
      178,
-     707,
-     1060,
+     711,
+     1047,
      1881
     ],
     "caption": [
-     155,
-     1883,
-     1168,
+     158,
+     1882,
+     1169,
      2015
     ],
     "column": 1,
     "inset": false,
     "page_box": [
-     249,
-     704,
+     173,
+     700,
      1159,
-     1863
+     1885
     ]
    },
    {
     "box": [
-     1208,
-     1424,
-     2213,
-     2518
+     1210,
+     1427,
+     2266,
+     2517
     ],
     "caption": [
-     1233,
-     2524,
+     1230,
+     2521,
      2260,
-     3126
+     3127
     ],
     "column": 2,
     "inset": false,
     "page_box": [
      1213,
-     1430,
-     2242,
+     1423,
+     2275,
      2524
     ]
    }
@@ -173,24 +197,36 @@
   },
   "usage": {
    "figures": {
-    "batch": true,
+    "model": "claude-opus-5-5",
+    "batch": false,
     "calls": 3,
-    "input_tokens": 6275,
-    "output_tokens": 168,
+    "input_tokens": 6387,
+    "output_tokens": 182,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0
    },
    "text": {
-    "batch": true,
-    "calls": 6,
-    "input_tokens": 4756,
-    "output_tokens": 2780,
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 8,
+    "input_tokens": 5508,
+    "output_tokens": 3641,
     "cache_creation_input_tokens": 0,
-    "cache_read_input_tokens": 11544
+    "cache_read_input_tokens": 20064
    }
   },
-  "carried": [],
+  "captions_marked": true,
+  "carried": [
+   {
+    "kind": "shoulder",
+    "markup": "{{EB1911 Shoulder Heading|Development<br>and Life-cycle.}}",
+    "letters": "DEVELOPMENTANDLIFECYCLE",
+    "before": "occurring in widely-different hosts.",
+    "after": "The following examples have",
+    "in_text": false
+   }
+  ],
   "carried_unplaced": []
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|344|TRYPANOSOMES|}}</noinclude>[[File:eb1911 v27 p0361 c1f1.png|center|353px]]\n{{c|'''(A–E, after Lav. and Mesnil; F, after Wasiel and Senn.)'''}}\n{{c|{{sc|Fig.}} 6.—Unequal Division and “Budding” process in ''T. lewisi.'' ''m'', Parent-individual; ''d'', Daughter-individual; ''d′'', Daughter-individual dividing. (× 2000.)}}\n\nG. Keysselitz (16), from fishes; also several other piscine Trypanosomes have their development phases in leeches worked on by Brumpt (5''a''). In addition, a Trypanosome whose vertebrate host is yet unknown (''T. grayi'') has been studied in detail by Minchin (41''a'').\n\nIt is impracticable here to consider fully all the various developmental phases and modifications of the life-cycle described as occurring in the above parasites. In view, however, of the great interest excited by Schaudinn's work on avian parasites, as well as on account of the far-reaching importance of his conclusions to the study of the Haematozoa, a brief summary of his celebrated research is necessary.\n\nAccording to Schaudinn's account, he was dealing with two separate Trypanosome parasites of the Little Owl (''Athene noctua''), viz. ''Trypanomorpha'' (''Trypanosoma'') ''noctuae'' and ''Trypanosoma'' (''Spirochaete'') ''ziemanni''. The latter organism, in certain phases, very closely resembles a ''Spirochaete''. In the blood of the owl resting, intracellular phases of both parasites alternate with active trypaniform ones; and, when in the former condition, Schaudinn considers that the parasites are identical with what have been formerly regarded as distinct Haemosporidia, ''Halteridium'' and a ''Leucocytozoon'' respectively. In other words, he considers that these two Haemosporidian forms are really only phases in the life-history of particular Trypanosomes. To this life-cycle belongs the formation of sexual individuals and their conjugation on arrival in the gnat (''Culex''); the process is described as agreeing in the main, in both cases, with what has already been made known by MacCallum for another species of ''Halteridium''. The male gametes, it may be noted, are said to possess the essential characters of a Trypanosome. The motile copula or ookinete formed in the gnat gives\n\n{{smaller|<sup>1</sup> ''T. brucei'' has also been studied in a Tsetse-fly (''G. fusca'') by Stuhlmann (54''a'').}} rise to one of three types of Trypanosome individual: indifferent, male or female. The development of an indifferent ookinete into an indifferent Trypanosome is shown in fig. 7, from which it will be seen that the cytological details are very complex. The indifferent parasites exhibit an alternation of resting, attached phases with active periods, during which they multiply actively and become very abundant in the insect. The male forms, which are very small and the homologues of the microgametes developed in the blood, appear to die off soon. The female Trypanosomes, on the other hand, grow to a large size, laying up a store of reserve nutriment. They are very sluggish and do not divide. They are the most resistant to unfavourable conditions of environment, and are able, by a process of parthenogenesis, to give rise to ordinary, indifferent forms again, which can repopulate the gnat.\n\nSo far as regards the remarkable connexion between Trypanosomes and Haemosporidia indicated by Schaudinn, this has met with a great deal of criticism on the part of Novy and McNeal among others, and it must be admitted that up to 1909 no definite corroboration can be said to have been brought forward. Again, the spirochaetiform ''Trypanosoma'' (''T. ziemanni'') described may have been really a true ''Spirochaete'', ''i.e.'' a Bacterium. In short, it is quite possible Schaudinn did not sufficiently distinguish between the life-cycles of four distinct parasites of the Little Owl: a Trypanosome, a ''Spirochaete'', a ''Halteridium'' and a ''Leucocytozoon''; though, on the other hand, this is by no means proved. However this may be, the research of subsequent workers—''e.g.'' Brumpt (5a), Léger (32, 33), Keysselitz (16), Prowazek (47), Minchin (41b) and others—has undoubtedly shown that much of Schaudinn's scheme of the life-history of a Trypanosome is well-founded. It is certain, for instance, that the three types of form which he discovered, viz. indifferent, male or female, can be recognized in many cases, often in the vertebrate, but always more sharply differentiated in the invertebrate. Moreover, it is very probable that conjugation occurs soon after the arrival of the parasites in their specific invertebrate host; and this act may perhaps give rise to an aflagellar copula, which is gregariniform and comparable to an ookinete. Different investigators, it may be noted, have described various\n\n[[File:eb1911 v27 p0361 c2f1.png|center|356px]]\n{{c|(After Schaudinn.)}}\n\n{{c|{{sc|Fig. 7.}}—Development of an Ookinete (of ''Halteridium'') into an indifferent Trypanosome (''Trypanomorpha'').}}\n\n{{c|A–D shows the formation of the two nuclear elements (trophonucleus and kinetonucleus) from the definitive nucleus (synkaryon) of the ookinete.}}\n\n{{c|E–H shows the formation of the myonemes and the flagellar border (flagellum) of the undulating membrane, by means of a greatly elongated nuclear-spindle.}}\n\n{{c|''t.chr'', Trophonuclear chromosome.<br>''k.chr'', Kinetonuclear do.<br>''c'', Centrosomic granule.<br>''a.s'', First axial spindle.<br>''a.s''<sup>2</sup>, ''a.s''<sup>3</sup>, Second and third do.<br>''t'', Trophonucleus.<br>''k'', Kinetonucleus.<br>''k.c'', Kinetonuclear centrosome.<br>''t.c'', Trophonuclear centrosome.<br>''m'', Myonemes.<br>''f.b'', Flagellar border of undulating-membrane (3rd axial spindle).<br>''c.''<sup>3</sup>, Its proximal centrosome (its distal one vanishing as such).}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|344|TRYPANOSOMES|}}</noinclude>rise to little fusiform parasites; with growth, these gradually assume the adult appearance.\n\nComprehensive researches (1905, seq.) have made it evident that Trypanosomes have a much more varied and complex development and life-history than was previously supposed. This has now been found to be the case in widely-differing parasites, occurring in widely-different hosts.\n{{EB1911 Shoulder Heading|Development<br>and Life-cycle.}}\n The following examples have been investigated: ''Trypanosoma lewisi'' (also, but much less completely, ''T. brucei''),<sup>1</sup> among mammalian forms, described by Prowazek (47); ''T. ziemanni'' and ''Trypanomorpha noctuae'', among avian parasites, described by Schaudinn (50); ''Trypanosoma inopinatum'', among batrachian forms, described by A. Billet (1''a'' and 2), ''T. barbatulae'' and ''Trypanoplasma varium'', described by Léger (32 and 33), and ''T. borreli'', by G. Keysselitz (16), from fishes; also several other piscine Trypanosomes have their development phases in leeches worked on by Brumpt (5''a''). In addition, a Trypanosome whose vertebrate host is yet unknown (''T. grayi'') has been studied in detail by Minchin (41''a'').\n\n[[File:eb1911 v27 p0361 c1f1.png|center|353px]]\n{{c|'''(A–E, after Lav. and Mesnil; F, after Wasiel and Senn.)'''<br />{{sc|Fig.}} 6.—Unequal Division and “Budding” process in ''T. lewisi''. ''m'', Parent-individual; ''d'', Daughter-individual; ''d′'', Daughter-individual dividing. (× 2000.)}}\n\nIt is impracticable here to consider fully all the various developmental phases and modifications of the life-cycle described as occurring in the above parasites. In view, however, of the great interest excited by Schaudinn's work on avian parasites, as well as on account of the far-reaching importance of his conclusions to the study of the Haematozoa, a brief summary of his celebrated research is necessary.\n\nAccording to Schaudinn's account, he was dealing with two separate Trypanosome parasites of the Little Owl (''Athene noctua''), viz. ''Trypanomorpha'' (''Trypanosoma'') ''noctuae'' and ''Trypanosoma'' (''Spirochaete'') ''ziemanni''. The latter organism, in certain phases, very closely resembles a ''Spirochaete''. In the blood of the owl resting, intracellular phases of both parasites alternate with active trypaniform ones; and, when in the former condition, Schaudinn considers that the parasites are identical with what have been formerly regarded as distinct Haemosporidia, ''Halteridium'' and a ''Leucocytozoon'' respectively. In other words, he considers that these two Haemosporidian forms are really only phases in the life-history of particular Trypanosomes. To this life-cycle belongs the formation of sexual individuals and their conjugation on arrival in the gnat (''Culex''); the process is described as agreeing in the main, in both cases, with what has already been made known by MacCallum for another species of ''Halteridium''. The male gametes, it may be noted, are said to possess the essential characters of a Trypanosome. The motile copula or ookinete formed in the gnat gives\n\n{{smaller block|<sup>1</sup> ''T. brucei'' has also been studied in a Tsetse-fly (''G. fusca'') by Stuhlmann (54''a'').}} rise to one of three types of Trypanosome individual: indifferent, male or female. The development of an indifferent ookinete into an indifferent Trypanosome is shown in fig. 7, from which it will be seen that the cytological details are very complex. The indifferent parasites exhibit an alternation of resting, attached phases with active periods, during which they multiply actively and become very abundant in the insect. The male forms, which are very small and the homologues of the microgametes developed in the blood, appear to die off soon. The female Trypanosomes, on the other hand, grow to a large size, laying up a store of reserve nutriment. They are very sluggish and do not divide. They are the most resistant to unfavourable conditions of environment, and are able, by a process of parthenogenesis, to give rise to ordinary, indifferent forms again, which can repopulate the gnat.\n\nSo far as regards the remarkable connexion between Trypanosomes and Haemosporidia indicated by Schaudinn, this has met with a great deal of criticism on the part of Novy and McNeal among others, and it must be admitted that up to 1909 no definite corroboration can be said to have been brought forward. Again, the spirochaetiform ''Trypanosoma'' (''T. ziemanni'') described may have been really a true ''Spirochaete'', ''i.e.'' a Bacterium. In short, it is quite possible Schaudinn did not sufficiently distinguish between the life-cycles of four distinct parasites of the Little Owl: a Trypanosome, a ''Spirochaete'', a ''Halteridium'' and a ''Leucocytozoon''; though, on the other hand, this is by no means proved. However this may be, the research of subsequent workers—''e.g.'' Brumpt (5a), Léger (32, 33), Keysselitz (16), Prowazek (47), Minchin (41b) and others—has undoubtedly shown that much of Schaudinn's scheme of the life-history of a Trypanosome is well-founded. It is certain, for instance, that the three types of form which he discovered, viz. indifferent, male or female, can be recognized in many cases, often in the vertebrate, but always more sharply differentiated in the invertebrate. Moreover, it is very probable that conjugation occurs soon after the arrival of the parasites in their specific invertebrate host; and this act may perhaps give rise to an aflagellar copula, which is gregariniform and comparable to an ookinete. Different investigators, it may be noted, have described various\n\n[[File:eb1911 v27 p0361 c2f1.png|center|356px]]\n{{c|'''(After Schaudinn.)'''}}\n\n{{c|{{sc|Fig.}} 7.—Development of an Ookinete (of ''Halteridium'') into an indifferent Trypanosome (''Trypanomorpha'').}}\n\n{{c|A–D shows the formation of the two nuclear elements (trophonucleus and kinetonucleus) from the definitive nucleus (synkaryon) of the ookinete.}}\n\n{{c|E–H shows the formation of the myonemes and the flagellar border (flagellum) of the undulating membrane, by means of a greatly elongated nuclear-spindle.}}\n\n{| style=\"margin:auto\"\n|''t.chr'',||Trophonuclear chromosome.||''t.c'',||Trophonuclear centrosome.\n|-\n|''k.chr'',||Kinetonuclear do.||''m'',||Myonemes.\n|-\n|''c'',||Centrosomic granule.||rowspan=3|''f.b'',||rowspan=3|Flagellar border of undulating-membrane (3rd axial spindle).\n|-\n|''a.s'',||First axial spindle.\n|-\n|''a.s''<sup>2</sup>, ''a.s''<sup>3</sup>,||Second and third do.\n|-\n|''t'',||Trophonucleus.||rowspan=3|''c.''<sup>3</sup>,||rowspan=3|Its proximal centrosome (its distal one vanishing as such).\n|-\n|''k'',||Kinetonucleus.\n|-\n|''k.c'',||Kinetonuclear centrosome.\n|}<noinclude><references/></noinclude>"
 }

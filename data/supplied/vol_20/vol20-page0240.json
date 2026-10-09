@@ -1,0 +1,320 @@
+{
+ "volume": 20,
+ "page_number": 240,
+ "source": "scan",
+ "title": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/240",
+ "provenance": {
+  "scan": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/240",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-09",
+  "angle": 0.2,
+  "column_width": 490,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     117,
+     71,
+     2348,
+     144
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     144,
+     2348,
+     201
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     201,
+     1259,
+     702
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1259,
+     201,
+     2348,
+     702
+    ]
+   },
+   {
+    "name": "c0s2",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     702,
+     2348,
+     737
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     737,
+     1069,
+     1068
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1069,
+     737,
+     2348,
+     1068
+    ]
+   },
+   {
+    "name": "c0s3",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     1068,
+     2348,
+     1103
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     1103,
+     1070,
+     1747
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1070,
+     1103,
+     2348,
+     1747
+    ]
+   },
+   {
+    "name": "c0s4",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     1747,
+     2348,
+     1782
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     1782,
+     1074,
+     2469
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1074,
+     1782,
+     2348,
+     2469
+    ]
+   },
+   {
+    "name": "c0s5",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     2469,
+     2348,
+     2504
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     2504,
+     1077,
+     3072
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1077,
+     2504,
+     2348,
+     3072
+    ]
+   },
+   {
+    "name": "c0s6",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     3072,
+     2348,
+     3177
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|212|ORDNANCE|[HISTORY AND CONSTRUCTION}}",
+   "c0s1": "{{sc|Table}} XIII.—''Austrian Naval Ordnance'', 1910.",
+   "c1s1": "{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.||Weight of Projectile.\n|-\n| ||In.||Tons.||lb.||lb.\n|-\n|30·5 cm.||12·01||. .||. .||990\n|-\n|24 ,,||9·45||21·5||120·6||474\n|-\n|19 ,,||7·5||11·6||56||198\n|-\n|15 ,,||5·91||5·2||28·8||112·5\n|-\n|12 ,,||4·72||2·0||9·7||52·4\n|-\n|7 ,,||2·75||. .||3·3||15·2\n|-\n|4·7 ,,||1·85||0·253||0·79||3·3\n|-\n|3·7 ,,||1·46||. . .||. . .||1·0\n|}",
+   "c2s1": "",
+   "c0s2": "{{c|{{sc|Table}} XIV.—''Austrian Coast Artillery'', 1910.}}",
+   "c1s2": "{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.\n|-\n|||In.||Tons.||lb.\n|-\n|30·5 cm.||12·01||. .||198·4\n|-\n|28 ,,||11·024||38||220\n|-\n|15 ,,||5·906||4·28||18·28\n|}",
+   "c2s2": "{| style=\"margin:auto\"\n|Weight of Projectile.||Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|lb.||Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||\n|-\n|981||2297||35,860||37·8||. .||rowspan=3|Tubular Prism\n|-\n|760||1722||15,615||22·5||. .\n|-\n|100||2297||3,659||17·2||4\n|}",
+   "c0s3": "¶\n{{c|{{sc|Table}} XV.—''United States Naval Guns'', 1910.}}",
+   "c1s3": "{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.\n|-\n|||In.||Tons.||lb.\n|-\n|13 in.||13||61·4||180\n|-\n|12 ,,||12||56·1||340\n|-\n|10 ,,||10||34·6||207·5\n|-\n|8 ,,||8||18·7||98·5\n|-\n|7 ,,||7||12·7||58\n|-\n|6 ,,||6||8·6||37\n|-\n|5 ,,||5||5||23·8\n|-\n|4·7 ,,||4·72||. .||. .\n|-\n|4 ,,||4||2·9||12·3\n|-\n|3 ,,||3||1·0||3·85\n|-\n|6 pr.||2·24||. .||. .\n|-\n|3 ,,||1·81||. .||. .\n|}",
+   "c2s3": "{| style=\"margin:auto\"\n|Weight of Projectile.||Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|lb.||Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||rowspan=2|Nitro-Cellulose\n|-\n|1130||2000||31,333||31·8||. .\n|-\n|870||2950||52,483||52||. .||,,\n|-\n|510||2700||25,772||38||. .||,,\n|-\n|260||2750||13,630||31·1||. .||,,\n|-\n|165||2700||8,340||25·9||. .||,,\n|-\n|105||2800||8,710||23·5||. .||,,\n|-\n|50||3150||3,439||21·1||. .||,,\n|-\n|45||2600||2,110||15·5||. .||,,\n|-\n|33||2800||1,794||16·1||. .||,,\n|-\n|13||2700||657||11·0||. .||,,\n|-\n|6||2240||209||6·6||. .||,,\n|-\n|3||2200||100||5·4||. .||,,\n|}",
+   "c0s4": "{{sc|Table}} XVI.—''United States Coast Defence Guns.''",
+   "c1s4": "{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.\n|-\n|||In.||Tons.||lb.\n|-\n|16 in.||16||127||612\n|-\n|14 ,,||14||50||280\n|-\n|12 ,,||12||59||340\n|-\n|10 ,,||10||34·3||205\n|-\n|8 ,,||8||14·4||80\n|-\n|6 ,,||6||9·45||35\n|-\n|5 ,,||5||4·96||20\n|-\n|4·72 ,,||4·72||2·75||10·5\n|-\n|4 ,,||4||1·61||7·5\n|-\n|3 ,,||3||1·2||6·0\n|-\n|2·24 ,,||2·24||0·38||1·35\n|-\n|rowspan=2|12 ,, mortar||rowspan=2|12||rowspan=2|13||54\n|-\n|62\n|}",
+   "c2s4": "{| style=\"margin:auto\"\n|Weight of Projectile.||Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|lb.||Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||rowspan=2|Nitro-Cellulose\n|-\n|2400||2150||77,000||46·4||..\n|-\n|1660||2150||53,220||41·0||..||,,\n|-\n|1046||2250||36,730||37·6||..||,,\n|-\n|604||2250||21,200||31·5||..||,,\n|-\n|316||2200||10,600||24·5||..||,,\n|-\n|106||2600||4,970||21·1||..||,,\n|-\n|58||2600||2,718||17·2||..||,,\n|-\n|45||2600||2,110||15·5||..||,,\n|-\n|33||2300||1,210||12·0||..||,,\n|-\n|15||2600||704||11·25||..||,,\n|-\n|6||2400||240||7·3||..||,,\n|-\n|1046||1150||9,590||..||..||,,\n|-\n|824||1325||10,025||||..||,,\n|}",
+   "c0s5": "{{sc|Table}} XVII.—''Japanese Naval Ordnance'', 1910.",
+   "c1s5": "",
+   "c2s5": "{| style=\"margin:auto\"\n|Weight of Projectile.||Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|lb.||Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||\n|-\n|990||2308||36,500||37·3||0·2||MD. Cordite\n|-\n|850||2800||46,200||47·2||2·0||,,\n|-\n|500||2850||28,170||40·9||3·0||,,\n|-\n|250||2740||13,015||30·3||2·0||,,\n|-\n|100||2800||5,436||29·3||7·0||,,\n|-\n|45||2188||1,494||12·0||8||,,\n|-\n|12·5||2210||423||8·0||12||,,\n|-\n|10·8||2716||553||10·2||..||,,\n|-\n|6·0||1818||138||4·8||20||,,\n|-\n|3·3||1873||80||4·25||20||,,\n|}",
+   "c0s6": "¶\n''Note.''—The Japanese fleet has mainly been armed by Armstrong's Works, but the \"Katori\" was armed by Vickers', and those ships taken from the Russians during the late war are armed with guns from Krupp or Obuchoff. Guns of all sizes are now, however, being constructed in Japan, so that the country is no longer dependent on foreign factories."
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    817,
+    159,
+    1589,
+    204
+   ],
+   [
+    831,
+    699,
+    1571,
+    740
+   ],
+   [
+    867,
+    1065,
+    1617,
+    1106
+   ],
+   [
+    808,
+    1744,
+    1603,
+    1785
+   ],
+   [
+    817,
+    2466,
+    1608,
+    2507
+   ],
+   [
+    118,
+    3070,
+    2352,
+    3179
+   ]
+  ],
+  "refused": [],
+  "unread": {
+   "c2s1": "too short for its ink (385 characters for 3 printed lines)",
+   "c1s5": "too short for its ink (313 characters for 4 printed lines)"
+  },
+  "rejected": {
+   "c2s1": "{| style=\"margin:auto\"\n|Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||\n|-\n|2625||47,300||46·0||..||\n|-\n|2595||22,121||34·5||..||\n|-\n|2700||10,025||27·3||3||\n|-\n|2608||5,308||22·0||10||\n|-\n|2264||3,554||13·7||10||\n|-\n|2378||..||10·4||..||\n|-\n|2329||..||5·8||..||\n|-\n|2346||..||..||..||\n|}",
+   "c1s5": "{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.\n|-\n|||In.||Tons.||℔.\n|-\n|||12·5||66||. .\n|-\n|||12||59||305\n|-\n|||10||34||166·5\n|-\n|||8||17·5||44\n|-\n|||6||7||35\n|-\n|||4·72||2·1||5·5\n|-\n|||3||0·6||1·94\n|-\n|||3||0·9||. .\n|-\n|||2·24||0·4||0·5\n|-\n|||1·35||0·25||0·4\n|}"
+  },
+  "disagreements": {
+   "0": [
+    6,
+    10
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 1,
+    "input_tokens": 2673,
+    "output_tokens": 127,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 19,
+    "input_tokens": 11346,
+    "output_tokens": 6835,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 47652
+   },
+   "reread 1": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 4,
+    "input_tokens": 2974,
+    "output_tokens": 1904,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 10032
+   }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": [],
+  "reread": [
+   {
+    "date": "2026-10-09",
+    "model": "claude-opus-5-5",
+    "recut": false,
+    "names": [
+     "c2s1",
+     "c1s5"
+    ]
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|212|ORDNANCE|[HISTORY AND CONSTRUCTION}}</noinclude>{{sc|Table}} XIII.—''Austrian Naval Ordnance'', 1910.\n\n{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.||Weight of Projectile.\n|-\n| ||In.||Tons.||lb.||lb.\n|-\n|30·5 cm.||12·01||. .||. .||990\n|-\n|24 ,,||9·45||21·5||120·6||474\n|-\n|19 ,,||7·5||11·6||56||198\n|-\n|15 ,,||5·91||5·2||28·8||112·5\n|-\n|12 ,,||4·72||2·0||9·7||52·4\n|-\n|7 ,,||2·75||. .||3·3||15·2\n|-\n|4·7 ,,||1·85||0·253||0·79||3·3\n|-\n|3·7 ,,||1·46||. . .||. . .||1·0\n|}\n\n{{c|{{sc|Table}} XIV.—''Austrian Coast Artillery'', 1910.}}\n\n{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.\n|-\n|||In.||Tons.||lb.\n|-\n|30·5 cm.||12·01||. .||198·4\n|-\n|28 ,,||11·024||38||220\n|-\n|15 ,,||5·906||4·28||18·28\n|}\n\n{| style=\"margin:auto\"\n|Weight of Projectile.||Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|lb.||Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||\n|-\n|981||2297||35,860||37·8||. .||rowspan=3|Tubular Prism\n|-\n|760||1722||15,615||22·5||. .\n|-\n|100||2297||3,659||17·2||4\n|}\n\n{{c|{{sc|Table}} XV.—''United States Naval Guns'', 1910.}}\n\n{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.\n|-\n|||In.||Tons.||lb.\n|-\n|13 in.||13||61·4||180\n|-\n|12 ,,||12||56·1||340\n|-\n|10 ,,||10||34·6||207·5\n|-\n|8 ,,||8||18·7||98·5\n|-\n|7 ,,||7||12·7||58\n|-\n|6 ,,||6||8·6||37\n|-\n|5 ,,||5||5||23·8\n|-\n|4·7 ,,||4·72||. .||. .\n|-\n|4 ,,||4||2·9||12·3\n|-\n|3 ,,||3||1·0||3·85\n|-\n|6 pr.||2·24||. .||. .\n|-\n|3 ,,||1·81||. .||. .\n|}\n\n{| style=\"margin:auto\"\n|Weight of Projectile.||Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|lb.||Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||rowspan=2|Nitro-Cellulose\n|-\n|1130||2000||31,333||31·8||. .\n|-\n|870||2950||52,483||52||. .||,,\n|-\n|510||2700||25,772||38||. .||,,\n|-\n|260||2750||13,630||31·1||. .||,,\n|-\n|165||2700||8,340||25·9||. .||,,\n|-\n|105||2800||8,710||23·5||. .||,,\n|-\n|50||3150||3,439||21·1||. .||,,\n|-\n|45||2600||2,110||15·5||. .||,,\n|-\n|33||2800||1,794||16·1||. .||,,\n|-\n|13||2700||657||11·0||. .||,,\n|-\n|6||2240||209||6·6||. .||,,\n|-\n|3||2200||100||5·4||. .||,,\n|}\n\n{{sc|Table}} XVI.—''United States Coast Defence Guns.''\n\n{| style=\"margin:auto\"\n|Official Designation of Gun.||Calibre.||Weight of Gun.||Weight of Charge.\n|-\n|||In.||Tons.||lb.\n|-\n|16 in.||16||127||612\n|-\n|14 ,,||14||50||280\n|-\n|12 ,,||12||59||340\n|-\n|10 ,,||10||34·3||205\n|-\n|8 ,,||8||14·4||80\n|-\n|6 ,,||6||9·45||35\n|-\n|5 ,,||5||4·96||20\n|-\n|4·72 ,,||4·72||2·75||10·5\n|-\n|4 ,,||4||1·61||7·5\n|-\n|3 ,,||3||1·2||6·0\n|-\n|2·24 ,,||2·24||0·38||1·35\n|-\n|rowspan=2|12 ,, mortar||rowspan=2|12||rowspan=2|13||54\n|-\n|62\n|}\n\n{| style=\"margin:auto\"\n|Weight of Projectile.||Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|lb.||Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||rowspan=2|Nitro-Cellulose\n|-\n|2400||2150||77,000||46·4||..\n|-\n|1660||2150||53,220||41·0||..||,,\n|-\n|1046||2250||36,730||37·6||..||,,\n|-\n|604||2250||21,200||31·5||..||,,\n|-\n|316||2200||10,600||24·5||..||,,\n|-\n|106||2600||4,970||21·1||..||,,\n|-\n|58||2600||2,718||17·2||..||,,\n|-\n|45||2600||2,110||15·5||..||,,\n|-\n|33||2300||1,210||12·0||..||,,\n|-\n|15||2600||704||11·25||..||,,\n|-\n|6||2400||240||7·3||..||,,\n|-\n|1046||1150||9,590||..||..||,,\n|-\n|824||1325||10,025||||..||,,\n|}\n\n{{sc|Table}} XVII.—''Japanese Naval Ordnance'', 1910.\n\n{| style=\"margin:auto\"\n|Weight of Projectile.||Muzzle Velocity.||Muzzle Energy.||Perforation of Wrought Iron.||Rate of firing Rounds.||Propellant.\n|-\n|lb.||Ft.-Secs.||Ft.-Tons.||In.||Per Minute.||\n|-\n|990||2308||36,500||37·3||0·2||MD. Cordite\n|-\n|850||2800||46,200||47·2||2·0||,,\n|-\n|500||2850||28,170||40·9||3·0||,,\n|-\n|250||2740||13,015||30·3||2·0||,,\n|-\n|100||2800||5,436||29·3||7·0||,,\n|-\n|45||2188||1,494||12·0||8||,,\n|-\n|12·5||2210||423||8·0||12||,,\n|-\n|10·8||2716||553||10·2||..||,,\n|-\n|6·0||1818||138||4·8||20||,,\n|-\n|3·3||1873||80||4·25||20||,,\n|}\n\n''Note.''—The Japanese fleet has mainly been armed by Armstrong's Works, but the \"Katori\" was armed by Vickers', and those ships taken from the Russians during the late war are armed with guns from Krupp or Obuchoff. Guns of all sizes are now, however, being constructed in Japan, so that the country is no longer dependent on foreign factories.<noinclude><references/></noinclude>"
+}

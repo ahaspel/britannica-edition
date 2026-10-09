@@ -76,8 +76,39 @@ def leaf_image(vol: int, leaf: int) -> Image.Image:
     return Image.open(io.BytesIO(z.read(name)))
 
 
+class NotATextPage(LookupError):
+    """A Wikisource page the transcriber must not read: no printed number (a
+    plate, a blank), or no one leaf both page maps agree it is."""
+
+
+@lru_cache(maxsize=None)
+def _printed(name: str) -> dict:
+    import json
+    return json.loads(current_corpus().derived(name).read_text(encoding="utf-8"))
+
+
+def page_leaf(vol: int, ws_page: int) -> int:
+    """The leaf a Wikisource page is read from: the one the reader's scan
+    viewer shows for it — its printed number (printed_pages.json), then the
+    leaf printing that number (printed_pages_leaf.json) — and the one
+    `leaf_for_ws` (scan_map) gives, which must be the same.  Two answers that
+    differ, or a page with no printed number, and the page is not read: a
+    transcription from a doubtful leaf is a wrong page with our name on it
+    (2026-10-07: 13 such, vol 20, 23, 24, 26)."""
+    number = _printed("printed_pages.json").get(str(vol), {}).get(str(ws_page))
+    if number is None:
+        raise NotATextPage(f"vol {vol} ws {ws_page} has no printed number: a plate or a blank")
+    leaves = [int(leaf) for leaf, n in _printed("printed_pages_leaf.json").get(str(vol), {}).items()
+              if n == number]
+    mapped = leaf_for_ws(vol, ws_page)
+    if leaves != [mapped]:
+        raise NotATextPage(f"vol {vol} ws {ws_page} (p. {number}): the viewer shows leaf "
+                           f"{leaves or 'none'}, scan_map says {mapped}")
+    return mapped
+
+
 def page_scan(vol: int, ws_page: int) -> Image.Image:
-    return leaf_image(vol, leaf_for_ws(vol, ws_page))
+    return leaf_image(vol, page_leaf(vol, ws_page))
 
 
 def page_layout(vol: int, ws_page: int):
@@ -90,7 +121,7 @@ def page_layout(vol: int, ws_page: int):
 def page_scan_url(vol: int, ws_page: int) -> str:
     """Where the leaf a transcription was read from is published — what it
     names as its source."""
-    leaf = leaf_for_ws(vol, ws_page)
+    leaf = page_leaf(vol, ws_page)
     if vol == 20:
         return f"https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/{leaf - 1}"
     if _site_only(vol, leaf):

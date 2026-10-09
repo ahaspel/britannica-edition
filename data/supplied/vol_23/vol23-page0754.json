@@ -1,0 +1,250 @@
+{
+ "volume": 23,
+ "page_number": 754,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri23chisrich/page/n768",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri23chisrich/page/n768",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-09",
+  "angle": 0.05,
+  "column_width": 1225,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     129,
+     117,
+     2404,
+     190
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     190,
+     1192,
+     1280
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     1280,
+     1192,
+     2139
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     129,
+     2139,
+     1192,
+     3123
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1192,
+     190,
+     2404,
+     860
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1192,
+     860,
+     2404,
+     1360
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1192,
+     1360,
+     2404,
+     2497
+    ]
+   },
+   {
+    "name": "c2c1",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1192,
+     2503,
+     2404,
+     2605
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1192,
+     2605,
+     2404,
+     2725
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1590,
+     2748,
+     2404,
+     2989
+    ]
+   },
+   {
+    "name": "c2c2",
+    "kind": "caption",
+    "column": 2,
+    "box": [
+     1590,
+     3012,
+     2404,
+     3050
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1192,
+     2725,
+     1590,
+     3123
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|716|ROPE AND ROPE-MAKING|}}",
+   "c1s1": "are placed in a horizontal position, have a lateral movement, so that the finished yarn may be wound on evenly. This machine is made for ordinary rope yarn, and for binder twine for self-reaping machines. When all three spreading machines are used in conjunction with the spiral drawing frames, the automatic feeding arrangement is sometimes considered unnecessary, because of the uniformity of the slivers when delivered from the finishing drawing frame.\n\nFigs. 14 and 15, Plate III., show two sheds filled with preparing machinery for the manufacture of binder twine. A complete system of Manila machinery, as recommended by Messrs Lawsons, Leeds, would consist of the following:—\n\n<poem>1 No. 1 spreading and hackling machine.\n1 ,, 2 ,, ,, ,, ,,\n1 ,, 3 ,, ,, ,, ,,\n1 spiral 1st drawing frame, 1 head, 88 in. reach, 4 slivers per head.\n1 ,, 2nd ,, 2 heads, 88 in. ,, 6 ,, ,,\n20 improved automatic spinners or jennies of 2 spindles each.</poem>\n\nThe length of sliver from a given length of fibre is proportional to the drafts and inversely proportional to the doublings. Thus, if\n\n<poem><math>d_1</math>, <math>d_2</math>, <math>d_3</math>, <math>d_4</math>, <math>d_5</math>, <math>d_6</math>, = the drafts,\n<math>s_1</math>, <math>s_2</math>, <math>s_3</math>, <math>s_4</math>, <math>s_5</math>, <math>s_6</math>, = the number of slivers,\n<math>l</math> = the feet per ℔ on the feed-table of No. 1 spreading machine,\n<math>\\text{L}</math> = the feet per ℔ delivered at the automatic spinner, then:—</poem>\n\n{{block center|<math>l \\times \\underbrace{\\frac{d_1}{s_1} \\times \\frac{d_2}{s_2} \\times \\frac{d_3}{s_3}} \\times \\underbrace{\\frac{d_4}{s_4} \\times \\frac{d_5}{s_5}} \\times \\frac{d_6}{s_6} = \\text{L}</math>.}}\n\n{| style=\"margin:auto\"\n|No. 1.||No. 2.||No. 3.||No. 1.||No. 2.||rowspan=2|Automatic spinner.\n|-\n|colspan=3|Spreading machines.||colspan=2|Drawing frames.\n|}\n\nA numerical example, showing the drafts, slivers, &c., used for the production of No. 22<sup>s</sup> rope yarn of 330 ft. per ℔ appears below:—",
+   "c1s2": "{{block center|<math>l \\times \\underbrace{\\frac{15\\cdot5}{1} \\times \\frac{15\\cdot5}{12} \\times \\frac{15\\cdot5}{12}}_{\\text{Spreading machines.}} \\times \\underbrace{\\frac{7\\cdot42}{4} \\times \\frac{9\\cdot7}{4}}_{\\text{Drawing frames.}} \\times \\underset{\\text{Automatic spinner.}}{\\frac{5\\frac{3}{16}}{1}} = 330 \\text{ ft.}</math>}}\nWhence <math>l = \\cdot536</math> ft., say ·54 ft. per ℔; that is to say, 1 ℔ of Manila fibre, approximately 6 in. in length, spread on the feed-table of No. 1 spreading and hackling machine, and subjected to the above drafts and doublings, would produce yarn No. 22<sup>s</sup> of 330 ft. per ℔ from the automatic spinner.\n\nThe bobbins from these automatic spinners may be used in the bank at the rope-walk as already indicated, or they may be taken to what is termed a “house machine.” These machines are of two distinct kinds—vertical and horizontal. They perform the same work as the machines in the rope-walk, but take up much less space.\n\nFigs. 16 and 17, Plate IV., illustrate two types of horizontal machines, each of which is capable of completing a rope in one operation. The process is pretty clear in fig. 17, which shows that eighteen threads are treated at once. On the right, and driven by spur gearing, are three revolving carriages or creels, each containing six bobbins. Each group revolves as the yarns are drawn off the bobbins, and thus the threads are formed into three strands. As the strands emerge from the guides, they converge towards three other guides, are laid together, and finally the finished rope is wound on to the reel.",
+   "c1s3": "¶\n{{smaller block|In principle the vertical machine is the same as the horizontal machine, and the rope is, consequently, made in one operation. Any number of bobbins, from 24 to 128, may be twisted at the same time; the machine in fig. 18, Plate IV., is for making a rope of three strands, each with 12 threads, or 36 threads in all. These machines are also made to make ropes of four strands. The strands are formed by the rotation of the carriages, from the top of which each strand passes. The three strands then converge to, and pass through, the top of the machine, where they are laid into a rope. The latter passes over a series of guide pulleys, and is ultimately wound on the large drum shown in front of the machine. Such a machine for making a 128-thread, four-strand rope, occupies only about 125 sq. ft.—8 ft. 9 in.×14 ft. 4 in.}}\n\nIn addition to the heavy rope there are many varieties of cord and twine made by means of the preparing, spinning and doubling machines. The fishing industry takes many different types for lines and nets, while the variety of cord and twine for other industrial and for household purposes is almost unlimited. All yarn from long vegetable fibre is more or less rough as it leaves the spinning frame, even after two or more threads have been twisted together. It is therefore necessary, for many uses, to impart a polish to the cord or twine. Special machines are used for this purpose. A certain number of bobbins, depending upon the capacity of the machine, are placed in a bank, and the ends are collected and passed under a roller which is immersed in hot starch. The yarns become saturated",
+   "c2s1": "with this starch, but, as they emerge from the starch-box, the superfluous starch is removed by passing the yarns between two rollers. The yarns now pass over a series of drying cylinders and polishing rollers, and are finally rewound by the same machine on bobbins. These machines are termed bobbin-to-bobbin polishing machines. In some cases the hot drying cylinders are replaced by a system of hot air drying. The finished yarns are now made up by machinery into hanks, balls or cheeses, according to which happens to be the best state for future use and for transport.\n\n{{smaller block|''Driving Ropes''.—It has already been stated that cotton driving ropes are extensively applied in the transmission of motive power. Although the mechanical efficiency of transmission by ropes is less than that obtained by wheel gearing, rope driving has several compensating advantages:—\n\n1. It is practically noiseless.\n\n2. It occupies less space than belt driving, and the slip is not}}",
+   "c2s2": "so great.\n\n3. The turning movement is better; machines therefore run more steadily and production is increased.\n\n4. Shafts may be run at higher speeds.\n\n5. Greater range of drives; anything from 10 ft. to over 80 ft., and much greater distances when carrier pulleys are used.\n\n6. The drive is usually obtained by a number of ropes; if one should break, the rope may be removed and the machinery run, in most cases, until stopping-time.\n\nThe number of ropes to be used depends upon the power to be transmitted and upon the surface speed of the driving pulley. The speed of the rope may vary from 2000 ft. to 6000 ft. or over per minute. In some few exceptional cases 60 ropes have been used on one pulley; the number usually varies between 15 and 40. (See also {{sc|Power Transmission}}, § ''Mechanical''.) Fig. 6 shows the",
+   "c2c1": "{{c|{{sc|Fig.}} 6.—Rope Race of a Lancashire Cotton-Spinning Mill, with 38 Lambeth Cotton Driving Ropes, <math>1\\frac{3}{4}</math> in. diameter; engine, 1700 H.P.}}",
+   "c2s3": "application of these ropes, which pass direct from the main driving pulley to the different flats of the mill. Fig. 7 shows the construction of the Lambeth",
+   "c2c2": "{{c|{{sc|Fig.}} 7.—Lambeth Cotton Rope.}}",
+   "c2s4": "four-strand cotton rope. There are two distinct systems of arranging the ropes on the driver and the driven pulleys. In the United Kingdom each rope is independent of all the others, and, as it is unlikely for more than one rope to break minimum. In America,"
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v23 p0754 c2f1.png",
+   "c2f2": "eb1911 v23 p0754 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1225,
+     1363,
+     2243,
+     2494
+    ],
+    "caption": [
+     1208,
+     2503,
+     2257,
+     2605
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1232,
+     1363,
+     2242,
+     2487
+    ]
+   },
+   {
+    "box": [
+     1602,
+     2752,
+     2253,
+     2985
+    ],
+    "caption": [
+     1675,
+     3012,
+     2175,
+     3048
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1584,
+     2745,
+     2255,
+     3003
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 3,
+    "input_tokens": 6553,
+    "output_tokens": 188,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 10,
+    "input_tokens": 7060,
+    "output_tokens": 5086,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 25080
+   }
+  },
+  "captions_marked": true,
+  "carried": [
+   {
+    "kind": "link",
+    "markup": "{{EB1911 article link|Power Transmission}}",
+    "text": "Power Transmission",
+    "alt": ""
+   }
+  ],
+  "carried_unplaced": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|716|ROPE AND ROPE-MAKING|}}</noinclude>are placed in a horizontal position, have a lateral movement, so that the finished yarn may be wound on evenly. This machine is made for ordinary rope yarn, and for binder twine for self-reaping machines. When all three spreading machines are used in conjunction with the spiral drawing frames, the automatic feeding arrangement is sometimes considered unnecessary, because of the uniformity of the slivers when delivered from the finishing drawing frame.\n\nFigs. 14 and 15, Plate III., show two sheds filled with preparing machinery for the manufacture of binder twine. A complete system of Manila machinery, as recommended by Messrs Lawsons, Leeds, would consist of the following:—\n\n<poem>1 No. 1 spreading and hackling machine.\n1 ,, 2 ,, ,, ,, ,,\n1 ,, 3 ,, ,, ,, ,,\n1 spiral 1st drawing frame, 1 head, 88 in. reach, 4 slivers per head.\n1 ,, 2nd ,, 2 heads, 88 in. ,, 6 ,, ,,\n20 improved automatic spinners or jennies of 2 spindles each.</poem>\n\nThe length of sliver from a given length of fibre is proportional to the drafts and inversely proportional to the doublings. Thus, if\n\n<poem><math>d_1</math>, <math>d_2</math>, <math>d_3</math>, <math>d_4</math>, <math>d_5</math>, <math>d_6</math>, = the drafts,\n<math>s_1</math>, <math>s_2</math>, <math>s_3</math>, <math>s_4</math>, <math>s_5</math>, <math>s_6</math>, = the number of slivers,\n<math>l</math> = the feet per ℔ on the feed-table of No. 1 spreading machine,\n<math>\\text{L}</math> = the feet per ℔ delivered at the automatic spinner, then:—</poem>\n\n{{block center|<math>l \\times \\underbrace{\\frac{d_1}{s_1} \\times \\frac{d_2}{s_2} \\times \\frac{d_3}{s_3}} \\times \\underbrace{\\frac{d_4}{s_4} \\times \\frac{d_5}{s_5}} \\times \\frac{d_6}{s_6} = \\text{L}</math>.}}\n\n{| style=\"margin:auto\"\n|No. 1.||No. 2.||No. 3.||No. 1.||No. 2.||rowspan=2|Automatic spinner.\n|-\n|colspan=3|Spreading machines.||colspan=2|Drawing frames.\n|}\n\nA numerical example, showing the drafts, slivers, &c., used for the production of No. 22<sup>s</sup> rope yarn of 330 ft. per ℔ appears below:— {{block center|<math>l \\times \\underbrace{\\frac{15\\cdot5}{1} \\times \\frac{15\\cdot5}{12} \\times \\frac{15\\cdot5}{12}}_{\\text{Spreading machines.}} \\times \\underbrace{\\frac{7\\cdot42}{4} \\times \\frac{9\\cdot7}{4}}_{\\text{Drawing frames.}} \\times \\underset{\\text{Automatic spinner.}}{\\frac{5\\frac{3}{16}}{1}} = 330 \\text{ ft.}</math>}}\nWhence <math>l = \\cdot536</math> ft., say ·54 ft. per ℔; that is to say, 1 ℔ of Manila fibre, approximately 6 in. in length, spread on the feed-table of No. 1 spreading and hackling machine, and subjected to the above drafts and doublings, would produce yarn No. 22<sup>s</sup> of 330 ft. per ℔ from the automatic spinner.\n\nThe bobbins from these automatic spinners may be used in the bank at the rope-walk as already indicated, or they may be taken to what is termed a “house machine.” These machines are of two distinct kinds—vertical and horizontal. They perform the same work as the machines in the rope-walk, but take up much less space.\n\nFigs. 16 and 17, Plate IV., illustrate two types of horizontal machines, each of which is capable of completing a rope in one operation. The process is pretty clear in fig. 17, which shows that eighteen threads are treated at once. On the right, and driven by spur gearing, are three revolving carriages or creels, each containing six bobbins. Each group revolves as the yarns are drawn off the bobbins, and thus the threads are formed into three strands. As the strands emerge from the guides, they converge towards three other guides, are laid together, and finally the finished rope is wound on to the reel.\n\n{{smaller block|In principle the vertical machine is the same as the horizontal machine, and the rope is, consequently, made in one operation. Any number of bobbins, from 24 to 128, may be twisted at the same time; the machine in fig. 18, Plate IV., is for making a rope of three strands, each with 12 threads, or 36 threads in all. These machines are also made to make ropes of four strands. The strands are formed by the rotation of the carriages, from the top of which each strand passes. The three strands then converge to, and pass through, the top of the machine, where they are laid into a rope. The latter passes over a series of guide pulleys, and is ultimately wound on the large drum shown in front of the machine. Such a machine for making a 128-thread, four-strand rope, occupies only about 125 sq. ft.—8 ft. 9 in.×14 ft. 4 in.}}\n\nIn addition to the heavy rope there are many varieties of cord and twine made by means of the preparing, spinning and doubling machines. The fishing industry takes many different types for lines and nets, while the variety of cord and twine for other industrial and for household purposes is almost unlimited. All yarn from long vegetable fibre is more or less rough as it leaves the spinning frame, even after two or more threads have been twisted together. It is therefore necessary, for many uses, to impart a polish to the cord or twine. Special machines are used for this purpose. A certain number of bobbins, depending upon the capacity of the machine, are placed in a bank, and the ends are collected and passed under a roller which is immersed in hot starch. The yarns become saturated with this starch, but, as they emerge from the starch-box, the superfluous starch is removed by passing the yarns between two rollers. The yarns now pass over a series of drying cylinders and polishing rollers, and are finally rewound by the same machine on bobbins. These machines are termed bobbin-to-bobbin polishing machines. In some cases the hot drying cylinders are replaced by a system of hot air drying. The finished yarns are now made up by machinery into hanks, balls or cheeses, according to which happens to be the best state for future use and for transport.\n\n{{smaller block|''Driving Ropes''.—It has already been stated that cotton driving ropes are extensively applied in the transmission of motive power. Although the mechanical efficiency of transmission by ropes is less than that obtained by wheel gearing, rope driving has several compensating advantages:—\n\n1. It is practically noiseless.\n\n2. It occupies less space than belt driving, and the slip is not}} so great.\n\n3. The turning movement is better; machines therefore run more steadily and production is increased.\n\n4. Shafts may be run at higher speeds.\n\n5. Greater range of drives; anything from 10 ft. to over 80 ft., and much greater distances when carrier pulleys are used.\n\n6. The drive is usually obtained by a number of ropes; if one should break, the rope may be removed and the machinery run, in most cases, until stopping-time.\n\nThe number of ropes to be used depends upon the power to be transmitted and upon the surface speed of the driving pulley. The speed of the rope may vary from 2000 ft. to 6000 ft. or over per minute. In some few exceptional cases 60 ropes have been used on one pulley; the number usually varies between 15 and 40. (See also {{sc|{{EB1911 article link|Power Transmission}}}}, § ''Mechanical''.) Fig. 6 shows the application of these ropes, which pass direct from the main driving pulley to the different flats of the mill. Fig. 7 shows the construction of the Lambeth four-strand cotton rope. There are two distinct systems of arranging the ropes on the driver and the driven pulleys. In the United Kingdom each rope is independent of all the others, and, as it is unlikely for more than one rope to break minimum. In America,\n\n[[File:eb1911 v23 p0754 c2f1.png|center|356px]]\n{{c|{{sc|Fig.}} 6.—Rope Race of a Lancashire Cotton-Spinning Mill, with 38 Lambeth Cotton Driving Ropes, <math>1\\frac{3}{4}</math> in. diameter; engine, 1700 H.P.}}\n\n[[File:eb1911 v23 p0754 c2f2.png|center|239px]]\n{{c|{{sc|Fig.}} 7.—Lambeth Cotton Rope.}}<noinclude><references/></noinclude>"
+}

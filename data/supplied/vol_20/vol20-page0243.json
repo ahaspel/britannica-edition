@@ -1,0 +1,139 @@
+{
+ "volume": 20,
+ "page_number": 243,
+ "source": "scan",
+ "title": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/243",
+ "provenance": {
+  "scan": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/243",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-09",
+  "angle": 0.2,
+  "column_width": 1134,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     38,
+     50,
+     2283,
+     124
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     38,
+     124,
+     1164,
+     1210
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     38,
+     1210,
+     1164,
+     2156
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     38,
+     2156,
+     1164,
+     3190
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1164,
+     124,
+     2283,
+     1151
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1164,
+     1151,
+     2283,
+     2199
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1164,
+     2199,
+     2283,
+     3190
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|HISTORY AND CONSTRUCTION]|ORDNANCE|215}}",
+   "c1s1": "being placed in position the hoop may prematurely grip on the gun and may consequently have to be sacrificed by cutting it off and shrinking on another.\n\nThe dilatation must be so adjusted that the required temperature to obtain it is not higher than that used for annealing the forging, otherwise the effect of this annealing will be modified. There is, therefore, for this reason, considerable risk in shrinking up long hoops of small diameter.\n\nBefore heating hoops of large diameter two or three narrow reference bands are turned on the exterior and their diameter measured; special gauges are prepared to measure these plus the dilatation required. After heating the hoop but before shrinking it, the diameter of the reference bands when tested by these gauges should not be in excess of them. The temperature can then be easily ascertained by dividing the dilatation by the coefficient of expansion of steel per degree F. or C., taking of course the diameter into account.\n\nFor small hoops this method is not convenient, as the hoop cools too quickly; the dilatation must then be obtained by ascertaining the temperature, and this is best done by the use of some form of pyrometer, such as a Siemens water pyrometer, before the hoop is withdrawn from the furnace.\n\nIt may also be desired to obtain a given striking energy or velocity at some definite range—then, the weight of the projectile being decided upon, the muzzle velocity is found from",
+   "c1s2": "the formulas (see {{sc|Ballistics}}) given in Exterior Ballistics. From this and the length of the gun allowable the designer has, with the aid of former experience and the formulas given in Internal Ballistics, to decide on the weight and nature of the powder charge necessary and the internal dimensions of the powder chamber and bore. These data are used to plot what is termed a “ gunmakers' curve,” ''i.e.'' the curve of pressures along the bore which the powder charge decided upon will give. The factor of safety and the maximum allowable stress of the steel forgings or steel wire also being known, the necessary strength of each section of the gun can be easily found and it remains to so proportion each part as to conform to these conditions and to meet certain others, such as facilities for manufacture, which experience only can determine.\n\nWhen the second course consists of a single long tube into which a tapered barrel is driven, as in the system adopted by the English government, the two tubes are treated as a single tube equal in thickness to the two together; but when the second course consists of several tubes shrunk on to the barrel the additional strength, obtained by the initial tension of the shrunk tubes, is sometimes taken account of in the calculation, or the two may be treated as one thick tube.",
+   "c1s3": "¶\nThe gunmakers' formulas for the strength of the gun are obtained from considering the strength of a thick cylinder exposed to unequal internal and external pressures. Supposing a transverse section of the gun to cut through <math>n</math> tubes, the internal radius of the barrel is <math>r_0</math> in., the external radius <math>r_1</math> in., the external radius of the second course is <math>r_2</math> and so on; and the external radius of the jacket is <math>r_n</math>. Then if <math>\\text{T}</math> = a circumferential stress (tension) in tons per square inch, <math>\\text{T}_n</math> = a circumferential stress at radius <math>r_n</math> in., <math>\\text{P}</math> = a radial stress (pressure) in tons per square inch, and <math>\\text{P}_n</math> = a radial stress at radius <math>r_n</math> in., the formulas used in the calculation of the strength of built-up guns are as follows:—\n{{block center|<math>\\text{T} = \\frac{\\text{P}_{n-1}r_{n-1}{}^2 - \\text{P}_n r_n{}^2}{r_n{}^2 - r_{n-1}{}^2} + \\frac{r_{n-1}{}^2 r_n{}^2}{r^2}\\,\\frac{\\text{P}_{n-1} - \\text{P}_n}{r_n{}^2 - r_{n-1}{}^2}</math> (1)}}\n{{block center|<math>\\text{P} = \\frac{r_{n-1}{}^2 r_n{}^2}{r^2}\\,\\frac{\\text{P}_{n-1} - \\text{P}_n}{r_n{}^2 - r_{n-1}{}^2} - \\frac{\\text{P}_{n-1}r_{n-1}{}^2 - \\text{P}_n r_n{}^2}{r_n{}^2 - r_{n-1}{}^2}</math> (2),}}\nwhere <math>r</math> is any intermediate radius in the thickness of a tube\n{{block center|<math>\\text{T}_n - \\text{P}_n = \\text{T} - \\text{P}</math> (3)}}\nin the same tube; also the pressure between the <math>(n-1)^{th}</math> and <math>n^{th}</math> hoops is\n{{block center|<math>\\text{P}_{n-1} = \\frac{r_n{}^2 - r_{n-1}{}^2}{r_n{}^2 + r_{n-1}{}^2}(\\text{T}_{n-1} + \\text{P}_n) + \\text{P}_n</math> (4).}}\n\nEquation (4) is usually known as the ''Gunmakers' formula'' and from it, when <math>\\text{P}_n</math> and <math>\\text{T}_{n-1}</math>, <math>\\text{T}_{n-2}</math> . . . are known the other pressures can be found. The proof tension of the material is kept well below the yielding stress. For ordinary carbon gun steel it is usual to",
+   "c2s1": "consider that the proof tension of the barrel should not exceed 15 tons and of the outer hoops 18 tons per square inch; with nickel gun steel these become 20 tons and 24 tons respectively. If the <math>n^{th}</math> hoop is the exterior tube then <math>\\text{P}_n=0</math>; neglecting the atmospheric pressure.\n\nIn all gun calculations for strength three cases must be considered:\n\n(''a'') When the built-up gun is fired, the stress is called the ''Firing Stress'' and is obtained by the repeated use of equation (4);\n\n(''b'') When the gun, supposed to be a solid homogeneous block of metal is fired, the stress is termed the ''Powder Stress'' and is obtained from the equations (1) and (2);\n\n(''c'') When the built-up gun is in repose, the stress is then called the ''Initial Stress'' or ''Stress of Repose.''\n\nBetween these three cases the following relations hold:—\n{{block center|''Initial Stress''+''Powder Stress''=''Firing Stress'' (5).}}\nIt is best to use different symbols to distinguish each kind of stress. We will use for the Firing Stress <math>\\text{P}</math>, <math>\\text{T}</math>; for Powder Stress <math>p</math>, <math>t</math>; and for the Initial Stress <math>(p)</math>, <math>(t)</math>.\n\nThe method of working will be illustrated by a practical example. Take, for instance, a section across the chamber of a 4·7-in. Q.F. gun, for which the diameter of the chamber is 5 in., that of the barrel 8·2 in., and the external diameter of the jacket 15 in.\n\n{{block center|Here <math>r_0=2{\\cdot}5;\\ r_1=4{\\cdot}1;\\ r_2=7{\\cdot}5</math>}}\n{{block center|<math>\\text{T}_0=15;\\ \\text{T}_1=18;\\ \\text{P}_2=0</math>.}}\nFrom (4) for the ''Firing Stress''\n{{block center|<math>\\text{P}_1=\\frac{(7{\\cdot}5)^2-(4{\\cdot}1)^2}{(7{\\cdot}5)^2+(4{\\cdot}1)^2}\\times18=9{\\cdot}72</math> tons per square inch.}}",
+   "c2s2": "{{block center|<math>\\text{P}_0=\\frac{(4{\\cdot}1)^2-(2{\\cdot}5)^2}{(4{\\cdot}1)^2+(2{\\cdot}5)^2}\\times(15+9{\\cdot}72)+9{\\cdot}72=21</math> tons per square inch.}}\n\nFrom (3) the tension <math>\\text{T}'_n</math> of the outer fibres of the hoops is obtained; thus\n\n{{block center|<math>\\text{T}'_2=\\text{P}_2+\\text{T}_1-\\text{P}_1=18-9{\\cdot}72=8{\\cdot}28</math> tons per square inch.}}\n{{block center|<math>\\text{T}'_1=\\text{P}_1+\\text{T}_0-\\text{P}_0=9{\\cdot}72+15-21=3{\\cdot}72</math> tons per square inch.}}\n\nFor any intermediate radius <math>r</math> the stress can be found by using equations (1) and (2) or (1) or (2) and (3).\n\nFor the ''Powder Stress'' equations (1) and (2) are used by putting <math>n=1</math>, and then <math>p_1=0</math> (also remembering that, as there are two hoops, the outer radius must be written <math>r_2</math>); the formulas become\n\n{{block center|<math>t=\\frac{r_0^2}{r^2}\\frac{r_2^2+r^2}{r_2^2-r_0^2}p_0</math> (6)}}\n{{block center|<math>p=\\frac{r_0^2}{r^2}\\frac{r_2^2-r^2}{r_2^2-r_0^2}p_0</math> (7).}}\n\nWhen <math>r=r_0=2{\\cdot}5</math>, <math>t=t_0</math>, <math>p_0=\\text{P}_0</math> already found and:\n\n{{block center|<math>t_0=\\frac{(7{\\cdot}5)^2+(2{\\cdot}5)^2}{(7{\\cdot}5)^2-(2{\\cdot}5)^2}\\times21=26{\\cdot}25</math> tons.}}\n\nFor the tension of the fibres at the outer circumference\n\n{{block center|<math>t'_2=26{\\cdot}25-21=5{\\cdot}25</math> tons,}}\n\nfrom (3) and for a radius <math>r_2=7{\\cdot}5</math> inches.\n\nThe stress for any intermediate radius <math>r</math> can be obtained from (6) and (7) or, from (6) or (7) and (3).\n\nSubtracting the ''Powder Stress'' from the ''Firing Stress'' the ''Initial Stress'' is obtained, and the various results can be tabulated as",
+   "c2s3": "follows:—\n\n{| style=\"margin:auto\"\n|rowspan=2|Radius.||colspan=3|Tensions.||colspan=3|Pressures.\n|-\n|Firing Stress.||Powder Stress.||Initial Stress.||Firing Stress.||Powder Stress.||Initial Stress.\n|-\n|<math>r_0 = 2\\cdot5</math>||15·0||26·25||−11·25||21·0||21·0||0\n|-\n|<math>r_1 = 4\\cdot1</math>||3·72||11·57||− 7·85||9·72||6·32||3·4\n|-\n|<math>r_1 = 4\\cdot1</math>||18·0||11·57||6·43||9·72||6·32||3·4\n|-\n|<math>r_2 = 7\\cdot5</math>||8·28||5·25||3·03||0||0||0\n|}\n\nIt is generally stipulated that the initial compression of the material at the interior surface of the barrel shall not exceed 26 tons per square inch, ''i.e.'' <math>(t_0) = -26</math> tons; in the example above <math>(t_0) = -11\\cdot25</math> tons only, but in wire-wound guns special attention to this condition is necessary.\n\nIt now remains for the designer so to dimension the several hoops that they shall, when shrunk together, give the stresses found by calculation. To do this the exterior diameter of the barrel must be a little larger than the interior diameter of the covering hoop; after this hoop is shrunk on to the barrel its exterior diameter is turned in a lathe so that it is slightly larger than the interior of the next course hoop and so on. It will be seen that the fibres of the barrel must be compressed while the fibres of the superimposed hoop are extended, and thus produce the ''Initial Stress.'' The shrinkage <math>\\text{S}</math> may be defined as the excess of the external diameter of the tube over the internal diameter of the hoop, when separate and both are in the cold state. Then"
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 1,
+    "input_tokens": 2673,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 7,
+    "input_tokens": 9373,
+    "output_tokens": 6406,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 17556
+   }
+  },
+  "captions_marked": true,
+  "carried": [
+   {
+    "kind": "link",
+    "markup": "{{1911link|Ballistics}}",
+    "text": "Ballistics",
+    "alt": ""
+   }
+  ],
+  "carried_unplaced": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|HISTORY AND CONSTRUCTION]|ORDNANCE|215}}</noinclude>being placed in position the hoop may prematurely grip on the gun and may consequently have to be sacrificed by cutting it off and shrinking on another.\n\nThe dilatation must be so adjusted that the required temperature to obtain it is not higher than that used for annealing the forging, otherwise the effect of this annealing will be modified. There is, therefore, for this reason, considerable risk in shrinking up long hoops of small diameter.\n\nBefore heating hoops of large diameter two or three narrow reference bands are turned on the exterior and their diameter measured; special gauges are prepared to measure these plus the dilatation required. After heating the hoop but before shrinking it, the diameter of the reference bands when tested by these gauges should not be in excess of them. The temperature can then be easily ascertained by dividing the dilatation by the coefficient of expansion of steel per degree F. or C., taking of course the diameter into account.\n\nFor small hoops this method is not convenient, as the hoop cools too quickly; the dilatation must then be obtained by ascertaining the temperature, and this is best done by the use of some form of pyrometer, such as a Siemens water pyrometer, before the hoop is withdrawn from the furnace.\n\nIt may also be desired to obtain a given striking energy or velocity at some definite range—then, the weight of the projectile being decided upon, the muzzle velocity is found from the formulas (see {{sc|{{1911link|Ballistics}}}}) given in Exterior Ballistics. From this and the length of the gun allowable the designer has, with the aid of former experience and the formulas given in Internal Ballistics, to decide on the weight and nature of the powder charge necessary and the internal dimensions of the powder chamber and bore. These data are used to plot what is termed a “ gunmakers' curve,” ''i.e.'' the curve of pressures along the bore which the powder charge decided upon will give. The factor of safety and the maximum allowable stress of the steel forgings or steel wire also being known, the necessary strength of each section of the gun can be easily found and it remains to so proportion each part as to conform to these conditions and to meet certain others, such as facilities for manufacture, which experience only can determine.\n\nWhen the second course consists of a single long tube into which a tapered barrel is driven, as in the system adopted by the English government, the two tubes are treated as a single tube equal in thickness to the two together; but when the second course consists of several tubes shrunk on to the barrel the additional strength, obtained by the initial tension of the shrunk tubes, is sometimes taken account of in the calculation, or the two may be treated as one thick tube.\n\nThe gunmakers' formulas for the strength of the gun are obtained from considering the strength of a thick cylinder exposed to unequal internal and external pressures. Supposing a transverse section of the gun to cut through <math>n</math> tubes, the internal radius of the barrel is <math>r_0</math> in., the external radius <math>r_1</math> in., the external radius of the second course is <math>r_2</math> and so on; and the external radius of the jacket is <math>r_n</math>. Then if <math>\\text{T}</math> = a circumferential stress (tension) in tons per square inch, <math>\\text{T}_n</math> = a circumferential stress at radius <math>r_n</math> in., <math>\\text{P}</math> = a radial stress (pressure) in tons per square inch, and <math>\\text{P}_n</math> = a radial stress at radius <math>r_n</math> in., the formulas used in the calculation of the strength of built-up guns are as follows:—\n{{block center|<math>\\text{T} = \\frac{\\text{P}_{n-1}r_{n-1}{}^2 - \\text{P}_n r_n{}^2}{r_n{}^2 - r_{n-1}{}^2} + \\frac{r_{n-1}{}^2 r_n{}^2}{r^2}\\,\\frac{\\text{P}_{n-1} - \\text{P}_n}{r_n{}^2 - r_{n-1}{}^2}</math> (1)}}\n{{block center|<math>\\text{P} = \\frac{r_{n-1}{}^2 r_n{}^2}{r^2}\\,\\frac{\\text{P}_{n-1} - \\text{P}_n}{r_n{}^2 - r_{n-1}{}^2} - \\frac{\\text{P}_{n-1}r_{n-1}{}^2 - \\text{P}_n r_n{}^2}{r_n{}^2 - r_{n-1}{}^2}</math> (2),}}\nwhere <math>r</math> is any intermediate radius in the thickness of a tube\n{{block center|<math>\\text{T}_n - \\text{P}_n = \\text{T} - \\text{P}</math> (3)}}\nin the same tube; also the pressure between the <math>(n-1)^{th}</math> and <math>n^{th}</math> hoops is\n{{block center|<math>\\text{P}_{n-1} = \\frac{r_n{}^2 - r_{n-1}{}^2}{r_n{}^2 + r_{n-1}{}^2}(\\text{T}_{n-1} + \\text{P}_n) + \\text{P}_n</math> (4).}}\n\nEquation (4) is usually known as the ''Gunmakers' formula'' and from it, when <math>\\text{P}_n</math> and <math>\\text{T}_{n-1}</math>, <math>\\text{T}_{n-2}</math> . . . are known the other pressures can be found. The proof tension of the material is kept well below the yielding stress. For ordinary carbon gun steel it is usual to consider that the proof tension of the barrel should not exceed 15 tons and of the outer hoops 18 tons per square inch; with nickel gun steel these become 20 tons and 24 tons respectively. If the <math>n^{th}</math> hoop is the exterior tube then <math>\\text{P}_n=0</math>; neglecting the atmospheric pressure.\n\nIn all gun calculations for strength three cases must be considered:\n\n(''a'') When the built-up gun is fired, the stress is called the ''Firing Stress'' and is obtained by the repeated use of equation (4);\n\n(''b'') When the gun, supposed to be a solid homogeneous block of metal is fired, the stress is termed the ''Powder Stress'' and is obtained from the equations (1) and (2);\n\n(''c'') When the built-up gun is in repose, the stress is then called the ''Initial Stress'' or ''Stress of Repose.''\n\nBetween these three cases the following relations hold:—\n{{block center|''Initial Stress''+''Powder Stress''=''Firing Stress'' (5).}}\nIt is best to use different symbols to distinguish each kind of stress. We will use for the Firing Stress <math>\\text{P}</math>, <math>\\text{T}</math>; for Powder Stress <math>p</math>, <math>t</math>; and for the Initial Stress <math>(p)</math>, <math>(t)</math>.\n\nThe method of working will be illustrated by a practical example. Take, for instance, a section across the chamber of a 4·7-in. Q.F. gun, for which the diameter of the chamber is 5 in., that of the barrel 8·2 in., and the external diameter of the jacket 15 in.\n\n{{block center|Here <math>r_0=2{\\cdot}5;\\ r_1=4{\\cdot}1;\\ r_2=7{\\cdot}5</math>}}\n{{block center|<math>\\text{T}_0=15;\\ \\text{T}_1=18;\\ \\text{P}_2=0</math>.}}\nFrom (4) for the ''Firing Stress''\n{{block center|<math>\\text{P}_1=\\frac{(7{\\cdot}5)^2-(4{\\cdot}1)^2}{(7{\\cdot}5)^2+(4{\\cdot}1)^2}\\times18=9{\\cdot}72</math> tons per square inch. <math>\\text{P}_0=\\frac{(4{\\cdot}1)^2-(2{\\cdot}5)^2}{(4{\\cdot}1)^2+(2{\\cdot}5)^2}\\times(15+9{\\cdot}72)+9{\\cdot}72=21</math> tons per square inch.}}\n\nFrom (3) the tension <math>\\text{T}'_n</math> of the outer fibres of the hoops is obtained; thus\n\n{{block center|<math>\\text{T}'_2=\\text{P}_2+\\text{T}_1-\\text{P}_1=18-9{\\cdot}72=8{\\cdot}28</math> tons per square inch.}}\n{{block center|<math>\\text{T}'_1=\\text{P}_1+\\text{T}_0-\\text{P}_0=9{\\cdot}72+15-21=3{\\cdot}72</math> tons per square inch.}}\n\nFor any intermediate radius <math>r</math> the stress can be found by using equations (1) and (2) or (1) or (2) and (3).\n\nFor the ''Powder Stress'' equations (1) and (2) are used by putting <math>n=1</math>, and then <math>p_1=0</math> (also remembering that, as there are two hoops, the outer radius must be written <math>r_2</math>); the formulas become\n\n{{block center|<math>t=\\frac{r_0^2}{r^2}\\frac{r_2^2+r^2}{r_2^2-r_0^2}p_0</math> (6)}}\n{{block center|<math>p=\\frac{r_0^2}{r^2}\\frac{r_2^2-r^2}{r_2^2-r_0^2}p_0</math> (7).}}\n\nWhen <math>r=r_0=2{\\cdot}5</math>, <math>t=t_0</math>, <math>p_0=\\text{P}_0</math> already found and:\n\n{{block center|<math>t_0=\\frac{(7{\\cdot}5)^2+(2{\\cdot}5)^2}{(7{\\cdot}5)^2-(2{\\cdot}5)^2}\\times21=26{\\cdot}25</math> tons.}}\n\nFor the tension of the fibres at the outer circumference\n\n{{block center|<math>t'_2=26{\\cdot}25-21=5{\\cdot}25</math> tons,}}\n\nfrom (3) and for a radius <math>r_2=7{\\cdot}5</math> inches.\n\nThe stress for any intermediate radius <math>r</math> can be obtained from (6) and (7) or, from (6) or (7) and (3).\n\nSubtracting the ''Powder Stress'' from the ''Firing Stress'' the ''Initial Stress'' is obtained, and the various results can be tabulated as follows:—\n\n{| style=\"margin:auto\"\n|rowspan=2|Radius.||colspan=3|Tensions.||colspan=3|Pressures.\n|-\n|Firing Stress.||Powder Stress.||Initial Stress.||Firing Stress.||Powder Stress.||Initial Stress.\n|-\n|<math>r_0 = 2\\cdot5</math>||15·0||26·25||−11·25||21·0||21·0||0\n|-\n|<math>r_1 = 4\\cdot1</math>||3·72||11·57||− 7·85||9·72||6·32||3·4\n|-\n|<math>r_1 = 4\\cdot1</math>||18·0||11·57||6·43||9·72||6·32||3·4\n|-\n|<math>r_2 = 7\\cdot5</math>||8·28||5·25||3·03||0||0||0\n|}\n\nIt is generally stipulated that the initial compression of the material at the interior surface of the barrel shall not exceed 26 tons per square inch, ''i.e.'' <math>(t_0) = -26</math> tons; in the example above <math>(t_0) = -11\\cdot25</math> tons only, but in wire-wound guns special attention to this condition is necessary.\n\nIt now remains for the designer so to dimension the several hoops that they shall, when shrunk together, give the stresses found by calculation. To do this the exterior diameter of the barrel must be a little larger than the interior diameter of the covering hoop; after this hoop is shrunk on to the barrel its exterior diameter is turned in a lathe so that it is slightly larger than the interior of the next course hoop and so on. It will be seen that the fibres of the barrel must be compressed while the fibres of the superimposed hoop are extended, and thus produce the ''Initial Stress.'' The shrinkage <math>\\text{S}</math> may be defined as the excess of the external diameter of the tube over the internal diameter of the hoop, when separate and both are in the cold state. Then<noinclude><references/></noinclude>"
+}

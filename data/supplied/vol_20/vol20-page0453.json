@@ -1,0 +1,233 @@
+{
+ "volume": 20,
+ "page_number": 453,
+ "source": "scan",
+ "title": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/453",
+ "provenance": {
+  "scan": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/453",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-09",
+  "angle": 0.55,
+  "column_width": 1136,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     10,
+     105,
+     2265,
+     176
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     10,
+     176,
+     1142,
+     569
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     755,
+     569,
+     1142,
+     675
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     10,
+     569,
+     755,
+     675
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     10,
+     675,
+     1142,
+     1581
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     10,
+     1581,
+     1142,
+     2676
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     10,
+     2676,
+     1142,
+     3406
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1142,
+     176,
+     2265,
+     895
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1142,
+     895,
+     2265,
+     1918
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1142,
+     1918,
+     2265,
+     2125
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1142,
+     2125,
+     2265,
+     3023
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1142,
+     3023,
+     2265,
+     3406
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||OXIMES|419}}",
+   "c1s1": "yielding hydroxylamine and the parent aldehyde or ketone. The aldoximes are converted by the action of dehydrating agents into nitriles: RCH : NOH→RC ⋮ N+H<sub>2</sub>O. The ketoximes by the action of acetyl chloride undergo a peculiar intramolecular re-arrangement known as the Beckmann transformation (E. Beckmann, ''Ber.'', 1886, 19, p. 989; 1887, 20, p. 2580), yielding as final products an acid-amide or anilide, thus:\n{{block center|RC(:N·OH)R′→RC(OH):NR′→RCONHR′.}}\n\nAs regards the constitution of the oximes, two possibilities exist,",
+   "c1s2": "¶\nAs regards the constitution of the oximes, namely >C: NOH, or , and the first",
+   "c1s3": "correct, since on alkylation and subsequent hydrolysis an alkyl hydroxylamine of the type NH<sub>2</sub>·OR is obtained, and consequently it is to be presumed that in the alkylated oxime, the alkyl group is attached to oxygen, and the oxime itself therefore contains the hydroxyl group. It is to be noted that the oximes of aromatic aldehydes and of unsymmetrical aromatic ketones frequently exist in isomeric forms. This isomerism is explained by the Hantzsch-Werner hypothesis (''Ber.'', 1890, 23, p. 11) in which the assumption is made that the three valencies of the nitrogen atom do not lie in the same plane. Thus in the case of the simple aldoximes two configurations are possible, namely:\n\n{| class=\"chem-grid\"\n|R||·||C||·||H||rowspan=3|and||R||·||C||·||H\n|-\n| || ||··|| || || || ||··|| ||\n|-\n| || ||N||·||OH||HO||·||N|| ||\n|}\n\n, the former, where the H atom and OH group are contiguous, being known as ''syn''-aldoximes and the latter as the ''anti''-aldoximes. The syn-aldoximes or treatment with acetyl chloride readily lose water and yield nitriles; the anti-aldoximes as a rule are acetylated and do not yield nitriles. The isomerism of the oximes of unsymmetrical ketones is explained in the same manner, and their configuration is determined by an application of the Beckmann transformation (see ''Ber.'', 1891, 24, p. 13); thus:\n\n{| class=\"chem-grid\"\n|R||·||C||·||R′||rowspan=3|→R·C(OH) : NR′→R·CONHR′(R′ and OH, \"''syn''\").\n|-\n| || ||··|| ||\n|-\n| || ||N||·||OH\n|}\n\n{| class=\"chem-grid\"\n|R||·||C||·||R′||rowspan=3|→RN : C(OH)R′→RNH·COR′ (R and OH, \"''syn''\").\n|-\n| || ||··|| ||\n|-\n|HO||·||N|| ||\n|}",
+   "c1s4": "¶\n''Aldoximes'' are generally obtained by the action of hydroxylamine hydrochloride on the aldehyde in presence of sodium carbonate; the oxime being then usually extracted from the solution by ether. They may also be prepared by the reduction of primary nitro compounds with stannous chloride and concentrated hydrochloric acid; by the reduction of unsaturated nitro compounds with aluminium amalgam or zinc dust in the presence of dilute acetic acid (L. Bouveault, ''Comptes rendus'', 1902, 134, p. 1145): R<sub>2</sub>C:CHNO<sub>2</sub>→R<sub>2</sub>C:CH·NHOH→R<sub>2</sub>CH·CH:NOH, and by the action of alkyl iodides on the sodium salt of nitro-hydroxylamine (A. Angeli, ''Rend. Acad. d. Lincei'', 1905, (5), 14, ii. p. 411), the cycle of reactions probably being as follows:\n{{block center|NO<sub>2</sub>·NHOH→HNO<sub>2</sub>+HNO; HNO+RI→HI+RNO}}\n{{block center|(CH<sub>3</sub>CH<sub>2</sub>NO→CH<sub>3</sub>CH:N·OH).}}\n\n''Formaldoxime'', CH<sub>2</sub>:NOH, was obtained by W. R. Dunstan (''Jour. Chem. Soc.'', 1898, 73, p. 352) as a colourless liquid by the addition of hydroxylamine hydrochloride to an aqueous solution of formaldehyde in the presence of sodium carbonate; the resulting solution was extracted with ether and the oxime hydrochloride precipitated by gaseous hydrochloric acid, the precipitate being then dissolved in water, the solution exactly neutralized and distilled. It boils at 83-85° C. and burns with a green coloured flame. It is readily transformed into a solid polymer, probably (CH<sub>2</sub>:NOH)<sub>3</sub>. In the absence of water, it forms salts of the type (CH<sub>2</sub>:NOH)<sub>3</sub>·HCl with acids. It behaves as a powerful reducing agent, and on hydrolysis with dilute mineral acids is decomposed into formaldehyde and hydroxylamine, together with some formic acid and ammonia, the amount of each product formed varying with temperature, time of reaction, amount of water present, &c. This latter reaction is probably due to some of the oxime existing in the form of the isomeric formamide HCO·NH<sub>2</sub>. Acetyl- and benzoyl-formaldoxime are derivatives of the threefold polymeric form. The acetyl com-",
+   "c1s5": "pound on reduction yields two of its nitrogen atoms in the form of ammonia and the third in the form of methylamine.\n\n''Acetaldoxime'', CH<sub>3</sub>CH:NOH, crystallizes in needles which melt at 47° C. On continued fusion the melting point gradually sinks to about 13° C., probably owing to conversion into a polymeric form.\n\n''Chloraloxime'', CCl<sub>3</sub>CH:NOH, is obtained when one molecular proportion of chloral hydrate is warmed with four molecular proportions of hydroxylamine hydrochloride and a little water. It crystallizes in prisms which melt at 39° C. A chloral hydroxylamine, CCl<sub>3</sub>·CHOH·NHOH, melting at 98° C. is obtained by allowing a mixture of one molecular proportion of chloral hydrate with two molecular proportions of hydroxylamine hydrochloride and one of sodium carbonate to stand for some time in a desiccator.\n\n''Glyoxime'', HON:CH·CH:NOH, obtained from glyoxal and hydroxylamine, or by boiling amidothiazole with excess of hydroxylamine hydrochloride and water, melts at 178° C. and is readily soluble in hot water.",
+   "c2s1": "¶\n''Succinic aldehyde dioxime'', HON:CH·CH<sub>2</sub>·CH<sub>2</sub>·CH:NOH, is obtained by boiling an alcoholic solution of pyrrol with hydroxylamine hydrochloride and anhydrous sodium carbonate (G. Ciamician, ''Ber.'', 1884, 17, p. 534). It melts at 173° C.; and on reduction with sodium in alcoholic solution yields tetramethylene diamine. A boiling solution of caustic potash hydrolyses it to ammonia and succinic acid.\n\n''Benzaldoximes.''—The α-oxime (benz-''anti''-aldoxime) is formed by the action of hydroxylamine on benzaldehyde. It melts at 35° C. and boils at 117° C. (14 mm.). Acids convert it into the β-oxime (benz-''syn''-aldoxime) which melts at 125° C. When distilled under diminished pressure the β-form reverts to the α-modification (see Beckmann, ''Ber.'', 1887, 20, p. 2766; 1889, 22, pp. 429, 513, 1531, 1588).\n\n''Keloximes'' are usually rather more difficult to prepare than aldoximes, and generally require the presence of a fairly concentrated alkaline solution. They may also be prepared by the reduction of pseudo-nitrols (R. Scholl, ''Ber.'', 1896, 29, p. 87), the reaction probably being:\n{{block center|RR:C(NO<sub>2</sub>)NO→RR:C:(NHOH)<sub>2</sub>→RR:C:NOH+NH<sub>2</sub>OH.}}",
+   "c2s2": "¶\n''Acetoxime'', (CH<sub>3</sub>)<sub>2</sub>C:NOH, melts at 58-59° C. and is readily soluble in water. Its sodium salt is obtained by the action of sodamide on the oxime, in presence of benzene (A. W. Titherley, ''Jour. Chem. Soc.'', 1897, 71, p. 461).\n\n''Mesityl oxime'', (CH<sub>3</sub>)<sub>2</sub>C:CH·C(:NOH)CH<sub>3</sub>, exists in two modifications. The β-form is obtained by the direct action of hydroxylamine hydrochloride on mesityl oxide, the hydrochloride so formed being decomposed by sodium carbonate. It crystallizes in plates which melt at 48-49° C. and boil at 92° C. (9 mm.). When boiled for some time with caustic soda, it is converted into the oily α-oxime, which boils at 83-84° C. (9 mm.). Both forms are volatile in steam. The α-oxime, on long continued boiling with a concentrated solution of a caustic alkali, is partially decomposed with formation of some acetone and acetoxime (C. Harries, ''Ber.'', 1898, 31, pp. 1381, 1808; 1899, 32, p. 1331). By the direct action of hydroxylamine on a methyl alcohol solution of mesityl oxide in the presence of sodium methylate a hydroxylamino-ketone, ''diacetone hydroxylamine'', (CH<sub>3</sub>)<sub>2</sub>C(NHOH)·CH<sub>2</sub>COCH<sub>3</sub>, is formed. In a similar manner phorone gives rise to ''triacetone hydroxylamine'', CO:[CH<sub>2</sub>·C(CH<sub>3</sub>)<sub>2</sub>]<sub>2</sub>:NOH.\n\n''Acetophenoneoxime'', C<sub>6</sub>H<sub>5</sub>·C(:NOH)·CH<sub>3</sub>, melts at 59° C. In glacial acetic acid solution, on the addition of concentrated sulphuric acid, it is converted into acetanilide. ''Benzophenone oxime'', C<sub>6</sub>H<sub>5</sub>C(:NOH)C<sub>6</sub>H<sub>5</sub>, exists only in one modification which melts at 140° C.; whereas the unsymmetrical benzophenones each yield two oximes. O. Wallach (''Ann.'', 1900, 312, p. 171) has shown that the saturated cyclic ketones yield oximes which by an application of the Beckmann reaction are converted into isoximes, and these latter on hydrolysis with dilute mineral acids are transformed into acyclic amino-acids; thus from cyclohexanone, ε-amidocaproic acid (ε-leucine) may be obtained:—",
+   "c2s3": "An ingenious application of the fact that oximes easily lose the elements of water and form nitriles was used by A. Wohl (''Ber.'', 1893, 26, p. 730) in the “breaking down” of the sugars. Glucose-oxime on warming with acetic anhydride is simultaneously acetylated and dehydrated, yielding an acetylated gluconitrile, which when warmed with ammoniacal silver nitrate loses hydrocyanic acid and is transformed into an acetyl pentose. The pentose is then obtained from the acetylated compound by successive treatment with ammonia and dilute acids:—\n\n{{block center|CH<sub>2</sub>OH·(CHOH)<sub>3</sub>·CHOH·CH: NOH→CH<sub>2</sub>OH·(CHOH)<sub>3</sub>·}}\n{{block center|CHOH·CN→CH<sub>2</sub>OH(CHOH)<sub>3</sub>·CHO.}}\n\nIn order to arrive at the configuration of the stereoisomeric ketoximes, A. Hantzsch (''Ber.'', 1891, 24, p. 13) has made use of the Beckmann reaction, whereby they are converted into acid-amides. Thus, with the tolylphenylketoximes, one yields the anilide of toluic acid and the other the toluidide of benzoic acid, the former necessitating the presence of the phenyl and hydroxyl radicals in the ''syn'' position and the latter the tolyl and hydroxyl radicals in the ''syn'' position, thus:\n\n{| class=\"chem-grid\"\n|CH<sub>3</sub>||·||C<sub>6</sub>H<sub>4</sub>||·||C||·||C<sub>6</sub>H<sub>5</sub>||rowspan=3|→ CH<sub>3</sub>C<sub>6</sub>H<sub>5</sub>CONHC<sub>6</sub>H<sub>5</sub>;\n|-\n| || || || ||║|| ||\n|-\n| || || ||N||·||OH||\n|-\n|colspan=8|''Syn''-phenyltolylketoxime\n|}\n\n{| class=\"chem-grid\"\n|CH<sub>3</sub>||·||C<sub>6</sub>H<sub>4</sub>||·||C||·||C<sub>6</sub>H<sub>5</sub>||rowspan=3|→ CH<sub>3</sub>C<sub>6</sub>H<sub>4</sub>NHCOC<sub>6</sub>H<sub>5</sub>\n|-\n| || || || ||║|| ||\n|-\n| || ||HO||·||N|| ||\n|}",
+   "c2s4": "{{c|''Anti''-tolylphenylketoxime}}\nIn the case of the aldoximes, that one which most readily loses the elements of water on dehydration is assumed to contain its hydroxyl radical adjacent to the movable hydrogen atom and is designated the ''syn''-compound.\n\nOn the oxyamido-oximes see H. Ley, ''Ber.'', 1898, 31, p. 2126; G. Schroeter, ''Ber.'', 1900, 33, p. 1975."
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v20 p0453 c1f1.png",
+   "c2f1": "eb1911 v20 p0453 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1164,
+     1921,
+     2246,
+     2122
+    ],
+    "caption": null,
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1163,
+     1919,
+     2237,
+     2125
+    ]
+   },
+   {
+    "box": [
+     763,
+     572,
+     890,
+     672
+    ],
+    "caption": null,
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     763,
+     572,
+     890,
+     672
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 3,
+    "input_tokens": 5751,
+    "output_tokens": 488,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 10,
+    "input_tokens": 9831,
+    "output_tokens": 8663,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 25080
+   }
+  },
+  "captions_marked": true,
+  "carried": [],
+  "carried_unplaced": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||OXIMES|419}}</noinclude>yielding hydroxylamine and the parent aldehyde or ketone. The aldoximes are converted by the action of dehydrating agents into nitriles: RCH : NOH→RC ⋮ N+H<sub>2</sub>O. The ketoximes by the action of acetyl chloride undergo a peculiar intramolecular re-arrangement known as the Beckmann transformation (E. Beckmann, ''Ber.'', 1886, 19, p. 989; 1887, 20, p. 2580), yielding as final products an acid-amide or anilide, thus:\n{{block center|RC(:N·OH)R′→RC(OH):NR′→RCONHR′.}}\n\nAs regards the constitution of the oximes, two possibilities exist,\n\n[[File:eb1911 v20 p0453 c1f1.png|center|123px]]\n\nAs regards the constitution of the oximes, namely >C: NOH, or , and the first correct, since on alkylation and subsequent hydrolysis an alkyl hydroxylamine of the type NH<sub>2</sub>·OR is obtained, and consequently it is to be presumed that in the alkylated oxime, the alkyl group is attached to oxygen, and the oxime itself therefore contains the hydroxyl group. It is to be noted that the oximes of aromatic aldehydes and of unsymmetrical aromatic ketones frequently exist in isomeric forms. This isomerism is explained by the Hantzsch-Werner hypothesis (''Ber.'', 1890, 23, p. 11) in which the assumption is made that the three valencies of the nitrogen atom do not lie in the same plane. Thus in the case of the simple aldoximes two configurations are possible, namely:\n\n{| class=\"chem-grid\"\n|R||·||C||·||H||rowspan=3|and||R||·||C||·||H\n|-\n| || ||··|| || || || ||··|| ||\n|-\n| || ||N||·||OH||HO||·||N|| ||\n|}\n\n, the former, where the H atom and OH group are contiguous, being known as ''syn''-aldoximes and the latter as the ''anti''-aldoximes. The syn-aldoximes or treatment with acetyl chloride readily lose water and yield nitriles; the anti-aldoximes as a rule are acetylated and do not yield nitriles. The isomerism of the oximes of unsymmetrical ketones is explained in the same manner, and their configuration is determined by an application of the Beckmann transformation (see ''Ber.'', 1891, 24, p. 13); thus:\n\n{| class=\"chem-grid\"\n|R||·||C||·||R′||rowspan=3|→R·C(OH) : NR′→R·CONHR′(R′ and OH, \"''syn''\").\n|-\n| || ||··|| ||\n|-\n| || ||N||·||OH\n|}\n\n{| class=\"chem-grid\"\n|R||·||C||·||R′||rowspan=3|→RN : C(OH)R′→RNH·COR′ (R and OH, \"''syn''\").\n|-\n| || ||··|| ||\n|-\n|HO||·||N|| ||\n|}\n\n''Aldoximes'' are generally obtained by the action of hydroxylamine hydrochloride on the aldehyde in presence of sodium carbonate; the oxime being then usually extracted from the solution by ether. They may also be prepared by the reduction of primary nitro compounds with stannous chloride and concentrated hydrochloric acid; by the reduction of unsaturated nitro compounds with aluminium amalgam or zinc dust in the presence of dilute acetic acid (L. Bouveault, ''Comptes rendus'', 1902, 134, p. 1145): R<sub>2</sub>C:CHNO<sub>2</sub>→R<sub>2</sub>C:CH·NHOH→R<sub>2</sub>CH·CH:NOH, and by the action of alkyl iodides on the sodium salt of nitro-hydroxylamine (A. Angeli, ''Rend. Acad. d. Lincei'', 1905, (5), 14, ii. p. 411), the cycle of reactions probably being as follows:\n{{block center|NO<sub>2</sub>·NHOH→HNO<sub>2</sub>+HNO; HNO+RI→HI+RNO}}\n{{block center|(CH<sub>3</sub>CH<sub>2</sub>NO→CH<sub>3</sub>CH:N·OH).}}\n\n''Formaldoxime'', CH<sub>2</sub>:NOH, was obtained by W. R. Dunstan (''Jour. Chem. Soc.'', 1898, 73, p. 352) as a colourless liquid by the addition of hydroxylamine hydrochloride to an aqueous solution of formaldehyde in the presence of sodium carbonate; the resulting solution was extracted with ether and the oxime hydrochloride precipitated by gaseous hydrochloric acid, the precipitate being then dissolved in water, the solution exactly neutralized and distilled. It boils at 83-85° C. and burns with a green coloured flame. It is readily transformed into a solid polymer, probably (CH<sub>2</sub>:NOH)<sub>3</sub>. In the absence of water, it forms salts of the type (CH<sub>2</sub>:NOH)<sub>3</sub>·HCl with acids. It behaves as a powerful reducing agent, and on hydrolysis with dilute mineral acids is decomposed into formaldehyde and hydroxylamine, together with some formic acid and ammonia, the amount of each product formed varying with temperature, time of reaction, amount of water present, &c. This latter reaction is probably due to some of the oxime existing in the form of the isomeric formamide HCO·NH<sub>2</sub>. Acetyl- and benzoyl-formaldoxime are derivatives of the threefold polymeric form. The acetyl compound on reduction yields two of its nitrogen atoms in the form of ammonia and the third in the form of methylamine.\n\n''Acetaldoxime'', CH<sub>3</sub>CH:NOH, crystallizes in needles which melt at 47° C. On continued fusion the melting point gradually sinks to about 13° C., probably owing to conversion into a polymeric form.\n\n''Chloraloxime'', CCl<sub>3</sub>CH:NOH, is obtained when one molecular proportion of chloral hydrate is warmed with four molecular proportions of hydroxylamine hydrochloride and a little water. It crystallizes in prisms which melt at 39° C. A chloral hydroxylamine, CCl<sub>3</sub>·CHOH·NHOH, melting at 98° C. is obtained by allowing a mixture of one molecular proportion of chloral hydrate with two molecular proportions of hydroxylamine hydrochloride and one of sodium carbonate to stand for some time in a desiccator.\n\n''Glyoxime'', HON:CH·CH:NOH, obtained from glyoxal and hydroxylamine, or by boiling amidothiazole with excess of hydroxylamine hydrochloride and water, melts at 178° C. and is readily soluble in hot water.\n\n''Succinic aldehyde dioxime'', HON:CH·CH<sub>2</sub>·CH<sub>2</sub>·CH:NOH, is obtained by boiling an alcoholic solution of pyrrol with hydroxylamine hydrochloride and anhydrous sodium carbonate (G. Ciamician, ''Ber.'', 1884, 17, p. 534). It melts at 173° C.; and on reduction with sodium in alcoholic solution yields tetramethylene diamine. A boiling solution of caustic potash hydrolyses it to ammonia and succinic acid.\n\n''Benzaldoximes.''—The α-oxime (benz-''anti''-aldoxime) is formed by the action of hydroxylamine on benzaldehyde. It melts at 35° C. and boils at 117° C. (14 mm.). Acids convert it into the β-oxime (benz-''syn''-aldoxime) which melts at 125° C. When distilled under diminished pressure the β-form reverts to the α-modification (see Beckmann, ''Ber.'', 1887, 20, p. 2766; 1889, 22, pp. 429, 513, 1531, 1588).\n\n''Keloximes'' are usually rather more difficult to prepare than aldoximes, and generally require the presence of a fairly concentrated alkaline solution. They may also be prepared by the reduction of pseudo-nitrols (R. Scholl, ''Ber.'', 1896, 29, p. 87), the reaction probably being:\n{{block center|RR:C(NO<sub>2</sub>)NO→RR:C:(NHOH)<sub>2</sub>→RR:C:NOH+NH<sub>2</sub>OH.}}\n\n''Acetoxime'', (CH<sub>3</sub>)<sub>2</sub>C:NOH, melts at 58-59° C. and is readily soluble in water. Its sodium salt is obtained by the action of sodamide on the oxime, in presence of benzene (A. W. Titherley, ''Jour. Chem. Soc.'', 1897, 71, p. 461).\n\n''Mesityl oxime'', (CH<sub>3</sub>)<sub>2</sub>C:CH·C(:NOH)CH<sub>3</sub>, exists in two modifications. The β-form is obtained by the direct action of hydroxylamine hydrochloride on mesityl oxide, the hydrochloride so formed being decomposed by sodium carbonate. It crystallizes in plates which melt at 48-49° C. and boil at 92° C. (9 mm.). When boiled for some time with caustic soda, it is converted into the oily α-oxime, which boils at 83-84° C. (9 mm.). Both forms are volatile in steam. The α-oxime, on long continued boiling with a concentrated solution of a caustic alkali, is partially decomposed with formation of some acetone and acetoxime (C. Harries, ''Ber.'', 1898, 31, pp. 1381, 1808; 1899, 32, p. 1331). By the direct action of hydroxylamine on a methyl alcohol solution of mesityl oxide in the presence of sodium methylate a hydroxylamino-ketone, ''diacetone hydroxylamine'', (CH<sub>3</sub>)<sub>2</sub>C(NHOH)·CH<sub>2</sub>COCH<sub>3</sub>, is formed. In a similar manner phorone gives rise to ''triacetone hydroxylamine'', CO:[CH<sub>2</sub>·C(CH<sub>3</sub>)<sub>2</sub>]<sub>2</sub>:NOH.\n\n''Acetophenoneoxime'', C<sub>6</sub>H<sub>5</sub>·C(:NOH)·CH<sub>3</sub>, melts at 59° C. In glacial acetic acid solution, on the addition of concentrated sulphuric acid, it is converted into acetanilide. ''Benzophenone oxime'', C<sub>6</sub>H<sub>5</sub>C(:NOH)C<sub>6</sub>H<sub>5</sub>, exists only in one modification which melts at 140° C.; whereas the unsymmetrical benzophenones each yield two oximes. O. Wallach (''Ann.'', 1900, 312, p. 171) has shown that the saturated cyclic ketones yield oximes which by an application of the Beckmann reaction are converted into isoximes, and these latter on hydrolysis with dilute mineral acids are transformed into acyclic amino-acids; thus from cyclohexanone, ε-amidocaproic acid (ε-leucine) may be obtained:— An ingenious application of the fact that oximes easily lose the elements of water and form nitriles was used by A. Wohl (''Ber.'', 1893, 26, p. 730) in the “breaking down” of the sugars. Glucose-oxime on warming with acetic anhydride is simultaneously acetylated and dehydrated, yielding an acetylated gluconitrile, which when warmed with ammoniacal silver nitrate loses hydrocyanic acid and is transformed into an acetyl pentose. The pentose is then obtained from the acetylated compound by successive treatment with ammonia and dilute acids:—\n\n[[File:eb1911 v20 p0453 c2f1.png|center|356px]]\n\n{{block center|CH<sub>2</sub>OH·(CHOH)<sub>3</sub>·CHOH·CH: NOH→CH<sub>2</sub>OH·(CHOH)<sub>3</sub>·}}\n{{block center|CHOH·CN→CH<sub>2</sub>OH(CHOH)<sub>3</sub>·CHO.}}\n\nIn order to arrive at the configuration of the stereoisomeric ketoximes, A. Hantzsch (''Ber.'', 1891, 24, p. 13) has made use of the Beckmann reaction, whereby they are converted into acid-amides. Thus, with the tolylphenylketoximes, one yields the anilide of toluic acid and the other the toluidide of benzoic acid, the former necessitating the presence of the phenyl and hydroxyl radicals in the ''syn'' position and the latter the tolyl and hydroxyl radicals in the ''syn'' position, thus:\n\n{| class=\"chem-grid\"\n|CH<sub>3</sub>||·||C<sub>6</sub>H<sub>4</sub>||·||C||·||C<sub>6</sub>H<sub>5</sub>||rowspan=3|→ CH<sub>3</sub>C<sub>6</sub>H<sub>5</sub>CONHC<sub>6</sub>H<sub>5</sub>;\n|-\n| || || || ||║|| ||\n|-\n| || || ||N||·||OH||\n|-\n|colspan=8|''Syn''-phenyltolylketoxime\n|}\n\n{| class=\"chem-grid\"\n|CH<sub>3</sub>||·||C<sub>6</sub>H<sub>4</sub>||·||C||·||C<sub>6</sub>H<sub>5</sub>||rowspan=3|→ CH<sub>3</sub>C<sub>6</sub>H<sub>4</sub>NHCOC<sub>6</sub>H<sub>5</sub>\n|-\n| || || || ||║|| ||\n|-\n| || ||HO||·||N|| ||\n|}\n\n{{c|''Anti''-tolylphenylketoxime}}\nIn the case of the aldoximes, that one which most readily loses the elements of water on dehydration is assumed to contain its hydroxyl radical adjacent to the movable hydrogen atom and is designated the ''syn''-compound.\n\nOn the oxyamido-oximes see H. Ley, ''Ber.'', 1898, 31, p. 2126; G. Schroeter, ''Ber.'', 1900, 33, p. 1975.<noinclude><references/></noinclude>"
+}

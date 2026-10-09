@@ -676,7 +676,29 @@ def _build_leaf_map_ia(vol: int) -> dict[int, int]:
     for leaf in UNNUMBERED_LEAVES.get(vol, []):
         leaf_map.pop(leaf, None)
 
+    # The leaf audit: each leaf's printed number READ OFF ITS OWN HEAD, last
+    # word over the walk — a plate, its tissue guard or a blank back (null)
+    # dropped, a page pinned.  The walk counts a plate the archive's OCR could
+    # not number as a page, and every page after it lands a leaf or two early
+    # (SUN p. 87 showed Plate I).
+    for leaf, printed in _leaf_audit().get(vol, {}).items():
+        if printed is None:
+            leaf_map.pop(leaf, None)
+        else:
+            leaf_map[leaf] = printed
+
     return leaf_map
+
+
+LEAF_AUDIT = Path("data/leaf_audit.json")
+
+
+def _leaf_audit() -> dict[int, dict[int, int | None]]:
+    """data/leaf_audit.json: {"volumes": {vol: {leaf: printed | null}}}."""
+    if not LEAF_AUDIT.exists():
+        return {}
+    vols = json.loads(LEAF_AUDIT.read_text(encoding="utf-8"))["volumes"]
+    return {int(v): {int(leaf): n for leaf, n in m.items()} for v, m in vols.items()}
 
 
 def _reject_heading_typos(headings: dict[int, int]) -> dict[int, int]:
