@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-09-26.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-10-10.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,37 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-09-26)
+## CURRENT STATE (2026-10-10)
+
+### 2026-10-10 — release: site, downloads, HuggingFace, Zenodo 2026.3, Payhip
+
+Everything shipped from ONE rebuild (`--reimport`, 37,226 articles, all gates
+green; ids and all three maps identical to the previous production).
+
+- **What changed in the book.**  Supplied pages (our scan transcriptions) enter
+  the source COMPLETE, before any processing — one pipeline, not two.  A supplied
+  page that declares itself level 2 (model-refused strips) never replaces a
+  fetched page that has text: 15 such pages had gone live with ~3,300 words
+  missing (SKY, SEWERAGE, TEXTILE-PRINTING, WEIGHING MACHINES, METEOROLOGY …);
+  restored.  Small-caps "see" references are detected (+126 see-links).  An
+  in-article "see X" that names a section of its own article links to it
+  (`match_section(strict=True)`; 14 links, 0 article links changed).
+- **Derivatives split.**  `rebuild_all.sh` builds the corpus, `deploy.sh` ships
+  the site, and `tools/derivatives.sh build|publish [corpus maps tei sampler epub
+  mdx hf]` does everything else, each step behind `derivative_stamp.py` (refuses
+  a derivative from another rebuild or with changed files).  First run: TEI 37,225
+  valid, both EPUBs EPUBCheck-clean, MDX archives verified; live download
+  checksums equal the local builds.
+- **Zenodo 2026.3** — `10.5281/zenodo.23288358` against `tei-2026.3`
+  (`docs/zenodo_deposit.md`).
+- **Payhip** — complete EPUB + both MDX zips + README uploaded by hand (the full
+  EPUB was "still behind" below; no longer).
+
+**Next:** supplied-page gate for refused/unread strips and word shortfall; why the
+model refused those strips; re-read the 399 supplied pages whole; the model-judged
+accuracy scorecard (ship only wins/ties); own-section links keyed by name + tier
+(GREECE/ROME); run-in headings as sections (KANT, WISCONSIN, RECORD); "see
+History" binding to HISTORY (TUNISIA, PORTUGAL).
 
 ### 2026-09-26 — ROADMAP: from one book to many (wikikit, the DNB, then scans)
 
