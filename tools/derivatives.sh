@@ -124,10 +124,12 @@ publish() {
       aws s3 cp "$SAMPLER.sha256" "$S3/$(basename "$SAMPLER").sha256" ;;
     epub)
       $STAMP check epub
-      echo "  $COMPLETE is current — upload it to Payhip by hand." ;;
+      # The Payhip complete edition is FOUR files: this EPUB and the mdx step's
+      # two archives + README.  Uploaded by hand.
+      echo "  Payhip, by hand: $COMPLETE" ;;
     mdx)
       $STAMP check mdx
-      echo "  mdx/releases/ is current — publish it by hand." ;;
+      echo "  Payhip, by hand: mdx/releases/Britannica11-MDX.zip, mdx/releases/Britannica11-Enhanced-Windows.zip, mdx/releases/README.md" ;;
     hf)
       # The dataset card and files ARE the corpus derivative's download/.
       $STAMP check corpus
