@@ -1,7 +1,8 @@
 # Zenodo deposit — the TEI edition
 
-**Status: 2026.2 published 2026-09-21**, DOI `10.5281/zenodo.22876664`, against
-the tagged tree `tei-2026.2` (`651981c`). The first deposit, 2026.1, was
+**Status: 2026.3 published 2026-10-10**, DOI `10.5281/zenodo.23288358`,
+against `tei-2026.3` (`9a5c0ca`). 2026.2 was published 2026-09-21 as
+`10.5281/zenodo.22876664` against the tagged tree `tei-2026.2` (`651981c`). The first deposit, 2026.1, was
 published 2026-08-23 as `10.5281/zenodo.22072146` against `tei-2026.1`; both
 sit under one concept DOI. Later versions can go through the API, which inherits
 this metadata — or through the web form's "New version", which is how 2026.2 was
@@ -17,6 +18,12 @@ the one the website should cite.
 | **concept** (all versions — cite this on the site) | `10.5281/zenodo.22072145` |
 | **version** — 2026.1 | `10.5281/zenodo.22072146` |
 | **version** — 2026.2 | `10.5281/zenodo.22876664` (published 2026-09-21) |
+| **version** — 2026.3 | `10.5281/zenodo.23288358` (published 2026-10-10, against `tei-2026.3` = `9a5c0ca`) |
+
+2026.3's file: `eb1911-tei.tar.gz`, 105,588,324 bytes,
+`md5:d9ec38972403a39d9ae050ac3e65987b` (SHA-256 `35787af0…ba2ec9128`) — verified
+as the live record's only file, 2026-10-10, with version `2026.3`, licence
+`cc-by-sa-4.0`, creator `Haspel, Aaron` with the ORCID attached.
 
 Published 2026-09-21 and verified against the live record: version `2026.2`,
 licence `cc-by-sa-4.0`, creator `Haspel, Aaron` with the ORCID attached, and
