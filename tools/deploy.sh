@@ -1,6 +1,11 @@
 #!/bin/bash
 # Deploy the ALREADY-BUILT corpus + viewer to production (britannica11.org).
 #
+# The SITE only.  It is the corpus's principal derivative; the download bundles,
+# TEI, the EPUBs, MDX and the HuggingFace mirror are the others, built and
+# published by tools/derivatives.sh — each against the same rebuild stamp this
+# script checks, so the site and the downloads describe the same book.
+#
 # This is Phase 7 + Phase 9 of rebuild_all.sh, extracted so a local `--no-deploy`
 # build can be reviewed and THEN shipped with one fast command — without rebuilding.
 # It pushes whatever is currently in data/derived/ — the site included, assembled into
@@ -21,18 +26,10 @@ export PYTHONIOENCODING=utf-8
 # decide both what is read locally and the names things are uploaded under.
 DERIVED=$(uv run python -m wikikit.corpora derived)
 IMAGES=$(uv run python -m wikikit.corpora images)
-SLUG=$(uv run python -m wikikit.corpora brand slug)
-CORPUS_TGZ=$(uv run python -m wikikit.export.download name corpus)
-MAPS_TGZ=$(uv run python -m wikikit.export.download name maps)
-TEI_TGZ=$(uv run python -m wikikit.export.download name tei)
-SAMPLER_VOL=$(uv run python -m wikikit.corpora brand sampler_volume)
 MAPS_JSON=$(uv run python -m wikikit.corpora data maps.json)
 # Every value ASSERTED non-empty before use: the article sync below runs with
 # --delete, and an empty root must stop the deploy, not point it elsewhere.
-: "${DERIVED:?no output root}" "${IMAGES:?no image root}" "${SLUG:?no slug}"
-: "${CORPUS_TGZ:?}" "${MAPS_TGZ:?}" "${TEI_TGZ:?}" "${MAPS_JSON:?}"
-: "${SAMPLER_VOL:?the book names no sampler volume}"
-SAMPLER="${SLUG}-vol$(printf '%02d' "$SAMPLER_VOL").epub"   # the published sampler
+: "${DERIVED:?no output root}" "${IMAGES:?no image root}" "${MAPS_JSON:?}"
 EXPORT_DIR="$DERIVED/articles"
 START=$(date +%s)
 elapsed() { local s=$(( $(date +%s) - START )); printf "%d:%02d" $((s/60)) $((s%60)); }
@@ -42,17 +39,6 @@ echo "  Deploy to britannica11.org"
 echo "  Started: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "============================================"
 
-# BUILD WHAT WE SHIP, at ship time — the same argument the corpus fingerprint
-# below makes for itself.  The sampler used to be uploaded from whatever happened
-# to be on disk, and drifted four days behind the corpus it sits beside on the
-# download page: built Aug 16, shipped Aug 19 next to a corpus carrying 31 source
-# corrections and five producer fixes it did not contain, under a freshly
-# computed sha256 that made it look current.
-#
-# FIRST, before any upload: the build carries hard gates (every article anchored
-# once, no duplicate ids, every href resolves, per-chunk text preservation) and
-# `set -e` aborts on them — and aborting before the first `aws s3` call is what
-# keeps a failed sampler from becoming a partial deploy.  ~80s.
 # BEFORE ANYTHING ELSE: is this corpus the output of a rebuild that finished its
 # gates, and has anything written to it since?  The header above asks a human to
 # run this "ONLY right after a clean FULL rebuild you have reviewed" — an
@@ -60,10 +46,6 @@ echo "============================================"
 # instruction as a check.  ~40ms.
 echo "  Verifying the corpus against the last completed rebuild..."
 uv run python tools/diagnostics/corpus_stamp.py --check
-
-echo "  Building vol-$SAMPLER_VOL sampler EPUB [$(elapsed)]..."
-mkdir -p epub   # gitignored, so absent on a fresh clone
-uv run python -m wikikit.epub.build --volume "$SAMPLER_VOL" --out "epub/$SAMPLER"
 
 echo "  Uploading articles to S3..."
 # Cache policy is load-bearing here: article JSONs are content-addressed ({hash}.json,
@@ -118,21 +100,6 @@ done
 # maps.json is hand-curated source (lives at data/maps.json, not data/derived/)
 aws s3 cp "$MAPS_JSON" s3://britannica11.org/data/maps.json \
   --content-type "application/json" --cache-control "no-cache"
-
-echo "  Uploading download bundle (agent JSONL + graphs)..."
-aws s3 cp "$DERIVED/$CORPUS_TGZ" "s3://britannica11.org/download/$CORPUS_TGZ"
-aws s3 cp "$DERIVED/$CORPUS_TGZ.sha256" "s3://britannica11.org/download/$CORPUS_TGZ.sha256"
-aws s3 cp "$DERIVED/$MAPS_TGZ" "s3://britannica11.org/download/$MAPS_TGZ"
-aws s3 cp "$DERIVED/$MAPS_TGZ.sha256" "s3://britannica11.org/download/$MAPS_TGZ.sha256"
-# The TEI-P5 edition — its own bundle for its own audience (see export/download.py).
-aws s3 cp "$DERIVED/$TEI_TGZ" "s3://britannica11.org/download/$TEI_TGZ"
-aws s3 cp "$DERIVED/$TEI_TGZ.sha256" "s3://britannica11.org/download/$TEI_TGZ.sha256"
-echo "  Uploading vol-$SAMPLER_VOL sampler EPUB (built above)..."
-sha256sum "epub/$SAMPLER" | awk '{print $1}' > "epub/$SAMPLER.sha256"
-aws s3 cp "epub/$SAMPLER" "s3://britannica11.org/download/$SAMPLER"
-aws s3 cp "epub/$SAMPLER.sha256" "s3://britannica11.org/download/$SAMPLER.sha256"
-aws s3 cp "$DERIVED/download/manifest.json" s3://britannica11.org/download/manifest.json
-aws s3 cp "$DERIVED/download/README.md" s3://britannica11.org/download/README.md
 
 # Regenerate the corpus fingerprint HERE, immediately before shipping it, so the
 # stamp provably describes the bytes this deploy uploaded.  Generating it only in
@@ -219,22 +186,6 @@ echo "  Deploy complete. [$(elapsed)]"
 echo
 echo "=== Deploy preflight [$(elapsed)] ==="
 uv run python tools/diagnostics/check_deploy_refs.py
-
-# --- HuggingFace dataset mirror (folded in; best-effort, NON-FATAL) ---
-# One command instead of a forgotten second step.  Kept non-fatal because the
-# SITE is already live by this point — an HF auth/network hiccup must never fail
-# a deploy whose site push already succeeded.  `--with huggingface_hub` supplies
-# the package; auth is a cached `hf auth login` (WRITE token) or $HF_TOKEN.
-echo
-echo "=== HuggingFace dataset mirror [$(elapsed)] ==="
-if uv run --with huggingface_hub python tools/publish_hf.py britannica11/eb1911; then
-  echo "  HuggingFace mirror updated."
-else
-  echo "  WARNING: HuggingFace publish failed — the site deploy above still SUCCEEDED."
-  echo "  Auth once with a WRITE token, then run just the publish (no full redeploy):"
-  echo "    uv run --with huggingface_hub hf auth login   # --force to replace a read-only token"
-  echo "    uv run --with huggingface_hub python tools/publish_hf.py britannica11/eb1911"
-fi
 
 echo
 echo "============================================"

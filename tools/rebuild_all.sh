@@ -26,11 +26,14 @@
 #   5  Resolve    5.1 classified TOC · 5.2 TOC disambiguations · 5.3 kind index
 #                 5.4 post-export pass (math · contributors · xrefs · render)
 #   6  Site       6.1 fm first-content scan · 6.2 generated pages + stamp
-#                 6.3 Reader's Guide · 6.4 download bundles (corpus · maps · TEI)
+#                 6.3 Reader's Guide
 #   7  Gates      7.1 quality report · 7.2 overlap audit (reports)
 #                 7.3 mangled-marker · 7.4 link census · 7.5 contributor-dedup
-#                 7.6 image coverage · 7.7 TEI validation (gates) · 7.8 stamp
-#   8  Deploy     opt-in (--deploy); default is build-only
+#                 7.6 image coverage · 7.8 word count (gates) · 7.9 stamp
+#   8  Deploy     opt-in (--deploy) — the SITE only; default is build-only
+#
+# 6.4 (download bundles) and 7.7 (TEI validation) moved out 2026-10-10: they
+# are derivatives, built from the stamp by tools/derivatives.sh.
 #
 # Relabeled 2026-08-15.  Decoder for pre-relabel logs/docs (old → new):
 #   3c→3.1  3d→3.2  4→4.1  4b→4.2  6b→5.1  6b2→5.2  6b3→5.3  6b4/6b5→5.4
@@ -259,7 +262,7 @@ uv run python tools/vol29/build_kind_index.py
 #                  consult the topic resolution built above; (re)writes
 #                  xref_resolution.jsonl.
 # MUST run before any consumer of the decorated bodies / rendered_html / xref
-# graph / contributors (6.3 Reader's Guide, 6.4 download bundle, the search index).
+# graph / contributors (6.3 Reader's Guide, the search index, every derivative).
 # Each transform is still runnable alone via its own module's main().
 # [[project_resolver_consolidation]]
 echo
@@ -297,25 +300,9 @@ echo
 echo "=== Phase 6.3: Building Reader's Guide [$(elapsed)] ==="
 uv run python tools/viewer/build_readers_guide.py all > /dev/null
 
-# --- Phase 6.4: Build the public download bundles (agent JSONL + 3 graphs) ---
-# The corpus and its three knowledge graphs re-rendered for download:
-# articles.jsonl (Markdown records), xref_edges.jsonl (reference graph),
-# topics.json (subject taxonomy), contributors.json (authorship roster).
-# Pure REASSEMBLY of already-derived data (article JSONs + classified_toc) — a
-# few minutes, no DB, no recompute.  MUST run after Phase 5.2 so it reads the
-# DISAMBIGUATED classified_toc.json (ABEL→right Abel, Zürich town vs canton).
-echo
-echo "=== Phase 6.4: Building download bundles [$(elapsed)] ==="
-uv run python -m wikikit.export.download
-# The maps bundle (colour plates + Stieler originals) rebuilds too so a registry
-# or image change never ships a stale archive; validates maps.json's file refs.
-uv run python -m wikikit.export.download maps
-# The TEI-P5 edition ships as its OWN bundle (eb1911-tei.tar.gz, ~100MB): a
-# reader who wants articles.jsonl for text-mining does not want a 37,000-file XML
-# tree, and the TEI audience does not want the JSONL.  Separation also lets it
-# carry its own DOI if deposited (Zenodo / TAPAS / the Oxford Text Archive).
-# Validity is gated separately in 7.7, against the TEI Consortium's own schema.
-uv run python -m wikikit.export.download tei
+# (The download bundles, TEI and its validation gate, the EPUBs, MDX and the
+# HuggingFace mirror are DERIVATIVES of this corpus, built from its stamp by
+# tools/derivatives.sh — not phases of the rebuild.)
 
 # --- Phase 7.1: Quality report (visibility, no gate) ---
 # The standing numbers, printed to the log so a regression is visible in the
@@ -388,21 +375,6 @@ echo
 echo "=== Phase 7.6: Image-coverage gate [$(elapsed)] ==="
 uv run python -m wikikit.diagnostics.check_image_coverage
 
-# --- Phase 7.7: TEI validation gate ---
-# Every article's TEI must validate against the TEI Consortium's OWN schema
-# (src/wikikit/diagnostics/tei_all.rng, vendored so a build never depends on tei-c.org).
-# This is a genuinely INDEPENDENT net: a leak scan finds markers we failed to
-# convert, while validation finds structure we converted WRONGLY — a <cell>
-# outside a <row>, a <p> inside an inline element, a <formula> with element
-# content, a duplicate @xml:id, a stray close tag from OCR-damaged source.
-# It found nine distinct defect classes the day it was first run, none of which
-# leaves a marker behind for any other check to notice.
-# lxml is fetched on demand rather than added as a project dependency — the same
-# pattern the HuggingFace publish uses in deploy.sh.  ~105s over 37k articles.
-echo
-echo "=== Phase 7.7: TEI validation gate [$(elapsed)] ==="
-uv run --with lxml python -m wikikit.diagnostics.tei_validate
-
 # --- Phase 7.8: Word-count gate ---
 # The shipped `word_count` must be `countable_words(body)`, its one owner.  The
 # export set it right from 2026-09-21 and it still shipped wrong for a rebuild:
@@ -434,6 +406,7 @@ if [ -n "$DEPLOY" ]; then
 else
   echo
   echo "=== Build complete — NOT deployed.  Review it, then ship with: ./tools/deploy.sh ==="
+  echo "=== Derivatives (bundles, TEI, EPUBs, MDX, HF): ./tools/derivatives.sh build, then publish ==="
 fi
 
 echo

@@ -68,16 +68,21 @@ STAMP = DERIVED / "rebuild_stamp.json"
 #
 # NOT `scans/`: those are inputs that no rebuild regenerates, so including them
 # would fail the check whenever a scan was added, which is not what this asks.
+#
+# The SITE's files only.  The public bundles (and `download/`) were here while the
+# deploy shipped them; they are derivatives now (tools/derivatives.sh), built
+# AFTER this stamp from it, so they would fail the check the moment they were
+# built.  Each derivative carries its own record of this stamp instead
+# (tools/diagnostics/derivative_stamp.py).
 SHIPPED_FILES = [
     # regenerated every rebuild and read client-side to build links and pages
     "classified_toc.json", "printed_pages.json", "printed_pages_leaf.json",
     "scan_map.json", "fm_first_content.json", "volumes.json",
-    # the public bundles
-    "eb1911-corpus.tar.gz", "eb1911-corpus.tar.gz.sha256",
-    "eb1911-maps.tar.gz", "eb1911-maps.tar.gz.sha256",
-    "eb1911-tei.tar.gz", "eb1911-tei.tar.gz.sha256",
 ]
-SHIPPED_DIRS = ["download"]
+SHIPPED_DIRS: list[str] = []
+# Which list the stamp's `shipped_signature` was taken over.  A stamp from the
+# wider list cannot be compared against this one; see the check.
+SHIPPED_SCOPE = "site"
 
 
 def _stat_line(name: str, path: pathlib.Path) -> str:
@@ -149,6 +154,7 @@ def main() -> int:
             "articles": count,
             "shipped_signature": ssig,
             "shipped_files": scount,
+            "shipped_scope": SHIPPED_SCOPE,
             "finished": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
         }, indent=2) + "\n", encoding="utf-8")
         print(f"  corpus stamped: {count:,} articles, {sig[:16]}")
@@ -184,6 +190,11 @@ def main() -> int:
     if "shipped_signature" not in prev:
         print("  (stamp predates the shipped-file check; articles verified only —"
               " the next rebuild will widen it)")
+    elif prev.get("shipped_scope") != SHIPPED_SCOPE:
+        # Taken over the old list (site + bundles): its signature cannot match
+        # the site-only one, so a mismatch here would say nothing about the files.
+        print("  (stamp's shipped-file signature covers the old site+bundles list;"
+              " articles verified only — the next rebuild records the site-only one)")
     else:
         ssig, scount = shipped_signature()
         if prev["shipped_signature"] != ssig:
