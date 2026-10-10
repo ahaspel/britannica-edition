@@ -9,6 +9,7 @@ from __future__ import annotations
 import importlib
 
 from wikikit.corpora import Corpus
+from wikikit.scan.vocabulary import Construct
 
 # --- how many scanned pages each volume has ----------------------------------
 # The fetch range.  EB1911's numbers were a bash array inside fetch_all.sh, a
@@ -121,6 +122,13 @@ EB1911 = Corpus(
     page_scan=_hook("eb1911.scans", "page_scan"),
     page_scan_url=_hook("eb1911.scans", "page_scan_url"),
     page_layout=_hook("eb1911.scans", "page_layout"),
+    # The book prints headings in the margin beside its paragraphs; Wikisource
+    # marks them {{EB1911 Shoulder Heading|…}}, which the engine renders — so
+    # our transcription writes them the same way, where they stand.
+    scan_constructs=(Construct(
+        "eb1911 shoulder heading", "{{EB1911 Shoulder Heading|", "}}",
+        "a heading printed in the MARGIN beside a paragraph (a side note), never part of the "
+        "sentence: on a line of its own at the place in the text where it stands"),),
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({

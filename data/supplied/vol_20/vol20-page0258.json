@@ -33,17 +33,6 @@
     ]
    },
    {
-    "name": "c2s1",
-    "kind": "text",
-    "column": 2,
-    "box": [
-     1213,
-     155,
-     2337,
-     247
-    ]
-   },
-   {
     "name": "c0f1",
     "kind": "figure",
     "column": 0,
@@ -66,17 +55,6 @@
     ]
    },
    {
-    "name": "c0s1",
-    "kind": "text",
-    "column": 0,
-    "box": [
-     1960,
-     247,
-     2337,
-     1263
-    ]
-   },
-   {
     "name": "c1s2",
     "kind": "text",
     "column": 1,
@@ -85,6 +63,28 @@
      1262,
      1211,
      1885
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1213,
+     155,
+     2337,
+     247
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1960,
+     247,
+     2337,
+     1263
     ]
    },
    {
@@ -128,7 +128,7 @@
    "c0c1": "{{c|{{sc|Fig.}} 81.—Buffington-Crozier Disappearing Carriage for 10″ B.L. Gun, U.S.A.}}",
    "c0s1": "Plate VI., represents a Krupp mounting for an 11·2″ howitzer, with a cupola-like shield. This is worked both electrically and by hand. Vertical fire from a weapon of this type is sufficiently powerful to penetrate the protective deck of a vessel. Light and medium guns, types (''b'') and (''c''), are sometimes mounted in cupolas, especially on land fronts (see below), and disappearing cupolas have also been proposed for them: in the latter the whole structure is made to sink by the action of mechanism till the top of the cupola is level with the ground. Types and further details will be found in the article {{sc|Fortification and Siege-}}",
    "c1s2": "practice being occasionally to mount two 11″ guns in the same cupola. The cast-iron cupola was introduced by Gruson of Magdeburg, ''Cupolas.'' but nickel steel is now generally employed by Krupp. In Gruson's design the gun and mounting are placed upon a turn-table upon which also rest the bases of a series of cast-iron plates; these are very massive, are curvilinear in section, and are built up into a shallow dome which completely covers the mountings as with a cap: the whole structure turns together, being traversed round a central pivot. The chase of the gun emerges through a port which admits of the necessary play of elevation. A notable example of a cupola was erected at Spezzia containing two 120-ton Krupp guns, the structure complete weighing 2050 tons. A Krupp cupola of chilled cast-iron for two 28-cm. (11″) is shown in fig. 82. These are designed principally for coast defence in low sites. The cupola, which is built up like a Gruson cupola of several heavy iron masses, is resolved and the guns laid by hydraulic power.",
-   "c2s2": "CRAFT.\n\nMountings of the barbette type are much favoured in the British service for guns of types (''a'') and (''b''); one of the most modern is shown in fig. 21, where a 9·2″ B.L. gun, Mark X., is placed upon a Mark V. mounting, a combination which admits of over five aimed rounds in two minutes.\n\n'''''Barbette mountings.'''''\n\n''The British 9·2″ B.L. Gun.''—Fig. 84 shows a general view of the mounting, fig. 85 a longitudinal section through the cradle on a larger scale. The gun, which is trunnionless, carries a cross-head A and recoils in the cradle C, being supported by its guides D, which slide in longitudinal grooves in the cradle. To this cross-head is attached the buffer cylinder B (see fig. 85) which recoils with the gun, while the piston rod L is attached to the front of the cradle: engaging with the buffer cylinder and in the same axial line is a bronze casting containing two air chambers F and G: the casting is attached to the rear of the cradle, which is supported by trunnions E in the lower carriage. Thus on firing, the gun carries the buffer",
+   "c2s2": "{{sc|craft}}.\n\nMountings of the barbette type are much favoured in the British service for guns of types (''a'') and (''b''); one of the most modern is shown in fig. 21, where a 9·2″ B.L. gun, Mark X., is placed upon a Mark V. mounting, a combination which admits of over five aimed rounds in two minutes.\n\n'''''Barbette mountings.'''''\n\n''The British 9·2″ B.L. Gun.''—Fig. 84 shows a general view of the mounting, fig. 85 a longitudinal section through the cradle on a larger scale. The gun, which is trunnionless, carries a cross-head A and recoils in the cradle C, being supported by its guides D, which slide in longitudinal grooves in the cradle. To this cross-head is attached the buffer cylinder B (see fig. 85) which recoils with the gun, while the piston rod L is attached to the front of the cradle: engaging with the buffer cylinder and in the same axial line is a bronze casting containing two air chambers F and G: the casting is attached to the rear of the cradle, which is supported by trunnions E in the lower carriage. Thus on firing, the gun carries the buffer",
    "c0c2": "{{c|{{sc|Fig.}} 82.—Krupp Cupola for two 28-cm. Guns.}}"
   },
   "figure_files": {
@@ -212,7 +212,7 @@
     "letters": "CUPOLAS",
     "before": "and mounting are placed",
     "after": "upon a turn-table upon",
-    "in_text": true
+    "in_text": false
    },
    {
     "kind": "link",
@@ -229,14 +229,23 @@
     "in_text": false
    }
   ],
-  "carried_unplaced": [
+  "carried_unplaced": [],
+  "corrections": [
    {
-    "kind": "link",
-    "markup": "{{1911link|Fortification and Siegecraft}}",
-    "text": "Fortification and Siegecraft",
-    "alt": ""
+    "date": "2026-10-09",
+    "strip": "items",
+    "from": "c1s1 c2s1 | c0s1 | c1s2 c2s2 (band order)",
+    "to": "c1s1 c1s2 | c2s1 c0s1 c2s2 (column order)",
+    "why": "Fig. 81 fills column 1: its text resumes below while column 2 runs on beside the figure"
+   },
+   {
+    "date": "2026-10-09",
+    "strip": "c2s2",
+    "from": "CRAFT.",
+    "to": "{{sc|craft}}.",
+    "why": "the end of {{sc|Fortification and Siege-}}, in small capitals on the page"
    }
   ]
  },
- "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|228|ORDNANCE|[GARRISON MOUNTINGS}}</noinclude>The heavy gun cupola is found on the continent of Europe in the armaments of various Powers for guns of type (''a''), the German A heavy chilled cast-iron collar protects the under side of the armoured structure and the working mechanism of the guns. Fig. 83,\n\n[[File:eb1911 v20 p0258 c0f1.png|center|299px]]\n{{c|{{sc|Fig.}} 81.—Buffington-Crozier Disappearing Carriage for 10″ B.L. Gun, U.S.A.}}\n\nPlate VI., represents a Krupp mounting for an 11·2″ howitzer, with a cupola-like shield. This is worked both electrically and by hand. Vertical fire from a weapon of this type is sufficiently powerful to penetrate the protective deck of a vessel. Light and medium guns, types (''b'') and (''c''), are sometimes mounted in cupolas, especially on land fronts (see below), and disappearing cupolas have also been proposed for them: in the latter the whole structure is made to sink by the action of mechanism till the top of the cupola is level with the ground. Types and further details will be found in the article {{sc|Fortification and Siege-}}\n\npractice being occasionally to mount two 11″ guns in the same cupola. The cast-iron cupola was introduced by Gruson of Magdeburg, ''Cupolas.'' but nickel steel is now generally employed by Krupp. In Gruson's design the gun and mounting are placed\n{{EB1911 Shoulder HeadingFine|Cupolas.}}\n upon a turn-table upon which also rest the bases of a series of cast-iron plates; these are very massive, are curvilinear in section, and are built up into a shallow dome which completely covers the mountings as with a cap: the whole structure turns together, being traversed round a central pivot. The chase of the gun emerges through a port which admits of the necessary play of elevation. A notable example of a cupola was erected at Spezzia containing two 120-ton Krupp guns, the structure complete weighing 2050 tons. A Krupp cupola of chilled cast-iron for two 28-cm. (11″) is shown in fig. 82. These are designed principally for coast defence in low sites. The cupola, which is built up like a Gruson cupola of several heavy iron masses, is resolved and the guns laid by hydraulic power. CRAFT.\n\nMountings of the barbette type are much favoured in the British service for guns of types (''a'') and (''b''); one of the most modern is shown in fig. 21, where a 9·2″ B.L. gun, Mark X., is placed upon a Mark V. mounting, a combination which admits of over five aimed rounds in two minutes.\n{{EB1911 Shoulder HeadingFine|Barbette mountings.}}\n\n\n\n\n''The British 9·2″ B.L. Gun.''—Fig. 84 shows a general view of the mounting, fig. 85 a longitudinal section through the cradle on a larger scale. The gun, which is trunnionless, carries a cross-head A and recoils in the cradle C, being supported by its guides D, which slide in longitudinal grooves in the cradle. To this cross-head is attached the buffer cylinder B (see fig. 85) which recoils with the gun, while the piston rod L is attached to the front of the cradle: engaging with the buffer cylinder and in the same axial line is a bronze casting containing two air chambers F and G: the casting is attached to the rear of the cradle, which is supported by trunnions E in the lower carriage. Thus on firing, the gun carries the buffer\n\n[[File:eb1911 v20 p0258 c0f2.png|center|360px]]\n{{c|{{sc|Fig.}} 82.—Krupp Cupola for two 28-cm. Guns.}}<noinclude><references/></noinclude>"
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|228|ORDNANCE|[GARRISON MOUNTINGS}}</noinclude>The heavy gun cupola is found on the continent of Europe in the armaments of various Powers for guns of type (''a''), the German practice being occasionally to mount two 11″ guns in the same cupola. The cast-iron cupola was introduced by Gruson of Magdeburg,  but nickel steel is now generally employed by Krupp. In Gruson's design the gun and mounting are placed\n{{EB1911 Shoulder HeadingFine|Cupolas.}}\n upon a turn-table upon which also rest the bases of a series of cast-iron plates; these are very massive, are curvilinear in section, and are built up into a shallow dome which completely covers the mountings as with a cap: the whole structure turns together, being traversed round a central pivot. The chase of the gun emerges through a port which admits of the necessary play of elevation. A notable example of a cupola was erected at Spezzia containing two 120-ton Krupp guns, the structure complete weighing 2050 tons. A Krupp cupola of chilled cast-iron for two 28-cm. (11″) is shown in fig. 82. These are designed principally for coast defence in low sites. The cupola, which is built up like a Gruson cupola of several heavy iron masses, is resolved and the guns laid by hydraulic power. A heavy chilled cast-iron collar protects the under side of the armoured structure and the working mechanism of the guns. Fig. 83, Plate VI., represents a Krupp mounting for an 11·2″ howitzer, with a cupola-like shield. This is worked both electrically and by hand. Vertical fire from a weapon of this type is sufficiently powerful to penetrate the protective deck of a vessel. Light and medium guns, types (''b'') and (''c''), are sometimes mounted in cupolas, especially on land fronts (see below), and disappearing cupolas have also been proposed for them: in the latter the whole structure is made to sink by the action of mechanism till the top of the cupola is level with the ground. Types and further details will be found in the article {{sc|{{1911link|Fortification and Siegecraft}}}}.\n\n[[File:eb1911 v20 p0258 c0f1.png|center|299px]]\n{{c|{{sc|Fig.}} 81.—Buffington-Crozier Disappearing Carriage for 10″ B.L. Gun, U.S.A.}}\n\nMountings of the barbette type are much favoured in the British service for guns of types (''a'') and (''b''); one of the most modern is shown in fig. 21, where a 9·2″ B.L. gun, Mark X., is placed upon a Mark V. mounting, a combination which admits of over five aimed rounds in two minutes.\n{{EB1911 Shoulder HeadingFine|Barbette mountings.}}\n\n\n\n\n''The British 9·2″ B.L. Gun.''—Fig. 84 shows a general view of the mounting, fig. 85 a longitudinal section through the cradle on a larger scale. The gun, which is trunnionless, carries a cross-head A and recoils in the cradle C, being supported by its guides D, which slide in longitudinal grooves in the cradle. To this cross-head is attached the buffer cylinder B (see fig. 85) which recoils with the gun, while the piston rod L is attached to the front of the cradle: engaging with the buffer cylinder and in the same axial line is a bronze casting containing two air chambers F and G: the casting is attached to the rear of the cradle, which is supported by trunnions E in the lower carriage. Thus on firing, the gun carries the buffer\n\n[[File:eb1911 v20 p0258 c0f2.png|center|360px]]\n{{c|{{sc|Fig.}} 82.—Krupp Cupola for two 28-cm. Guns.}}<noinclude><references/></noinclude>"
 }
