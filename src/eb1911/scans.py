@@ -113,9 +113,16 @@ def page_scan(vol: int, ws_page: int) -> Image.Image:
 
 def page_layout(vol: int, ws_page: int):
     """Every page the book transcribes is an article page, printed in two
-    columns; the plates, which are not, are never transcribed."""
+    columns; the plates, which are not, are never transcribed.  Each column
+    is read whole: its type reads at the scale a whole column arrives at
+    (five columns, 2026-10-11, nothing lost), and a column read whole has
+    no cut to lose a line in.  A page with anything across its columns — a
+    wide table, a figure spanning or reaching across the gutter — is filed
+    for special handling, not read (user, 2026-10-11: "any effort to do
+    anything but simply read the two columns will fail in one way or
+    another")."""
     from wikikit.scan.layout import PageLayout
-    return PageLayout(columns=2)
+    return PageLayout(columns=2, whole_columns=True, columns_only=True)
 
 
 def page_scan_url(vol: int, ws_page: int) -> str:

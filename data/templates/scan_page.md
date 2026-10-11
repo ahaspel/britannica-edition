@@ -6,6 +6,10 @@ An article begins with its title in bold capitals at the margin
 heading in italic, followed by a full stop and a dash: ''Symbolic Form''.—
 Footnotes are printed at the foot of the page in smaller type.
 
+Some pages print a sheet signature at the very foot of the first column,
+below the text: a volume number in roman, a sheet number, sometimes a letter
+("XXIV. 31 a"). It is the printer's mark, not the page's text: leave it out.
+
 CHEMISTRY is not mathematics: a chemical formula or equation is written in
 the running text with <sub> for its subscript numbers, never in <math>:
 SiI<sub>4</sub>+2C<sub>2</sub>H<sub>5</sub>OH = SiO<sub>2</sub>+…

@@ -122,6 +122,9 @@ EB1911 = Corpus(
     page_scan=_hook("eb1911.scans", "page_scan"),
     page_scan_url=_hook("eb1911.scans", "page_scan_url"),
     page_layout=_hook("eb1911.scans", "page_layout"),
+    # A transcribed page keeps the section names its articles' ids hang on:
+    # where its articles start, read off our page; the names, Wikisource's.
+    page_sections=_hook("eb1911.boundaries", "supplied_page_sections"),
     # The book prints headings in the margin beside its paragraphs; Wikisource
     # marks them {{EB1911 Shoulder Heading|…}}, which the engine renders — so
     # our transcription writes them the same way, where they stand.

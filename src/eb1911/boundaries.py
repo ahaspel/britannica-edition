@@ -233,3 +233,80 @@ def article_starts(stream: str, page_keys: list, section_keys: list) -> list[int
             out.append(gpos)
 
     return out
+
+
+# ── a transcribed page's sections ────────────────────────────────────────────
+def _one_page(volume: int, page: int, wikitext: str):
+    """One page as the pipeline streams it: (stream, page keys, section keys)."""
+    from types import SimpleNamespace
+
+    from wikikit.pipeline.stages.preprocess import stream_with_keys
+    return stream_with_keys([SimpleNamespace(wikitext=wikitext, page_number=page)], volume)
+
+
+def _headword_at(stream: str, pos: int) -> str:
+    m = _HEADING.match(stream, pos)
+    if m:
+        return _heading_text(m.group(1))
+    return _letter_from_dropcap(stream[pos:].lstrip()) or ""
+
+
+def page_articles(volume: int, page: int, wikitext: str) -> tuple[bool, list[str]]:
+    """How this book divides one page: does it open with text running on from
+    the page before, and the headword of each article that starts on it, in
+    order — by `article_starts`, the rule the pipeline divides every page by."""
+    stream, page_keys, _ = _one_page(volume, page, wikitext)
+    starts = sorted(set(article_starts(stream, page_keys, [(0, "")])))
+    runs_on = bool(stream[:starts[0]].strip()) if starts else bool(stream.strip())
+    return runs_on, [_headword_at(stream, s) for s in starts]
+
+
+def page_sections(volume: int, page: int, ours: str, fetched: str) -> tuple[list[dict] | None, str | None]:
+    """The `<section begin>` names a transcribed page carries, and where:
+    [{"name", "before": headword | None}] (None: the page's top), or None and
+    why not.
+
+    WHERE comes from the print: the transcribed page divided by the book's own
+    rule (`page_articles`).  The NAME is an address, not text — it is hashed
+    into the article's id (`stable_id`), and Wikisource's transcribers chose it:
+    the k-th section on a page is `sk` (192 of the 273 sections on the supplied
+    pages, 2026-10-11), unless one gave it a name instead ("Schliemann,
+    Heinrich").  So the names are the fetched page's, section for section, and
+    nothing else of it is taken.  They are taken only where the fetched page
+    divides into the SAME articles, headword for headword: anything else and
+    the page has no names, and says why."""
+    from wikikit.util.strings import section_slug as slug
+    runs_on, heads = page_articles(volume, page, ours)
+    stream, page_keys, section_keys = _one_page(volume, page, fetched)
+    if not section_keys:
+        # nothing on this page addresses an article: an article starting here
+        # takes its id from the section open on an earlier page, as it does now
+        # (308 of the 399 supplied pages, 2026-10-11)
+        return [], None
+    starts = sorted(set(article_starts(stream, page_keys, section_keys)))
+    theirs = [_headword_at(stream, s) for s in starts]
+    if [slug(h) for h in heads] != [slug(h) for h in theirs]:
+        return None, f"articles {heads} on our page, {theirs} on the fetched page"
+    out = []
+    for i, (off, name) in enumerate(section_keys):
+        end = section_keys[i + 1][0] if i + 1 < len(section_keys) else len(stream)
+        # the article whose heading opens the section, past any lead layout
+        # (a margin note before VARIATIONS, CALCULUS OF: vol 27 p941) — the
+        # same reach `article_starts` has; or a drop-cap at the open itself
+        m = _heading_at(stream, off)
+        opens = [k for k, s in enumerate(starts) if off <= s < end and (s == off or (m and s == m.start()))]
+        if opens:
+            out.append({"name": name, "before": heads[opens[0]]})
+        elif i == 0 and runs_on:
+            out.append({"name": name, "before": None})
+        else:
+            return None, f"section {name!r} opens on no article and is not the page's top"
+    return out, None
+
+
+def supplied_page_sections(volume: int, page: int, ours: str) -> tuple[list[dict] | None, str | None]:
+    """The book's `Corpus.page_sections`: `page_sections` against the page
+    Wikisource has for it (none fetched: nothing to keep)."""
+    from wikikit.source_pages import fetched_text
+    fetched = fetched_text(volume, page)
+    return page_sections(volume, page, ours, fetched) if fetched else ([], None)
