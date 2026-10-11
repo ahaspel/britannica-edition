@@ -122,7 +122,7 @@ def page_layout(vol: int, ws_page: int):
     anything but simply read the two columns will fail in one way or
     another")."""
     from wikikit.scan.layout import PageLayout
-    return PageLayout(columns=2, whole_columns=True, columns_only=True)
+    return PageLayout(columns=2, whole_columns=True, columns_only=True, marks_small_type=True)
 
 
 def page_scan_url(vol: int, ws_page: int) -> str:

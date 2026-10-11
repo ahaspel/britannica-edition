@@ -6,9 +6,23 @@ An article begins with its title in bold capitals at the margin
 heading in italic, followed by a full stop and a dash: ''Symbolic Form''.—
 Footnotes are printed at the foot of the page in smaller type.
 
+The image has a white margin to the left of the column, not part of the page.
+In it, ticks labelled with numbers mark positions down the page. Begin EVERY
+paragraph you write — the first in the image too, even one running on from the
+column before — with the number of the tick level with, or just above, its
+first printed line, in double brackets before its first word: ⟦1200⟧.
+
+The book is printed in two sizes of type. A grey bar in the margin, beside the
+column, marks where the smaller type is printed — it is measured from the
+spacing of the lines, so trust it over your eye: the paragraphs beside the bar
+are in the smaller type ({{smaller block|…}}), and the paragraphs with no bar
+beside them are in the ordinary type, unmarked. The bar's ends can fall a line
+or two from where the type changes; the type changes where a paragraph begins,
+so the paragraph nearest each end decides.
+
 Some pages print a sheet signature at the very foot of the first column,
 below the text: a volume number in roman, a sheet number, sometimes a letter
-("XXIV. 31 a"). It is the printer's mark, not the page's text: leave it out.
+("XXIV. 31 a"). Record it, marked as the printer's sheet signature.
 
 CHEMISTRY is not mathematics: a chemical formula or equation is written in
 the running text with <sub> for its subscript numbers, never in <math>:
@@ -52,3 +66,9 @@ Unicode look-alikes. A letter or symbol in the running text is a formula too:
   in the same paragraph unless the book begins a new one (an indented line).
 - An equation number or a word printed beside a display ("(1)", "and")
   stays outside the <math>, inside the block.
+- Look twice at the characters this type makes alike: the italic letter o
+  and the figure 0; η and n or h; α and a; ν and v; ι and i; ⅕ and ⅙. A
+  subscript or superscript, however small (n₀, x₁, the dot of ẋ), is part of
+  the symbol: never drop it.
+- A command prints only inside <math>: write every Greek letter, operator
+  and sign in LaTeX there (\psi, \int, \sum), never as a word in the text.

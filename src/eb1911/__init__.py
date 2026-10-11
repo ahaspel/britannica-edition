@@ -130,8 +130,13 @@ EB1911 = Corpus(
     # our transcription writes them the same way, where they stand.
     scan_constructs=(Construct(
         "eb1911 shoulder heading", "{{EB1911 Shoulder Heading|", "}}",
-        "a heading printed in the MARGIN beside a paragraph (a side note), never part of the "
-        "sentence: on a line of its own at the place in the text where it stands"),),
+        "a heading printed in the MARGIN beside the text (a side note), never part of the "
+        "sentence: on a line of its own between the printed lines beside which it stands; it "
+        "begins no paragraph and ends none"),
+        Construct(
+        "eb1911 sheet signature", "{{EB1911 sheet signature|", "}}",
+        "the printer's sheet signature at the very foot of a column, below the text (a volume "
+        "number in roman, a sheet number, sometimes a letter: XXIV. 31 a)", furniture=True),),
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({
