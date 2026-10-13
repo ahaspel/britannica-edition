@@ -179,6 +179,62 @@ def displays(text: str) -> list[tuple[int, int]]:
     return out
 
 
+_QUOTES = re.compile(r"'{2,5}")
+
+
+def quotes_open(span: str) -> bool:
+    """Does `span` leave italics or bold open on any of its lines — a ''
+    or ''' it switches on and does not switch off, or off without on?  A
+    patch whose span cuts through Wikisource's ''…'' left the rest of the
+    line in italics, its closing '' printed (THERMODYNAMICS, vol 26 p. 808:
+    "external work done by''", live 2026-10-13).  Formulas' TeX primes
+    (x'') are not quotes."""
+    for line in RAW_MATH.sub(" ", span).split("\n"):
+        italic = bold = False
+        for m in _QUOTES.finditer(line):
+            n = len(m.group(0))
+            if n in (2, 4):
+                italic = not italic
+            elif n == 3:
+                bold = not bold
+            else:
+                italic, bold = not italic, not bold
+        if italic or bold:
+            return True
+    return False
+
+
+def quote_edges(ws: str, w0: int, w1: int) -> tuple[int, int]:
+    """Wikisource's span with its edges moved off the italics or bold it cut
+    through: a quote run it opens or closes at an edge left outside it, or the
+    run just outside an edge taken in — the first that leaves no italics or
+    bold open.  Unchanged when none does (the patch is then refused).  A
+    correction refused for where its edge fell is a correction lost."""
+    def runs_at_start(a, b):
+        m = re.match(r"\s*'{2,5}", ws[a:b])
+        return a + m.end() if m else None
+
+    def runs_at_end(a, b):
+        m = re.search(r"'{2,5}\s*\Z", ws[a:b])
+        return a + m.start() if m else None
+
+    def run_before(a):
+        m = re.search(r"'{2,5}\Z", ws[:a])
+        return m.start() if m else None
+
+    def run_after(b):
+        m = re.match(r"'{2,5}", ws[b:])
+        return b + m.end() if m else None
+
+    starts = [w0] + [x for x in (runs_at_start(w0, w1), run_before(w0)) if x is not None]
+    ends = [w1] + [x for x in (runs_at_end(w0, w1), run_after(w1)) if x is not None]
+    for a in starts:
+        for b in ends:
+            if a < b and (a, b) != (w0, w1) and not quotes_open(ws[a:b]):
+                return a, b
+    return w0, w1
+
+
 def paragraph_end(ours: str, n0: int, n1: int, ws: str, w0: int, w1: int) -> tuple[int, int]:
     """Both spans ended at the paragraph break before the next paragraph,
     when ours runs on into a paragraph it opens and does not close
@@ -292,6 +348,10 @@ def main():
             n0, n1 = edges(ours, o0, o1)
             w0, w1 = edges(ws, w0, w1)
             n1, w1 = paragraph_end(ours, n0, n1, ws, w0, w1)
+            if quotes_open(ws[w0:w1]):
+                w0, w1 = quote_edges(ws, w0, w1)
+            if quotes_open(ours[n0:n1]):           # ours too: "'' <math>…" closes the
+                n0, n1 = quote_edges(ours, n0, n1)  # italics before it; "(in ''" opens a title
             new_c, old_c = ours[n0:n1], ws[w0:w1]
             if old_c == new_c or "<math" not in new_c:
                 continue
@@ -299,6 +359,8 @@ def main():
             s = structure(old_c)
             if markup_balance(old_c) != markup_balance(new_c):
                 why = "markup unbalanced at an edge"
+            elif quotes_open(old_c) or quotes_open(new_c):
+                why = "cuts through italics or bold"
             elif s:
                 why = "Wikisource span holds " + s.split()[0]
             elif structure(new_c):

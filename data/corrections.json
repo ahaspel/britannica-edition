@@ -1556,5 +1556,33 @@
    "from": "{{img float|file=EB1911 Typography - Type with jet.jpg |width=x150px |cap={{sc|Fig.}} 5.—Type<br>with jet.}}",
    "to": "{{img float |align=right|file=EB1911 Typography - Type with jet.jpg |width=x150px |cap={{sc|Fig.}} 5.—Type<br>with jet.}}"
   }
+ ],
+ "_26:855_note": "THERMOELECTRICITY, vol 26 p. 815: 'the algebraic difference (p′ − p″) of their powers'. The source types p-prime as ''p''' — italic p and an apostrophe — which wikitext reads as a bold switch, so the site printed (p'''− p''″). The prime set as a prime.",
+ "26:855": [
+  {
+   "from": "(''p'''−''p''″)",
+   "to": "(''p''′−''p''″)"
+  }
+ ],
+ "_26:849_note": "THERMODYNAMICS, vol 26 p. 809: dW = HF′(t)dt. The source types the prime as an apostrophe after the italics (''HF'''), which wikitext reads as a bold switch; the site printed HF'''(t) dt''. The prime set as a prime.",
+ "26:849": [
+  {
+   "from": "''HF'''(''t'')''dt'',",
+   "to": "''HF''′(''t'')''dt'',"
+  }
+ ],
+ "_26:850_note": "THERMODYNAMICS, vol 26 p. 810, relation (5): the source's OCR line (''s'''−''s''\"+…=(v\"−2/)dp/d…) is garbled and its primes break the italics. Set as our scan reading of the page sets it (data/readings/vol_26/vol26-page0850.json): s′ − s″ + dL/dθ = (v″ − v′)dp/dθ = L/θ.",
+ "26:850": [
+  {
+   "from": "''s'''−''s''\"+''dL''/''d''{{Polytonic|θ}}=(v\"−2/)dp/d{{Polytonic|θ}}=''L''/{{Polytonic|θ}},  . . (5)",
+   "to": "<math>s'-s''+dL/d\\theta=(v''-v')dp/d\\theta=L/\\theta</math>, . . . (5)"
+  }
+ ],
+ "_18:161_note": "MENSURATION, vol 18 p. 142: the print writes the double integral in Sheppard's double brackets, [[V(x,y).u]]; wikitext reads [[…]] as a link, and the site printed a link to 'Vx,y.u'. A zero-width space between each pair of brackets keeps them brackets.",
+ "18:161": [
+  {
+   "from": "[[''V<sub>x,y</sub>.u'']]",
+   "to": "[​[''V<sub>x,y</sub>.u'']​]"
+  }
  ]
 }

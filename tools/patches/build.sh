@@ -19,6 +19,7 @@ nice uv run python $P/build_formulas.py           # -> formulas.json
 uv run python $P/merge.py                         # -> merged.json
 nice uv run python $P/filter_patches.py           # -> kept.json
 nice uv run python $P/validate_patches.py         # -> validate.json, tex.json
+nice uv run python $P/check_leaks.py              # -> leaks.json: nothing but each patch changes
 uv run python $P/katex_check.py                   # -> katex_errors.json
 if [ "${1:-}" = "--install" ]; then
   uv run python $P/install.py

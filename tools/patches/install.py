@@ -61,6 +61,15 @@ if problems:
     for x in problems:
         print("PROBLEM", x[0], x[1][:3])
     sys.exit(1)
+# the leak check (check_leaks.py) must have run on this kept set, after it was
+# made, and flagged nothing unreviewed: no patch changes anything beyond its
+# own text (2026-10-13: italics cut by formula patches had shipped)
+leaks, kept = WORK / "leaks.json", WORK / "kept.json"
+leak_problem = ("leak check not run on the current kept.json" if not leaks.exists()
+                or leaks.stat().st_mtime < kept.stat().st_mtime
+                else "leak check flags " + ", ".join(sorted(json.loads(leaks.read_text(encoding="utf-8"))))
+                if json.loads(leaks.read_text(encoding="utf-8")) else None)
+print("leaks:", leak_problem or "none")
 if "--dry" in sys.argv:
     # what would be installed, against what is: equal, or the pages that differ
     have = {k: v for k, v in json.loads(Path("data/patches.json").read_text(encoding="utf-8")).items()
@@ -69,6 +78,9 @@ if "--dry" in sys.argv:
     print("equals data/patches.json" if not differ else f"differs from data/patches.json on {len(differ)} "
           f"pages: {differ[:10]}")
     sys.exit(0)
+if leak_problem:
+    print("REFUSED:", leak_problem)
+    sys.exit(1)
 doc = {"_doc": "Corrections of WORDS and FORMULAS laid on fetched Wikisource pages, and nothing else "
                "(wikikit.scan.patches): our judged transcription's words where the judge ruled ours, and our "
                "formulas, placed by the prose both pages share; validated (Wikisource's structure unchanged; "

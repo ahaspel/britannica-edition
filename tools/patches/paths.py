@@ -12,6 +12,8 @@
   data/readings/drop.json          patches dropped after the filter: those the
                                    validator faulted, and those a combination
                                    on one page faulted (drop_faulted.py)
+  data/readings/leaks_reviewed.json  patches check_leaks.py flags that were read
+                                   and found right, each with why
   data/staging/patches/            the chain's working files (not kept)"""
 from pathlib import Path
 
@@ -24,6 +26,7 @@ PAGES = JUDGE / "judged.txt"
 VOCAB = READINGS / "vocab.json"
 FILTER_VOCAB = READINGS / "vocab_filter.json"
 DROP = READINGS / "drop.json"
+LEAKS_REVIEWED = READINGS / "leaks_reviewed.json"
 WORK = Path("data/staging/patches")
 WORK.mkdir(parents=True, exist_ok=True)
 
