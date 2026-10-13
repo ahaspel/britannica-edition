@@ -1,0 +1,108 @@
+{
+ "volume": 24,
+ "page_number": 908,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n918",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n918",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 554,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     119,
+     166,
+     2234,
+     232
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     119,
+     232,
+     1176,
+     3126
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1176,
+     232,
+     2234,
+     3126
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    122,
+    283,
+    244,
+    2879
+   ],
+   [
+    2081,
+    753,
+    2192,
+    2657
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    0,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 52,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: table (middle): rotated full-page Table IV spans both columns, crossing the gutter top to bottom"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "rotated full-page Table IV spans both columns, crossing the gutter top to bottom"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> <noinclude><references/></noinclude>"
+}

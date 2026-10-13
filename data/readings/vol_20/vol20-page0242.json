@@ -1,0 +1,176 @@
+{
+ "volume": 20,
+ "page_number": 242,
+ "source": "scan",
+ "title": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/242",
+ "provenance": {
+  "scan": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/242",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 1181,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     48,
+     82,
+     2400,
+     155
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     48,
+     174,
+     2400,
+     1897
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     48,
+     1897,
+     1207,
+     3231
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1207,
+     1897,
+     2400,
+     3231
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c0s1": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    82,
+    173,
+    2327,
+    422
+   ],
+   [
+    640,
+    456,
+    1546,
+    497
+   ],
+   [
+    82,
+    513,
+    2316,
+    1088
+   ],
+   [
+    200,
+    1108,
+    2180,
+    1147
+   ],
+   [
+    749,
+    1178,
+    1689,
+    1219
+   ],
+   [
+    82,
+    1235,
+    2316,
+    1835
+   ],
+   [
+    661,
+    1857,
+    1703,
+    1898
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    7,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 2,
+    "input_tokens": 7818,
+    "output_tokens": 348,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (7)",
+   "across the gutter: text (top): intro paragraph spans full page width",
+   "across the gutter: table (top): Table XXI Schneider-Canet guns spans both columns",
+   "across the gutter: caption (top): Table XXI title and note centred across page",
+   "across the gutter: table (middle): Table XXII Bethlehem Steel guns spans both columns",
+   "across the gutter: caption (middle): Table XXII title and note centred across page"
+  ],
+  "gutter": [
+   {
+    "kind": "text",
+    "where": "top",
+    "detail": "intro paragraph spans full page width"
+   },
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "Table XXI Schneider-Canet guns spans both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "Table XXI title and note centred across page"
+   },
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "Table XXII Bethlehem Steel guns spans both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "middle",
+    "detail": "Table XXII title and note centred across page"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n <noinclude><references/></noinclude>"
+}

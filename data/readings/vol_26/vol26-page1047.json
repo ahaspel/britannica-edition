@@ -1,0 +1,305 @@
+{
+ "volume": 26,
+ "page_number": 1047,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n1061",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n1061",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.4,
+  "column_width": 1095,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     101,
+     123,
+     2280,
+     189
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     101,
+     189,
+     1173,
+     3129
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     101,
+     1773,
+     585,
+     1967
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     101,
+     2635,
+     585,
+     2888
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1173,
+     189,
+     2280,
+     3129
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1173,
+     434,
+     2242,
+     774
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1333,
+     992,
+     2086,
+     1322
+    ]
+   },
+   {
+    "name": "c2f3",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1184,
+     2132,
+     1486,
+     2480
+    ]
+   },
+   {
+    "name": "c2f4",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1318,
+     2583,
+     2106,
+     2987
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p1047 c1f1.png",
+   "c1f2": "eb1911 v26 p1047 c1f2.png",
+   "c2f1": "eb1911 v26 p1047 c2f1.png",
+   "c2f2": "eb1911 v26 p1047 c2f2.png",
+   "c2f3": "eb1911 v26 p1047 c2f3.png",
+   "c2f4": "eb1911 v26 p1047 c2f4.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1152,
+     446,
+     2230,
+     762
+    ],
+    "caption": [
+     1652,
+     792,
+     1766,
+     818
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1184,
+     444,
+     2236,
+     778
+    ]
+   },
+   {
+    "box": [
+     1345,
+     1004,
+     2074,
+     1310
+    ],
+    "caption": [
+     1657,
+     1321,
+     1769,
+     1349
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1188,
+     996,
+     2236,
+     1314
+    ]
+   },
+   {
+    "box": [
+     103,
+     1785,
+     573,
+     1955
+    ],
+    "caption": [
+     283,
+     1966,
+     389,
+     1996
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     106,
+     1778,
+     583,
+     1955
+    ]
+   },
+   {
+    "box": [
+     107,
+     2647,
+     573,
+     2876
+    ],
+    "caption": [
+     293,
+     2882,
+     399,
+     2910
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     106,
+     2642,
+     583,
+     2872
+    ]
+   },
+   {
+    "box": [
+     1196,
+     2144,
+     1474,
+     2468
+    ],
+    "caption": [
+     1298,
+     2478,
+     1404,
+     2510
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1188,
+     2154,
+     1489,
+     2463
+    ]
+   },
+   {
+    "box": [
+     1330,
+     2595,
+     2094,
+     2975
+    ],
+    "caption": [
+     1660,
+     2977,
+     1774,
+     3009
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1211,
+     2593,
+     2236,
+     2976
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    5
+   ],
+   "2": [
+    4,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 7,
+    "input_tokens": 13133,
+    "output_tokens": 462,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: illustration (top): Fig. 3 ground line and lower-left edge of the flattened tire drawing extend left over the column rule into the left column"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "top",
+    "detail": "Fig. 3 ground line and lower-left edge of the flattened tire drawing extend left over the column rule into the left column"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n[[File:eb1911 v26 p1047 c1f1.png|center|159px]]\n\n[[File:eb1911 v26 p1047 c1f2.png|center|159px]]\n\n[[File:eb1911 v26 p1047 c2f1.png|center|351px]]\n\n[[File:eb1911 v26 p1047 c2f2.png|center|248px]]\n\n[[File:eb1911 v26 p1047 c2f3.png|center|99px]]\n\n[[File:eb1911 v26 p1047 c2f4.png|center|259px]]<noinclude><references/></noinclude>"
+}

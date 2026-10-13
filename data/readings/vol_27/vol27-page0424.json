@@ -1,0 +1,244 @@
+{
+ "volume": 27,
+ "page_number": 424,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n431",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n431",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": -0.2,
+  "column_width": 2221,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     58,
+     114,
+     2279,
+     235
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     58,
+     235,
+     2279,
+     1994
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     305,
+     235,
+     2118,
+     1146
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     58,
+     1994,
+     1207,
+     2420
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1207,
+     1994,
+     2279,
+     2420
+    ]
+   },
+   {
+    "name": "c0s2",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     58,
+     2420,
+     2279,
+     3115
+    ]
+   },
+   {
+    "name": "c0f2",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     125,
+     2420,
+     2279,
+     3018
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c0s1": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s2": ""
+  },
+  "figure_files": {
+   "c0f1": "eb1911 v27 p0424 c0f1.png",
+   "c0f2": "eb1911 v27 p0424 c0f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     317,
+     219,
+     2106,
+     1134
+    ],
+    "caption": [
+     885,
+     1152,
+     1497,
+     1192
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     316,
+     206,
+     2106,
+     1090
+    ]
+   },
+   {
+    "box": [
+     309,
+     1235,
+     2016,
+     1943
+    ],
+    "caption": [
+     680,
+     1955,
+     1779,
+     1997
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     316,
+     1235,
+     2025,
+     1945
+    ]
+   },
+   {
+    "box": [
+     137,
+     2427,
+     2272,
+     3006
+    ],
+    "caption": [
+     544,
+     3081,
+     1886,
+     3119
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     136,
+     2415,
+     2264,
+     3037
+    ]
+   }
+  ],
+  "across": [
+   [
+    143,
+    3044,
+    628,
+    3076
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 5,
+    "input_tokens": 14115,
+    "output_tokens": 527,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "a figure across the columns (3)",
+   "across the gutter: illustration (top): Fig. 12 Boston Subway cross-section spans both columns",
+   "across the gutter: caption (top): Fig. 12 caption centred across page",
+   "across the gutter: illustration (middle): Fig. 13 longitudinal section through shield spans both columns",
+   "across the gutter: caption (middle): Fig. 13 caption centred across page",
+   "across the gutter: illustration (bottom): Fig. 14 Mersey Tunnel longitudinal section spans full width",
+   "across the gutter: caption (bottom): Fig. 14 caption centred across page"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "top",
+    "detail": "Fig. 12 Boston Subway cross-section spans both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "Fig. 12 caption centred across page"
+   },
+   {
+    "kind": "illustration",
+    "where": "middle",
+    "detail": "Fig. 13 longitudinal section through shield spans both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "middle",
+    "detail": "Fig. 13 caption centred across page"
+   },
+   {
+    "kind": "illustration",
+    "where": "bottom",
+    "detail": "Fig. 14 Mersey Tunnel longitudinal section spans full width"
+   },
+   {
+    "kind": "caption",
+    "where": "bottom",
+    "detail": "Fig. 14 caption centred across page"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n[[File:eb1911 v27 p0424 c0f1.png|center|294px]]\n\n \n\n\n\n[[File:eb1911 v27 p0424 c0f2.png|center|349px]]<noinclude><references/></noinclude>"
+}

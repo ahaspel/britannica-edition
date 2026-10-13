@@ -1,0 +1,149 @@
+{
+ "volume": 18,
+ "page_number": 292,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri18chisrich/page/n299",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri18chisrich/page/n299",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 1176,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     0,
+     2239,
+     203
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     203,
+     1161,
+     2854
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1161,
+     203,
+     2239,
+     2854
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     0,
+     2854,
+     2239,
+     3152
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     3152,
+     1119,
+     3320
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1119,
+     3152,
+     2239,
+     3320
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    100,
+    2869,
+    1483,
+    3151
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    2
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7760,
+    "output_tokens": 443,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (1)",
+   "across the gutter: table (bottom): 'Diminution of Pressure of Aqueous Vapour in the Free Air' table extends from left column into right column",
+   "across the gutter: caption (bottom): table caption centred across the gutter"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "'Diminution of Pressure of Aqueous Vapour in the Free Air' table extends from left column into right column"
+   },
+   {
+    "kind": "caption",
+    "where": "bottom",
+    "detail": "table caption centred across the gutter"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n\n\n <noinclude><references/></noinclude>"
+}

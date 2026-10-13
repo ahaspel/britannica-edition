@@ -1,0 +1,326 @@
+{
+ "volume": 20,
+ "page_number": 240,
+ "source": "scan",
+ "title": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/240",
+ "provenance": {
+  "scan": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/240",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.2,
+  "column_width": 490,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     117,
+     71,
+     2348,
+     144
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     144,
+     2348,
+     201
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     201,
+     1259,
+     702
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1259,
+     201,
+     2348,
+     702
+    ]
+   },
+   {
+    "name": "c0s2",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     702,
+     2348,
+     737
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     737,
+     1069,
+     1068
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1069,
+     737,
+     2348,
+     1068
+    ]
+   },
+   {
+    "name": "c0s3",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     1068,
+     2348,
+     1103
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     1103,
+     1070,
+     1747
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1070,
+     1103,
+     2348,
+     1747
+    ]
+   },
+   {
+    "name": "c0s4",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     1747,
+     2348,
+     1782
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     1782,
+     1074,
+     2469
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1074,
+     1782,
+     2348,
+     2469
+    ]
+   },
+   {
+    "name": "c0s5",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     2469,
+     2348,
+     2504
+    ]
+   },
+   {
+    "name": "c1s5",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     117,
+     2504,
+     1077,
+     3072
+    ]
+   },
+   {
+    "name": "c2s5",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1077,
+     2504,
+     2348,
+     3072
+    ]
+   },
+   {
+    "name": "c0s6",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     117,
+     3072,
+     2348,
+     3177
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c0s1": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s2": "",
+   "c1s2": "",
+   "c2s2": "",
+   "c0s3": "",
+   "c1s3": "",
+   "c2s3": "",
+   "c0s4": "",
+   "c1s4": "",
+   "c2s4": "",
+   "c0s5": "",
+   "c1s5": "",
+   "c2s5": "",
+   "c0s6": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    817,
+    159,
+    1589,
+    204
+   ],
+   [
+    831,
+    699,
+    1571,
+    740
+   ],
+   [
+    867,
+    1065,
+    1617,
+    1106
+   ],
+   [
+    808,
+    1744,
+    1603,
+    1785
+   ],
+   [
+    817,
+    2466,
+    1608,
+    2507
+   ],
+   [
+    118,
+    3070,
+    2352,
+    3179
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    6,
+    10
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 2,
+    "input_tokens": 7818,
+    "output_tokens": 434,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (6)",
+   "across the gutter: table (top): Tables XIII and XIV (Austrian naval and coast ordnance) set full page width",
+   "across the gutter: table (middle): Tables XV and XVI (US naval and coast defence guns) span both columns",
+   "across the gutter: table (bottom): Table XVII (Japanese naval ordnance) spans full width",
+   "across the gutter: caption (top): Table titles centred across the page",
+   "across the gutter: text (bottom): Note on Japanese fleet runs full page width"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "Tables XIII and XIV (Austrian naval and coast ordnance) set full page width"
+   },
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "Tables XV and XVI (US naval and coast defence guns) span both columns"
+   },
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "Table XVII (Japanese naval ordnance) spans full width"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "Table titles centred across the page"
+   },
+   {
+    "kind": "text",
+    "where": "bottom",
+    "detail": "Note on Japanese fleet runs full page width"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n \n\n\n\n \n\n\n\n \n\n\n\n \n\n\n\n \n\n<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,254 @@
+{
+ "volume": 20,
+ "page_number": 241,
+ "source": "scan",
+ "title": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/241",
+ "provenance": {
+  "scan": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/241",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 559,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     39,
+     76,
+     2274,
+     151
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     39,
+     151,
+     2274,
+     208
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     39,
+     208,
+     1002,
+     845
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1002,
+     208,
+     2274,
+     845
+    ]
+   },
+   {
+    "name": "c0s2",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     39,
+     845,
+     2274,
+     969
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     39,
+     969,
+     999,
+     1608
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     999,
+     969,
+     2274,
+     1608
+    ]
+   },
+   {
+    "name": "c0s3",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     39,
+     1608,
+     2274,
+     1734
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     39,
+     1734,
+     997,
+     3136
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     997,
+     1734,
+     2274,
+     3136
+    ]
+   },
+   {
+    "name": "c0s4",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     39,
+     3136,
+     2274,
+     3212
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c0s1": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s2": "",
+   "c1s2": "",
+   "c2s2": "",
+   "c0s3": "",
+   "c1s3": "",
+   "c2s3": "",
+   "c0s4": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    472,
+    168,
+    1807,
+    211
+   ],
+   [
+    613,
+    842,
+    1664,
+    886
+   ],
+   [
+    593,
+    929,
+    1680,
+    972
+   ],
+   [
+    647,
+    1605,
+    1703,
+    1648
+   ],
+   [
+    329,
+    1692,
+    1957,
+    1737
+   ],
+   [
+    41,
+    3133,
+    2271,
+    3215
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    6,
+    6
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 2,
+    "input_tokens": 7818,
+    "output_tokens": 329,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (6)",
+   "across the gutter: table (top): Table XVIII Armstrong guns spans full page width",
+   "across the gutter: table (middle): Table XIX Vickers guns spans both columns",
+   "across the gutter: table (bottom): Table XX Krupp ordnance spans both columns",
+   "across the gutter: caption (top): Table titles and notes centred across page",
+   "across the gutter: text (bottom): Note text running full width under Table XX"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "Table XVIII Armstrong guns spans full page width"
+   },
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "Table XIX Vickers guns spans both columns"
+   },
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "Table XX Krupp ordnance spans both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "Table titles and notes centred across page"
+   },
+   {
+    "kind": "text",
+    "where": "bottom",
+    "detail": "Note text running full width under Table XX"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n \n\n\n\n \n\n\n\n \n\n<noinclude><references/></noinclude>"
+}

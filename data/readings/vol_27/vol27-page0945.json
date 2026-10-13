@@ -1,0 +1,244 @@
+{
+ "volume": 27,
+ "page_number": 945,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n963",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n963",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 2278,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     126,
+     2278,
+     196
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     196,
+     1203,
+     3133
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     125,
+     963,
+     756,
+     1144
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     125,
+     1709,
+     618,
+     2164
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1203,
+     196,
+     2278,
+     3133
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1591,
+     639,
+     2265,
+     799
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1689,
+     2546,
+     2276,
+     2940
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||VARIATIONS, CALCULUS OF|919}}",
+   "c1s1": "⟦200⟧results, relating to strong as well as weak variations, are obtained by a method which permits of the expression of the variation of an integral as a line integral taken along the varied curve. Let A, B be the end points, and let the stationary curve AB be drawn. If the end points A, B are not a pair of conjugate points, and if the point conjugate to A does not lie on the arc AB, then we may find a point A′, on the backward continuation of the stationary curve BA beyond A, so near to A that the point conjugate to A′ lies on the forward continuation of the arc AB beyond B. This being the case, it is possible to delimit an area of finite breadth, so that the arc AB of the stationary curve joining A, B lies entirely within the area, and\n{{EB1911 Shoulder Heading|Field of stationary curves.}}\nno two stationary curves drawn through A′ intersect within the area. Through any point of such an area it is possible to draw one, and only one, stationary curve which passes through A′. This family of stationary curves is said to constitute a ''field'' of stationary curves about the curve AB. We suppose that such a field exists, and that the varied curve AQPB lies entirely within the delimited area. The variation of the integral <math>\\int \\text{F}(x,\\, y,\\, y')dx</math> is identical with the line integral of F taken round a contour consisting of the varied curve AQPB and the stationary curve AB, in the sense AQPBA. The line integral may, as usual, be replaced by the sum of line integrals taken round a series of cells, the external boundaries of the set of cells being identical with the\n[[FIGURE]]\n{{c|{{sc|Fig.}} 4.}}\ngiven contour, and the internal boundaries of adjacent cells being traversed twice in opposite senses. We may choose a suitable set of cells as follows. Let Q, P be points on the varied curve, and let A′Q, A′P be the stationary curves of the field which pass through Q, P. Let P follow Q in the sense\n{{EB1911 Shoulder Heading|General expression for variation of an integral.}}\nAQPB in which the varied curve is described. Then the contour consisting of the stationary curve A′Q, from A′ to Q, the varied curve QP, from Q to P, and the stationary curve A′P, from P to A′, is the boundary of a cell (fig. 4). Let us denote the integral of F taken along a stationary curve by round brackets, thus (A′Q), and the integral of F taken along any other curve by square brackets, thus [PQ]. If the varied curve is divided into a number of arcs such as QP we have the result\n{{block center|<math>[\\text{AQPB}]-(\\text{AB}) = \\Sigma\\{(\\text{A}'\\text{Q})+[\\text{QP}]-(\\text{A}'\\text{P})\\},</math>}}\nand the right-hand member can be expressed as a line integral taken along the varied curve AQPB.\n\n⟦1700⟧To effect this transformation we seek an approximate expression\n[[FIGURE]]\n{{c|{{sc|Fig.}} 5.}}\nfor the term <math>(\\text{A}'\\text{Q})+[\\text{QP}]-(\\text{A}'\\text{P})</math> when Q, P are near together. Let <math>\\Delta s</math> denote the arc QP, and <math>\\psi</math> the angle which the tangent at P to the varied curve, in the sense from A to B, makes with the axis of <math>x</math> (fig. 5). Also let <math>\\phi</math> be the angle which the tangent at P to the stationary curve A′P, in the sense from A′ to P, makes with the axis of <math>x</math>. We evaluate <math>(\\text{A}'\\text{Q})-(\\text{A}'\\text{P})</math> approximately by means of a result which we obtained in connexion with the problem of variable limits. Observing that the angle here denoted by <math>\\psi</math> is equivalent to the angle formerly denoted by <math>\\pi+\\omega</math> (cf. fig. 1), while <math>\\tan\\phi</math> is equivalent to the quantity formerly denoted by <math>y'</math>, we obtain the approximate equation\n{{block center|<math>(\\text{A}'\\text{Q})-(\\text{A}'\\text{P}) = -\\Delta s.\\cos\\psi\\left\\{\\text{F}(x,y,p)+(\\tan\\psi-p)\\frac{\\partial\\text{F}}{\\partial p}\\right\\}_{p=\\tan\\phi}</math>}}\nwhich is correct to the first order in <math>\\Delta s</math>. Also we have\n{{block center|<math>[\\text{QP}] = \\Delta s\\, .\\, \\cos\\psi\\text{F}(x,y,\\, \\tan\\psi)</math>}}\ncorrectly to the same order. Hence we find that, correctly to the first order in <math>\\Delta s</math>,\n{{block center|<math>(\\text{A}'\\text{Q})+[\\text{QP}]-(\\text{A}'\\text{P}) = \\text{E}(x,y,\\, \\tan\\phi,\\, \\tan\\psi)\\Delta s,</math>}}\nwhere\n{{block center|<math>\\text{E}(x,\\, y,\\, \\tan\\phi,\\, \\tan\\psi)</math>}}\n{{block center|<math>=\\cos\\psi\\left\\{\\text{F}(x,y,\\, \\tan\\psi)-\\text{F}(x,y,p)-(\\tan\\psi-p)\\frac{\\partial\\text{F}}{\\partial p}\\right\\}_{p=\\tan\\phi}.</math>}}\nWhen the parametric method is used the function E takes the form\n{{block center|<math>\\left(\\lambda\\frac{\\partial f}{\\partial\\dot{x}}+\\mu\\frac{\\partial f}{\\partial\\dot{y}}\\right)_{\\dot{x}=\\lambda,\\, \\dot{y}=\\mu}-\\left(\\lambda\\frac{\\partial f}{\\partial\\dot{x}}+\\mu\\frac{\\partial f}{\\partial\\dot{y}}\\right)_{\\dot{x}=l,\\, \\dot{y}=m}</math>}}\nwhere <math>\\lambda</math>, <math>\\mu</math> are the direction cosines of the tangent at P to the curve AQPB, in the sense from A to B, and <math>l</math>, <math>m</math> are the direction cosines of the tangent at P to the stationary curve A′P, in the sense from A′ to P.\n\n⟦2900⟧The function E, here introduced, has been called Weierstrass's ''excess function''. We learn that the variation of the integral, that\n{{EB1911 Shoulder Heading|Weierstrass's excess function.}}\nis to say, the excess of the integral of F taken along the varied curve above the integral of F taken along the original curve, is expressible as the line integral <math>\\int\\text{E}ds</math> taken along the varied curve. We can therefore state a ''sufficient'' (but not necessary) condition for the existence of an extremum in the form:—When the integral is taken along a",
+   "c2s1": "⟦200⟧stationary curve, and there is no pair of conjugate points on the arc of the curve terminated by the given end points, the integral is certainly an extremum if the excess function has the same sign at all points of a finite area containing the whole of this arc within\n{{EB1911 Shoulder Heading|Sufficient and necessary conditions,}}\nit. Further, we may specialize the excess function by identifying A′ with A, and calculating the function for a point P on the arc AB of the stationary curve AB, and an arbitrary direction of the tangent at P to the varied curve. This process is equivalent to the introduction of a particular type of strong variation. We may in fact take, as a varied curve, the arc AQ of a neighbouring stationary curve, the straight line QP drawn from Q to a point of the arc AB, and the arc PB of the stationary curve AB (fig. 6). The sign of the variation is then the\n[[FIGURE]]\n{{c|{{sc|Fig.}} 6.}}\nsame as that of the function <math>\\text{E}(x,\\ y,\\ \\tan\\phi,\\ \\tan\\psi)</math>, where <math>(x,\\ y)</math> is the point P, <math>\\psi</math> is the angle which the straight line QP makes with the axis of <math>x</math>, and <math>\\phi</math> is the angle which the tangent at P to the curve APB makes with the same axis. We thus arrive at a new ''necessary'' (but not sufficient) condition for the existence of an extremum of the integral <math>\\int\\text{F}ds</math>, viz. the specialized excess function, so calculated, must not change sign between A and B.\n\n⟦1000⟧The sufficient condition, and the new necessary condition, associated with the excess function, as well as the expression for the variation as <math>\\int\\text{E}ds</math>, are due to Weierstrass. In applica-\n{{EB1911 Shoulder Heading|Developments connected with the excess function.}}\ntions to special problems it is generally permissible to identify A′ with A, and to regard QP as straight. The direction of QP must be such that the integral of F taken along it is finite and real. We shall describe such directions as ''admissible.'' In the statement of the sufficient condition, and the new necessary condition, it is of course understood that the direction specified by <math>\\psi</math> is admissible. The excess function generally vanishes if <math>\\psi=\\phi</math>, but it does not change sign. It can be shown without difficulty that, when <math>\\psi</math> is very nearly equal to <math>\\phi</math>, the sign of E is the same as that of\n{{block center|<math>(\\tan\\psi-\\tan\\phi)^2\\cos\\phi\\left(\\frac{\\partial^2\\text{F}}{\\partial y'^2}\\right)_{y'=\\tan\\phi}</math>}}\nand thus the necessary condition as to the sign of the excess function includes Legendre's condition as to the sign of <math>\\partial^1\\text{F}/\\partial y'^2</math>.\n\n⟦1600⟧Weierstrass's conditions have been obtained by D. Hilbert from the observation that, if <math>p</math> is a function of <math>x</math> and <math>y</math>, the integral\n{{block center|<math>\\int\\left\\{\\text{F}(x,y,p)+(y'-p)\\left(\\frac{\\partial\\text{F}}{\\partial y'}\\right)_{y'=p}\\right\\}dx,</math>}}\ntaken along a curve joining two fixed points, has the same value for all such curves, provided that there is a field of stationary curves, and that <math>p</math> is the gradient at the point <math>(x,\\ y)</math> of that stationary curve of the field which passes through this point.\n\n⟦1800⟧An instructive example of the excess function, and the conditions connected with it, is afforded by the integral\n{{block center|<math>\\int y^2y'^{-2}dx</math> or <math>\\int y^2\\dot{x}^3\\dot{y}^{-2}d\\theta</math>.}}\n{{EB1911 Shoulder Heading|Example of the excess function.}}\nThe first integral of the principal equation is\n{{block center|<math>y^2\\dot{x}^2\\dot{y}^{-2}=\\text{const.}</math>,}}\nand the stationary curves include the axis of <math>x</math>, straight lines parallel to the axis of <math>y</math>, and the family of exponential curves <math>y=ae^{cx}</math>. A field of stationary curves is expressed by the equation\n{{block center|<math>y=y_0\\exp\\{c(x-x_0)\\}</math>,}}\nand, as these have no envelope other than the initial point <math>(x_0,\\ y_0)</math>, there are no conjugate points. The function <math>f_1</math> is <math>6\\dot{x}\\dot{y}^{-4}</math>, and this is positive for curves going from the initial point in the positive direction of the axis of <math>x</math>. The value of the excess function is\n{{block center|<math>y^2\\cos\\psi(\\cot^2\\psi-3\\cot^2\\phi+2\\tan\\psi\\cot^3\\phi)</math>.}}\nThe directions <math>\\psi=0</math> and <math>\\psi=\\pi</math> are inadmissible. On putting <math>\\psi=\\frac{1}{2}\\pi</math> we get <math>2y^2\\cot^3\\phi</math>; and on putting <math>\\psi=\\frac{3}{2}\\pi</math> we get <math>-2y^2\\cot^3\\phi</math>. Hence the integral taken along AQ′PB is greater than that taken along APB, and the integral taken along AQPB is less than that taken along APB, when Q′Q are sufficiently near to P on the ordinate of P\n[[FIGURE]]\n{{c|{{sc|Fig.}} 7.}}\n(fig. 7). It follows that the integral is neither a maximum nor a minimum.\n\n⟦2600⟧It has been proved by Weierstrass that the excess function cannot be one-signed if the function <math>f</math> of the parametric method is a rational function of <math>\\dot{x}</math> and <math>\\dot{y}</math>. This result includes the above example, and the problem of the solid of least resistance, for which, as Legendre had seen, there can be no solution if strong variations are admitted. As another example of the calculation of excess functions, it may be noted that the value of the excess function in the problem of the catenoid is <math>2y\\sin^2\\frac{1}{2}(\\psi-\\phi)</math>."
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0945 c1f1.png",
+   "c1f2": "eb1911 v27 p0945 c1f2.png",
+   "c2f1": "eb1911 v27 p0945 c2f1.png",
+   "c2f2": "eb1911 v27 p0945 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     137,
+     975,
+     744,
+     1132
+    ],
+    "caption": [
+     423,
+     1128,
+     531,
+     1161
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     139,
+     970,
+     741,
+     1118
+    ]
+   },
+   {
+    "box": [
+     137,
+     1721,
+     606,
+     2152
+    ],
+    "caption": [
+     298,
+     2174,
+     405,
+     2208
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     152,
+     1744,
+     628,
+     2149
+    ]
+   },
+   {
+    "box": [
+     1603,
+     651,
+     2253,
+     787
+    ],
+    "caption": [
+     1877,
+     791,
+     1986,
+     817
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1603,
+     661,
+     2259,
+     801
+    ]
+   },
+   {
+    "box": [
+     1701,
+     2558,
+     2264,
+     2928
+    ],
+    "caption": [
+     1932,
+     2938,
+     2038,
+     2968
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1707,
+     2556,
+     2307,
+     2924
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    0
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 5,
+    "input_tokens": 9747,
+    "output_tokens": 343,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 7318,
+    "output_tokens": 6912,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 10875
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type": {
+   "c1s1": [
+    "body",
+    "body",
+    "body"
+   ],
+   "c2s1": [
+    "body",
+    "body",
+    "body",
+    "body",
+    "body"
+   ]
+  },
+  "type_unmeasured": [],
+  "sections": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader||VARIATIONS, CALCULUS OF|919}}</noinclude>results, relating to strong as well as weak variations, are obtained by a method which permits of the expression of the variation of an integral as a line integral taken along the varied curve. Let A, B be the end points, and let the stationary curve AB be drawn. If the end points A, B are not a pair of conjugate points, and if the point conjugate to A does not lie on the arc AB, then we may find a point A′, on the backward continuation of the stationary curve BA beyond A, so near to A that the point conjugate to A′ lies on the forward continuation of the arc AB beyond B. This being the case, it is possible to delimit an area of finite breadth, so that the arc AB of the stationary curve joining A, B lies entirely within the area, and\n{{EB1911 Shoulder Heading|Field of stationary curves.}}\nno two stationary curves drawn through A′ intersect within the area. Through any point of such an area it is possible to draw one, and only one, stationary curve which passes through A′. This family of stationary curves is said to constitute a ''field'' of stationary curves about the curve AB. We suppose that such a field exists, and that the varied curve AQPB lies entirely within the delimited area. The variation of the integral <math>\\int \\text{F}(x,\\, y,\\, y')dx</math> is identical with the line integral of F taken round a contour consisting of the varied curve AQPB and the stationary curve AB, in the sense AQPBA. The line integral may, as usual, be replaced by the sum of line integrals taken round a series of cells, the external boundaries of the set of cells being identical with the given contour, and the internal boundaries of adjacent cells being traversed twice in opposite senses.\n\n[[File:eb1911 v27 p0945 c1f1.png|center|100px]]\n{{c|{{sc|Fig.}} 4.}}\n\nWe may choose a suitable set of cells as follows. Let Q, P be points on the varied curve, and let A′Q, A′P be the stationary curves of the field which pass through Q, P. Let P follow Q in the sense\n{{EB1911 Shoulder Heading|General expression for variation of an integral.}}\nAQPB in which the varied curve is described. Then the contour consisting of the stationary curve A′Q, from A′ to Q, the varied curve QP, from Q to P, and the stationary curve A′P, from P to A′, is the boundary of a cell (fig. 4). Let us denote the integral of F taken along a stationary curve by round brackets, thus (A′Q), and the integral of F taken along any other curve by square brackets, thus [PQ]. If the varied curve is divided into a number of arcs such as QP we have the result\n{{block center|<math>[\\text{AQPB}]-(\\text{AB}) = \\Sigma\\{(\\text{A}'\\text{Q})+[\\text{QP}]-(\\text{A}'\\text{P})\\},</math>}}\nand the right-hand member can be expressed as a line integral taken along the varied curve AQPB.\n\nTo effect this transformation we seek an approximate expression for the term <math>(\\text{A}'\\text{Q})+[\\text{QP}]-(\\text{A}'\\text{P})</math> when Q, P are near together.\n\n[[File:eb1911 v27 p0945 c1f2.png|center|78px]]\n{{c|{{sc|Fig.}} 5.}}\n\nLet <math>\\Delta s</math> denote the arc QP, and <math>\\psi</math> the angle which the tangent at P to the varied curve, in the sense from A to B, makes with the axis of <math>x</math> (fig. 5). Also let <math>\\phi</math> be the angle which the tangent at P to the stationary curve A′P, in the sense from A′ to P, makes with the axis of <math>x</math>. We evaluate <math>(\\text{A}'\\text{Q})-(\\text{A}'\\text{P})</math> approximately by means of a result which we obtained in connexion with the problem of variable limits. Observing that the angle here denoted by <math>\\psi</math> is equivalent to the angle formerly denoted by <math>\\pi+\\omega</math> (cf. fig. 1), while <math>\\tan\\phi</math> is equivalent to the quantity formerly denoted by <math>y'</math>, we obtain the approximate equation\n{{block center|<math>(\\text{A}'\\text{Q})-(\\text{A}'\\text{P}) = -\\Delta s.\\cos\\psi\\left\\{\\text{F}(x,y,p)+(\\tan\\psi-p)\\frac{\\partial\\text{F}}{\\partial p}\\right\\}_{p=\\tan\\phi}</math>}}\nwhich is correct to the first order in <math>\\Delta s</math>. Also we have\n{{block center|<math>[\\text{QP}] = \\Delta s\\, .\\, \\cos\\psi\\text{F}(x,y,\\, \\tan\\psi)</math>}}\ncorrectly to the same order. Hence we find that, correctly to the first order in <math>\\Delta s</math>,\n{{block center|<math>(\\text{A}'\\text{Q})+[\\text{QP}]-(\\text{A}'\\text{P}) = \\text{E}(x,y,\\, \\tan\\phi,\\, \\tan\\psi)\\Delta s,</math>}}\nwhere\n{{block center|<math>\\text{E}(x,\\, y,\\, \\tan\\phi,\\, \\tan\\psi)</math>}}\n{{block center|<math>=\\cos\\psi\\left\\{\\text{F}(x,y,\\, \\tan\\psi)-\\text{F}(x,y,p)-(\\tan\\psi-p)\\frac{\\partial\\text{F}}{\\partial p}\\right\\}_{p=\\tan\\phi}.</math>}}\nWhen the parametric method is used the function E takes the form\n{{block center|<math>\\left(\\lambda\\frac{\\partial f}{\\partial\\dot{x}}+\\mu\\frac{\\partial f}{\\partial\\dot{y}}\\right)_{\\dot{x}=\\lambda,\\, \\dot{y}=\\mu}-\\left(\\lambda\\frac{\\partial f}{\\partial\\dot{x}}+\\mu\\frac{\\partial f}{\\partial\\dot{y}}\\right)_{\\dot{x}=l,\\, \\dot{y}=m}</math>}}\nwhere <math>\\lambda</math>, <math>\\mu</math> are the direction cosines of the tangent at P to the curve AQPB, in the sense from A to B, and <math>l</math>, <math>m</math> are the direction cosines of the tangent at P to the stationary curve A′P, in the sense from A′ to P.\n\nThe function E, here introduced, has been called Weierstrass's ''excess function''. We learn that the variation of the integral, that\n{{EB1911 Shoulder Heading|Weierstrass's excess function.}}\nis to say, the excess of the integral of F taken along the varied curve above the integral of F taken along the original curve, is expressible as the line integral <math>\\int\\text{E}ds</math> taken along the varied curve. We can therefore state a ''sufficient'' (but not necessary) condition for the existence of an extremum in the form:—When the integral is taken along a stationary curve, and there is no pair of conjugate points on the arc of the curve terminated by the given end points, the integral is certainly an extremum if the excess function has the same sign at all points of a finite area containing the whole of this arc within\n{{EB1911 Shoulder Heading|Sufficient and necessary conditions,}}\nit. Further, we may specialize the excess function by identifying A′ with A, and calculating the function for a point P on the arc AB of the stationary curve AB, and an arbitrary direction of the tangent at P to the varied curve. This process is equivalent to the introduction of a particular type of strong variation. We may in fact take, as a varied curve, the arc AQ of a neighbouring stationary curve, the straight line QP drawn from Q to a point of the arc AB, and the arc PB of the stationary curve AB (fig. 6). The sign of the variation is then the same as that of the function <math>\\text{E}(x,\\ y,\\ \\tan\\phi,\\ \\tan\\psi)</math>, where <math>(x,\\ y)</math> is the point P, <math>\\psi</math> is the angle which the straight line QP makes with the axis of <math>x</math>, and <math>\\phi</math> is the angle which the tangent at P to the curve APB makes with the same axis.\n\n[[File:eb1911 v27 p0945 c2f1.png|center|107px]]\n{{c|{{sc|Fig.}} 6.}}\n\nWe thus arrive at a new ''necessary'' (but not sufficient) condition for the existence of an extremum of the integral <math>\\int\\text{F}ds</math>, viz. the specialized excess function, so calculated, must not change sign between A and B.\n\nThe sufficient condition, and the new necessary condition, associated with the excess function, as well as the expression for the variation as <math>\\int\\text{E}ds</math>, are due to Weierstrass. In\n{{EB1911 Shoulder Heading|Developments connected with the excess function.}}\napplications to special problems it is generally permissible to identify A′ with A, and to regard QP as straight. The direction of QP must be such that the integral of F taken along it is finite and real. We shall describe such directions as ''admissible.'' In the statement of the sufficient condition, and the new necessary condition, it is of course understood that the direction specified by <math>\\psi</math> is admissible. The excess function generally vanishes if <math>\\psi=\\phi</math>, but it does not change sign. It can be shown without difficulty that, when <math>\\psi</math> is very nearly equal to <math>\\phi</math>, the sign of E is the same as that of\n{{block center|<math>(\\tan\\psi-\\tan\\phi)^2\\cos\\phi\\left(\\frac{\\partial^2\\text{F}}{\\partial y'^2}\\right)_{y'=\\tan\\phi}</math>}}\nand thus the necessary condition as to the sign of the excess function includes Legendre's condition as to the sign of <math>\\partial^1\\text{F}/\\partial y'^2</math>.\n\nWeierstrass's conditions have been obtained by D. Hilbert from the observation that, if <math>p</math> is a function of <math>x</math> and <math>y</math>, the integral\n{{block center|<math>\\int\\left\\{\\text{F}(x,y,p)+(y'-p)\\left(\\frac{\\partial\\text{F}}{\\partial y'}\\right)_{y'=p}\\right\\}dx,</math>}}\ntaken along a curve joining two fixed points, has the same value for all such curves, provided that there is a field of stationary curves, and that <math>p</math> is the gradient at the point <math>(x,\\ y)</math> of that stationary curve of the field which passes through this point.\n\nAn instructive example of the excess function, and the conditions connected with it, is afforded by the integral\n{{block center|<math>\\int y^2y'^{-2}dx</math> or <math>\\int y^2\\dot{x}^3\\dot{y}^{-2}d\\theta</math>.}}\n{{EB1911 Shoulder Heading|Example of the excess function.}}\nThe first integral of the principal equation is\n{{block center|<math>y^2\\dot{x}^2\\dot{y}^{-2}=\\text{const.}</math>,}}\nand the stationary curves include the axis of <math>x</math>, straight lines parallel to the axis of <math>y</math>, and the family of exponential curves <math>y=ae^{cx}</math>. A field of stationary curves is expressed by the equation\n{{block center|<math>y=y_0\\exp\\{c(x-x_0)\\}</math>,}}\nand, as these have no envelope other than the initial point <math>(x_0,\\ y_0)</math>, there are no conjugate points. The function <math>f_1</math> is <math>6\\dot{x}\\dot{y}^{-4}</math>, and this is positive for curves going from the initial point in the positive direction of the axis of <math>x</math>. The value of the excess function is\n{{block center|<math>y^2\\cos\\psi(\\cot^2\\psi-3\\cot^2\\phi+2\\tan\\psi\\cot^3\\phi)</math>.}}\nThe directions <math>\\psi=0</math> and <math>\\psi=\\pi</math> are inadmissible. On putting <math>\\psi=\\frac{1}{2}\\pi</math> we get <math>2y^2\\cot^3\\phi</math>; and on putting <math>\\psi=\\frac{3}{2}\\pi</math> we get <math>-2y^2\\cot^3\\phi</math>. Hence the integral taken along AQ′PB is greater than that taken along APB, and the integral taken along AQPB is less than that taken along APB, when Q′Q are sufficiently near to P on the ordinate of P (fig. 7).\n\n[[File:eb1911 v27 p0945 c2f2.png|center|93px]]\n{{c|{{sc|Fig.}} 7.}}\n\nIt follows that the integral is neither a maximum nor a minimum.\n\nIt has been proved by Weierstrass that the excess function cannot be one-signed if the function <math>f</math> of the parametric method is a rational function of <math>\\dot{x}</math> and <math>\\dot{y}</math>. This result includes the above example, and the problem of the solid of least resistance, for which, as Legendre had seen, there can be no solution if strong variations are admitted. As another example of the calculation of excess functions, it may be noted that the value of the excess function in the problem of the catenoid is <math>2y\\sin^2\\frac{1}{2}(\\psi-\\phi)</math>.<noinclude><references/></noinclude>"
+}

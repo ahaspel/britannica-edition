@@ -1,0 +1,143 @@
+{
+ "volume": 27,
+ "page_number": 70,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n76",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n76",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.25,
+  "column_width": 1181,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     111,
+     136,
+     2365,
+     203
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     111,
+     203,
+     1172,
+     3152
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     220,
+     377,
+     1172,
+     1080
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     203,
+     2365,
+     3152
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0070 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     232,
+     389,
+     1192,
+     1068
+    ],
+    "caption": [
+     760,
+     1244,
+     1192,
+     1280
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     223,
+     386,
+     1456,
+     1226
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4959,
+    "output_tokens": 97,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: illustration (top): vertical section drawing of torpedo tube spans both columns",
+   "across the gutter: illustration (middle): plan view drawing with torpedo in flight spans both columns",
+   "across the gutter: caption (middle): Fig. 3 caption centred across both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "top",
+    "detail": "vertical section drawing of torpedo tube spans both columns"
+   },
+   {
+    "kind": "illustration",
+    "where": "middle",
+    "detail": "plan view drawing with torpedo in flight spans both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "middle",
+    "detail": "Fig. 3 caption centred across both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n[[File:eb1911 v27 p0070 c1f1.png|center|290px]]<noinclude><references/></noinclude>"
+}

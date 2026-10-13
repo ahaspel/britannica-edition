@@ -30,6 +30,13 @@
    "kind": "formula"
   },
   {
+   "start": 583,
+   "end": 899,
+   "old": "<br>\n{{em|3.8}}{{overline|''exp''}} (''m''<sub>10</sub>''d''<sub>10</sub> + ''m''<sub>01</sub>''d''<sub>01</sub> + … + ''m''<sub>''pq''</sub>''d''<sub>''pq''</sub> + …)<br>\n{{em|3}}= ''exp'' (M<sub>10</sub>''d''<sub>10</sub> + M<sub>01</sub>''d''<sub>01</sub> + … + M<sub>''pq''</sub>''d''<sub>''pq''</sub> + …);<br>",
+   "new": "{{block center|<math>\\overline{exp}\\ (m_{10}d_{10}+m_{01}d_{01}+\\dots+m_{pq}d_{pq}+\\dots)</math>}}\n{{block center|<math>=exp\\ (\\text{M}_{10}d_{10}+\\text{M}_{01}d_{01}+\\dots+\\text{M}_{pq}d_{pq}+\\dots)</math>;}}",
+   "kind": "formula"
+  },
+  {
    "start": 1032,
    "end": 1070,
    "old": "''m<sub>pq</sub>'', M<sub>''pq''</sub>",
@@ -51,6 +58,13 @@
    "kind": "formula"
   },
   {
+   "start": 1557,
+   "end": 2047,
+   "old": "''m''<sub>10</sub> = {{Greek|μ}}, ''m''<sub>01</sub> = {{Greek|ν}} and ''m''<sub>''pq''</sub> = 0 otherwise<br>\n{{em|2}}M<sub>10</sub>{{Greek|ξ}} + M<sub>01</sub>{{Greek|η}} + … + M<sub>''pq''</sub>{{Greek|ξ}} <sup>''p''</sup>{{Greek|η}}<sup>''q''</sup> + … = log (1 + {{Greek|μ}}{{Greek|ξ}} + {{Greek|ν}}{{Greek|η}})<br>\nor<br>\n{{em|4}}M<sub>''pq''</sub> = ( − )<sup>''p''+''q''−1</sup>{{sfrac|(''p'' + ''q'' − 1)!|''p''! ''q''!}}{{Greek|μ}}<sup>''p''</sup>{{Greek|ν}}<sup>''q''</sup>;<br>",
+   "new": "<math>m_{10}=\\mu</math>, <math>m_{01}=\\nu</math> and <math>m_{pq}=0</math> otherwise\n{{block center|<math>\\text{M}_{10}\\xi+\\text{M}_{01}\\eta+\\dots+\\text{M}_{pq}\\xi^p\\eta^q+\\dots=\\log\\ (1+\\mu\\xi+\\nu\\eta)</math>}}\nor\n{{block center|<math>\\text{M}_{pq}=(-)^{p+q-1}\\frac{(p+q-1)!}{p!q!}\\mu^p\\nu^q</math>;}}",
+   "kind": "formula"
+  },
+  {
    "start": 2070,
    "end": 2567,
    "old": "<br>\n{{em|5}}{{overline|''exp''}} ({{Greek|μ}}''d''<sub>10</sub> + {{Greek|ν}}''d''<sub>01</sub>)<br>\n{{em|3}}= ''exp'' { {{Greek|μ}}''d''<sub>10</sub> + {{Greek|ν}}''d''<sub>01</sub> − {{sfrac|1|2}} ({{Greek|μ}}<sup>2</sup>''d''<sub>20</sub> + 2{{Greek|μ}}{{Greek|ν}}''d''<sub>11</sub> + {{Greek|ν}}<sup>2</sup>''d''<sub>02</sub>) + … }<br>\n{{em|3}}= 1 + {{Greek|μ}}D<sub>10</sub> + {{Greek|ν}}D<sub>01</sub> + … + {{Greek|μ}}<sup>''p''</sup>{{Greek|ν}}<sup>''q''</sup>D<sub>''pq''</sub> + …;<br>",
@@ -62,6 +76,13 @@
    "end": 2977,
    "old": "<br>\n{{em|5}}{{Greek|μ}}''d''<sub>10</sub> + {{Greek|ν}}''d''<sub>01</sub> − {{sfrac|1|2}} ({{Greek|μ}}<sup>2</sup>''d''<sub>20</sub> + 2{{Greek|μ}}{{Greek|ν}}''d''<sub>11</sub> + {{Greek|ν}}<sup>2</sup>''d''<sub>02</sub>) + …<br>\n{{em|3}}={{em|1}}log (1 + {{Greek|μ}}D<sub>10</sub> + {{Greek|ν}}D<sub>01</sub> + … + {{Greek|μ}}<sup>''p''</sup>{{Greek|ν}}<sup>''q''</sup>D<sub>''pq''</sub> + …).<br>",
    "new": "{{block center|<math>\\mu d_{10}+\\nu d_{01}-\\frac{1}{2}(\\mu^2d_{20}+2\\mu\\nu d_{11}+\\nu^2d_{02})+\\dots</math>}}\n{{block center|<math>= \\log\\ (1+\\mu\\text{D}_{10}+\\nu\\text{D}_{01}+\\dots+\\mu^p\\nu^q\\text{D}_{pq}+\\dots)</math>.}}",
+   "kind": "formula"
+  },
+  {
+   "start": 3037,
+   "end": 4355,
+   "old": "<br>\n&emsp;( − )<sup>''p''+''q''−1</sup>{{sfrac|(''p'' + ''q'' − 1)!|''p''!''q''!}}''d''<sub>''pq''</sub> = <math>\\sum_\\pi</math> ( − )<sup>{{Greek|Σπ}}−1</sup> {{sfrac|({{Greek|Σπ}} − 1)!|{{Greek|π}}<sub>1</sub>! {{Greek|π}}<sub>2</sub>! …}}{{larger|D}}{{dual line|{{Greek|π}}<sub>1</sub>|''p''<sub>1</sub>''q''<sub>1</sub>|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{larger|D}}{{dual line|{{Greek|π}}<sub>2</sub>|''p''<sub>2</sub>''q''<sub>2</sub>|style=text-align: left;font-size: 80%;vertical-align:middle;}}…,<br>\n&emsp;( − )<sup>''p''+''q''−1</sup>D<sub>''pq''</sub> = <math>\\sum_\\pi</math>{{brace2|2|l}}{{sfrac|(''p''<sub>1</sub> + ''q''<sub>1</sub> − 1)!|''p''<sub>1</sub>!''q''<sub>1</sub>!}}{{brace2|2|r}}<sup>{{Greek|π}}<sub>1</sub></sup>{{brace2|2|l}}{{sfrac|(''p''<sub>2</sub> + ''q''<sub>2</sub> − 1)!|''p''<sub>2</sub>!''q''<sub>2</sub>!}}{{brace2|2|r}}<sup>{{Greek|π}}<sub>2</sub></sup> … <br>\n{{em|5}}… {{sfrac|( − )<sup>{{Greek|Σπ}} − 1)!</sup>|{{Greek|π}}<sub>1</sub>! {{Greek|π}}<sub>2</sub>! …}}''d''{{dual line|{{Greek|π}}<sub>1</sub>|''p''<sub>1</sub>''q''<sub>1</sub>|style=text-align: left;font-size: 80%;vertical-align:middle;}}''d''{{dual line|{{Greek|π}}<sub>2</sub>|''p''<sub>2</sub>''q''<sub>2</sub>|style=text-align: left;font-size: 80%;vertical-align:middle;}}…,<br>",
+   "new": "{{block center|<math>(-)^{p+q-1}\\frac{(p+q-1)!}{p!q!}d_{pq}=\\sum_{\\pi}(-)^{\\Sigma\\pi-1}\\frac{(\\Sigma\\pi-1)!}{\\pi_1!\\pi_2!\\dots}\\text{D}^{\\pi_1}_{p_1q_1}\\text{D}^{\\pi_2}_{p_2q_2}\\dots</math>,}}\n{{block center|<math>(-)^{p+q-1}\\text{D}_{pq}=\\sum_{\\pi}\\left\\{\\frac{(p_1+q_1-1)!}{p_1!q_1!}\\right\\}^{\\pi_1}\\left\\{\\frac{(p_2+q_2-1)!}{p_2!q_2!}\\right\\}^{\\pi_2}\\dots</math>}}\n{{block center|<math>\\dots\\frac{(-)^{\\Sigma\\pi-1}}{\\pi_1!\\pi_2!\\dots}d^{\\pi_1}_{p_1q_1}d^{\\pi_2}_{p_2q_2}\\dots</math>,}}",
    "kind": "formula"
   },
   {
@@ -90,6 +111,13 @@
    "end": 4841,
    "old": "(''pq''), ({{overline|10}}<sup>''p''</sup> {{overline|01}}<sup>''q''</sup>)",
    "new": "<math>(pq)</math>, <math>(\\overline{10}^p\\overline{01}^q)</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 5054,
+   "end": 5455,
+   "old": "<br>\n{{em|3}}{{sfrac|1|{{Greek|π}}<sub>1</sub>!}}{{sfrac|1|{{Greek|π}}<sub>2</sub>!}}…''d''{{dual line|{{Greek|π}}<sub>1</sub>|''p''<sub>1</sub>''q''<sub>1</sub>|style=text-align: left;font-size: 80%;vertical-align:middle;}}''d''{{dual line|{{Greek|π}}<sub>2</sub>|''p''<sub>2</sub>''q''<sub>2</sub>|style=text-align: left;font-size: 80%;vertical-align:middle;}}…{{em|1}} (multiplication symbolic)<br>",
+   "new": "{{block center|<math>\\frac{1}{\\pi_1!}\\frac{1}{\\pi_2!}\\dots d^{\\pi_1}_{p_1q_1}d^{\\pi_2}_{p_2q_2}\\dots</math> (multiplication symbolic)}}",
    "kind": "formula"
   },
   {
@@ -163,6 +191,62 @@
    "kind": "formula"
   },
   {
+   "start": 8261,
+   "end": 8662,
+   "old": "<br>\n{{em|4}}''ax''{{dual line|''n''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} + ''bx''{{dual line|''n''−1|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''x''<sub>2</sub> + ''c''{{dual line|''n''−2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''x''{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} + …;<br>\nor in",
+   "new": "{{block center|<math>ax_1^n + bx_1^{n-1} x_2 + cx_1^{n-2} x_2^2 + \\dots;</math>}}\nor in",
+   "kind": "formula"
+  },
+  {
+   "start": 8671,
+   "end": 9282,
+   "old": "<br>\n''ax''{{dual line|''n''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} + {{xx-larger|(}}{{dual line|''n''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{xx-larger|)}}''bx''{{dual line|''n''−1|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''x''<sub>2</sub> + {{xx-larger|(}}{{dual line|''n''|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{xx-larger|)}}''c''{{dual line|''n''−2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''x''{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} + …;<br>",
+   "new": "{{block center|<math>ax_1^n + \\binom{n}{1} bx_1^{n-1} x_2 + \\binom{n}{2} cx_1^{n-2} x_2^2 + \\dots,</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 9304,
+   "end": 9630,
+   "old": "by<br>\n{{em|5}}(''a'', ''b'', ''c'', …) (''x''<sub>1</sub>, ''x''<sub>2</sub>)<sup>''n''</sup><br>\n{{xx-larger|(}}{{dual line|''n''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{xx-larger|)}}, {{xx-larger|(}}{{dual line|''n''|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{xx-larger|)}}…",
+   "new": "by\n{{block center|<math>(a, b, c, \\dots)(x_1, x_2)^n</math>}}\n<math>\\binom{n}{1}, \\binom{n}{2} \\dots</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 9689,
+   "end": 9744,
+   "old": "''n'', {{x-smaller|{{sfrac|1|2}}}}''n'' (''n'' − 1), ….",
+   "new": "<math>n, \\tfrac{1}{2}n(n-1), \\dots.</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 9760,
+   "end": 10128,
+   "old": "<br>\n{{em|4}}''ax''{{dual line|''n''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} + ''nb''{{dual line|''n''−1|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''x''<sub>2</sub> + ''n''(''n'' − 1)''cx''{{dual line|''n''−2|1|style=text-align: left;font-size: 80%;}}''x''{{dual line|2|2|style=text-align: left;font-size: 80%;}} + …,<br>",
+   "new": "{{block center|<math>ax_1^n + nbx_1^{n-1} x_2 + n(n-1)cx_1^{n-2} x_2^2 + \\dots,</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 10155,
+   "end": 10271,
+   "old": "{{xx-larger|(}}{{dual line|''n''|''s''|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{xx-larger|)}}",
+   "new": "<math>\\binom{n}{s}</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 10287,
+   "end": 10413,
+   "old": "by ''s''!{{xx-larger|(}}{{dual line|''n''|''s''|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{xx-larger|)}},",
+   "new": "by <math>s!\\binom{n}{s}</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 10417,
+   "end": 10756,
+   "old": "<br>\n{{em|5}}''ax''{{dual line|''n''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} + {{sfrac|1|1!}}''b''{{dual line|''n''−1|1|style=text-align: left;font-size: 80%;}}''x''<sub>2</sub> + {{sfrac|1|2!}}''cx''{{dual line|''n''−2|1|style=text-align: left;font-size: 80%;}}''x''{{dual line|2|2|style=font-size:80%;}} + …,<br>",
+   "new": "{{block center|<math>ax_1^n + \\frac{1}{1!}bx_1^{n-1} x_2 + \\frac{1}{2!}cx_1^{n-2} x_2^2 + \\dots,</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 11999,
    "end": 12265,
    "old": "{{sfrac||''a''<sub>0</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>1</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>2</sub>|font-size=100%|vertical-align=0}}, … {{sfrac||''a''<sub>''n''</sub>|font-size=100%|vertical-align=0}}, ''n'' + 1 in",
@@ -212,10 +296,24 @@
    "kind": "formula"
   },
   {
+   "start": 14489,
+   "end": 14654,
+   "old": "{{overline|''a''}}{{sfrac nobar|′|0}}, {{overline|''a''}}{{sfrac nobar|′|1}}, {{overline|''a''}}{{sfrac nobar|′|2}} {{...}} {{overline|''a''}}{{sfrac nobar|′|''n''}}",
+   "new": "<math>\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2 \\dots \\bar{a}'_n</math>",
+   "kind": "formula"
+  },
+  {
    "start": 14789,
    "end": 14796,
    "old": "''n''th",
    "new": "<math>n</math>th",
+   "kind": "formula"
+  },
+  {
+   "start": 14858,
+   "end": 15485,
+   "old": "<br>\n{{em|5}}''r''{{Greek|ξ}}<sub>1</sub> = {{em|1}} {{Greek|α}}<sub>22</sub>''x''<sub>1</sub> − {{Greek|α}}<sub>12</sub>''x''<sub>2</sub>,<br>\n{{em|5}}''r''{{Greek|ξ}}<sub>1</sub> = − {{Greek|α}}<sub>21</sub>''x''<sub>1</sub> − {{Greek|α}}<sub>11</sub>''x''<sub>2</sub>,<br> {{em|3}}where ''r'' = {{xx-larger|&#124;}}{{dual line|{{Greek|α}}<sub>11</sub>{{Greek|α}}<sub>12</sub>|{{Greek|α}}<sub>21</sub>{{Greek|α}}<sub>22</sub>|style=text-align: left;font-size: 80%;vertical-align:middle;}} {{xx-larger|&#124;}} = {{Greek|α}}<sub>11</sub>{{Greek|α}}<sub>22</sub> − {{Greek|α}}<sub>12</sub>{{Greek|α}}<sub>21</sub>;<br>\n''r'' is",
+   "new": "{{block center|<math>r\\xi_1 = \\alpha_{22}x_1 - \\alpha_{12}x_2,</math>}}\n{{block center|<math>r\\xi_2 = -\\alpha_{21}x_1 + \\alpha_{11}x_2,</math>}}\n{{block center|where <math>r = \\begin{vmatrix} \\alpha_{11}\\alpha_{12} \\\\ \\alpha_{21}\\alpha_{22} \\end{vmatrix} = \\alpha_{11}\\alpha_{12} - \\alpha_{12}\\alpha_{21};</math>}}\n<math>r</math> is",
    "kind": "formula"
   },
   {
@@ -233,6 +331,13 @@
    "kind": "formula"
   },
   {
+   "start": 15983,
+   "end": 16693,
+   "old": "<br>\n{{em|3}}F({{overline|''a''}}{{dual line|′|0|style=text-align: left;font-size: 80%;vertical-align:middle;}}, {{overline|''a''}}{{dual line|′|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}, {{overline|''a''}}{{dual line|′|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}, … {{overline|''a''}}{{dual line|′|''n''|style=text-align: left;font-size: 80%;vertical-align:middle;}}) = ''r''&#8202;<sup>{{Greek|λ}}</sup> F({{sfrac||''a''<sub>0</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>1</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>2</sub>|font-size=100%|vertical-align=0}}, … {{sfrac||''a''<sub>''n''</sub>|font-size=100%|vertical-align=0}}),<br>",
+   "new": "{{block center|<math>\\text{F}(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots \\bar{a}'_n) = r^\\lambda\\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots \\bar{a}_n),</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 16707,
    "end": 16965,
    "old": "F({{sfrac||''a''<sub>0</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>1</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>2</sub>|font-size=100%|vertical-align=0}}, … {{sfrac||''a''<sub>''n''</sub>|font-size=100%|vertical-align=0}}) is",
@@ -247,6 +352,13 @@
    "kind": "formula"
   },
   {
+   "start": 17095,
+   "end": 17729,
+   "old": "<br>\n{{em|3}}F({{overline|''a''}}{{dual line|′|0|style=text-align: left;font-size: 80%;vertical-align:middle;}}, {{overline|''a''}}{{dual line|′|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}, {{overline|''a''}}{{dual line|′|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}, … ; {{Greek|ξ}}<sub>1</sub>, {{Greek|ξ}}<sub>2</sub>) = ''r''&#8202;<sup>{{Greek|λ}}</sup> F({{sfrac||''a''<sub>0</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>1</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>2</sub>|font-size=100%|vertical-align=0}}, … ; ''x''<sub>1</sub>, ''x''<sub>2</sub>),<br>",
+   "new": "{{block center|<math>\\text{F}(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots; \\xi_1, \\xi_2) = r^\\lambda\\text{F}(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2, \\dots; x_1, x_2),</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 17743,
    "end": 17975,
    "old": "F({{sfrac||''a''<sub>0</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>1</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>2</sub>|font-size=100%|vertical-align=0}}, … ; ''x''<sub>1</sub>, ''x''<sub>2</sub>) is",
@@ -258,6 +370,13 @@
    "end": 18913,
    "old": "<br>\n{{em|2}}𝑓 ({{sfrac||''a''<sub>0</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>1</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''a''<sub>2</sub>|font-size=100%|vertical-align=0}}, … ; ''x''<sub>1</sub>, ''x''<sub>2</sub>), {{Greek|φ}}({{sfrac||''b''<sub>0</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''b''<sub>1</sub>|font-size=100%|vertical-align=0}}, {{sfrac||''b''<sub>2</sub>|font-size=100%|vertical-align=0}}, … ; ''x''<sub>1</sub>, ''x''<sub>2</sub>), …<br>",
    "new": "{{block center|<math>f(\\bar{a}_0, \\bar{a}_1, \\bar{a}_2 \\dots; x_1, x_2), \\phi(\\bar{b}_0, \\bar{b}_1, \\bar{b}_2, \\dots; x_1, x_2), \\dots</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 19099,
+   "end": 19833,
+   "old": "<br>\n{{em|2}}𝑓 ({{overline|''a''}}{{dual line|′|0|style=text-align: left;font-size: 80%;vertical-align:middle;}}, {{overline|''a''}}{{dual line|′|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}, {{overline|''a''}}{{dual line|′|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}, … ; {{Greek|ξ}}<sub>1</sub>, {{Greek|ξ}}<sub>2</sub>), {{Greek|φ}}({{overline|''b''}}{{dual line|′|0|style=text-align: left;font-size: 80%;vertical-align:middle;}}, {{overline|''b''}}{{dual line|′|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}, {{overline|''b''}}{{dual line|′|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}, … ; {{Greek|ξ}}<sub>1</sub>, {{Greek|ξ}}<sub>2</sub>), …<br>\nIf",
+   "new": "{{block center|<math>f(\\bar{a}'_0, \\bar{a}'_1, \\bar{a}'_2, \\dots; \\xi_1, \\xi_2), \\phi(\\bar{b}'_0, \\bar{b}'_1, \\bar{b}'_2, \\dots; \\xi_1, \\xi_2), \\dots.</math>}}\nIf",
    "kind": "formula"
   }
  ],
@@ -305,6 +424,13 @@
    "kind": "word"
   },
   {
+   "start": 2484,
+   "end": 2913,
+   "old": "<br />\n{{em|7}}''a''{{dual line|''n''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}, ''a''{{dual line|''n''&minus;1|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''a''<sub>2</sub>, ... ''a''<sub>1</sub>''a''{{dual line|''n''&minus;1|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}. ''a''{{dual line|''n''|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}<br />",
+   "new": "{{block center|<math>a^n_1, a^{n-1}_1a_2, \\dots a_1a^{n-1}_2, a^n_2</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 2970,
    "end": 3117,
    "old": "{{overline|''a''}}<sub>0</sub>, {{overline|''a''}}<sub>1</sub>, ... {{overline|''a''}}<sub>''n''&minus;1</sub>, {{overline|''a''}}<sub>''n''</sub>,",
@@ -312,10 +438,38 @@
    "kind": "formula"
   },
   {
+   "start": 3133,
+   "end": 3322,
+   "old": "''a''{{dual line|''n''&minus;''k''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''a''{{dual line|''k''|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} is",
+   "new": "<math>a^{n-k}_1a^k_2</math> is",
+   "kind": "formula"
+  },
+  {
    "start": 3338,
    "end": 3379,
    "old": "{{overline|''a''}}<sub>''k''</sub>. If we",
    "new": "<math>\\bar{a}_k</math>. If we",
+   "kind": "formula"
+  },
+  {
+   "start": 3627,
+   "end": 4185,
+   "old": "<br />\n{{em|6}}{{overline|''a''}}<sub>1</sub>{{overline|''a''}}<sub>2</sub> = ''a''{{dual line|''n''&minus;1|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''a''<sub>2</sub>. ''a''{{dual line|''n''&minus;2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''a''{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} = ''a''{{dual line|2''n''&minus;3|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''a''{{dual line|3|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}<br />",
+   "new": "{{block center|<math>\\bar{a}_1\\bar{a}_2 = a^{n-1}_1a_2 . a^{n-2}_1a^2_2 = a^{2n-3}_1a^3_2</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 4230,
+   "end": 4762,
+   "old": "<br />\n{{em|7}}{{overline|''a''}}<sub>0</sub>{{overline|''a''}}<sub>3</sub> = ''a''{{dual line|''n''|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}.''a''{{dual line|''n''&minus;3|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''a''{{dual line|3|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} = ''a''{{dual line|2''n''&minus;3|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''a''{{dual line|3|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}<br />",
+   "new": "{{block center|<math>\\bar{a}_0\\bar{a}_3 = a^n_1 . a^{n-3}_1a^3_2 = a^{2n-3}_1a^3_2.</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 4991,
+   "end": 5278,
+   "old": "''a''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}} ≡ ''b''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}} ≡ ''c''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}} ≡ …. So",
+   "new": "<math>a^n_x \\equiv b^n_x \\equiv c^n_x \\equiv \\dots</math>. So",
    "kind": "formula"
   },
   {
@@ -344,6 +498,27 @@
    "end": 7341,
    "old": "''s''",
    "new": "<math>s</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 7599,
+   "end": 7763,
+   "old": "{{overline|''a''}}<sub>0</sub>{{overline|''a''}}<sub>2</sub>&minus;{{overline|''a''}}{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}},",
+   "new": "<math>\\bar{a}_0\\bar{a}_2 - \\bar{a}^2_1</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 7814,
+   "end": 8298,
+   "old": "{{overline|''a''}}<sub>0</sub>''x''{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} + 2 {{overline|''a''}}<sub>1</sub>''x''<sub>1</sub>''x''<sub>2</sub> + {{overline|''a''}}<sub>2</sub>''x''{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} = ''a''{{dual line|2|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}} = ''b''{{dual line|2|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, in a",
+   "new": "<math>\\bar{a}_0x^2_1 + 2\\bar{a}_1x_1x_2 + \\bar{a}_2x^2_2 = a^2_x = b^2_x</math>, in a",
+   "kind": "formula"
+  },
+  {
+   "start": 8320,
+   "end": 9203,
+   "old": "<br />\n{{em|3}}2(''a''<sub>0</sub>a<sub>2</sub> &minus; {{overline|''a''}}{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}) = {{overline|''a''}}<sub>0</sub>{{overline|''a''}}<sub>2</sub> + {{overline|''a''}}<sub>1</sub>{{overline|a}}<sub>2</sub> &minus; 2{{overline|''a''}}<sub>1</sub> . {{overline|''a''}}<sub>1</sub> = ''a''{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''b''{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} + ''a''{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} ''b''{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} &minus; 2''a''<sub>1</sub>''a''<sub>2</sub>''b''<sub>1</sub>''b''<sub>2</sub><br />\n{{em|8.5}} = (''a''<sub>1</sub>''b''<sub>2</sub> &minus; ''a''<sub>2</sub>''b''<sub>1</sub>)<sup>2</sup>.<br />",
+   "new": "{{block center|<math>2(a_0a_2 - a^2_1) = \\bar{a}_0\\bar{a}_2 + \\bar{a}_0\\bar{a}_2 - 2\\bar{a}_1 . \\bar{a}_1 = a^2_1b^2_2 + a^2_2b^2_1 - 2a_1a_2b_1b_2</math>}}\n{{block center|<math>= (a_1b_2 - a_2b_1)^2.</math>}}",
    "kind": "formula"
   },
   {
@@ -438,10 +613,24 @@
    "kind": "formula"
   },
   {
-   "start": 14011,
-   "end": 14122,
-   "old": "<br />\n{{em|4.5}}{{overline|''a''}}<sub>0</sub>, {{overline|''a''}}<sub>1</sub>, {{overline|''a''}}<sub>2</sub>",
-   "new": "<math>\\bar{a}_0, \\bar{a}_1, \\bar{a}_2</math>",
+   "start": 10893,
+   "end": 11633,
+   "old": "<br />\n{{em|5}}''x''<sub>1</sub> = {{Polytonic|λ}}<sub>1</sub>{{Polytonic|ξ}}<sub>1</sub> + {{Polytonic|μ}}<sub>1</sub>{{Polytonic|ξ}}<sub>2</sub>,{{em|1}} ''x''<sub>2</sub> = {{Polytonic|λ}}<sub>2</sub>{{Polytonic|ξ}}<sub>1</sub> + {{Polytonic|μ}}<sub>2</sub>{{Polytonic|ξ}}<sub>2</sub>,<br />\nof modulus {{xx-larger|&#124;}}{{dual line|{{Polytonic|λ}}<sub>1</sub>|{{Polytonic|λ}}<sub>2</sub>|style=text-align: left;vertical-align:middle;}}{{dual line|{{Polytonic|μ}}<sub>1</sub>|{{Polytonic|μ}}<sub>2</sub>|style=text-align: left;vertical-align:middle;}}{{xx-larger|&#124;}} = ({{Polytonic|λ}}<sub>1</sub>{{Polytonic|μ}}<sub>2</sub> &minus; {{Polytonic|λ}}<sub>2</sub>{{Polytonic|μ}}<sub>1</sub>) = ({{Polytonic|λ}}{{Polytonic|μ}}),<br />",
+   "new": "{{block center|<math>x_1 = \\lambda_1\\xi_1 + \\mu_1\\xi_2, x_2 = \\lambda_2\\xi_1 + \\mu_2\\xi_2,</math>}}\n{{block center|of modulus <math>\\begin{vmatrix}\\lambda_1 & \\mu_1 \\\\ \\lambda_2 & \\mu_2\\end{vmatrix} = (\\lambda_1\\mu_2 - \\lambda_2\\mu_1) = (\\lambda\\mu)</math>,}}",
+   "kind": "formula"
+  },
+  {
+   "start": 13595,
+   "end": 13999,
+   "old": "<br />\n{{em|4}}''a''{{dual line|2|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}} = (''a''<sub>1</sub>''x''<sub>1</sub> + ''a''<sub>2</sub>''x''<sub>2</sub>)<sup>2</sup>,{{em|0.5}}A{{dual line|2|{{Polytonic|ξ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}} = (A<sub>1</sub>{{Polytonic|ξ}}<sub>1</sub> + A<sub>2</sub>{{Polytonic|ξ}}<sub>2</sub>)<sup>2</sup>,<br />\nby",
+   "new": "{{block center|<math>a_x^2 = (a_1x_1 + a_2x_2)^2, \\ \\text{A}_\\xi^2 = (\\text{A}_1\\xi_1 + \\text{A}_2\\xi_2)^2,</math>}}\nby",
+   "kind": "formula"
+  },
+  {
+   "start": 14664,
+   "end": 16790,
+   "old": "<br/>\n{{em|4}}{{overline|A}}<sub>0</sub> = ''a''{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{Polytonic|λ}}{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} + 2''a''<sub>1</sub>''a''<sub>2</sub>{{Polytonic|λ}}<sub>1</sub>{{Polytonic|λ}}<sub>2</sub> + ''a''{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{Polytonic|λ}}{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} = (''a''<sub>1</sub>{{Polytonic|λ}}<sub>1</sub> + ''a''<sub>2</sub>{{Polytonic|λ}}<sub>2</sub>)<sup>2</sup> = ''a''{{dual line|2|{{Polytonic|λ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}},<br />\n{{em|4}}{{overline|A}}<sub>1</sub> = (''a''<sub>1</sub>{{Polytonic|λ}}<sub>1</sub> + ''a''<sub>2</sub>{{Polytonic|λ}}<sub>2</sub>) (''a''<sub>1</sub>{{Polytonic|μ}}<sub>1</sub> + ''a''<sub>2</sub>{{Polytonic|μ}}<sub>2</sub>) = ''a''<sub>{{Polytonic|λ}}</sub>''a''<sub>{{Polytonic|μ}}</sub>,<br />\n{{em|4}}{{overline|A}}<sub>2</sub> = (''a''<sub>1</sub>{{Polytonic|μ}}<sub>1</sub> + ''a''<sub>2</sub>{{Polytonic|μ}}<sub>2</sub>)<sup>2</sup> = ''a''{{dual line|2|{{Polytonic|μ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}};<br />\nso that<br />\n{{em|6}}A{{dual line|2|{{Polytonic|ξ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}} = ''a''{{dual line|2|{{Polytonic|λ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{Polytonic|ξ}}{{dual line|2|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} + 2''a''<sub>{{Polytonic|λ}}</sub>''a''<sub>{{Polytonic|μ}}</sub>{{Polytonic|ξ}}<sub>1</sub>{{Polytonic|ξ}}<sub>2</sub> + ''a''{{dual line|2|{{Polytonic|μ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}}{{Polytonic|ξ}}{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} = (''a''<sub>{{Polytonic|λ}}</sub>{{Polytonic|ξ}}<sub>1</sub> + ''a''<sub>{{Polytonic|μ}}</sub>{{Polytonic|ξ}}<sub>2</sub>)<sup>2</sup>;<br />\nwhence A<sub>1</sub>, A<sub>2</sub> become ''a''<sub>{{Polytonic|λ}}</sub>, '''a''<sub>{{Polytonic|μ}}</sub>",
+   "new": "{{block center|<math>\\overline{\\text{A}}_0 = a_1^2\\lambda_1^2 + 2a_1a_2\\lambda_1\\lambda_2 + a_2^2\\lambda_2^2 = (a_1\\lambda_1 + a_2\\lambda_2)^2 = a_\\lambda^2,</math>}}\n{{block center|<math>\\overline{\\text{A}}_1 = (a_1\\lambda_1 + a_2\\lambda_2)(a_1\\mu_1 + a_2\\mu_2) = a_\\lambda a_\\mu,</math>}}\n{{block center|<math>\\overline{\\text{A}}_2 = (a_1\\mu_1 + a_2\\mu_2)^2 = a_\\mu^2;</math>}}\nso that\n{{block center|<math>\\text{A}_\\xi^2 = a_\\lambda^2\\xi_1^2 + 2a_\\lambda a_\\mu\\xi_1\\xi_2 + a_\\mu^2\\xi_2^2 = (a_\\lambda\\xi_1 + a_\\mu\\xi_2)^2;</math>}}\nwhence <math>\\text{A}_1</math>, <math>\\text{A}_2</math> become <math>a_\\lambda</math>, <math>a_\\mu</math>",
    "kind": "formula"
   },
   {
@@ -473,10 +662,24 @@
    "kind": "formula"
   },
   {
+   "start": 17478,
+   "end": 17572,
+   "old": "''a''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}} we",
+   "new": "<math>a_x^n</math> we",
+   "kind": "formula"
+  },
+  {
    "start": 19168,
    "end": 19265,
    "old": "A<sub>1</sub>, A<sub>2</sub> are ''a''<sub>{{Polytonic|λ}}</sub>, ''a''<sub>{{Polytonic|μ}}</sub>",
    "new": "<math>\\text{A}_1</math>, <math>\\text{A}_2</math> are <math>a_\\lambda</math>, <math>a_\\mu</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 19315,
+   "end": 19764,
+   "old": "<br />\n{{em|10}}''a''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}} = (''a''<sub>1</sub>''x''<sub>1</sub> + ''a''<sub>2</sub>''x''<sub>2</sub>)<sup>''n''</sup><br />\nis transformed to<br />\n{{em|10}}A{{dual line|''n''|{{Polytonic|ξ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}} = (A<sub>1</sub>{{Polytonic|ξ}}<sub>1</sub> + A<sub>2</sub>{{Polytonic|ξ}}<sub>2</sub>)<sup>''n''</sup><br />\nby",
+   "new": "{{block center|<math>a_x^n = (a_1x_1 + a_2x_2)^n</math>}}\nis transformed to\n{{block center|<math>\\text{A}_\\xi^n = (\\text{A}_1\\xi_1 + \\text{A}_2\\xi_2)^n</math>}}\nby",
    "kind": "formula"
   },
   {
@@ -741,6 +944,13 @@
    "kind": "formula"
   },
   {
+   "start": 2468,
+   "end": 2653,
+   "old": "''a''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, ''b''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}},",
+   "new": "<math>a^n_x</math>, <math>b^n_x</math>,",
+   "kind": "formula"
+  },
+  {
    "start": 2782,
    "end": 2790,
    "old": "B, ''b''",
@@ -881,10 +1091,24 @@
    "kind": "formula"
   },
   {
+   "start": 5183,
+   "end": 5257,
+   "old": "''a''<sub>''x''</sub>, ''b''<sub>''x''</sub>, ''c''<sub>''x''</sub>, …. In",
+   "new": "<math>a_x, b_x, c_x, \\dots</math>. In",
+   "kind": "formula"
+  },
+  {
    "start": 5269,
    "end": 5342,
    "old": "(''ab'')<sup>''i''</sup>(''ac'')<sup>''j''</sup>(''bc'')<sup>''k''</sup>…",
    "new": "<math>(ab)^i(ac)^j(bc)^k\\dots</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 5406,
+   "end": 5722,
+   "old": "''a''{{dual line|''n''<sub>1</sub>|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, ''b''{{dual line|''n''<sub>2</sub>|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, ''c''{{dual line|''n''<sub>3</sub>|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}},…,",
+   "new": "<math>a^{n_1}_x, b^{n_2}_x, c^{n_3}_x, \\dots</math>,",
    "kind": "formula"
   },
   {
@@ -923,6 +1147,27 @@
    "kind": "formula"
   },
   {
+   "start": 6518,
+   "end": 6801,
+   "old": "''a''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, ''b''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, ''c''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, … be",
+   "new": "<math>a^n_x, b^n_x, c^n_x, \\dots</math> be",
+   "kind": "formula"
+  },
+  {
+   "start": 6927,
+   "end": 7019,
+   "old": "''a''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}.",
+   "new": "<math>a^n_x</math>.",
+   "kind": "formula"
+  },
+  {
+   "start": 7053,
+   "end": 7333,
+   "old": "''a''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, ''b''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, ''c''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}, …",
+   "new": "<math>a^n_x, b^n_x, c^n_x, \\dots</math>",
+   "kind": "formula"
+  },
+  {
    "start": 7642,
    "end": 7697,
    "old": "A{{Polytonic|ξ}}, B{{Polytonic|ξ}}, C{{Polytonic|ξ}}, …",
@@ -944,6 +1189,27 @@
    "kind": "formula"
   },
   {
+   "start": 7932,
+   "end": 8781,
+   "old": "<br />\n{{em|3}}(AB)<sup>''i''</sup>(AC)<sup>''j''</sup>(BC)<sup>''k''</sup>…A{{dual line|{{Polytonic|ρ}}|{{Polytonic|ξ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}}B{{dual line|{{Polytonic|σ}}|{{Polytonic|ξ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}}C{{dual line|{{Polytonic|τ}}|{{Polytonic|ξ}}|style=text-align: left;font-size: 80%;vertical-align:middle;}}…<br />\n{{em|12}} = ({{Polytonic|λμ}})<sup>''i''+''j''+''k''+…</sup>(''ab'')<sup>''i''</sup>(''ac'')<sup>''j''</sup>(''bc'')<sup>''k''</sup>…''a''{{dual line|{{Polytonic|ρ}}|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}''b''{{dual line|{{Polytonic|σ}}|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}''c''{{dual line|{{Polytonic|τ}}|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}…,<br />",
+   "new": "{{block center|<math>(\\text{AB})^i(\\text{AC})^j(\\text{BC})^k\\dots\\text{A}^\\rho_\\xi\\text{B}^\\sigma_\\xi\\text{C}^\\tau_\\xi\\dots</math>}}\n{{block center|<math>= (\\lambda\\mu)^{i+j+k+\\dots}(ab)^i(ac)^j(bc)^k\\dots a^\\rho_x b^\\sigma_x c^\\tau_x\\dots,</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 8818,
+   "end": 9218,
+   "old": "<br />\n{{em|10}}(''ab'')<sup>''i''</sup>(''ac'')<sup>''j''</sup>(''bc'')<sup>''k''</sup>…''a''{{dual line|{{Polytonic|ρ}}|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}''b''{{dual line|{{Polytonic|σ}}|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}''c''{{dual line|{{Polytonic|τ}}|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}…,<br />",
+   "new": "{{block center|<math>(ab)^i(ac)^j(bc)^k\\dots a^\\rho_x b^\\sigma_x c^\\tau_x\\dots</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 10332,
+   "end": 10424,
+   "old": "''a''{{dual line|''n''|''x''|style=text-align: left;font-size: 80%;vertical-align:middle;}}.",
+   "new": "<math>a_x^n</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 10441,
    "end": 10461,
    "old": "(''ab'')<sup>4</sup>",
@@ -955,6 +1221,13 @@
    "end": 10577,
    "old": "(''ab'')<sup>2</sup> (''cd'')<sup>2</sup>,",
    "new": "<math>(ab)^2(cd)^2</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 10663,
+   "end": 12000,
+   "old": "<br />\n{{em|3}}(''ab'')<sup>4</sup> = (''a''<sub>1</sub>''b''<sub>2</sub> − ''a''<sub>2</sub>''b''<sub>1</sub>)<sup>4</sup> = ''a''{{dual line|4|1}}''b''{{dual line|4|2}} − 4''a''{{dual line|4|1}}''a''<sub>2</sub>''b''<sub>1</sub>''b''{{dual line|3|2}} + 6''a''{{dual line|2|1}}''a''{{dual line|2|2}}''b''{{dual line|2|1}}''b''{{dual line|2|2}}<br />\n{{em|4}}− 4''a''<sub>1</sub>''a''{{dual line|3|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}}''b''{{dual line|3|1|style=text-align: left;font-size: 80%;vertical-align:middle;}}''b''<sub>2</sub> + ''a''{{dual line|4|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}''b''{{dual line|4|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} = {{overline|''a''}}<sub>0</sub>{{overline|''a''}}<sub>4</sub> − 4{{overline|''a''}}<sub>1</sub>{{overline|''a''}}<sub>3</sub> + 6{{overline|''a''}}{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}} − 4{{overline|''a''}}<sub>1</sub>{{overline|''a''}}<sub>3</sub> + {{overline|''a''}}<sub>0</sub>{{overline|''a''}}<sub>4</sub><br />\n{{em|4}}= 2({{overline|''a''}}<sub>0</sub>{{overline|''a''}}<sub>4</sub> − 4{{overline|''a''}}<sub>1</sub>{{overline|''a''}}<sub>3</sub> + 3{{overline|''a''}}{{dual line|2|2|style=text-align: left;font-size: 80%;vertical-align:middle;}}),<br />",
+   "new": "{{block center|<math>(ab)^4=(a_1b_2-a_2b_1)^4=a_1^4b_2^4-4a_1^3a_2b_1b_2^3+6a_1^2a_2^2b_1^2b_2^2</math>}}\n{{block center|<math>-4a_1a_2^3b_1^3b_2+a_2^4b_1^4=\\bar{a}_0\\bar{a}_4-4\\bar{a}_1\\bar{a}_3+6\\bar{a}_2^2-4\\bar{a}_1\\bar{a}_3+\\bar{a}_0\\bar{a}_4</math>}}\n{{block center|<math>=2(\\bar{a}_0\\bar{a}_4-4\\bar{a}_1\\bar{a}_3+3\\bar{a}_2^2),</math>}}",
    "kind": "formula"
   },
   {
@@ -990,6 +1263,13 @@
    "end": 16282,
    "old": ") is {{Polytonic|ρ}} + {{Polytonic|σ}} + {{Polytonic|τ}} …",
    "new": ") is <math>\\rho+\\sigma+\\tau+\\dots</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 16764,
+   "end": 16902,
+   "old": "''x''{{dual line|{{Polytonic|ρ}} + {{Polytonic|σ}} + {{Polytonic|τ}} …|1|style=text-align: left;font-size: 80%;vertical-align:middle;}} is",
+   "new": "<math>x_1^{\\rho+\\sigma+\\tau+\\dots}</math> is",
    "kind": "formula"
   },
   {
@@ -1063,6 +1343,20 @@
    "kind": "formula"
   },
   {
+   "start": 18824,
+   "end": 18864,
+   "old": "''x''<sub>1</sub>, and ''x''<sub>2</sub>",
+   "new": "<math>x_1</math> and <math>x_2</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 18877,
+   "end": 19034,
+   "old": "<br />\n{{em|7}}''a''<sub>''x''</sub>(''bc'') + ''b''<sub>''x''</sub>(''ca'') + ''c''<sub>''x''</sub>(''ab'') = 0{{em|2}}.{{em|2}}.{{em|2}}.{{em|2}}(I.)<br />",
+   "new": "{{block center|<math>a_x(bc)+b_x(ca)+c_x(ab)=0</math> . . . (I.)}}",
+   "kind": "formula"
+  },
+  {
    "start": 19060,
    "end": 19096,
    "old": "''d''<sub>1</sub>, ''d''<sub>2</sub>",
@@ -1127,9 +1421,9 @@
   },
   {
    "start": 19722,
-   "end": 19882,
-   "old": "<br />\n{{em|7}}''a''<sub>''x''</sub>''b''<sub>''y''</sub> − ''a''<sub>''y''</sub>''b''<sub>''x''</sub> = (''ab'')(''xy''). {{em|2}}.{{em|2}}.{{em|2}}.{{em|2}} (",
-   "new": "<math>a_xb_y-a_yb_x=(ab)(xy).</math> . . . . . (",
+   "end": 19893,
+   "old": "<br />\n{{em|7}}''a''<sub>''x''</sub>''b''<sub>''y''</sub> − ''a''<sub>''y''</sub>''b''<sub>''x''</sub> = (''ab'')(''xy''). {{em|2}}.{{em|2}}.{{em|2}}.{{em|2}} (III.)<br />",
+   "new": "{{block center|<math>a_xb_y-a_yb_x=(ab)(xy).</math> . . . . . (III.)}}",
    "kind": "formula"
   },
   {
@@ -1137,6 +1431,13 @@
    "end": 19952,
    "old": "''a''<sub>''x''</sub>(''bc'') to",
    "new": "<math>a_x(bc)</math> to",
+   "kind": "formula"
+  },
+  {
+   "start": 19991,
+   "end": 20236,
+   "old": "<br />\n{{em|5}}2(''ac'')(''bc'')''a''<sub>''x''</sub>''b''<sub>''x''</sub> = (''bc'')<sup>2</sup>''a''{{dual line|2|''x''}} + (''ac'')<sup>2</sup>''b''<sub>''x''</sub> − (''ab'')<sup>2</sup>''c''{{dual line|2|''x''}}{{em|2}}.{{em|2}} (IV.)<br />",
+   "new": "{{block center|<math>2(ac)(bc)a_xb_x=(bc)^2a_x^2+(ac)^2b_x-(ab)^2c_x^2</math> . (IV.)}}",
    "kind": "formula"
   },
   {
@@ -1164,16 +1465,9 @@
   },
   {
    "start": 463,
-   "end": 486,
-   "old": "<br />\nn (ab) ay 2 by 2",
-   "new": "<math>(ab)^2a_x^{n-2}b_x^{n-2}</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 491,
    "end": 494,
-   "old": "cZ.",
-   "new": "<math>c_x^n</math>.",
+   "old": "<br />\nn (ab) ay 2 by 2 and cZ.",
+   "new": "{{block center|<math>(ab)^2a_x^{n-2}b_x^{n-2}</math> and <math>c_x^n</math>.}}",
    "kind": "formula"
   },
   {
@@ -1464,27 +1758,6 @@
    "kind": "formula"
   },
   {
-   "start": 3905,
-   "end": 3908,
-   "old": "kth",
-   "new": "<math>k^{th}</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 3930,
-   "end": 3965,
-   "old": "(4)1,,, 4)Q) k = (4)) k 4)2 -krk, a",
-   "new": "{{block center|<math>(\\phi^p_x, \\psi^q_x)^k = (\\phi\\psi)^k \\phi^{p-k}_x \\psi^{q-k}_x</math>,}}\na",
-   "kind": "formula"
-  },
-  {
-   "start": 4022,
-   "end": 4036,
-   "old": "of, 4 ,2 to be",
-   "new": "<math>\\phi^p_x</math>, <math>\\psi^q_x</math> to be",
-   "kind": "formula"
-  },
-  {
    "start": 4191,
    "end": 4208,
    "old": "ax, bx, or of, 0,",
@@ -1695,6 +1968,13 @@
    "kind": "formula"
   },
   {
+   "start": 5931,
+   "end": 5939,
+   "old": "by by-k.",
+   "new": "by <math>b^{n-k}_x</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 6082,
    "end": 6167,
    "old": "If F = An, 4) = By, 1 = I \n\n(Df A4) Of A?) Ab A\"'^1Bz 1=, (F, Mn Ax I Ax 2 Axe Ax1) J",
@@ -1723,6 +2003,13 @@
    "kind": "formula"
   },
   {
+   "start": 6415,
+   "end": 6493,
+   "old": "F,4, F 5.4)= (Axby A Y B X) A X B X 1= (Xy)(F,4))1; (F,Ct)1=F5.D' 7,(Xy)(F4)1.",
+   "new": "{{block center|<math>f\\phi^1_y-f_y.\\phi = (a_xb_y-a_yb_x)a^{m-1}_x b^{n-1}_x = (xy)(f,\\phi)^1</math>;}}\n{{block center|<math>\\therefore (f,\\phi)^1 = f^1_y.\\phi+\\frac{n}{m+n}(xy)(f,\\phi)^1</math>.}}",
+   "kind": "formula"
+  },
+  {
    "start": 6498,
    "end": 6501,
    "old": "M 1",
@@ -1748,6 +2035,13 @@
    "end": 6549,
    "old": "By (Ab);",
    "new": "by <math>(ab)</math>;",
+   "kind": "formula"
+  },
+  {
+   "start": 6555,
+   "end": 6632,
+   "old": "{ (F ,C6) } = (Ab) A X 2A Y B X 1 M N I 2 (Xy) ,?) 2, = (A B)Ax 1B X 2B Y L I",
+   "new": "{{block center|<math>\\{(f,\\phi)\\}^1_y = (ab)a^{m-2}_x a_y b^{n-1}_x+\\frac{n-1}{m+n-2}(xy)(f,\\phi)^2</math>,}}\n{{block center|<math>= (ab)a^{m-1}_x b^{n-2}_x b_y-\\frac{m-1}{m+n-2}(xy)(f,\\phi)^2</math>.}}",
    "kind": "formula"
   },
   {
@@ -2075,24 +2369,10 @@
    "kind": "formula"
   },
   {
-   "start": 3455,
-   "end": 3476,
-   "old": "X 1, X 2, ï¿½ 1, ï¿½2",
-   "new": "<math>\\lambda_1</math>, <math>\\lambda_2</math>, <math>\\mu_1</math>, <math>\\mu_2</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 3544,
-   "end": 3560,
-   "old": "J =j, A k =akï¿½",
-   "new": "<math>\\text{J}=j</math>, <math>\\bar{\\text{A}}_k=\\bar{a}_k</math>.",
-   "kind": "formula"
-  },
-  {
-   "start": 3567,
+   "start": 3259,
    "end": 3757,
-   "old": "Â°a-do +(n -1)71 (a2aa-+... =wj, - aj aj - aj a Â°aa1 +2a 1aa2 +3a 2aa3 +... =0, - aj aj aj nal aao +(n-1)a2 at i -} (n - 2)a 3aa2+... =0, a 1 a ? +2a 2 a? +3a 3 a +... = wj, aa 1 aa 2 a a 3",
-   "new": "{{block center|<math>n\\bar{a}_0\\frac{\\partial j}{\\partial\\bar{a}_0}+(n-1)\\bar{a}_1\\frac{\\partial j}{\\partial\\bar{a}_1}+(n-2)\\bar{a}_2\\frac{\\partial j}{\\partial\\bar{a}_2}+\\dots=wj,</math>}}\n{{block center|<math>\\bar{a}_0\\frac{\\partial j}{\\partial\\bar{a}_1}+2\\bar{a}_1\\frac{\\partial j}{\\partial\\bar{a}_2}+3\\bar{a}_2\\frac{\\partial j}{\\partial\\bar{a}_3}+\\dots=0,</math>}}\n{{block center|<math>n\\bar{a}_1\\frac{\\partial j}{\\partial\\bar{a}_0}+(n-1)\\bar{a}_2\\frac{\\partial j}{\\partial\\bar{a}_1}+(n-2)\\bar{a}_3\\frac{\\partial j}{\\partial\\bar{a}_2}+\\dots=0,</math>}}\n{{block center|<math>\\bar{a}_1\\frac{\\partial j}{\\partial\\bar{a}_1}+2\\bar{a}_2\\frac{\\partial j}{\\partial\\bar{a}_2}+3\\bar{a}_3\\frac{\\partial j}{\\partial\\bar{a}_3}+\\dots=wj,</math>}}",
+   "old": "D A xA k = (n - k) A k; Aï¿½ A k = k A?1; D ï¿½A A k = (n - k) A k+1;D mï¿½ A k = kA k; (n - k)A ka - w Ak - 1 aA k = O; a _ J (n - k) A k +l A k = O; kA k Ak = wJ; equations which are valid when X 1, X 2, ï¿½ 1, ï¿½2 have arbitrary values, and therefore when the values are such that J =j, A k =akï¿½ Hence Â°a-do +(n -1)71 (a2aa-+... =wj, - aj aj - aj a Â°aa1 +2a 1aa2 +3a 2aa3 +... =0, - aj aj aj nal aao +(n-1)a2 at i -} (n - 2)a 3aa2+... =0, a 1 a ? +2a 2 a? +3a 3 a +... = wj, aa 1 aa 2 a a 3",
+   "new": "{{block center|<math>\\text{D}_{\\lambda\\lambda} \\bar{\\text{A}}_k = (n-k) \\bar{\\text{A}}_k; \\text{D}_{\\lambda\\mu} \\bar{\\text{A}}_k = k\\bar{\\text{A}}_{k-1};</math>}}\n{{block center|<math>\\text{D}_{\\mu\\lambda} \\bar{\\text{A}}_k = (n-k) \\bar{\\text{A}}_{k+1}; \\text{D}_{\\mu\\mu} \\bar{\\text{A}}_k = k\\bar{\\text{A}}_k;</math>}}\nso we obtain\n{{block center|<math>\\sum_k (n-k) \\bar{\\text{A}}_k \\frac{\\partial \\text{J}}{\\partial \\bar{\\text{A}}_k} = w\\text{J}; \\sum_k k\\bar{\\text{A}}_{k-1} \\frac{\\partial \\text{J}}{\\partial \\bar{\\text{A}}_k} = 0;</math>}}\n{{block center|<math>\\sum_k (n-k) \\bar{\\text{A}}_{k+1} \\frac{\\partial \\text{J}}{\\partial \\bar{\\text{A}}_k} = 0; \\sum_k k\\bar{\\text{A}}_k \\frac{\\partial \\text{J}}{\\partial \\bar{\\text{A}}_k} = w\\text{J};</math> equations which are valid when <math>\\lambda_1</math>, <math>\\lambda_2</math>, <math>\\mu_1</math>, <math>\\mu_2</math> have arbitrary values, and therefore when the values are such that <math>\\text{J}=j</math>, <math>\\bar{\\text{A}}_k=\\bar{a}_k</math>.}}\n\nHence\n{{block center|<math>n\\bar{a}_0\\frac{\\partial j}{\\partial\\bar{a}_0}+(n-1)\\bar{a}_1\\frac{\\partial j}{\\partial\\bar{a}_1}+(n-2)\\bar{a}_2\\frac{\\partial j}{\\partial\\bar{a}_2}+\\dots=wj,</math>}}\n{{block center|<math>\\bar{a}_0\\frac{\\partial j}{\\partial\\bar{a}_1}+2\\bar{a}_1\\frac{\\partial j}{\\partial\\bar{a}_2}+3\\bar{a}_2\\frac{\\partial j}{\\partial\\bar{a}_3}+\\dots=0,</math>}}\n{{block center|<math>n\\bar{a}_1\\frac{\\partial j}{\\partial\\bar{a}_0}+(n-1)\\bar{a}_2\\frac{\\partial j}{\\partial\\bar{a}_1}+(n-2)\\bar{a}_3\\frac{\\partial j}{\\partial\\bar{a}_2}+\\dots=0,</math>}}\n{{block center|<math>\\bar{a}_1\\frac{\\partial j}{\\partial\\bar{a}_1}+2\\bar{a}_2\\frac{\\partial j}{\\partial\\bar{a}_2}+3\\bar{a}_3\\frac{\\partial j}{\\partial\\bar{a}_3}+\\dots=wj,</math>}}",
    "kind": "formula"
   },
   {
@@ -2187,6 +2467,13 @@
    "kind": "formula"
   },
   {
+   "start": 5421,
+   "end": 5534,
+   "old": "(bd) 2 (bc) cyd x +(ac) 2 (ad) c xdx - (bd) 2 (ad)axb x - (ac)2(bc)axbx =4(bd) 2 (bc)c 2. d x the first evectant;",
+   "new": "{{block center|<math>(bd)^2(bc)c^2_x d_x+(ac)^2(ad)c_x d^2_x</math>}}\n{{block center|<math>-(bd)^2(ad)a^2_x b_x-(ac)^2(bc)a_x b^2_x</math>}}\n{{block center|<math>=4(bd)^2(bc)c^2_x d_x</math> the first evectant;}}",
+   "kind": "formula"
+  },
+  {
    "start": 5546,
    "end": 5551,
    "old": "4cxdi",
@@ -2226,6 +2513,13 @@
    "end": 5886,
    "old": "''a'' to ''x'', we",
    "new": "<math>a</math> to <math>x</math>, we",
+   "kind": "formula"
+  },
+  {
+   "start": 5914,
+   "end": 5931,
+   "old": "(-) k, x1x2 aak k",
+   "new": "{{block center|<math>p^n_x=\\sum_k(-)^k x^k_1 x^{n-k}_2\\frac{\\partial j}{\\partial\\bar{a}_k}.</math>}}",
    "kind": "formula"
   },
   {
@@ -2585,13 +2879,6 @@
    "end": 3542,
    "old": "of uo, ul, a n = (aiy1+a2y2) n",
    "new": "of <math>u_0</math>, <math>u_1</math>, <math>u_2</math>,... take <math>a^n_y = (a_1y_1 + a_2y_2)^n</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 3580,
-   "end": 3591,
-   "old": "fi y 1+f2 y",
-   "new": "<math>f_1y_1 + f_2y_2 = \\xi</math>",
    "kind": "formula"
   },
   {
@@ -3164,6 +3451,13 @@
  ],
  "1:675": [
   {
+   "start": 343,
+   "end": 585,
+   "old": "<math>a_x^4=f</math>; <math>(f,f')^2=(ab)^2a_x^2b_x^2=\\Delta_x^4</math>; <math>(f,f')^4=(ab)^4=i</math>; <math>(f,\\Delta)^1=(a\\Delta)a_x^3\\Delta_x^3=(ab)^2(cb)a_x^2b_xc_x^3=t</math>; <math>(f,\\Delta)^4=(a\\Delta)^4=(ab)^2(bc)^2(ca)^2=j</math>,",
+   "new": "<math>a^4_x=f</math>; <math>(f,f')^2=(ab)^2a^2_xb^2_x=\\Delta^4_x</math>; <math>(f,f')^4=(ab)^4=i</math>; <math>(f,\\ \\Delta)^1=(a\\Delta)a^3_x\\Delta^3_x=(ab)^2(cb)a^2_xb_xc^3_x=t</math>; <math>(f,\\Delta)^4=(a\\Delta)^4=(ab)^2(bc)^2(ca)^2=j</math>,",
+   "kind": "formula"
+  },
+  {
    "start": 671,
    "end": 755,
    "old": "{{block center|\n<math>2t^2=\\frac{1}{2}if^2\\Delta-\\Delta^3-\\frac{1}{3}jf^3</math>.\n}}",
@@ -3245,6 +3539,13 @@
    "end": 1686,
    "old": "a o xi+4a 1 xix 2",
    "new": "<math>a_0x^4_1+4a_1x^3_1x_2</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 1900,
+   "end": 1929,
+   "old": "(yx) 2 0 4 = 2f.4-2(f y 1 ) 2",
+   "new": "<math>(yx)^2\\Delta^4_x=2f.f^2_y-2(f^1_y)^2</math>",
    "kind": "formula"
   },
   {
@@ -3458,6 +3759,13 @@
    "kind": "formula"
   },
   {
+   "start": 3454,
+   "end": 3472,
+   "old": "1 t = -' (1)ï¿½x4;",
+   "new": "{{block center|<math>t=\\frac{1}{\\sqrt{-2}}\\phi.\\chi.\\psi</math>;}}",
+   "kind": "formula"
+  },
+  {
    "start": 3498,
    "end": 3506,
    "old": "0, x, 1P",
@@ -3518,6 +3826,13 @@
    "end": 3993,
    "old": "of a:,",
    "new": "of <math>a^4_x</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 4019,
+   "end": 4086,
+   "old": "by (rs) 4 .a x 4 = (ar) 4s: 6 (ar) 2 (as) 2rxsy -I- (as) 4rx; 4) is",
+   "new": "by\n{{block center|<math>(rs)^4.a^4_x=(ar)^4s^4_x+6(ar)^2(as)^2r^2_xs^2_x+(as)^4r^4_x</math>;}}\n<math>\\phi</math> is",
    "kind": "formula"
   },
   {
@@ -3584,6 +3899,13 @@
    "kind": "formula"
   },
   {
+   "start": 4588,
+   "end": 4615,
+   "old": "? 2 - 9 m 2 (1 3 m 2)) 2 we",
+   "new": "<math>\\frac{i^3}{j^2}=\\frac{2}{9}\\frac{(1+3m^2)^2}{m^2(1-m^2)^2}</math> we",
+   "kind": "formula"
+  },
+  {
    "start": 4654,
    "end": 4662,
    "old": "m 2 as a",
@@ -3605,6 +3927,13 @@
    "kind": "formula"
   },
   {
+   "start": 4910,
+   "end": 5043,
+   "old": "{{block center|\n<math>\\frac{1}{2i}\\sqrt{-\\frac{j}{2}}\\frac{\\partial z}{\\sqrt{\\frac{1}{3}-\\frac{1}{2}z+\\frac{j^2}{i^3}z^3}}</math>.\n}}",
+   "new": "{{block center|<math>\\frac{1}{2i}\\sqrt{-\\frac{j}{2}}\\frac{\\partial z}{\\sqrt{\\frac{1}{3}-\\frac{1}{2}z+\\frac{j^2}{i^3}z^3}}</math>.}}",
+   "kind": "formula"
+  },
+  {
    "start": 5143,
    "end": 5149,
    "old": "f =a:;",
@@ -3616,6 +3945,13 @@
    "end": 5239,
    "old": "i= (f, f) 4 = (ab) 4axbx;",
    "new": "<math>i = (f,f')^4 = (ab)^4a_xb_x</math>;",
+   "kind": "formula"
+  },
+  {
+   "start": 5248,
+   "end": 5331,
+   "old": "nonic co variant T = (f, (f', f\") 2) 1 = (f, H) 1 = (aH) azHi = (ab) 2 (ca) axbycy;",
+   "new": "nonic covariant <math>\\text{T} = (f,(f',f'')^2)^1 = (f,\\text{H})^1 = (a\\text{H})a_x^4\\text{H}_x^5 = (ab)^2(ca)a_x^2b_x^3c_x^4</math>;",
    "kind": "formula"
   },
   {
@@ -5058,6 +5394,13 @@
    "kind": "formula"
   },
   {
+   "start": 8205,
+   "end": 8631,
+   "old": "<table align=center {{Ts|ma|vmi}}>\n<tr align=center><td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">|</span></td> <td>''a'' − ''b''</td>\n<td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">|</span> < {{Polytonic|ε}}, for |''a'' − ''b''| < {{Polytonic|η}};</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''z'' − ''b''</td></tr></table>",
+   "new": "{{block center|<math>\\left|\\frac{a-b}{z-b}\\right| < \\epsilon</math>, for <math>|a-b| < \\eta</math>;}}",
+   "kind": "formula"
+  },
+  {
    "start": 9382,
    "end": 9392,
    "old": "''n'' is a",
@@ -5914,6 +6257,13 @@
    "kind": "formula"
   },
   {
+   "start": 11484,
+   "end": 11822,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td rowspan=\"2\">''z'' =</td> <td>''c''{{Polytonic|ζ}}</td>\n<td rowspan=\"2\">, &emsp; {{Polytonic|ζ}} =</td> <td>(''c'' + 1)''z''</td>\n<td rowspan=\"2\">;</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''c'' + 1 − {{Polytonic|ζ}}</td> <td {{Ts|bt|ac|pl.5|pr.5}}>''c'' + ''z''</td></tr></table>",
+   "new": "{{block center|<math>z=\\frac{c\\zeta}{c+1-\\zeta}, \\quad \\zeta=\\frac{(c+1)z}{c+z}</math>;}}",
+   "kind": "formula"
+  },
+  {
    "start": 11843,
    "end": 11876,
    "old": "{{Polytonic|ζ}} = 0, 1, 1 + ''c''",
@@ -6156,6 +6506,13 @@
    "end": 16089,
    "old": "R we",
    "new": "<math>\\text{R}</math> we",
+   "kind": "formula"
+  },
+  {
+   "start": 16106,
+   "end": 16508,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td rowspan=\"2\">2{{Polytonic|π}}''i''ƒ(''x'') = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">&int;</span></td> <td>ƒ(''t'')</td>\n<td rowspan=\"2\">&nbsp;</td> <td>ƒ(''t'')</td>\n<td rowspan=\"2\">,</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''t''</td> <td {{Ts|bt|ac|pl.5|pr.5}}>1 − xt<sup>−1</sup></td></tr></table>",
+   "new": "{{block center|<math>2\\pi if(x) = \\int\\frac{dt}{t}\\frac{f(t)}{1-xt^{-1}},</math>}}",
    "kind": "formula"
   },
   {
@@ -6819,6 +7176,13 @@
    "kind": "formula"
   },
   {
+   "start": 14394,
+   "end": 14965,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">''n''{{Polytonic|π}} tan {{Polytonic|α}}</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">0</span> dy</td> <td>2''n''{{Polytonic|π}}</td>\n<td rowspan=\"2\">, that is than 2{{Polytonic|α}}.</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''n''<sup>2</sup>{{Polytonic|π}}<sup>2</sup> + ''y''<sup>2</sup></td></tr></table>",
+   "new": "{{block center|<math>\\int_0^{n\\pi \\tan \\alpha} dy \\frac{2n\\pi}{n^2\\pi^2+y^2}</math>, that is than <math>2\\alpha</math>.}}",
+   "kind": "formula"
+  },
+  {
    "start": 15031,
    "end": 15654,
    "old": "R = n{{Polytonic|π}} sec {{Polytonic|α}}, we have ''z'' = R(cos {{Polytonic|θ}} + ''i'' sin {{Polytonic|θ}}) = RE(''i''{{Polytonic|θ}}), we have\n\n<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td>''dz''</td>\n<td rowspan=\"2\">= id{{Polytonic|θ}}, ''i'' tan ''z'' =</td> <td>exp(−R sin {{Polytonic|θ}}) E(''i''R cos {{Polytonic|θ}}) − exp(R sin {{Polytonic|θ}}) E(−''i''R cos {{Polytonic|θ}})</td>\n<td rowspan=\"2\">;</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''z''</td> <td {{Ts|bt|ac|pl.5|pr.5}}>exp(−R sin {{Polytonic|θ}}) E(''i''R cos {{Polytonic|θ}}) + exp(R sin {{Polytonic|θ}}) E(−''i''R cos {{Polytonic|θ}})</td></tr></table>",
@@ -6840,6 +7204,13 @@
    "kind": "formula"
   },
   {
+   "start": 16221,
+   "end": 16737,
+   "old": "is\n\n<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td rowspan=\"2\">2 <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">∞</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">0</span></td> <td>tan ''x''</td>\n<td rowspan=\"2\">''dx'' − ({{Polytonic|π}} − 2{{Polytonic|α}}) − 2{{Polytonic|α}}{{Polytonic|ε}} = 0,</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''x''</td></tr></table>",
+   "new": "is\n{{block center|<math>2\\int_0^\\infty \\frac{\\tan x}{x} dx - (\\pi - 2\\alpha) - 2\\alpha\\epsilon = 0</math>,}}",
+   "kind": "formula"
+  },
+  {
    "start": 16745,
    "end": 16763,
    "old": "{{Polytonic|ε}} is",
@@ -6851,6 +7222,20 @@
    "end": 16825,
    "old": "{{Polytonic|α}} to",
    "new": "<math>\\alpha</math> to",
+   "kind": "formula"
+  },
+  {
+   "start": 16862,
+   "end": 17378,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">∞</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">0</span></td> <td>tan ''x''</td>\n<td rowspan=\"2\">''dx'' =</td> <td>{{Polytonic|π}}</td>\n<td rowspan=\"2\">.</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''x''</td> <td {{Ts|bt|ac|pl.5|pr.5}}>2</td></tr></table>",
+   "new": "{{block center|<math>\\int_0^\\infty \\frac{\\tan x}{x} dx = \\frac{\\pi}{2}</math>.}}",
+   "kind": "formula"
+  },
+  {
+   "start": 17461,
+   "end": 17741,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span></td> <td>''z''<sup>''a''−1</sup></td>\n<td rowspan=\"2\">''dz'',</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>1 + ''z''</td></tr></table>",
+   "new": "{{block center|<math>\\int \\frac{z^{a-1}}{1+z} dz</math>,}}",
    "kind": "formula"
   },
   {
@@ -7668,6 +8053,13 @@
    "kind": "formula"
   },
   {
+   "start": 2546,
+   "end": 2607,
+   "old": "''t'' = exp ({{Greek|ζ}}) or {{Greek|ζ}} = {{Greek|λ}}(''t'')",
+   "new": "<math>t = \\exp(\\zeta)</math> or <math>\\zeta = \\lambda(t)</math>",
+   "kind": "formula"
+  },
+  {
    "start": 2649,
    "end": 2657,
    "old": "of t. If",
@@ -8064,6 +8456,13 @@
    "end": 7722,
    "old": "''z'' + {{Greek|ω}}\nis of",
    "new": "<math>z + w</math> is of",
+   "kind": "formula"
+  },
+  {
+   "start": 7732,
+   "end": 7867,
+   "old": "−{{Greek|ω}} <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> ''z'' [ƒ′(''z'')/ƒ(''z'')] dz,",
+   "new": "<math>-\\omega\\int\\frac{f'(z)}{f(z)}dz</math>,",
    "kind": "formula"
   },
   {
@@ -8536,10 +8935,10 @@
    "kind": "formula"
   },
   {
-   "start": 15853,
+   "start": 15701,
    "end": 16398,
-   "old": "<table style=\"margin:auto; text-align:center\">\n<tr><td rowspan=\"2\">ƒ(''z'') =</td> <td>1</td>\n<td rowspan=\"2\">+ {{Greek|Σ}}′ <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">{</span></td> <td>1</td>\n<td rowspan=\"2\">−</td> <td>1</td>\n<td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">}</span> ,</td></tr>\n<tr><td {{Ts|bt|ac}}>''z''<sup>2</sup></td> <td {{Ts|bt|ac}}>(''z'' − {{Greek|Ω}})<sup>2</sup></td>\n<td {{Ts|bt|ac}}>{{Greek|Ω}}<sup>2</sup></td></tr></table>",
-   "new": "<math>f(z)=\\frac{1}{z^2}+\\Sigma'\\left\\{\\frac{1}{(z-\\Omega)^2}-\\frac{1}{\\Omega^2}\\right\\},</math>",
+   "old": "<table style=margin:auto>\n<tr><td>''d''ƒ(''z'')</td>\n<td rowspan=\"2\">= {{Greek|φ}}(''z'')</td></tr>\n<tr><td {{Ts|bt|ac}}>''dz''</td></tr></table>\n\nand\n\n<table style=\"margin:auto; text-align:center\">\n<tr><td rowspan=\"2\">ƒ(''z'') =</td> <td>1</td>\n<td rowspan=\"2\">+ {{Greek|Σ}}′ <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">{</span></td> <td>1</td>\n<td rowspan=\"2\">−</td> <td>1</td>\n<td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">}</span> ,</td></tr>\n<tr><td {{Ts|bt|ac}}>''z''<sup>2</sup></td> <td {{Ts|bt|ac}}>(''z'' − {{Greek|Ω}})<sup>2</sup></td>\n<td {{Ts|bt|ac}}>{{Greek|Ω}}<sup>2</sup></td></tr></table>",
+   "new": "{{block center|<math>\\frac{df(z)}{dz}=\\phi(z)</math>}}\n{{block center|and <math>f(z)=\\frac{1}{z^2}+\\Sigma'\\left\\{\\frac{1}{(z-\\Omega)^2}-\\frac{1}{\\Omega^2}\\right\\},</math>}}",
    "kind": "formula"
   },
   {
@@ -9378,6 +9777,13 @@
    "kind": "formula"
   },
   {
+   "start": 10393,
+   "end": 10927,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td rowspan=\"2\">ƒ(''z'' + t) + ƒ(''z'') + ƒ(''t'') = {{EB1911 tfrac|1|4}} <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">[</span></td> <td>{{Polytonic|φ}}(''z'') − {{Polytonic|φ}}(''t'')</td>\n<td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">]</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">2</span>.</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>ƒ(''z'') − ƒ(''t'')</td></tr></table>",
+   "new": "{{block center|<math>f(z+t)+f(z)+f(t)=\\tfrac14\\left[\\frac{\\phi(z)-\\phi(t)}{f(z)-f(t)}\\right]^2.</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 10945,
    "end": 10959,
    "old": "if F(''z'') be",
@@ -9809,6 +10215,13 @@
    "end": 19057,
    "old": "sn<sup>2</sup>(''u'') + cn<sup>2</sup>(''u'') = 1, ''k''<sup>2</sup>sn<sup>2</sup>(''u'') + ''dn''<sup>2</sup>(''u'') = 1; if ''x'' = ''sn''(''u'')\nwe at",
    "new": "<math>\\text{sn}^2(u)+\\text{cn}^2(u)=1</math>, <math>k^2\\text{sn}^2(u)+\\text{dn}^2(u)=1</math>; if <math>x=\\text{sn}(u)</math> we at",
+   "kind": "formula"
+  },
+  {
+   "start": 19106,
+   "end": 19591,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td>du</td>\n<td rowspan=\"2\">= [(1 − ''x''<sup>2</sup>) (1 − ''k''<sup>2</sup>''x''<sup>2</sup>)]<sup>−1/2</sup>;</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''dx''</td></tr></table>\n\nif we put ''x'' = sin{{Polytonic|φ}} we have\n\n<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td>du</td>\n<td rowspan=\"2\">= [1 − ''k''<sup>2</sup>sin<sup>2</sup>{{Polytonic|φ}}]<sup>−1/2</sup>,</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>d{{Polytonic|φ}}</td></tr></table>",
+   "new": "{{block center|<math>\\frac{du}{dx}=[(1-x^2)(1-k^2x^2)]^{-\\frac12};</math>}}\nif we put <math>x=\\sin\\phi</math> we have\n{{block center|<math>\\frac{du}{d\\phi}=[1-k^2\\sin^2\\phi]^{-\\frac12},</math>}}",
    "kind": "formula"
   },
   {
@@ -10518,6 +10931,13 @@
    "end": 21204,
    "old": "{{Polytonic|Θ}},",
    "new": "<math>\\Theta</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 21267,
+   "end": 21479,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td>{{Polytonic|ε}}</td>\n<td rowspan=\"2\">({{Polytonic|Φ}} + {{Polytonic|Θ}}).</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>2{{Polytonic|π}}</td></tr></table>\n\nIf",
+   "new": "{{block center|<math>\\frac{\\epsilon}{2\\pi}(\\Phi+\\Theta).</math>}}\nIf",
    "kind": "formula"
   },
   {
@@ -11643,6 +12063,13 @@
    "kind": "formula"
   },
   {
+   "start": 10322,
+   "end": 10793,
+   "old": "by\n\n<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">[</span> R(''s'', ''z'')</td> <td>''dz''</td>\n<td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">]</span><span style=\"position: relative; top: 0.3em; font-size: 0.75em;>''t''<sup>−1</sup></span> = 0.</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''dt''</td></tr></table>",
+   "new": "by\n{{block center|<math>\\left[\\text{R}(s,z)\\frac{dz}{dt}\\right]_{t^{-1}}=0.</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 10826,
    "end": 10830,
    "old": "n=1,",
@@ -11966,16 +12393,9 @@
   },
   {
    "start": 14965,
-   "end": 15016,
-   "old": "R(''s'', ''z'') = ''t''<sup>''m''</sup>H(''t''), we",
-   "new": "<math>\\text{R}(s,z)=t^m\\text{H}(t)</math>, we",
-   "kind": "formula"
-  },
-  {
-   "start": 15023,
    "end": 15470,
-   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td>1</td>\n<td rowspan=\"2\">&nbsp;</td> <td>dR(''s'', ''z'')</td>\n<td rowspan=\"2\">&nbsp;</td> <td>''dz''</td>\n<td rowspan=\"2\">=</td> <td>''d''</td>\n<td rowspan=\"2\">{{{Polytonic|λ}} [R(''s'', ''z'')] },</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>R(''s'', ''z'')</td> <td {{Ts|bt|ac|pl.5|pr.5}}>''dz''</td>\n<td {{Ts|bt|ac|pl.5|pr.5}}>''dt''</td> <td {{Ts|bt|ac|pl.5|pr.5}}>''dt''</td></tr></table>",
-   "new": "{{block center|<math>\\frac{1}{\\text{R}(s,z)}\\frac{d\\text{R}(s,z)}{dz}\\frac{dz}{dt}=\\frac{d}{dt}\\{\\lambda[\\text{R}(s,z)]\\},</math>}}",
+   "old": "R(''s'', ''z'') = ''t''<sup>''m''</sup>H(''t''), we have\n\n<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td>1</td>\n<td rowspan=\"2\">&nbsp;</td> <td>dR(''s'', ''z'')</td>\n<td rowspan=\"2\">&nbsp;</td> <td>''dz''</td>\n<td rowspan=\"2\">=</td> <td>''d''</td>\n<td rowspan=\"2\">{{{Polytonic|λ}} [R(''s'', ''z'')] },</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>R(''s'', ''z'')</td> <td {{Ts|bt|ac|pl.5|pr.5}}>''dz''</td>\n<td {{Ts|bt|ac|pl.5|pr.5}}>''dt''</td> <td {{Ts|bt|ac|pl.5|pr.5}}>''dt''</td></tr></table>",
+   "new": "<math>\\text{R}(s,z)=t^m\\text{H}(t)</math>, we have\n{{block center|<math>\\frac{1}{\\text{R}(s,z)}\\frac{d\\text{R}(s,z)}{dz}\\frac{dz}{dt}=\\frac{d}{dt}\\{\\lambda[\\text{R}(s,z)]\\},</math>}}",
    "kind": "formula"
   },
   {
@@ -12415,6 +12835,13 @@
    "kind": "formula"
   },
   {
+   "start": 5275,
+   "end": 5767,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td rowspan=\"2\">R(''s'', ''z'')</td> <td>''dz''</td>\n<td rowspan=\"2\">{{Polytonic|λ}} <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">(</span></td> <td>H(''s'', ''z'') − B</td>\n<td rowspan=\"2\"><span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">)</span>,</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''dt''</td> <td {{Ts|bt|ac|pl.5|pr.5}}>H(''s'', ''z'') − A</td></tr></table>",
+   "new": "{{block center|<math>\\text{R}(s, z)\\frac{dz}{dt}\\lambda\\left(\\frac{\\text{H}(s, z)-\\text{B}}{\\text{H}(s, z)-\\text{A}}\\right)</math>,}}",
+   "kind": "formula"
+  },
+  {
    "start": 5775,
    "end": 5790,
    "old": "{{Polytonic|λ}}",
@@ -12499,6 +12926,13 @@
    "kind": "formula"
   },
   {
+   "start": 7925,
+   "end": 8219,
+   "old": "<span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">''z''</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">1</span> ''z''<sup>−1</sup>''dz'' is",
+   "new": "<math>\\int_1^z z^{-1}dz</math> is",
+   "kind": "formula"
+  },
+  {
    "start": 8311,
    "end": 8321,
    "old": "''z'' = 0,",
@@ -12510,6 +12944,13 @@
    "end": 8368,
    "old": "to 2{{Polytonic|π}}''i''; if we",
    "new": "to <math>2\\pi i</math>; if we",
+   "kind": "formula"
+  },
+  {
+   "start": 8373,
+   "end": 8672,
+   "old": "''u'' = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">''z''</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">1</span> ''z''<sup>−1</sup>''dz''",
+   "new": "<math>u=\\int_1^z z^{-1}dz</math>",
    "kind": "formula"
   },
   {
@@ -12562,10 +13003,24 @@
    "kind": "formula"
   },
   {
+   "start": 8968,
+   "end": 9280,
+   "old": "<span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">''z''</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">0</span> (1 + ''z''<sup>2</sup>)<sup>−1</sup>''dz'' is",
+   "new": "<math>\\int_0^z (1+z^2)^{-1}dz</math> is",
+   "kind": "formula"
+  },
+  {
    "start": 9393,
    "end": 9404,
    "old": "''z'' = ±i;",
    "new": "<math>z=\\pm i</math>;",
+   "kind": "formula"
+  },
+  {
+   "start": 9420,
+   "end": 9738,
+   "old": "''u'' = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">''z''</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">0</span> (1 + ''z''<sup>2</sup>)<sup>−1</sup>''dz'',",
+   "new": "<math>u=\\int_0^z (1+z^2)^{-1}dz</math>,",
    "kind": "formula"
   },
   {
@@ -12587,6 +13042,13 @@
    "end": 9844,
    "old": "tan (''u'').",
    "new": "<math>\\tan\\ (u)</math>.",
+   "kind": "formula"
+  },
+  {
+   "start": 9871,
+   "end": 10195,
+   "old": "''u'' = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">(''z'')</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">(0)</span> (1 − ''z''<sup>2</sup>)<sup>−1/2</sup>''dz'',",
+   "new": "<math>u=\\int_{(0)}^{(z)} (1-z^2)^{-\\frac{1}{2}}dz</math>,",
    "kind": "formula"
   },
   {
@@ -12706,6 +13168,13 @@
    "end": 13473,
    "old": "2{{Polytonic|π}}",
    "new": "<math>2\\pi</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 13505,
+   "end": 14033,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td rowspan=\"2\">''u'' = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.9em; font-size: 0.75em;\">(''z'')</span><span style=\"position: relative; top: 0.8em; font-size: 0.75em; margin-left: -2.2ex;\">(''z''<sub>0</sub>)</span></td> <td>''dz''</td>\n<td rowspan=\"2\">,</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>√{ (''z'' − ''a'') (''z'' − b) (''z'' − ''c'') (''z'' − ''d'') }</td></tr></table>",
+   "new": "{{block center|<math>u=\\int_{(z_0)}^{(z)}\\frac{dz}{\\sqrt{\\{(z-a)(z-b)(z-c)(z-d)\\}}},</math>}}",
    "kind": "formula"
   },
   {
@@ -13100,6 +13569,13 @@
    "end": 1419,
    "old": "''z'' is",
    "new": "<math>z</math> is",
+   "kind": "formula"
+  },
+  {
+   "start": 1449,
+   "end": 1458,
+   "old": "of ''u''.",
+   "new": "of <math>u</math>.",
    "kind": "formula"
   },
   {
@@ -13901,6 +14377,13 @@
    "kind": "formula"
   },
   {
+   "start": 10753,
+   "end": 11234,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td>''s''</td>\n<td rowspan=\"2\">+ ''z'' √''a''<sub>0</sub> − J<sub>1</sub> + J<sub>3</sub> + (''a''<sub>0</sub>{{Polytonic|θ}}<sup>2</sup> + 2''a''<sub>1</sub>{{Polytonic|θ}}) <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span></td> <td>''dz''</td>\n<td rowspan=\"2\">.</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''z'' − {{Polytonic|θ}}</td> <td {{Ts|bt|ac|pl.5|pr.5}}>''s''</td></tr></table>",
+   "new": "{{block center|<math>\\frac{s}{z-\\theta}+z\\sqrt{a_0}-\\text{J}_1+\\text{J}_3+(a_0\\theta^2+2a_1\\theta)\\int\\frac{dz}{s}=0.</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 11263,
    "end": 11765,
    "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td rowspan=\"2\">P = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫ (</span></td> <td>s + ''s''<sub>0</sub></td>\n<td rowspan=\"2\">+ ''z'' √''a''<sub>0</sub> <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">)</span></td> <td>''dz''</td>\n<td rowspan=\"2\">;</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''z'' − ''z''<sub>0</sub></td> <td {{Ts|bt|ac|pl.5|pr.5}}>2''s''</td></tr></table>",
@@ -13954,6 +14437,13 @@
    "end": 12204,
    "old": "if\nƒ({{Polytonic|θ}}) = 0,",
    "new": "if <math>f(\\theta)=0</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 12219,
+   "end": 12696,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td rowspan=\"2\">P<sub>1</sub> = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫ (</span></td> <td>''s''</td>\n<td rowspan=\"2\">+ ''z'' √''a''<sub>0</sub> <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">)</span></td> <td>''dz''</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''z'' − {{Polytonic|θ}}</td> <td {{Ts|bt|ac|pl.5|pr.5}}>2''s''</td></tr></table>\n\nis",
+   "new": "{{block center|<math>\\text{P}_1=\\int\\left(\\frac{s}{z-\\theta}+z\\sqrt{a_0}\\right)\\frac{dz}{2s}</math>}}\nis",
    "kind": "formula"
   },
   {
@@ -14499,16 +14989,9 @@
   },
   {
    "start": 5526,
-   "end": 5974,
-   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td rowspan=\"2\">''u'' = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">(∞)</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">(''x'', ''y'' )</span></td> <td>''dx''</td>\n<td rowspan=\"2\">;</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''y''</td></tr></table>",
-   "new": "{{block center|<math>u=\\int_{(x,y)}^{(\\infty)}\\frac{dx}{y};</math>}}",
-   "kind": "formula"
-  },
-  {
-   "start": 5987,
    "end": 6102,
-   "old": "if ''x''<sub>0</sub> = {{Polytonic|φ}}(''u''<sub>0</sub>), ''y''<sub>0</sub> = −{{Polytonic|φ}}′(''u''<sub>0</sub>)",
-   "new": "if <math>x_0=\\phi(u_0)</math>, <math>y_0=-\\phi'(u_0)</math>",
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr><td rowspan=\"2\">''u'' = <span style=\"font-size: 200%; font-family: 'Courier New'; letter-spacing: -0.1em;\">∫</span> <span style=\"position: relative; bottom: 0.6em; font-size: 0.75em;\">(∞)</span><span style=\"position: relative; top: 0.5em; font-size: 0.75em; margin-left: -1.2ex;\">(''x'', ''y'' )</span></td> <td>''dx''</td>\n<td rowspan=\"2\">;</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>''y''</td></tr></table>\n\nconversely if ''x''<sub>0</sub> = {{Polytonic|φ}}(''u''<sub>0</sub>), ''y''<sub>0</sub> = −{{Polytonic|φ}}′(''u''<sub>0</sub>)",
+   "new": "{{block center|<math>u=\\int_{(x,y)}^{(\\infty)}\\frac{dx}{y};</math>}}\nconversely if <math>x_0=\\phi(u_0)</math>, <math>y_0=-\\phi'(u_0)</math>",
    "kind": "formula"
   },
   {
@@ -14810,6 +15293,13 @@
    "end": 13139,
    "old": "''m'' = 0,\n''m''′ = 0.",
    "new": "<math>m = 0</math>, <math>m' = 0</math>.",
+   "kind": "formula"
+  },
+  {
+   "start": 13231,
+   "end": 13264,
+   "old": "{{Polytonic|ω}}′/{{Polytonic|ω}}.",
+   "new": "<math>\\omega'/\\omega</math>.",
    "kind": "formula"
   },
   {
@@ -15181,6 +15671,13 @@
    "end": 19587,
    "old": "J({{Polytonic|τ}}) = 0",
    "new": "<math>\\text{J}(\\tau) = 0</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 19592,
+   "end": 19657,
+   "old": "{{Polytonic|τ}} = exp ({{EB1911 tfrac|2|3}}{{Polytonic|π}}''i''),",
+   "new": "<math>\\tau = \\exp(\\tfrac{2}{3}\\pi i)</math>,",
    "kind": "formula"
   },
   {
@@ -15809,6 +16306,13 @@
    "kind": "formula"
   },
   {
+   "start": 11429,
+   "end": 11457,
+   "old": "{{Polytonic|λ}} = exp(''z'')",
+   "new": "<math>\\lambda=\\exp(z)</math>",
+   "kind": "formula"
+  },
+  {
    "start": 11514,
    "end": 11532,
    "old": "of {{Polytonic|λ}}",
@@ -16149,6 +16653,13 @@
    "end": 14869,
    "old": "{{Polytonic|λ}}",
    "new": "<math>\\lambda</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 14992,
+   "end": 15426,
+   "old": "<table align=center {{Ts|ma|vmi|bc}}>\n<tr align=center><td rowspan=\"2\">K = <math>\\int_0^1</math></td> <td>''dt''</td>\n<td rowspan=\"2\">, &emsp; K′ = <math>\\int_0^1</math></td> <td>''dt''</td>\n<td rowspan=\"2\">;</td></tr>\n<tr><td {{Ts|bt|ac|pl.5|pr.5}}>√[1 − ''t''<sup>2</sup>] [1 − {{Polytonic|λ}}''t''<sup>2</sup>]</td> <td {{Ts|bt|ac|pl.5|pr.5}}>√[1 − ''t''<sup>2</sup>] [1 − (1 − {{Polytonic|λ}}) ''t''<sup>2</sup>]</td></tr></table>",
+   "new": "{{block center|<math>\\text{K}=\\int_0^1\\frac{dt}{\\sqrt{[1-t^2][1-\\lambda t^2]}}</math>, <math>\\text{K}'=\\int_0^1\\frac{dt}{\\sqrt{[1-t^2][1-(1-\\lambda)t^2]}}</math>;}}",
    "kind": "formula"
   },
   {
@@ -17175,6 +17686,13 @@
    "end": 206,
    "old": "''h''",
    "new": "<math>h</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 211,
+   "end": 348,
+   "old": "0, A<sub>{{sfrac nobar|1|2}}</sub>{{Greek|φ}}′ (''x''<sub>1</sub>), (A;+A;)¢'(x2),    (A=+A; +  . . +\nA, , 3)¢' (x, ,, , 1), A¢»'fx, ,,);",
+   "new": "<math>0</math>, <math>\\text{A}_{\\frac{1}{2}}\\phi'(x_1)</math>, <math>(\\text{A}_{\\frac{1}{2}}+\\text{A}_{\\frac{3}{2}})\\phi'(x_2)</math>, . . . <math>(\\text{A}_{\\frac{1}{2}}+\\text{A}_{\\frac{3}{2}}+\\dots+\\text{A}_{m-\\frac{3}{2}})\\phi'(x_{m-1})</math>, <math>\\text{A}\\phi'(x_m)</math>;",
    "kind": "formula"
   },
   {
@@ -20868,6 +21386,13 @@
    "kind": "formula"
   },
   {
+   "start": 7333,
+   "end": 7832,
+   "old": "''a''＝{{EB1911 tfrac|{{Greek|λ}}{{sub|1}}{{Greek|λ}}{{sub|2}}|({{Greek|λ}}{{sub|1}}−{{Greek|λ}}{{sub|2}})({{Greek|λ}}{{sub|1}}−{{Greek|λ}}{{sub|3}})|font-size=100%}}, ''b''＝{{EB1911 tfrac|{{Greek|λ}}{{sub|1}}{{Greek|λ}}{{sub|2}}|({{Greek|λ}}{{sub|2}}−{{Greek|λ}}{{sub|1}})({{Greek|λ}}{{sub|2}}−{{Greek|λ}}{{sub|3}})|font-size=100%}}, ''c''＝{{EB1911 tfrac|{{Greek|λ}}{{sub|1}}{{Greek|λ}}{{sub|2}}|({{Greek|λ}}{{sub|3}}−{{Greek|λ}}{{sub|1}})({{Greek|λ}}{{sub|3}}−{{Greek|λ}}{{sub|2}})|font-size=100%}}",
+   "new": "<math>a=\\frac{\\lambda_1\\lambda_2}{(\\lambda_1-\\lambda_2)(\\lambda_1-\\lambda_3)}</math>, <math>b=\\frac{\\lambda_1\\lambda_2}{(\\lambda_2-\\lambda_1)(\\lambda_2-\\lambda_3)}</math>, <math>c=\\frac{\\lambda_1\\lambda_2}{(\\lambda_3-\\lambda_1)(\\lambda_3-\\lambda_2)}</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 7875,
    "end": 7880,
    "old": "of Q,",
@@ -20982,10 +21507,24 @@
    "kind": "formula"
   },
   {
+   "start": 1787,
+   "end": 1787,
+   "old": "",
+   "new": "{{block center|<math>l \\times \\underbrace{\\frac{d_1}{s_1} \\times \\frac{d_2}{s_2} \\times \\frac{d_3}{s_3}} \\times \\underbrace{\\frac{d_4}{s_4} \\times \\frac{d_5}{s_5}} \\times \\frac{d_6}{s_6} = \\text{L}.</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 2286,
    "end": 2296,
    "old": "of No. 22°",
    "new": "of No. <math>22^{\\text{s}}</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 2361,
+   "end": 2361,
+   "old": "",
+   "new": "{{block center|<math>l \\times \\underbrace{\\frac{15\\cdot 5}{1} \\times \\frac{15\\cdot 5}{12} \\times \\frac{15\\cdot 5}{12}} \\times \\underbrace{\\frac{7\\cdot 42}{4} \\times \\frac{9\\cdot 7}{4}} \\times \\frac{5\\frac{3}{16}}{1} = 330 \\text{ ft.}</math>}}",
    "kind": "formula"
   },
   {
@@ -21708,6 +22247,13 @@
    "kind": "formula"
   },
   {
+   "start": 5368,
+   "end": 5394,
+   "old": "if u, ,=tan nx tan (n+r)x,",
+   "new": "if <math>u_n=\\tan nx\\tan(n+1)x</math>,",
+   "kind": "formula"
+  },
+  {
    "start": 5436,
    "end": 5441,
    "old": "un in",
@@ -21873,6 +22419,13 @@
    "end": 7187,
    "old": "of n",
    "new": "of <math>n</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 7218,
+   "end": 7256,
+   "old": "I-l-x-1-x2+   is (1-x )/(1-x). If x is",
+   "new": "<math>1+x+x^2+\\dots</math>is <math>(1-x^n)/(1-x)</math>. If <math>x</math> is",
    "kind": "formula"
   },
   {
@@ -22646,6 +23199,13 @@
    "old": "to ether",
    "new": "together",
    "kind": "word"
+  },
+  {
+   "start": 3446,
+   "end": 3547,
+   "old": "(u1\"l'u2'i'u3'l'- - -) ('”1~l'Uz'l\"Us-i\"- - -) =“1'U1+(1¢17J2+1la7J1)'l“§ \"1vs+\nugifz-|-url/1)-I-  .,",
+   "new": "<math>(u_1 + u_2 + u_3 + \\dots)(v_1 + v_2 + v_3 + \\dots) = u_1v_1 + (u_1v_2 + u_2v_1) + (u_1v_3 + u_2v_2 + u_3v_1) + \\dots</math>,",
+   "kind": "formula"
   },
   {
    "start": 3715,
@@ -24383,9 +24943,16 @@
   },
   {
    "start": 4511,
+   "end": 4902,
+   "old": "{{ne||V<sub>{{Greek|α}}</sub>𝑦＝<math>\\int_0^{\\alpha}</math>''d''{{Greek|θ}}{{x-larger|[}}<math> \\int</math>{{dual line|{{EB1911 tfrac|3}}𝑟<sup>2</sup>𝑑𝑥|sum}}{{x-larger|]}}sin {{Greek|θ}}|(6)}}\n\n{{ne||V<sub>{{Greek|α}}</sub>𝑧＝<math>\\int_0^{\\alpha}</math>''d''{{Greek|θ}}{{x-larger|[}}<math> \\int</math>{{dual line|{{EB1911 tfrac|3}}𝑟<sup>2</sup>𝑑𝑥|sum}}{{x-larger|]}}cos {{Greek|θ}}|(7)}}\nOn",
+   "new": "{{block center|<math>\\text{V}_\\alpha y = \\int_0 d\\theta \\left[\\int \\underset{\\text{sum}}{\\tfrac{1}{3}r^3dx}\\right]\\cos\\theta,</math> . . . (6)}}\n{{block center|<math>\\text{V}_\\alpha z = \\int_0^\\alpha d\\theta \\left[\\int \\underset{\\text{sum}}{\\tfrac{1}{3}r^3dx}\\right]\\sin\\theta.</math> . . . (7)}}\n\nOn",
+   "kind": "formula"
+  },
+  {
+   "start": 4915,
    "end": 4950,
-   "old": "{{ne||V<sub>{{Greek|α}}</sub>𝑦＝<math>\\int_0^{\\alpha}</math>''d''{{Greek|θ}}{{x-larger|[}}<math> \\int</math>{{dual line|{{EB1911 tfrac|3}}𝑟<sup>2</sup>𝑑𝑥|sum}}{{x-larger|]}}sin {{Greek|θ}}|(6)}}\n\n{{ne||V<sub>{{Greek|α}}</sub>𝑧＝<math>\\int_0^{\\alpha}</math>''d''{{Greek|θ}}{{x-larger|[}}<math> \\int</math>{{dual line|{{EB1911 tfrac|3}}𝑟<sup>2</sup>𝑑𝑥|sum}}{{x-larger|]}}cos {{Greek|θ}}|(7)}}\nOn eliminating V<sub>{{Greek|α}}</sub> in (5), (6)",
-   "new": "{{block center|<math>\\text{V}_\\alpha y = \\int_0 d\\theta \\left[\\int \\underset{\\text{sum}}{\\tfrac{1}{3}r^3dx}\\right]\\cos\\theta,</math> . . . (6)}}\n{{block center|<math>\\text{V}_\\alpha z = \\int_0^\\alpha d\\theta \\left[\\int \\underset{\\text{sum}}{\\tfrac{1}{3}r^3dx}\\right]\\sin\\theta.</math> . . . (7)}}\n\nOn eliminating <math>\\text{V}_\\alpha</math> in (5), (6)",
+   "old": "V<sub>{{Greek|α}}</sub> in (5), (6)",
+   "new": "<math>\\text{V}_\\alpha</math> in (5), (6)",
    "kind": "formula"
   },
   {
@@ -24646,9 +25213,9 @@
   },
   {
    "start": 6840,
-   "end": 6888,
-   "old": ")\n\n{{center|{{sfrac|font-size=100%|A''h''|2240}}",
-   "new": ")\n{{block center|<math>\\frac{\\text{A}h}{2240}</math>",
+   "end": 6899,
+   "old": ")\n\n{{center|{{sfrac|font-size=100%|A''h''|2240}}foot-tons}}",
+   "new": ")\n{{block center|<math>\\frac{\\text{A}h}{2240}</math>foot-tons}}",
    "kind": "formula"
   },
   {
@@ -24861,6 +25428,13 @@
    "end": 2107,
    "old": "{{sfrac|font-size=100%|A|W{{EB1911 tfrac|2|3}}}}",
    "new": "<math>\\frac{\\text{A}}{\\text{W}^{\\frac{2}{3}}}</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 2707,
+   "end": 2720,
+   "old": "meta centre M",
+   "new": "metacentre <math>\\text{M}</math>",
    "kind": "formula"
   },
   {
@@ -25129,6 +25703,13 @@
    "end": 990,
    "old": "M<sub>1</sub> M<sub>1</sub>, {{...}}",
    "new": "<math>\\text{M}_1</math> <math>\\text{M}_1</math>,...",
+   "kind": "formula"
+  },
+  {
+   "start": 1033,
+   "end": 1050,
+   "old": "meta centre M. If",
+   "new": "metacentre <math>\\text{M}</math>. If",
    "kind": "formula"
   },
   {
@@ -25426,45 +26007,10 @@
    "kind": "formula"
   },
   {
-   "start": 8466,
-   "end": 8552,
-   "old": "{{sfrac|font-size=100%|θ|V}}∬''y''′<sup>2</sup>.''dx''′.''dy''′ (or BB<sub>1</sub>, in",
-   "new": "<math>\\frac{\\theta}{\\text{V}}\\int\\int y'^2 . dx' . dy'</math> (or <math>\\text{BB}_1</math> in",
-   "kind": "formula"
-  },
-  {
-   "start": 8663,
-   "end": 8672,
-   "old": "to O''x''",
-   "new": "to <math>\\text{O}x'</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 8680,
-   "end": 8794,
-   "old": "{{EB1911 tfrac|2}}{{sfrac|font-size=100%|θ<sup>2</sup>|V}}∬''y''′<sup>2</sup>.''dx''′.''dy''′ (or B<sub>2</sub>B′)",
-   "new": "<math>\\tfrac{1}{2}\\cdot\\frac{\\theta^2}{\\text{V}}\\int\\int y'^2 . dx' . dy'</math> (or <math>\\text{B}_2\\text{B}'</math>)",
-   "kind": "formula"
-  },
-  {
-   "start": 8803,
-   "end": 8813,
-   "old": "to O''z''.",
-   "new": "to <math>\\text{O}z</math>.",
-   "kind": "formula"
-  },
-  {
    "start": 8836,
-   "end": 8984,
-   "old": "-\n\n{{sfrac|font-size=100%|θ|V}}⋅I<sub>''x''</sub>′; {{sfrac|font-size=100%|θ|V}}⋅P; and {{sfrac|font-size=100%|θ<sup>2</sup>|2V}}⋅I<sub>''x''</sub>′",
-   "new": "<math>\\frac{\\theta}{\\text{V}}\\cdot\\text{I}_x'; \\frac{\\theta}{\\text{V}}\\cdot\\text{P};</math> and<math>\\frac{\\theta^2}{2\\text{V}}\\text{I}_x'</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 9005,
    "end": 9026,
-   "old": "I<sub>''x''</sub>′ is",
-   "new": "<math>\\text{I}_x'</math> is",
+   "old": "-\n\n{{sfrac|font-size=100%|θ|V}}⋅I<sub>''x''</sub>′; {{sfrac|font-size=100%|θ|V}}⋅P; and {{sfrac|font-size=100%|θ<sup>2</sup>|2V}}⋅I<sub>''x''</sub>′ respectively\n\nwhere I<sub>''x''</sub>′ is",
+   "new": "{{block center|<math>\\frac{\\theta}{\\text{V}}\\cdot\\text{I}_x'; \\frac{\\theta}{\\text{V}}\\cdot\\text{P};</math> and<math>\\frac{\\theta^2}{2\\text{V}}\\text{I}_x'</math> respectively}}\nwhere <math>\\text{I}_x'</math> is",
    "kind": "formula"
   },
   {
@@ -25955,10 +26501,24 @@
    "kind": "formula"
   },
   {
+   "start": 2203,
+   "end": 2424,
+   "old": "{{center|{{Greek|θ}}＝{{Greek|Θ}}.{{sfrac|font-size=100%|1|1−{{sfrac|font-size=100%|T<sup>2</sup>|T<sub>1</sub><sup>2</sup>}}}} sin {{sfrac|font-size=100%|{{Greek|π}}|T<sub>1</sub>}}''t''.}}\n\nSince {{Greek|θ}}<sub>1</sub>,",
+   "new": "{{block center|<math>\\theta = \\Theta\\,.\\,\\frac{1}{1 - \\frac{\\text{T}^2}{\\text{T}_1^2}} \\sin\\frac{\\pi}{\\text{T}_1}t.</math>}}\nSince <math>\\theta_1</math>,",
+   "kind": "formula"
+  },
+  {
    "start": 2457,
    "end": 2544,
    "old": "to {{Greek|Θ}}<sub>1</sub> sin {{sfrac|font-size=100%|{{Greek|π}}|T<sub>1</sub>}}''t'',",
    "new": "to <math>\\Theta_1 \\sin\\frac{\\pi}{\\text{T}_1}t</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 2663,
+   "end": 2818,
+   "old": "or {{Greek|θ}}/{{Greek|θ}}<sub>1</sub>,\n\n{{center|＝{{sfrac|font-size=100%|1|1−{{sfrac|font-size=100%|T<sup>2</sup>|T<sub>1</sub><sup>2</sup>}}}}＝constant}}",
+   "new": "or <math>\\theta/\\theta_1</math>,\n{{block center|<math>= \\frac{1}{1 - \\frac{\\text{T}^2}{\\text{T}_1^2}} = \\text{constant}.</math>}}",
    "kind": "formula"
   },
   {
@@ -26104,13 +26664,6 @@
    "kind": "formula"
   },
   {
-   "start": 2197,
-   "end": 2223,
-   "old": "{{Greek|Θ}}<sub>1</sub> =9",
-   "new": "<math>\\Theta_1 = 9</math>",
-   "kind": "formula"
-  },
-  {
    "start": 2455,
    "end": 2494,
    "old": "{{center|G''z''＝''m''.{{Greek|θ}}}}\n\nis",
@@ -26129,6 +26682,13 @@
    "end": 2702,
    "old": "If ''m'' be",
    "new": "If <math>m</math> be",
+   "kind": "formula"
+  },
+  {
+   "start": 2771,
+   "end": 2859,
+   "old": "{{center|GZ＝sin {{Greek|θ}}(''m''+{{EB1911 tfrac|2}}''a'' tan<sup>2</sup>{{Greek|θ}}),}}",
+   "new": "{{block center|<math>\\text{GZ} = \\sin\\theta(m + \\tfrac{1}{2}a\\tan^2\\theta),</math>}}",
    "kind": "formula"
   },
   {
@@ -26319,13 +26879,6 @@
    "old": "''b''",
    "new": "<math>b</math>",
    "kind": "formula"
-  },
-  {
-   "start": 8134,
-   "end": 8217,
-   "old": "to\n\n{{center|{{sfrac|font-size=100%|K<sub>1</sub>{{Greek|π}}<sup>2</sup>|2W''m''T}}",
-   "new": "to\n{{block center|<math>\\frac{\\text{K}_1\\pi^2}{2\\text{W}m\\text{T}}</math>",
-   "kind": "formula"
   }
  ],
  "24:999": [
@@ -26365,10 +26918,10 @@
    "kind": "formula"
   },
   {
-   "start": 1506,
-   "end": 1513,
-   "old": "|<math>",
-   "new": "<math>",
+   "start": 1501,
+   "end": 1647,
+   "old": "{{ne||<math>\\theta =\\mbox{A}e^{\\frac{-at}{\\text{T}}} \\sin \\left( \\frac{\\pi t}{\\mbox{T}} \\sqrt {1 - \\frac{a^2}{\\pi^2}} + \\beta\\right )</math>,}}\n\na",
+   "new": "{{block center|<math>\\theta = \\text{A}e^{\\frac{-at}{\\text{T}}} \\sin \\left(\\frac{\\pi t}{\\text{T}}\\sqrt{1 - \\frac{a^2}{\\pi^2}} + \\beta\\right)</math>, . . . . (8)}}\na",
    "kind": "formula"
   },
   {
@@ -26414,6 +26967,13 @@
    "kind": "formula"
   },
   {
+   "start": 4208,
+   "end": 4210,
+   "old": "V.",
+   "new": "<math>\\text{V}</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 5057,
    "end": 5063,
    "old": "heelin",
@@ -26443,23 +27003,9 @@
   },
   {
    "start": 5887,
-   "end": 5904,
-   "old": "is—\n\n{{ne||<math>",
-   "new": "is—\n{{block center|<math>",
-   "kind": "formula"
-  },
-  {
-   "start": 6135,
-   "end": 6293,
-   "old": "<math>\\frac{1}{\\text{A}_1^{\\ 2}} = \\left ( 1 - \\frac{\\text{T}^2}{\\text{T}_1^{\\ 2}} \\right ) ^2 +\\frac{4a^2}{\\pi^2} \\frac{\\text{T}^2}{\\text{T}_1^{\\ 2}} </math>",
-   "new": "<math>\\frac{1}{\\text{A}_1{}^2}=\\left(1-\\frac{\\text{T}^2}{\\text{T}_1{}^2}\\right)^2+\\frac{4a^2}{\\pi^2}\\frac{\\text{T}^2}{\\text{T}_1{}^2}</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 6298,
-   "end": 6385,
-   "old": "<math>\\beta_1= =\\tan^{-1} \\frac{2a\\text{TT}}{\\pi(\\text{T}_1^2 - \\text{T}^2})</math>|(8)",
-   "new": "<math>\\beta_1=\\tan^{-1}\\frac{2a\\text{T}\\text{T}_1}{\\pi(\\text{T}_1{}^2-\\text{T}^2)}</math>",
+   "end": 6387,
+   "old": "is—\n\n{{ne||<math>\\theta=\\text{A}e^{\\frac{-at}{\\text{T}}} \\sin \\left ( \\frac{\\pi t}{\\text{T}} . \\sqrt{1-\\frac{a^2}{\\pi^2}} + \\beta \\right ) + \\text{A}_1 \\Theta_1 \\sin \\left (\\frac{\\pi t}{\\text{T}_1} - \\beta_1 \\right ),</math>|(9)}}\n\nwhere\n\n{{center|<math>\\frac{1}{\\text{A}_1^{\\ 2}} = \\left ( 1 - \\frac{\\text{T}^2}{\\text{T}_1^{\\ 2}} \\right ) ^2 +\\frac{4a^2}{\\pi^2} \\frac{\\text{T}^2}{\\text{T}_1^{\\ 2}} </math> and <math>\\beta_1= =\\tan^{-1} \\frac{2a\\text{TT}}{\\pi(\\text{T}_1^2 - \\text{T}^2})</math>|(8)}}",
+   "new": "is—\n{{block center|<math>\\theta=\\text{A}e^{\\frac{-at}{\\text{T}}}\\sin\\left(\\frac{\\pi t}{\\text{T}}\\cdot\\sqrt{1-\\frac{a^2}{\\pi^2}}+\\beta\\right)+\\text{A}_1\\Theta_1\\sin\\left(\\cdot\\frac{\\pi t}{\\text{T}_1}-\\beta_1\\right),</math> . (9)}}\nwhere\n{{block center|<math>\\frac{1}{\\text{A}_1{}^2}=\\left(1-\\frac{\\text{T}^2}{\\text{T}_1{}^2}\\right)^2+\\frac{4a^2}{\\pi^2}\\frac{\\text{T}^2}{\\text{T}_1{}^2}</math> and <math>\\beta_1=\\tan^{-1}\\frac{2a\\text{T}\\text{T}_1}{\\pi(\\text{T}_1{}^2-\\text{T}^2)}</math>}}",
    "kind": "formula"
   },
   {
@@ -26768,6 +27314,13 @@
    "kind": "formula"
   },
   {
+   "start": 6579,
+   "end": 6605,
+   "old": "sub multiple\nof 3-6 L'; on",
+   "new": "submultiple of <math>3{\\cdot}6\\ \\text{L}'</math>; on",
+   "kind": "formula"
+  },
+  {
    "start": 6626,
    "end": 6628,
    "old": "V'",
@@ -26779,6 +27332,13 @@
    "end": 6670,
    "old": "1-8 L', or",
    "new": "<math>1{\\cdot}8\\ \\text{L}'</math>, or",
+   "kind": "formula"
+  },
+  {
+   "start": 6675,
+   "end": 6698,
+   "old": "sub multiple of 1·8 L′,",
+   "new": "submultiple of <math>1{\\cdot}8\\ \\text{L}'</math>,",
    "kind": "formula"
   },
   {
@@ -27091,6 +27651,13 @@
    "end": 4040,
    "old": "{{sfrac|font-size=100%|Beam|Draught}}",
    "new": "<math>\\frac{\\text{Beam}}{\\text{Draught}}</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 4138,
+   "end": 4185,
+   "old": "of {{sfrac|font-size=100%|Beam|Draught}}＝2·5 an",
+   "new": "of <math>\\frac{\\text{Beam}}{\\text{Draught}} = 2\\cdot5</math> an",
    "kind": "formula"
   },
   {
@@ -27609,17 +28176,10 @@
    "kind": "formula"
   },
   {
-   "start": 1032,
-   "end": 1091,
-   "old": "(''y''{{sub|1}}−''y'') (''d''{{Greek|φ}}′−''d''{{Greek|φ}})",
-   "new": "<math>(y_1 - y)\\ (d\\phi' - d\\phi)</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 1096,
+   "start": 1023,
    "end": 1161,
-   "old": "(''x''{{sub|1}}−''x'') (''d''{{Greek|φ}}′−''d''{{Greek|φ}})}}\n\nin",
-   "new": "<math>(x_1 - x)\\ (d\\phi' - d\\phi)</math>}}\nin",
+   "old": "{{center|(''y''{{sub|1}}−''y'') (''d''{{Greek|φ}}′−''d''{{Greek|φ}}) and (''x''{{sub|1}}−''x'') (''d''{{Greek|φ}}′−''d''{{Greek|φ}})}}\n\nin",
+   "new": "{{block center|<math>(y_1 - y)\\ (d\\phi' - d\\phi)</math> and <math>(x_1 - x)\\ (d\\phi' - d\\phi)</math>}}\nin",
    "kind": "formula"
   },
   {
@@ -27834,16 +28394,9 @@
   },
   {
    "start": 10591,
-   "end": 10653,
-   "old": "I{{sub|''m''}}＝{{sfrac|font-size=100%|1|''n''{{sup|4}}}} · -1.",
-   "new": "<math>\\text{I}_m=\\frac{1}{n^4}\\cdot\\text{I}_s</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 10658,
    "end": 10672,
-   "old": "w, ,＝$ ~%:.W.;",
-   "new": "<math>\\text{W}_m=\\frac{1}{n^3}\\cdot\\frac{\\rho_m}{\\rho_s}\\cdot\\text{W}_s;</math>",
+   "old": "I{{sub|''m''}}＝{{sfrac|font-size=100%|1|''n''{{sup|4}}}} · -1. and w, ,＝$ ~%:.W.;",
+   "new": "{{block center|<math>\\text{I}_m=\\frac{1}{n^4}\\cdot\\text{I}_s</math> and <math>\\text{W}_m=\\frac{1}{n^3}\\cdot\\frac{\\rho_m}{\\rho_s}\\cdot\\text{W}_s;</math>}}",
    "kind": "formula"
   }
  ],
@@ -28170,6 +28723,13 @@
    "kind": "formula"
   },
   {
+   "start": 573,
+   "end": 696,
+   "old": "in volutes ''a''<sub>1</sub> ''b''<sub>1</sub> ''g''<sub>1</sub> and  ''a''<sub>2</sub> ''b''<sub>2</sub> ''g''<sub>2</sub>",
+   "new": "involutes <math>a_1\\ b_1\\ g_1</math> and <math>a_2\\ b_2\\ g_2</math>",
+   "kind": "formula"
+  },
+  {
    "start": 735,
    "end": 792,
    "old": "A<sub>1</sub>G<sub>1</sub> and A<sub>2</sub>G<sub>2</sub>",
@@ -28293,6 +28853,13 @@
    "end": 2827,
    "old": "G<sub>0</sub> F<sub>0</sub> E<sub>0</sub> D<sub>0</sub> C<sub>0</sub> B<sub>0</sub> A<sub>0</sub>",
    "new": "<math>\\text{G}_0\\ \\text{F}_0\\ \\text{E}_0\\ \\text{D}_0\\ \\text{C}_0\\ \\text{B}_0\\ \\text{A}_0</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 3071,
+   "end": 3090,
+   "old": "in volutes al bl gl",
+   "new": "involutes <math>a_1\\ b_1\\ g_1</math>",
    "kind": "formula"
   },
   {
@@ -28848,13 +29415,6 @@
    "kind": "formula"
   },
   {
-   "start": 5354,
-   "end": 5460,
-   "old": "{{center|1=''a'' {{=}} {{sfrac|font-size=100%|''h''×1300×3|60}}{{=}}''h''×60′ or 1°, as ''h'' is 1 inch.}}",
-   "new": "{{block center|<math>a=\\frac{h\\times 1200\\times 3}{60}=h\\times 60=60'\\text{ or }1^\\circ,\\text{ as }h\\text{ is }1\\text{ inch.}</math>}}",
-   "kind": "formula"
-  },
-  {
    "start": 5524,
    "end": 5529,
    "old": "to 1′",
@@ -29205,6 +29765,20 @@
    "end": 419,
    "old": "by \n\n{{ne||{{Greek|ζ}}＝''e''<sup>−ikx</sup>|(4)}}",
    "new": "by\n{{block center|<math>\\zeta = e^{-ikx}</math> . . . . . . . (4)}}",
+   "kind": "formula"
+  },
+  {
+   "start": 473,
+   "end": 473,
+   "old": "",
+   "new": "{{block center|<math>\\left.\\begin{aligned}\\varpi_3 &= \\text{P}\\left(-\\frac{\\Delta\\text{N}}{\\text{N}}\\frac{yz}{r^2}\\right),\\\\ \\varpi_1 &= \\text{P}\\left(\\frac{\\Delta\\text{D}}{\\text{D}}\\frac{y}{r}+\\frac{\\Delta\\text{N}}{\\text{N}}\\cdot\\frac{xy}{r^2}\\right),\\\\ \\varpi_2 &= \\text{P}\\left(-\\frac{\\Delta\\text{D}}{\\text{D}}\\cdot\\frac{x}{r}+\\frac{\\Delta\\text{N}}{\\text{N}}\\frac{z^2-x^2}{r^2}\\right)\\end{aligned}\\right\\}</math> . . . (5)}}",
+   "kind": "formula"
+  },
+  {
+   "start": 480,
+   "end": 597,
+   "old": "_ p /_ ANyz\\ \nV N W' \n\nr \\D r + N TV' \np/_AD x ANz 2 -* 2 \\ \n\\ D -~r + N r- ) \nP = \nN \n\nik'T e-ikr \n4ir r \n\n(5) \n\n(6)",
+   "new": "{{block center|<math>\\text{P} = \\frac{ik^3\\text{T}}{4\\pi}\\frac{e^{-ikr}}{r}</math> . . . . . (6)}}",
    "kind": "formula"
   },
   {
@@ -29845,6 +30419,13 @@
    "end": 7873,
    "old": "''r''(''n''−1) +2, is",
    "new": "<math>r\\ (n-1) + 2</math>, is",
+   "kind": "formula"
+  },
+  {
+   "start": 7914,
+   "end": 7929,
+   "old": "''r''(''n''−1);",
+   "new": "<math>n(r-1)</math>;",
    "kind": "formula"
   },
   {
@@ -31225,6 +31806,13 @@
    "kind": "formula"
   },
   {
+   "start": 7198,
+   "end": 7213,
+   "old": "QR＝−''udt'', so",
+   "new": "<math>\\text{QR} = -udt</math>, so",
+   "kind": "formula"
+  },
+  {
    "start": 7219,
    "end": 7234,
    "old": "QR/MN＝−''u''/U.",
@@ -32197,6 +32785,13 @@
    "kind": "formula"
   },
   {
+   "start": 1223,
+   "end": 1320,
+   "old": "is \n\n{{ne||2{{Greek|ρπ}}<sup>2</sup>U<sup>3</sup>''a''<sup>2</sup>/{{Greek|λ}}<sup>2</sup>|(14)}}",
+   "new": "is\n{{block center|<math>2\\rho\\pi^2\\text{U}^3a^2/\\lambda^2</math> (14)}}",
+   "kind": "formula"
+  },
+  {
    "start": 2557,
    "end": 2633,
    "old": "is <math>\\int_0^1</math>(P+{{Greek|ῶ}}+{{Greek|ρ}}''u''<sup>2</sup> )''dt''.",
@@ -32317,9 +32912,16 @@
   },
   {
    "start": 4131,
+   "end": 4187,
+   "old": "(''dy''/''dx'')<sup>2</sup> = (''u''/U)<sup>2</sup> , we",
+   "new": "<math>(dy/dx)^2=(u/\\text{U})^2</math>, we",
+   "kind": "formula"
+  },
+  {
+   "start": 4195,
    "end": 4284,
-   "old": "(''dy''/''dx'')<sup>2</sup> = (''u''/U)<sup>2</sup> , we have \n\n{{ne||＝{{EB1911 tfrac|2}}({{Greek|γ}} + 1) average energy per cubic centimetre,|(15)}}\n\na",
-   "new": "<math>(dy/dx)^2=(u/\\text{U})^2</math>, we have\n{{block center|<math>p=\\frac{\\gamma+1}{2}\\cdot\\frac{1}{\\text{U}}\\int_0^{\\text{U}}\\rho_0u^2dx</math>}}\n{{block center|<math>=\\tfrac12(\\gamma+1)</math> average energy per cubic centimetre, (15)}}\na",
+   "old": "{{ne||＝{{EB1911 tfrac|2}}({{Greek|γ}} + 1) average energy per cubic centimetre,|(15)}}\n\na",
+   "new": "{{block center|<math>p=\\frac{\\gamma+1}{2}\\cdot\\frac{1}{\\text{U}}\\int_0^{\\text{U}}\\rho_0u^2dx</math>}}\n{{block center|<math>=\\tfrac12(\\gamma+1)</math> average energy per cubic centimetre, (15)}}\na",
    "kind": "formula"
   },
   {
@@ -32493,13 +33095,6 @@
    "kind": "formula"
   },
   {
-   "start": 2234,
-   "end": 2254,
-   "old": "U<sub>0</sub>＝330·71",
-   "new": "<math>\\text{U}_0 = 330\\cdot71</math>",
-   "kind": "formula"
-  },
-  {
    "start": 3137,
    "end": 3156,
    "old": "U<sub>0</sub>=330·6",
@@ -32564,16 +33159,16 @@
   },
   {
    "start": 4742,
-   "end": 4785,
-   "old": "at 0°&nbsp;C. \n\n{{center|U<sub>0</sub>＝3310",
-   "new": "at 0° C.\n{{block center|<math>\\text{U}_0 = 331{\\cdot}10</math>",
+   "end": 4797,
+   "old": "at 0°&nbsp;C. \n\n{{center|U<sub>0</sub>＝3310 met./sec.}}",
+   "new": "at 0° C.\n{{block center|<math>\\text{U}_0 = 331{\\cdot}10</math> met./sec.}}",
    "kind": "formula"
   },
   {
-   "start": 5048,
-   "end": 5068,
-   "old": "'''U<sub>0</sub>＝331",
-   "new": "<math>\\mathbf{U}_0 = \\mathbf{331}</math> '''",
+   "start": 5039,
+   "end": 5092,
+   "old": "{{center|'''U<sub>0</sub>＝331 metres per second.'''}}",
+   "new": "{{block center|<math>\\mathbf{U}_0 = \\mathbf{331}</math> '''metres per second.'''}}",
    "kind": "formula"
   },
   {
@@ -32900,6 +33495,13 @@
  ],
  "25:463": [
   {
+   "start": 442,
+   "end": 475,
+   "old": "as 256 {1−0·000113 (''t''−26·2)}.",
+   "new": "as <math>256\\{1-0{\\cdot}000113\\ (t-26{\\cdot}2)\\}</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 2941,
    "end": 2943,
    "old": "Â±",
@@ -33158,6 +33760,13 @@
    "end": 4897,
    "old": "{{center|B＝{{sfrac|font-size=100%|P|M}} ·  {{sfrac|font-size=100%|1|''p''<sup>2</sup> −''n''<sup>2</sup>}}}}",
    "new": "{{block center|<math>\\text{B} = \\frac{\\text{P}}{\\text{M}} \\cdot \\frac{1}{p^2-n^2},</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 4932,
+   "end": 5085,
+   "old": "to −P sin ''pt'' is \n\n{{ne||''x''＝ {{sfrac|font-size=100%|P|M}} · {{sfrac|font-size=100%|1|''p''<sup>2</sup> −''n''<sup>2</sup>}}|(23)}} \n\nIf ''p''>''n''",
+   "new": "to <math>-\\text{P} \\sin pt</math> is\n{{block center|<math>x = \\frac{\\text{P}}{\\text{M}} \\cdot \\frac{\\sin pt}{p^2-n^2}.</math> (23)}}\nIf <math>p>n</math>",
    "kind": "formula"
   },
   {
@@ -34548,17 +35157,17 @@
    "kind": "formula"
   },
   {
+   "start": 8024,
+   "end": 8273,
+   "old": "Ywody/<fc-fpu(U-w) 2 = poÂ£oU 2 . (27) \n\nNow u/V = -dy/dx, (28) \n\nfor the particle at A moves over dy backwards, while the disturbance \nmoves over U. Also since dx has been stretched to dx-j-dy \n\npa> (dx 4- dy ) = po&odx \nor pH(i+dyjdx) =p Â«o. (29)",
+   "new": "{{block center|<math>\\text{Y}\\varpi_0 dy/dx+\\rho\\varpi(\\text{U}-u)^2=\\rho_0\\varpi_0\\text{U}^2.</math> (27)}}\n{{block center|Now <math>u/\\text{U}=-dy/dx,</math> (28)}}\nfor the particle at <math>\\text{A}</math> moves over <math>dy</math> backwards, while the disturbance moves over <math>\\text{U}</math>. Also since <math>dx</math> has been stretched to <math>dx+dy</math>\n{{block center|<math>\\rho\\varpi(dx+dy)=\\rho_0\\varpi_0 dx</math>}}\n{{block center|or <math>\\rho\\varpi(1+dy/dx)=\\rho_0\\varpi_0.</math> (29)}}",
+   "kind": "formula"
+  },
+  {
    "start": 8294,
    "end": 8347,
    "old": "(28) in (27) \n\nYfiog + pfiU 2 (1 + g) 2 = po&U*, (30)",
    "new": "(28) in (27)\n{{block center|<math>\\text{Y}\\varpi_0\\frac{dy}{dx}+\\rho\\varpi\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)^2=\\rho_0\\varpi_0\\text{U}^2,</math> (30)}}",
-   "kind": "formula"
-  },
-  {
-   "start": 8372,
-   "end": 8428,
-   "old": "(29) in (30) \n\nY3og + PoffloU 2 (1 + g) = poSoU 2 , (31)",
-   "new": "(29) in (30)\n{{block center|<math>\\text{Y}\\varpi_0\\frac{dy}{dx}+\\rho_0\\varpi_0\\text{U}^2\\left(1+\\frac{dy}{dx}\\right)=\\rho_0\\varpi_0\\text{U}^2,</math> (31)}}",
    "kind": "formula"
   }
  ],
@@ -35656,6 +36265,13 @@
    "kind": "formula"
   },
   {
+   "start": 4037,
+   "end": 4212,
+   "old": "be \n\n{{center|{{sfrac|font-size=100%|''n''|N}} {{=}} {{xx-larger|(}}{{sfrac|font-size=100%|1|(1.5)<sup>2</sup>}}−{{sfrac|font-size=100%|1|''s''<sup>2</sup>}}{{xx-larger|)}}.}}",
+   "new": "be\n{{block center|<math>\\frac{n}{\\text{N}} = \\left(\\frac{1}{(1.5)^2} - \\frac{1}{s^2}\\right).</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 7068,
    "end": 7072,
    "old": "N in",
@@ -36352,13 +36968,6 @@
    "kind": "formula"
   },
   {
-   "start": 1634,
-   "end": 1655,
-   "old": "\\ti â€” V (v?â€” 1)|,",
-   "new": "<math>\\{u-\\sqrt{(u^2-1)}\\} > \\text{mod}\\ \\{\\mu-\\sqrt{(\\mu^2-1)}\\}</math>,",
-   "kind": "formula"
-  },
-  {
    "start": 1669,
    "end": 1680,
    "old": "il(n â€” u)",
@@ -36444,16 +37053,9 @@
   },
   {
    "start": 2394,
-   "end": 2429,
-   "old": "Qâ€ž0) = J *V~V (m 2 - 1) cosh xNx.",
-   "new": "<math>\\text{Q}_n(\\mu) = \\int_0^{\\chi_0}\\{\\mu-\\sqrt{(\\mu^2-1)}.\\cosh\\chi\\}^n d\\chi,</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 2436,
    "end": 2452,
-   "old": "xa = ^og c j~. '",
-   "new": "<math>\\chi_0 = \\frac{1}{2}\\log_e\\frac{\\mu+1}{\\mu-1}.</math>",
+   "old": "Qâ€ž0) = J *V~V (m 2 - 1) cosh xNx. where xa = ^og c j~. '",
+   "new": "{{block center|<math>\\text{Q}_n(\\mu) = \\int_0^{\\chi_0}\\{\\mu-\\sqrt{(\\mu^2-1)}.\\cosh\\chi\\}^n d\\chi,</math> where <math>\\chi_0 = \\frac{1}{2}\\log_e\\frac{\\mu+1}{\\mu-1}.</math>}}",
    "kind": "formula"
   },
   {
@@ -36935,39 +37537,18 @@
    "kind": "formula"
   },
   {
-   "start": 2790,
-   "end": 2798,
-   "old": "â€”m, we",
-   "new": "<math>-m</math>, we",
-   "kind": "formula"
-  },
-  {
-   "start": 2806,
-   "end": 2882,
-   "old": "d(p ! )\" [ ' \n\n\"Jm(p)(, \n\nd\" ', \n\nJ,_ m (p) = (-2) V -^[pÂ«J_ m (p)j. \n\nIn a",
-   "new": "<math>\\text{J}_{p-m}(\\rho)=(-2)^p\\rho^{p-m}\\frac{d^p}{d(\\rho^2)^p}\\{\\rho^m\\text{J}_{-m}(\\rho)\\}</math>. In a",
-   "kind": "formula"
-  },
-  {
-   "start": 2922,
-   "end": 2960,
-   "old": "} m â€ž(p) = 2 Â»p^ 5 ^p|pÂ»'J m (p)j.",
-   "new": "{{block center|<math>\\text{J}_{m\\;p}(\\rho) = 2^p\\rho^{p-m}\\frac{d^p}{d(\\rho^2)^p}\\{\\rho^m\\text{J}_m(\\rho)\\}.</math>}}",
-   "kind": "formula"
-  },
-  {
-   "start": 2983,
-   "end": 2995,
-   "old": "of Yâ€ž,(p),",
-   "new": "of <math>\\text{Y}_m(\\rho)</math>,",
-   "kind": "formula"
-  },
-  {
    "start": 3029,
    "end": 3031,
    "old": "wi",
    "new": "we",
    "kind": "word"
+  },
+  {
+   "start": 3213,
+   "end": 3299,
+   "old": "L,(p) = (-2p)*^|Lj (p), Y p (p) = (-2p) \n\nJ I ( p) = _%W,Y I (p) = -^ Y Â«(Â£). \ncp dp",
+   "new": "{{block center|<math>\\text{J}_{p-m}(\\rho)=(-2)^p\\rho^{p-m}\\frac{d^p}{d(\\rho^2)^p}\\{\\rho^m\\text{J}_{-m}(\\rho)\\}</math>. In a similar manner it can be proved that\n{{block center|<math>\\text{J}_{m\\;p}(\\rho) = 2^p\\rho^{p-m}\\frac{d^p}{d(\\rho^2)^p}\\{\\rho^m\\text{J}_m(\\rho)\\}.</math>}}\nFrom the definition of <math>\\text{Y}_m(\\rho)</math>, and applying the above analysis, we prove that\n{{block center|<math>\\text{Y}_{m+p}(\\rho) = (-2)^p\\rho^{m+p}\\frac{d^p}{d(\\rho^2)^p}\\{\\rho^{-m}\\text{Y}_m(\\rho)\\}</math>}}\nand\n{{block center|<math>\\text{Y}_{m-p}(\\rho) = 2^p\\rho^{p-m}\\frac{d^p}{d(\\rho^2)^p}\\{\\rho^m\\text{Y}_m(\\rho)\\}.</math>}}\nAs particular cases of the above formulae, we find\n{{block center|<math>\\text{J}_p(\\rho) = (-2\\rho)^p\\frac{d^p}{d(\\rho^2)^p}\\text{J}_0(\\rho),\\ \\text{Y}_p(\\rho) = (-2\\rho)^p\\frac{d^p}{d(\\rho^2)^p}\\text{Y}_0(\\rho)</math>}}\n{{block center|<math>\\text{J}_1(\\rho) = -\\frac{d\\text{J}_0(\\rho)}{d\\rho},\\ \\text{Y}_1(\\rho) = -\\frac{d\\text{Y}_0(\\rho)}{d\\rho}.</math>}}}}",
+   "kind": "formula"
   },
   {
    "start": 3379,
@@ -37114,6 +37695,13 @@
    "end": 4986,
    "old": "J,â€ž(p) as",
    "new": "<math>\\text{J}_m(\\rho)</math> as",
+   "kind": "formula"
+  },
+  {
+   "start": 5014,
+   "end": 5145,
+   "old": "Jn(p) = ~J cos (psin0)<20, J,â€ž(p) = I j^cos(p sin 0) cos m<jd<t>{m even) \n\n]m(p) = â€ž. J () sin (p sin 0) sin m0i0 (m odd). \n\nIt",
+   "new": "{{block center|<math>\\text{J}_0(\\rho) = \\frac{1}{\\pi}\\int_0^\\pi\\cos\\ (\\rho\\sin\\phi)d\\phi,\\ \\text{J}_m(\\rho) = \\frac{1}{\\pi}\\int_0^\\pi\\cos\\ (\\rho\\sin\\phi)\\cos m\\phi d\\phi</math> (<math>m</math> even)}}\n{{block center|<math>\\text{J}_m(\\rho) = \\frac{1}{\\pi}\\int_0^\\pi\\sin\\ (\\rho\\sin\\phi)\\sin\\ m\\phi d\\phi</math> (<math>m</math> odd).}}\nIt",
    "kind": "formula"
   },
   {
@@ -37277,6 +37865,13 @@
    "end": 1746,
    "old": "<math>P^m_n=\\left( \\cos\\rho\\right)=\\sin^m\\theta\\frac{d^m\\mathrm{P}_n\\left( \\cos\\theta \\right)}{d\\left( \\cos\\theta \\right)^m},</math>\n\n\nwe",
    "new": "{{block center|<math>\\text{P}^m_n(\\cos \\rho) = \\sin^m \\theta \\frac{d^m\\text{P}_n(\\cos \\theta)}{d(\\cos \\theta)^m},</math>}}\nwe",
+   "kind": "formula"
+  },
+  {
+   "start": 3140,
+   "end": 3178,
+   "old": "expres- \nsion I e 2P ^ â€” 'r m ~ 1 dt",
+   "new": "expression <math>\\int e^{\\frac{1}{2}\\rho(t-t^{-1})}t^{-m-1}dt</math>",
    "kind": "formula"
   },
   {
@@ -37828,6 +38423,13 @@
    "kind": "word"
   },
   {
+   "start": 6721,
+   "end": 6739,
+   "old": "tores. If x, y r z",
+   "new": "tores. If <math>x</math>, <math>y</math>, <math>z</math>",
+   "kind": "formula"
+  },
+  {
    "start": 6804,
    "end": 6808,
    "old": "x, y",
@@ -37836,6 +38438,20 @@
   }
  ],
  "25:682": [
+  {
+   "start": 314,
+   "end": 729,
+   "old": "â€” \n\n\n\nP^j(coshp) \n\n\n\nir H(Â»â€” mâ€” j)J a (cosh p + sinh p cos . \n\n\n\ncos m(j> \n\n\n\nJTP^ \n\n\n\nI n(re+m â€” J) f , i , -i ,nâ€ž_i ,j, \n\n= â€” jtH r~- (coshp -f sinhp cos 0)\" 5 cos m$d<t>. \n\nw ii\\n~i) Jo \n\nP^.(coshp)=2J^_ \n\n\n\ncosh n<t> \n\n\n\n=d<t>. \n\n\n\n0V2 cosh p â€” 2 cosh <Â£ \n\nQ^j(coshp) = (-1)\" n (â€ž_|) j .. â–  ( cosh P \n\nâ–  â€” sinh p cosh w)\"~3 cosh mwdw \n\n^(-^TUm-mi-i) -nh \" P f; (2 cosh ;Â°_ S f cos0) ^^.",
+   "new": "{{block center|<math>\\text{P}^m_{n-\\frac{1}{2}}(\\cosh\\rho) = \\frac{(-1)^m}{\\pi}\\frac{\\Pi(n-\\frac{1}{2})}{\\Pi(n-m-\\frac{1}{2})}\\int_0^\\pi \\frac{\\cos m\\phi}{(\\cosh\\rho+\\sinh\\rho\\cos\\phi)^{n+\\frac{1}{2}}}d\\phi</math>}}\n{{block center|<math>= \\frac{1}{\\pi}\\frac{\\Pi(n+m-\\frac{1}{2})}{\\Pi(n-\\frac{1}{2})}\\int_0^\\pi (\\cosh\\rho+\\sinh\\rho\\cos\\phi)^{n-\\frac{1}{2}}\\cos m\\phi d\\phi.</math>}}\n{{block center|<math>\\text{P}_{n-\\frac{1}{2}}(\\cosh\\rho) = \\frac{2}{\\pi}\\int_0^\\rho \\frac{\\cosh n\\phi}{\\sqrt{2\\cosh\\rho-2\\cosh\\phi}}d\\phi.</math>}}\n{{block center|<math>\\text{Q}_{n-\\frac{1}{2}}(\\cosh\\rho) = (-1)^m\\frac{\\Pi(n+m-\\frac{1}{2})}{\\Pi(n-\\frac{1}{2})}\\int_0^{\\log\\coth\\frac{1}{2}\\rho}(\\cosh\\rho</math>}}\n{{block center|<math>-\\sinh\\rho\\cosh w)^{n-\\frac{1}{2}}\\cosh mw dw</math>}}\n{{block center|<math>= (-1)^m\\frac{1}{\\pi}2^m\\Pi(m-\\tfrac{1}{2})\\Pi(-\\tfrac{1}{2})\\sinh{}^m\\rho\\int_0^\\pi \\frac{\\cos n\\phi}{(2\\cosh\\rho-2\\cos\\phi)^{m+\\frac{1}{2}}}d\\phi.</math>}}",
+   "kind": "formula"
+  },
+  {
+   "start": 827,
+   "end": 1021,
+   "old": "2Â»t cosh pP ? ^,(cosh p) â€” (Â« â€” m + 1) Pâ„¢ , (cosh p) \nâ€” (n-\\-m â€” l)P^_i (cosh p) = o. \nP^?(cosh p) + 2(m + 1) coth pP^Hcosh p) \nâ€” (n.â€” Â»Â»;â€” j)(Â» + Â»Â»4-5)P^_, (cosh p) = 0,",
+   "new": "{{block center|<math>2n\\cosh\\rho\\text{P}^m_{n-\\frac{1}{2}}(\\cosh\\rho) - (n-m+\\tfrac{1}{2})\\text{P}^m_{n+\\frac{1}{2}}(\\cosh\\rho)</math>}}\n{{block center|<math>-(n+m-\\tfrac{1}{2})\\text{P}^m_{n-\\frac{1}{2}}(\\cosh\\rho) = 0.</math>}}\n{{block center|<math>\\text{P}^{m+2}_{n-\\frac{1}{2}}(\\cosh\\rho) + 2(m+1)\\coth\\rho\\text{P}^{m+1}_{n-\\frac{1}{2}}(\\cosh\\rho)</math>}}\n{{block center|<math>-(n-m-\\tfrac{1}{2})(n+m+\\tfrac{1}{2})\\text{P}^m_{n-\\frac{1}{2}}(\\cosh\\rho) = 0,</math>}}",
+   "kind": "formula"
+  },
   {
    "start": 1075,
    "end": 1088,
@@ -39449,6 +40065,13 @@
    "kind": "formula"
   },
   {
+   "start": 6012,
+   "end": 6017,
+   "old": "of Q.",
+   "new": "of <math>\\text{Q}</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 6231,
    "end": 6232,
    "old": "P",
@@ -39623,13 +40246,6 @@
    "end": 3836,
    "old": "{{Greek|σ}} is",
    "new": "<math>\\sigma</math> is",
-   "kind": "formula"
-  },
-  {
-   "start": 3965,
-   "end": 4000,
-   "old": "{{sfrac|font=size=100%|E＝9CK|3K+C}}",
-   "new": "<math>\\text{E} = \\frac{9\\text{CK}}{3\\text{K}+\\text{C}}</math>",
    "kind": "formula"
   },
   {
@@ -40132,6 +40748,13 @@
    "kind": "formula"
   },
   {
+   "start": 9362,
+   "end": 9691,
+   "old": "(Pu <M EI \n- dx 2 \"dx = M' \n\nIntegrating this for a beam of uniform section, of span L, supported at its ends and loaded with a weight W at the centre, we have, for the greatest slope and greatest deflexion, respectively, t'i=WL 2 /i6EI, Mi=WL'/48EI. If the load W is uniformly distributed over L, \n''i''<sub>1</sub> = WL s /24EI",
+   "new": "{{block center|<math>\\frac{du}{dx}=i;\\quad \\frac{d^2u}{dx^2}=\\frac{di}{dx}=\\frac{\\text{EI}}{\\text{M}}</math>.}}\nIntegrating this for a beam of uniform section, of span <math>\\text{L}</math>, supported at its ends and loaded with a weight <math>\\text{W}</math> at the centre, we have, for the greatest slope and greatest deflexion, respectively, <math>i_1=\\text{WL}^2/16\\text{EI}</math>, <math>u_1=\\text{WL}^3/48\\text{EI}</math>. If the load <math>\\text{W}</math> is uniformly distributed over <math>\\text{L}</math>, <math>i_1=\\text{WL}^2/24\\text{EI}</math>",
+   "kind": "formula"
+  },
+  {
    "start": 9696,
    "end": 9715,
    "old": "Â« t = 5WLÂ»/384EI.",
@@ -40334,6 +40957,13 @@
    "end": 4393,
    "old": "), \ngi = 2Mi/xn 3 .",
    "new": "), <math>q_1=2\\text{M}_1/\\pi r_1^3</math>.",
+   "kind": "formula"
+  },
+  {
+   "start": 4440,
+   "end": 4525,
+   "old": "prin- \ncipal stresses r = 2JM 8 Â±V(Mi 2 -r-M s 2 )}/irri 3 ,orr = 2P(BCÂ±AC)/irn 3 .",
+   "new": "principal stresses <math>r=2\\{\\text{M}_2\\pm\\sqrt{(\\text{M}_1^2+\\text{M}_2^2)}\\}/\\pi r_1^3</math>,or <math>r=2\\text{P}(\\text{BC}\\pm\\text{AC})/\\pi r_1^3</math>.",
    "kind": "formula"
   },
   {
@@ -40959,6 +41589,27 @@
    "old": "typihed",
    "new": "typified",
    "kind": "word"
+  },
+  {
+   "start": 9330,
+   "end": 9362,
+   "old": "{{nowrap|({{Sfrac nobar|3|2}})}}",
+   "new": "(<math>\\tfrac{3}{2}</math>)",
+   "kind": "formula"
+  },
+  {
+   "start": 9476,
+   "end": 9509,
+   "old": "{{nowrap|({{Sfrac nobar|6|4}})}}.",
+   "new": "(<math>\\tfrac{6}{4}</math>).",
+   "kind": "formula"
+  },
+  {
+   "start": 9913,
+   "end": 9958,
+   "old": "({{Sfrac nobar|3|4}} or {{Sfrac nobar|2|5}}),",
+   "new": "(<math>\\tfrac{3}{4}</math> or <math>\\tfrac{3}{8}</math>),",
+   "kind": "formula"
   }
  ],
  "26:77": [
@@ -41170,10 +41821,31 @@
    "kind": "word"
   },
   {
+   "start": 1924,
+   "end": 1926,
+   "old": "Su",
+   "new": "Sμ",
+   "kind": "word"
+  },
+  {
    "start": 1965,
    "end": 1966,
    "old": "S",
    "new": "Sλ",
+   "kind": "word"
+  },
+  {
+   "start": 2016,
+   "end": 2018,
+   "old": "Sa",
+   "new": "Sμ",
+   "kind": "word"
+  },
+  {
+   "start": 2264,
+   "end": 2266,
+   "old": "Sa",
+   "new": "Sμ",
    "kind": "word"
   },
   {
@@ -41936,10 +42608,24 @@
    "kind": "formula"
   },
   {
+   "start": 6306,
+   "end": 6344,
+   "old": "P=, , l J.\ncos uu, '1 -I-ak'1 sin ua'1",
+   "new": "<math>\\text{P}=\\cos ua^{-1}+ak^{-1}\\sin ua^{-1}</math> for a synclastic surface, <math>\\text{P}=\\cosh ua^{-1}+ak^{-1}\\sinh ua^{-1}</math>",
+   "kind": "formula"
+  },
+  {
    "start": 6577,
    "end": 6591,
    "old": "p'1=\nP\"dP/du '",
    "new": "<math>\\rho^{-1}=\\text{P}^{-1}d\\text{P}/du</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 6668,
+   "end": 6696,
+   "old": "u=const will be geo- '\ndetic",
+   "new": "<math>u=\\text{const}</math> will be geodetic",
    "kind": "formula"
   },
   {
@@ -43742,6 +44428,13 @@
    "kind": "formula"
   },
   {
+   "start": 7115,
+   "end": 7195,
+   "old": "{{center|cos''P'' {{=}} tan''PS''cot''PZ'',\n\ncos''Z'' {{=}} cos''PS''sin''P''.}}",
+   "new": "{{block center|<math>\\cos P = \\tan PS \\cot PZ</math>,}}\n{{block center|<math>\\cos Z = \\cos PS \\sin P</math>.}}",
+   "kind": "formula"
+  },
+  {
    "start": 7211,
    "end": 7232,
    "old": "{{Polytonic|δ}}''P'',",
@@ -43764,9 +44457,9 @@
   },
   {
    "start": 7787,
-   "end": 7908,
-   "old": "{{center|{{Polytonic|δ}}''Z'' {{=}} − {{sfrac|font-size=100%|''m'' tan ''Z'' cos<sup>2</sup>''PS''|1 − ''n'' + ''l''}},}}",
-   "new": "{{block center|<math>\\delta Z = -\\frac{m \\tan Z \\cos^2 PS}{1 - n + l}</math>,}}",
+   "end": 8154,
+   "old": "{{center|{{Polytonic|δ}}''Z'' {{=}} − {{sfrac|font-size=100%|''m'' tan ''Z'' cos<sup>2</sup>''PS''|1 − ''n'' + ''l''}},}}\n\nwhere ''m'' = 2 sin<sup>2</sup>{{sfrac|font-size=100%|{{Polytonic|δ}}''P''|2}} cosec 1″, ''n'' = 2 sin<sup>2</sup>''PS'' sin<sup>2</sup>{{sfrac|font-size=100%|{{Polytonic|δ}}''P''|2}}, and\n''l''=cot ''P'' sin {{Polytonic|δ}}''P''; ''l'', ''m'',",
+   "new": "{{block center|<math>\\delta Z = -\\frac{m \\tan Z \\cos^2 PS}{1 - n + l}</math>,}}\n{{block center|where <math>m = 2 \\sin^2\\frac{\\delta P}{2} \\operatorname{cosec} 1''</math>, <math>n = 2 \\sin^2 PS \\sin^2\\frac{\\delta P}{2}</math>, and}}\n<math>l = \\cot P \\sin \\delta P</math>; <math>l</math>, <math>m</math>,",
    "kind": "formula"
   },
   {
@@ -43974,16 +44667,9 @@
   },
   {
    "start": 8937,
-   "end": 8969,
-   "old": "BD-5\n\n= i(D1>fD<») (15).\n\nV sm S",
-   "new": "<math>BD</math>—\n{{block center|<math>S = \\tfrac{1}{2}(D_b - D_a)</math> (15),}}",
-   "kind": "formula"
-  },
-  {
-   "start": 8975,
    "end": 8987,
-   "old": "h =   ((16)U",
-   "new": "<math>h = AD\\frac{\\sin S}{\\cos D_b}</math> (16).",
+   "old": "BD-5\n\n= i(D1>fD<») (15).\n\nV sm S\n\nand h =   ((16)U",
+   "new": "<math>BD</math>—\n{{block center|<math>S = \\tfrac{1}{2}(D_b - D_a)</math> (15),}}\n{{block center|and <math>h = AD\\frac{\\sin S}{\\cos D_b}</math> (16).}}",
    "kind": "formula"
   },
   {
@@ -44409,6 +45095,13 @@
    "end": 1192,
    "old": "of ''B''({{Greek|π}}+''A'') of",
    "new": "of <math>B-(\\pi+A)</math> of",
+   "kind": "formula"
+  },
+  {
+   "start": 1282,
+   "end": 1390,
+   "old": "{{center|convergency {{=}} ''x'' tan {{Greek|λ}} {{sfrac|cosec1<sup>1″</sup>|{{Greek|λ}}|font-size=100%}},}}",
+   "new": "{{block center|<math>\\text{convergency} = x\\tan\\lambda\\frac{\\text{cosec}\\,1''}{\\nu},</math>}}",
    "kind": "formula"
   },
   {
@@ -44929,13 +45622,6 @@
    "kind": "formula"
   },
   {
-   "start": 1803,
-   "end": 1876,
-   "old": "number of feet subtended X 3 4  \n\nAngle in seconds = -p-r 1 — . r \", T be",
-   "new": "<math>\\text{Angle in seconds} = \\frac{\\text{number of feet subtended} \\times 34}{\\text{distance of object in sea-miles}}</math> be",
-   "kind": "formula"
-  },
-  {
    "start": 2757,
    "end": 2759,
    "old": "me",
@@ -45306,6 +45992,13 @@
  ],
  "26:701": [
   {
+   "start": 182,
+   "end": 205,
+   "old": "H<sup>{{Greek|β}}</sup>",
+   "new": "<math>\\text{H}^\\beta</math>",
+   "kind": "formula"
+  },
+  {
    "start": 306,
    "end": 333,
    "old": "to H<sup>{{Greek|α}}</sup>.",
@@ -45335,10 +46028,10 @@
   },
   {
    "start": 517,
-   "end": 528,
-   "old": "divergences",
-   "new": "divergencies",
-   "kind": "word"
+   "end": 589,
+   "old": "divergences between H<sup>{{Greek|α}}</sup> and H<sup>{{Greek|β}}</sup>.",
+   "new": "divergencies between <math>\\text{H}^\\alpha</math> and <math>\\text{H}^\\beta</math>.",
+   "kind": "formula"
   },
   {
    "start": 5055,
@@ -46198,25 +46891,18 @@
    "kind": "formula"
   },
   {
-   "start": 6446,
-   "end": 6461,
-   "old": "0+0＝''x''+94300",
-   "new": "0+0=<math>x</math>+94300",
-   "kind": "formula"
-  },
-  {
-   "start": 6468,
-   "end": 6479,
-   "old": "or x＝−94300",
-   "new": "or <math>x</math>= −94300",
-   "kind": "formula"
-  },
-  {
    "start": 6945,
    "end": 6951,
    "old": "151000",
    "new": "131000",
    "kind": "word"
+  },
+  {
+   "start": 6977,
+   "end": 7021,
+   "old": "-\n\n0−131000＝0−146000+''x''\n\n''x''＝15000 cal.",
+   "new": "{{block center|0−131000=0−146000+<math>x</math>}}\n{{block center|<math>x</math>=15000 cal.}}",
+   "kind": "formula"
   },
   {
    "start": 7599,
@@ -46258,6 +46944,13 @@
    "end": 8494,
    "old": "if ''x'' is",
    "new": "if <math>x</math> is",
+   "kind": "formula"
+  },
+  {
+   "start": 8530,
+   "end": 8580,
+   "old": "−''x''+0＝−94300−(2×68300)+213800\n\n''x''＝17000 cal.",
+   "new": "{{block center|−<math>x</math>+0=−94300−(2×68300)+213800}}\n{{block center|<math>x</math>=17000 cal.}}",
    "kind": "formula"
   }
  ],
@@ -48319,6 +49012,13 @@
    "end": 5739,
    "old": "v, is",
    "new": "<math>v</math>, is",
+   "kind": "formula"
+  },
+  {
+   "start": 5770,
+   "end": 5802,
+   "old": "or is entropic\npath, dE＝-pdv. As",
+   "new": "or isentropic path, <math>dE = -pdv</math>. As",
    "kind": "formula"
   },
   {
@@ -51337,6 +52037,13 @@
    "kind": "formula"
   },
   {
+   "start": 6784,
+   "end": 6872,
+   "old": "{{center|<math>\\frac{m}{\\surd \\{r^2+\\rho^2-2r\\rho\\cos{z}\\}}-\\frac{m}{r}</math>.}}\n\nIt is",
+   "new": "{{block center|<math>\\frac{m}{\\sqrt{\\{r^2+\\rho^2-2r\\rho\\cos z\\}}}-\\frac{m}{r}</math>.}}\nIt is",
+   "kind": "formula"
+  },
+  {
    "start": 6915,
    "end": 6923,
    "old": "''r'' is",
@@ -51547,6 +52254,13 @@
    "old": "II",
    "new": "11",
    "kind": "word"
+  },
+  {
+   "start": 851,
+   "end": 950,
+   "old": "{{center|<math>V=\\frac{3m}{2r^2}\\rho^2(\\cos^2{z}-\\begin{matrix} \\frac{1}{2} \\end{matrix})</math>.}}",
+   "new": "{{block center|<math>V=\\frac{3m}{2r^3}\\rho^2(\\cos^2 z-\\tfrac{1}{3}).</math>}}",
+   "kind": "formula"
   },
   {
    "start": 987,
@@ -51831,17 +52545,10 @@
    "kind": "formula"
   },
   {
-   "start": 2997,
-   "end": 3049,
-   "old": "<math>\\frac{d r}{d t} = \\frac{d \\rho}{d t}</math>, a",
-   "new": "<math>\\frac{dr}{dt} = \\frac{d\\rho}{dt}</math>, a",
-   "kind": "formula"
-  },
-  {
-   "start": 3072,
-   "end": 3223,
-   "old": "<math>r \\sin \\theta \\frac{d \\phi}{d t} = \\frac{d}{d t} \\left(\\eta \\sin \\theta \\right)</math>,\n\n<math>r \\frac{d \\theta}{d t} = \\frac{d \\xi}{d t}</math>.",
-   "new": "{{block center|<math>r\\sin\\theta\\frac{d\\phi}{dt} = \\frac{d}{dt}\\left(\\eta\\sin\\theta\\right),</math>}}\n{{block center|<math>r\\frac{d\\theta}{dt} = \\frac{d\\xi}{dt}.</math>}}",
+   "start": 2992,
+   "end": 3226,
+   "old": "{{c|\n<math>\\frac{d r}{d t} = \\frac{d \\rho}{d t}</math>, a very small quantity;\n\n<math>r \\sin \\theta \\frac{d \\phi}{d t} = \\frac{d}{d t} \\left(\\eta \\sin \\theta \\right)</math>,\n\n<math>r \\frac{d \\theta}{d t} = \\frac{d \\xi}{d t}</math>.\n}}",
+   "new": "{{block center|<math>\\frac{dr}{dt} = \\frac{d\\rho}{dt}</math>, a very small quantity;}}\n{{block center|<math>r\\sin\\theta\\frac{d\\phi}{dt} = \\frac{d}{dt}\\left(\\eta\\sin\\theta\\right),</math>}}\n{{block center|<math>r\\frac{d\\theta}{dt} = \\frac{d\\xi}{dt}.</math>}}",
    "kind": "formula"
   },
   {
@@ -52094,6 +52801,13 @@
    "end": 8947,
    "old": "''e''",
    "new": "<math>\\mathfrak{e}</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 9329,
+   "end": 9634,
+   "old": "{{c|<math>\\left . \\begin{aligned}\ne & = \\Sigma e_i = \\Sigma e_i \\cos(2nft + s\\phi + \\alpha) \\\\\nb & = b\\Sigma_i = \\Sigma h_i \\cos(2nft + s\\phi + \\alpha) \\\\\n\\xi & = \\Sigma b_i x_i \\cos(2nft + s\\phi + \\alpha) \\\\\n\\eta & = \\Sigma b_i y_i \\sin(2nft + s\\phi + \\alpha)\n\\end{aligned} \\right \\} \\text{(18)}</math>}}",
+   "new": "{{block center|<math>\\mathfrak{e}=\\Sigma\\mathfrak{e}_i=\\Sigma e_i\\cos(2nft+s\\phi+\\alpha)</math>}}\n{{block center|<math>\\mathfrak{b}=\\mathfrak{b}\\Sigma_i=\\Sigma h_i\\cos(2nft+s\\phi+\\alpha)</math> (18)}}\n{{block center|<math>\\xi=\\Sigma b_ix_i\\cos(2nft+s\\phi+\\alpha)</math>}}\n{{block center|<math>\\eta=\\Sigma b_iy_i\\sin(2nft+s\\phi+\\alpha)</math>}}",
    "kind": "formula"
   },
   {
@@ -52351,10 +53065,10 @@
    "kind": "formula"
   },
   {
-   "start": 4213,
-   "end": 4227,
-   "old": "(25) by sin θ,",
-   "new": "(25) by <math>\\sin\\theta</math>,",
+   "start": 4256,
+   "end": 4858,
+   "old": "{{c|<math>\\sin^2 \\theta \\frac{dP_i}{d\\theta} = \\frac{i(i + I)}{2i + I} \\left \\{ -\\frac{I}{2i + 3} \\left ( \\frac{dP_{i+2}}{d\\theta} - \\frac{dP_i}{d\\theta} \\right ) + \\frac{I}{2i - I} \\left ( \\frac{dP_i}{d\\theta} - \\frac{dP_{i-2}}{d\\theta} \\right ) \\right \\}</math>}}\n\nTherefore\n\n{{c|<math>\\begin{aligned}\n\\frac{f^2 - \\cos^2 \\theta}{\\sin \\theta} \\int P_i \\sin \\theta d\\theta = \\frac{I}{(2i - I)(2i + I)} \\frac{dP_{i-2}}{d\\theta} \\\\\n- \\left \\{ \\frac{f^2 - I}{i(i + I)} + \\frac{2}{(2i - I)(2i + 3)} \\right \\} \\frac{dP_i}{d\\theta} + \\frac{I}{(2i + I)(2i + 3)} \\frac{dP_{i+2}}{d\\theta}\n\\end{aligned}</math>}}",
+   "new": "{{block center|<math>\\sin^2\\theta\\frac{dP_i}{d\\theta}=\\frac{i(i+1)}{2i+1}\\left\\{-\\frac{1}{2i+3}\\left(\\frac{dP_{i+2}}{d\\theta}-\\frac{dP_i}{d\\theta}\\right)+\\frac{1}{2i-1}\\left(\\frac{dP_i}{d\\theta}-\\frac{dP_{i-2}}{d\\theta}\\right)\\right\\}.</math>}}\nTherefore <math>\\frac{f^2-\\cos^2\\theta}{\\sin\\theta}\\int P_i\\sin\\theta d\\theta=\\frac{1}{(2i-1)(2i+1)}\\frac{dP_{i-2}}{d\\theta}</math>\n{{block center|<math>-\\left\\{\\frac{f^2-1}{i(i+1)}+\\frac{2}{(2i-1)(2i+3)}\\right\\}\\frac{dP_i}{d\\theta}+\\frac{1}{(2i+1)(2i+3)}\\frac{dP_{i+2}}{d\\theta}.</math>}}",
    "kind": "formula"
   },
   {
@@ -52383,13 +53097,6 @@
    "end": 5223,
    "old": "by γ/4''ma''",
    "new": "by <math>\\gamma/4ma</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 5517,
-   "end": 5524,
-   "old": "</math>",
-   "new": "</math>}}\n{{block center|<math>+\\frac{C_{i+2}}{(2i+3)(2i+5)}=0.</math> (27)",
    "kind": "formula"
   },
   {
@@ -52530,6 +53237,13 @@
    "end": 7572,
    "old": "of ''i''",
    "new": "of <math>i</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 7639,
+   "end": 7720,
+   "old": "{{c|<math>\\frac{C_{i+2} + C_{i-2}}{C_i} + \\frac{2^3 \\gamma}{ma} = o.</math>}}\n\nBy",
+   "new": "{{block center|<math>\\frac{C_{i+2}+C_{i-2}}{C_i}+\\frac{i^2\\gamma}{ma}=0.</math>}}\nBy",
    "kind": "formula"
   },
   {
@@ -52948,13 +53662,6 @@
    "kind": "formula"
   },
   {
-   "start": 7756,
-   "end": 7777,
-   "old": "</math>.}}\n\nIf PQ  s¢",
-   "new": "</math> (40)}}\n\nIf <math>P^s_i\\begin{smallmatrix}\\cos\\\\ \\sin\\end{smallmatrix}s\\phi</math>",
-   "kind": "formula"
-  },
-  {
    "start": 7818,
    "end": 7823,
    "old": "''i''",
@@ -53031,6 +53738,13 @@
    "end": 213,
    "old": "of P<sub>i</sub> in",
    "new": "of <math>P^s_i</math> in",
+   "kind": "formula"
+  },
+  {
+   "start": 252,
+   "end": 718,
+   "old": "{{c|<math>\\left . \\begin{aligned}\n\\alpha_i^3 \\{\\sigma - i(i+1)\\} + 2\\sigma^2 \\left \\{ \\beta_{i+1}^2 \\frac{i+s+1}{2i+3} + \\beta_{i-1}^2 \\frac{i-s}{2i-1} \\right \\} & = 0, \\\\\n-\\beta_i^2 \\{\\sigma + i(i+1)\\} + \\frac{4ma}{\\gamma\\sigma^2}C_i^3 & = 0, \\\\\n b_i(C_i^3 - E_i^3) + \\alpha_{i-1}^3 \\frac{(i-s)[\\sigma + (i-1)(i-2)]}{2(2i-1)} \\\\\n+ \\alpha_{i+1}^3 \\frac{(i+s+1)[\\sigma + (i+2)(i+3)]}{2(2i+3)} - \\beta_i^3 s^2 & = 0.\n\\end{aligned} \\right \\} \\qquad (45)</math>}}\n\nIf we",
+   "new": "{{block center|<math>\\alpha^s_i\\{\\sigma-i(i+1)\\}+2\\sigma^2\\left\\{\\beta^s_{i+1}\\frac{i+s+1}{2i+3}+\\beta^s_{i-1}\\frac{i-s}{2i-1}\\right\\}=0,</math>}}\n{{block center|<math>-\\beta^s_i\\{\\sigma+i(i+1)\\}+\\frac{4ma}{\\gamma\\sigma^2}C^s_i=0,</math>}}\n{{block center|<math>b_i(C^s_i-E^s_i)+\\alpha^s_{i-1}\\frac{(i-s)[\\sigma+(i-1)(i-2)]}{2(2i-1)}</math> (45)}}\n{{block center|<math>+\\alpha^s_{i+1}\\frac{(i+s+1)[\\sigma+(i+2)(i+3)]}{2(2i+3)}-\\beta^s_is^2=0.</math>}}\n\nIf we",
    "kind": "formula"
   },
   {
@@ -53405,6 +54119,13 @@
    "kind": "formula"
   },
   {
+   "start": 8073,
+   "end": 8087,
+   "old": "C<sub>i</sub>.",
+   "new": "<math>C^s_i</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 8182,
    "end": 8191,
    "old": "''e'', so",
@@ -53412,10 +54133,10 @@
    "kind": "formula"
   },
   {
-   "start": 8673,
-   "end": 8681,
-   "old": "</math>,",
-   "new": "</math>}}\n{{block center|<math>+ 4ma\\, C^1_2 u = 0,</math>",
+   "start": 8334,
+   "end": 8683,
+   "old": "{{c|<math>\\gamma(C\\tfrac{1}{2} - E\\tfrac{1}{2} \\left \\{ \\frac{1}{\\sin \\theta} \\frac{d}{d\\theta} \\left ( \\frac{\\sin \\theta\\frac{du}{d\\theta} + \\frac{1}{f}u \\cos \\theta}{f^2 - \\cos^2\\theta} \\right ) - \\frac{\\frac{\\cos \\theta}{f} \\frac{du}{d\\theta} + \\frac{u}{\\sin \\theta}}{\\sin \\theta(f^2 - \\cos^2 \\theta)} \\right \\} + 4ma C\\tfrac{1}{2}u = 0</math>,}}",
+   "new": "{{block center|<math>\\gamma(C^1_2 - E^1_2) \\left\\{ \\frac{1}{\\sin\\theta} \\frac{d}{d\\theta} \\left( \\frac{\\sin\\theta \\frac{du}{d\\theta} + \\frac{1}{f} u \\cos\\theta}{f^2 - \\cos^2\\theta} \\right) - \\frac{\\frac{\\cos\\theta}{f} \\frac{du}{d\\theta} + \\frac{u}{\\sin\\theta}}{\\sin\\theta(f^2 - \\cos^2\\theta)} \\right\\}</math>}}\n{{block center|<math>+ 4ma\\, C^1_2 u = 0,</math>}}",
    "kind": "formula"
   },
   {
@@ -53787,10 +54508,10 @@
    "kind": "formula"
   },
   {
-   "start": 927,
-   "end": 927,
-   "old": "",
-   "new": "</math>}}\n{{block center|<math>",
+   "start": 692,
+   "end": 967,
+   "old": "{{center|<math>\\eta = (H_1 + H_2) \\sin n_1 \\Big( t - \\frac{x}{\\sqrt{gh}}\\Big) + \\frac{3H_1H_2}{4h} \\frac{n_1 + n_2}{\\sqrt{gh}}s \\sin \\Big[ 2n_1t - \\frac{(n_1 + n_2)x}{\\sqrt{gh}} \\Big] + \\frac{3H_1H_2}{4h} \\frac{n_1 - n_2}{\\sqrt{gh}}s \\sin \\frac{n_1 - n_2}{\\sqrt{gh}}</math>}}",
+   "new": "{{block center|<math>\\eta = (H_1+H_2) \\sin n_1 \\left(t-\\frac{x}{\\sqrt{gh}}\\right) + \\frac{3H_1H_2}{4h}\\frac{n_1+n_2}{\\sqrt{gh}}x \\sin\\left[2n_1t-\\frac{(n_1+n_2)x}{\\sqrt{gh}}\\right]</math>}}\n{{block center|<math>+\\frac{3H_1H_2}{4h}\\frac{n_1-n_2}{\\sqrt{gh}}x \\sin\\frac{(n_1-n_2)x}{\\sqrt{gh}}.</math>}}",
    "kind": "formula"
   },
   {
@@ -53875,6 +54596,13 @@
    "end": 5462,
    "old": "if A be",
    "new": "if <math>\\lambda</math> be",
+   "kind": "formula"
+  },
+  {
+   "start": 5504,
+   "end": 5528,
+   "old": "£=cos >,17=0, § '=sin A.",
+   "new": "{{block center|<math>\\xi=\\cos\\lambda,\\ \\eta=0,\\ \\zeta=\\sin\\lambda.</math>}}",
    "kind": "formula"
   },
   {
@@ -55439,16 +56167,9 @@
   },
   {
    "start": 6168,
-   "end": 6204,
-   "old": "5 A =a—o., , V\n\n~/1, = ~/f + A, (57)",
-   "new": "{{block center|<math>\\text{A} = \\alpha-\\alpha_,,</math>}}\n{{block center|<math>\\psi_, = \\psi + \\text{A},</math>}}",
-   "kind": "formula"
-  },
-  {
-   "start": 6210,
    "end": 6251,
-   "old": "5 h, =M cos 2(¢-it)-PM, cos 2(//+A-u,). A",
-   "new": "<math>\\text{h}_2 = \\text{M}\\cos 2(\\psi-\\mu)+\\text{M}_,\\cos 2(\\psi+\\text{A}-\\mu_,).</math> (57)",
+   "old": "5 A =a—o., , V\n\n~/1, = ~/f + A, (57)\n\nand 5 h, =M cos 2(¢-it)-PM, cos 2(//+A-u,). A",
+   "new": "{{block center|<math>\\text{A} = \\alpha-\\alpha_,,</math>}}\n{{block center|<math>\\psi_, = \\psi + \\text{A},</math>}}\n{{block center|and <math>\\text{h}_2 = \\text{M}\\cos 2(\\psi-\\mu)+\\text{M}_,\\cos 2(\\psi+\\text{A}-\\mu_,).</math> (57)}}",
    "kind": "formula"
   },
   {
@@ -55628,16 +56349,9 @@
   },
   {
    "start": 8487,
-   "end": 8498,
-   "old": "A = A0, Y*0",
-   "new": "{{block center|<math>\\text{A} = \\text{A}_0 + \\frac{\\sigma-\\eta}{\\gamma-\\sigma}\\mu</math>}}",
-   "kind": "formula"
-  },
-  {
-   "start": 8504,
    "end": 8544,
-   "old": "A-~, +#=A., -», +£72/»=A»-», +n»».~ (61)",
-   "new": "<math>\\text{A} - \\mu_, + \\mu = \\text{A}_0 - \\mu_, + \\frac{\\gamma-\\eta}{\\gamma-\\sigma}\\mu = \\text{A}_0 - \\mu_, + \\tfrac{30}{29}\\mu.</math> (61)",
+   "old": "A = A0, Y*0\n\nand A-~, +#=A., -», +£72/»=A»-», +n»».~ (61)",
+   "new": "{{block center|<math>\\text{A} = \\text{A}_0 + \\frac{\\sigma-\\eta}{\\gamma-\\sigma}\\mu</math>}}\n{{block center|and <math>\\text{A} - \\mu_, + \\mu = \\text{A}_0 - \\mu_, + \\frac{\\gamma-\\eta}{\\gamma-\\sigma}\\mu = \\text{A}_0 - \\mu_, + \\tfrac{30}{29}\\mu.</math> (61)}}",
    "kind": "formula"
   },
   {
@@ -56038,16 +56752,9 @@
   },
   {
    "start": 4812,
-   "end": 4825,
-   "old": "wzrs == u(M ;",
-   "new": "{{block center|<math>\\omega^2r^3=\\mu(M+m);</math>}}",
-   "kind": "formula"
-  },
-  {
-   "start": 4834,
    "end": 4852,
-   "old": "wf'=;4i(M + m)ir5.",
-   "new": "<math>\\omega r^2=\\mu^{\\frac{1}{2}}(M+m)^{\\frac{1}{2}}r^{\\frac{1}{2}}.</math>",
+   "old": "wzrs == u(M ;\n\nwhence wf'=;4i(M + m)ir5.",
+   "new": "{{block center|<math>\\omega^2r^3=\\mu(M+m);</math>}}\n{{block center|whence <math>\\omega r^2=\\mu^{\\frac{1}{2}}(M+m)^{\\frac{1}{2}}r^{\\frac{1}{2}}.</math>}}",
    "kind": "formula"
   },
   {
@@ -56135,10 +56842,10 @@
    "kind": "formula"
   },
   {
-   "start": 6820,
-   "end": 6896,
-   "old": "by ''dY''/''dx''=0, \nor{{center|''x'' - ''h'' + 1/''x''<sup>3</sup>{{=}}0,}}",
-   "new": "by <math>dY/dx = 0</math>,\n{{block center|or <math>x - h + 1/x^3 = 0,</math>}}",
+   "start": 7559,
+   "end": 7570,
+   "old": "on ω=''n'',",
+   "new": "<math>\\omega = n</math>,",
    "kind": "formula"
   },
   {
@@ -56594,6 +57301,13 @@
    "kind": "formula"
   },
   {
+   "start": 4746,
+   "end": 4762,
+   "old": "''ZPS''=''t'' is",
+   "new": "<math>ZPS = t</math> is",
+   "kind": "formula"
+  },
+  {
    "start": 4897,
    "end": 5019,
    "old": "{{center|cos ''t''＝{{sfrac|font-size=100%|cos ''z'' − sin {{Greek|φ}} sin {{Greek|δ}}|cos {{Greek|φ}} cos {{Greek|δ}}}},}}",
@@ -56776,6 +57490,13 @@
    "kind": "formula"
   },
   {
+   "start": 8497,
+   "end": 8786,
+   "old": "{{em|2}}sin ''h'' =sin {{Greek|φ}} sin ({{Greek|δ}}−{{Greek|Δδ}}) +cos {{Greek|φ}} cos ({{Greek|δ}}−{{Greek|Δδ}}) cos (''t''+''x'')<br>\nand sin ''h'' =sin {{Greek|φ}} sin ({{Greek|δ}}+{{Greek|Δδ}}) +cos {{Greek|φ}} cos ({{Greek|δ}}+{{Greek|Δδ}}) cos (''t''−''x''),<br>\nwhence, as cos ''x''",
+   "new": "{{block center|<math>\\sin h = \\sin\\phi \\sin\\ (\\delta - \\Delta\\delta) + \\cos\\phi \\cos\\ (\\delta - \\Delta\\delta) \\cos\\ (t + x)</math>}}\n{{block center|and <math>\\sin h = \\sin\\phi \\sin\\ (\\delta + \\Delta\\delta) + \\cos\\phi \\cos\\ (\\delta + \\Delta\\delta) \\cos\\ (t - x),</math>}}\nwhence, as <math>\\cos x</math>",
+   "kind": "formula"
+  },
+  {
    "start": 8797,
    "end": 8874,
    "old": "＝1, sin ''x''＝''x'', and tan {{Greek|Δδ}}＝{{Greek|Δδ}},\n\n''x''＝ sint 'tant A6",
@@ -56946,17 +57667,10 @@
    "kind": "formula"
   },
   {
-   "start": 7384,
-   "end": 7402,
-   "old": "&nbsp; ±0.08ˢ,<br>",
-   "new": "<math>\\pm 0{\\cdot}08^s</math>,",
-   "kind": "formula"
-  },
-  {
-   "start": 7428,
-   "end": 7435,
-   "old": "±0.07ˢ;",
-   "new": "<math>\\pm 0{\\cdot}07^s</math>;",
+   "start": 7351,
+   "end": 7437,
+   "old": "{{center|for eye and ear transits&nbsp; ±0.08ˢ,<br>\nfor chronograph transits ±0.07ˢ;}}",
+   "new": "{{block center|for eye and ear transits <math>\\pm 0{\\cdot}08^s</math>,}}\n{{block center|for chronograph transits <math>\\pm 0{\\cdot}07^s</math>;}}",
    "kind": "formula"
   },
   {
@@ -58664,6 +59378,13 @@
    "kind": "formula"
   },
   {
+   "start": 9375,
+   "end": 9436,
+   "old": "cos ''a''＝cos ''b'' cos ''c'' + sin ''b'' sin ''c'' cos ''A''",
+   "new": "<math>\\cos a = \\cos b \\cos c + \\sin b \\sin c \\cos A</math>",
+   "kind": "formula"
+  },
+  {
    "start": 9462,
    "end": 9470,
    "old": "''ABC''.",
@@ -58685,6 +59406,13 @@
    "old": "Latiri",
    "new": "Latin",
    "kind": "word"
+  },
+  {
+   "start": 569,
+   "end": 653,
+   "old": "cos ''B''＝cos&nbsp;𝑏 sin&nbsp;''A'', cos&nbsp;𝑐＝\ncot&nbsp;''A'' cot&nbsp;''B'', in a",
+   "new": "<math>\\cos B = \\cos b \\sin A</math>, <math>\\cos c = \\cot A \\cot B</math>, in a",
+   "kind": "formula"
   },
   {
    "start": 672,
@@ -59634,6 +60362,13 @@
    "kind": "formula"
   },
   {
+   "start": 7577,
+   "end": 7697,
+   "old": "1 + tan<sup>2</sup>{{Greek|α}} = sec<sup>2</sup>{{Greek|α}}, I + cot<sup>2</sup>{{Greek|α}} =\ncosec<sup>2</sup>''a''. We",
+   "new": "<math>1 + \\tan^2\\alpha = \\sec^2\\alpha</math>, <math>1 + \\cot^2\\alpha = \\text{cosec}^2\\alpha</math>. We",
+   "kind": "formula"
+  },
+  {
    "start": 7911,
    "end": 8004,
    "old": "0, {{EB1911 tfrac|2}}{{Greek|π}}, {{Greek|π}}, {{EB1911 tfrac|3|2}}{{Greek|π}}, 2{{Greek|π}},",
@@ -59687,6 +60422,13 @@
    "end": 10566,
    "old": "is {{EB1911 tfrac|2}} or cos {{EB1911 tfrac|2}}{{Greek|π}}={{EB1911 tfrac|2}},",
    "new": "is <math>\\tfrac{1}{2}</math> or <math>\\cos \\tfrac{1}{3}\\pi = \\tfrac{1}{2}</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 10600,
+   "end": 10670,
+   "old": "(3) {{Greek|π}}/10, {{Greek|π}}/5, 2{{Greek|π}}/5, 3{{Greek|π}}/10. In",
+   "new": "(3) <math>\\pi/10</math>, <math>\\pi/5</math>, <math>2\\pi/5</math>, <math>3\\pi/10</math>. In",
    "kind": "formula"
   },
   {
@@ -59902,6 +60644,13 @@
    "kind": "formula"
   },
   {
+   "start": 320,
+   "end": 458,
+   "old": "to OF sin B; hence\n\nOF cos (A -l-B) =-'OE cos A-I-EF cos (%1r+A)\n=OF (cos A cos B-sin A. sin B),\n\nor cos (A +B) ==cos A cos B-sin A sin B.",
+   "new": "to <math>OF \\sin B</math>; hence\n{{block center|<math>OF \\cos (A+B) = OE \\cos A + EF \\cos (\\tfrac{1}{2}\\pi+A)</math>}}\n{{block center|<math>= OF (\\cos A \\cos B - \\sin A \\sin B),</math>}}\n{{block center|or <math>\\cos (A+B) = \\cos A \\cos B - \\sin A \\sin B.</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 470,
    "end": 474,
    "old": "A, B",
@@ -60014,6 +60763,13 @@
    "kind": "formula"
   },
   {
+   "start": 4847,
+   "end": 4962,
+   "old": "2 sin 35A = (-1)l>'(I -l-sin A)%+(-I)q'(I —sin A)l,\n2 cos %A = (-1)i>'(1--sin AH-(-1)'1'(I -sin A)l,\nXfliere ji' is",
+   "new": "{{block center|<math>2\\sin\\tfrac{1}{2}A = (-1)^{p'}(1+\\sin A)^{\\frac{1}{2}} + (-1)^{q'}(1-\\sin A)^{\\frac{1}{2}},</math>}}\n{{block center|<math>2\\cos\\tfrac{1}{2}A = (-1)^{p'}(1+\\sin A)^{\\frac{1}{2}} - (-1)^{q'}(1-\\sin A)^{\\frac{1}{2}},</math>}}\nwhere <math>p'</math> is",
+   "kind": "formula"
+  },
+  {
    "start": 4981,
    "end": 4995,
    "old": "of A /27l\"'j'%",
@@ -60095,6 +60851,13 @@
    "end": 5511,
    "old": "a/sin A =b/sin B =c/sin C.",
    "new": "<math>a/\\sin A = b/\\sin B = c/\\sin C</math>.",
+   "kind": "formula"
+  },
+  {
+   "start": 5525,
+   "end": 5544,
+   "old": "a=b cos C-l-c cos B",
+   "new": "<math>a=b\\cos C+c\\cos B</math>",
    "kind": "formula"
   },
   {
@@ -60210,10 +60973,31 @@
    "kind": "formula"
   },
   {
+   "start": 6596,
+   "end": 6614,
+   "old": "p-l-q-I-r-l-I is a",
+   "new": "<math>p+q+r+1</math> is a",
+   "kind": "formula"
+  },
+  {
+   "start": 6711,
+   "end": 6729,
+   "old": "p-I-q-l-r-l-I =6n,",
+   "new": "<math>p+q+r+1=6n</math>,",
+   "kind": "formula"
+  },
+  {
    "start": 6763,
    "end": 6831,
    "old": "2mr - (pA +qB+rC),2n1r - (rA +pB +qC),21z1r - (gA -I-1B-I-pC) is 1r;",
    "new": "<math>2n\\pi-(pA+qB+rC)</math>, <math>2n\\pi-(rA+pB+qC)</math>, <math>2n\\pi-(qA+rB+pC)</math> is <math>\\pi</math>;",
+   "kind": "formula"
+  },
+  {
+   "start": 6889,
+   "end": 6905,
+   "old": "A+B-l-C\n=-fr, we",
+   "new": "<math>A+B+C=\\pi</math>, we",
    "kind": "formula"
   },
   {
@@ -60273,10 +61057,24 @@
    "kind": "formula"
   },
   {
+   "start": 7511,
+   "end": 7561,
+   "old": "-a cos A cos 2A, - b cos B cos 2B,\n-L cos C cos 2C",
+   "new": "<math>-a\\cos A\\cos 2A</math>, <math>-b\\cos B\\cos 2B</math>, <math>-c\\cos C\\cos 2C</math>",
+   "kind": "formula"
+  },
+  {
    "start": 7581,
    "end": 7606,
    "old": "4A -1r, 4B~jvr, 4C—/r; We",
    "new": "<math>4A-\\pi</math>, <math>4B-\\pi</math>, <math>4C-\\pi</math>; we",
+   "kind": "formula"
+  },
+  {
+   "start": 7741,
+   "end": 7834,
+   "old": "COS A a2 cos” A cos” 2A -122 cos' B cos? 2B-02 cosz C cos' 2C\n4 2bc cos B cos C cos 2B cos 2C",
+   "new": "{{block center|<math>\\cos 4A = \\frac{a^2\\cos^2 A\\cos^2 2A - b^2\\cos^2 B\\cos^2 2B - c^2\\cos^2 C\\cos^2 2C}{2bc\\cos B\\cos C\\cos 2B\\cos 2C}.</math>}}",
    "kind": "formula"
   },
   {
@@ -60328,6 +61126,13 @@
    "end": 400,
    "old": "1: is",
    "new": "<math>c</math> is",
+   "kind": "formula"
+  },
+  {
+   "start": 432,
+   "end": 465,
+   "old": "log c＝log a+L sin C-L sin A.\n\n(3)",
+   "new": "{{block center|<math>\\log c=\\log a+L\\sin C-L\\sin A.</math>}}\n\n(3)",
    "kind": "formula"
   },
   {
@@ -60443,6 +61248,13 @@
    "kind": "formula"
   },
   {
+   "start": 1056,
+   "end": 1086,
+   "old": "log b＝log a-Q-L sin B-L sin A.",
+   "new": "<math>\\log b=\\log a+L\\sin B-L\\sin A</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 1233,
    "end": 1285,
    "old": "{{EB1911 tfrac|2}}''bc'' sin A, {s(s-a) (s-b)(s-c)}$",
@@ -60506,6 +61318,13 @@
    "kind": "formula"
   },
   {
+   "start": 1848,
+   "end": 1888,
+   "old": "S= {s(s-a)(s-b)(s-c)(s-d) -abcd cos2a}é.",
+   "new": "{{block center|<math>S=\\{s(s-a)(s-b)(s-c)(s-d)-abcd\\cos^2\\alpha\\}^{\\frac{1}{2}}.</math>}}",
+   "kind": "formula"
+  },
+  {
    "start": 1893,
    "end": 1894,
    "old": "R",
@@ -60528,9 +61347,9 @@
   },
   {
    "start": 2095,
-   "end": 2381,
-   "old": "-\n\n”S;';\"°db d R=abc/4S=a/2 sin A,\n\n''r''=''S''/''s'' ° r=S/s=(s-a)tan 5A =4R sin {{EB1911 tfrac|2}}A sin {{EB1911 tfrac|2}}B sin {{EB1911 tfrac|2}}C\n''r''{{sub|1}}=S/(5-a)=s tan {{EB1911 tfrac|2}}A=4R sin {{EB1911 tfrac|2}}A cos {{EB1911 tfrac|2}}B cos {{EB1911 tfrac|2}}C.\n{{center|''",
-   "new": "{{block center|<math>R=abc/4S=a/2\\sin A,</math>}}\n{{block center|<math>r=S/s=(s-a)\\tan\\tfrac{1}{2}A=4R\\sin\\tfrac{1}{2}A\\ \\sin\\tfrac{1}{2}B\\ \\sin\\tfrac{1}{2}C,</math>}}\n{{block center|<math>r_1=S/(s-a)=s\\ \\tan\\tfrac{1}{2}A=4R\\sin\\tfrac{1}{2}A\\ \\cos\\tfrac{1}{2}B\\ \\cos\\tfrac{1}{2}C.</math>}}\n\n{{c|''",
+   "end": 2129,
+   "old": "-\n\n”S;';\"°db d R=abc/4S=a/2 sin A,",
+   "new": "{{block center|<math>R=abc/4S=a/2\\sin A,</math>}}\n{{block center|<math>r=S/s=(s-a)\\tan\\tfrac{1}{2}A=4R\\sin\\tfrac{1}{2}A\\ \\sin\\tfrac{1}{2}B\\ \\sin\\tfrac{1}{2}C,</math>}}\n{{block center|<math>r_1=S/(s-a)=s\\ \\tan\\tfrac{1}{2}A=4R\\sin\\tfrac{1}{2}A\\ \\cos\\tfrac{1}{2}B\\ \\cos\\tfrac{1}{2}C.</math>}}",
    "kind": "formula"
   },
   {
@@ -60545,13 +61364,6 @@
    "end": 2845,
    "old": "a, b, c of",
    "new": "<math>a</math>, <math>b</math>, <math>c</math> of",
-   "kind": "formula"
-  },
-  {
-   "start": 2931,
-   "end": 2935,
-   "old": "ABC;",
-   "new": "<math>ABC</math>;",
    "kind": "formula"
   },
   {
@@ -60765,6 +61577,13 @@
    "kind": "word"
   },
   {
+   "start": 6044,
+   "end": 6169,
+   "old": "cos A = -cos B cos C+sin B sin C cos a\ncos B = -cos C cos A +sin C sin A cos b (2)\ncos C= -cos A cos B-i-sin A sin B cos 6\nIn",
+   "new": "{{block center|<math>\\left.\\begin{array}{l}\\cos A = -\\cos B\\cos C + \\sin B\\sin C\\cos a\\\\ \\cos B = -\\cos C\\cos A + \\sin C\\sin A\\cos b\\\\ \\cos C = -\\cos A\\cos B + \\sin A\\sin B\\cos c\\end{array}\\right\\}</math> (2)}}\nIn",
+   "kind": "formula"
+  },
+  {
    "start": 6190,
    "end": 6217,
    "old": "AM=AL sin Ci=r sin b sin C,",
@@ -60849,6 +61668,13 @@
    "kind": "formula"
   },
   {
+   "start": 7637,
+   "end": 7742,
+   "old": "cos c =cot A cot B (e)\nand cos A -cos A sin B\n\ncos c=cos a cos b+sin a sin b cos C\n\ncos B=C0S b sin A ff)",
+   "new": "{{block center|<math>\\cos c = \\cot A\\cot B</math> (<math>\\epsilon</math>)}}\nand\n{{block center|<math>\\left.\\begin{array}{l}\\cos A = \\cos A\\sin B\\\\ \\cos B = \\cos b\\sin A\\end{array}\\right\\}</math> (<math>\\zeta</math>)}}",
+   "kind": "formula"
+  },
+  {
    "start": 7985,
    "end": 8003,
    "old": "(3): If AD, BE, CF",
@@ -60916,6 +61742,13 @@
    "end": 8927,
    "old": "BDE, ADC",
    "new": "<math>BDE</math>, <math>ADC</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 8988,
+   "end": 9316,
+   "old": "sinBD ' sin § A ' sin CD  'sin § A ' therefore Sm 2\n:Sm BD Sm   Sm. CDE Sm BDE. But sin BD sin BDE=sin BE\nsin b sin c\n\n=sin {{EB1911 tfrac|2}}(a+c-b), and sin CD sin CDE=sin CE-=sin {{EB1911 tfrac|2}} (a+b-c);\nA ' l -b ' 1 b- 1 s\n\ntherefore sin{{sfrac|font-size=100%|''A''|2}} {sin {{EB1911 tfrac|2}}(''a''+''c''−''b'' . . . (5)",
+   "new": "<math>\\frac{\\sin c}{\\sin BD} = \\frac{\\sin ADB}{\\sin\\frac{1}{2}A}</math>, <math>\\frac{\\sin b}{\\sin CD} = \\frac{\\sin ADC}{\\sin\\frac{1}{2}A}</math>; therefore <math>\\sin^2\\tfrac{1}{2}A = \\frac{\\sin BD\\sin CD\\sin CDE\\sin BDE}{\\sin b\\sin c}</math>. But <math>\\sin BD\\sin BDE = \\sin BE = \\sin\\tfrac{1}{2}(a+c-b)</math>, and <math>\\sin CD\\sin CDE = \\sin CE = \\sin\\tfrac{1}{2}(a+b-c)</math>; therefore\n{{block center|<math>\\sin\\frac{A}{2} = \\left\\{\\frac{\\sin\\frac{1}{2}(a+c-b)\\sin\\frac{1}{2}(a+b-c)}{\\sin b\\sin c}\\right\\}^{\\frac{1}{2}}</math> (5)}}",
    "kind": "formula"
   },
   {
@@ -61033,6 +61866,13 @@
    "kind": "formula"
   },
   {
+   "start": 4885,
+   "end": 4890,
+   "old": "11, N",
+   "new": "<math>n</math>, <math>N</math>",
+   "kind": "formula"
+  },
+  {
    "start": 6151,
    "end": 6184,
    "old": "(a,1r-b, -ir-c, A, 1r-B,1r-C), we",
@@ -61051,6 +61891,13 @@
    "end": 6256,
    "old": "A,",
    "new": "<math>A</math>,",
+   "kind": "formula"
+  },
+  {
+   "start": 6280,
+   "end": 6383,
+   "old": "tan 1, =tan § A sin s=n cosec (s-a) =§ Nsec 5/l cosec § B cosec § C\n=sin a cos § B cos %C sec § A. (22)",
+   "new": "{{block center|<math>\\tan r_1=\\tan\\tfrac{1}{2}A \\sin s=n \\operatorname{cosec} (s-a)=\\tfrac{1}{2}N \\sec\\tfrac{1}{2}A \\operatorname{cosec}\\tfrac{1}{2}B \\operatorname{cosec}\\tfrac{1}{2}C</math>}}\n{{block center|<math>=\\sin a \\cos\\tfrac{1}{2}B \\cos\\tfrac{1}{2}C \\sec\\tfrac{1}{2}A.</math> (22)}}",
    "kind": "formula"
   },
   {
@@ -61132,20 +61979,6 @@
   }
  ],
  "27:292": [
-  {
-   "start": 120,
-   "end": 239,
-   "old": "<math>\\qquad \\frac{\\tan \\tfrac{1}{4}E}{\\tan^2 \\tfrac{1}{4}(C - E)} = \\tan \\tfrac{1}{2}s \\tan \\tfrac{1}{2}(s -c).</math>",
-   "new": "<math>\\frac{\\tan\\frac{1}{4}E}{\\tan^2\\frac{1}{4}(C-E)}=\\tan\\frac{1}{2}s\\tan\\frac{1}{2}(s-c).</math>",
-   "kind": "formula"
-  },
-  {
-   "start": 251,
-   "end": 354,
-   "old": "<math>\\quad \\tan \\tfrac{1}{4}E \\tan^2  \\tfrac{1}{4}(C - E) = \\tan \\tfrac{1}{2}(s - a) \\tan(s-b);</math>",
-   "new": "<math>\\tan\\frac{1}{4}E\\tan^2\\frac{1}{4}(C-E)=\\tan\\frac{1}{2}(s-a)\\tan\\frac{1}{2}(s-b);</math>",
-   "kind": "formula"
-  },
   {
    "start": 610,
    "end": 691,
@@ -61253,23 +62086,9 @@
   },
   {
    "start": 2165,
-   "end": 2185,
-   "old": "''BAD'', ''BCD'', we",
-   "new": "<math>BAD</math>, <math>BCD</math>, we",
-   "kind": "formula"
-  },
-  {
-   "start": 2192,
-   "end": 2351,
-   "old": "<math>\\sin A \\cos \\tfrac{1}{2}a \\cos \\tfrac{1}{2}d \\text{ cosec} \\tfrac{1}{2}y=\\sin C \\cos \\tfrac{1}{2}b \\cos \\tfrac{1}{2}C \\text{ cosec} \\tfrac{1}{2}y</math>;",
-   "new": "{{block center|<math>\\sin A\\cos\\frac{1}{2}a\\cos\\frac{1}{2}d\\operatorname{cosec}\\frac{1}{2}y=\\sin C\\cos\\frac{1}{2}b\\cos\\frac{1}{2}C\\operatorname{cosec}\\frac{1}{2}y;</math>}}",
-   "kind": "formula"
-  },
-  {
-   "start": 2360,
    "end": 2480,
-   "old": "<math>\\frac{\\sin A}{\\cos \\tfrac{1}{2}b \\cos \\tfrac{1}{2}c} = \\frac{\\sin C}{\\cos \\tfrac{1}{2}a \\cos \\tfrac{1}{2}d}</math>",
-   "new": "<math>\\frac{\\sin A}{\\cos\\frac{1}{2}b\\cos\\frac{1}{2}c}=\\frac{\\sin C}{\\cos\\frac{1}{2}a\\cos\\frac{1}{2}d}.</math>",
+   "old": "''BAD'', ''BCD'', we have\n\n<math>\\sin A \\cos \\tfrac{1}{2}a \\cos \\tfrac{1}{2}d \\text{ cosec} \\tfrac{1}{2}y=\\sin C \\cos \\tfrac{1}{2}b \\cos \\tfrac{1}{2}C \\text{ cosec} \\tfrac{1}{2}y</math>;\n\nWhence <math>\\frac{\\sin A}{\\cos \\tfrac{1}{2}b \\cos \\tfrac{1}{2}c} = \\frac{\\sin C}{\\cos \\tfrac{1}{2}a \\cos \\tfrac{1}{2}d}</math>",
+   "new": "<math>BAD</math>, <math>BCD</math>, we have\n{{block center|<math>\\sin A\\cos\\frac{1}{2}a\\cos\\frac{1}{2}d\\operatorname{cosec}\\frac{1}{2}y=\\sin C\\cos\\frac{1}{2}b\\cos\\frac{1}{2}C\\operatorname{cosec}\\frac{1}{2}y;</math>}}\n{{block center|whence <math>\\frac{\\sin A}{\\cos\\frac{1}{2}b\\cos\\frac{1}{2}c}=\\frac{\\sin C}{\\cos\\frac{1}{2}a\\cos\\frac{1}{2}d}.</math>}}",
    "kind": "formula"
   },
   {
@@ -61686,6 +62505,13 @@
    "kind": "formula"
   },
   {
+   "start": 7649,
+   "end": 7689,
+   "old": "(cos 0-I-L sin 0)\"\n=cos 110-I-L sin 110;",
+   "new": "<math>(\\cos\\theta+\\iota\\sin\\theta)^n=\\cos n\\theta+\\iota\\sin n\\theta</math>;",
+   "kind": "formula"
+  },
+  {
    "start": 7784,
    "end": 7785,
    "old": "0",
@@ -61816,13 +62642,6 @@
    "end": 8880,
    "old": "of\nr\"'“\" (cos 0+L sin 0)\"'/\"",
    "new": "of <math>r^{m/n}(\\cos\\theta+\\iota\\sin\\theta)^{m/n}</math>.",
-   "kind": "formula"
-  },
-  {
-   "start": 9035,
-   "end": 9051,
-   "old": "cos 0+¢ sin 0 is",
-   "new": "<math>\\cos\\theta+\\iota\\sin\\theta</math> is",
    "kind": "formula"
   },
   {
@@ -62565,6 +63384,13 @@
    "kind": "formula"
   },
   {
+   "start": 1258,
+   "end": 1271,
+   "old": "of ef#/, e\"f/",
+   "new": "of <math>e^{iy}</math>, <math>e^{-iy}</math>",
+   "kind": "formula"
+  },
+  {
    "start": 1276,
    "end": 1289,
    "old": "E(iy), E(-iy)",
@@ -62747,6 +63573,13 @@
    "kind": "formula"
   },
   {
+   "start": 2776,
+   "end": 2789,
+   "old": "E<2'iT)=I~ We",
+   "new": "<math>E(2i\\pi) = 1</math>. We",
+   "kind": "formula"
+  },
+  {
    "start": 2800,
    "end": 2832,
    "old": "E(2'i1rr)={E(2i'n')}'=I, if r is",
@@ -62817,6 +63650,13 @@
    "kind": "formula"
   },
   {
+   "start": 3284,
+   "end": 3289,
+   "old": "of z.",
+   "new": "of <math>z</math>.",
+   "kind": "formula"
+  },
+  {
    "start": 3461,
    "end": 3480,
    "old": "a =eL9, b =e'|0, we",
@@ -62866,17 +63706,10 @@
    "kind": "formula"
   },
   {
-   "start": 4006,
-   "end": 4014,
-   "old": "''n'' is",
-   "new": "<math>n</math> is",
-   "kind": "formula"
-  },
-  {
-   "start": 4203,
-   "end": 4207,
-   "old": "n is",
-   "new": "<math>n</math> is",
+   "start": 3886,
+   "end": 4231,
+   "old": "\" A\n\n(— 1)&( >(2 sin 0)\" = 2sin m9-n  2 sin(n-2)0-|-$22 sin(n -4)0...\n+()'3?n(n-1).  %(n-Q-3)\n\n~' 9\n\n5(1)-I)! ”'“\n\nwhen ''n'' is odd. These formulae enable us to express any positive\nintegral power of the sine or cosine in terms of sines or cosines of\nmultiples of the argument. There are corresponding formulae when\nn is not a positive integer.",
+   "new": "{{block center|<math>(-1)^{\\frac{1}{2}(n-1)}(2 \\sin \\theta)^n = 2 \\sin n\\theta - n . 2 \\sin (n-2)\\theta + \\frac{n(n-1)}{1.2} 2 \\sin (n-4)\\theta \\dots</math>}}\n{{block center|<math>+ (-)^{\\frac{n-1}{2}} \\frac{n(n-1)\\dots\\frac{1}{2}(n+3)}{\\frac{1}{2}(n-1)!} \\sin \\theta</math> when <math>n</math> is odd. These formulae enable us to express any positive integral power of the sine or cosine in terms of sines or cosines of multiples of the argument. There are corresponding formulae when <math>n</math> is not a positive integer.}}",
    "kind": "formula"
   },
   {
@@ -63268,9 +64101,16 @@
   },
   {
    "start": 4884,
+   "end": 4899,
+   "old": "ar .'n x\n\nif we",
+   "new": "{{block center|<math>\\frac{\\text{arc sin }x}{\\sqrt{1-x^2}}=x+\\frac{2}{3}x^3+\\frac{2.4}{3.5}x^5+\\frac{2.4.6}{3.5\\cdot 7}x^7+\\dots;</math>}}\nif we",
+   "kind": "formula"
+  },
+  {
+   "start": 4904,
    "end": 4924,
-   "old": "ar .'n x\n\nif we put arc sin x=arc tan y,",
-   "new": "{{block center|<math>\\frac{\\text{arc sin }x}{\\sqrt{1-x^2}}=x+\\frac{2}{3}x^3+\\frac{2.4}{3.5}x^5+\\frac{2.4.6}{3.5\\cdot 7}x^7+\\dots;</math>}}\nif we put <math>\\text{arc sin }x=\\text{arc tan }y</math>,",
+   "old": "arc sin x=arc tan y,",
+   "new": "<math>\\text{arc sin }x=\\text{arc tan }y</math>,",
    "kind": "formula"
   },
   {
@@ -63577,11 +64417,11 @@
    "kind": "formula"
   },
   {
-   "start": 1423,
-   "end": 1427,
-   "old": "unit",
-   "new": "unity",
-   "kind": "word"
+   "start": 1408,
+   "end": 1491,
+   "old": "of\nSin mt/n is unit we have\nm1r/n y\nsin x  <   (lim R.\n-T - 1-T2 I-2,72   I-WT, mfw",
+   "new": "of <math>\\frac{\\sin m\\pi/n}{m\\pi/n}</math> is unity, we have\n{{block center|<math>\\frac{\\sin x}{x} = \\left(1-\\frac{x^2}{\\pi^2}\\right)\\left(1-\\frac{x^2}{2^2\\pi^2}\\right)\\dots\\left(1-\\frac{x^2}{m^2\\pi^2}\\right)\\lim_{m=\\infty}\\text{R}</math>.}}",
+   "kind": "formula"
   },
   {
    "start": 1504,
@@ -63595,6 +64435,13 @@
    "end": 1662,
    "old": "mod. (R-I) is",
    "new": "<math>\\text{mod.}\\ (R-1)</math> is",
+   "kind": "formula"
+  },
+  {
+   "start": 1673,
+   "end": 1930,
+   "old": "exp. p2(cosec' rn-f-Ivr/11+   -lcosec\nkr/n)-I, or than exp. § p2n'{r/ m+1)2+. .. +I/k“}-I, or\nthan exp. {p'n'/4m'}-I. Now p2=sin2 a./n.cosh2 B/n+cos2 a./n.\nsinh' B/n, if x=a+1;6; or p'=sin2 u./rt-l-sinh” /3/n. Hence\nlim, ,=, p'n'=a'-H82, hmnm, pn=mod. x. It",
+   "new": "<math>\\text{exp.}\\ \\{\\rho^2(\\text{cosec}^2\\,\\overline{m+1}\\pi/n+\\dots+\\text{cosec}^2\\,k\\pi/n)-1</math>, or than <math>\\text{exp.}\\ \\tfrac{1}{4}\\rho^2n^2\\{1/(m+1)^2+\\dots+1/k^2\\}-1</math>, or than <math>\\text{exp.}\\ \\{\\rho^2n^2/4m^2\\}-1</math>. Now <math>\\rho^2 = \\sin^2\\alpha/n.\\cosh^2\\beta/n+\\cos^2\\alpha/n.\\sinh^2\\beta/n</math>, if <math>x = \\alpha+i\\beta</math>; or <math>\\rho^2 = \\sin^2\\alpha/n+\\sinh^2\\beta/n</math>. Hence <math>\\lim_{n=\\infty}\\rho^2n^2 = \\alpha^2+\\beta^2</math>, <math>\\lim_{n=\\infty}\\rho n = \\text{mod.}\\ x</math>. It",
    "kind": "formula"
   },
   {
@@ -63686,6 +64533,13 @@
    "end": 2718,
    "old": "sinh x, cosh x as",
    "new": "<math>\\sinh x</math>, <math>\\cosh x</math> as",
+   "kind": "formula"
+  },
+  {
+   "start": 2740,
+   "end": 2780,
+   "old": "sinhx x=0 I+-174; coshx 5:0 1+(2n+I),1r,",
+   "new": "{{block center|<math>\\sinh x = x\\overset{n=\\infty}{\\underset{n=0}{P}}\\left(1+\\frac{x^2}{n^2\\pi^2}\\right),\\quad \\cosh x = \\overset{n=\\infty}{\\underset{n=0}{P}}\\left(1+\\frac{4x^2}{(2n+1)^2\\pi^2}\\right)</math>.}}",
    "kind": "formula"
   },
   {
@@ -64901,23 +65755,16 @@
   },
   {
    "start": 8430,
-   "end": 8444,
-   "old": "p. OC mfr?/k\",",
-   "new": "{{block center|<math>\\mu \\propto m^x\\bar{v}^yk^w,</math>}}",
-   "kind": "formula"
-  },
-  {
-   "start": 8455,
    "end": 8491,
-   "old": "[ML'IT\"] = [M]'”[LT\"]=/[M\"L”+'T\"]'°,",
-   "new": "<math>[\\text{ML}^{-1}\\text{T}^{-1}] = [\\text{M}]^x[\\text{LT}^{-1}]^y[\\text{M}^{-1}\\text{L}^{s+1}\\text{T}^{-2}]^w,</math>",
+   "old": "p. OC mfr?/k\",\n\nprovided [ML'IT\"] = [M]'”[LT\"]=/[M\"L”+'T\"]'°,",
+   "new": "{{block center|<math>\\mu \\propto m^x\\bar{v}^yk^w,</math>}}\n{{block center|provided <math>[\\text{ML}^{-1}\\text{T}^{-1}] = [\\text{M}]^x[\\text{LT}^{-1}]^y[\\text{M}^{-1}\\text{L}^{s+1}\\text{T}^{-2}]^w,</math>}}",
    "kind": "formula"
   },
   {
-   "start": 8568,
+   "start": 8523,
    "end": 8593,
-   "old": "w=-S- iI, y=;-i”?, x=;%?-",
-   "new": "<math>w=-\\frac{2}{s-1},\\ y=\\frac{s+3}{s-1},\\ x=\\frac{s-3}{s-1}.</math>",
+   "old": "by,\n\nx-w=I, y+2w=I, y-1-(s+I)w= -I,\n\nso that w=-S- iI, y=;-i”?, x=;%?-",
+   "new": "by\n{{block center|<math>x-w=1,\\ y+2w=1,\\ y+(s+1)w=-1,</math>}}\n{{block center|so that <math>w=-\\frac{2}{s-1},\\ y=\\frac{s+3}{s-1},\\ x=\\frac{s-3}{s-1}.</math>}}",
    "kind": "formula"
   },
   {
@@ -65223,6 +66070,13 @@
    "end": 5493,
    "old": "is 𝑚/4{{Greek|π}}𝑟<sup>2</sup>",
    "new": "is <math>m/4\\pi r^2</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 5633,
+   "end": 5718,
+   "old": "is\n\n{{center|4{{Greek|π}}𝑟<sup>2</sup> × 𝑚/4{{Greek|π}}𝑟<sup>2</sup> units＝𝑚 units;}}",
+   "new": "is\n{{block center|<math>4\\pi r^2 \\times m/4\\pi r^2 \\text{ units} = m \\text{ units};</math>}}",
    "kind": "formula"
   },
   {
@@ -66331,6 +67185,13 @@
    "end": 4219,
    "old": "p\" of",
    "new": "<math>p''</math> of",
+   "kind": "formula"
+  },
+  {
+   "start": 4250,
+   "end": 4292,
+   "old": "''m''PV/R{{Greek|θ}} =log,(''p''′−''p''″),",
+   "new": "<math>m\\text{PV}/\\text{R}\\theta=\\log_e(p'/p'')</math>,",
    "kind": "formula"
   },
   {
@@ -67537,6 +68398,13 @@
    "kind": "formula"
   },
   {
+   "start": 2296,
+   "end": 2415,
+   "old": "{{ne|A＝log''<sub>e</sub>p''<sub>0</sub>−B/{{Greek|θ}}<sub>0</sub> − C log<sub>''e''</sub>{{Greek|θ}}<sub>0</sub>,}} \n\nA",
+   "new": "{{block center|<math>\\text{A} = \\log_e p_0 - \\text{B}/\\theta_0 - \\text{C} \\log_e\\theta_0.</math>}}\nA",
+   "kind": "formula"
+  },
+  {
    "start": 3016,
    "end": 3102,
    "old": "(''dp''/''d''{{Greek|θ}})<sub>''s''</sub>−(''dp''/''d''{{Greek|θ}})<sub>''l''</sub> of",
@@ -68376,13 +69244,6 @@
    "kind": "formula"
   },
   {
-   "start": 886,
-   "end": 946,
-   "old": "at ''x''=''x''<sub>0</sub> and at ''x''=''x''<sub>1</sub>, .",
-   "new": "at <math>x=x_0</math> and at <math>x=x_1</math>.",
-   "kind": "formula"
-  },
-  {
    "start": 1248,
    "end": 1332,
    "old": "{{center|<math>\\int_{x_0}^{x_1}\\text{F}(x, y+\\epsilon u, y'+\\epsilon u')dx.</math>}}",
@@ -68833,6 +69694,13 @@
    "kind": "formula"
   },
   {
+   "start": 3557,
+   "end": 3617,
+   "old": "∫{{Sfrac nobar|''t''<sub>1</sub>|''t''<sub>0</sub>}}T''dt'',",
+   "new": "<math>\\int_{t_0}^{t_1} 2\\text{T}dt</math>, ''",
+   "kind": "formula"
+  },
+  {
    "start": 3665,
    "end": 3689,
    "old": "(''q''<sup>(0)</sup>) to",
@@ -68987,6 +69855,13 @@
    "kind": "formula"
   },
   {
+   "start": 5509,
+   "end": 5574,
+   "old": "{{center|{{EB1911 tfrac|2}}{{Greek|Σ}}<sub>''r''</sub>, . . .}}\nA",
+   "new": "{{block center|<math>\\tfrac{1}{2}\\Sigma_{r,\\ s}\\left(b_{rs}\\frac{\\partial \\text{A}}{\\partial q_r}\\frac{\\partial \\text{A}}{\\partial q_s}\\right) + \\text{V} = \\text{E}</math>.}}\nA",
+   "kind": "formula"
+  },
+  {
    "start": 5640,
    "end": 5646,
    "old": "A as a",
@@ -69005,6 +69880,13 @@
    "end": 5679,
    "old": "n",
    "new": "<math>n</math>",
+   "kind": "formula"
+  },
+  {
+   "start": 5701,
+   "end": 5719,
+   "old": "al, al,  .  a., of",
+   "new": "<math>a_1</math>, <math>a_2</math>, <math>\\dots</math> <math>a_n</math>, of",
    "kind": "formula"
   },
   {
@@ -72684,6 +73566,13 @@
    "kind": "formula"
   },
   {
+   "start": 3019,
+   "end": 3043,
+   "old": "counter- \nbalance, E, is",
+   "new": "counterbalance, <math>\\text{E}</math>, is",
+   "kind": "formula"
+  },
+  {
    "start": 3066,
    "end": 3071,
    "old": "B, by",
@@ -73400,6 +74289,13 @@
    "end": 2339,
    "old": "{{EB1911 tfrac|20}} or",
    "new": "<math>\\tfrac{1}{20}</math>, or",
+   "kind": "formula"
+  },
+  {
+   "start": 2355,
+   "end": 2375,
+   "old": "{{EB1911 tfrac|12}}.",
+   "new": "<math>\\tfrac{1}{12}</math>.",
    "kind": "formula"
   },
   {

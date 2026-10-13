@@ -1,0 +1,95 @@
+{
+ "volume": 24,
+ "page_number": 1008,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1018",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1018",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 1076,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     85,
+     125,
+     2224,
+     195
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     85,
+     195,
+     1150,
+     3118
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1150,
+     195,
+     2224,
+     3118
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 2561,
+    "output_tokens": 14,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: table (bottom): E.H.P. conversion table extends past the column rule into the right column, whose text is indented around it"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "E.H.P. conversion table extends past the column rule into the right column, whose text is indented around it"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> <noinclude><references/></noinclude>"
+}

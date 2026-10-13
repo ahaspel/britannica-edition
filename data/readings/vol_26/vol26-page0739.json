@@ -1,0 +1,179 @@
+{
+ "volume": 26,
+ "page_number": 739,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n753",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n753",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.55,
+  "column_width": 1087,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     41,
+     103,
+     2194,
+     172
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     41,
+     172,
+     1116,
+     582
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1116,
+     172,
+     2194,
+     582
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     41,
+     582,
+     2194,
+     1064
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     41,
+     1064,
+     1122,
+     3156
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1122,
+     1064,
+     2194,
+     3156
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1236,
+     1562,
+     2108,
+     2276
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v26 p0739 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1248,
+     1574,
+     2096,
+     2264
+    ],
+    "caption": [
+     1610,
+     2296,
+     1722,
+     2328
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1250,
+     1624,
+     2176,
+     2269
+    ]
+   }
+  ],
+  "across": [
+   [
+    40,
+    583,
+    1546,
+    1049
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 9984,
+    "output_tokens": 284,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (1)",
+   "across the gutter: table (top): colour recipe table (Red–Violet columns) set across gutter into right column"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "colour recipe table (Red–Violet columns) set across gutter into right column"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n\n\n \n\n[[File:eb1911 v26 p0739 c2f1.png|center|289px]]<noinclude><references/></noinclude>"
+}

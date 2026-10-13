@@ -1,0 +1,140 @@
+{
+ "volume": 26,
+ "page_number": 366,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n375",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n375",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": -0.05,
+  "column_width": 1128,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     61,
+     95,
+     2254,
+     173
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     173,
+     1178,
+     866
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1178,
+     173,
+     2254,
+     866
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     61,
+     866,
+     2254,
+     1203
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     61,
+     1203,
+     1173,
+     3103
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1173,
+     1203,
+     2254,
+     3103
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    106,
+    875,
+    2249,
+    1206
+   ],
+   [
+    2054,
+    1204,
+    2218,
+    1244
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7706,
+    "output_tokens": 310,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (1)",
+   "across the gutter: table (top): chemical analyses table of palagonite and tachylyte spanning both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "chemical analyses table of palagonite and tachylyte spanning both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n\n\n <noinclude><references/></noinclude>"
+}

@@ -1,0 +1,187 @@
+{
+ "volume": 26,
+ "page_number": 863,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n877",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n877",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.2,
+  "column_width": 1102,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     50,
+     126,
+     2204,
+     193
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     50,
+     193,
+     1141,
+     2676
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     93,
+     1236,
+     400,
+     2032
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1141,
+     193,
+     2204,
+     2676
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     50,
+     2676,
+     2204,
+     2869
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     50,
+     2869,
+     1138,
+     3114
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1138,
+     2869,
+     2204,
+     3114
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0863 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     105,
+     1248,
+     388,
+     2020
+    ],
+    "caption": [
+     116,
+     2025,
+     372,
+     2094
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     77,
+     1241,
+     393,
+     2015
+    ]
+   }
+  ],
+  "across": [
+   [
+    77,
+    2673,
+    2209,
+    2872
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 3,
+    "input_tokens": 10162,
+    "output_tokens": 250,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (1)",
+   "across the gutter: table (bottom): Table I steam temperature table spans full page width",
+   "across the gutter: caption (bottom): Table I title centred across both columns",
+   "across the gutter: text (bottom): Approximate formula (5) line runs across both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "Table I steam temperature table spans full page width"
+   },
+   {
+    "kind": "caption",
+    "where": "bottom",
+    "detail": "Table I title centred across both columns"
+   },
+   {
+    "kind": "text",
+    "where": "bottom",
+    "detail": "Approximate formula (5) line runs across both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n[[File:eb1911 v26 p0863 c1f1.png|center|100px]]\n\n\n\n <noinclude><references/></noinclude>"
+}

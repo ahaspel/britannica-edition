@@ -1,0 +1,195 @@
+{
+ "volume": 20,
+ "page_number": 238,
+ "source": "scan",
+ "title": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/238",
+ "provenance": {
+  "scan": "https://en.wikisource.org/wiki/Page:EB1911_-_Volume_20.djvu/238",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.45,
+  "column_width": 749,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     41,
+     71,
+     2345,
+     145
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     41,
+     145,
+     2345,
+     2202
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     41,
+     2202,
+     1216,
+     2653
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1216,
+     2202,
+     2345,
+     2653
+    ]
+   },
+   {
+    "name": "c0s2",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     41,
+     2653,
+     2345,
+     3191
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c0s1": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s2": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    901,
+    159,
+    1601,
+    204
+   ],
+   [
+    107,
+    227,
+    2343,
+    1299
+   ],
+   [
+    990,
+    1306,
+    1419,
+    1344
+   ],
+   [
+    854,
+    1390,
+    1567,
+    1430
+   ],
+   [
+    107,
+    1446,
+    2343,
+    2202
+   ],
+   [
+    929,
+    2650,
+    1558,
+    2691
+   ],
+   [
+    107,
+    2709,
+    2343,
+    3145
+   ],
+   [
+    1035,
+    3152,
+    1378,
+    3190
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "batch": false,
+    "calls": 2,
+    "input_tokens": 7818,
+    "output_tokens": 648,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (8)",
+   "across the gutter: table (top): Table VI British Rifled Ordnance 1890 spans full width",
+   "across the gutter: table (middle): Table VII British B.L. Ordnance 1900 spans both columns",
+   "across the gutter: table (bottom): Table VIII British Ordnance 1910 spans full width",
+   "across the gutter: caption (top): Table VI title and footnote centred across page",
+   "across the gutter: caption (middle): Table VII title centred across both columns",
+   "across the gutter: caption (bottom): Table VIII title and 'Q.F. guns as in 1900' note centred"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "Table VI British Rifled Ordnance 1890 spans full width"
+   },
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "Table VII British B.L. Ordnance 1900 spans both columns"
+   },
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "Table VIII British Ordnance 1910 spans full width"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "Table VI title and footnote centred across page"
+   },
+   {
+    "kind": "caption",
+    "where": "middle",
+    "detail": "Table VII title centred across both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "bottom",
+    "detail": "Table VIII title and 'Q.F. guns as in 1900' note centred"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n \n\n<noinclude><references/></noinclude>"
+}

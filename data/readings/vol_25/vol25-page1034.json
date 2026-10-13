@@ -1,0 +1,330 @@
+{
+ "volume": 25,
+ "page_number": 1034,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n1056",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n1056",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 1084,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     161,
+     97,
+     2307,
+     167
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     161,
+     167,
+     1234,
+     3095
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     179,
+     417,
+     413,
+     1008
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     1027,
+     783,
+     1227,
+     1121
+    ]
+   },
+   {
+    "name": "c1f3",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     161,
+     1245,
+     667,
+     1763
+    ]
+   },
+   {
+    "name": "c1f4",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     161,
+     2253,
+     681,
+     2791
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1234,
+     167,
+     2307,
+     3095
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1405,
+     651,
+     2171,
+     1072
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1890,
+     1214,
+     2307,
+     1651
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|1008|STRENGTH OF MATERIALS|}}",
+   "c1s1": "⟦200⟧{{smaller block|other. These three are called principal stresses, and their directions are called the axes of principal stress. These axes have the important property that the intensity of stress along one of them is greater, and along another it is less, than in any other direction. These are called respectively the axes of greatest and least principal stress.}}\n\n⟦300⟧{{smaller block|''Resolution of Stress.''—Returning now to the case of a single simple longitudinal stress, let AB (fig. 1) be a portion of a tie or a strut\n[[FIGURE]]\n{{c|{{sc|Fig.}} 1.}}\nwhich is being pulled or pushed in the direction of the axis AB with a total stress P. On any plane CD taken at right angles to the axis we have a normal pull or push of intensity <math>p=\\text{P}/\\text{S}</math>, S being the area of the normal cross-section. On a plane EF whose normal is inclined to the axis at an angle <math>\\theta</math> we have a stress still in the direction of the axis, and therefore oblique to the plane EF, of intensity <math>\\text{P}/\\text{S}'</math>, where <math>\\text{S}'</math> is the area of the surface EF, or <math>\\text{S}/\\cos\\theta</math>. The whole stress P on EF may be resolved into two components, one normal to\n[[FIGURE]]\n{{c|{{sc|Fig.}} 2.}}\nEF, and the other a shearing stress tangential to EF. The normal component (<math>\\text{P}_n</math>, fig. 2) is <math>\\text{P}\\cos\\theta</math>; the tangential component (<math>\\text{P}_t</math>) is <math>\\text{P}\\sin\\theta</math>. Hence the intensity of normal pull or push on EF, or <math>p_n</math>, is <math>p\\cos^2\\theta</math>, and the intensity of shearing stress EF, or <math>p_t</math>, is <math>p\\sin\\theta\\cos\\theta</math>. This expression makes <math>p_t</math> a maximum when <math>\\theta=45^\\circ</math>: surfaces inclined at 45° to the axis are called surfaces of maximum shearing stress; the intensity of shearing stress on them is <math>\\tfrac{1}{2}p</math>.}}\n\n⟦1100⟧''Combination of Two Simple Pull or Push Stresses at Right Angles to One Another.''—Suppose next that there are two principal stresses:\n[[FIGURE]]\n{{c|{{sc|Fig.}} 3.}}\nin other words that in addition to the simple pull or push stress of fig. 1 there is a second pull or push stress acting at right angles to it as in fig. 3. Call these <math>\\text{P}_x</math> and <math>\\text{P}_y</math> respectively. On any inclined surface EF there will be an intensity of stress whose normal component <math>p_n</math> and tangential component <math>p_t</math> are found by summing up the effects due to <math>\\text{P}_x</math> and <math>\\text{P}_y</math> separately. Let <math>p_x</math> and <math>p_y</math> be the intensities of stress produced by <math>\\text{P}_x</math> and <math>\\text{P}_y</math> respectively on planes perpendicular to their own directions. Then\n{{block center|<math>p_n=(\\text{P}_x\\cos^2\\theta+p_y\\sin^2\\theta,</math>}}\n{{block center|<math>p_t=(p_x-p_y)\\sin\\theta\\cos\\theta,</math>}}\n<math>\\theta</math> being the angle which the normal to the surface makes with the direction of <math>\\text{P}_x</math>.\n\n⟦1900⟧{{smaller block|The tangential stress <math>p_t</math> becomes a maximum when <math>\\theta</math> is 45°, and its value then is\n{{block center|<math>\\text{Max. }p_t=\\tfrac{1}{2}(p_x-p_y).</math>}}}}\n\n⟦1900⟧{{smaller block|If in addition there is a third principal stress <math>\\text{P}_z</math>, it will not produce any tangential component on planes perpendicular to the plane of the figure. Hence the above expression for the maximum tangential stress will still apply, and it is easy to extend this result so as to reach the important general proposition that in any condition of stress whatever the maximum intensity of shearing stress is equal to one-half the difference between the greatest and least principal stresses and occurs on surfaces inclined at 45° to them.}}\n\n⟦2200⟧{{smaller block|''State of Simple Shear.''—A special case of great importance\n[[FIGURE]]\n{{c|{{sc|Fig.}} 4.}}\noccurs when there are two principal stresses only, equal in magnitude and opposite in sign; in other words, when one is a simple push and the other a simple pull. Then on surfaces inclined at 45° to the axes of pull and push there is nothing but tangential stress, for <math>p_n=0</math>; and this intensity of tangential stress is numerically equal to <math>p_x</math> or to <math>p_y</math>. This condition of stress is called a state of simple shear.}}\n\n⟦2700⟧{{smaller block|The state of simple shear may also be arrived at in another way. Let an elementary cubical part of any solid body (fig. 4) have tangential stresses QQ applied to one pair of opposite faces, A and B, and equal tangential stresses applied to a second pair of faces C and D,}}\n\n⟦2900⟧Figs. 3, 4, 5, 6, 15, 16, 17, 18, 19, 20, 23, 24 and 25 are from Ewing's ''Strength of Materials'', by permission of the Cambridge University Press.",
+   "c2s1": "⟦200⟧ {{smaller block|as in the figure. The effect is to set up a state of simple shear. On all planes parallel to <math>\\text{A}</math> and <math>\\text{B}</math> there is nothing but tangential stress, and the same is true of all planes parallel to <math>\\text{C}</math> and <math>\\text{D}</math>. The intensity of the stress on both systems of planes is equal throughout to the intensity of the stress which was applied to the face of the block.}}\n\n⟦400⟧ {{smaller block|To see the connexion between these two ways of specifying a state of simple shear consider the equilibrium of the parts into which the block may be divided by ideal diagonal planes of section. To balance the forces <math>\\text{QQ}</math> (fig. 5), there must be normal pull on the diagonal plane, the amount of which is <math>\\text{P}=\\text{Q}\\sqrt{2}</math>. But the area of the surface over which <math>\\text{P}</math> acts is greater than that of the surface over which <math>\\text{Q}</math> acts in the proportion which <math>\\text{P}</math> bears to <math>\\text{Q}</math>, and hence the intensity of <math>\\text{P}</math> is the same as the intensity of <math>\\text{Q}</math>.}}\n[[FIGURE]]\n{{c|{{sc|Fig.}} 5.}}\n\n⟦1100⟧ {{smaller block|Again, taking the other diagonal plane (fig. 6), the same argument applies except that here the normal force <math>\\text{P}</math> required for equilibrium is a push instead of a pull. Thus the state of stress represented in fig. 4\n[[FIGURE]]\n{{c|{{sc|Fig.}} 6.}}\nadmits of analysis into two equal principal stresses, one of push and one of pull, acting in directions at right angles to one another and inclined at 45° to the planes of shear stress.}}\n\n⟦1400⟧ {{smaller block|''Equality of Shearing Stress in Two Directions.''—No tangential stress can exist in one direction without an equal intensity of tangential stress existing in another direction at right angles to the first. To prove this it is sufficient to consider the equilibrium of the elementary cube of fig. 4. The tangential forces acting on two sides <math>\\text{A}</math> and <math>\\text{B}</math> produce a couple which tends to rotate the cube. No arrangement of normal stresses on any of the three pairs of sides of the cube can balance this couple; that can be done only by equal tangential forces on <math>\\text{C}</math> and <math>\\text{D}</math>.}}\n\n⟦1800⟧ {{smaller block|''Fluid Stress.''—Another important case occurs when there are three principal stresses all of the same sign and of equal intensity <math>p</math>. The tangential components on any planes cancel each other: the stress on every plane is wholly normal and its intensity is <math>p</math>. This is the only state of stress that can exist in a fluid at rest because a fluid exerts no statical resistance to shear. For this reason the state is often spoken of as a fluid stress.}}\n\n⟦2100⟧ ''Strain'' is the change of shape produced by stress. If the stress is a simple longitudinal pull, the strain consists of lengthening in the direction of the pull, accompanied by contraction in both directions at right angles to the pull. If the stress is a simple push, the strain consists of shortening in the direction of the push and expansion in both directions at right angles to that; the stress and the strain are then exactly the reverse of what they are in the case of simple pull. If the stress is one of simple shearing, the strain consists of a distortion such as would be produced by the sliding of layers in the direction of the shearing stresses.\n\n⟦2500⟧ A material is elastic with regard to any applied stress if the strain disappears when the stress is removed. Strain which persists after the stress that produced it is removed is called permanent set. For brevity, it is convenient to speak of strain which disappears when the stress is removed as elastic strain.\n\n⟦2800⟧ ''Limits of Elasticity.''—Actual materials are generally very perfectly elastic with regard to small stresses, and very imperfectly elastic with regard to great stresses. If the applied stress is less than a certain limit, the strain is in general small in amount, and disappears wholly, or almost wholly, when the stress is removed. If the applied stress exceeds this limit, the strain is, in general, much greater than before, and most of it is found, when the stress is removed, to consist of permanent set. The"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v25 p1034 c1f1.png",
+   "c1f2": "eb1911 v25 p1034 c1f2.png",
+   "c1f3": "eb1911 v25 p1034 c1f3.png",
+   "c1f4": "eb1911 v25 p1034 c1f4.png",
+   "c2f1": "eb1911 v25 p1034 c2f1.png",
+   "c2f2": "eb1911 v25 p1034 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     191,
+     429,
+     401,
+     996
+    ],
+    "caption": [
+     233,
+     1002,
+     339,
+     1027
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     163,
+     424,
+     402,
+     998
+    ]
+   },
+   {
+    "box": [
+     1039,
+     795,
+     1215,
+     1109
+    ],
+    "caption": [
+     1069,
+     1118,
+     1175,
+     1144
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     1034,
+     791,
+     1219,
+     1104
+    ]
+   },
+   {
+    "box": [
+     163,
+     1257,
+     655,
+     1751
+    ],
+    "caption": [
+     356,
+     1758,
+     465,
+     1796
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     159,
+     1255,
+     663,
+     1749
+    ]
+   },
+   {
+    "box": [
+     163,
+     2265,
+     669,
+     2779
+    ],
+    "caption": [
+     372,
+     2788,
+     477,
+     2823
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     159,
+     2253,
+     680,
+     2779
+    ]
+   },
+   {
+    "box": [
+     1417,
+     663,
+     2159,
+     1060
+    ],
+    "caption": [
+     1725,
+     1070,
+     1828,
+     1103
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1414,
+     658,
+     2209,
+     1065
+    ]
+   },
+   {
+    "box": [
+     1902,
+     1226,
+     2300,
+     1639
+    ],
+    "caption": [
+     2044,
+     1650,
+     2152,
+     1680
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1899,
+     1221,
+     2308,
+     1645
+    ]
+   }
+  ],
+  "across": [
+   [
+    199,
+    2988,
+    1219,
+    3086
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    4,
+    0
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 7,
+    "input_tokens": 14403,
+    "output_tokens": 969,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6935,
+    "output_tokens": 5232,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 10875
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type": {
+   "c1s1": [
+    null,
+    "small",
+    "small",
+    "small",
+    "small",
+    "small",
+    "small",
+    null
+   ],
+   "c2s1": [
+    "small",
+    "small",
+    "small",
+    "small",
+    "small",
+    "body",
+    "body",
+    "body"
+   ]
+  },
+  "type_unmeasured": [
+   "c1s1 y200",
+   "c1s1 y2900"
+  ],
+  "sections": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|1008|STRENGTH OF MATERIALS|}}</noinclude>{{smaller block|other. These three are called principal stresses, and their directions are called the axes of principal stress. These axes have the important property that the intensity of stress along one of them is greater, and along another it is less, than in any other direction. These are called respectively the axes of greatest and least principal stress.}}\n\n{{smaller block|''Resolution of Stress.''—Returning now to the case of a single simple longitudinal stress, let AB (fig. 1) be a portion of a tie or a strut which is being pulled or pushed in the direction of the axis AB with a total stress P.}}\n\n[[File:eb1911 v25 p1034 c1f1.png|center|78px]]\n{{c|{{sc|Fig.}} 1.}}\n\n{{smaller block|On any plane CD taken at right angles to the axis we have a normal pull or push of intensity <math>p=\\text{P}/\\text{S}</math>, S being the area of the normal cross-section. On a plane EF whose normal is inclined to the axis at an angle <math>\\theta</math> we have a stress still in the direction of the axis, and therefore oblique to the plane EF, of intensity <math>\\text{P}/\\text{S}'</math>, where <math>\\text{S}'</math> is the area of the surface EF, or <math>\\text{S}/\\cos\\theta</math>. The whole stress P on EF may be resolved into two components, one normal to EF, and the other a shearing stress tangential to EF.}}\n\n[[File:eb1911 v25 p1034 c1f2.png|center|66px]]\n{{c|{{sc|Fig.}} 2.}}\n\n{{smaller block|The normal component (<math>\\text{P}_n</math>, fig. 2) is <math>\\text{P}\\cos\\theta</math>; the tangential component (<math>\\text{P}_t</math>) is <math>\\text{P}\\sin\\theta</math>. Hence the intensity of normal pull or push on EF, or <math>p_n</math>, is <math>p\\cos^2\\theta</math>, and the intensity of shearing stress EF, or <math>p_t</math>, is <math>p\\sin\\theta\\cos\\theta</math>. This expression makes <math>p_t</math> a maximum when <math>\\theta=45^\\circ</math>: surfaces inclined at 45° to the axis are called surfaces of maximum shearing stress; the intensity of shearing stress on them is <math>\\tfrac{1}{2}p</math>.}}\n\n{{smaller block|''Combination of Two Simple Pull or Push Stresses at Right Angles to One Another.''—Suppose next that there are two principal stresses:}}\n\n[[File:eb1911 v25 p1034 c1f3.png|center|168px]]\n{{c|{{sc|Fig.}} 3.}}\n\n{{smaller block|in other words that in addition to the simple pull or push stress of fig. 1 there is a second pull or push stress acting at right angles to it as in fig. 3. Call these <math>\\text{P}_x</math> and <math>\\text{P}_y</math> respectively. On any inclined surface EF there will be an intensity of stress whose normal component <math>p_n</math> and tangential component <math>p_t</math> are found by summing up the effects due to <math>\\text{P}_x</math> and <math>\\text{P}_y</math> separately. Let <math>p_x</math> and <math>p_y</math> be the intensities of stress produced by <math>\\text{P}_x</math> and <math>\\text{P}_y</math> respectively on planes perpendicular to their own directions. Then\n{{block center|<math>p_n=(\\text{P}_x\\cos^2\\theta+p_y\\sin^2\\theta,</math>}}\n{{block center|<math>p_t=(p_x-p_y)\\sin\\theta\\cos\\theta,</math>}}\n<math>\\theta</math> being the angle which the normal to the surface makes with the direction of <math>\\text{P}_x</math>.}}\n\n{{smaller block|The tangential stress <math>p_t</math> becomes a maximum when <math>\\theta</math> is 45°, and its value then is\n{{block center|<math>\\text{Max. }p_t=\\tfrac{1}{2}(p_x-p_y).</math>}}}}\n\n{{smaller block|If in addition there is a third principal stress <math>\\text{P}_z</math>, it will not produce any tangential component on planes perpendicular to the plane of the figure. Hence the above expression for the maximum tangential stress will still apply, and it is easy to extend this result so as to reach the important general proposition that in any condition of stress whatever the maximum intensity of shearing stress is equal to one-half the difference between the greatest and least principal stresses and occurs on surfaces inclined at 45° to them.}}\n\n{{smaller block|''State of Simple Shear.''—A special case of great importance occurs when there are two principal stresses only, equal in magnitude and opposite in sign; in other words, when one is a simple push and the other a simple pull.}}\n\n[[File:eb1911 v25 p1034 c1f4.png|center|173px]]\n{{c|{{sc|Fig.}} 4.}}\n\n{{smaller block|Then on surfaces inclined at 45° to the axes of pull and push there is nothing but tangential stress, for <math>p_n=0</math>; and this intensity of tangential stress is numerically equal to <math>p_x</math> or to <math>p_y</math>. This condition of stress is called a state of simple shear.}}\n\n{{smaller block|The state of simple shear may also be arrived at in another way. Let an elementary cubical part of any solid body (fig. 4) have tangential stresses QQ applied to one pair of opposite faces, A and B, and equal tangential stresses applied to a second pair of faces C and D,}}\n\nFigs. 3, 4, 5, 6, 15, 16, 17, 18, 19, 20, 23, 24 and 25 are from Ewing's ''Strength of Materials'', by permission of the Cambridge University Press. {{smaller block|as in the figure. The effect is to set up a state of simple shear. On all planes parallel to <math>\\text{A}</math> and <math>\\text{B}</math> there is nothing but tangential stress, and the same is true of all planes parallel to <math>\\text{C}</math> and <math>\\text{D}</math>. The intensity of the stress on both systems of planes is equal throughout to the intensity of the stress which was applied to the face of the block.}}\n\n{{smaller block|To see the connexion between these two ways of specifying a state of simple shear consider the equilibrium of the parts into which the block may be divided by ideal diagonal planes of section. To balance the forces <math>\\text{QQ}</math> (fig. 5), there must be normal pull on the diagonal plane, the amount of which is <math>\\text{P}=\\text{Q}\\sqrt{2}</math>. But the area of the surface over which <math>\\text{P}</math> acts is greater than that of the surface over which <math>\\text{Q}</math> acts in the proportion which <math>\\text{P}</math> bears to <math>\\text{Q}</math>, and hence the intensity of <math>\\text{P}</math> is the same as the intensity of <math>\\text{Q}</math>.}}\n\n[[File:eb1911 v25 p1034 c2f1.png|center|254px]]\n{{c|{{sc|Fig.}} 5.}}\n\n{{smaller block|Again, taking the other diagonal plane (fig. 6), the same argument applies except that here the normal force <math>\\text{P}</math> required for equilibrium is a push instead of a pull. Thus the state of stress represented in fig. 4 admits of analysis into two equal principal stresses, one of push and one of pull, acting in directions at right angles to one another and inclined at 45° to the planes of shear stress.}}\n\n[[File:eb1911 v25 p1034 c2f2.png|center|138px]]\n{{c|{{sc|Fig.}} 6.}}\n\n{{smaller block|''Equality of Shearing Stress in Two Directions.''—No tangential stress can exist in one direction without an equal intensity of tangential stress existing in another direction at right angles to the first. To prove this it is sufficient to consider the equilibrium of the elementary cube of fig. 4. The tangential forces acting on two sides <math>\\text{A}</math> and <math>\\text{B}</math> produce a couple which tends to rotate the cube. No arrangement of normal stresses on any of the three pairs of sides of the cube can balance this couple; that can be done only by equal tangential forces on <math>\\text{C}</math> and <math>\\text{D}</math>.}}\n\n{{smaller block|''Fluid Stress.''—Another important case occurs when there are three principal stresses all of the same sign and of equal intensity <math>p</math>. The tangential components on any planes cancel each other: the stress on every plane is wholly normal and its intensity is <math>p</math>. This is the only state of stress that can exist in a fluid at rest because a fluid exerts no statical resistance to shear. For this reason the state is often spoken of as a fluid stress.}}\n\n''Strain'' is the change of shape produced by stress. If the stress is a simple longitudinal pull, the strain consists of lengthening in the direction of the pull, accompanied by contraction in both directions at right angles to the pull. If the stress is a simple push, the strain consists of shortening in the direction of the push and expansion in both directions at right angles to that; the stress and the strain are then exactly the reverse of what they are in the case of simple pull. If the stress is one of simple shearing, the strain consists of a distortion such as would be produced by the sliding of layers in the direction of the shearing stresses.\n\nA material is elastic with regard to any applied stress if the strain disappears when the stress is removed. Strain which persists after the stress that produced it is removed is called permanent set. For brevity, it is convenient to speak of strain which disappears when the stress is removed as elastic strain.\n\n''Limits of Elasticity.''—Actual materials are generally very perfectly elastic with regard to small stresses, and very imperfectly elastic with regard to great stresses. If the applied stress is less than a certain limit, the strain is in general small in amount, and disappears wholly, or almost wholly, when the stress is removed. If the applied stress exceeds this limit, the strain is, in general, much greater than before, and most of it is found, when the stress is removed, to consist of permanent set. The<noinclude><references/></noinclude>"
+}

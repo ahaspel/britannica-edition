@@ -1,0 +1,145 @@
+{
+ "volume": 26,
+ "page_number": 730,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n744",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n744",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.05,
+  "column_width": 1151,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     118,
+     134,
+     2327,
+     203
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     118,
+     203,
+     1188,
+     3119
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1188,
+     203,
+     2327,
+     3119
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1842,
+     2262,
+     2268,
+     2851
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|696|TEXTILE-PRINTING|[TECHNOLOGY}}",
+   "c1s1": "",
+   "c2s1": "⟦300⟧ mentioned here because it is, to a slight extent, still used in Switzerland for printing finely engraved borders on a special style of handkerchief the centre of which is afterwards filled in by block-printing.\n\n⟦400⟧ The presses first used were of the ordinary letterpress type, the engraved plate being fixed in the place of the type. In later improvements the well-known cylinder press was employed; the plate was inked mechanically and cleaned off by passing under a sharp blade of steel; and the cloth, instead of being laid on the plate, was passed round the pressure cylinder. The plate was raised into frictional contact with the cylinder and in passing under it transferred its ink to the cloth.\n\n⟦600⟧ The great difficulty in plate-printing was to make the various impressions join up exactly; and, as this could never be done with any certainty, the process was eventually confined to patterns complete in one repeat, such as handkerchiefs, or those made up of widely separated objects in which no repeat is visible, like, for instance, patterns composed of little sprays, spots, &c.\n\n⟦800⟧ (4) ''Roller-Printing, Cylinder-Printing, or Machine-Printing.''—This elegant and efficient process was patented and worked by Bell in 1785 only fifteen years after his application of the engraved plate to textiles. It will probably remain a moot question as to whether he was the originator of the idea, but it is beyond doubt that he was the first man to put into practice the continuous printing of cloth from engraved copper rollers. Bell's first patent was for a machine to print six colours at once, but, owing probably to its incomplete development, this was not immediately successful, although the principle of the method was shown to be practical by the printing of one colour with perfectly satisfactory results. The difficulty was to keep the six rollers, each carrying a portion of the pattern, in perfect register with each other. This defect was soon overcome by Adam Parkinson of Manchester, and in 1785, the year of its invention, Bell's machine with Parkinson's improvement was successfully employed by Messrs Livesey, Hargreaves, Hall & Co., of Bamber Bridge, Preston, for the printing of calico in from two to six colours at a single operation.\n\n⟦1400⟧ What Parkinson's contribution to the development of the modern roller-printing machine really was is not known with certainty, but it was possibly the invention of the delicate adjustment known as \"the box wheel,\" whereby the rollers can be turned, whilst the machine is in motion, either in or against the direction of their rotation.\n\n⟦1600⟧ In its simplest form the roller-printing machine consists of a strong cast iron cylinder mounted in adjustable bearings capable of sliding up and down slots in the sides of the rigid iron framework. Beneath this cylinder the engraved copper roller rests in stationary bearings and is supplied with colour from a wooden roller which revolves in a colour-box below it. The copper roller is mounted on a stout steel axle, at one end of which a cog-wheel is fixed to gear with the driving wheel of the machine, and at the other end a smaller cog-wheel to drive the colour-furnishing roller. The cast iron pressure cylinder is wrapped with several thicknesses of a special material made of wool and cotton—lapping—the object of which is to provide the elasticity necessary to enable it to properly force the cloth to be printed into the lines of engraving. A further and most important appliance is the \"doctor\"—a thin sharp blade of steel which rests on the engraved roller and serves to scrape off every vestige of superfluous colour from its surface, leaving only that which rests in the engraving. On the perfect action of this \"doctor\" depends the entire success of printing, and as its sharpness and angle of inclination to the copper roller varies with the styles of work in hand it requires an expert to \"get it up\" (sharpen it) properly and considerable practical experience to know exactly what qualities it should possess in any given case. In order to prevent it (the \"doctor\") from wearing irregularly it is given a to-and-fro motion so that it is constantly changing its position and is never in contact with one part of the engraving for more than a moment at a time. A second \"doctor\" of brass or a similar alloy is frequently added on the opposite side of the roller to that occupied by the steel or \"cleaning\" doctor; it is known technically as the \"lint doctor\" from its purpose of cleaning off loose filaments or \"lint\" which the roller picks off the cloth during the printing operation. The steel or \"cleaning doctor\" is pressed against the roller by means of weighted\n[[FIGURE]]\n{{c|{{sc|Fig.}} 1.}}\nlevers, but the \"lint doctor\" is usually just allowed to rest upon it by its own weight as its function is merely to intercept the nap which becomes detached from the cloth and would, if not cleaned from the roller, mix with the colour and give rise to defective work.\n\n⟦3100⟧ The working of the machine will be best understood by referring to the accompanying diagrammatic sketch of a single colour (fig. 1)."
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v26 p0730 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1854,
+     2274,
+     2256,
+     2839
+    ],
+    "caption": [
+     1986,
+     2857,
+     2092,
+     2887
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1838,
+     2269,
+     2253,
+     2854
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [
+   "c1s1"
+  ],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 2,
+    "input_tokens": 4975,
+    "output_tokens": 93,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 3880,
+    "output_tokens": 1713,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 7250
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type": {
+   "c1s1": [],
+   "c2s1": [
+    null,
+    "body",
+    "body",
+    "body",
+    "body",
+    "body",
+    null
+   ]
+  },
+  "type_unmeasured": [
+   "c2s1 y300",
+   "c2s1 y3100"
+  ],
+  "sections": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|696|TEXTILE-PRINTING|[TECHNOLOGY}}</noinclude> mentioned here because it is, to a slight extent, still used in Switzerland for printing finely engraved borders on a special style of handkerchief the centre of which is afterwards filled in by block-printing.\n\nThe presses first used were of the ordinary letterpress type, the engraved plate being fixed in the place of the type. In later improvements the well-known cylinder press was employed; the plate was inked mechanically and cleaned off by passing under a sharp blade of steel; and the cloth, instead of being laid on the plate, was passed round the pressure cylinder. The plate was raised into frictional contact with the cylinder and in passing under it transferred its ink to the cloth.\n\nThe great difficulty in plate-printing was to make the various impressions join up exactly; and, as this could never be done with any certainty, the process was eventually confined to patterns complete in one repeat, such as handkerchiefs, or those made up of widely separated objects in which no repeat is visible, like, for instance, patterns composed of little sprays, spots, &c.\n\n(4) ''Roller-Printing, Cylinder-Printing, or Machine-Printing.''—This elegant and efficient process was patented and worked by Bell in 1785 only fifteen years after his application of the engraved plate to textiles. It will probably remain a moot question as to whether he was the originator of the idea, but it is beyond doubt that he was the first man to put into practice the continuous printing of cloth from engraved copper rollers. Bell's first patent was for a machine to print six colours at once, but, owing probably to its incomplete development, this was not immediately successful, although the principle of the method was shown to be practical by the printing of one colour with perfectly satisfactory results. The difficulty was to keep the six rollers, each carrying a portion of the pattern, in perfect register with each other. This defect was soon overcome by Adam Parkinson of Manchester, and in 1785, the year of its invention, Bell's machine with Parkinson's improvement was successfully employed by Messrs Livesey, Hargreaves, Hall & Co., of Bamber Bridge, Preston, for the printing of calico in from two to six colours at a single operation.\n\nWhat Parkinson's contribution to the development of the modern roller-printing machine really was is not known with certainty, but it was possibly the invention of the delicate adjustment known as \"the box wheel,\" whereby the rollers can be turned, whilst the machine is in motion, either in or against the direction of their rotation.\n\nIn its simplest form the roller-printing machine consists of a strong cast iron cylinder mounted in adjustable bearings capable of sliding up and down slots in the sides of the rigid iron framework. Beneath this cylinder the engraved copper roller rests in stationary bearings and is supplied with colour from a wooden roller which revolves in a colour-box below it. The copper roller is mounted on a stout steel axle, at one end of which a cog-wheel is fixed to gear with the driving wheel of the machine, and at the other end a smaller cog-wheel to drive the colour-furnishing roller. The cast iron pressure cylinder is wrapped with several thicknesses of a special material made of wool and cotton—lapping—the object of which is to provide the elasticity necessary to enable it to properly force the cloth to be printed into the lines of engraving. A further and most important appliance is the \"doctor\"—a thin sharp blade of steel which rests on the engraved roller and serves to scrape off every vestige of superfluous colour from its surface, leaving only that which rests in the engraving. On the perfect action of this \"doctor\" depends the entire success of printing, and as its sharpness and angle of inclination to the copper roller varies with the styles of work in hand it requires an expert to \"get it up\" (sharpen it) properly and considerable practical experience to know exactly what qualities it should possess in any given case. In order to prevent it (the \"doctor\") from wearing irregularly it is given a to-and-fro motion so that it is constantly changing its position and is never in contact with one part of the engraving for more than a moment at a time. A second \"doctor\" of brass or a similar alloy is frequently added on the opposite side of the roller to that occupied by the steel or \"cleaning\" doctor; it is known technically as the \"lint doctor\" from its purpose of cleaning off loose filaments or \"lint\" which the roller picks off the cloth during the printing operation. The steel or \"cleaning doctor\" is pressed against the roller by means of weighted levers, but the \"lint doctor\" is usually just allowed to rest upon it by its own weight as its function is merely to intercept the nap which becomes detached from the cloth and would, if not cleaned from the roller, mix with the colour and give rise to defective work.\n\n[[File:eb1911 v26 p0730 c2f1.png|center|133px]]\n{{c|{{sc|Fig.}} 1.}}\n\nThe working of the machine will be best understood by referring to the accompanying diagrammatic sketch of a single colour (fig. 1).<noinclude><references/></noinclude>"
+}

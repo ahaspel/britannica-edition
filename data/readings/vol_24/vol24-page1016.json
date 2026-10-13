@@ -1,0 +1,153 @@
+{
+ "volume": 24,
+ "page_number": 1016,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1026",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1026",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 1079,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     86,
+     129,
+     2223,
+     198
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     86,
+     198,
+     1154,
+     3119
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     86,
+     2233,
+     816,
+     2971
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1154,
+     198,
+     2223,
+     3119
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|948|SHIPBUILDING|[PROPULSION}}",
+   "c1s1": "⟦200⟧{{smaller block|Mr R. E. Froude in 1908, it is probable that the effect of friction would be in the direction of giving higher efficiencies for large screws than for small. The results obtained with ships' propellers are in general accordance with those deduced from model propellers, although the difficulties inherent to carrying out experiments with full-sized screws have hitherto prevented as exact a comparison being made as was done with resistance in the trials of the \"Greyhound\" and her model. Results of model experiments have been given by Mr R. E. Froude, Mr. D. W. Taylor, Sir John Thornycroft and others; of these a very complete series was made by Mr R. E. Froude, an account of which appears in ''Trans. Inst. Nav. Archs.'', 1908. Propellers of three and four blades, of pitch ratios varying from 0·8 to 1·5, and with blades of various widths and forms were successively tried, the slip ratio varying from zero to about 0·45. In each case the screw advanced through undisturbed water; the diameter was uniformly 0·8 ft., the immersion to centre of shaft 0·64 ft., and the speed of advance 300 ft. per minute. Curves are given in the paper which express the results in a form convenient for application. Assuming as in Froude's theory that the normal pressure on a blade element varies with the area, the angle of incidence, and the square of the speed, the thrust <math>\\text{T}</math> would be given by a formula such as\n{{block center|<math>\\text{T} = a\\,\\text{R}^2 - b\\text{R}</math>}}\nwhere <math>\\text{R}</math> is the number of revolutions per unit time.}}\n\n⟦1000⟧{{smaller block|On rationalising the dimensions, and substituting for <math>\\text{R}</math> in terms of the slip ratio <math>s</math>, the \"conventional\" pitch ratio <math>p</math>, the diameter <math>\\text{D}</math>, and the speed of advance <math>\\text{V}</math>, this relation becomes:\n{{block center|<math>\\text{T} = \\frac{a}{p^2}\\,\\text{D}^2\\text{V}^2\\frac{s}{(1-s)^2}.</math>}}}}\n\n⟦1100⟧{{smaller block|From the experiments the coefficient <math>a</math> was determined, and the final empirical formula below was obtained—\n{{block center|<math>\\text{T} = \\text{D}^2\\text{V}^2 \\times \\text{B}\\,\\frac{p+21}{p} \\times \\frac{1{\\cdot}02s(1-{\\cdot}08s)}{(1-s)^2}</math>}}\n{{block center|or <math>\\text{H} = {\\cdot}003216\\ \\text{D}^2\\text{V}^3 \\times \\text{B}{\\cdot}\\,\\frac{p+21}{p} \\times s\\,\\frac{(1-{\\cdot}08s)}{(1-s)^2}</math>}}\nwhere <math>\\text{H}</math> is the thrust horse-power, <math>\\text{R}</math> the revolutions in hundreds per minute, <math>\\text{V}</math> is in knots, and <math>\\text{D}</math> in feet. The \"blade factor\" <math>\\text{B}</math> depends only on the type and number of blades; its value for various \"disk area ratios,\" ''i.e.'' ratio of total blade area (assuming the blade to extend to the centre of shaft) to the area of a circle of diameter <math>\\text{D}</math> is given in the following table:—}}\n{|\n|Disk area ratio . .||·30||·40||·50||·60||·70||·80\n|-\n|B for 3 blades elliptical||·0978||·1050||·1085||·1112||·1135||·1157\n|-\n|B for 3 blades, wide tip||·1045||·1126||·1166||·1195||·1218||·1242\n|-\n|B for 4 blades, elliptical||·1040||·1159||·1227||·1268||·1294||·1318\n|}\n{{smaller block|The ratio of the ordinates of the wide tip blades to those of the elliptical blades varies as <math>\\tfrac{1}{2} + \\frac{2r}{\\text{D}}</math>, where <math>r</math> is the radius from centre of shaft.}}\n\n⟦2100⟧{{smaller block|Curves of propeller efficiency on a base of slip ratio are drawn in fig. 53; these are correct for a 3-bladed elliptical screw of disk area\n[[FIGURE]]\n{{c|{{sc|Fig.}} 53.—Curves of Screw Propeller Efficiency.}}\nratio 0·45; a uniform deduction from the efficiency obtained by the curves of ·02 for a 3-bladed wide tip and ·012 for a 4-bladed elliptical screw must be made. Efficiency corrections for different disk area ratios have also to be applied; for a disk ratio of 0·70 the deductions are ·06, ·035, ·02 and ·01 with pitch ratios of 0·8, 1·0, 1·2 and 1·4 respectively; for other disk ratios, the deduction is roughly proportional to (disk ratio−0·45), a slight increase in efficiency being obtained for low values of the disk ratio. A skew-back of the blades to an angle of 15° was found to make no material difference to the results}}",
+   "c2s1": "¶\n⟦200⟧{{smaller block|Hitherto, the theoretical and experimental considerations of the screw have been made under the convention that the propeller is advanced into undisturbed or “open” water, which conditions are very different from those existing\n{{EB1911 Shoulder Heading|Inter-action between ship and screw.}}\nbehind the ship. The vessel is followed by a body of water in complex motion and the assumption usually made is that the “wake,” as it is termed, can be considered to have a uniform forward velocity <math>\\text{V}'</math> over the propeller disk.}}\n\n⟦500⟧If <math>\\text{V}</math> be the speed of the ship, the velocity of the propeller relative to the water in which it works, ''i.e.'' the speed of advance of the propeller is <math>\\text{V}-\\text{V}'</math>. The value of the wake velocity is given by the ratio <math>\\frac{\\text{V}'}{\\text{V}-\\text{V}'}=w</math>, which is termed the ''wake value.''\n\n⟦700⟧The propeller behaves generally the same as a screw advancing into “open” water at speed <math>\\text{V}-\\text{V}'</math> instead of at speed <math>\\text{V}</math> and the real slip is <math>v-(\\text{V}-\\text{V}')=v-\\frac{\\text{V}}{1+w}</math>. The real slip is greater than the apparent slip <math>v-\\text{V}</math>, since in general <math>w</math> is a positive fraction; and the real slip must be taken into account in the design of propeller dimensions.\n\n⟦900⟧{{smaller block|On the other hand the influence of the screw extends sufficiently far forward to cause a diminution of pressure on the after part of the ship, thereby causing an increase in resistance. The thrust <math>\\text{T}</math>, given by the screw working behind the ship, must be sufficient to balance the tow-rope resistance <math>\\text{R}</math> and the resistance caused by the diminution in pressure. If this diminution of pressure be expressed as a fraction <math>t</math> of the thrust exerted by the screw then <math>\\text{T}(1-t)=\\text{R}</math>.}}\n\n⟦1200⟧The power exerted by the propeller or the thrust horse-power is proportional to <math>\\text{T}\\times(\\text{V}-\\text{V}')</math>; the effective or tow rope horse-power is <math>\\text{R}\\times\\text{V}</math>, and the ratio of these two powers <math>\\frac{\\text{RV}}{\\text{T}(\\text{V}-\\text{V}')}=(1-t)(1+w)</math> is termed the ''hull efficiency''.\n\n⟦1400⟧{{smaller block|It is evident that the first factor <math>(1+w)</math> represents the power regained from the wake, which is itself due to the resistance of the ship. As the wake velocity is usually a maximum close to the stern, the increase of <math>w</math> obtained through placing the screw in a favourable position is generally accompanied by an increase in <math>t</math>; for this reason the hull efficiency does not differ greatly from unity with different positions of the screw. Model screw experiments with and without a ship are frequently made to determine the values of <math>w</math>, <math>t</math>, and the hull efficiency for new designs; a number of results for different ships, together with an account of some interesting experiments on the effect of varying the speed, position of screw, pitch ratio, direction of rotation, &c., are given in a paper read at the Institution of Naval Architects in 1910 by Mr W. J. Luke.}}\n\n⟦1800⟧{{smaller block|The total propelling efficiency or propulsive coefficient (<math>p</math>) is the ratio of the effective horse-power (<math>\\text{RV}</math>) to the indicated horse-power, or in turbine-driven ships to the shaft horse-power as determined from the torque on the shaft. In addition to the factor “hull efficiency,” it includes the losses due to engine friction, shaft friction, and the propeller. Its value is generally about 0·5, the efficiencies of the propeller and of the engine and shafting being about 65 and 80% respectively. The engine losses are eliminated in the propulsive coefficient as measured in a ship with steam turbines; but the higher rate of revolutions there adopted causes a reduction in the propeller efficiency usually sufficient to keep the value of the propulsive coefficient about the same as in ships with reciprocating engines.}}\n\n⟦2200⟧{{smaller block|The table on the following page gives approximate values of <math>w</math>, <math>t</math>, and <math>p</math> in some ships of various types.}}\n\n⟦2300⟧{{smaller block|The action of a screw propeller is believed to involve the acceleration of the water in the race before reaching the screw, which is necessarily accompanied by a diminution of pressure;\n{{EB1911 Shoulder Heading|Cavitation.}}\nand it is quite conceivable that the pressure may be reduced below the amount which would preserve the natural flow of water to the screw. This would occur at small depths of immersion where the original pressure is low, and with relatively small blade-areas in relation to the thrust, when the acceleration is rapid; and it is in conjunction with these circumstances that so-called “cavitation” is generally experienced. It is accompanied by excessive slip, and a reduction in thrust; experiments on the torpedo-boat destroyer “Daring,” made by Mr S. W. Barnaby in 1894,<sup>1</sup> showed that cavitation occurred when the thrust per square inch of projected blade area exceeded a certain amount (11½ ℔). Further trials have shown that the conditions under which cavitation is produced depend upon the depth of immersion and other factors, the critical pressure causing cavitation varying to some extent with the type of ship and with the details of the propeller; the phenomenon, however, provides a lower limit to the area of the screw below which irregularity in thrust may be expected, and the data for other screws (whether model or full-size) become inapplicable.}}\n\n⟦3000⟧{{smaller block|<sup>1</sup> ''Trans. I.N.A.'' 1897 (vol. xxxix.).}}"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1016 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     90,
+     2245,
+     804,
+     2959
+    ],
+    "caption": [
+     86,
+     2965,
+     810,
+     3005
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     93,
+     2241,
+     815,
+     2956
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4879,
+    "output_tokens": 100,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6935,
+    "output_tokens": 6812,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 10875
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type": {
+   "c1s1": [
+    "small",
+    null,
+    "small",
+    "small"
+   ],
+   "c2s1": [
+    "small",
+    "small",
+    null,
+    "small",
+    null,
+    "small",
+    "small",
+    null,
+    "small",
+    "small"
+   ]
+  },
+  "type_unmeasured": [
+   "c1s1 y1000",
+   "c2s1 y700",
+   "c2s1 y1200",
+   "c2s1 y2200"
+  ],
+  "sections": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|948|SHIPBUILDING|[PROPULSION}}</noinclude>{{smaller block|Mr R. E. Froude in 1908, it is probable that the effect of friction would be in the direction of giving higher efficiencies for large screws than for small. The results obtained with ships' propellers are in general accordance with those deduced from model propellers, although the difficulties inherent to carrying out experiments with full-sized screws have hitherto prevented as exact a comparison being made as was done with resistance in the trials of the \"Greyhound\" and her model. Results of model experiments have been given by Mr R. E. Froude, Mr. D. W. Taylor, Sir John Thornycroft and others; of these a very complete series was made by Mr R. E. Froude, an account of which appears in ''Trans. Inst. Nav. Archs.'', 1908. Propellers of three and four blades, of pitch ratios varying from 0·8 to 1·5, and with blades of various widths and forms were successively tried, the slip ratio varying from zero to about 0·45. In each case the screw advanced through undisturbed water; the diameter was uniformly 0·8 ft., the immersion to centre of shaft 0·64 ft., and the speed of advance 300 ft. per minute. Curves are given in the paper which express the results in a form convenient for application. Assuming as in Froude's theory that the normal pressure on a blade element varies with the area, the angle of incidence, and the square of the speed, the thrust <math>\\text{T}</math> would be given by a formula such as\n{{block center|<math>\\text{T} = a\\,\\text{R}^2 - b\\text{R}</math>}}\nwhere <math>\\text{R}</math> is the number of revolutions per unit time.}}\n\n{{smaller block|On rationalising the dimensions, and substituting for <math>\\text{R}</math> in terms of the slip ratio <math>s</math>, the \"conventional\" pitch ratio <math>p</math>, the diameter <math>\\text{D}</math>, and the speed of advance <math>\\text{V}</math>, this relation becomes:\n{{block center|<math>\\text{T} = \\frac{a}{p^2}\\,\\text{D}^2\\text{V}^2\\frac{s}{(1-s)^2}.</math>}}}}\n\n{{smaller block|From the experiments the coefficient <math>a</math> was determined, and the final empirical formula below was obtained—\n{{block center|<math>\\text{T} = \\text{D}^2\\text{V}^2 \\times \\text{B}\\,\\frac{p+21}{p} \\times \\frac{1{\\cdot}02s(1-{\\cdot}08s)}{(1-s)^2}</math>}}\n{{block center|or <math>\\text{H} = {\\cdot}003216\\ \\text{D}^2\\text{V}^3 \\times \\text{B}{\\cdot}\\,\\frac{p+21}{p} \\times s\\,\\frac{(1-{\\cdot}08s)}{(1-s)^2}</math>}}\nwhere <math>\\text{H}</math> is the thrust horse-power, <math>\\text{R}</math> the revolutions in hundreds per minute, <math>\\text{V}</math> is in knots, and <math>\\text{D}</math> in feet. The \"blade factor\" <math>\\text{B}</math> depends only on the type and number of blades; its value for various \"disk area ratios,\" ''i.e.'' ratio of total blade area (assuming the blade to extend to the centre of shaft) to the area of a circle of diameter <math>\\text{D}</math> is given in the following table:—}}\n\n{| style=\"margin:auto\"\n|Disk area ratio . .||·30||·40||·50||·60||·70||·80\n|-\n|B for 3 blades elliptical||·0978||·1050||·1085||·1112||·1135||·1157\n|-\n|B for 3 blades, wide tip||·1045||·1126||·1166||·1195||·1218||·1242\n|-\n|B for 4 blades, elliptical||·1040||·1159||·1227||·1268||·1294||·1318\n|}\n\n{{smaller block|The ratio of the ordinates of the wide tip blades to those of the elliptical blades varies as <math>\\tfrac{1}{2} + \\frac{2r}{\\text{D}}</math>, where <math>r</math> is the radius from centre of shaft.}}\n\n{{smaller block|Curves of propeller efficiency on a base of slip ratio are drawn in fig. 53; these are correct for a 3-bladed elliptical screw of disk area ratio 0·45; a uniform deduction from the efficiency obtained by the curves of ·02 for a 3-bladed wide tip and ·012 for a 4-bladed elliptical screw must be made.}}\n\n[[File:eb1911 v24 p1016 c1f1.png|center|244px]]\n{{c|{{sc|Fig.}} 53.—Curves of Screw Propeller Efficiency.}}\n\n{{smaller block|Efficiency corrections for different disk area ratios have also to be applied; for a disk ratio of 0·70 the deductions are ·06, ·035, ·02 and ·01 with pitch ratios of 0·8, 1·0, 1·2 and 1·4 respectively; for other disk ratios, the deduction is roughly proportional to (disk ratio−0·45), a slight increase in efficiency being obtained for low values of the disk ratio. A skew-back of the blades to an angle of 15° was found to make no material difference to the results}}\n\n{{smaller block|Hitherto, the theoretical and experimental considerations of the screw have been made under the convention that the propeller is advanced into undisturbed or “open” water, which conditions are very different from those existing\n{{EB1911 Shoulder Heading|Inter-action between ship and screw.}}\nbehind the ship. The vessel is followed by a body of water in complex motion and the assumption usually made is that the “wake,” as it is termed, can be considered to have a uniform forward velocity <math>\\text{V}'</math> over the propeller disk.}}\n\n{{smaller block|If <math>\\text{V}</math> be the speed of the ship, the velocity of the propeller relative to the water in which it works, ''i.e.'' the speed of advance of the propeller is <math>\\text{V}-\\text{V}'</math>. The value of the wake velocity is given by the ratio <math>\\frac{\\text{V}'}{\\text{V}-\\text{V}'}=w</math>, which is termed the ''wake value.''}}\n\nThe propeller behaves generally the same as a screw advancing into “open” water at speed <math>\\text{V}-\\text{V}'</math> instead of at speed <math>\\text{V}</math> and the real slip is <math>v-(\\text{V}-\\text{V}')=v-\\frac{\\text{V}}{1+w}</math>. The real slip is greater than the apparent slip <math>v-\\text{V}</math>, since in general <math>w</math> is a positive fraction; and the real slip must be taken into account in the design of propeller dimensions.\n\n{{smaller block|On the other hand the influence of the screw extends sufficiently far forward to cause a diminution of pressure on the after part of the ship, thereby causing an increase in resistance. The thrust <math>\\text{T}</math>, given by the screw working behind the ship, must be sufficient to balance the tow-rope resistance <math>\\text{R}</math> and the resistance caused by the diminution in pressure. If this diminution of pressure be expressed as a fraction <math>t</math> of the thrust exerted by the screw then <math>\\text{T}(1-t)=\\text{R}</math>.}}\n\nThe power exerted by the propeller or the thrust horse-power is proportional to <math>\\text{T}\\times(\\text{V}-\\text{V}')</math>; the effective or tow rope horse-power is <math>\\text{R}\\times\\text{V}</math>, and the ratio of these two powers <math>\\frac{\\text{RV}}{\\text{T}(\\text{V}-\\text{V}')}=(1-t)(1+w)</math> is termed the ''hull efficiency''.\n\n{{smaller block|It is evident that the first factor <math>(1+w)</math> represents the power regained from the wake, which is itself due to the resistance of the ship. As the wake velocity is usually a maximum close to the stern, the increase of <math>w</math> obtained through placing the screw in a favourable position is generally accompanied by an increase in <math>t</math>; for this reason the hull efficiency does not differ greatly from unity with different positions of the screw. Model screw experiments with and without a ship are frequently made to determine the values of <math>w</math>, <math>t</math>, and the hull efficiency for new designs; a number of results for different ships, together with an account of some interesting experiments on the effect of varying the speed, position of screw, pitch ratio, direction of rotation, &c., are given in a paper read at the Institution of Naval Architects in 1910 by Mr W. J. Luke.}}\n\n{{smaller block|The total propelling efficiency or propulsive coefficient (<math>p</math>) is the ratio of the effective horse-power (<math>\\text{RV}</math>) to the indicated horse-power, or in turbine-driven ships to the shaft horse-power as determined from the torque on the shaft. In addition to the factor “hull efficiency,” it includes the losses due to engine friction, shaft friction, and the propeller. Its value is generally about 0·5, the efficiencies of the propeller and of the engine and shafting being about 65 and 80% respectively. The engine losses are eliminated in the propulsive coefficient as measured in a ship with steam turbines; but the higher rate of revolutions there adopted causes a reduction in the propeller efficiency usually sufficient to keep the value of the propulsive coefficient about the same as in ships with reciprocating engines.}}\n\n{{smaller block|The table on the following page gives approximate values of <math>w</math>, <math>t</math>, and <math>p</math> in some ships of various types.}}\n\n{{smaller block|The action of a screw propeller is believed to involve the acceleration of the water in the race before reaching the screw, which is necessarily accompanied by a diminution of pressure;\n{{EB1911 Shoulder Heading|Cavitation.}}\nand it is quite conceivable that the pressure may be reduced below the amount which would preserve the natural flow of water to the screw. This would occur at small depths of immersion where the original pressure is low, and with relatively small blade-areas in relation to the thrust, when the acceleration is rapid; and it is in conjunction with these circumstances that so-called “cavitation” is generally experienced. It is accompanied by excessive slip, and a reduction in thrust; experiments on the torpedo-boat destroyer “Daring,” made by Mr S. W. Barnaby in 1894,<ref>''Trans. I.N.A.'' 1897 (vol. xxxix.).</ref> showed that cavitation occurred when the thrust per square inch of projected blade area exceeded a certain amount (11½ ℔). Further trials have shown that the conditions under which cavitation is produced depend upon the depth of immersion and other factors, the critical pressure causing cavitation varying to some extent with the type of ship and with the details of the propeller; the phenomenon, however, provides a lower limit to the area of the screw below which irregularity in thrust may be expected, and the data for other screws (whether model or full-size) become inapplicable.}}<noinclude><references/></noinclude>"
+}

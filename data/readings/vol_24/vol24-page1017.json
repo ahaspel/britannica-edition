@@ -1,0 +1,241 @@
+{
+ "volume": 24,
+ "page_number": 1017,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1027",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1027",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.35,
+  "column_width": 1063,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     107,
+     125,
+     2254,
+     195
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     107,
+     213,
+     2254,
+     874
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     107,
+     874,
+     1179,
+     3243
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     107,
+     2478,
+     771,
+     3004
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1179,
+     874,
+     2254,
+     3243
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1601,
+     1045,
+     2237,
+     1493
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1596,
+     1705,
+     2253,
+     2141
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c0s1": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1017 c1f1.png",
+   "c2f1": "eb1911 v24 p1017 c2f1.png",
+   "c2f2": "eb1911 v24 p1017 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1613,
+     1057,
+     2225,
+     1481
+    ],
+    "caption": [
+     1649,
+     1493,
+     2211,
+     1559
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1612,
+     1041,
+     2263,
+     1479
+    ]
+   },
+   {
+    "box": [
+     1608,
+     1717,
+     2241,
+     2129
+    ],
+    "caption": [
+     1628,
+     2136,
+     2220,
+     2201
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1594,
+     1709,
+     2263,
+     2126
+    ]
+   },
+   {
+    "box": [
+     119,
+     2490,
+     759,
+     2992
+    ],
+    "caption": [
+     371,
+     2996,
+     496,
+     3034
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     100,
+     2480,
+     764,
+     3023
+    ]
+   }
+  ],
+  "across": [
+   [
+    122,
+    215,
+    1887,
+    788
+   ],
+   [
+    159,
+    793,
+    1811,
+    877
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 5,
+    "input_tokens": 13732,
+    "output_tokens": 430,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (2)",
+   "across the gutter: table (top): propulsion coefficient table spans both columns",
+   "across the gutter: caption (top): table footnotes run across both columns",
+   "across the gutter: text (top): right-column text beside table continues into left column area"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "propulsion coefficient table spans both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "table footnotes run across both columns"
+   },
+   {
+    "kind": "text",
+    "where": "top",
+    "detail": "right-column text beside table continues into left column area"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n \n\n[[File:eb1911 v24 p1017 c1f1.png|center|225px]]\n\n[[File:eb1911 v24 p1017 c2f1.png|center|215px]]\n\n[[File:eb1911 v24 p1017 c2f2.png|center|223px]]<noinclude><references/></noinclude>"
+}

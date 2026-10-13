@@ -1,0 +1,214 @@
+{
+ "volume": 24,
+ "page_number": 1041,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1059",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1059",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.4,
+  "column_width": 1109,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     68,
+     149,
+     2240,
+     219
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     68,
+     219,
+     1161,
+     3157
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     90,
+     570,
+     1161,
+     2002
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1161,
+     219,
+     2240,
+     3157
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1254,
+     2108,
+     2180,
+     3022
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1041 c1f1.png",
+   "c2f1": "eb1911 v24 p1041 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     166,
+     583,
+     1184,
+     1523
+    ],
+    "caption": null,
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     210,
+     571,
+     690,
+     1173
+    ]
+   },
+   {
+    "box": [
+     102,
+     582,
+     1184,
+     1988
+    ],
+    "caption": [
+     918,
+     1701,
+     1061,
+     1735
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     690,
+     580,
+     1301,
+     1682
+    ]
+   },
+   {
+    "box": [
+     105,
+     1230,
+     589,
+     1990
+    ],
+    "caption": [
+     231,
+     1916,
+     401,
+     1945
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     133,
+     1217,
+     690,
+     1881
+    ]
+   },
+   {
+    "box": [
+     1266,
+     2120,
+     2168,
+     3010
+    ],
+    "caption": [
+     1639,
+     3022,
+     1785,
+     3057
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1257,
+     2118,
+     2226,
+     2999
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 5,
+    "input_tokens": 11625,
+    "output_tokens": 998,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: illustration (top): Fig. 104 sheer-plan level lines and 3L/2L/1L labels extend past gutter",
+   "across the gutter: illustration (middle): Fig. 104 half-breadth lines, MIDDLE LINE label extend into right column"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "top",
+    "detail": "Fig. 104 sheer-plan level lines and 3L/2L/1L labels extend past gutter"
+   },
+   {
+    "kind": "illustration",
+    "where": "middle",
+    "detail": "Fig. 104 half-breadth lines, MIDDLE LINE label extend into right column"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n[[File:eb1911 v24 p1041 c1f1.png|center|348px]]\n\n[[File:eb1911 v24 p1041 c2f1.png|center|301px]]<noinclude><references/></noinclude>"
+}

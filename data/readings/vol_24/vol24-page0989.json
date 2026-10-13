@@ -1,0 +1,255 @@
+{
+ "volume": 24,
+ "page_number": 989,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n999",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n999",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": -0.05,
+  "column_width": 1092,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     114,
+     118,
+     2265,
+     188
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     114,
+     188,
+     1184,
+     3125
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     114,
+     510,
+     1178,
+     1266
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     124,
+     1789,
+     1160,
+     2596
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1184,
+     188,
+     2265,
+     3125
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1213,
+     719,
+     2251,
+     1193
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1235,
+     2029,
+     2265,
+     2529
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|THEORETICAL]|SHIPBUILDING|927}}",
+   "c1s1": "¶\n⟦200⟧5. From the cross curves, curves of stability on a base of angle of inclination can be constructed for any required displacement, allowance being made for the position of <math>\\text{G}</math> by adding to, or subtracting from, each ordinate, the quantity <math>\\text{GS}'\\sin\\alpha</math> according as <math>\\text{G}</math> is below or above <math>\\text{S}'</math>.\n\n⟦300⟧A typical set of cross curves of stability for a battleship of about 18,000 tons displacement is shown in fig. 9. It will be observed that the righting levers decrease with an increase of displacement; and this is a general characteristic of the cross curves for ships of ordinary\n[[FIGURE]]\n{{c|{{sc|Fig.}} 11.—Curves of Stability of a Merchant Vessel.}}\nform. The additional weights that constitute the difference between light and deep load (''i.e.'' cargo, coal, stores and water) are generally placed low down, and thus the position of the centre of gravity is usually lower when loaded than when light, causing an increase of stability which frequently more than compensates for the loss of stability indicated by the cross curves.\n\n⟦1500⟧The stability curves for the same vessel are reproduced in fig. 10. It is customary in warships to draw separate curves for three conditions: (''a'') normal load, ''i.e.'' fully equipped with bunkers about half full, and reserve feed tanks empty; (''b'') deep load with all bunkers and tanks full; (''c'') light with all coal, water (except in boilers), ammunition, provisions and consumable stores removed.\n\n⟦1700⟧The curves for a cargo or passenger ship are generally drawn for the condition when light, when fully laden with passengers or with a\n[[FIGURE]]\n{{c|{{sc|Fig.}} 12.—Curves of Stability of a Box-shaped Vessel showing the influence of beam and freeboard.}}\nhomogeneous cargo, and sometimes for an intermediate condition; typical curves are given in fig. 11.\n\n⟦2700⟧Stability curves are obtained on the assumptions—\n\n⟦2800⟧1. That all openings in the upper deck, forecastle and poop (if any) are covered in and made watertight; and the buoyancy of any erections above these decks is generally neglected.\n\n⟦2900⟧2. That the side of the ship is intact up to the upper deck, all side scuttles, ports or other openings being closed.\n\n⟦2900⟧3. That all weights in the ship are absolutely fixed.\n\n⟦3000⟧4. That no changes of trim occur during the inclination.\n\n⟦3000⟧In some cases curves are drawn (''a'') with forecastle and poop intact, (''b'') with these thrown open to the sea, the latter condition being more commonly considered.",
+   "c2s1": "¶\n⟦200⟧The slope of the stability curve for small angles, the maximum righting lever with the angle at which it occurs, and the range or the inclination at which the stability vanishes are of particular interest, inasmuch as the curve depends principally on these features; and the effect on them, particulars of variation of freeboard, breadth and position of centre of gravity, is considered below.\n\n⟦400⟧The stability curve AA (fig. 12) is drawn for a box-shaped vessel of draught 10 ft., freeboard 10 ft. and beam 30 ft.; with C.G. in the water-plane. The curves EE, FF, GG are drawn for the\n{{EB1911 Shoulder Heading|Effect of freeboard.}}\nsame vessel, but with freeboard altered to 12½, 7½ and 5 ft. respectively; it will be observed that freeboard has no influence on the stability at small angles, but has a marked effect on the range and maximum righting lever. An increase of freeboard is generally accompanied by a rise in the position of the centre of gravity; this is not included in the curves, but would actually reduce\n[[FIGURE]]\n{{c|{{sc|Fig.}} 13.—Curves of Stability of “Monarch” and “Captain.”}}\nthe stability to some extent. The effect of freeboard on the range and on the safety of ships is also illustrated by a comparison between the curves of stability (fig. 13) of the armoured turret ships “Monarch” and “Captain,” the latter of which was lost at sea in 1870. These vessels were similar in construction and dimensions except that the freeboard of the “Monarch” was 14′ 0″ and that of the “Captain” 6′ 6″; the smaller freeboard of the “Captain” was associated with a slightly lower position of the centre of gravity and a greater metacentric height. The stability curve of the “Captain” in consequence rises rather more steeply than that of the “Monarch” up to about 14° when the deck edge is immersed; the righting lever then rapidly declines, and vanishes at 54½°, in contrast to the “Monarch’s,” where the maximum righting lever is doubled and range augmented 1·3 times by the additional freeboard. For the influence of the range in enabling a ship to withstand a suddenly applied force see “Dynamical Stability.”\n\n⟦1800⟧Again, for the box-shaped vessel previously considered, if the breadth is modified successively from 30 ft. to 35, 25 and 20 ft., other features remaining unaltered, the curves of stability then\n{{EB1911 Shoulder Heading|Effect of beam.}}\nobtained are represented by BB, CC and DD in fig. 12. It is seen that alteration in beam affects principally the stability levers at moderate angles of inclination, while at 90° inclination the curves all intersect. Since at small angles <math>\\text{GZ}=\\text{GM}.\\theta</math> (in circular\n[[FIGURE]]\n{{c|{{sc|Fig.}} 14.—Curves of Stability of a Steam Yacht showing effect of variation in height of centre of gravity.}}\nmeasure) approximately, the initial slope of the curve is proportional to GM, and the tangent to this curve at the origin can be drawn by setting by the value of GM as an ordinate to an angle of one radian (57·3°) as abscissa, and joining the point to the origin. (See figs. 10 and 11.) The height of the metacentre above the centre of buoyancy will, ''caeteris paribus'', vary with the cube of the breadth, and an increase of beam will result in a large increase of stability at moderate angles.\n\n⟦2900⟧Finally the effect of an alteration in the vertical position of the centre of gravity is illustrated by the three stability curves of a steam yacht in fig. 14, where the centre of gravity is\n{{EB1911 Shoulder Heading|Effect of position of C.G.}}\nsuccessively raised 1 ft. In the condition corresponding to the fourth and lowest curve, the GM is negative (—·2 ft.) and so also are the righting levers up to 15° when the curve crosses the axis; from 15° to about 52° the GZ is positive, but above"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p0989 c1f1.png",
+   "c1f2": "eb1911 v24 p0989 c1f2.png",
+   "c2f1": "eb1911 v24 p0989 c2f1.png",
+   "c2f2": "eb1911 v24 p0989 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     118,
+     522,
+     1166,
+     1254
+    ],
+    "caption": [
+     242,
+     1262,
+     1046,
+     1300
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     155,
+     516,
+     1156,
+     1114
+    ]
+   },
+   {
+    "box": [
+     1225,
+     731,
+     2239,
+     1181
+    ],
+    "caption": [
+     1239,
+     1189,
+     2221,
+     1229
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1222,
+     715,
+     2248,
+     1185
+    ]
+   },
+   {
+    "box": [
+     136,
+     1801,
+     1148,
+     2584
+    ],
+    "caption": [
+     148,
+     2596,
+     1132,
+     2665
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     128,
+     1798,
+     1156,
+     2584
+    ]
+   },
+   {
+    "box": [
+     1247,
+     2041,
+     2255,
+     2517
+    ],
+    "caption": [
+     1221,
+     2527,
+     2239,
+     2593
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1218,
+     2039,
+     2248,
+     2462
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    3
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 5,
+    "input_tokens": 11446,
+    "output_tokens": 355,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 7027,
+    "output_tokens": 4087,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 10875
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type": {
+   "c1s1": [
+    null,
+    "body",
+    "body",
+    "body",
+    null,
+    null,
+    "body",
+    null,
+    "body",
+    "body"
+   ],
+   "c2s1": [
+    "body",
+    "body",
+    "body",
+    "body"
+   ]
+  },
+  "type_unmeasured": [
+   "c1s1 y200",
+   "c1s1 y2700",
+   "c1s1 y2800",
+   "c1s1 y2900"
+  ],
+  "sections": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|THEORETICAL]|SHIPBUILDING|927}}</noinclude>5. From the cross curves, curves of stability on a base of angle of inclination can be constructed for any required displacement, allowance being made for the position of <math>\\text{G}</math> by adding to, or subtracting from, each ordinate, the quantity <math>\\text{GS}'\\sin\\alpha</math> according as <math>\\text{G}</math> is below or above <math>\\text{S}'</math>.\n\nA typical set of cross curves of stability for a battleship of about 18,000 tons displacement is shown in fig. 9. It will be observed that the righting levers decrease with an increase of displacement; and this is a general characteristic of the cross curves for ships of ordinary form.\n\n[[File:eb1911 v24 p0989 c1f1.png|center|351px]]\n{{c|{{sc|Fig.}} 11.—Curves of Stability of a Merchant Vessel.}}\n\nThe additional weights that constitute the difference between light and deep load (''i.e.'' cargo, coal, stores and water) are generally placed low down, and thus the position of the centre of gravity is usually lower when loaded than when light, causing an increase of stability which frequently more than compensates for the loss of stability indicated by the cross curves.\n\nThe stability curves for the same vessel are reproduced in fig. 10. It is customary in warships to draw separate curves for three conditions: (''a'') normal load, ''i.e.'' fully equipped with bunkers about half full, and reserve feed tanks empty; (''b'') deep load with all bunkers and tanks full; (''c'') light with all coal, water (except in boilers), ammunition, provisions and consumable stores removed.\n\nThe curves for a cargo or passenger ship are generally drawn for the condition when light, when fully laden with passengers or with a homogeneous cargo, and sometimes for an intermediate condition; typical curves are given in fig. 11.\n\n[[File:eb1911 v24 p0989 c1f2.png|center|342px]]\n{{c|{{sc|Fig.}} 12.—Curves of Stability of a Box-shaped Vessel showing the influence of beam and freeboard.}}\n\nStability curves are obtained on the assumptions—\n\n1. That all openings in the upper deck, forecastle and poop (if any) are covered in and made watertight; and the buoyancy of any erections above these decks is generally neglected.\n\n2. That the side of the ship is intact up to the upper deck, all side scuttles, ports or other openings being closed.\n\n3. That all weights in the ship are absolutely fixed.\n\n4. That no changes of trim occur during the inclination.\n\nIn some cases curves are drawn (''a'') with forecastle and poop intact, (''b'') with these thrown open to the sea, the latter condition being more commonly considered.\n\nThe slope of the stability curve for small angles, the maximum righting lever with the angle at which it occurs, and the range or the inclination at which the stability vanishes are of particular interest, inasmuch as the curve depends principally on these features; and the effect on them, particulars of variation of freeboard, breadth and position of centre of gravity, is considered below.\n\nThe stability curve AA (fig. 12) is drawn for a box-shaped vessel of draught 10 ft., freeboard 10 ft. and beam 30 ft.; with C.G. in the water-plane. The curves EE, FF, GG are drawn for the\n{{EB1911 Shoulder Heading|Effect of freeboard.}}\nsame vessel, but with freeboard altered to 12½, 7½ and 5 ft. respectively; it will be observed that freeboard has no influence on the stability at small angles, but has a marked effect on the range and maximum righting lever. An increase of freeboard is generally accompanied by a rise in the position of the centre of gravity; this is not included in the curves, but would actually reduce the stability to some extent.\n\n[[File:eb1911 v24 p0989 c2f1.png|center|342px]]\n{{c|{{sc|Fig.}} 13.—Curves of Stability of “Monarch” and “Captain.”}}\n\nThe effect of freeboard on the range and on the safety of ships is also illustrated by a comparison between the curves of stability (fig. 13) of the armoured turret ships “Monarch” and “Captain,” the latter of which was lost at sea in 1870. These vessels were similar in construction and dimensions except that the freeboard of the “Monarch” was 14′ 0″ and that of the “Captain” 6′ 6″; the smaller freeboard of the “Captain” was associated with a slightly lower position of the centre of gravity and a greater metacentric height. The stability curve of the “Captain” in consequence rises rather more steeply than that of the “Monarch” up to about 14° when the deck edge is immersed; the righting lever then rapidly declines, and vanishes at 54½°, in contrast to the “Monarch’s,” where the maximum righting lever is doubled and range augmented 1·3 times by the additional freeboard. For the influence of the range in enabling a ship to withstand a suddenly applied force see “Dynamical Stability.”\n\nAgain, for the box-shaped vessel previously considered, if the breadth is modified successively from 30 ft. to 35, 25 and 20 ft., other features remaining unaltered, the curves of stability then\n{{EB1911 Shoulder Heading|Effect of beam.}}\nobtained are represented by BB, CC and DD in fig. 12. It is seen that alteration in beam affects principally the stability levers at moderate angles of inclination, while at 90° inclination the curves all intersect. Since at small angles <math>\\text{GZ}=\\text{GM}.\\theta</math> (in circular measure) approximately, the initial slope of the curve is proportional to GM, and the tangent to this curve at the origin can be drawn by setting by the value of GM as an ordinate to an angle of one radian (57·3°) as abscissa, and joining the point to the origin.\n\n[[File:eb1911 v24 p0989 c2f2.png|center|340px]]\n{{c|{{sc|Fig.}} 14.—Curves of Stability of a Steam Yacht showing effect of variation in height of centre of gravity.}}\n\n(See figs. 10 and 11.) The height of the metacentre above the centre of buoyancy will, ''caeteris paribus'', vary with the cube of the breadth, and an increase of beam will result in a large increase of stability at moderate angles.\n\nFinally the effect of an alteration in the vertical position of the centre of gravity is illustrated by the three stability curves of a steam yacht in fig. 14, where the centre of gravity is\n{{EB1911 Shoulder Heading|Effect of position of C.G.}}\nsuccessively raised 1 ft. In the condition corresponding to the fourth and lowest curve, the GM is negative (—·2 ft.) and so also are the righting levers up to 15° when the curve crosses the axis; from 15° to about 52° the GZ is positive, but above<noinclude><references/></noinclude>"
+}

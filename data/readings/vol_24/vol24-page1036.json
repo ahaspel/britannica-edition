@@ -1,0 +1,142 @@
+{
+ "volume": 24,
+ "page_number": 1036,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1048",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1048",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": -0.05,
+  "column_width": 1141,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     118,
+     17,
+     2314,
+     228
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     118,
+     228,
+     1185,
+     3157
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     135,
+     877,
+     1185,
+     1801
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1185,
+     228,
+     2314,
+     3157
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1036 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     147,
+     889,
+     1204,
+     1789
+    ],
+    "caption": null,
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     115,
+     886,
+     2241,
+     2303
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    2
+   ],
+   "2": [
+    0,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4310,
+    "output_tokens": 86,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: illustration (middle): Fig. 99 drawing spans both columns; water-lines, base line and frame border run across the gutter",
+   "across the gutter: caption (middle): FIG. 99 caption centred across both columns",
+   "across the gutter: heading (middle): BODY PLAN / PART SHEER AND HALF-BREADTH PLANS figure titles spanning the page width"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "middle",
+    "detail": "Fig. 99 drawing spans both columns; water-lines, base line and frame border run across the gutter"
+   },
+   {
+    "kind": "caption",
+    "where": "middle",
+    "detail": "FIG. 99 caption centred across both columns"
+   },
+   {
+    "kind": "heading",
+    "where": "middle",
+    "detail": "BODY PLAN / PART SHEER AND HALF-BREADTH PLANS figure titles spanning the page width"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n[[File:eb1911 v24 p1036 c1f1.png|center|331px]]<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,323 @@
+{
+ "volume": 24,
+ "page_number": 1025,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n1036",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n1036",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.05,
+  "column_width": 1083,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     90,
+     127,
+     2224,
+     196
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     90,
+     196,
+     1155,
+     466
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1155,
+     196,
+     2224,
+     466
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     90,
+     466,
+     2224,
+     1197
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     90,
+     1197,
+     1154,
+     3114
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     91,
+     1292,
+     631,
+     1489
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     238,
+     1799,
+     998,
+     2013
+    ]
+   },
+   {
+    "name": "c1f3",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     90,
+     2119,
+     641,
+     2365
+    ]
+   },
+   {
+    "name": "c1f4",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     90,
+     2543,
+     631,
+     2746
+    ]
+   },
+   {
+    "name": "c1f5",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     196,
+     2934,
+     1026,
+     3073
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1154,
+     1197,
+     2224,
+     3114
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p1025 c1f1.png",
+   "c1f2": "eb1911 v24 p1025 c1f2.png",
+   "c1f3": "eb1911 v24 p1025 c1f3.png",
+   "c1f4": "eb1911 v24 p1025 c1f4.png",
+   "c1f5": "eb1911 v24 p1025 c1f5.png"
+  },
+  "figures": [
+   {
+    "box": [
+     103,
+     1304,
+     619,
+     1477
+    ],
+    "caption": [
+     92,
+     1502,
+     623,
+     1622
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     93,
+     1324,
+     638,
+     1528
+    ]
+   },
+   {
+    "box": [
+     250,
+     1811,
+     986,
+     2001
+    ],
+    "caption": [
+     195,
+     2009,
+     1016,
+     2051
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     210,
+     1811,
+     1134,
+     1993
+    ]
+   },
+   {
+    "box": [
+     96,
+     2131,
+     629,
+     2353
+    ],
+    "caption": [
+     127,
+     2358,
+     598,
+     2427
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     221,
+     2139,
+     669,
+     2374
+    ]
+   },
+   {
+    "box": [
+     90,
+     2555,
+     619,
+     2734
+    ],
+    "caption": [
+     88,
+     2755,
+     630,
+     2852
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     97,
+     2562,
+     1134,
+     2757
+    ]
+   },
+   {
+    "box": [
+     208,
+     2946,
+     1014,
+     3061
+    ],
+    "caption": [
+     347,
+     3073,
+     874,
+     3108
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     210,
+     2941,
+     1134,
+     3078
+    ]
+   }
+  ],
+  "across": [
+   [
+    115,
+    469,
+    2203,
+    1147
+   ],
+   [
+    895,
+    1160,
+    1422,
+    1198
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    5,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 7,
+    "input_tokens": 15683,
+    "output_tokens": 1311,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (2)",
+   "across the gutter: table (top): turning-trials table set across both columns",
+   "across the gutter: caption (top): 'Helm angle about 35° in all cases' centred under the table"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "turning-trials table set across both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "'Helm angle about 35° in all cases' centred under the table"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n\n\n \n\n[[File:eb1911 v24 p1025 c1f1.png|center|180px]]\n\n[[File:eb1911 v24 p1025 c1f2.png|center|253px]]\n\n[[File:eb1911 v24 p1025 c1f3.png|center|183px]]\n\n[[File:eb1911 v24 p1025 c1f4.png|center|180px]]\n\n[[File:eb1911 v24 p1025 c1f5.png|center|276px]]<noinclude><references/></noinclude>"
+}

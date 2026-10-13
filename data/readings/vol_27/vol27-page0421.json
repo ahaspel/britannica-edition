@@ -1,0 +1,278 @@
+{
+ "volume": 27,
+ "page_number": 421,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n428",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n428",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-11",
+  "angle": 0.0,
+  "column_width": 1060,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     139,
+     112,
+     2278,
+     184
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     139,
+     184,
+     1206,
+     629
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1206,
+     184,
+     2278,
+     629
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     139,
+     629,
+     2278,
+     1230
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     139,
+     1230,
+     1203,
+     2191
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     355,
+     1639,
+     973,
+     2019
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1203,
+     1230,
+     2278,
+     2191
+    ]
+   },
+   {
+    "name": "c0s2",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     139,
+     2191,
+     2278,
+     3115
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     139,
+     2191,
+     1738,
+     2936
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": "",
+   "c0s2": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0421 c1f1.png",
+   "c0f1": "eb1911 v27 p0421 c0f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     367,
+     1651,
+     961,
+     2007
+    ],
+    "caption": [
+     137,
+     2113,
+     1187,
+     2183
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     364,
+     1651,
+     970,
+     2062
+    ]
+   },
+   {
+    "box": [
+     141,
+     2194,
+     919,
+     2914
+    ],
+    "caption": [
+     259,
+     2987,
+     1223,
+     3100
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     130,
+     2192,
+     970,
+     2957
+    ]
+   },
+   {
+    "box": [
+     148,
+     2198,
+     1726,
+     2924
+    ],
+    "caption": [
+     260,
+     2987,
+     1605,
+     3097
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     979,
+     2192,
+     1744,
+     2957
+    ]
+   }
+  ],
+  "across": [
+   [
+    931,
+    626,
+    1425,
+    663
+   ],
+   [
+    139,
+    680,
+    2279,
+    1217
+   ],
+   [
+    260,
+    3024,
+    1607,
+    3100
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "model": "claude-opus-5-5",
+    "calls": 5,
+    "input_tokens": 14352,
+    "output_tokens": 732,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (3)",
+   "a figure across the columns (1)",
+   "across the gutter: table (top): Mountain Tunnels for Railways table spans both columns",
+   "across the gutter: caption (top): table title centred across both columns",
+   "across the gutter: illustration (bottom): Figs. 5 and 6 cross-sections extend across gutter",
+   "across the gutter: caption (bottom): shared caption for figs. 5 and 6 spans gutter"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "Mountain Tunnels for Railways table spans both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "table title centred across both columns"
+   },
+   {
+    "kind": "illustration",
+    "where": "bottom",
+    "detail": "Figs. 5 and 6 cross-sections extend across gutter"
+   },
+   {
+    "kind": "caption",
+    "where": "bottom",
+    "detail": "shared caption for figs. 5 and 6 spans gutter"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> \n\n\n\n \n\n[[File:eb1911 v27 p0421 c1f1.png|center|210px]]\n\n\n\n[[File:eb1911 v27 p0421 c0f1.png|center|543px]]<noinclude><references/></noinclude>"
+}
