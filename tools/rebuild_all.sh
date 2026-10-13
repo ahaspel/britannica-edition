@@ -19,6 +19,7 @@
 #
 # The phases (the serious work is the walk, the export, and the resolve —
 # everything after is derivation and verification):
+#   0  Gate       supplied pages fit to stand in (tools/diagnostics/supplied_gate.py)
 #   1  Clean      truncate DB + clear exports
 #   2  Walk       per-volume pipeline: (import +) detect-boundaries, parallel
 #   3  Page map   3.1 printed-page mapping · 3.2 article-index snapshot
@@ -97,6 +98,17 @@ if [ -n "$SKIP_IMPORT" ]; then
 else
   echo "  Mode: --reimport (re-importing the raw source_pages)"
 fi
+echo
+
+# --- Phase 0: Supplied-page gate ---
+# Every supplied page the door lets in must be fit to stand in for the page it
+# replaces: complete, the right leaf, its words, sections, margin headings and
+# IMAGES (the fetched page's own; 335 had been replaced by our crops and
+# shipped, 2026-10-09).  Run before the database is touched: a failure here
+# costs seconds, not an hour.  The gate's docstring had said "Phase 0" while
+# no build ran it.
+echo "=== Phase 0: Supplied-page gate [$(elapsed)] ==="
+uv run python tools/diagnostics/supplied_gate.py
 echo
 
 # --- Phase 1: Clean everything ---

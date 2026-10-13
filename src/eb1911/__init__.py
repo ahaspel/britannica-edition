@@ -140,7 +140,7 @@ EB1911 = Corpus(
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({
-        "corrections.json", "hyphen_map.json", "contributor_aliases.json",
+        "corrections.json", "patches.json", "hyphen_map.json", "contributor_aliases.json",
         "xref_adjudications.json", "maps.json", "link_exceptions.json",
         "genealogy_images.json", "mdx_sample.json", "tei_odd.xml",
         "templates/tei_readme.md", "templates/tei_source.xml",

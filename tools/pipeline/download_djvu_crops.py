@@ -255,8 +255,12 @@ def scan_non_djvu_crop_sources() -> list[str]:
 # Download full DjVu page renders
 # ---------------------------------------------------------------------------
 
-def _djvu_page_url(djvu_filename: str, page: int, width: int = 1200) -> str:
-    """Build the Wikimedia Commons thumb URL for a single DjVu page."""
+def _djvu_page_url(djvu_filename: str, page: int, width: int = 1920) -> str:
+    """Build the Wikimedia Commons thumb URL for a single DjVu page.  Commons
+    serves only its standard thumbnail widths: 1200 is refused (HTTP 400, "Use
+    thumbnail sizes listed on https://w.wiki/GHai"; the genealogy crops had
+    met it, 2026-06-02), 1920 is served.  A template scales whatever width is
+    fetched to its own bSize, so the width fetched changes no crop."""
     name = djvu_filename.replace(" ", "_")
     md5 = hashlib.md5(name.encode()).hexdigest()
     encoded = quote(name)
