@@ -46,7 +46,39 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-10-10)
+## CURRENT STATE (2026-10-13)
+
+### 2026-10-13 — release: site, downloads, HuggingFace, Zenodo 2026.4
+
+From the rebuild of 2026-10-13 17:49 (`--reimport`, 37,226 articles).
+
+- **Scan readings enter as PATCHES on Wikisource's pages.**  Whole-page
+  replacement lost what Wikisource's editors built (tables, footnotes, links,
+  images).  Now each page is Wikisource's own, with our adjudicated corrections
+  laid on it (`data/patches.json`, applied at load, before `corrections.json`):
+  10,571 on 302 pages, 9,292 formulas + 1,279 words.  Formulas set as TeX on those
+  pages: 540 → 11,609.  Nothing Wikisource's pages carry is lost.  The 97 other
+  formerly supplied pages carry Wikisource's text as is.  About 72% of the
+  judge's 8,142 ours-rulings are in; the rest are refused by category, none over
+  ~470 (`tools/patches/README.md`).
+- **The chain is in the repo** (`tools/patches/`, inputs in `data/readings/`),
+  reproducible: `install.py --dry` says "equals data/patches.json".  Every patch
+  passes `check_leaks.py`: the page rendered before and after, nothing changed but
+  the patch's own text.  It caught formula patches cutting Wikisource's italics
+  (THERMODYNAMICS "done by''", live for 4 hours on 2026-10-13); `install.py`
+  refuses while it flags anything unreviewed.
+- **Derivatives:** TEI 37,225 valid, EPUBCheck clean, MDX verified; live TEI
+  checksum equals the local build.
+- **Zenodo 2026.4** — `10.5281/zenodo.23353109` against `tei-2026.4`
+  (`docs/zenodo_deposit.md`).
+- **Payhip** — EPUB + both MDX zips + README uploaded by hand.
+
+**Next:** table vocabulary (engine, done: rules, headings, alignment, braces;
+desk parity) — re-read the 50 table pages and decide whether our tables may
+replace Wikisource's junk ones; viewer: count a table's columns by its widest row,
+don't force wide tables to the text column; italics inside `{{c|}}` within
+`{{smaller block|}}` render as quote marks; the 4 source corrections committed
+after this build go into the next one; the 88 unjudged/crossing pages.
 
 ### 2026-10-10 — release: site, downloads, HuggingFace, Zenodo 2026.3, Payhip
 

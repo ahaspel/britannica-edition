@@ -16,6 +16,7 @@ P=tools/patches
 
 nice uv run python $P/build_words.py --loose      # -> words.json
 nice uv run python $P/build_formulas.py           # -> formulas.json
+nice uv run python $P/build_tables.py             # -> tables.json
 uv run python $P/merge.py                         # -> merged.json
 nice uv run python $P/filter_patches.py           # -> kept.json
 nice uv run python $P/validate_patches.py         # -> validate.json, tex.json

@@ -68,6 +68,11 @@ def main():
         # a new disagreement: one whose OUR side and context did not disagree before
         old_ours = {(o, c) for _, o, c in before}
         new = [s for s in after if (s[1], s[2]) not in old_ours and s[1]]
+        # a word our two reads split differently, inside a table patch's own
+        # text ("fort nightly", TIDE), is no disagreement (as in the filter)
+        in_tables = re.sub(r"\W", "", " ".join(x["new"] for x in ps if x["kind"] == "table")).lower()
+        new = [s for s in new if not (re.sub(r"\W", "", s[0]) == re.sub(r"\W", "", s[1])
+                                      and re.sub(r"\W", "", s[0]).lower() in in_tables)]
         for s in new:
             bad.append(f"new disagreement: ws {s[0]!r} vs ours {s[1]!r} after {s[2]!r}")
         for x in ps:

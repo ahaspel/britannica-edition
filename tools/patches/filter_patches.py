@@ -70,10 +70,19 @@ def main():
             if why is None:
                 after = sites(tokens(v, p, apply(ws, [x])), O)
                 new = [s for s in after if (s[1], s[2]) not in old_ours and s[1]]
+                if x["kind"] == "table":
+                    # a table's words are the judged reading's figure for figure
+                    # (build_tables.py); a word our two reads split differently
+                    # ("fort nightly", TIDE) is no disagreement
+                    new = [s for s in new if re.sub(r"\W", "", s[0]) != re.sub(r"\W", "", s[1])]
                 if new:
                     why = f"creates a disagreement: ws {new[0][0][:40]!r} vs ours {new[0][1][:40]!r}"
                 elif len(after) >= len(before):
-                    if x["kind"] == "formula":
+                    if x["kind"] == "table":
+                        # a table's gain is its setting, which no word measures:
+                        # kept when it creates no disagreement
+                        t["kept (table, setting only)"] += 1
+                    elif x["kind"] == "formula":
                         # our notation where Wikisource's says the same: ours
                         # stands (user, 2026-10-13: "I prefer our notations")
                         t["kept (formula, notation only)"] += 1

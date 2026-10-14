@@ -2,6 +2,10 @@
 
   data/readings/vol_NN/STEM.json   our scan readings, judged and corrected
                                    (each correction in provenance.corrected)
+  data/readings/tables/vol_NN/     pages re-read for their TABLES with the table
+                                   vocabulary (rules, headings, alignment, braces)
+                                   — used for their tables only, whose words and
+                                   figures must match the judged reading's
   data/readings/judge/             the evaluation: the disputes between each
                                    reading and Wikisource's page, the judge's
                                    answers, the rulings, the pages judged
@@ -31,6 +35,14 @@ WORK = Path("data/staging/patches")
 WORK.mkdir(parents=True, exist_ok=True)
 
 
+TABLE_READINGS = READINGS / "tables"
+
+
 def reading(stem: str) -> Path:
     """Our reading of a page, e.g. vol22-page0706."""
     return READINGS / ("vol_" + stem[3:5]) / (stem + ".json")
+
+
+def table_reading(stem: str) -> Path:
+    """Our re-reading of a page for its tables."""
+    return TABLE_READINGS / ("vol_" + stem[3:5]) / (stem + ".json")

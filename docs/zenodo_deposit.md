@@ -1,7 +1,10 @@
 # Zenodo deposit — the TEI edition
 
-**Status: 2026.3 published 2026-10-10**, DOI `10.5281/zenodo.23288358`,
-against `tei-2026.3` (`9a5c0ca`). 2026.2 was published 2026-09-21 as
+**Status: 2026.4 published 2026-10-13**, DOI `10.5281/zenodo.23353109`,
+against `tei-2026.4` (`f63a65b`; four `corrections.json` entries in that tree
+postdate the bundle and enter the next version). 2026.3 was published
+2026-10-10 as `10.5281/zenodo.23288358` against `tei-2026.3` (`9a5c0ca`).
+2026.2 was published 2026-09-21 as
 `10.5281/zenodo.22876664` against the tagged tree `tei-2026.2` (`651981c`). The first deposit, 2026.1, was
 published 2026-08-23 as `10.5281/zenodo.22072146` against `tei-2026.1`; both
 sit under one concept DOI. Later versions can go through the API, which inherits
@@ -19,6 +22,16 @@ the one the website should cite.
 | **version** — 2026.1 | `10.5281/zenodo.22072146` |
 | **version** — 2026.2 | `10.5281/zenodo.22876664` (published 2026-09-21) |
 | **version** — 2026.3 | `10.5281/zenodo.23288358` (published 2026-10-10, against `tei-2026.3` = `9a5c0ca`) |
+| **version** — 2026.4 | `10.5281/zenodo.23353109` (published 2026-10-13, against `tei-2026.4` = `f63a65b`) |
+
+2026.4's file: `eb1911-tei.tar.gz`, 105,612,175 bytes,
+`md5:c402761d09919f0fa7f45693a02e3a8e` (SHA-256 `a410f385…bf30a33c7`) — verified
+2026-10-13 as the live record's only file, byte-identical to the copy at
+britannica11.org/download/ (SHA-256 compared), version `2026.4`, licence
+`cc-by-sa-4.0`, creator `Haspel, Aaron`, under the concept DOI as the latest
+version. Its HuggingFace relation, inherited as `isIdenticalTo` (the dataset is
+the JSON corpus, not this encoding), was corrected to `isVariantFormOf` the same
+day — a metadata edit, no new version; verified on the live record.
 
 2026.3's file: `eb1911-tei.tar.gz`, 105,588,324 bytes,
 `md5:d9ec38972403a39d9ae050ac3e65987b` (SHA-256 `35787af0…ba2ec9128`) — verified
