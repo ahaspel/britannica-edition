@@ -46,7 +46,42 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-10-13)
+## CURRENT STATE (2026-10-14)
+
+### 2026-10-14 — site only: our tables over Wikisource's OCR junk
+
+From the rebuild of 2026-10-14 10:07 (`--reimport`), deployed 10:55.  **The
+downloads are HELD** (user's call: batch with the next table round) — the site is
+ahead of the bundles, TEI, EPUB, MDX and HF, which are still 2026.4.
+
+- **Table patches.**  A page re-read with the table vocabulary
+  (`data/readings/tables/`) gives its tables; `tools/patches/build_tables.py`
+  places each between the words both pages share, whole lines only, where
+  Wikisource has only OCR text or a `{{missing table}}` — never over structure of
+  its own.  Words and figures must be the judged reading's.  11 tables on 5
+  articles: TIDE (both schedules), SOUND, SURVEYING, TEXTILE-PRINTING (4 recipes),
+  SOLUTION (2, filling `{{missing table}}`).  24 of 35 refused: WEIGHTS AND
+  MEASURES (Wikisource has them), SILK (two reads disagree on figures), TUNNEL
+  (two tables on one span), MINERALOGY (notes in the span), SHIPBUILDING (a picture).
+- **Engine:** OCR's `<s- s>` is no tag (it had blocked two judged TRIGONOMETRY
+  formula patches, which now land: pp. 280 and 285); a table patch is its own kind
+  in `wikikit.scan.patches.check`.
+- **Viewer:** a formula in a scrolling table box positions its own KaTeX copy — it
+  had widened the page on phones (ORDNANCE 922px → 371px); the Expand button counts
+  a table's columns by its widest row.  The class-less-table width change of
+  2026-10-13 was reverted: it squeezed old tables on phones.
+- **Verified** against the 2026.4 corpus (both `articles.jsonl` by
+  `build_download`): 9 of 37,225 articles changed, all intended (the 5 tables, the
+  4 corrections.json fixes in THERMODYNAMICS ×2, THERMOELECTRICITY, MENSURATION;
+  TRIGONOMETRY).  Table layout live vs build at desktop and 390px on 7 articles:
+  equal or better.
+
+**Next:** more tables — candidates without reads: ~32 strict / ~80 loose pages of
+flattened OCR tables, 31 `{{missing table}}`, 24 tables as pictures (needs its own
+rule); tighten the list, then a read + judge round, then release the batch.
+TIDE's stray `{{missing table}}` above its heading (outside the span).  Long display
+formulas overflow on phones (open wide-math item; TRIGONOMETRY's new series joins
+it).  The 88 unjudged/crossing pages.
 
 ### 2026-10-13 — release: site, downloads, HuggingFace, Zenodo 2026.4
 

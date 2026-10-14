@@ -76,7 +76,7 @@ if "--dry" in sys.argv:
             if not k.startswith("_")} if Path("data/patches.json").exists() else {}
     differ = sorted(k for k in set(have) | set(out) if have.get(k) != out.get(k))
     print("equals data/patches.json" if not differ else f"differs from data/patches.json on {len(differ)} "
-          f"pages: {differ[:10]}")
+          f"pages: {differ}")
     sys.exit(0)
 if leak_problem:
     print("REFUSED:", leak_problem)

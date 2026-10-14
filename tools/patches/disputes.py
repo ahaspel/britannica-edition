@@ -13,7 +13,8 @@ Every remaining site is a DISPUTE for the judge — no frequency list decides
 anything.  Each records both sides' words, 6 words of agreed context either
 side, and the item (column/strip) of ours it falls in, found by its context.
 
-Pages: --set FILE (one stem per line) or stems.  Writes disputes.json."""
+Pages: --set FILE (one stem per line) or stems.  Writes disputes.json; with
+--add, the pages join those already there."""
 import copy
 import difflib
 import json
@@ -184,7 +185,12 @@ def main():
         stems = Path(args[args.index("--set") + 1]).read_text(encoding="utf-8").split()
     else:
         stems = [a for a in args if a.startswith("vol")]
-    out = {}
+    # --add: these pages join the disputes already made (pages newly read);
+    # a page already there is never remade — its sites are what the judge's
+    # answers are keyed by
+    out = json.loads(DISPUTES.read_text(encoding="utf-8")) if "--add" in args else {}
+    if "--add" in args and (again := sorted(set(stems) & set(out))):
+        raise SystemExit(f"--add: already disputed, left as they are: {again}")
     for s in stems:
         out[s] = page(s, src_dir)
         r = out[s]

@@ -1,0 +1,95 @@
+{
+ "volume": 25,
+ "page_number": 464,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n472",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n472",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-14",
+  "angle": 0.0,
+  "column_width": 1088,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     134,
+     111,
+     2284,
+     181
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     134,
+     181,
+     1206,
+     3140
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1206,
+     181,
+     2284,
+     3140
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7872,
+    "output_tokens": 332,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: table (top): diatonic scale table (Note/Interval/Frequency) extends from left column across gutter into right column area"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "diatonic scale table (Note/Interval/Frequency) extends from left column across gutter into right column area"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude> <noinclude><references/></noinclude>"
+}

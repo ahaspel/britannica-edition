@@ -29,7 +29,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).parent))
 from build_formulas import displays, lost_words, prose, quotes_open, structure, vocabulary, words_of
 from build_words import find, locate
-from paths import DISPUTES, RULINGS, TABLE_READINGS, WORK, reading
+from paths import DISPUTES, PAGES, RULINGS, TABLE_READINGS, WORK, reading
 from patterns import TOKEN
 from raw_tokens import tokens
 
@@ -82,6 +82,42 @@ def cells(text: str) -> str:
     return re.sub(r"(?m)^(\{\|[^\n]*)$", "\\1\n|", text)
 
 
+#: a character no clean line of print carries: OCR's debris
+_DEBRIS = re.compile(r"[^\w\s.,;:()\[\]'\"’“”‘\-–—&/%£°·*†‡§¶]|§")
+
+
+def clean_words_lost(old: str, new: str, vocab, ruled: Counter, page: str) -> list[str]:
+    """The CLEAN lines of Wikisource's span — a heading, a caption, a sentence:
+    little OCR debris, most of its words real — whose real words our text
+    does not print.  Junk the table replaces may go (TIDE's "21-(hen)"), but a
+    clean line is content: TEMPERANCE p. 584's span held "Consumption per head
+    in Litres, Norway.", a table our patch did not carry.
+
+    A word is printed by ours when it is a word of ours or part of one (the
+    OCR split "Carol-ina", "En land"); a misreading is excused only where the
+    judge ruled on that very site (`ruled`: located by its context — "Sir E.
+    Tumour" for the print's Turnour), never by a ruling elsewhere — and only
+    for a word our reading of the PAGE (`page`) prints nowhere: the judge
+    rules on a site's position, and a word ours prints elsewhere is MOVED
+    content, not misread (TEMPERANCE p. 586: "Arrests and Licences per
+    10,000." stood where ours has the county table; its table comes later)."""
+    text = re.sub(r"<math[^>]*>([\s\S]*?)</math>", r" \1 ", new).lower()
+    have = Counter(re.findall(r"[^\W\d_]{3,}", text))
+    joined = " ".join(have)
+    elsewhere = set(re.findall(r"[^\W\d_]{3,}", page.lower()))
+    out = []
+    for line in old.split("\n"):
+        words = [w.lower() for w in re.findall(r"[^\W\d_]{3,}", line)]
+        real = [w for w in words if w in vocab and not re.fullmatch(r"[ivxlc]+", w)]   # III: OCR's 111
+        if not real or len(_DEBRIS.findall(line)) > max(1, len(line) // 40) or len(real) < 0.7 * len(words):
+            continue                                   # junk, or no real words
+        lost = [w for w in (Counter(real) - have) if w not in joined
+                and not (ruled[w] and w not in elsewhere)]
+        if lost:
+            out.append(f"{line.strip()} (lost: {', '.join(lost[:4])})")
+    return out
+
+
 def figures(text: str) -> list[str]:
     """A table's words and figures, as tokens: joined, what must match the judged
     reading — its setting (rules, headings, alignment, the opening's class or
@@ -107,8 +143,15 @@ def main():
     out, tally = {}, Counter()
     dis = json.loads(DISPUTES.read_text(encoding="utf-8"))
     rul = json.loads(RULINGS.read_text(encoding="utf-8"))
+    judged_pages = set(PAGES.read_text().split())
     for f in sorted(TABLE_READINGS.glob("vol_*/vol*-page*.json")):
         stem = f.stem
+        # a table's figures must be a judged reading's: a page the judge never
+        # saw (filed unread for crossing columns, or read with no table) waits
+        if stem not in judged_pages or not reading(stem).exists():
+            print(f"  {stem}: no judged reading — skipped")
+            tally["pages skipped: not judged"] += 1
+            continue
         d = json.loads(f.read_text(encoding="utf-8"))
         v, p = d["volume"], d["page_number"]
         ours = supplied.name_sections(copy.deepcopy(d))["raw_text"]
@@ -138,13 +181,18 @@ def main():
                 j = locate(W, ws_words, site["before"].split(), site["after"].split())
                 places = [j] if j is not None else find(W, ws_words)
                 given.append(([(W[k][1], W[k + len(ws_words) - 1][2]) for k in places],
-                              Counter(w for w in ws_words if len(w) >= 3)))
+                              Counter(w for w in ws_words if len(w) >= 3), j is not None))
 
         def within(w0, w1):
             """The words given at sites standing in w0..w1 — every place a
             site's tokens stand must be inside, so none counts twice."""
-            return sum((c for at, c in given if at and all(w0 <= x and y <= w1 for x, y in at)),
+            return sum((c for at, c, _ in given if at and all(w0 <= x and y <= w1 for x, y in at)),
                        Counter())
+
+        def ruled_at(w0, w1):
+            """The words given at sites the judge's context LOCATED in w0..w1."""
+            return sum((c for at, c, located in given
+                        if located and all(w0 <= x and y <= w1 for x, y in at)), Counter())
 
         page = []
         for a, b in tables_of(ours):
@@ -161,6 +209,11 @@ def main():
             judged = judged_table(old, figures(table))
             if w1 <= w0:
                 why = "the shared words are out of order"
+            elif not (w0 == 0 or ws[w0 - 1] == "\n") or not (w1 == len(ws) or ws[w1] == "\n"):
+                # the words either side stand on ONE line of Wikisource's: the
+                # table's rows are not between them (TEMPERANCE p. 582's table
+                # fell on ". In no " mid-sentence, its rows earlier on the page)
+                why = "no whole line of Wikisource's between the shared words"
             elif table.strip() not in ours_span:
                 why = "the table is not whole between the words"
             elif structure(rest) or quotes_open(rest):
@@ -171,6 +224,9 @@ def main():
                 why = "markup unbalanced at an edge"
             elif (lost := lost_words(MISSING_TABLE.sub("", old_span), cells(ours_span), vocab, within(w0, w1))):
                 why = f"a word of Wikisource's would be lost: {sorted(lost)[:5]}"
+            elif (lost := clean_words_lost(MISSING_TABLE.sub("", old_span), ours_span, vocab, ruled_at(w0, w1),
+                                                   ours.replace(ours_span, " "))):
+                why = f"a clean line of Wikisource's would be lost: {lost[0][:90]!r}"
             elif judged is None or "".join(figures(judged)) != "".join(figures(table)):
                 diff = [] if judged is None else [
                     (x, y) for op_, i1, i2, j1, j2 in SequenceMatcher(
