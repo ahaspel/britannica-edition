@@ -125,6 +125,10 @@ EB1911 = Corpus(
     # A transcribed page keeps the section names its articles' ids hang on:
     # where its articles start, read off our page; the names, Wikisource's.
     page_sections=_hook("eb1911.boundaries", "supplied_page_sections"),
+    # A page we transcribe replaces Wikisource's text only once a person has
+    # proofread it at the desk (user, 2026-10-15): the pages Wikisource left as
+    # raw OCR wait in data/supplied, and Wikisource's (patched) stands meanwhile.
+    supplied_replaces_text_at=3,
     # The book prints headings in the margin beside its paragraphs; Wikisource
     # marks them {{EB1911 Shoulder Heading|…}}, which the engine renders — so
     # our transcription writes them the same way, where they stand.
