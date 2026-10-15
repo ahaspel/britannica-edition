@@ -295,16 +295,23 @@ def main() -> int:
         if found:
             fails[f.name] = found
     # patched pages: every patch at its place, the fetched page's structure
-    # unchanged (`wikikit.scan.patches.check`), and no supplied page standing
-    # for a patched one (the patches would never be read)
+    # unchanged (`wikikit.scan.patches.check`), and no supplied page ENTERING
+    # for a patched one (the patches would never be read).  A supplied page the
+    # door holds — waiting to be proofread at the desk — replaces nothing, and
+    # the patched page stands meanwhile.
     from wikikit.scan.patches import check as check_patches, load_patches
     patched = n_patches = 0
     for key, ps in load_patches().items():
         v, p = (int(x) for x in key.split(":"))
         name = f"patches {key}"
-        if (SUPPLIED / f"vol_{v:02d}" / f"vol{v:02d}-page{p:04d}.json").exists():
-            fails[name] = [("patches", "a supplied page stands for this page: its patches are never read")]
-            continue
+        sup = SUPPLIED / f"vol_{v:02d}" / f"vol{v:02d}-page{p:04d}.json"
+        if sup.exists():
+            d = json.loads(sup.read_text(encoding="utf-8"))
+            ws = fetched_text(v, p)
+            if prefer({"raw_text": ws} if ws is not None else None, d) is d:
+                fails[name] = [("patches", "a supplied page enters for this page: its patches are "
+                                            "never read — drop them (install.py) as it enters")]
+                continue
         bad = check_patches(fetched_text(v, p) or "", ps)
         if bad:
             fails[name] = [("patches", "; ".join(bad))]
