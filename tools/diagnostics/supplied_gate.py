@@ -36,7 +36,8 @@ the door lets in must pass every check below.  Each check caught a real fault:
   carry     the fetched page's tables and links carried onto ours, nothing
             left unplaced (`wikikit.scan.carry`)
   lacks     no element the fetched page has — formula, figure, table, cell,
-            footnote, link, margin heading, poem — missing from ours, unless
+            footnote, link, margin heading, poem, contributor's initials —
+            missing from ours, unless
             the page records why (`lacks_decided`).  Whole pages lost 26
             footnotes from SPECTROSCOPY and 12 margin headings from SURVEYING
             to checks that compared words (2026-10-12)
@@ -249,6 +250,10 @@ ELEMENTS = {
     "links": r"«LN:",
     "margin headings": r"«SH:",
     "poems": r"«POEM",
+    # a contributor's initials closing an article ({{EB1911 footer initials}}):
+    # the attribution binds from them, so a whole page may not drop them
+    # (6,953 fetched pages carry them; markup_census.py, 2026-10-15)
+    "signatures": r"«SPAN\[style:float:right\]»\([^«»()]{1,40}\)«/SPAN»",
 }
 #: Below these a difference is how cells were split, no loss.
 SLACK = {"cells": 2}

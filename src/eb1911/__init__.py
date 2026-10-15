@@ -140,7 +140,49 @@ EB1911 = Corpus(
         Construct(
         "eb1911 sheet signature", "{{EB1911 sheet signature|", "}}",
         "the printer's sheet signature at the very foot of a column, below the text (a volume "
-        "number in roman, a sheet number, sometimes a letter: XXIV. 31 a)", furniture=True),),
+        "number in roman, a sheet number, sometimes a letter: XXIV. 31 a)", furniture=True),
+        # What else the book prints that the shared vocabulary cannot say, by
+        # how often Wikisource's transcribers mark it (markup_census.py, 28,753
+        # pages, 2026-10-15) — each in the form the engine already renders.
+        # Each name is the template's, as the desk keys it.  Not yet: numbered
+        # displays ({{ne}}, 231 pages) — the engine re-sets the number ("(1)."
+        # becomes its label 1) and typesets the display, which the desk cannot
+        # reproduce without becoming a second engine.
+        # The contributor's initials close a signed article (6,953 pages): the
+        # attribution binds from the initials through the vol 29 index, so the
+        # name, which the page does not print, is left empty.
+        Construct(
+        "eb1911 footer initials", "{{EB1911 footer initials|", "}}",
+        "the contributor's initials that close a signed article: an empty first argument (the "
+        "page does not print the name), then the initials as printed without their parentheses "
+        "— {{EB1911 footer initials||F. R. C.}} — on a line of their own after the last words",
+        args=("", "Q. X. Z.")),
+        Construct(
+        "rule", "{{rule|", "}}",
+        "a horizontal rule printed across the column or part of it, on its own line: its length "
+        "in whole em — {{rule|8em}}", args=("13em",)),
+        Construct(
+        "dual line", "{{dual line|", "}}",
+        "two short lines printed one above the other in one place (in a table's cell, beside a "
+        "brace): {{dual line|the upper line|the lower line}}", args=("QQA1QQ", "QQA2QQ")),
+        Construct(
+        "ditto", "{{ditto|", "}}",
+        "a ditto mark (\" or do.) in place of a word printed above it: {{ditto|the word it "
+        "repeats}}", args=("QQA1QQ",)),
+        # Margin headings in the smaller sizes (2,618 and 698 pages).  The walk
+        # renders all three sizes alike today; the reading records the print.
+        Construct(
+        "eb1911 shoulder headingsmall", "{{EB1911 Shoulder HeadingSmall|", "}}",
+        "a margin heading as above, set in a SMALLER size than the book's usual margin headings"),
+        Construct(
+        "eb1911 shoulder headingfine", "{{EB1911 Shoulder HeadingFine|", "}}",
+        "a margin heading as above, in the SMALLEST size, as beside a passage in small type"),
+        Construct(
+        "hi", "{{hi|", "}}",
+        "one entry set with a hanging indent (its first line flush, the rest indented): a "
+        "bibliography's entries, a list's items — one entry to each"),
+        Construct(
+        "overline", "{{overline|", "}}", "a term printed with a bar over it"),),
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({
