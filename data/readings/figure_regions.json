@@ -1,0 +1,898 @@
+{
+ "_doc": "Each of our figures with no image on Wikisource's page, as a region of the volume's clean Commons render (never the Internet Archive scan): stem -> item -> {css, box (pixels at bSize), how (cutter / by eye / as found)}; css \"\" = the box held no figure. Set 2026-10-12 (the 24 lousy crops boxed by eye on the user's review); kept here 2026-10-15, after restaging the desk's pages lost them. tools/desk.py add sets them.",
+ "vol20-page0453": {
+  "c1f1": {
+   "css": "",
+   "box": null,
+   "how": "a line of running text, already transcribed, boxed as a figure"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 20.djvu\n|Page = 453\n|bSize = 1200\n|cWidth = 532\n|cHeight = 99\n|oTop = 963\n|oLeft = 578\n|Location = center}}",
+   "box": [
+    578,
+    963,
+    1110,
+    1062
+   ],
+   "how": "by eye"
+  }
+ },
+ "vol22-page0679": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 22.djvu\n|Page = 679\n|bSize = 1200\n|cWidth = 619\n|cHeight = 117\n|oTop = 1172\n|oLeft = 2\n|Location = center}}",
+   "box": [
+    2,
+    1172,
+    621,
+    1289
+   ],
+   "how": "as found"
+  }
+ },
+ "vol22-page0680": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 22.djvu\n|Page = 680\n|bSize = 1200\n|cWidth = 549\n|cHeight = 188\n|oTop = 97\n|oLeft = 51\n|Location = center}}",
+   "box": [
+    51,
+    97,
+    600,
+    285
+   ],
+   "how": "as found"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 22.djvu\n|Page = 680\n|bSize = 1200\n|cWidth = 549\n|cHeight = 71\n|oTop = 433\n|oLeft = 53\n|Location = center}}",
+   "box": [
+    53,
+    433,
+    602,
+    504
+   ],
+   "how": "as found"
+  }
+ },
+ "vol22-page0706": {
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 22.djvu\n|Page = 706\n|bSize = 1200\n|cWidth = 185\n|cHeight = 55\n|oTop = 422\n|oLeft = 608\n|Location = center}}",
+   "box": [
+    608,
+    422,
+    793,
+    477
+   ],
+   "how": "by eye"
+  },
+  "c2f3": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 22.djvu\n|Page = 706\n|bSize = 1200\n|cWidth = 208\n|cHeight = 56\n|oTop = 812\n|oLeft = 614\n|Location = center}}",
+   "box": [
+    614,
+    812,
+    822,
+    868
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol23-page0754": {
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 23.djvu\n|Page = 754\n|bSize = 1200\n|cWidth = 345\n|cHeight = 133\n|oTop = 1401\n|oLeft = 814\n|Location = center}}",
+   "box": [
+    814,
+    1401,
+    1159,
+    1534
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol24-page0768": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 24.djvu\n|Page = 768\n|bSize = 1200\n|cWidth = 116\n|cHeight = 491\n|oTop = 449\n|oLeft = 67\n|Location = center}}",
+   "box": [
+    67,
+    449,
+    183,
+    940
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol24-page0769": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 24.djvu\n|Page = 769\n|bSize = 1200\n|cWidth = 415\n|cHeight = 315\n|oTop = 477\n|oLeft = 130\n|Location = center}}",
+   "box": [
+    130,
+    477,
+    545,
+    792
+   ],
+   "how": "by eye"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 24.djvu\n|Page = 769\n|bSize = 1200\n|cWidth = 546\n|cHeight = 223\n|oTop = 233\n|oLeft = 614\n|Location = center}}",
+   "box": [
+    614,
+    233,
+    1160,
+    456
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 24.djvu\n|Page = 769\n|bSize = 1200\n|cWidth = 314\n|cHeight = 248\n|oTop = 750\n|oLeft = 852\n|Location = center}}",
+   "box": [
+    852,
+    750,
+    1166,
+    998
+   ],
+   "how": "by eye"
+  }
+ },
+ "vol24-page1049": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 24.djvu\n|Page = 1049\n|bSize = 1200\n|cWidth = 370\n|cHeight = 332\n|oTop = 860\n|oLeft = 54\n|Location = center}}",
+   "box": [
+    54,
+    860,
+    424,
+    1192
+   ],
+   "how": "by eye"
+  }
+ },
+ "vol24-page1051": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 24.djvu\n|Page = 1051\n|bSize = 1200\n|cWidth = 519\n|cHeight = 627\n|oTop = 160\n|oLeft = 637\n|Location = center}}",
+   "box": [
+    637,
+    160,
+    1156,
+    787
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 24.djvu\n|Page = 1051\n|bSize = 1200\n|cWidth = 517\n|cHeight = 704\n|oTop = 828\n|oLeft = 635\n|Location = center}}",
+   "box": [
+    635,
+    828,
+    1152,
+    1532
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol24-page1052": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 24.djvu\n|Page = 1052\n|bSize = 1200\n|cWidth = 615\n|cHeight = 982\n|oTop = 314\n|oLeft = 60\n|Location = center}}",
+   "box": [
+    60,
+    314,
+    675,
+    1296
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0220": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 220\n|bSize = 1200\n|cWidth = 236\n|cHeight = 137\n|oTop = 382\n|oLeft = 930\n|Location = center}}",
+   "box": [
+    930,
+    382,
+    1166,
+    519
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0458": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 458\n|bSize = 1200\n|cWidth = 269\n|cHeight = 134\n|oTop = 604\n|oLeft = 57\n|Location = center}}",
+   "box": [
+    57,
+    604,
+    326,
+    738
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0460": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 460\n|bSize = 1200\n|cWidth = 241\n|cHeight = 248\n|oTop = 258\n|oLeft = 54\n|Location = center}}",
+   "box": [
+    54,
+    258,
+    295,
+    506
+   ],
+   "how": "by eye"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 460\n|bSize = 1200\n|cWidth = 127\n|cHeight = 135\n|oTop = 1429\n|oLeft = 72\n|Location = center}}",
+   "box": [
+    72,
+    1429,
+    199,
+    1564
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0462": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 462\n|bSize = 1200\n|cWidth = 200\n|cHeight = 65\n|oTop = 154\n|oLeft = 49\n|Location = center}}",
+   "box": [
+    49,
+    154,
+    249,
+    219
+   ],
+   "how": "cutter"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 462\n|bSize = 1200\n|cWidth = 221\n|cHeight = 364\n|oTop = 1103\n|oLeft = 64\n|Location = center}}",
+   "box": [
+    64,
+    1103,
+    285,
+    1467
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0469": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 469\n|bSize = 1200\n|cWidth = 73\n|cHeight = 381\n|oTop = 138\n|oLeft = 63\n|Location = center}}",
+   "box": [
+    63,
+    138,
+    136,
+    519
+   ],
+   "how": "cutter"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 469\n|bSize = 1200\n|cWidth = 530\n|cHeight = 70\n|oTop = 697\n|oLeft = 59\n|Location = center}}",
+   "box": [
+    59,
+    697,
+    589,
+    767
+   ],
+   "how": "cutter"
+  },
+  "c1f3": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 469\n|bSize = 1200\n|cWidth = 523\n|cHeight = 54\n|oTop = 1188\n|oLeft = 68\n|Location = center}}",
+   "box": [
+    68,
+    1188,
+    591,
+    1242
+   ],
+   "how": "cutter"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 469\n|bSize = 1200\n|cWidth = 456\n|cHeight = 97\n|oTop = 984\n|oLeft = 651\n|Location = center}}",
+   "box": [
+    651,
+    984,
+    1107,
+    1081
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0470": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 470\n|bSize = 1200\n|cWidth = 244\n|cHeight = 275\n|oTop = 329\n|oLeft = 51\n|Location = center}}",
+   "box": [
+    51,
+    329,
+    300,
+    604
+   ],
+   "how": "cutter; trimmed 2026-10-15"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 470\n|bSize = 1200\n|cWidth = 391\n|cHeight = 144\n|oTop = 677\n|oLeft = 132\n|Location = center}}",
+   "box": [
+    132,
+    677,
+    523,
+    821
+   ],
+   "how": "cutter"
+  },
+  "c1f3": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 470\n|bSize = 1200\n|cWidth = 316\n|cHeight = 61\n|oTop = 1312\n|oLeft = 184\n|Location = center}}",
+   "box": [
+    184,
+    1312,
+    500,
+    1373
+   ],
+   "how": "as found"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 470\n|bSize = 1200\n|cWidth = 536\n|cHeight = 103\n|oTop = 788\n|oLeft = 615\n|Location = center}}",
+   "box": [
+    615,
+    788,
+    1151,
+    891
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0471": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 471\n|bSize = 1200\n|cWidth = 387\n|cHeight = 263\n|oTop = 957\n|oLeft = 700\n|Location = center}}",
+   "box": [
+    700,
+    957,
+    1087,
+    1220
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0472": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 472\n|bSize = 1200\n|cWidth = 238\n|cHeight = 101\n|oTop = 138\n|oLeft = 50\n|Location = center}}",
+   "box": [
+    50,
+    138,
+    288,
+    239
+   ],
+   "how": "cutter"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 472\n|bSize = 1200\n|cWidth = 130\n|cHeight = 394\n|oTop = 692\n|oLeft = 70\n|Location = center}}",
+   "box": [
+    70,
+    692,
+    200,
+    1086
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0473": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 473\n|bSize = 1200\n|cWidth = 310\n|cHeight = 145\n|oTop = 1203\n|oLeft = 55\n|Location = center}}",
+   "box": [
+    55,
+    1203,
+    365,
+    1348
+   ],
+   "how": "cutter"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 473\n|bSize = 1200\n|cWidth = 202\n|cHeight = 202\n|oTop = 359\n|oLeft = 949\n|Location = center}}",
+   "box": [
+    949,
+    359,
+    1151,
+    561
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 473\n|bSize = 1200\n|cWidth = 120\n|cHeight = 176\n|oTop = 760\n|oLeft = 1034\n|Location = center}}",
+   "box": [
+    1034,
+    760,
+    1154,
+    936
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0916": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 916\n|bSize = 1200\n|cWidth = 179\n|cHeight = 280\n|oTop = 1299\n|oLeft = 988\n|Location = center}}",
+   "box": [
+    988,
+    1299,
+    1167,
+    1579
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol25-page0918": {
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 25.djvu\n|Page = 918\n|bSize = 1200\n|cWidth = 83\n|cHeight = 107\n|oTop = 877\n|oLeft = 276\n|Location = center}}",
+   "box": [
+    276,
+    877,
+    359,
+    984
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol26-page0134": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 134\n|bSize = 1200\n|cWidth = 284\n|cHeight = 55\n|oTop = 1308\n|oLeft = 56\n|Location = center}}",
+   "box": [
+    56,
+    1308,
+    340,
+    1363
+   ],
+   "how": "as found"
+  }
+ },
+ "vol26-page0140": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 140\n|bSize = 1200\n|cWidth = 320\n|cHeight = 249\n|oTop = 1232\n|oLeft = 61\n|Location = center}}",
+   "box": [
+    61,
+    1232,
+    381,
+    1481
+   ],
+   "how": "cutter"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 140\n|bSize = 1200\n|cWidth = 314\n|cHeight = 446\n|oTop = 139\n|oLeft = 842\n|Location = center}}",
+   "box": [
+    842,
+    139,
+    1156,
+    585
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 140\n|bSize = 1200\n|cWidth = 321\n|cHeight = 379\n|oTop = 664\n|oLeft = 841\n|Location = center}}",
+   "box": [
+    841,
+    664,
+    1162,
+    1043
+   ],
+   "how": "cutter"
+  },
+  "c2f3": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 140\n|bSize = 1200\n|cWidth = 320\n|cHeight = 363\n|oTop = 1141\n|oLeft = 845\n|Location = center}}",
+   "box": [
+    845,
+    1141,
+    1165,
+    1504
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol26-page0141": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 141\n|bSize = 1200\n|cWidth = 243\n|cHeight = 173\n|oTop = 575\n|oLeft = 51\n|Location = center}}",
+   "box": [
+    51,
+    575,
+    294,
+    748
+   ],
+   "how": "cutter"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 141\n|bSize = 1200\n|cWidth = 470\n|cHeight = 313\n|oTop = 886\n|oLeft = 92\n|Location = center}}",
+   "box": [
+    92,
+    886,
+    562,
+    1199
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol26-page0704": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 704\n|bSize = 1200\n|cWidth = 509\n|cHeight = 57\n|oTop = 627\n|oLeft = 662\n|Location = center}}",
+   "box": [
+    662,
+    627,
+    1171,
+    684
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 704\n|bSize = 1200\n|cWidth = 559\n|cHeight = 73\n|oTop = 1432\n|oLeft = 614\n|Location = center}}",
+   "box": [
+    614,
+    1432,
+    1173,
+    1505
+   ],
+   "how": "as found"
+  }
+ },
+ "vol26-page0884": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 884\n|bSize = 1200\n|cWidth = 582\n|cHeight = 41\n|oTop = 1465\n|oLeft = 604\n|Location = center}}",
+   "box": [
+    604,
+    1465,
+    1186,
+    1506
+   ],
+   "how": "as found"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 884\n|bSize = 1200\n|cWidth = 301\n|cHeight = 40\n|oTop = 1534\n|oLeft = 604\n|Location = center}}",
+   "box": [
+    604,
+    1534,
+    905,
+    1574
+   ],
+   "how": "as found"
+  }
+ },
+ "vol26-page0999": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 26.djvu\n|Page = 999\n|bSize = 1200\n|cWidth = 245\n|cHeight = 204\n|oTop = 930\n|oLeft = 927\n|Location = center}}",
+   "box": [
+    927,
+    930,
+    1172,
+    1134
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol27-page0054": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 54\n|bSize = 1200\n|cWidth = 534\n|cHeight = 188\n|oTop = 139\n|oLeft = 616\n|Location = center}}",
+   "box": [
+    616,
+    139,
+    1150,
+    327
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 54\n|bSize = 1200\n|cWidth = 530\n|cHeight = 351\n|oTop = 745\n|oLeft = 620\n|Location = center}}",
+   "box": [
+    620,
+    745,
+    1150,
+    1096
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol27-page0289": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 289\n|bSize = 1200\n|cWidth = 229\n|cHeight = 186\n|oTop = 547\n|oLeft = 50\n|Location = center}}",
+   "box": [
+    50,
+    547,
+    279,
+    733
+   ],
+   "how": "by eye"
+  }
+ },
+ "vol27-page0291": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 291\n|bSize = 1200\n|cWidth = 241\n|cHeight = 221\n|oTop = 469\n|oLeft = 52\n|Location = center}}",
+   "box": [
+    52,
+    469,
+    293,
+    690
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol27-page0292": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 292\n|bSize = 1200\n|cWidth = 279\n|cHeight = 365\n|oTop = 378\n|oLeft = 899\n|Location = center}}",
+   "box": [
+    899,
+    378,
+    1178,
+    743
+   ],
+   "how": "by eye"
+  }
+ },
+ "vol27-page0293": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 293\n|bSize = 1200\n|cWidth = 294\n|cHeight = 344\n|oTop = 204\n|oLeft = 50\n|Location = center}}",
+   "box": [
+    50,
+    204,
+    344,
+    548
+   ],
+   "how": "cutter"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 293\n|bSize = 1200\n|cWidth = 210\n|cHeight = 206\n|oTop = 636\n|oLeft = 55\n|Location = center}}",
+   "box": [
+    55,
+    636,
+    265,
+    842
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol27-page0417": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 417\n|bSize = 1200\n|cWidth = 470\n|cHeight = 447\n|oTop = 626\n|oLeft = 649\n|Location = center}}",
+   "box": [
+    649,
+    626,
+    1119,
+    1073
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol27-page0418": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 418\n|bSize = 1200\n|cWidth = 354\n|cHeight = 411\n|oTop = 695\n|oLeft = 820\n|Location = center}}",
+   "box": [
+    820,
+    695,
+    1174,
+    1106
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol27-page0819": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 819\n|bSize = 1200\n|cWidth = 186\n|cHeight = 58\n|oTop = 876\n|oLeft = 610\n|Location = center}}",
+   "box": [
+    610,
+    876,
+    796,
+    934
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol27-page0991": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 991\n|bSize = 1200\n|cWidth = 510\n|cHeight = 184\n|oTop = 1068\n|oLeft = 80\n|Location = center}}",
+   "box": [
+    80,
+    1068,
+    590,
+    1252
+   ],
+   "how": "by eye"
+  }
+ },
+ "vol27-page1091": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 27.djvu\n|Page = 1091\n|bSize = 1200\n|cWidth = 119\n|cHeight = 168\n|oTop = 1399\n|oLeft = 62\n|Location = center}}",
+   "box": [
+    62,
+    1399,
+    181,
+    1567
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol28-page0444": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 444\n|bSize = 1200\n|cWidth = 204\n|cHeight = 371\n|oTop = 198\n|oLeft = 962\n|Location = center}}",
+   "box": [
+    962,
+    198,
+    1166,
+    569
+   ],
+   "how": "by eye"
+  }
+ },
+ "vol28-page0446": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 446\n|bSize = 1200\n|cWidth = 181\n|cHeight = 173\n|oTop = 939\n|oLeft = 982\n|Location = center}}",
+   "box": [
+    982,
+    939,
+    1163,
+    1112
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 446\n|bSize = 1200\n|cWidth = 237\n|cHeight = 195\n|oTop = 1316\n|oLeft = 926\n|Location = center}}",
+   "box": [
+    926,
+    1316,
+    1163,
+    1511
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol28-page0447": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 447\n|bSize = 1200\n|cWidth = 364\n|cHeight = 152\n|oTop = 278\n|oLeft = 49\n|Location = center}}",
+   "box": [
+    49,
+    278,
+    413,
+    430
+   ],
+   "how": "cutter"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 447\n|bSize = 1200\n|cWidth = 272\n|cHeight = 195\n|oTop = 911\n|oLeft = 54\n|Location = center}}",
+   "box": [
+    54,
+    911,
+    326,
+    1106
+   ],
+   "how": "cutter"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 447\n|bSize = 1200\n|cWidth = 426\n|cHeight = 280\n|oTop = 164\n|oLeft = 667\n|Location = center}}",
+   "box": [
+    667,
+    164,
+    1093,
+    444
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 447\n|bSize = 1200\n|cWidth = 364\n|cHeight = 35\n|oTop = 807\n|oLeft = 793\n|Location = center}}",
+   "box": [
+    793,
+    807,
+    1157,
+    842
+   ],
+   "how": "as found"
+  },
+  "c2f3": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 447\n|bSize = 1200\n|cWidth = 360\n|cHeight = 98\n|oTop = 1133\n|oLeft = 795\n|Location = center}}",
+   "box": [
+    795,
+    1133,
+    1155,
+    1231
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol28-page0487": {
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 487\n|bSize = 1200\n|cWidth = 429\n|cHeight = 377\n|oTop = 644\n|oLeft = 110\n|Location = center}}",
+   "box": [
+    110,
+    644,
+    539,
+    1021
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol28-page0490": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 490\n|bSize = 1200\n|cWidth = 502\n|cHeight = 339\n|oTop = 576\n|oLeft = 76\n|Location = center}}",
+   "box": [
+    76,
+    576,
+    578,
+    915
+   ],
+   "how": "cutter"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 490\n|bSize = 1200\n|cWidth = 436\n|cHeight = 611\n|oTop = 170\n|oLeft = 671\n|Location = center}}",
+   "box": [
+    671,
+    170,
+    1107,
+    781
+   ],
+   "how": "cutter"
+  },
+  "c2f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 490\n|bSize = 1200\n|cWidth = 296\n|cHeight = 368\n|oTop = 815\n|oLeft = 673\n|Location = center}}",
+   "box": [
+    673,
+    815,
+    969,
+    1183
+   ],
+   "how": "cutter"
+  },
+  "c2f3": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 490\n|bSize = 1200\n|cWidth = 476\n|cHeight = 414\n|oTop = 1020\n|oLeft = 646\n|Location = center}}",
+   "box": [
+    646,
+    1020,
+    1122,
+    1434
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol28-page0491": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 491\n|bSize = 1200\n|cWidth = 445\n|cHeight = 366\n|oTop = 170\n|oLeft = 115\n|Location = center}}",
+   "box": [
+    115,
+    170,
+    560,
+    536
+   ],
+   "how": "by eye"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 491\n|bSize = 1200\n|cWidth = 330\n|cHeight = 627\n|oTop = 782\n|oLeft = 829\n|Location = center}}",
+   "box": [
+    829,
+    782,
+    1159,
+    1409
+   ],
+   "how": "cutter"
+  }
+ },
+ "vol28-page0494": {
+  "c1f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 494\n|bSize = 1200\n|cWidth = 542\n|cHeight = 690\n|oTop = 133\n|oLeft = 50\n|Location = center}}",
+   "box": [
+    50,
+    133,
+    592,
+    823
+   ],
+   "how": "by eye"
+  },
+  "c1f2": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 494\n|bSize = 1200\n|cWidth = 363\n|cHeight = 530\n|oTop = 935\n|oLeft = 55\n|Location = center}}",
+   "box": [
+    55,
+    935,
+    418,
+    1465
+   ],
+   "how": "by eye"
+  },
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 494\n|bSize = 1200\n|cWidth = 480\n|cHeight = 718\n|oTop = 381\n|oLeft = 640\n|Location = center}}",
+   "box": [
+    640,
+    381,
+    1120,
+    1099
+   ],
+   "how": "by eye"
+  }
+ },
+ "vol28-page0496": {
+  "c2f1": {
+   "css": "{{Css image crop\n|Image = EB1911 - Volume 28.djvu\n|Page = 496\n|bSize = 1200\n|cWidth = 414\n|cHeight = 169\n|oTop = 548\n|oLeft = 689\n|Location = center}}",
+   "box": [
+    689,
+    548,
+    1103,
+    717
+   ],
+   "how": "cutter"
+  }
+ }
+}
