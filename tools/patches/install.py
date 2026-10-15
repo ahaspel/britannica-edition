@@ -4,10 +4,14 @@ words and formulas laid on it, nothing else.  For every judged page
 
   its validated patches (kept.json, less those in data/readings/drop.json:
   [stem, old text — or its first 60 characters, as the validator quotes it])
-  go into data/patches.json, keyed "vol:page"; its supplied page leaves
-  data/supplied
+  go into data/patches.json, keyed "vol:page" — unless our own whole page
+  ENTERS for it (proofread at the desk, `supplied_replaces_text_at`): then
+  Wikisource's page is not read and its patches are not installed.
 
-The pages the gate holds (not judged) are not touched.  Refuses before
+A supplied page is never deleted here: one the door holds waits in
+data/supplied for the desk (2026-10-15), and Wikisource's patched page
+stands meanwhile.  (Until then this script deleted every judged page's
+supplied page — the 43 waiting for the desk among them.)  Refuses before
 changing anything if a patch fails `wikikit.scan.patches.check` on the
 fetched page, or a corrections.json entry falls inside a patched span (it
 would stop applying, silently).  Counts in = installed + dropped, or stops.
@@ -21,7 +25,8 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 from wikikit.corrections import load_corrections
 from wikikit.scan.patches import apply_patches, check
-from wikikit.source_pages import fetched_text
+from wikikit.scan import supplied
+from wikikit.source_pages import fetched_text, prefer
 sys.path.insert(0, str(Path(__file__).parent))
 from paths import DROP, PAGES, WORK, reading
 
@@ -31,6 +36,17 @@ drop = set()
 if DROP.exists():
     drop = {tuple(x) for x in json.loads(DROP.read_text(encoding="utf-8"))}
 corr = load_corrections()
+
+
+def ours_enters(v: int, p: int) -> bool:
+    """Our whole page replaces Wikisource's for this page (`prefer`)."""
+    if not supplied.path_for(v, p).exists():
+        return False
+    ws = fetched_text(v, p)
+    d = supplied.read(v, p)
+    return prefer({"raw_text": ws} if ws is not None else None, d) is d
+
+
 out, problems, t = {}, [], Counter()
 for stem in sorted(judged):
     ps_all = ok.get(stem, [])
@@ -38,10 +54,14 @@ for stem in sorted(judged):
           if not any(stem == s and (x["old"] == pre or (len(pre) >= 60 and x["old"].startswith(pre))) for s, pre in drop)]
     t["dropped"] += len(ps_all) - len(ps)
     t["in"] += len(ps_all)
+    v, p = int(stem[3:5]), int(stem[-4:])
+    if ours_enters(v, p):
+        t["pages: ours, proofread"] += 1
+        t["not read (ours enters)"] += len(ps)
+        continue
     if not ps:
         t["pages: Wikisource's as it is"] += 1
         continue
-    v, p = int(stem[3:5]), int(stem[-4:])
     raw = fetched_text(v, p) or ""
     bad = check(raw, ps)
     if bad:
@@ -55,7 +75,7 @@ for stem in sorted(judged):
     t["pages: patched"] += 1
     t["installed"] += len(ps)
     t["installed formulas"] += sum(x["kind"] == "formula" for x in ps)
-assert t["in"] == t["installed"] + t["dropped"] or problems, dict(t)
+assert t["in"] == t["installed"] + t["dropped"] + t["not read (ours enters)"] or problems, dict(t)
 print(dict(t))
 if problems:
     for x in problems:
@@ -88,10 +108,4 @@ doc = {"_doc": "Corrections of WORDS and FORMULAS laid on fetched Wikisource pag
                "in KaTeX).  Built 2026-10-13."}
 Path("data/patches.json").write_text(json.dumps({**doc, **out}, ensure_ascii=False, indent=1) + "\n",
                                      encoding="utf-8")
-gone = 0
-for stem in judged:
-    f = Path(f"data/supplied/vol_{stem[3:5]}/{stem}.json")
-    if f.exists():
-        f.unlink()
-        gone += 1
-print("data/patches.json:", len(out), "pages;", gone, "supplied pages stepped aside")
+print("data/patches.json:", len(out), "pages")
