@@ -95,7 +95,8 @@ def add(vol: int, ws: int, why: str) -> str:
     door holds it until it is proofread.  The reading: the table re-reading
     where one exists, else the judged reading (data/readings).  Its figures:
     Wikisource's own images where its page has them (`carry_images`), else
-    the Commons regions set for them (data/readings/figure_regions.json).  A
+    the Commons regions set for them (data/readings/figure_regions.json); one
+    the print sets with type beside it floats there (`measure_insets`).  A
     Wikisource page proofread there (level 2 or more) is replaced only because
     we say why (`replaces`); every page records why it was staged.  Refused:
     a page already supplied, a page with no reading of ours, a page the gate
@@ -132,6 +133,11 @@ def add(vol: int, ws: int, why: str) -> str:
         p["replaces"] = why
     p["staged"] = {"why": why, "from": src.as_posix(),
                    "at": datetime.date.today().isoformat()}
+    if figs:
+        # a figure the print sets with type beside it floats there, in its text
+        from wikikit.corpora import current_corpus
+        from wikikit.scan import cut
+        supplied.measure_insets(d, cut.deskew(current_corpus().page_scan(vol, ws), p["angle"]))
     supplied.reassemble(d, fetched=fetched)
     live = json.loads(urllib.request.urlopen(urllib.request.Request(
         LIVE_PRINTED, headers={"User-Agent": "desk add"}), timeout=60).read())
