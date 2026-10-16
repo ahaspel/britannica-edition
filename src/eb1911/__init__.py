@@ -129,6 +129,9 @@ EB1911 = Corpus(
     # proofread it at the desk (user, 2026-10-15): the pages Wikisource left as
     # raw OCR wait in data/supplied, and Wikisource's (patched) stands meanwhile.
     supplied_replaces_text_at=3,
+    # The print sets every quotation mark the same way; the transcriptions
+    # mix straight and curly (user, 2026-10-16): all set curly.
+    curly_quotes=True,
     # The book prints headings in the margin beside its paragraphs; Wikisource
     # marks them {{EB1911 Shoulder Heading|…}}, which the engine renders — so
     # our transcription writes them the same way, where they stand.
