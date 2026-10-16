@@ -1,8 +1,11 @@
 # Zenodo deposit — the TEI edition
 
-**Status: 2026.4 published 2026-10-13**, DOI `10.5281/zenodo.23353109`,
-against `tei-2026.4` (`f63a65b`; four `corrections.json` entries in that tree
-postdate the bundle and enter the next version). 2026.3 was published
+**Status: 2026.5 published 2026-10-16**, DOI `10.5281/zenodo.23426594`,
+against `tei-2026.5` (`d04703d`). 2026.4 was published 2026-10-13 as
+`10.5281/zenodo.23353109` against `tei-2026.4` (`f63a65b`; four
+`corrections.json` entries in that tree postdate the bundle and entered 2026.5).
+The tags `tei-2026.4` and `tei-2026.5` were made on 2026-10-16 — 2026.4's had
+been recorded here but never created — and `tei-2026.1` pushed with them. 2026.3 was published
 2026-10-10 as `10.5281/zenodo.23288358` against `tei-2026.3` (`9a5c0ca`).
 2026.2 was published 2026-09-21 as
 `10.5281/zenodo.22876664` against the tagged tree `tei-2026.2` (`651981c`). The first deposit, 2026.1, was
@@ -23,6 +26,17 @@ the one the website should cite.
 | **version** — 2026.2 | `10.5281/zenodo.22876664` (published 2026-09-21) |
 | **version** — 2026.3 | `10.5281/zenodo.23288358` (published 2026-10-10, against `tei-2026.3` = `9a5c0ca`) |
 | **version** — 2026.4 | `10.5281/zenodo.23353109` (published 2026-10-13, against `tei-2026.4` = `f63a65b`) |
+| **version** — 2026.5 | `10.5281/zenodo.23426594` (published 2026-10-16, against `tei-2026.5` = `d04703d`) |
+
+2026.5's file: `eb1911-tei.tar.gz`, 105,491,183 bytes,
+`md5:e47a2e4cdab58b311c93dc540e8d3480` (SHA-256 `b750a1f1…e1abab7a`) — verified
+2026-10-16 as the live record's only file, identical to our build and to the copy
+at britannica11.org/download/ (SHA-256 compared); version `2026.5`, licence
+`cc-by-sa-4.0`, creator `Haspel, Aaron`, `isVariantFormOf` the HuggingFace
+dataset.  Smaller than 2026.4's by 120,992 bytes though its content grew by
+146,198 (1,842 documents grew, 71 shrank — the raw OCR proofread pages replaced,
+METEOROLOGY −2,301, TEXTILE-PRINTING −1,682): it compresses better, nothing is
+missing (compared document by document against 2026.4's file from Zenodo).
 
 2026.4's file: `eb1911-tei.tar.gz`, 105,612,175 bytes,
 `md5:c402761d09919f0fa7f45693a02e3a8e` (SHA-256 `a410f385…bf30a33c7`) — verified

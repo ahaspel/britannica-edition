@@ -46,7 +46,41 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-10-14)
+## CURRENT STATE (2026-10-16)
+
+### 2026-10-16 — release: site, downloads, HuggingFace, Zenodo 2026.5, Payhip
+
+From the rebuild of 2026-10-16 16:30 (`--reimport`, 37,226 articles), deployed
+16:49; derivatives built 17:25 and published from the same rebuild.
+
+- **The proofreading desk** (`tools/desk.py serve`): 49 pages Wikisource has only
+  as raw OCR enter as our transcriptions, each checked against the scan by the
+  user; their patches dropped (`install.py`).  273 pages keep 9,048 patches
+  (8,029 formulas).  Level-2 pages are listed where a save keeps their text.
+  SHIPBUILDING p. 953 withdrawn (one plate; Wikisource sets it whole).
+- **Quotation marks set curly** (`Corpus.curly_quotes`, in preprocess after
+  corrections): ~2,800 pairs on 1,032 pages; lone marks (inches, arc seconds,
+  ditto) and every mark in markup, file names and link targets untouched.  The
+  first rebuild's image gate caught RIGGING's "Santa Maria" file name set curly.
+- **Engine:** tables in a small paragraph set small; a figure set by
+  `{{img float}}` is the image it names (Wikisource's own figures on vol 18
+  p. 272, vol 27 p. 401); the gate and carry know an image by what it is
+  (`images.identity`); a formula in a heading is set in the contents list;
+  floated crops at their printed width; punctuation after inline math stays
+  with it; paragraph breaks restored at page boundaries.
+- **Checked against live** before deploy: all 2,061 articles the build was
+  predicted to change plus a 400-article random control, by visible words and
+  full markup — every difference intended.
+- **Derivatives:** TEI 37,225 valid, EPUBCheck clean (sampler + complete), MDX
+  verified; live TEI checksum equals the build.
+- **Zenodo 2026.5** — `10.5281/zenodo.23426594` against `tei-2026.5`
+  (`docs/zenodo_deposit.md`).
+- **Payhip** — EPUB + both MDX zips + README uploaded by hand.
+
+**Next:** Century — the pilot's 5 pages done ($0.80); figures the locator merges
+are split to match the reading, and the ornamental capitals read as letters; the
+next 90 pages of vol 1 (~$14–17 by batch) on the user's word.  Stretched text
+tables (4,400 in 913 articles) deferred.
 
 ### 2026-10-14 — site only: our tables over Wikisource's OCR junk
 
