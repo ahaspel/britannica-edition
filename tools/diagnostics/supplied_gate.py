@@ -208,7 +208,9 @@ def checks(d: dict, ws: str | None, live: dict):
     # a formula or table ours transcribes as text), never silent.
     if pv.get("images_unplaced"):
         yield "images", "; ".join(pv["images_unplaced"])
-    left = [s["markup"] for s in images.source_images(ws) if s["markup"] not in raw]
+    # the same image however ours sets it: floated beside its type, captioned
+    on_ours = images.identities_on(raw)
+    left = [s["markup"] for s in images.source_images(ws) if images.identity(s["markup"]) not in on_ours]
     if left and not pv.get("images_decided"):
         yield "images", (f"{len(left)} of the fetched page's images not on ours: "
                          + "; ".join(m.replace("\n", " ")[:60] for m in left))

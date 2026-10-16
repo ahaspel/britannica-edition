@@ -65,9 +65,18 @@ def queue(done: bool = False) -> list[tuple[int, int]]:
         ws = fetched_text(v, p)
         lv = supplied.level(d)
         held = prefer({"raw_text": ws} if ws is not None else None, d) is not d
-        if (lv == 1 and held) or (done and lv >= 3):
+        if (lv == 1 and held) or (done and lv >= 3) or (lv == 2 and _saves_as_filed(d)):
             keys.append((v, p))
     return keys
+
+
+def _saves_as_filed(d: dict) -> bool:
+    """A level-2 page (text missing: refused or unread) is shown too, for the
+    proofreader to supply it — but only where a save, which rebuilds the page
+    from its readings, rebuilds the text on file: the older pages' text was
+    set apart from their readings, and a save there loses what was set."""
+    import copy
+    return supplied.reassemble(copy.deepcopy(d))["raw_text"] == d["raw_text"]
 
 
 def bundle(keys: list[tuple[int, int]]) -> None:
