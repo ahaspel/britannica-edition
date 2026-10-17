@@ -19,30 +19,19 @@ Each strip is a column of the page beside our reading of it.
         -> each page's reading of ours onto the desk (`add`): its figures
            Wikisource's own images or our Commons regions, the gate passed,
            held until proofread.  PAGE is the PRINTED page.
-    uv run python tools/desk.py bundle [VOL:PAGE ...]
-        -> data/derived/desk/: desk.json, strip images, desk_render.js, and
-           seed/<strip id>.json, one document per text strip for the desk's
-           store.  No pages named: every supplied page the door holds whose
-           reading is complete (level 1) — the queue.  PAGE is the PRINTED page.
-    uv run python tools/desk.py apply DIR
-        DIR holds the desk's saved strips, one <strip id>.json each
-        (as exported from its store): readings corrected, checks recorded,
-        pages reassembled — a page fully checked is level 3 and enters.
 """
 from __future__ import annotations
 
 import json
-import shutil
 import sys
 from pathlib import Path
 
-from eb1911.scans import _printed, page_scan
-from wikikit.scan import desk, supplied
+from eb1911.scans import _printed
+from wikikit.scan import supplied
 from wikikit.source_pages import SUPPLIED_DIR, fetched_text, prefer
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
-OUT = Path("data/derived/desk")
 PRINTED = _printed("printed_pages.json")
 
 
@@ -77,26 +66,6 @@ def _saves_as_filed(d: dict) -> bool:
     set apart from their readings, and a save there loses what was set."""
     import copy
     return supplied.reassemble(copy.deepcopy(d))["raw_text"] == d["raw_text"]
-
-
-def bundle(keys: list[tuple[int, int]]) -> None:
-    path = desk.bundle(keys, {k: page_scan(*k) for k in keys}, OUT, label=label)
-    shutil.copyfile(desk.DESK_RENDER_JS, OUT / "desk_render.js")
-    seed = OUT / "seed"
-    shutil.rmtree(seed, ignore_errors=True)
-    seed.mkdir()
-    data = json.loads(path.read_text(encoding="utf-8"))
-    n = 0
-    for pg in data["pages"]:
-        for s in pg["strips"]:
-            if s["kind"] == "figure":
-                continue
-            (seed / f"{s['id']}.json").write_text(json.dumps({
-                "page": pg["id"], "name": s["name"], "text": s["text"], "model_text": s["text"],
-                "status": "checked" if s["checked"] else "unchecked"},
-                ensure_ascii=False), encoding="utf-8")
-            n += 1
-    print(f"{path}: {len(data['pages'])} pages, {n} text strips to seed")
 
 
 def add(vol: int, ws: int, why: str) -> str:
@@ -163,12 +132,6 @@ def add(vol: int, ws: int, why: str) -> str:
             f"Commons region(s)" + (f"; OUR CROP still stands for {', '.join(left)}" if left else ""))
 
 
-def apply(src: Path) -> None:
-    rows = {f.stem: json.loads(f.read_text(encoding="utf-8")) for f in sorted(src.glob("*.json"))}
-    for line in desk.apply(rows):
-        print(line)
-
-
 def main() -> int:
     if len(sys.argv) in (2, 3) and sys.argv[1] == "serve":
         import subprocess
@@ -185,11 +148,6 @@ def main() -> int:
         for a in pages:
             v, pg = (int(x) for x in a.split(":"))
             print(add(v, ws_for(v, pg), why))
-    elif len(sys.argv) >= 2 and sys.argv[1] == "bundle":
-        keys = [(int(v), ws_for(int(v), int(p))) for v, p in (a.split(":") for a in sys.argv[2:])]
-        bundle(keys or queue())
-    elif len(sys.argv) == 3 and sys.argv[1] == "apply":
-        apply(Path(sys.argv[2]))
     else:
         print(__doc__)
         return 2
