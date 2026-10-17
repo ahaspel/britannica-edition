@@ -5,16 +5,16 @@ left as raw OCR — whose whole reading of ours waits in data/supplied until a
 person has proofread it (the door: `supplied_replaces_text_at=3`, user
 2026-10-15), proofread on Wikisource or not ("if we encounter any other lousy
 pages, proofread or not, we can simply fix them here": `add`, recording why).
-Each strip is a column of the page beside our reading of it.
+Each page is proofread whole: its scan beside its text, one text to correct
+and one check for the page (`wikikit.scan.desk_serve`).
 
     uv run --env-file .env python tools/desk.py serve [PORT]
         -> the desk at http://localhost:PORT/desk (default 8020), on the site's
            own server: each page's strips beside the page rendered as it would
            enter, by the site's viewer, its links resolved as the build
            resolves them (from the database: not during a rebuild).  Saving
-           writes into data/supplied; a page whose strips are all checked is
-           proofread and enters at the next rebuild.  Never save while a
-           rebuild runs.
+           writes into data/supplied; a page checked is proofread and enters
+           at the next rebuild.  Never save while a rebuild runs.
     uv run python tools/desk.py add VOL:PAGE [...] --why "what is wrong with Wikisource's page"
         -> each page's reading of ours onto the desk (`add`): its figures
            Wikisource's own images or our Commons regions, the gate passed,
@@ -54,18 +54,12 @@ def queue(done: bool = False) -> list[tuple[int, int]]:
         ws = fetched_text(v, p)
         lv = supplied.level(d)
         held = prefer({"raw_text": ws} if ws is not None else None, d) is not d
-        if (lv == 1 and held) or (done and lv >= 3) or (lv == 2 and _saves_as_filed(d)):
+        # a level-2 page (text missing: refused or unread) is shown for the
+        # proofreader to supply what is missing: a save keeps the page's text
+        # as they leave it, never rebuilt from the readings
+        if (lv == 1 and held) or lv == 2 or (done and lv >= 3):
             keys.append((v, p))
     return keys
-
-
-def _saves_as_filed(d: dict) -> bool:
-    """A level-2 page (text missing: refused or unread) is shown too, for the
-    proofreader to supply it — but only where a save, which rebuilds the page
-    from its readings, rebuilds the text on file: the older pages' text was
-    set apart from their readings, and a save there loses what was set."""
-    import copy
-    return supplied.reassemble(copy.deepcopy(d))["raw_text"] == d["raw_text"]
 
 
 def add(vol: int, ws: int, why: str) -> str:
