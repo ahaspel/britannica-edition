@@ -20,7 +20,8 @@ still passed.  HTML ships no-cache and must revalidate, which makes a page the
 one request that proves the origin path works end to end.
 
 References are split into two classes:
-  - HARD  — <script>, <link>, <img> tags. A missing one of these breaks
+  - HARD  — <script>, <link>, <img> tags and CSS url(...) (the Greek
+            face's fonts). A missing one of these breaks
             page rendering. Failure here exits non-zero so rebuild_all.sh's
             `set -e` suppresses the success banner.
   - SOFT  — fetch() literals and template data paths. Production code
@@ -44,12 +45,16 @@ TIMEOUT_SECS = 15
 MAX_WORKERS = 16
 
 _STATIC_EXT = (".json", ".js", ".svg", ".css", ".jpg", ".jpeg",
-               ".png", ".gif", ".ico", ".html", ".txt", ".pdf")
+               ".png", ".gif", ".ico", ".html", ".txt", ".pdf", ".woff2")
 
 _TAG_RE = re.compile(
     r"""<(?:script|link|img)\s[^>]*?(?:src|href)\s*=\s*["']([^"']+)["']""",
     re.IGNORECASE,
 )
+# A stylesheet's url(...) — the Greek face's fonts.  A font that never
+# uploaded fails quietly (the text falls back to Georgia), so only this
+# check would ever notice.
+_CSS_URL_RE = re.compile(r"""url\(\s*["']?([^"')\s]+)["']?\s*\)""")
 _DATA_LITERAL_RE = re.compile(
     r"""["'](/data/[^"'\s]+?)["']""",
 )
@@ -87,8 +92,8 @@ def collect_refs(html_path: Path) -> tuple[set[str], set[str]]:
     hard: set[str] = set()
     soft: set[str] = set()
 
-    # HARD: <script src>, <link href>, <img src>
-    for m in _TAG_RE.finditer(text):
+    # HARD: <script src>, <link href>, <img src>, and a stylesheet's url(...)
+    for m in (*_TAG_RE.finditer(text), *_CSS_URL_RE.finditer(text)):
         url = m.group(1).strip()
         if not url or is_external(url) or has_dynamic(url) or url.startswith("#"):
             continue

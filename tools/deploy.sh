@@ -146,6 +146,14 @@ for f in search-api article-urls typeahead gc-gate build-stamp; do
 done
 aws s3 cp "$SITE/favicon.svg" s3://britannica11.org/favicon.svg \
   --content-type "image/svg+xml" --cache-control "public, max-age=86400"
+# The Greek face (GFS Didot, the engine's pages' @font-face) and its licence.
+# A font's bytes do not change under its name; a new version gets a new name.
+for f in gfs-didot-regular gfs-didot-italic gfs-didot-bold gfs-didot-bold-italic; do
+  aws s3 cp "$SITE/$f.woff2" "s3://britannica11.org/$f.woff2" \
+    --content-type "font/woff2" --cache-control "public, max-age=2592000"
+done
+aws s3 cp "$SITE/gfs-didot-OFL.txt" s3://britannica11.org/gfs-didot-OFL.txt \
+  --content-type "text/plain; charset=utf-8" --cache-control "public, max-age=86400"
 
 echo "  Uploading Reader's Guide (72 pages + 1 image)..."
 for f in "$SITE"/readers-guide.html \
