@@ -37,8 +37,9 @@ if DROP.exists():
     drop = {tuple(x) for x in json.loads(DROP.read_text(encoding="utf-8"))}
 # a person's ruling at the desk's patch screen is final over every check:
 # "drop" is never installed, "keep" is though drop.json or the leak check
-# names it (tools/desk.py, 2026-10-21)
-ruled = {(r["stem"], r["old"], r["new"]): r["ruling"]
+# names it, "edit" is installed with the person's own text (tools/desk.py,
+# 2026-10-21)
+ruled = {(r["stem"], r["old"], r["new"]): r
          for r in json.loads(PATCH_RULINGS.read_text(encoding="utf-8"))} if PATCH_RULINGS.exists() else {}
 corr = load_corrections()
 
@@ -46,8 +47,15 @@ corr = load_corrections()
 def dropped(stem: str, x: dict) -> bool:
     r = ruled.get((stem, x["old"], x["new"]))
     if r:
-        return r == "drop"
+        return r["ruling"] == "drop"
     return any(stem == s and (x["old"] == pre or (len(pre) >= 60 and x["old"].startswith(pre))) for s, pre in drop)
+
+
+def laid(stem: str, x: dict) -> dict:
+    """The patch as installed: its new text a person's edit, if they made one."""
+    r = ruled.get((stem, x["old"], x["new"]))
+    p = {k: x[k] for k in ("start", "end", "old", "new", "kind")}
+    return {**p, "new": r["text"]} if r and r["ruling"] == "edit" else p
 
 
 def ours_enters(v: int, p: int) -> bool:
@@ -62,9 +70,10 @@ def ours_enters(v: int, p: int) -> bool:
 out, problems, t = {}, [], Counter()
 for stem in sorted(judged):
     ps_all = ok.get(stem, [])
-    ps = [{k: x[k] for k in ("start", "end", "old", "new", "kind")} for x in ps_all if not dropped(stem, x)]
+    ps = [laid(stem, x) for x in ps_all if not dropped(stem, x)]
     t["dropped"] += len(ps_all) - len(ps)
     t["ruled at the desk"] += sum(1 for x in ps_all if (stem, x["old"], x["new"]) in ruled)
+    t["edited at the desk"] += sum(1 for x in ps_all if ruled.get((stem, x["old"], x["new"]), {}).get("ruling") == "edit")
     t["in"] += len(ps_all)
     v, p = int(stem[3:5]), int(stem[-4:])
     if ours_enters(v, p):

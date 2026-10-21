@@ -18,9 +18,9 @@ and one check for the page (`wikikit.scan.desk_serve`).
            Beside it, the PATCH SCREEN at /desk/patches: every patch the chain
            made (data/staging/patches/kept.json, so after build.sh) on the
            judged pages, beside the scan, Wikisource's markup before and after,
-           flagged pages first; a ruling, keep or drop, goes into
-           data/readings/patch_rulings.json and install.py honours it over
-           every check.
+           flagged pages first; a ruling, keep, drop or edit (your own text
+           in the patch's place), goes into data/readings/patch_rulings.json
+           and install.py honours it over every check.
     uv run python tools/desk.py add VOL:PAGE [...] --why "what is wrong with Wikisource's page"
         -> each page's reading of ours onto the desk (`add`): its figures
            Wikisource's own images or our Commons regions, the gate passed,
@@ -147,24 +147,35 @@ class Patches:
             r = rulings.get((x["old"], x["new"]))
             out.append({**{k: x[k] for k in ("kind", "start", "end", "old", "new")}, "flags": flags,
                         "chain": "drop" if dropped else "install",
-                        "ruling": {k: r[k] for k in ("ruling", "note", "by", "at")} if r else None})
+                        "ruling": {k: r.get(k) for k in ("ruling", "note", "by", "at", "text")} if r else None})
         return out
 
     def reading(self, v: int, p: int) -> dict:
         return json.loads(self.P.reading(self.stem(v, p)).read_text(encoding="utf-8"))
 
-    def rule(self, v: int, p: int, old: str, new: str, ruling: str | None, note: str, by: str) -> str:
+    def rule(self, v: int, p: int, old: str, new: str, ruling: str | None, note: str, by: str,
+             text: str | None = None) -> str:
         import datetime
+        from wikikit.scan.patches import check
         stem = self.stem(v, p)
-        if not any(x["old"] == old and x["new"] == new for x in self.kept.get(stem, [])):
+        x = next((x for x in self.kept.get(stem, []) if x["old"] == old and x["new"] == new), None)
+        if x is None:
             raise LookupError(f"{label(v, p)}: no such patch in kept.json — rebuild the chain and reload")
+        if ruling == "edit":
+            # the person's text in the patch's place, held to the check install
+            # holds every patch to: at its place, Wikisource's structure kept
+            bad = check(fetched_text(v, p) or "", [{**x, "new": text}])
+            if bad:
+                raise ValueError(f"{label(v, p)}: the edit is refused, nothing saved — {bad[0]}")
         rows = [r for r in self._rulings() if not (r["stem"] == stem and r["old"] == old and r["new"] == new)]
         if ruling:
             rows.append({"stem": stem, "old": old, "new": new, "ruling": ruling, "note": note, "by": by,
-                         "at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")})
+                         "at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+                         **({"text": text} if ruling == "edit" else {})})
         rows.sort(key=lambda r: (r["stem"], r["old"]))
         self.P.PATCH_RULINGS.write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-        return f"{label(v, p)}: {ruling or 'ruling withdrawn'} — {old[:40]!r} → {new[:40]!r}"
+        shown = text if ruling == "edit" else new
+        return f"{label(v, p)}: {ruling or 'ruling withdrawn'} — {old[:40]!r} → {shown[:40]!r}"
 
 
 def add(vol: int, ws: int, why: str) -> str:
