@@ -1,0 +1,163 @@
+{
+ "volume": 24,
+ "page_number": 271,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n276",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n276",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.1,
+  "column_width": 2115,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     154,
+     124,
+     2269,
+     234
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     154,
+     234,
+     1025,
+     346
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1025,
+     234,
+     2269,
+     346
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     154,
+     346,
+     2269,
+     3054
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     154,
+     346,
+     2269,
+     3054
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": ""
+  },
+  "figure_files": {
+   "c0f1": "eb1911 v24 p0271 c0f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     152,
+     343,
+     2277,
+     3063
+    ],
+    "caption": [
+     723,
+     288,
+     1714,
+     332
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     151,
+     350,
+     2274,
+     3065
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 9945,
+    "output_tokens": 295,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "a figure across the columns (1)",
+   "across the gutter: table (top): Genealogical table of House of Savoy spans both columns, its lines and names crossing the gutter",
+   "across the gutter: heading (top): Table title 'Genealogical Table of the House of Savoy' centred across both columns",
+   "across the gutter: table (middle): Family tree branch lines and entries run across the gutter",
+   "across the gutter: table (bottom): Bottom generations of the tree extend across the full page width"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "Genealogical table of House of Savoy spans both columns, its lines and names crossing the gutter"
+   },
+   {
+    "kind": "heading",
+    "where": "top",
+    "detail": "Table title 'Genealogical Table of the House of Savoy' centred across both columns"
+   },
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "Family tree branch lines and entries run across the gutter"
+   },
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "Bottom generations of the tree extend across the full page width"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n\n\n[[File:eb1911 v24 p0271 c0f1.png|center|360px]]<noinclude><references/></noinclude>"
+}

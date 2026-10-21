@@ -15,6 +15,12 @@ and one check for the page (`wikikit.scan.desk_serve`).
            resolves them (from the database: not during a rebuild).  Saving
            writes into data/supplied; a page checked is proofread and enters
            at the next rebuild.  Never save while a rebuild runs.
+           Beside it, the PATCH SCREEN at /desk/patches: every patch the chain
+           made (data/staging/patches/kept.json, so after build.sh) on the
+           judged pages, beside the scan, Wikisource's markup before and after,
+           flagged pages first; a ruling, keep or drop, goes into
+           data/readings/patch_rulings.json and install.py honours it over
+           every check.
     uv run python tools/desk.py add VOL:PAGE [...] --why "what is wrong with Wikisource's page"
         -> each page's reading of ours onto the desk (`add`): its figures
            Wikisource's own images or our Commons regions, the gate passed,
@@ -60,6 +66,105 @@ def queue(done: bool = False) -> list[tuple[int, int]]:
         if (lv == 1 and held) or lv == 2 or (done and lv >= 3):
             keys.append((v, p))
     return keys
+
+
+def _patch_paths():
+    sys.path.insert(0, str(Path(__file__).parent / "patches"))
+    import paths
+    return paths
+
+
+def validator_faults(problems: list[str]) -> list[tuple[str, str]]:
+    """validate.json's "removes word(s) [...]: 'old'" problems of one page:
+    (the old text it quotes, the problem) — as drop_faulted.py reads them."""
+    import ast
+    import re
+    out = []
+    for pr in problems:
+        m = re.match(r"removes word\(s\) \[[^\]]*\]: (.*)$", pr, re.S)
+        if m:
+            out.append((ast.literal_eval(m.group(1)), pr.split(":", 1)[0]))
+    return out
+
+
+def _quoted(x: dict, old: str) -> bool:
+    """The patch a check quotes by its old text (whole, or its first 60+)."""
+    return x["old"] == old or (len(old) >= 60 and x["old"].startswith(old))
+
+
+class Patches:
+    """The patch screen's patches (`wikikit.scan.desk_serve.PatchSource`):
+    the chain's kept patches on the judged pages, less the pages our own
+    whole page replaces, each with what the checks say of it — the leak
+    check (leaks.json, less leaks_reviewed.json), the validator
+    (validate.json), drop.json — and a person's ruling."""
+
+    def __init__(self):
+        P = _patch_paths()
+        self.P = P
+        load = lambda f, empty: json.loads(f.read_text(encoding="utf-8")) if f.exists() else empty
+        self.kept = load(P.WORK / "kept.json", {})
+        self.leaks = load(P.WORK / "leaks.json", {})
+        self.faults = {s: validator_faults(ps) for s, ps in load(P.WORK / "validate.json", {}).items()}
+        self.drop = [tuple(x) for x in load(P.DROP, [])]
+        judged = P.PAGES.read_text().split()
+        pages = []
+        for stem in judged:
+            if not self.kept.get(stem):
+                continue
+            v, p = int(stem[3:5]), int(stem[-4:])
+            if supplied.path_for(v, p).exists():
+                ws = fetched_text(v, p)
+                d = supplied.read(v, p)
+                if prefer({"raw_text": ws} if ws is not None else None, d) is d:
+                    continue                    # ours enters whole: no patches laid
+            pages.append((v, p))
+        flagged = {k for k in pages if any(x["flags"] for x in self.patches(*k))}
+        self.pages = sorted(pages, key=lambda k: (k not in flagged, k))
+
+    @staticmethod
+    def stem(v: int, p: int) -> str:
+        return f"vol{v:02d}-page{p:04d}"
+
+    def _rulings(self) -> list[dict]:
+        f = self.P.PATCH_RULINGS
+        return json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
+
+    def queue(self) -> list[tuple[int, int]]:
+        return self.pages
+
+    def patches(self, v: int, p: int) -> list[dict]:
+        stem = self.stem(v, p)
+        rulings = {(r["old"], r["new"]): r for r in self._rulings() if r["stem"] == stem}
+        together = [l["why"] for l in self.leaks.get(stem, []) if l["old"].startswith("(all the page")]
+        out = []
+        for x in self.kept.get(stem, []):
+            flags = [f"leak: {l['why']}" for l in self.leaks.get(stem, [])
+                     if l["old"] == x["old"][:200] and l["new"] == x["new"][:200]]
+            flags += [f"validator: {why}" for old, why in self.faults.get(stem, []) if _quoted(x, old)]
+            flags += [f"the page's patches together: {w}" for w in together]
+            dropped = any(s == stem and _quoted(x, old) for s, old in self.drop)
+            r = rulings.get((x["old"], x["new"]))
+            out.append({**{k: x[k] for k in ("kind", "start", "end", "old", "new")}, "flags": flags,
+                        "chain": "drop" if dropped else "install",
+                        "ruling": {k: r[k] for k in ("ruling", "note", "by", "at")} if r else None})
+        return out
+
+    def reading(self, v: int, p: int) -> dict:
+        return json.loads(self.P.reading(self.stem(v, p)).read_text(encoding="utf-8"))
+
+    def rule(self, v: int, p: int, old: str, new: str, ruling: str | None, note: str, by: str) -> str:
+        import datetime
+        stem = self.stem(v, p)
+        if not any(x["old"] == old and x["new"] == new for x in self.kept.get(stem, [])):
+            raise LookupError(f"{label(v, p)}: no such patch in kept.json — rebuild the chain and reload")
+        rows = [r for r in self._rulings() if not (r["stem"] == stem and r["old"] == old and r["new"] == new)]
+        if ruling:
+            rows.append({"stem": stem, "old": old, "new": new, "ruling": ruling, "note": note, "by": by,
+                         "at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")})
+        rows.sort(key=lambda r: (r["stem"], r["old"]))
+        self.P.PATCH_RULINGS.write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        return f"{label(v, p)}: {ruling or 'ruling withdrawn'} — {old[:40]!r} → {new[:40]!r}"
 
 
 def add(vol: int, ws: int, why: str) -> str:
@@ -131,7 +236,8 @@ def main() -> int:
         import subprocess
         from wikikit.scan import desk_serve
         who = subprocess.run(["git", "config", "user.name"], capture_output=True, text=True).stdout.strip()
-        desk_serve.serve_desk(lambda: queue(done=True), label, int(sys.argv[2]) if len(sys.argv) == 3 else 8020, who or "proofreader")
+        desk_serve.serve_desk(lambda: queue(done=True), label, int(sys.argv[2]) if len(sys.argv) == 3 else 8020,
+                              who or "proofreader", patches=Patches())
     elif len(sys.argv) >= 3 and sys.argv[1] == "add":
         args = sys.argv[2:]
         if "--why" not in args or args.index("--why") == len(args) - 1:

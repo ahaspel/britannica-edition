@@ -28,14 +28,26 @@ from wikikit.scan.patches import apply_patches, check
 from wikikit.scan import supplied
 from wikikit.source_pages import fetched_text, prefer
 sys.path.insert(0, str(Path(__file__).parent))
-from paths import DROP, PAGES, WORK, reading
+from paths import DROP, PAGES, PATCH_RULINGS, WORK, reading
 
 judged = PAGES.read_text().split()
 ok = json.loads((WORK / "kept.json").read_text(encoding="utf-8"))
 drop = set()
 if DROP.exists():
     drop = {tuple(x) for x in json.loads(DROP.read_text(encoding="utf-8"))}
+# a person's ruling at the desk's patch screen is final over every check:
+# "drop" is never installed, "keep" is though drop.json or the leak check
+# names it (tools/desk.py, 2026-10-21)
+ruled = {(r["stem"], r["old"], r["new"]): r["ruling"]
+         for r in json.loads(PATCH_RULINGS.read_text(encoding="utf-8"))} if PATCH_RULINGS.exists() else {}
 corr = load_corrections()
+
+
+def dropped(stem: str, x: dict) -> bool:
+    r = ruled.get((stem, x["old"], x["new"]))
+    if r:
+        return r == "drop"
+    return any(stem == s and (x["old"] == pre or (len(pre) >= 60 and x["old"].startswith(pre))) for s, pre in drop)
 
 
 def ours_enters(v: int, p: int) -> bool:
@@ -50,9 +62,9 @@ def ours_enters(v: int, p: int) -> bool:
 out, problems, t = {}, [], Counter()
 for stem in sorted(judged):
     ps_all = ok.get(stem, [])
-    ps = [{k: x[k] for k in ("start", "end", "old", "new", "kind")} for x in ps_all
-          if not any(stem == s and (x["old"] == pre or (len(pre) >= 60 and x["old"].startswith(pre))) for s, pre in drop)]
+    ps = [{k: x[k] for k in ("start", "end", "old", "new", "kind")} for x in ps_all if not dropped(stem, x)]
     t["dropped"] += len(ps_all) - len(ps)
+    t["ruled at the desk"] += sum(1 for x in ps_all if (stem, x["old"], x["new"]) in ruled)
     t["in"] += len(ps_all)
     v, p = int(stem[3:5]), int(stem[-4:])
     if ours_enters(v, p):
@@ -85,10 +97,25 @@ if problems:
 # made, and flagged nothing unreviewed: no patch changes anything beyond its
 # own text (2026-10-13: italics cut by formula patches had shipped)
 leaks, kept = WORK / "leaks.json", WORK / "kept.json"
-leak_problem = ("leak check not run on the current kept.json" if not leaks.exists()
-                or leaks.stat().st_mtime < kept.stat().st_mtime
-                else "leak check flags " + ", ".join(sorted(json.loads(leaks.read_text(encoding="utf-8"))))
-                if json.loads(leaks.read_text(encoding="utf-8")) else None)
+
+
+def unruled(stem: str, flagged: list[dict]) -> list[dict]:
+    """A page's leak flags no ruling answers: a flagged patch a person ruled
+    (leaks.json quotes 200 characters) — and, once each of the page's
+    flagged patches is ruled, the flag on its patches together."""
+    def ruling(l):
+        return next((r for (s, o, n), r in ruled.items() if s == stem and o[:200] == l["old"] and n[:200] == l["new"]),
+                    None)
+    alone = [l for l in flagged if not l["old"].startswith("(all the page")]
+    left = [l for l in alone if not ruling(l)]
+    return left + ([l for l in flagged if l not in alone] if left or not alone else [])
+
+
+if not leaks.exists() or leaks.stat().st_mtime < kept.stat().st_mtime:
+    leak_problem = "leak check not run on the current kept.json"
+else:
+    flagged = {s: u for s, ls in json.loads(leaks.read_text(encoding="utf-8")).items() if (u := unruled(s, ls))}
+    leak_problem = "leak check flags " + ", ".join(sorted(flagged)) if flagged else None
 print("leaks:", leak_problem or "none")
 if "--dry" in sys.argv:
     # what would be installed, against what is: equal, or the pages that differ

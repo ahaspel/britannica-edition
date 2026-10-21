@@ -1,0 +1,135 @@
+{
+ "volume": 25,
+ "page_number": 252,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n260",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n260",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.0,
+  "column_width": 1086,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     118,
+     129,
+     2261,
+     197
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     118,
+     197,
+     1191,
+     959
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1191,
+     197,
+     2261,
+     959
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     118,
+     959,
+     2261,
+     1222
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     118,
+     1222,
+     1185,
+     3140
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1185,
+     1222,
+     2261,
+     3140
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    121,
+    963,
+    2253,
+    1215
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7872,
+    "output_tokens": 203,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (1)",
+   "across the gutter: table (middle): Proto-Slav comparison table (candle, boundary, stove, power) spanning both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "Proto-Slav comparison table (candle, boundary, stove, power) spanning both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n\n\n<noinclude><references/></noinclude>"
+}

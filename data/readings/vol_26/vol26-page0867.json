@@ -1,0 +1,140 @@
+{
+ "volume": 26,
+ "page_number": 867,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n881",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n881",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": -0.05,
+  "column_width": 1082,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     77,
+     108,
+     2216,
+     178
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     77,
+     178,
+     1146,
+     3115
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     88,
+     1105,
+     1115,
+     1970
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1146,
+     178,
+     2216,
+     3115
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|GAS]|THERMOMETRY|827}}",
+   "c1s1": "⟦200⟧addition of a duplicate set of connecting tubes C for the elimination of the stem-exposure correction by the method of automatic compensation already explained, is shown in fig. 5 (''Proc. R. S.'' vol. 50, p. 243; Preston’s ''Heat'', p. 133).\n\n⟦400⟧{{smaller block|In setting up the instrument, after cleaning, and drying and calibrating the bulbs and connecting tubes, the masses of gas on the two sides are adjusted as nearly as possible to equality, in order that any changes of temperature in the two sets of connecting tubes may compensate each other. This is effected with all the bulbs in melting ice, by adjusting the quantities of mercury in the bulbs M and S and equalizing the pressures. The bulb T is then heated in steam to determine the fundamental interval. A weight <math>w_1</math> of mercury is removed from the overflow bulb M in order to equalize the pressures again. If <math>\\text{W}</math> is the weight of the mercury at 0° C. which would be required to fill the bulb T at 0° C., and if <math>\\text{W}+d\\text{W}_1</math> is the weight of mercury at 0° which would be required to fill a volume equal to that of the bulb in steam at <math>t_1</math>, we have the following equation for determining the coefficient of expansion <math>a</math>, or the fundamental zero <math>\\text{T}_0</math>,\n{{block center|<math>at_1 = t_1/\\text{T}_0 = (w_1+d\\text{W}_1)/(\\text{W}-w_1),</math> . . . . (13)}}\nSimilarly if <math>w</math> is the overflow when the bulb is at any other temperature <math>t</math>, and the expansion of the bulb is <math>d\\text{W}</math>, we have a precisely similar equation for determining <math>t</math> in terms of <math>\\text{T}_0</math>, but with <math>t</math> and <math>w</math> and <math>d\\text{W}</math> substituted for <math>t_1</math> and <math>w_1</math> and <math>d\\text{W}_1</math>. In practice, if the pressures are not adjusted to exact equality, or if the volumes of\n[[FIGURE]]\n{{c|{{sc|Fig.}} 5.—Compensated Differential Gas Thermometer.}}\nthe connecting tubes do not exactly compensate, it is only necessary to include in <math>w</math> a small correction <math>dw</math>, equivalent to the observed difference, which need never exceed one part in ten thousand.}}\n\n⟦2200⟧{{smaller block|It is possible to employ the same apparatus at constant volume as well as at constant pressure, but the manipulation is not quite so simple, in consequence of the change of pressure. Instead of removing mercury from the overflow bulb M in connexion with the thermometric bulb, mercury is introduced from a higher level into the standard bulb S so as to raise its pressure to equality with that of T at constant volume. The equations of this method are precisely the same as those already given, except that <math>w</math> now signifies the “inflow” weight introduced into the bulb S, instead of the overflow weight from M. It is necessary, however, to take account of the pressure-coefficient of the bulb T, and it is much more important to have the masses of gas on the two sides of the apparatus equal than in the other case. The thermometric scale obtained in this method differs slightly from the scale of the manometric method, on account of the deviation of the gas compressed at 0° C. from Boyle’s law, but it is easy to take account of this with certainty.}}\n\n⟦2700⟧{{smaller block|Another use to which the same apparatus may be put is the accurate comparison of the scales of two different gases at constant volume by a differential method. It is usual to effect this comparison indirectly, by comparing the gas thermometers separately with a mercury thermometer, or other secondary standard. But by using a pair of bulbs like M and S simultaneously in the same bath, and measuring the small difference of pressure with an oil-gauge, a higher order of accuracy may be attained in the measurement of the small differences than by the method of indirect comparison. For instance, in the curves representing the difference between the nitrogen and hydrogen scales (fig. 1), as found}}",
+   "c2s1": "⟦200⟧{{smaller block|by Chappuis by comparison of the nitrogen and hydrogen thermometers with the mercury thermometer, it is probable that the contrary flexure of the curve between 70° and 100° C. is due to a minute error of observation, which is quite as likely to be caused by the increasing aberrations of the mercury thermometer at these temperatures as by the difficulties of the manometric method. It may be taken as an axiom in all such cases that it is better to measure the small difference itself directly than to deduce it from the much more laborious observations of the separate magnitudes concerned.}}\n\n⟦500⟧17. ''Expansion Correction.''—In the use of the mercury thermometer we are content to overlook the modification of the scale due to the expansion of the envelope, which is known as Poggendorff's correction, or rather to include it in the scale correction. In the case of the gas thermometer it is necessary to determine the expansion correction separately, as our object is to arrive at the closest approximation possible to the absolute scale. It is a common mistake to imagine that if the rate of expansion of the bulb were uniform, the scale of the apparent expansion of the gas would be the same as the scale of the real expansion—in other words, that the correction for the expansion of the bulb would affect the value of the coefficient of expansion <math>1/T_0</math> only, and would be without effect on the value of the temperature <math>t</math> deduced. A result of this kind would be produced by a constant error in the initial pressure on the manometric method, or by a constant error in the initial volume on the volumetric method, or by a constant error in the fundamental interval on any method, but ''not'' by a constant error in the coefficient of expansion of the bulb, which would produce a modification of the scale exactly analogous to Poggendorff's correction. The correction to be applied to the value of <math>t</math> in any case to allow for any systematic error or variation in the data is easily found by differentiating the formula for <math>t</math> with respect to the variable considered. Another method, which is in some respects more instructive, is the following:—\n\n⟦1600⟧{{smaller block|Let <math>\\text{T}</math> be the function of the temperature which is taken as the basis of the scale considered, then we have the value of <math>t</math> given by the general formula (1), already quoted in § 3. Let <math>d\\text{T}</math> be the correction to be added to the observed value of <math>\\text{T}</math> to allow for any systematic change or error in the measurement of any of the data on which the value of <math>\\text{T}</math> depends, and let <math>dt</math> be the corresponding correction produced in the value of <math>t</math>, then substituting in formula (1) we have,\n{{block center|<math>t+dt=100(\\text{T}-\\text{T}_0+d\\text{T}-d\\text{T}_0)/(\\text{T}_1-\\text{T}_0+d\\text{T}_1-d\\text{T}_0),</math>}}\nfrom which, provided that the variations considered are small, we obtain the following general expression for the correction to <math>t</math>,\n{{block center|<math>dt=(d\\text{T}-d\\text{T}_0)-(d\\text{T}_1-d\\text{T}_0)t/100.</math> . . . (14)}}\nIt is frequently simpler to estimate the correction in this manner, rather than by differentiating the general formula.}}\n\n⟦2100⟧{{smaller block|In the special case of the gas thermometer the value of <math>\\text{T}</math> is given by the formula\n{{block center|<math>\\text{T}=p\\text{V}/\\text{RM}=p\\text{V}/\\text{R}(\\text{M}_0-\\text{M}_2),</math> . . . . (15)}}\nwhere <math>p</math> is the observed pressure at any temperature <math>t</math>, <math>\\text{V}</math> the volume of the thermometric bulb, and <math>\\text{M}</math> the mass of gas remaining in the bulb. The quantity <math>\\text{M}</math> cannot be directly observed, but is deduced by subtracting from the whole mass of gas <math>\\text{M}_0</math> contained in the apparatus the mass <math>\\text{M}_2</math> which is contained in the dead space and overflow bulb. In applying these formulae to deduce the effect of the expansion of the bulb, we observe that if <math>d\\text{V}</math> is the expansion from 0° C., and <math>\\text{V}_0</math> the volume at 0° C., we may write\n{{block center|<math>\\text{V}=\\text{V}_0+d\\text{V},\\quad \\text{T}=p(\\text{V}_0+d\\text{V})/\\text{RM}=(p\\text{V}_0/\\text{RM})\\ (1+d\\text{V}/\\text{V}_0),</math>}}\nwhence we obtain approximately\n{{block center|<math>d\\text{T}=\\text{T}d\\text{V}/\\text{V}_0</math> . . . . . . (16)}}}}\n\n⟦2600⟧{{smaller block|If the coefficient of expansion of the bulb is constant and equal to the fundamental coefficient <math>f</math> (the mean coefficient between 0° and 100° C.), we have simply <math>d\\text{V}/\\text{V}_0=ft</math>; and if we substitute this value in the general expression (14) for <math>dt</math>, we obtain\n{{block center|<math>dt=(\\text{T}-\\text{T}_1)ft=ft(t-100)</math> . . . . (17)}}\nProvided that the correction can be expressed as a rational integral function of <math>t</math>, it is evident that it must contain the factors <math>t</math> and <math>(t-100)</math>, since by hypothesis the scale must be correct at the fixed points 0° and 100° C., and the correction must vanish at these points. It is clear from the above that the scale of the gas thermometer is not independent of the expansion of the bulb even in the simple case where the coefficient is constant. The correction is by no means unimportant. In the case of an average glass or}}"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0867 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     100,
+     1117,
+     1103,
+     1958
+    ],
+    "caption": [
+     178,
+     1990,
+     1026,
+     2029
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     106,
+     1111,
+     1127,
+     1973
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    4
+   ],
+   "2": [
+    0,
+    3
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 10054,
+    "output_tokens": 237,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 6935,
+    "output_tokens": 5093,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13401
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type_unmeasured": [],
+  "insets": {},
+  "sections": [
+   {
+    "name": "Thermometry",
+    "before": null
+   }
+  ],
+  "images": {
+   "c1f1": [
+    "[[File:EB1911 - Thermometry - Fig. 5.png|400px|Fig. 5.—Compensated Differential Gas Thermometer.]]"
+   ]
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|GAS]|THERMOMETRY|827}}</noinclude><section begin=\"Thermometry\" />addition of a duplicate set of connecting tubes C for the elimination of the stem-exposure correction by the method of automatic compensation already explained, is shown in fig. 5 (''Proc. R. S.'' vol. 50, p. 243; Preston’s ''Heat'', p. 133).\n\n{{smaller block|In setting up the instrument, after cleaning, and drying and calibrating the bulbs and connecting tubes, the masses of gas on the two sides are adjusted as nearly as possible to equality, in order that any changes of temperature in the two sets of connecting tubes may compensate each other. This is effected with all the bulbs in melting ice, by adjusting the quantities of mercury in the bulbs M and S and equalizing the pressures. The bulb T is then heated in steam to determine the fundamental interval. A weight <math>w_1</math> of mercury is removed from the overflow bulb M in order to equalize the pressures again. If <math>\\text{W}</math> is the weight of the mercury at 0° C. which would be required to fill the bulb T at 0° C., and if <math>\\text{W}+d\\text{W}_1</math> is the weight of mercury at 0° which would be required to fill a volume equal to that of the bulb in steam at <math>t_1</math>, we have the following equation for determining the coefficient of expansion <math>a</math>, or the fundamental zero <math>\\text{T}_0</math>,\n{{block center|<math>at_1 = t_1/\\text{T}_0 = (w_1+d\\text{W}_1)/(\\text{W}-w_1),</math> . . . . (13)}}\nSimilarly if <math>w</math> is the overflow when the bulb is at any other temperature <math>t</math>, and the expansion of the bulb is <math>d\\text{W}</math>, we have a precisely similar equation for determining <math>t</math> in terms of <math>\\text{T}_0</math>, but with <math>t</math> and <math>w</math> and <math>d\\text{W}</math> substituted for <math>t_1</math> and <math>w_1</math> and <math>d\\text{W}_1</math>. In practice, if the pressures are not adjusted to exact equality, or if the volumes of\nthe connecting tubes do not exactly compensate, it is only necessary to include in <math>w</math> a small correction <math>dw</math>, equivalent to the observed difference, which need never exceed one part in ten thousand.}}\n\n[[File:EB1911 - Thermometry - Fig. 5.png|400px|Fig. 5.—Compensated Differential Gas Thermometer.]]\n{{c|{{sc|Fig.}} 5.—Compensated Differential Gas Thermometer.}}\n\n{{smaller block|It is possible to employ the same apparatus at constant volume as well as at constant pressure, but the manipulation is not quite so simple, in consequence of the change of pressure. Instead of removing mercury from the overflow bulb M in connexion with the thermometric bulb, mercury is introduced from a higher level into the standard bulb S so as to raise its pressure to equality with that of T at constant volume. The equations of this method are precisely the same as those already given, except that <math>w</math> now signifies the “inflow” weight introduced into the bulb S, instead of the overflow weight from M. It is necessary, however, to take account of the pressure-coefficient of the bulb T, and it is much more important to have the masses of gas on the two sides of the apparatus equal than in the other case. The thermometric scale obtained in this method differs slightly from the scale of the manometric method, on account of the deviation of the gas compressed at 0° C. from Boyle’s law, but it is easy to take account of this with certainty.}}\n\n{{smaller block|Another use to which the same apparatus may be put is the accurate comparison of the scales of two different gases at constant volume by a differential method. It is usual to effect this comparison indirectly, by comparing the gas thermometers separately with a mercury thermometer, or other secondary standard. But by using a pair of bulbs like M and S simultaneously in the same bath, and measuring the small difference of pressure with an oil-gauge, a higher order of accuracy may be attained in the measurement of the small differences than by the method of indirect comparison. For instance, in the curves representing the difference between the nitrogen and hydrogen scales (fig. 1), as found by Chappuis by comparison of the nitrogen and hydrogen thermometers with the mercury thermometer, it is probable that the contrary flexure of the curve between 70° and 100° C. is due to a minute error of observation, which is quite as likely to be caused by the increasing aberrations of the mercury thermometer at these temperatures as by the difficulties of the manometric method. It may be taken as an axiom in all such cases that it is better to measure the small difference itself directly than to deduce it from the much more laborious observations of the separate magnitudes concerned.}}\n\n17. ''Expansion Correction.''—In the use of the mercury thermometer we are content to overlook the modification of the scale due to the expansion of the envelope, which is known as Poggendorff's correction, or rather to include it in the scale correction. In the case of the gas thermometer it is necessary to determine the expansion correction separately, as our object is to arrive at the closest approximation possible to the absolute scale. It is a common mistake to imagine that if the rate of expansion of the bulb were uniform, the scale of the apparent expansion of the gas would be the same as the scale of the real expansion—in other words, that the correction for the expansion of the bulb would affect the value of the coefficient of expansion <math>1/T_0</math> only, and would be without effect on the value of the temperature <math>t</math> deduced. A result of this kind would be produced by a constant error in the initial pressure on the manometric method, or by a constant error in the initial volume on the volumetric method, or by a constant error in the fundamental interval on any method, but ''not'' by a constant error in the coefficient of expansion of the bulb, which would produce a modification of the scale exactly analogous to Poggendorff's correction. The correction to be applied to the value of <math>t</math> in any case to allow for any systematic error or variation in the data is easily found by differentiating the formula for <math>t</math> with respect to the variable considered. Another method, which is in some respects more instructive, is the following:—\n\n{{smaller block|Let <math>\\text{T}</math> be the function of the temperature which is taken as the basis of the scale considered, then we have the value of <math>t</math> given by the general formula (1), already quoted in § 3. Let <math>d\\text{T}</math> be the correction to be added to the observed value of <math>\\text{T}</math> to allow for any systematic change or error in the measurement of any of the data on which the value of <math>\\text{T}</math> depends, and let <math>dt</math> be the corresponding correction produced in the value of <math>t</math>, then substituting in formula (1) we have,\n{{block center|<math>t+dt=100(\\text{T}-\\text{T}_0+d\\text{T}-d\\text{T}_0)/(\\text{T}_1-\\text{T}_0+d\\text{T}_1-d\\text{T}_0),</math>}}\nfrom which, provided that the variations considered are small, we obtain the following general expression for the correction to <math>t</math>,\n{{block center|<math>dt=(d\\text{T}-d\\text{T}_0)-(d\\text{T}_1-d\\text{T}_0)t/100.</math> . . . (14)}}\nIt is frequently simpler to estimate the correction in this manner, rather than by differentiating the general formula.}}\n\n{{smaller block|In the special case of the gas thermometer the value of <math>\\text{T}</math> is given by the formula\n{{block center|<math>\\text{T}=p\\text{V}/\\text{RM}=p\\text{V}/\\text{R}(\\text{M}_0-\\text{M}_2),</math> . . . . (15)}}\nwhere <math>p</math> is the observed pressure at any temperature <math>t</math>, <math>\\text{V}</math> the volume of the thermometric bulb, and <math>\\text{M}</math> the mass of gas remaining in the bulb. The quantity <math>\\text{M}</math> cannot be directly observed, but is deduced by subtracting from the whole mass of gas <math>\\text{M}_0</math> contained in the apparatus the mass <math>\\text{M}_2</math> which is contained in the dead space and overflow bulb. In applying these formulae to deduce the effect of the expansion of the bulb, we observe that if <math>d\\text{V}</math> is the expansion from 0° C., and <math>\\text{V}_0</math> the volume at 0° C., we may write\n{{block center|<math>\\text{V}=\\text{V}_0+d\\text{V},\\quad \\text{T}=p(\\text{V}_0+d\\text{V})/\\text{RM}=(p\\text{V}_0/\\text{RM})\\ (1+d\\text{V}/\\text{V}_0),</math>}}\nwhence we obtain approximately\n{{block center|<math>d\\text{T}=\\text{T}d\\text{V}/\\text{V}_0</math> . . . . . . (16)}}}}\n\n{{smaller block|If the coefficient of expansion of the bulb is constant and equal to the fundamental coefficient <math>f</math> (the mean coefficient between 0° and 100° C.), we have simply <math>d\\text{V}/\\text{V}_0=ft</math>; and if we substitute this value in the general expression (14) for <math>dt</math>, we obtain\n{{block center|<math>dt=(\\text{T}-\\text{T}_1)ft=ft(t-100)</math> . . . . (17)}}\nProvided that the correction can be expressed as a rational integral function of <math>t</math>, it is evident that it must contain the factors <math>t</math> and <math>(t-100)</math>, since by hypothesis the scale must be correct at the fixed points 0° and 100° C., and the correction must vanish at these points. It is clear from the above that the scale of the gas thermometer is not independent of the expansion of the bulb even in the simple case where the coefficient is constant. The correction is by no means unimportant. In the case of an average glass or}}<noinclude><references/></noinclude>"
+}

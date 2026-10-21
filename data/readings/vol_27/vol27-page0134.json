@@ -1,0 +1,247 @@
+{
+ "volume": 27,
+ "page_number": 134,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n141",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n141",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.2,
+  "column_width": 1162,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     4,
+     2284,
+     199
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     199,
+     1173,
+     1949
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1173,
+     199,
+     2284,
+     1949
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1189,
+     540,
+     2240,
+     1142
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1294,
+     1336,
+     2056,
+     1750
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     0,
+     1949,
+     2284,
+     2743
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     92,
+     1949,
+     1468,
+     2610
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     2743,
+     1172,
+     3140
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1172,
+     2743,
+     2284,
+     3140
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {
+   "c2f1": "eb1911 v27 p0134 c2f1.png",
+   "c2f2": "eb1911 v27 p0134 c2f2.png",
+   "c0f1": "eb1911 v27 p0134 c0f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     1201,
+     552,
+     2228,
+     1130
+    ],
+    "caption": [
+     1477,
+     1154,
+     1954,
+     1190
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1198,
+     550,
+     2246,
+     1133
+    ]
+   },
+   {
+    "box": [
+     1306,
+     1348,
+     2044,
+     1738
+    ],
+    "caption": [
+     1472,
+     1749,
+     1960,
+     1784
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1295,
+     1334,
+     2246,
+     1729
+    ]
+   },
+   {
+    "box": [
+     104,
+     1946,
+     1456,
+     2598
+    ],
+    "caption": [
+     129,
+     2598,
+     1355,
+     2743
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     108,
+     1950,
+     1477,
+     2625
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ],
+   "2": [
+    2,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 14332,
+    "output_tokens": 623,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "a figure across the columns (1)",
+   "across the gutter: illustration (bottom): Fig. 1 Pedrail wheel drawing (level road) extends from left column across gutter into right column",
+   "across the gutter: caption (bottom): 'Position of the parts on a level road' subcaption spans gutter"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "bottom",
+    "detail": "Fig. 1 Pedrail wheel drawing (level road) extends from left column across gutter into right column"
+   },
+   {
+    "kind": "caption",
+    "where": "bottom",
+    "detail": "'Position of the parts on a level road' subcaption spans gutter"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n[[File:eb1911 v27 p0134 c2f1.png|center|326px]]\n\n[[File:eb1911 v27 p0134 c2f2.png|center|236px]]\n\n\n\n[[File:eb1911 v27 p0134 c0f1.png|center|426px]]\n\n<noinclude><references/></noinclude>"
+}

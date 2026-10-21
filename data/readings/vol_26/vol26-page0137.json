@@ -1,0 +1,99 @@
+{
+ "volume": 26,
+ "page_number": 137,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n141",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n141",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.05,
+  "column_width": 1212,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     0,
+     1,
+     2273,
+     211
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     0,
+     211,
+     1200,
+     3154
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1200,
+     211,
+     2273,
+     3154
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader||SURFACE|119}}",
+   "c1s1": "⟦300⟧ but we cannot with a single sheet of paper properly exhibit the form in the neighbourhood of the edge of regression: we need two sheets connected along a plane curve, which, when the paper is bent, becomes the edge of regression and appears as a cuspidal curve on the surface.\n\n⟦400⟧ It may be mentioned that the condition which must be satisfied in order that the equation <math>U=0</math> shall represent a developable is <math>H(U)=0</math>; that is, the Hessian or functional determinant formed with the second differential coefficients of <math>U</math> must vanish in virtue of the equation <math>U=0</math>, or—what is the same thing—<math>H(U)</math> must contain <math>U</math> as a factor. If in cartesian co-ordinates the equation is taken in the form <math>z-f(x, y)=0</math>, then the condition is <math>rt-s^2=0</math> identically, where <math>r, s, t</math> denote as usual the second differential coefficients of <math>z</math> in regard to <math>x, y</math> respectively.\n\n⟦700⟧ 9. A regulus or ruled surface is the locus of a singly infinite system of lines, where the consecutive lines do not intersect; this is a true surface, for there is a doubly infinite series of\n{{EB1911 Shoulder Heading|Regulus or Ruled Surface.}}\ntangent planes—in fact any plane through any one of the lines is a tangent plane of the surface, touching it at a point on the line, and in such wise that, as the tangent plane turns about the line, the point of contact moves along the line. The complete intersection of the surface by the tangent plane is made up of the line counting once and of a residual curve of the order <math>n-1</math>. A quadric surface is a regulus in a two-fold manner, for there are on the surface two systems of lines each of which is a regulus. A cubic surface may be a regulus (see below, par. 11).\n\n⟦1100⟧ {{c|''Surfaces of the Orders 2, 3 and 4.''}}\n\n⟦1200⟧ 10. A surface of the second order or a quadric surface is a surface such that every line meets it in two points, or—what comes to the same thing—such that every plane section thereof\n{{EB1911 Shoulder Heading|Quadric Surfaces.}}\nis a conic or quadric curve. Such surfaces have been studied from every point of view. The only singular forms are when there is (1) a conical point (cnicnode), when the surface is a cone of the second order or quadricone; (2) a conic of contact (cnictrope), when the surface is this conic; from a different point of view it is a “surface aplatie” or flattened surface. Excluding these degenerate forms, the surface is of the order, rank and class each = 2, and it has no singularities. Distinguishing the forms according to ''reality'', we have the ellipsoid, the hyperboloid of two sheets, the hyperboloid of one sheet, the elliptic paraboloid and the hyperbolic paraboloid (see {{sc|Geometry}}: § ''Analytical''). A particular case of the ellipsoid is the sphere; in abstract geometry this is a quadric surface passing through a given quadric curve, the circle at infinity. The tangent plane of a quadric surface meets it in a quadric curve having a node, that is, in a pair of lines; hence there are on the surface two singly infinite sets of lines. Two lines of the same set do not meet, but each line of the one set meets each line of the other set; the surface is thus a regulus in a two-fold manner. The lines are real for the hyperboloid of one sheet and for the hyperbolic paraboloid; for the other forms of surface they are imaginary.\n\n⟦1900⟧ 11. We have next the surface of the third order or cubic surface, which has also been very completely studied. Such a surface may have isolated point singularities (cnicnodes or\n{{EB1911 Shoulder Heading|Cubic Surfaces.}}\npoints of higher singularity), or it may have a nodal line; we have thus <math>21+2, =23</math> cases. In the general case of a surface without any singularities, the order, rank and class are <math>=3, 6, 12</math> respectively. The surface has upon it 27 lines, lying by threes in 45 planes, which are triple tangent planes. Observe that the tangent plane is a plane meeting the surface in a curve having a node. For a surface of any given order <math>n</math> there will be a certain number of planes each meeting the surface in a curve with 3 nodes, that is, triple tangent planes; and, in the particular case where <math>n=3</math>, the cubic curve with 3 nodes is of course a set of 3 lines; it is found that the number of triple tangent planes is, as just mentioned, <math>=45</math>. This would give 135 lines, but through each line we have 5 such planes, and the number of lines is thus <math>=27</math>. The theory of the 27 lines is an extensive and interesting one; in particular, it may be noticed that we can, in thirty-six ways, select a system of <math>6\\times6</math> lines, or “double sixer,” such that no two lines of the same set intersect each other, but that each line of the one set intersects each line of the other set.\n\n⟦2600⟧ A cubic surface having a nodal line is a ruled surface or regulus; in fact any plane through the nodal line meets the surface in this line counting twice and in a residual line, and there is thus on the surface a singly infinite set of lines. There are two forms.\n\n⟦2800⟧ 12. As regards quartic surfaces, only particular forms have been much studied. A quartic surface can have at most 16 conical points (cnicnodes); an instance of such a surface is\n{{EB1911 Shoulder Heading|Quartic Surfaces.}}\nFresnel’s wave surface, which has 4 real cnicnodes in one of the principal planes, <math>4\\times2</math> imaginary ones in the other two principal planes, and 4 imaginary ones at infinity—in all 16 cnicnodes; the same surface has also <math>4</math> real<math>+12</math> imaginary planes each touching the surface along a circle (cnictropes)—in all 16 cnictropes. It was easy by a mere homographic transforma-",
+   "c2s1": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [
+   "c2s1"
+  ],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    3
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7818,
+    "output_tokens": 29,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 4391,
+    "output_tokens": 2107,
+    "cache_creation_input_tokens": 4467,
+    "cache_read_input_tokens": 4467
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type_unmeasured": [
+   "c1s1 y300",
+   "c1s1 y1100"
+  ],
+  "insets": {},
+  "sections": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader||SURFACE|119}}</noinclude>but we cannot with a single sheet of paper properly exhibit the form in the neighbourhood of the edge of regression: we need two sheets connected along a plane curve, which, when the paper is bent, becomes the edge of regression and appears as a cuspidal curve on the surface.\n\nIt may be mentioned that the condition which must be satisfied in order that the equation <math>U=0</math> shall represent a developable is <math>H(U)=0</math>; that is, the Hessian or functional determinant formed with the second differential coefficients of <math>U</math> must vanish in virtue of the equation <math>U=0</math>, or—what is the same thing—<math>H(U)</math> must contain <math>U</math> as a factor. If in cartesian co-ordinates the equation is taken in the form <math>z-f(x, y)=0</math>, then the condition is <math>rt-s^2=0</math> identically, where <math>r, s, t</math> denote as usual the second differential coefficients of <math>z</math> in regard to <math>x, y</math> respectively.\n\n9. A regulus or ruled surface is the locus of a singly infinite system of lines, where the consecutive lines do not intersect; this is a true surface, for there is a doubly infinite series of\n{{EB1911 Shoulder Heading|Regulus or Ruled Surface.}}\ntangent planes—in fact any plane through any one of the lines is a tangent plane of the surface, touching it at a point on the line, and in such wise that, as the tangent plane turns about the line, the point of contact moves along the line. The complete intersection of the surface by the tangent plane is made up of the line counting once and of a residual curve of the order <math>n-1</math>. A quadric surface is a regulus in a two-fold manner, for there are on the surface two systems of lines each of which is a regulus. A cubic surface may be a regulus (see below, par. 11).\n\n{{c|''Surfaces of the Orders 2, 3 and 4.''}}\n\n10. A surface of the second order or a quadric surface is a surface such that every line meets it in two points, or—what comes to the same thing—such that every plane section thereof\n{{EB1911 Shoulder Heading|Quadric Surfaces.}}\nis a conic or quadric curve. Such surfaces have been studied from every point of view. The only singular forms are when there is (1) a conical point (cnicnode), when the surface is a cone of the second order or quadricone; (2) a conic of contact (cnictrope), when the surface is this conic; from a different point of view it is a “surface aplatie” or flattened surface. Excluding these degenerate forms, the surface is of the order, rank and class each = 2, and it has no singularities. Distinguishing the forms according to ''reality'', we have the ellipsoid, the hyperboloid of two sheets, the hyperboloid of one sheet, the elliptic paraboloid and the hyperbolic paraboloid (see {{sc|Geometry}}: § ''Analytical''). A particular case of the ellipsoid is the sphere; in abstract geometry this is a quadric surface passing through a given quadric curve, the circle at infinity. The tangent plane of a quadric surface meets it in a quadric curve having a node, that is, in a pair of lines; hence there are on the surface two singly infinite sets of lines. Two lines of the same set do not meet, but each line of the one set meets each line of the other set; the surface is thus a regulus in a two-fold manner. The lines are real for the hyperboloid of one sheet and for the hyperbolic paraboloid; for the other forms of surface they are imaginary.\n\n11. We have next the surface of the third order or cubic surface, which has also been very completely studied. Such a surface may have isolated point singularities (cnicnodes or\n{{EB1911 Shoulder Heading|Cubic Surfaces.}}\npoints of higher singularity), or it may have a nodal line; we have thus <math>21+2, =23</math> cases. In the general case of a surface without any singularities, the order, rank and class are <math>=3, 6, 12</math> respectively. The surface has upon it 27 lines, lying by threes in 45 planes, which are triple tangent planes. Observe that the tangent plane is a plane meeting the surface in a curve having a node. For a surface of any given order <math>n</math> there will be a certain number of planes each meeting the surface in a curve with 3 nodes, that is, triple tangent planes; and, in the particular case where <math>n=3</math>, the cubic curve with 3 nodes is of course a set of 3 lines; it is found that the number of triple tangent planes is, as just mentioned, <math>=45</math>. This would give 135 lines, but through each line we have 5 such planes, and the number of lines is thus <math>=27</math>. The theory of the 27 lines is an extensive and interesting one; in particular, it may be noticed that we can, in thirty-six ways, select a system of <math>6\\times6</math> lines, or “double sixer,” such that no two lines of the same set intersect each other, but that each line of the one set intersects each line of the other set.\n\nA cubic surface having a nodal line is a ruled surface or regulus; in fact any plane through the nodal line meets the surface in this line counting twice and in a residual line, and there is thus on the surface a singly infinite set of lines. There are two forms.\n\n12. As regards quartic surfaces, only particular forms have been much studied. A quartic surface can have at most 16 conical points (cnicnodes); an instance of such a surface is\n{{EB1911 Shoulder Heading|Quartic Surfaces.}}\nFresnel’s wave surface, which has 4 real cnicnodes in one of the principal planes, <math>4\\times2</math> imaginary ones in the other two principal planes, and 4 imaginary ones at infinity—in all 16 cnicnodes; the same surface has also <math>4</math> real<math>+12</math> imaginary planes each touching the surface along a circle (cnictropes)—in all 16 cnictropes. It was easy by a mere homographic transforma-<noinclude><references/></noinclude>"
+}

@@ -1,0 +1,281 @@
+{
+ "volume": 27,
+ "page_number": 60,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n66",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n66",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": -0.05,
+  "column_width": 1178,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     137,
+     137,
+     2371,
+     203
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     137,
+     203,
+     1202,
+     1486
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     206,
+     535,
+     1119,
+     1192
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1202,
+     203,
+     2371,
+     1486
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1229,
+     333,
+     2278,
+     907
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     137,
+     1486,
+     2371,
+     2242
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     780,
+     1486,
+     2294,
+     2096
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     137,
+     2242,
+     1205,
+     3124
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1205,
+     2242,
+     2371,
+     3124
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1775,
+     2337,
+     2274,
+     2821
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v27 p0060 c1f1.png",
+   "c2f1": "eb1911 v27 p0060 c2f1.png",
+   "c0f1": "eb1911 v27 p0060 c0f1.png",
+   "c2f2": "eb1911 v27 p0060 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     218,
+     547,
+     1107,
+     1180
+    ],
+    "caption": [
+     139,
+     1190,
+     1187,
+     1340
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     217,
+     537,
+     1198,
+     1181
+    ]
+   },
+   {
+    "box": [
+     1241,
+     345,
+     2266,
+     895
+    ],
+    "caption": [
+     1252,
+     912,
+     2272,
+     1053
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1224,
+     347,
+     2279,
+     905
+    ]
+   },
+   {
+    "box": [
+     792,
+     1483,
+     2282,
+     2084
+    ],
+    "caption": [
+     933,
+     2096,
+     2180,
+     2228
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     797,
+     1484,
+     2279,
+     2090
+    ]
+   },
+   {
+    "box": [
+     1787,
+     2349,
+     2262,
+     2809
+    ],
+    "caption": [
+     1785,
+     2813,
+     2272,
+     2944
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1776,
+     2366,
+     2279,
+     2794
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    2
+   ],
+   "2": [
+    2,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 6,
+    "input_tokens": 17038,
+    "output_tokens": 548,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "a figure across the columns (1)",
+   "across the gutter: illustration (middle): Fig. 78 surface plate, straight-edge and squares span both columns",
+   "across the gutter: caption (middle): Fig. 78 caption set across the gutter"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "middle",
+    "detail": "Fig. 78 surface plate, straight-edge and squares span both columns"
+   },
+   {
+    "kind": "caption",
+    "where": "middle",
+    "detail": "Fig. 78 caption set across the gutter"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n[[File:eb1911 v27 p0060 c1f1.png|center|279px]]\n\n[[File:eb1911 v27 p0060 c2f1.png|center|321px]]\n\n\n\n[[File:eb1911 v27 p0060 c0f1.png|center|463px]]\n\n\n\n[[File:eb1911 v27 p0060 c2f2.png|center|152px]]<noinclude><references/></noinclude>"
+}

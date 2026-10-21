@@ -1,0 +1,187 @@
+{
+ "volume": 26,
+ "page_number": 885,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n899",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n899",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": -0.05,
+  "column_width": 1076,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     78,
+     120,
+     2211,
+     191
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     78,
+     191,
+     1146,
+     3109
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     78,
+     697,
+     1146,
+     807
+    ]
+   },
+   {
+    "name": "c1f2",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     296,
+     2090,
+     956,
+     2249
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1146,
+     191,
+     2211,
+     3109
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0885 c1f1.png",
+   "c1f2": "eb1911 v26 p0885 c1f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     80,
+     709,
+     1166,
+     795
+    ],
+    "caption": null,
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     77,
+     707,
+     1140,
+     795
+    ]
+   },
+   {
+    "box": [
+     308,
+     2102,
+     944,
+     2237
+    ],
+    "caption": [
+     340,
+     2243,
+     895,
+     2272
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     323,
+     2099,
+     486,
+     2236
+    ]
+   },
+   {
+    "box": [
+     311,
+     2105,
+     943,
+     2233
+    ],
+    "caption": [
+     340,
+     2243,
+     897,
+     2271
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     674,
+     2085,
+     950,
+     2240
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    2,
+    3
+   ],
+   "2": [
+    0,
+    3
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 12249,
+    "output_tokens": 974,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: illustration (top): chemical formula equation line spanning from left column into right column"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "top",
+    "detail": "chemical formula equation line spanning from left column into right column"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n[[File:eb1911 v26 p0885 c1f1.png|center|357px]]\n\n[[File:eb1911 v26 p0885 c1f2.png|center|221px]]<noinclude><references/></noinclude>"
+}

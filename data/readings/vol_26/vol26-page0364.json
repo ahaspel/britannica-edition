@@ -1,0 +1,281 @@
+{
+ "volume": 26,
+ "page_number": 364,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n373",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n373",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": -0.1,
+  "column_width": 1085,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     99,
+     96,
+     2243,
+     175
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     175,
+     1170,
+     1433
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     173,
+     543,
+     1081,
+     747
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1170,
+     175,
+     2243,
+     1433
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1256,
+     423,
+     2196,
+     876
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     99,
+     1433,
+     2243,
+     2010
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     99,
+     1433,
+     1492,
+     2010
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     2010,
+     1164,
+     3084
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1164,
+     2010,
+     2243,
+     3084
+    ]
+   },
+   {
+    "name": "c2f2",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1164,
+     2538,
+     2243,
+     2976
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0364 c1f1.png",
+   "c2f1": "eb1911 v26 p0364 c2f1.png",
+   "c0f1": "eb1911 v26 p0364 c0f1.png",
+   "c2f2": "eb1911 v26 p0364 c2f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     185,
+     555,
+     1069,
+     735
+    ],
+    "caption": [
+     579,
+     751,
+     687,
+     784
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     177,
+     548,
+     1171,
+     729
+    ]
+   },
+   {
+    "box": [
+     1268,
+     435,
+     2184,
+     864
+    ],
+    "caption": [
+     1664,
+     874,
+     1770,
+     904
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1237,
+     442,
+     2242,
+     862
+    ]
+   },
+   {
+    "box": [
+     102,
+     1430,
+     1480,
+     2013
+    ],
+    "caption": [
+     574,
+     1952,
+     685,
+     1991
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     104,
+     1431,
+     1480,
+     2015
+    ]
+   },
+   {
+    "box": [
+     1152,
+     2550,
+     2236,
+     2964
+    ],
+    "caption": [
+     1580,
+     2972,
+     1684,
+     3000
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1049,
+     2540,
+     2242,
+     2971
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    2
+   ],
+   "2": [
+    2,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 6,
+    "input_tokens": 15176,
+    "output_tokens": 689,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "a figure across the columns (1)",
+   "across the gutter: illustration (middle): Fig. 4 telescope diagram spans from left column across gutter into right column",
+   "across the gutter: illustration (bottom): Fig. 6 diagram extends leftward from right column across gutter into left column area"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "middle",
+    "detail": "Fig. 4 telescope diagram spans from left column across gutter into right column"
+   },
+   {
+    "kind": "illustration",
+    "where": "bottom",
+    "detail": "Fig. 6 diagram extends leftward from right column across gutter into left column area"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n[[File:eb1911 v26 p0364 c1f1.png|center|301px]]\n\n[[File:eb1911 v26 p0364 c2f1.png|center|312px]]\n\n\n\n[[File:eb1911 v26 p0364 c0f1.png|center|462px]]\n\n\n\n[[File:eb1911 v26 p0364 c2f2.png|center|358px]]<noinclude><references/></noinclude>"
+}

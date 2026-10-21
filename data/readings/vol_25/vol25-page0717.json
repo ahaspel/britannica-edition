@@ -1,0 +1,147 @@
+{
+ "volume": 25,
+ "page_number": 717,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n737",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n737",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.0,
+  "column_width": 1083,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     128,
+     106,
+     2273,
+     177
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     128,
+     177,
+     1199,
+     2368
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1199,
+     177,
+     2273,
+     2368
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     128,
+     2368,
+     2273,
+     2847
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     128,
+     2847,
+     1198,
+     3105
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1198,
+     2847,
+     2273,
+     3105
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    875,
+    2365,
+    1542,
+    2436
+   ],
+   [
+    197,
+    2452,
+    2209,
+    2842
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7872,
+    "output_tokens": 168,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (2)",
+   "across the gutter: table (bottom): Statistics table on home-made spirits spans both columns",
+   "across the gutter: heading (bottom): 'United Kingdom 1. Statistics regarding Home-made Spirits' centred across both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "Statistics table on home-made spirits spans both columns"
+   },
+   {
+    "kind": "heading",
+    "where": "bottom",
+    "detail": "'United Kingdom 1. Statistics regarding Home-made Spirits' centred across both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n\n\n<noinclude><references/></noinclude>"
+}

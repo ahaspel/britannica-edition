@@ -18,6 +18,9 @@
                                    on one page faulted (drop_faulted.py)
   data/readings/leaks_reviewed.json  patches check_leaks.py flags that were read
                                    and found right, each with why
+  data/readings/patch_rulings.json  a person's rulings at the desk's patch
+                                   screen, keep or drop: final over every
+                                   check (install.py)
   data/staging/patches/            the chain's working files (not kept)"""
 from pathlib import Path
 
@@ -31,6 +34,7 @@ VOCAB = READINGS / "vocab.json"
 FILTER_VOCAB = READINGS / "vocab_filter.json"
 DROP = READINGS / "drop.json"
 LEAKS_REVIEWED = READINGS / "leaks_reviewed.json"
+PATCH_RULINGS = READINGS / "patch_rulings.json"
 WORK = Path("data/staging/patches")
 WORK.mkdir(parents=True, exist_ok=True)
 

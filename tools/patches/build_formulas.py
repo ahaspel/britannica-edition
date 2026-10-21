@@ -83,6 +83,8 @@ STRUCTURE_TAGS = {"ref", "section", "noinclude", "includeonly", "poem", "div", "
                   "ul", "ol", "li", "dl", "dd", "dt", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "img", "references",
                   "gallery", "pre", "blockquote", "score", "chem", "ce", "timeline", "imagemap"}
 _TABLE = re.compile(r"\{\|[\s\S]*?\n\|\}|<table[\s\S]*?</table>", re.I)
+MATH_SPAN = re.compile(r"<math[^>]*>[\s\S]*?</math>", re.I)
+_INNERMOST = re.compile(r"\{\{[^{}]*\}\}")
 
 
 def _formula_table(t: str) -> bool:
@@ -109,6 +111,28 @@ def structure(span: str) -> str | None:
         if m.group(1).lower() in STRUCTURE_TAGS:
             return "tag " + m.group(1)
     return None
+
+
+def cell_boundary(ws: str, w0: int, w1: int) -> bool:
+    """A span of a wikitable's rows holding a cell or row boundary: "Japan||||
+    132{{EB1911 tfrac|2}}" made "Japan||<math>…" and every cell after it
+    moved one column (vol 28 p. 492, 2026-10-20).  Only inside a table — in
+    prose a "|" is OCR salad or an absolute value — and never a template's
+    own "||" ({{sfrac||a}}) or a formula's."""
+    # nesting counted (a table inside a table: vol 28 p. 492), and a table
+    # carried over from the page before (a "|}" with no "{|" ahead of it)
+    marks = [(m.start(), m.group().strip()) for m in re.finditer(r"\{\||(?:^|\n)\|\}", ws)]
+    depth = 1 if marks and marks[0][1] == "|}" else 0
+    for at, mark in marks:
+        if at >= w0:
+            break
+        depth = max(0, depth + (1 if mark == "{|" else -1))
+    if not depth:
+        return False
+    bare = MATH_SPAN.sub(" ", ws[w0:w1])
+    while (shed := _INNERMOST.sub(" ", bare)) != bare:
+        bare = shed
+    return bool(re.search(r"\|\||!!|\n[ \t]*[|!]", bare))
 
 
 _OPENER = re.compile(r"\{\{\s*[^|{}\n]*\|")
@@ -363,6 +387,8 @@ def main():
                 why = "cuts through italics or bold"
             elif s:
                 why = "Wikisource span holds " + s.split()[0]
+            elif cell_boundary(ws, w0, w1):
+                why = "Wikisource span crosses a table cell"
             elif structure(new_c):
                 why = "our span holds markup"
             elif len(old_c) > 4 * len(new_c) + 200:

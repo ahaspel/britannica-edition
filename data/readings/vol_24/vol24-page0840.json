@@ -1,0 +1,241 @@
+{
+ "volume": 24,
+ "page_number": 840,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n850",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n850",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.05,
+  "column_width": 1081,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     116,
+     179,
+     2250,
+     251
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     116,
+     251,
+     1183,
+     772
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1183,
+     251,
+     2250,
+     772
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     116,
+     772,
+     2250,
+     1503
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     301,
+     772,
+     1975,
+     1477
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     116,
+     1503,
+     1176,
+     3187
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     198,
+     2188,
+     1063,
+     2373
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1176,
+     1503,
+     2250,
+     3187
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1562,
+     1784,
+     2250,
+     2459
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": ""
+  },
+  "figure_files": {
+   "c0f1": "eb1911 v24 p0840 c0f1.png",
+   "c1f1": "eb1911 v24 p0840 c1f1.png",
+   "c2f1": "eb1911 v24 p0840 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     313,
+     769,
+     1963,
+     1465
+    ],
+    "caption": [
+     350,
+     1465,
+     745,
+     1506
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     106,
+     760,
+     2259,
+     1444
+    ]
+   },
+   {
+    "box": [
+     210,
+     2200,
+     1051,
+     2361
+    ],
+    "caption": [
+     267,
+     2388,
+     1015,
+     2426
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     210,
+     2210,
+     1054,
+     2374
+    ]
+   },
+   {
+    "box": [
+     1574,
+     1796,
+     2247,
+     2447
+    ],
+    "caption": [
+     1577,
+     2456,
+     2190,
+     2491
+    ],
+    "column": 2,
+    "inset": true,
+    "page_box": [
+     1581,
+     1789,
+     2254,
+     2440
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    0
+   ],
+   "2": [
+    1,
+    2
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 5,
+    "input_tokens": 13834,
+    "output_tokens": 340,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "a figure across the columns (1)",
+   "across the gutter: illustration (top): Basking shark drawing (Fig. 13) spans both columns; its body and tail extend across the gutter"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "top",
+    "detail": "Basking shark drawing (Fig. 13) spans both columns; its body and tail extend across the gutter"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n\n\n[[File:eb1911 v24 p0840 c0f1.png|center|557px]]\n\n\n\n[[File:eb1911 v24 p0840 c1f1.png|center|288px]]\n\n[[File:eb1911 v24 p0840 c2f1.png|center|229px]]<noinclude><references/></noinclude>"
+}

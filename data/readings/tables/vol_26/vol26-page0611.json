@@ -1,0 +1,128 @@
+{
+ "volume": 26,
+ "page_number": 611,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n621",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n621",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": -0.05,
+  "column_width": 526,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     65,
+     154,
+     2211,
+     224
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     65,
+     224,
+     1137,
+     881
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1137,
+     224,
+     2211,
+     881
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     65,
+     881,
+     2211,
+     3145
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    806,
+    879,
+    1467,
+    915
+   ],
+   [
+    66,
+    939,
+    2209,
+    3115
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    2,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7818,
+    "output_tokens": 149,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (2)",
+   "across the gutter: table (middle): Consumption per head table spans full page width across gutter",
+   "across the gutter: caption (middle): 'Consumption per Head of Population' title centred across both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "Consumption per head table spans full page width across gutter"
+   },
+   {
+    "kind": "caption",
+    "where": "middle",
+    "detail": "'Consumption per Head of Population' title centred across both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n<noinclude><references/></noinclude>"
+}

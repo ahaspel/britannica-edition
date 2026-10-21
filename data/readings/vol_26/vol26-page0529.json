@@ -1,0 +1,172 @@
+{
+ "volume": 26,
+ "page_number": 529,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n538",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n538",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": -0.05,
+  "column_width": 1079,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     78,
+     65,
+     2345,
+     137
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     78,
+     137,
+     1146,
+     3314
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     78,
+     337,
+     1146,
+     1258
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1146,
+     137,
+     2345,
+     3314
+    ]
+   },
+   {
+    "name": "c2f1",
+    "kind": "figure",
+    "column": 2,
+    "box": [
+     1205,
+     1691,
+     2177,
+     2495
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0529 c1f1.png",
+   "c2f1": "eb1911 v26 p0529 c2f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     83,
+     349,
+     1166,
+     1246
+    ],
+    "caption": [
+     83,
+     1302,
+     1166,
+     1492
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     80,
+     347,
+     1250,
+     1250
+    ]
+   },
+   {
+    "box": [
+     1217,
+     1703,
+     2165,
+     2483
+    ],
+    "caption": [
+     1164,
+     2505,
+     2218,
+     2836
+    ],
+    "column": 2,
+    "inset": false,
+    "page_box": [
+     1211,
+     1739,
+     2176,
+     2490
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "2": [
+    1,
+    0
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 4,
+    "input_tokens": 12073,
+    "output_tokens": 793,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: illustration (top): Fig. 1 3rd molar drawings and labels extend past gutter into right column",
+   "across the gutter: caption (top): Fig. 1 caption lines run past gutter into right column area"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "top",
+    "detail": "Fig. 1 3rd molar drawings and labels extend past gutter into right column"
+   },
+   {
+    "kind": "caption",
+    "where": "top",
+    "detail": "Fig. 1 caption lines run past gutter into right column area"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n[[File:eb1911 v26 p0529 c1f1.png|center|356px]]\n\n[[File:eb1911 v26 p0529 c2f1.png|center|324px]]<noinclude><references/></noinclude>"
+}

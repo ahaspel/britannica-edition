@@ -1,0 +1,249 @@
+{
+ "volume": 25,
+ "page_number": 251,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n259",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n259",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.0,
+  "column_width": 1083,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     152,
+     111,
+     2299,
+     182
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     152,
+     182,
+     1223,
+     1001
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1223,
+     182,
+     2299,
+     1001
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     152,
+     1001,
+     2299,
+     1272
+    ]
+   },
+   {
+    "name": "c1s2",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     152,
+     1272,
+     1222,
+     1863
+    ]
+   },
+   {
+    "name": "c2s2",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1222,
+     1272,
+     2299,
+     1863
+    ]
+   },
+   {
+    "name": "c0s2",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     152,
+     1863,
+     2299,
+     2221
+    ]
+   },
+   {
+    "name": "c1s3",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     152,
+     2221,
+     1219,
+     2494
+    ]
+   },
+   {
+    "name": "c2s3",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1219,
+     2221,
+     2299,
+     2494
+    ]
+   },
+   {
+    "name": "c0s3",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     152,
+     2494,
+     2299,
+     2849
+    ]
+   },
+   {
+    "name": "c1s4",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     152,
+     2849,
+     1217,
+     3115
+    ]
+   },
+   {
+    "name": "c2s4",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1217,
+     2849,
+     2299,
+     3115
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c1s2": "",
+   "c2s2": "",
+   "c0s2": "",
+   "c1s3": "",
+   "c2s3": "",
+   "c0s3": "",
+   "c1s4": "",
+   "c2s4": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [
+   [
+    1148,
+    998,
+    1303,
+    1038
+   ],
+   [
+    155,
+    1056,
+    2292,
+    1270
+   ],
+   [
+    1391,
+    1807,
+    1559,
+    1846
+   ],
+   [
+    663,
+    1866,
+    2297,
+    2191
+   ],
+   [
+    1131,
+    2491,
+    1316,
+    2531
+   ],
+   [
+    155,
+    2546,
+    2297,
+    2849
+   ]
+  ],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7872,
+    "output_tokens": 787,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "type across the columns (5)",
+   "across the gutter: table (top): Table I and its caption set across both columns",
+   "across the gutter: table (middle): Table II extends from right column into left column area",
+   "across the gutter: table (bottom): Table III and its caption set across both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "Table I and its caption set across both columns"
+   },
+   {
+    "kind": "table",
+    "where": "middle",
+    "detail": "Table II extends from right column into left column area"
+   },
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "Table III and its caption set across both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n\n\n\n\n\n\n\n\n\n\n<noinclude><references/></noinclude>"
+}

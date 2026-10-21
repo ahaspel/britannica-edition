@@ -1,0 +1,135 @@
+{
+ "volume": 24,
+ "page_number": 772,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri24chisrich/page/n782",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri24chisrich/page/n782",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.05,
+  "column_width": 1145,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     108,
+     0,
+     2314,
+     228
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     108,
+     228,
+     1176,
+     3319
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     114,
+     1826,
+     852,
+     2213
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1176,
+     228,
+     2314,
+     3319
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|742|SEWERAGE|}}",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v24 p0772 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     126,
+     1838,
+     840,
+     2201
+    ],
+    "caption": [
+     112,
+     2216,
+     846,
+     2255
+    ],
+    "column": 1,
+    "inset": true,
+    "page_box": [
+     111,
+     1833,
+     879,
+     2192
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [
+   "c2s1",
+   "c1s1"
+  ],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    1,
+    6
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 9696,
+    "output_tokens": 110,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 741,
+    "output_tokens": 23,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 4467
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type_unmeasured": [],
+  "insets": {
+   "c1f1": "left"
+  },
+  "sections": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|742|SEWERAGE|}}</noinclude>\n\n[[File:eb1911 v24 p0772 c1f1.png|center|232px]]<noinclude><references/></noinclude>"
+}

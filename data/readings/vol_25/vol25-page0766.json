@@ -1,0 +1,204 @@
+{
+ "volume": 25,
+ "page_number": 766,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri25chisrich/page/n786",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri25chisrich/page/n786",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.0,
+  "column_width": 2127,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     171,
+     154,
+     2298,
+     222
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     171,
+     222,
+     1232,
+     834
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1232,
+     222,
+     2298,
+     834
+    ]
+   },
+   {
+    "name": "c0s1",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     171,
+     834,
+     2298,
+     1537
+    ]
+   },
+   {
+    "name": "c0f1",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     171,
+     834,
+     2269,
+     1511
+    ]
+   },
+   {
+    "name": "c0s2",
+    "kind": "text",
+    "column": 0,
+    "box": [
+     171,
+     1594,
+     2298,
+     3137
+    ]
+   },
+   {
+    "name": "c0f2",
+    "kind": "figure",
+    "column": 0,
+    "box": [
+     171,
+     1594,
+     2298,
+     3106
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": "",
+   "c0s1": "",
+   "c0s2": ""
+  },
+  "figure_files": {
+   "c0f1": "eb1911 v25 p0766 c0f1.png",
+   "c0f2": "eb1911 v25 p0766 c0f2.png"
+  },
+  "figures": [
+   {
+    "box": [
+     183,
+     835,
+     2257,
+     1499
+    ],
+    "caption": [
+     1178,
+     1508,
+     1285,
+     1540
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     172,
+     844,
+     2297,
+     1497
+    ]
+   },
+   {
+    "box": [
+     177,
+     1594,
+     2304,
+     3094
+    ],
+    "caption": [
+     1182,
+     3111,
+     1291,
+     3143
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     172,
+     1606,
+     2301,
+     3096
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 4,
+    "input_tokens": 12991,
+    "output_tokens": 464,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "a figure across the columns (2)",
+   "across the gutter: illustration (middle): Fig. 1 Holyhead wind velocity chart spans full page width",
+   "across the gutter: caption (middle): FIG. 1. caption centred across both columns",
+   "across the gutter: illustration (bottom): Fig. 2 Scilly wind velocity and direction chart spans full width",
+   "across the gutter: caption (bottom): FIG. 2. caption centred across both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "illustration",
+    "where": "middle",
+    "detail": "Fig. 1 Holyhead wind velocity chart spans full page width"
+   },
+   {
+    "kind": "caption",
+    "where": "middle",
+    "detail": "FIG. 1. caption centred across both columns"
+   },
+   {
+    "kind": "illustration",
+    "where": "bottom",
+    "detail": "Fig. 2 Scilly wind velocity and direction chart spans full width"
+   },
+   {
+    "kind": "caption",
+    "where": "bottom",
+    "detail": "FIG. 2. caption centred across both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude>\n\n\n\n[[File:eb1911 v25 p0766 c0f1.png|center|355px]]\n\n\n\n[[File:eb1911 v25 p0766 c0f2.png|center|360px]]<noinclude><references/></noinclude>"
+}

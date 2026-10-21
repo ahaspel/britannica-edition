@@ -1,0 +1,131 @@
+{
+ "volume": 26,
+ "page_number": 875,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n889",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n889",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.2,
+  "column_width": 1090,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     42,
+     133,
+     2193,
+     202
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     42,
+     202,
+     1111,
+     3132
+    ]
+   },
+   {
+    "name": "c1f1",
+    "kind": "figure",
+    "column": 1,
+    "box": [
+     132,
+     1265,
+     1018,
+     1795
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1111,
+     202,
+     2193,
+     3132
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|REGISTERING]|THERMOMETRY|835}}",
+   "c1s1": "⟦200⟧ rapidly above 1200° C. that it is questionable whether any advantage is gained by using it beyond this point. The law of radiation has been so closely verified by observations at lower temperatures that the uncertainty involved in applying it at higher temperatures, in the case of a black body is probably less than the uncertainty of the gas-thermometer measurements, and much less than the uncertainty of extrapolating an empirical formula for a thermocouple. Thus L. F. C. Holborn and W. Wien (''Wied. Ann.'', 1895, (6), by extrapolating their thermoelectric formula, found the value 1587° C. for the melting-point of palladium, whereas Violle found 1500° C. by the calorimetric method, and Callendar and Eumorfopoulos (''Phil. Mag.'', 1899, 48) found 1540° and 1550° C. by the methods of the expansion and the change of resistance of platinum respectively. By a later thermoelectric extrapolation Holborn and Henning (''Berlin Akad.'', 1905, 12, p. 311) found 1535° C. for the melting-point of palladium, and 1710° C. for that of platinum, values which were strikingly confirmed by J. A. Harker at the National Physical Laboratory, and by Waidner and Burgess at the Bureau of Standards, U.S.A. Holborn and Valentiner employing an optical method (''Ann. Phys.'', 1907, 22, p. 1) found 1582° C. and 1789° C. for palladium and platinum respectively. There can be little doubt that the extrapolation of the parabolic formula for the thermocouple at these temperatures is quite untrustworthy (see {{sc|Thermoelectricity}}) and that the values given by the electrical resistance method, or by the laws of radiation, are more likely to be correct. Assuming that the total radiation varies as the fourth power of the absolute temperature, a radiation pyrometer can be calibrated by a single observation at a known temperature, such as the melting-point of gold, 1062° C. if a black body is employed as the source; and its indications will probably be accurate at higher temperatures under a similar restriction. If the pyrometer is sighted on the interior of a furnace through a small observation\n[[FIGURE]]\n{{c|{{sc|Fig.}} 8.—Féry’s Mirror Pyrometer (Camb. Scient. Inst. Co.).<br>For temperatures from 500° C. to 1100° C}}\nhole it will indicate the temperature of the furnace correctly, provided that the temperature is uniform. But it must be remembered that this condition does not generally exist in large furnaces. Suppose, for instance, that it is required to find the temperature of the molten metal on the hearth of a furnace viewed through a thick layer of furnace gases, which are probably at a much higher temperature. It is evident that the radiation from the intervening flame may be much greater than that from the metal, and may introduce serious errors. The same objection applies with greater force to optical pyrometers, as the luminous radiation from gases may be of a highly selective character. If, on the other hand, it is required to observe the temperature of metal in a ladle before casting, the surface of the metal must be cleared of scum, and it is necessary to know the emissive power of the metal or oxide exposed.\n\n⟦2400⟧ For scientific measurements of temperature by the radiation method, the thermopile, or bolometer, or radiomicrometer, previously calibrated by exposure to a black body at a known temperature, is directly exposed at a known distance to a known area of the source of radiation. The required result may then be deduced in terms of the area and the distance. The use of extraneous optical appliances is avoided as far as possible on account of selective absorption. For practical purposes, in order to avoid troublesome calculations and measurements, an optical arrangement is employed, either lens or mirror, in order to form an image of the source on the receiving surface. Fig. 8 illustrates Féry’s mirror pyrometer, in which a mirror M, focused by the pinion P, forms an image of the source on a disk, supported by wires of constantan and copper forming a thermocouple, connected by the brass strips D and R to the terminals <math>b</math>, <math>b'</math>. The observation hole in the wall of the furnace is sighted through the eyepiece O, and is made to overlap the disk slightly. The rise of temperature of the junction is assumed to be proportional to the intensity of radiation, and is indicated by the deflexion of a delicate galvanometer connected to the terminals <math>b</math>, <math>b'</math>. A lens may be substituted for the mirror at high temperatures, but it is necessary to allow for the selective absorption of the lens, and to a less extent for that of the mirror, by a special calibration of the scale.",
+   "c2s1": "¶\n⟦300⟧Assuming Wien's laws for the distribution of energy in the spectrum (see {{sc|Heat}}), the temperature of a black body may also be measured by observing (1) the wave-length corresponding to maximum intensity in the normal spectrum, which varies inversely as the absolute temperature, or (2) the maximum intensity itself, which varies as the fifth power of the absolute temperature, or (3) the intensity of radiation corresponding to some particular radiation or colour, which varies as an exponential function, the exact form of which is somewhat uncertain. Methods (1) and (2) require elaborate apparatus and are impracticable except for purposes of scientific research. The ''exact'' application of method (3) is almost equally difficult, and is less certain in its results, but for optical purposes this method may be realized with a fair degree of approximation by the use of coloured glasses, and forms the basis in theory of the most trustworthy optical pyrometers.\n\n⟦700⟧34. ''Optical or Photometric Pyrometers''.—The change of colour of a heated body from red to white with rise of temperature, and the great increase of intrinsic brilliancy which accompanies the change, are among the most familiar methods of estimating high temperatures. For many processes eye estimation suffices, but a much greater degree of accuracy may be secured by the employment of suitable photometers. In Mesuré and Nouel's pyrometric telescope, the estimation of temperature depends on observing the rotation of a quartz polarimeter required to reduce the colour of the radiation to a standard tint. It has the advantage of requiring no auxiliary apparatus, but, owing to the lack of a standard of comparison, its indications are not very precise. In the majority of photometric pyrometers, a standard of comparison for the intensity of the light, either an amyl-acetate or gasoline lamp, or an electric glow-lamp, is employed. The optical pyrometer of H. L. Le Chatelier (''Comptes Rendus'', 1892, 114, p. 214) was one of the earliest, and has served as a model for subsequent inventors. The standard of comparison is an amyl-acetate lamp, the flame of which is adjusted in the usual manner and viewed in the same field as the image of the source. The two halves of the field are adjusted to equality of brightness by means of a cat's eye diaphragm and absorption glasses, and are viewed through a red glass, giving nearly monochromatic radiation in order to avoid the difficulty of comparing lights of different colours. Assuming Wien's law, the logarithm of the intensity of monochromatic radiation for a black body is a linear function of the reciprocal of the absolute temperature, and the instrument can be graduated by observing two temperatures; but it is generally graduated at several points by comparison with temperatures observed by means of a thermocouple.\n\n⟦1700⟧The Wanner Pyrometer (''Phys. Zeits.'', 1902, p. 112) is a modification of Konig's spectrophotometer, in which the two halves of the field, corresponding to the source and the standard of comparison, are illuminated with monochromatic red light polarized in planes at right angles to each other. The two halves may be equalized by rotating the analyzer, the circle of which is graduated to read in degrees of temperature. The instrument has a somewhat restricted range of maximum sensitiveness, and cannot be used below 900° C. owing to the great loss of light in the complicated optical system. It cannot be sighted directly on the object since no image is formed as in the Le Chatelier or Féry instruments, but the methods of securing monochromatic light by a direct vision spectroscope, and of adjusting the fields to equality by rotating the analyser, are capable of great precision, and lead to simple theoretical formulae for the ratio of the intensities in terms of Wien's law.\n\n⟦2200⟧The Féry Absorption Pyrometer (''Journ. Phys.'', 1904, p. 32) differs from Le Chatelier's only in minor details, such as the replacement of the cat's eye diaphragm by a pair of absorbing glass wedges. The principles of its action and the method of calibration are the same. The pyrometers of Morse, and of L. F. C. Holborn and F. Kurlbaum depend on the employment of a glow lamp filament as standard of comparison, the current through which is adjusted to make the intrinsic brilliancy of the filament equal to that of the source. When this adjustment is made the filament becomes invisible against the image of the source as background, and the temperature of the source may be determined from an observation of the current required. Each lamp requires a separate calibration, but the lamps remain fairly constant provided that they are not overheated. To avoid this, the source is screened by absorption glasses (which also require calibration) in observing high temperatures. Except at low temperatures the comparison is effected by placing a red glass before the eyepiece. At low temperatures a special advantage of the glow-lamp as a standard of comparison is that it matches the source in colour as well as in brightness, so that the instrument is very sensitive. At high temperatures the red glass serves chiefly to mitigate the glare.\n\n⟦2900⟧35. ''Registering and Recording Thermometers''.—The term registering thermometer is usually applied to an instrument with an index which requires setting, and when set will indicate the maximum or minimum temperature occurring, or will register the temperature at a particular time or place. A recording instrument is one constructed to give a continuous record of the temperature, and requires a revolving drum or some equivalent clockwork mechanism"
+  },
+  "figure_files": {
+   "c1f1": "eb1911 v26 p0875 c1f1.png"
+  },
+  "figures": [
+   {
+    "box": [
+     144,
+     1277,
+     1006,
+     1783
+    ],
+    "caption": [
+     100,
+     1793,
+     1055,
+     1859
+    ],
+    "column": 1,
+    "inset": false,
+    "page_box": [
+     137,
+     1277,
+     968,
+     1750
+    ]
+   }
+  ],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {},
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 9896,
+    "output_tokens": 186,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 3,
+    "input_tokens": 7027,
+    "output_tokens": 3918,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13401
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type_unmeasured": [],
+  "insets": {},
+  "sections": [
+   {
+    "name": "Thermometry",
+    "before": null
+   }
+  ],
+  "images": {
+   "c1f1": [
+    "[[File:EB1911 - Thermometry - Fig. 8.png|center|400px]]"
+   ]
+  }
+ },
+ "raw_text": "<noinclude><pagequality level=\"1\" user=\"transcriber\" />{{RunningHeader|REGISTERING]|THERMOMETRY|835}}</noinclude><section begin=\"Thermometry\" />rapidly above 1200° C. that it is questionable whether any advantage is gained by using it beyond this point. The law of radiation has been so closely verified by observations at lower temperatures that the uncertainty involved in applying it at higher temperatures, in the case of a black body is probably less than the uncertainty of the gas-thermometer measurements, and much less than the uncertainty of extrapolating an empirical formula for a thermocouple. Thus L. F. C. Holborn and W. Wien (''Wied. Ann.'', 1895, (6), by extrapolating their thermoelectric formula, found the value 1587° C. for the melting-point of palladium, whereas Violle found 1500° C. by the calorimetric method, and Callendar and Eumorfopoulos (''Phil. Mag.'', 1899, 48) found 1540° and 1550° C. by the methods of the expansion and the change of resistance of platinum respectively. By a later thermoelectric extrapolation Holborn and Henning (''Berlin Akad.'', 1905, 12, p. 311) found 1535° C. for the melting-point of palladium, and 1710° C. for that of platinum, values which were strikingly confirmed by J. A. Harker at the National Physical Laboratory, and by Waidner and Burgess at the Bureau of Standards, U.S.A. Holborn and Valentiner employing an optical method (''Ann. Phys.'', 1907, 22, p. 1) found 1582° C. and 1789° C. for palladium and platinum respectively. There can be little doubt that the extrapolation of the parabolic formula for the thermocouple at these temperatures is quite untrustworthy (see {{sc|Thermoelectricity}}) and that the values given by the electrical resistance method, or by the laws of radiation, are more likely to be correct. Assuming that the total radiation varies as the fourth power of the absolute temperature, a radiation pyrometer can be calibrated by a single observation at a known temperature, such as the melting-point of gold, 1062° C. if a black body is employed as the source; and its indications will probably be accurate at higher temperatures under a similar restriction. If the pyrometer is sighted on the interior of a furnace through a small observation\nhole it will indicate the temperature of the furnace correctly, provided that the temperature is uniform. But it must be remembered that this condition does not generally exist in large furnaces. Suppose, for instance, that it is required to find the temperature of the molten metal on the hearth of a furnace viewed through a thick layer of furnace gases, which are probably at a much higher temperature. It is evident that the radiation from the intervening flame may be much greater than that from the metal, and may introduce serious errors. The same objection applies with greater force to optical pyrometers, as the luminous radiation from gases may be of a highly selective character. If, on the other hand, it is required to observe the temperature of metal in a ladle before casting, the surface of the metal must be cleared of scum, and it is necessary to know the emissive power of the metal or oxide exposed.\n\n[[File:EB1911 - Thermometry - Fig. 8.png|center|400px]]\n{{c|{{sc|Fig.}} 8.—Féry’s Mirror Pyrometer (Camb. Scient. Inst. Co.).<br>For temperatures from 500° C. to 1100° C}}\n\nFor scientific measurements of temperature by the radiation method, the thermopile, or bolometer, or radiomicrometer, previously calibrated by exposure to a black body at a known temperature, is directly exposed at a known distance to a known area of the source of radiation. The required result may then be deduced in terms of the area and the distance. The use of extraneous optical appliances is avoided as far as possible on account of selective absorption. For practical purposes, in order to avoid troublesome calculations and measurements, an optical arrangement is employed, either lens or mirror, in order to form an image of the source on the receiving surface. Fig. 8 illustrates Féry’s mirror pyrometer, in which a mirror M, focused by the pinion P, forms an image of the source on a disk, supported by wires of constantan and copper forming a thermocouple, connected by the brass strips D and R to the terminals <math>b</math>, <math>b'</math>. The observation hole in the wall of the furnace is sighted through the eyepiece O, and is made to overlap the disk slightly. The rise of temperature of the junction is assumed to be proportional to the intensity of radiation, and is indicated by the deflexion of a delicate galvanometer connected to the terminals <math>b</math>, <math>b'</math>. A lens may be substituted for the mirror at high temperatures, but it is necessary to allow for the selective absorption of the lens, and to a less extent for that of the mirror, by a special calibration of the scale.\n\nAssuming Wien's laws for the distribution of energy in the spectrum (see {{sc|Heat}}), the temperature of a black body may also be measured by observing (1) the wave-length corresponding to maximum intensity in the normal spectrum, which varies inversely as the absolute temperature, or (2) the maximum intensity itself, which varies as the fifth power of the absolute temperature, or (3) the intensity of radiation corresponding to some particular radiation or colour, which varies as an exponential function, the exact form of which is somewhat uncertain. Methods (1) and (2) require elaborate apparatus and are impracticable except for purposes of scientific research. The ''exact'' application of method (3) is almost equally difficult, and is less certain in its results, but for optical purposes this method may be realized with a fair degree of approximation by the use of coloured glasses, and forms the basis in theory of the most trustworthy optical pyrometers.\n\n34. ''Optical or Photometric Pyrometers''.—The change of colour of a heated body from red to white with rise of temperature, and the great increase of intrinsic brilliancy which accompanies the change, are among the most familiar methods of estimating high temperatures. For many processes eye estimation suffices, but a much greater degree of accuracy may be secured by the employment of suitable photometers. In Mesuré and Nouel's pyrometric telescope, the estimation of temperature depends on observing the rotation of a quartz polarimeter required to reduce the colour of the radiation to a standard tint. It has the advantage of requiring no auxiliary apparatus, but, owing to the lack of a standard of comparison, its indications are not very precise. In the majority of photometric pyrometers, a standard of comparison for the intensity of the light, either an amyl-acetate or gasoline lamp, or an electric glow-lamp, is employed. The optical pyrometer of H. L. Le Chatelier (''Comptes Rendus'', 1892, 114, p. 214) was one of the earliest, and has served as a model for subsequent inventors. The standard of comparison is an amyl-acetate lamp, the flame of which is adjusted in the usual manner and viewed in the same field as the image of the source. The two halves of the field are adjusted to equality of brightness by means of a cat's eye diaphragm and absorption glasses, and are viewed through a red glass, giving nearly monochromatic radiation in order to avoid the difficulty of comparing lights of different colours. Assuming Wien's law, the logarithm of the intensity of monochromatic radiation for a black body is a linear function of the reciprocal of the absolute temperature, and the instrument can be graduated by observing two temperatures; but it is generally graduated at several points by comparison with temperatures observed by means of a thermocouple.\n\nThe Wanner Pyrometer (''Phys. Zeits.'', 1902, p. 112) is a modification of Konig's spectrophotometer, in which the two halves of the field, corresponding to the source and the standard of comparison, are illuminated with monochromatic red light polarized in planes at right angles to each other. The two halves may be equalized by rotating the analyzer, the circle of which is graduated to read in degrees of temperature. The instrument has a somewhat restricted range of maximum sensitiveness, and cannot be used below 900° C. owing to the great loss of light in the complicated optical system. It cannot be sighted directly on the object since no image is formed as in the Le Chatelier or Féry instruments, but the methods of securing monochromatic light by a direct vision spectroscope, and of adjusting the fields to equality by rotating the analyser, are capable of great precision, and lead to simple theoretical formulae for the ratio of the intensities in terms of Wien's law.\n\nThe Féry Absorption Pyrometer (''Journ. Phys.'', 1904, p. 32) differs from Le Chatelier's only in minor details, such as the replacement of the cat's eye diaphragm by a pair of absorbing glass wedges. The principles of its action and the method of calibration are the same. The pyrometers of Morse, and of L. F. C. Holborn and F. Kurlbaum depend on the employment of a glow lamp filament as standard of comparison, the current through which is adjusted to make the intrinsic brilliancy of the filament equal to that of the source. When this adjustment is made the filament becomes invisible against the image of the source as background, and the temperature of the source may be determined from an observation of the current required. Each lamp requires a separate calibration, but the lamps remain fairly constant provided that they are not overheated. To avoid this, the source is screened by absorption glasses (which also require calibration) in observing high temperatures. Except at low temperatures the comparison is effected by placing a red glass before the eyepiece. At low temperatures a special advantage of the glow-lamp as a standard of comparison is that it matches the source in colour as well as in brightness, so that the instrument is very sensitive. At high temperatures the red glass serves chiefly to mitigate the glare.\n\n35. ''Registering and Recording Thermometers''.—The term registering thermometer is usually applied to an instrument with an index which requires setting, and when set will indicate the maximum or minimum temperature occurring, or will register the temperature at a particular time or place. A recording instrument is one constructed to give a continuous record of the temperature, and requires a revolving drum or some equivalent clockwork mechanism<noinclude><references/></noinclude>"
+}

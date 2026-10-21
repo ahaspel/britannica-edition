@@ -1,0 +1,97 @@
+{
+ "volume": 26,
+ "page_number": 136,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri26chisrich/page/n140",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri26chisrich/page/n140",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.05,
+  "column_width": 1154,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     99,
+     152,
+     2309,
+     220
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     99,
+     220,
+     1167,
+     3165
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1167,
+     220,
+     2309,
+     3165
+    ]
+   }
+  ],
+  "readings": {
+   "head": "{{RunningHeader|118|SURFACE|}}",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [
+   "c2s1",
+   "c1s1"
+  ],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "1": [
+    0,
+    1
+   ],
+   "2": [
+    0,
+    3
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7818,
+    "output_tokens": 29,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 1,
+    "input_tokens": 267,
+    "output_tokens": 21,
+    "cache_creation_input_tokens": 4467,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "gutter": [],
+  "type_unmeasured": [],
+  "insets": {},
+  "sections": []
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" />{{RunningHeader|118|SURFACE|}}</noinclude><noinclude><references/></noinclude>"
+}

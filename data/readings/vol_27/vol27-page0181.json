@@ -1,0 +1,110 @@
+{
+ "volume": 27,
+ "page_number": 181,
+ "source": "scan",
+ "title": "https://archive.org/details/encyclopaediabri27chisrich/page/n188",
+ "provenance": {
+  "scan": "https://archive.org/details/encyclopaediabri27chisrich/page/n188",
+  "model": "claude-opus-5-5",
+  "transcribed": "2026-10-20",
+  "fetched_by": "ahaspel",
+  "angle": 0.25,
+  "column_width": 1092,
+  "items": [
+   {
+    "name": "head",
+    "kind": "head",
+    "column": 0,
+    "box": [
+     186,
+     121,
+     2335,
+     190
+    ]
+   },
+   {
+    "name": "c1s1",
+    "kind": "text",
+    "column": 1,
+    "box": [
+     186,
+     190,
+     1255,
+     3150
+    ]
+   },
+   {
+    "name": "c2s1",
+    "kind": "text",
+    "column": 2,
+    "box": [
+     1255,
+     190,
+     2335,
+     3150
+    ]
+   }
+  ],
+  "readings": {
+   "head": "",
+   "c1s1": "",
+   "c2s1": ""
+  },
+  "figure_files": {},
+  "figures": [],
+  "across": [],
+  "refused": [],
+  "unread": {},
+  "rejected": {},
+  "disagreements": {
+   "0": [
+    0,
+    1
+   ],
+   "1": [
+    0,
+    2
+   ],
+   "2": [
+    0,
+    1
+   ]
+  },
+  "usage": {
+   "figures": {
+    "batch": true,
+    "calls": 2,
+    "input_tokens": 7949,
+    "output_tokens": 287,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   },
+   "text": {
+    "batch": true,
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+   }
+  },
+  "captions_marked": true,
+  "special": [
+   "across the gutter: table (top): Electric traction company financial results table extends left over gutter into left column",
+   "across the gutter: table (bottom): Ordinary/preference/debenture capital table spans both columns"
+  ],
+  "gutter": [
+   {
+    "kind": "table",
+    "where": "top",
+    "detail": "Electric traction company financial results table extends left over gutter into left column"
+   },
+   {
+    "kind": "table",
+    "where": "bottom",
+    "detail": "Ordinary/preference/debenture capital table spans both columns"
+   }
+  ]
+ },
+ "raw_text": "<noinclude><pagequality level=\"2\" user=\"transcriber\" /></noinclude><noinclude><references/></noinclude>"
+}
