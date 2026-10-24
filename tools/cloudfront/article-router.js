@@ -37,6 +37,25 @@ function handler(event) {
   var request = event.request;
   var uri = request.uri;
 
+  // ── scraper fleet, 403 ─────────────────────────────────────────────────────
+  // In Oct 2026 well over half the traffic was one scraper rotating through
+  // ~1,400 IPs, claiming to be Windows Chrome 103–133 and pulling
+  // /data/articles/*.json directly.  Real Chromium browsers (Chrome, Edge,
+  // Opera, Brave) have sent `sec-ch-ua` on every HTTPS request since v89, and
+  // the scraper never does — so "says Chrome on Windows, sends no sec-ch-ua"
+  // is the tell.  This used to be the WAF's job, but the WAF only came with the
+  // flat-rate plan; the distribution moved to pay-as-you-go, where this
+  // function is free and the WAF is not.
+  var headers = request.headers || {};
+  var ua = headers['user-agent'] ? headers['user-agent'].value : '';
+  if (ua.indexOf('Windows NT') !== -1 && ua.indexOf('Chrome/') !== -1 && !headers['sec-ch-ua']) {
+    return {
+      statusCode: 403,
+      statusDescription: 'Forbidden',
+      headers: { 'cache-control': { value: 'no-store' } }
+    };
+  }
+
   // ── www → apex, 301 ────────────────────────────────────────────────────────
   // The published download bundle and the HuggingFace dataset carry
   // `https://www.britannica11.org/article/<id>` in all 37,225 records, and that

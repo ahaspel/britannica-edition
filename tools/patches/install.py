@@ -52,10 +52,11 @@ def dropped(stem: str, x: dict) -> bool:
 
 
 def laid(stem: str, x: dict) -> dict:
-    """The patch as installed: its new text a person's edit, if they made one."""
+    """The patch as installed: a person's edit in its place, if they made one
+    (its own span: the patch's, or wider)."""
     r = ruled.get((stem, x["old"], x["new"]))
     p = {k: x[k] for k in ("start", "end", "old", "new", "kind")}
-    return {**p, "new": r["text"]} if r and r["ruling"] == "edit" else p
+    return {**p, **r["edit"]} if r and r["ruling"] == "edit" else p
 
 
 def ours_enters(v: int, p: int) -> bool:

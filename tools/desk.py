@@ -147,35 +147,53 @@ class Patches:
             r = rulings.get((x["old"], x["new"]))
             out.append({**{k: x[k] for k in ("kind", "start", "end", "old", "new")}, "flags": flags,
                         "chain": "drop" if dropped else "install",
-                        "ruling": {k: r.get(k) for k in ("ruling", "note", "by", "at", "text")} if r else None})
+                        "ruling": {k: r.get(k) for k in ("ruling", "note", "by", "at", "edit")} if r else None})
         return out
 
     def reading(self, v: int, p: int) -> dict:
         return json.loads(self.P.reading(self.stem(v, p)).read_text(encoding="utf-8"))
 
     def rule(self, v: int, p: int, old: str, new: str, ruling: str | None, note: str, by: str,
-             text: str | None = None) -> str:
+             edit: dict | None = None) -> str:
         import datetime
         from wikikit.scan.patches import check
         stem = self.stem(v, p)
         x = next((x for x in self.kept.get(stem, []) if x["old"] == old and x["new"] == new), None)
         if x is None:
             raise LookupError(f"{label(v, p)}: no such patch in kept.json — rebuild the chain and reload")
+        rows = [r for r in self._rulings() if not (r["stem"] == stem and r["old"] == old and r["new"] == new)]
+        mine = None
         if ruling == "edit":
-            # the person's text in the patch's place, held to the check install
-            # holds every patch to: at its place, Wikisource's structure kept
-            bad = check(fetched_text(v, p) or "", [{**x, "new": text}])
+            # the person's text over a span of the fetched page — the patch's
+            # own, or wider when they changed the words either side — held to
+            # the check install holds every patch to: Wikisource's structure kept
+            raw = fetched_text(v, p) or ""
+            s, t = edit["start"], edit["end"]
+            if not (0 <= s <= x["start"] and x["end"] <= t <= len(raw)):
+                raise ValueError(f"{label(v, p)}: the edit's span {s}:{t} does not hold the patch's own")
+            if raw[s:t] != edit.get("was"):
+                # the screen says what it showed under the span: else an edit
+                # could take or leave text the person never saw
+                raise ValueError(f"{label(v, p)}: the page under the edit is not what the box showed — "
+                                 "nothing saved; reload the page")
+            dropped = {(r["old"], r["new"]) for r in rows if r["stem"] == stem and r["ruling"] == "drop"}
+            other = next((y for y in self.kept.get(stem, []) if y is not x and (y["old"], y["new"]) not in dropped
+                          and y["start"] < t and s < y["end"]), None)
+            if other:
+                raise ValueError(f"{label(v, p)}: the edit reaches into the patch {other['old'][:30]!r} → "
+                                 f"{other['new'][:30]!r} — drop that one first, nothing saved")
+            mine = {"start": s, "end": t, "old": raw[s:t], "new": edit["text"]}
+            bad = check(raw, [{**mine, "kind": x["kind"]}])
             if bad:
                 raise ValueError(f"{label(v, p)}: the edit is refused, nothing saved — {bad[0]}")
-        rows = [r for r in self._rulings() if not (r["stem"] == stem and r["old"] == old and r["new"] == new)]
         if ruling:
             rows.append({"stem": stem, "old": old, "new": new, "ruling": ruling, "note": note, "by": by,
                          "at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
-                         **({"text": text} if ruling == "edit" else {})})
+                         **({"edit": mine} if mine else {})})
         rows.sort(key=lambda r: (r["stem"], r["old"]))
         self.P.PATCH_RULINGS.write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-        shown = text if ruling == "edit" else new
-        return f"{label(v, p)}: {ruling or 'ruling withdrawn'} — {old[:40]!r} → {shown[:40]!r}"
+        a, b = (mine["old"], mine["new"]) if mine else (old, new)
+        return f"{label(v, p)}: {ruling or 'ruling withdrawn'} — {a[:40]!r} → {b[:40]!r}"
 
 
 def add(vol: int, ws: int, why: str) -> str:
