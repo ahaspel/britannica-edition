@@ -1,5 +1,6 @@
-"""Pages where our tables might replace what Wikisource has — no reads, the
-fetched pages only.  Two kinds:
+"""Pages where our tables might replace what Wikisource has — no reads; the
+pages as the book reads them (`load_pages`: corrections and patches on, a
+supplied page in its fetched page's place — level 3, so never flat).  Two kinds:
 
   flat     a table the OCR flattened into lines of figures: a run of MIN_RUN+
            consecutive lines dense with figures (MIN_FIGS+ digit runs, a
@@ -21,11 +22,13 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).parent))
-from paths import PAGES, TABLE_READINGS, WORK, reading
+from paths import PAGES, TABLE_READINGS, WORK, page_files, reading
+from patterns import RAW_MATH
 
 from eb1911.scans import _printed
 from wikikit.export.corpus import load_corpus
 from wikikit.scan.patches import MISSING_TABLE
+from wikikit.source_pages import load_pages
 
 MIN_FIGS, MIN_SHARE, MIN_RUN = 2, 0.3, 3
 LEVEL = re.compile(r'pagequality level="(\d)"')
@@ -40,8 +43,10 @@ def tabular(line: str) -> bool:
 
 
 def flat_blocks(raw: str) -> list[dict]:
-    """Runs of tabular lines outside the page's own tables."""
-    lines = TABLES.sub(lambda x: "\n" * x.group(0).count("\n"), raw).split("\n")
+    """Runs of tabular lines outside the page's own tables and formulas (a
+    formula patch's TeX is dense with digits, and no flattened table)."""
+    blank = lambda x: "\n" * x.group(0).count("\n")
+    lines = RAW_MATH.sub(blank, TABLES.sub(blank, raw)).split("\n")
     out, run, start = [], 0, 0
     for i, line in enumerate(lines + [""]):
         if not line.strip() and run:
@@ -60,7 +65,7 @@ def flat_blocks(raw: str) -> list[dict]:
 def main():
     pp = _printed("printed_pages.json")
     judged = set(PAGES.read_text().split())
-    done = {f.stem for f in TABLE_READINGS.glob("vol_*/*.json")}
+    done = {f.stem for f in page_files(TABLE_READINGS)}
     corpus, _ = load_corpus()
     arts = {}
     for a in corpus.values():
@@ -68,11 +73,10 @@ def main():
         for q in range(p0, (a.get("ws_page_end") or p0) + 1) if p0 is not None else ():
             arts.setdefault((a["volume"], q), []).append(a["title"])
     out = {}
-    for f in sorted(Path("data/raw/wikisource").glob("vol_*/vol*-page*.json")):
-        if f.parent.name == "vol_29" or f.stem in done:
+    for page in load_pages()[0]:
+        if page.volume == 29 or page.path.stem in done:
             continue
-        d = json.loads(f.read_text(encoding="utf-8"))
-        raw = d.get("raw_text") or ""
+        f, raw = page.path, page.text
         m = LEVEL.search(raw)
         level = m.group(1) if m else "?"
         blocks = flat_blocks(raw) if level in ("0", "1") else []
@@ -81,7 +85,7 @@ def main():
             blocks.append({"kind": "missing", "lines": 0, "sample": after})
         if not blocks:
             continue
-        v, p = d["volume"], d["page_number"]
+        v, p = page.volume, page.page
         out[f.stem] = {"volume": v, "ws": p, "printed": pp.get(str(v), {}).get(str(p)),
                        "articles": arts.get((v, p), [])[:4], "level": level,
                        "read": reading(f.stem).exists(), "judged": f.stem in judged, "blocks": blocks}

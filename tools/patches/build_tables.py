@@ -29,8 +29,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).parent))
 from build_formulas import displays, lost_words, prose, quotes_open, structure, vocabulary, words_of
 from build_words import find, locate
-from paths import DISPUTES, PAGES, RULINGS, TABLE_READINGS, WORK, reading
-from patterns import TOKEN
+from paths import DISPUTES, PAGES, RULINGS, TABLE_READINGS, WORK, page_files, reading
+from patterns import MATH_TEX, TOKEN, WORD3
 from raw_tokens import tokens
 
 from wikikit.scan import supplied
@@ -101,13 +101,13 @@ def clean_words_lost(old: str, new: str, vocab, ruled: Counter, page: str) -> li
     rules on a site's position, and a word ours prints elsewhere is MOVED
     content, not misread (TEMPERANCE p. 586: "Arrests and Licences per
     10,000." stood where ours has the county table; its table comes later)."""
-    text = re.sub(r"<math[^>]*>([\s\S]*?)</math>", r" \1 ", new).lower()
-    have = Counter(re.findall(r"[^\W\d_]{3,}", text))
+    text = MATH_TEX.sub(r" \1 ", new).lower()
+    have = Counter(WORD3.findall(text))
     joined = " ".join(have)
-    elsewhere = set(re.findall(r"[^\W\d_]{3,}", page.lower()))
+    elsewhere = set(WORD3.findall(page.lower()))
     out = []
     for line in old.split("\n"):
-        words = [w.lower() for w in re.findall(r"[^\W\d_]{3,}", line)]
+        words = [w.lower() for w in WORD3.findall(line)]
         real = [w for w in words if w in vocab and not re.fullmatch(r"[ivxlc]+", w)]   # III: OCR's 111
         if not real or len(_DEBRIS.findall(line)) > max(1, len(line) // 40) or len(real) < 0.7 * len(words):
             continue                                   # junk, or no real words
@@ -144,7 +144,7 @@ def main():
     dis = json.loads(DISPUTES.read_text(encoding="utf-8"))
     rul = json.loads(RULINGS.read_text(encoding="utf-8"))
     judged_pages = set(PAGES.read_text().split())
-    for f in sorted(TABLE_READINGS.glob("vol_*/vol*-page*.json")):
+    for f in page_files(TABLE_READINGS):
         stem = f.stem
         # a table's figures must be a judged reading's: a page the judge never
         # saw (filed unread for crossing columns, or read with no table) waits

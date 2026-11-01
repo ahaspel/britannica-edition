@@ -14,7 +14,7 @@ render stack for three functions that only touch strings.
 """
 import re
 
-from wikikit.util.strings import section_slug
+from wikikit.util.strings import section_slug, strip_html_tags
 
 
 _ALLCAPS_LINE = re.compile(r"[A-Z][A-Z .ÆŒ'’-]{2,40}")
@@ -147,7 +147,7 @@ def _vision_to_html(text: str, drop_leading_title: bool = False) -> tuple[str, l
         # across three lines.)  Anchored by slug so the contents list can link
         # to it, exactly as `build_preface` does.
         if stripped.startswith(">> "):
-            label = re.sub(r"<[^>]+>", "", stripped[3:]).strip().rstrip(".")
+            label = strip_html_tags(stripped[3:]).strip().rstrip(".")
             sid = f"section-{section_slug(label)}"
             toc.append((sid, label))
             result.append(

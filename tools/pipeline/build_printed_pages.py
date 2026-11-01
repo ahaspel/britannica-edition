@@ -19,6 +19,7 @@ import json
 import re
 from pathlib import Path
 
+from eb1911.wikitext import ENTITY
 from wikikit.db.models import SourcePage
 from wikikit.db.session import SessionLocal
 from wikikit.source_pages import load_pages
@@ -488,7 +489,7 @@ def _printed_from_rh(raw_text: str, max_page: int = 1200) -> int | None:
         # keeps that conservatism; the reorder alone fixes the nesting.
         bare = _SPACING_TEMPLATE_RE.sub("", val)
         bare = re.sub(r"\{\{[^{}|]+\|([^{}]*)\}\}", r"\1", bare)
-        bare = re.sub(r"&[a-z]+;|&#\d+;", "", bare, flags=re.IGNORECASE)
+        bare = ENTITY.sub("", bare)
         if not re.search(r"[A-Za-z]", bare):
             n = _int_in_range(val, max_page=max_page)
             if n is not None:

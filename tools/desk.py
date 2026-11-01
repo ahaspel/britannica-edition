@@ -34,7 +34,7 @@ from pathlib import Path
 
 from eb1911.scans import _printed
 from wikikit.scan import supplied
-from wikikit.source_pages import SUPPLIED_DIR, fetched_text, prefer
+from wikikit.source_pages import fetched_text, load_supplied, page_filename, prefer
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
@@ -54,8 +54,7 @@ def queue(done: bool = False) -> list[tuple[int, int]]:
     waits to be proofread.  `done`: with the pages proofread since, so the
     desk keeps a page in view once it is finished."""
     keys = []
-    for f in sorted(Path(SUPPLIED_DIR).glob("vol_*/*.json")):
-        d = json.loads(f.read_text(encoding="utf-8"))
+    for _, d in load_supplied():
         v, p = d["volume"], d["page_number"]
         ws = fetched_text(v, p)
         lv = supplied.level(d)
@@ -78,10 +77,11 @@ def validator_faults(problems: list[str]) -> list[tuple[str, str]]:
     """validate.json's "removes word(s) [...]: 'old'" problems of one page:
     (the old text it quotes, the problem) — as drop_faulted.py reads them."""
     import ast
-    import re
+    _patch_paths()
+    from patterns import REMOVES_WORDS
     out = []
     for pr in problems:
-        m = re.match(r"removes word\(s\) \[[^\]]*\]: (.*)$", pr, re.S)
+        m = REMOVES_WORDS.match(pr)
         if m:
             out.append((ast.literal_eval(m.group(1)), pr.split(":", 1)[0]))
     return out
@@ -124,7 +124,7 @@ class Patches:
 
     @staticmethod
     def stem(v: int, p: int) -> str:
-        return f"vol{v:02d}-page{p:04d}"
+        return Path(page_filename(v, p)).stem
 
     def _rulings(self) -> list[dict]:
         f = self.P.PATCH_RULINGS
@@ -134,9 +134,10 @@ class Patches:
         return self.pages
 
     def patches(self, v: int, p: int) -> list[dict]:
+        from patterns import LEAK_TOGETHER
         stem = self.stem(v, p)
         rulings = {(r["old"], r["new"]): r for r in self._rulings() if r["stem"] == stem}
-        together = [l["why"] for l in self.leaks.get(stem, []) if l["old"].startswith("(all the page")]
+        together = [l["why"] for l in self.leaks.get(stem, []) if l["old"] == LEAK_TOGETHER]
         out = []
         for x in self.kept.get(stem, []):
             flags = [f"leak: {l['why']}" for l in self.leaks.get(stem, [])
@@ -217,7 +218,7 @@ def add(vol: int, ws: int, why: str) -> str:
     from wikikit.scan.transcribe import apply_type
     from wikikit.source_pages import page_level
 
-    stem = f"vol{vol:02d}-page{ws:04d}"
+    stem = Patches.stem(vol, ws)
     if supplied.path_for(vol, ws).exists():
         raise SystemExit(f"{label(vol, ws)}: already on the desk (data/supplied)")
     src = next((f for f in (table_reading(stem), reading(stem)) if f.exists()), None)

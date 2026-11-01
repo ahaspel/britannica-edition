@@ -21,6 +21,7 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).parent))
 from paths import LEAKS_REVIEWED, WORK
+from patterns import LEAK_TOGETHER
 sys.path.insert(0, "tools/diagnostics")
 import supplied_gate as g
 
@@ -118,7 +119,7 @@ def main():
                                    sum(paragraph_allowance(x) for x in ps))
         diff = {**{k: -n for k, n in lost.items()}, **gained}
         if diff:
-            bad.setdefault(stem, []).append({"old": "(all the page's patches together)", "new": "",
+            bad.setdefault(stem, []).append({"old": LEAK_TOGETHER, "new": "",
                                              "why": f"together, markers change beyond the patches: {diff}"})
             t["pages leaking together"] += 1
     (WORK / "leaks.json").write_text(json.dumps(bad, indent=1, ensure_ascii=False), encoding="utf-8")

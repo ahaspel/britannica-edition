@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 from wikikit.export.corpus import load_corpus
+from wikikit.util.strings import strip_html_tags
 
 PATCHES = {k: v for k, v in json.loads(Path("data/patches.json").read_text(encoding="utf-8")).items()
            if not k.startswith("_")}
@@ -21,7 +22,7 @@ TEX = re.compile(r'<span class="tex-math"[^>]*>[\s\S]*?</span>')
 
 
 def plain(s: str) -> str:
-    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s)))
+    return re.sub(r"\s+", " ", html.unescape(strip_html_tags(s, " ")))
 
 
 def main():

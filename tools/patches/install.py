@@ -29,6 +29,9 @@ from wikikit.scan import supplied
 from wikikit.source_pages import fetched_text, prefer
 sys.path.insert(0, str(Path(__file__).parent))
 from paths import DROP, PAGES, PATCH_RULINGS, WORK, reading
+from patterns import LEAK_TOGETHER
+
+NOT_READ = "not read (ours enters)"
 
 judged = PAGES.read_text().split()
 ok = json.loads((WORK / "kept.json").read_text(encoding="utf-8"))
@@ -79,7 +82,7 @@ for stem in sorted(judged):
     v, p = int(stem[3:5]), int(stem[-4:])
     if ours_enters(v, p):
         t["pages: ours, proofread"] += 1
-        t["not read (ours enters)"] += len(ps)
+        t[NOT_READ] += len(ps)
         continue
     if not ps:
         t["pages: Wikisource's as it is"] += 1
@@ -97,7 +100,7 @@ for stem in sorted(judged):
     t["pages: patched"] += 1
     t["installed"] += len(ps)
     t["installed formulas"] += sum(x["kind"] == "formula" for x in ps)
-assert t["in"] == t["installed"] + t["dropped"] + t["not read (ours enters)"] or problems, dict(t)
+assert t["in"] == t["installed"] + t["dropped"] + t[NOT_READ] or problems, dict(t)
 print(dict(t))
 if problems:
     for x in problems:
@@ -116,7 +119,7 @@ def unruled(stem: str, flagged: list[dict]) -> list[dict]:
     def ruling(l):
         return next((r for (s, o, n), r in ruled.items() if s == stem and o[:200] == l["old"] and n[:200] == l["new"]),
                     None)
-    alone = [l for l in flagged if not l["old"].startswith("(all the page")]
+    alone = [l for l in flagged if l["old"] != LEAK_TOGETHER]
     left = [l for l in alone if not ruling(l)]
     return left + ([l for l in flagged if l not in alone] if left or not alone else [])
 

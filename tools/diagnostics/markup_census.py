@@ -1,8 +1,9 @@
 """What markup do Wikisource's transcribers use on this book's pages, and how
 much of it can our transcription vocabulary say?
 
-Every template, well-formed HTML tag and wikitext construct in every fetched
-page's body (its noinclude header and footer aside), tallied by name: on how
+Every template, well-formed HTML tag and wikitext construct in every page's
+body as the book reads it (`load_pages`; its noinclude header and footer
+aside), tallied by name: on how
 many pages, how many uses, and whether the scan vocabulary covers it — the
 shared constructs plus the book's own (`wikikit.scan.vocabulary.constructs`)
 and the table forms (`{|`, `{{Ts}}`, `{{brace2}}`).  A construct the
@@ -11,31 +12,28 @@ book's collection (`Corpus.scan_constructs`, the desk's
 `scan_notation.json`) should consider.  Each row gives one example.
 
 Read-only.  Usage: markup_census.py [N rows, default 100]   (book root)"""
-import json
 import re
 import sys
 from collections import Counter
-from pathlib import Path
+
+from eb1911.wikitext import BOLD, ENTITY, FILE_LINK, ITALIC, NOINCLUDE, TABLE_OPEN, TAG, TEMPLATE
+from wikikit.scan.vocabulary import constructs
+from wikikit.source_pages import load_pages
 
 sys.stdout.reconfigure(encoding="utf-8")
-sys.path.insert(0, str(Path(__file__).parents[1] / "patches"))
-from whole_candidates import TAG, TEMPLATE
-
-from wikikit.scan.vocabulary import constructs
-from wikikit.source_pages import RAW_DIR
 
 #: wikitext's own constructs, besides templates and tags
 WIKI = {
-    "'''": r"(?<!')'''(?!')",
-    "''": r"(?<!')''(?!')",
-    "[[link": r"\[\[(?!(?:File|Image):)",
-    "[[File": r"\[\[(?:File|Image):",
-    "{|": r"(?m)^\s*\{\|",
-    "== heading": r"(?m)^=+[^=\n]+=+\s*$",
-    ": indent": r"(?m)^:+",
-    "* list": r"(?m)^[*#]+",
-    "<!-- comment": r"<!--",
-    "&entity;": r"&[a-z]+;|&#\d+;",
+    "'''": BOLD,
+    "''": ITALIC,
+    "[[link": re.compile(r"\[\[(?!(?:File|Image):)", re.I),
+    "[[File": FILE_LINK,
+    "{|": TABLE_OPEN,
+    "== heading": re.compile(r"(?m)^=+[^=\n]+=+\s*$"),
+    ": indent": re.compile(r"(?m)^:+"),
+    "* list": re.compile(r"(?m)^[*#]+"),
+    "<!-- comment": re.compile(r"<!--"),
+    "&entity;": ENTITY,
 }
 
 
@@ -61,9 +59,9 @@ def main():
     rows = int(sys.argv[1]) if len(sys.argv) > 1 else 100
     pages, uses, example = Counter(), Counter(), {}
     n = 0
-    for f in sorted(Path(RAW_DIR).glob("vol_*/*.json")):
-        t = json.loads(f.read_text(encoding="utf-8")).get("raw_text") or ""
-        body = re.sub(r"<noinclude>[\s\S]*?</noinclude>", "", t)
+    for page in load_pages()[0]:
+        f, t = page.path, page.text
+        body = NOINCLUDE.sub("", t)
         if not body.strip():
             continue
         n += 1
@@ -79,13 +77,13 @@ def main():
             found[k] += 1
             example.setdefault(k, (f.stem, body[m.start():m.start() + 70]))
         for k, pat in WIKI.items():
-            for m in re.finditer(pat, body):
+            for m in pat.finditer(body):
                 found[k] += 1
                 example.setdefault(k, (f.stem, body[max(0, m.start() - 10):m.start() + 60]))
         uses.update(found)
         pages.update(found.keys())
     have = covered()
-    print(f"{n} fetched pages with text; {len(pages)} distinct constructs\n")
+    print(f"{n} pages with text; {len(pages)} distinct constructs\n")
     print(f"{'construct':34} {'pages':>6} {'uses':>8}  vocab  example")
     for k, p in pages.most_common(rows):
         ex = example[k]

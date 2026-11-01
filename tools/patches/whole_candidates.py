@@ -28,18 +28,11 @@ from paths import PAGES
 from supplied_gate import elements
 
 from eb1911.scans import _printed
+from eb1911.wikitext import BOLD, ITALIC, NOINCLUDE, TABLE_OPEN, TAG, TEMPLATE
 from wikikit.db.models import Article
 from wikikit.db.session import SessionLocal
 from wikikit.source_pages import fetched_text
 
-#: the HTML tags wikitext renders; anything else after `<` is OCR's text
-TAGS = ("ref|references|math|chem|ce|table|tr|td|th|caption|sub|sup|span|div|br|hr|poem|i|b|u|s|"
-        "small|big|center|font|p|blockquote|ol|ul|li|dl|dt|dd|pre|code|nowiki|score|section|abbr|"
-        "includeonly|onlyinclude|noinclude|gallery|imagemap|timeline|hiero|syntaxhighlight|tt|var|del|ins|q")
-#: a tag as written: bare, or with attributes `name=…` — OCR's "<s- s>",
-#: "<s-a>", "<p, z = cr cos 0 … >" (formula salad, vol 25 p. 659) are text
-TAG = re.compile(rf"<\s*/?\s*({TAGS})(?:\s+[a-z-]+\s*=\s*[^<>]*)?\s*/?\s*>", re.I)
-TEMPLATE = re.compile(r"\{\{\s*([^|{}\n]+?)\s*(?=[|}])")
 ALLOWED = {"<section", "{{missing table"}
 
 
@@ -47,11 +40,10 @@ def markup(body: str) -> Counter:
     """Every piece of markup a person (or a bot) set on the page body, by name."""
     c = Counter("{{" + m.lower() for m in TEMPLATE.findall(body))
     c.update("<" + m.lower() for m in TAG.findall(body))
-    # exactly two or three: OCR reads a garbled exponent as "''''" (vol 28 p. 429)
-    c["'''"] += len(re.findall(r"(?<!')'''(?!')", body))
-    c["''"] += len(re.findall(r"(?<!')''(?!')", body))
+    c["'''"] += len(BOLD.findall(body))
+    c["''"] += len(ITALIC.findall(body))
     c["[["] += len(re.findall(r"\[\[", body))
-    c["{|"] += len(re.findall(r"(?m)^\s*\{\|", body))
+    c["{|"] += len(TABLE_OPEN.findall(body))
     return +c
 
 
@@ -64,7 +56,7 @@ def main():
         for stem in PAGES.read_text().split():
             v, p = int(stem[3:5]), int(stem[-4:])
             ws = fetched_text(v, p) or ""
-            body = re.sub(r"<noinclude>[\s\S]*?</noinclude>", "", ws)
+            body = NOINCLUDE.sub("", ws)
             mk = Counter({k: n for k, n in markup(body).items() if k not in ALLOWED})
             el = +elements(v, p, body)
             arts = ", ".join(a.title for a in s.query(Article).filter(

@@ -36,7 +36,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
 from paths import DISPUTES, RULINGS, VOCAB, WORK, reading
-from patterns import RAW_MATH, TEMPLATE_NAME, WORD3, blank_math
+from patterns import MATH_TEX, RAW_MATH, TEMPLATE_NAME, WORD3, blank_math
 from raw_tokens import tokens
 from build_words import find, locate
 
@@ -83,7 +83,6 @@ STRUCTURE_TAGS = {"ref", "section", "noinclude", "includeonly", "poem", "div", "
                   "ul", "ol", "li", "dl", "dd", "dt", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "img", "references",
                   "gallery", "pre", "blockquote", "score", "chem", "ce", "timeline", "imagemap"}
 _TABLE = re.compile(r"\{\|[\s\S]*?\n\|\}|<table[\s\S]*?</table>", re.I)
-MATH_SPAN = re.compile(r"<math[^>]*>[\s\S]*?</math>", re.I)
 _INNERMOST = re.compile(r"\{\{[^{}]*\}\}")
 
 
@@ -129,7 +128,7 @@ def cell_boundary(ws: str, w0: int, w1: int) -> bool:
         depth = max(0, depth + (1 if mark == "{|" else -1))
     if not depth:
         return False
-    bare = MATH_SPAN.sub(" ", ws[w0:w1])
+    bare = RAW_MATH.sub(" ", ws[w0:w1])
     while (shed := _INNERMOST.sub(" ", bare)) != bare:
         bare = shed
     return bool(re.search(r"\|\||!!|\n[ \t]*[|!]", bare))
@@ -247,8 +246,8 @@ def quote_edges(ws: str, w0: int, w1: int) -> tuple[int, int]:
         return m.start() if m else None
 
     def run_after(b):
-        m = re.match(r"'{2,5}", ws[b:])
-        return b + m.end() if m else None
+        m = _QUOTES.match(ws, b)
+        return m.end() if m else None
 
     starts = [w0] + [x for x in (runs_at_start(w0, w1), run_before(w0)) if x is not None]
     ends = [w1] + [x for x in (runs_at_end(w0, w1), run_after(w1)) if x is not None]
@@ -290,7 +289,7 @@ def words_of(span, vocab, ours=False):
     not (`{{Polytonic|`, `<span style=…>`, `font-size=100%`).  Our formulas
     count every letter run in them (\\sin, \\text{N}, ABC) — what they may
     stand for in Wikisource's salad; Wikisource's own <math> prints none."""
-    maths = re.findall(r"<math[^>]*>([\s\S]*?)</math>", span)
+    maths = MATH_TEX.findall(span)
     text = RAW_MATH.sub(" ", span)
     text = re.sub(r"<[^<>]*>", " ", text)                       # tags with their attributes
     # a named parameter's whole value, to the next | or brace: a style runs

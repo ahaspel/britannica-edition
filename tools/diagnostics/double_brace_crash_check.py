@@ -15,17 +15,15 @@ Run: uv run python tools/diagnostics/double_brace_crash_check.py
 """
 from __future__ import annotations
 
-import re
 import sys
 from collections import Counter
 
+from eb1911.wikitext import TEMPLATE as _OPENER_RE
 from wikikit.db.session import SessionLocal
 from wikikit.db.models import SourcePage
 from wikikit.pipeline.stages.preprocess import preprocess
 from wikikit.pipeline.stages.elements._walker import walk
 from wikikit.pipeline.stages.elements._classifier import classify
-
-_OPENER_RE = re.compile(r"\{\{\s*([^|{}\n]+?)\s*(?=[|}])")
 
 
 def scan() -> tuple[Counter, dict[str, tuple[str, str]]]:

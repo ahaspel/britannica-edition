@@ -67,7 +67,7 @@ from wikikit.markers import countable_word_list
 from wikikit.pipeline.stages.elements import ElementContext, process_elements
 from wikikit.pipeline.stages.preprocess import stream_with_keys
 from wikikit.scan import carry, images, supplied
-from wikikit.source_pages import fetched_text, page_level, prefer
+from wikikit.source_pages import fetched_text, load_supplied, page_level, prefer
 
 ROOT = Path(__file__).resolve().parents[2]
 SUPPLIED = ROOT / "data" / "supplied"
@@ -285,8 +285,7 @@ def main() -> int:
     live = json.loads(urllib.request.urlopen(req, timeout=60).read())
 
     fails, held, pages, entered = {}, [], 0, 0
-    for f in sorted(SUPPLIED.glob("vol_*/*.json")):
-        d = json.loads(f.read_text(encoding="utf-8"))
+    for f, d in load_supplied(SUPPLIED):
         pages += 1
         ws = fetched_text(d["volume"], d["page_number"])
         if prefer({"raw_text": ws} if ws is not None else None, d) is not d:
@@ -306,7 +305,7 @@ def main() -> int:
     for key, ps in load_patches().items():
         v, p = (int(x) for x in key.split(":"))
         name = f"patches {key}"
-        sup = SUPPLIED / f"vol_{v:02d}" / f"vol{v:02d}-page{p:04d}.json"
+        sup = supplied.path_for(v, p)
         if sup.exists():
             d = json.loads(sup.read_text(encoding="utf-8"))
             ws = fetched_text(v, p)

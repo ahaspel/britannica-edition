@@ -11,7 +11,7 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).parent))
-from paths import READINGS, WORK
+from paths import READINGS, WORK, page_files
 
 from wikikit.scan import supplied
 
@@ -26,7 +26,7 @@ def fix(s: str) -> str:
 
 
 fixed = []
-for f in sorted(READINGS.glob("vol_*/vol*-page*.json")):
+for f in page_files(READINGS):
     d = json.loads(f.read_text(encoding="utf-8"))
     p = d["provenance"]
     items = [k for k, v in p["readings"].items() if isinstance(v, str) and BEGIN in v]

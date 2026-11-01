@@ -50,3 +50,8 @@ def reading(stem: str) -> Path:
 def table_reading(stem: str) -> Path:
     """Our re-reading of a page for its tables."""
     return TABLE_READINGS / ("vol_" + stem[3:5]) / (stem + ".json")
+
+
+def page_files(root: Path) -> list[Path]:
+    """Every page's file under `root` (READINGS, TABLE_READINGS), in order."""
+    return sorted(root.glob("vol_*/vol*-page*.json"))

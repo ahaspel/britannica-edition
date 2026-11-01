@@ -29,6 +29,7 @@ import re
 import sys
 from collections import Counter, defaultdict
 
+from eb1911.wikitext import FILE_LINK
 from wikikit.db.models import Article, ArticleSegment
 from wikikit.db.session import SessionLocal
 
@@ -39,7 +40,7 @@ def fingerprint(raw: str) -> dict:
                   flags=re.DOTALL | re.IGNORECASE)
     text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
 
-    images = re.findall(r"\[\[(?:File|Image):", text, re.IGNORECASE)
+    images = FILE_LINK.findall(text)
     wikitables = re.findall(r"^\{\|", text, re.MULTILINE)
     htmltables = re.findall(r"<table\b", text, re.IGNORECASE)
     illus = re.findall(r'<table[^>]*summary="Illustration"', text, re.IGNORECASE)
