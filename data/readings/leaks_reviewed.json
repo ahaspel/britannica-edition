@@ -4,5 +4,23 @@
   "old": "artzl",
   "new": "and",
   "why": "TRIGONOMETRY, vol 27 p. 280: Wikisource's 'see De Morgan's Trigonometry artzl Double Algebra' was read by the pipeline as ONE cross-reference; with the word corrected it finds the TWO the print names, De Morgan's Trigonometry and Double Algebra. The change beyond the patch is the link split, which is right. Reviewed 2026-10-13."
+ },
+ {
+  "stem": "vol26-page0285",
+  "old": "g",
+  "new": "q",
+  "why": "SWITZERLAND, vol 26 p. 265: the print's (q.v.), which Wikisource's OCR reads (g.v.).  The change beyond the patch is the producer's (q.v.) window, stamped back to the last punctuation by design; the resolver cuts it to the name ('lacques Necker' -> NECKER, shown 'Necker'; Cherbuliez's '1829-1899, g.v.' stamps no window).  No shipped q.v. link shows over 3 words.  Reviewed 2026-11-01."
+ },
+ {
+  "stem": "vol26-page0285",
+  "old": "Topffer (g",
+  "new": "Töpffer (q",
+  "why": "SWITZERLAND, vol 26 p. 265: the print's (q.v.), which Wikisource's OCR reads (g.v.).  The change beyond the patch is the producer's (q.v.) window, stamped back to the last punctuation by design; the resolver cuts it to the name ('Rodolphe Töpffer' -> TÖPFFER).  Reviewed 2026-11-01."
+ },
+ {
+  "stem": "vol26-page0450",
+  "old": "ef",
+  "new": "cf",
+  "why": "TARGUM, vol 26 p. 421: the print's 'cf. Fragm. Tg.'; the change beyond the patch is the see-window the cf. cue stamps, and resolve_see abstains on 'Fragm' (no link ships).  Reviewed 2026-11-01."
  }
 ]
