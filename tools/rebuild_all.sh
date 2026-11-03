@@ -108,6 +108,13 @@ echo
 # costs seconds, not an hour.  The gate's docstring had said "Phase 0" while
 # no build ran it.
 echo "=== Phase 0: Supplied-page gate [$(elapsed)] ==="
+# Reusing source_pages builds the supplied pages and patches they were imported
+# with, not the ones on disk: refuse if those have changed since the import
+# (2026-11-03: a rebuild reused pages imported before 433 patched pages and
+# three held ones, and built none of them).
+if [ -n "$SKIP_IMPORT" ]; then
+  uv run python -m wikikit.pipeline.import_stamp check
+fi
 uv run python tools/diagnostics/supplied_gate.py
 echo
 
@@ -192,6 +199,11 @@ rm -rf "$P2_DIR"
 if [ "$P2_FAILS" -ne 0 ]; then
   echo "=== Phase 2 FAILED: $P2_FAILS volume(s) did not complete — aborting rebuild ==="
   exit 1
+fi
+# every volume imported: record what source_pages was made from, for the next
+# rebuild that reuses it (import_stamp check, Phase 0)
+if [ -z "$SKIP_IMPORT" ]; then
+  uv run python -m wikikit.pipeline.import_stamp write
 fi
 
 # --- Phase 3.1: Rebuild printed-page mapping (ws→printed / leaf→printed) ---
