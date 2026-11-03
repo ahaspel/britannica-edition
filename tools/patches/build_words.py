@@ -16,7 +16,6 @@ words the judge saw either side (`locate`), or not patched.
 
 Writes words.json; prints the tally.
 Usage: build_words.py --loose [--why] [--fwhy]  (book root)"""
-import copy
 import json
 import re
 import sys
@@ -26,12 +25,11 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
-from paths import DISPUTES, RULINGS, WORK, reading
+from paths import DISPUTES, RULINGS, WORK, judged_text, reading
 from patterns import RAW_MATH, WORD2
 from judge_tokens import flat_tokens
 from raw_tokens import FORMAT, regions, tokens
 
-from wikikit.scan import supplied
 from wikikit.source_pages import fetched_text
 
 CTX = 6
@@ -187,7 +185,7 @@ def main():
     for stem, rec in dis.items():
         d = json.loads((reading(stem)).read_text(encoding="utf-8"))
         v, p = d["volume"], d["page_number"]
-        ours_text = supplied.name_sections(copy.deepcopy(d))["raw_text"]
+        ours_text = judged_text(stem, dis)
         plain, O, formulas = flat_tokens(v, p, ours_text)
         raw_math = MATH_RAW.findall(ours_text)
         if len(raw_math) != len(formulas):

@@ -24,7 +24,6 @@ Refused — Wikisource's text stays — when:
 
 Writes formulas.json; prints the tally.
 Usage: build_formulas.py [--why]  (book root)"""
-import copy
 import json
 import re
 import sys
@@ -35,12 +34,11 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
-from paths import DISPUTES, RULINGS, VOCAB, WORK, reading
+from paths import DISPUTES, RULINGS, VOCAB, WORK, judged_text, reading
 from patterns import MATH_TEX, RAW_MATH, TEMPLATE_NAME, WORD3, blank_math
 from raw_tokens import tokens
 from build_words import find, locate
 
-from wikikit.scan import supplied
 from wikikit.scan.carry import markup_balance
 from wikikit.scan.patches import balanced
 from wikikit.source_pages import fetched_text
@@ -322,7 +320,7 @@ def main():
     for stem in sorted(dis):
         d = json.loads((reading(stem)).read_text(encoding="utf-8"))
         v, p = d["volume"], d["page_number"]
-        ours = supplied.name_sections(copy.deepcopy(d))["raw_text"]
+        ours = judged_text(stem, dis)
         ws = fetched_text(v, p) or ""
         OT, WT = tokens(ours), tokens(ws)
         op, wp = prose(OT, vocab, ours, displays(ours)), prose(WT, vocab, ws)

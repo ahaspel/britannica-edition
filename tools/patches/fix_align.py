@@ -13,8 +13,6 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).parent))
 from paths import READINGS, WORK, page_files
 
-from wikikit.scan import supplied
-
 NOTE = "\\begin{align} set as \\begin{aligned}: KaTeX parses align only in display mode (2026-10-13)"
 
 
@@ -36,8 +34,9 @@ for f in page_files(READINGS):
         p["readings"][k] = fix(p["readings"][k])
     if NOTE not in p.setdefault("corrected", []):
         p["corrected"].append(NOTE)
-    supplied.reassemble(d, carried=False)
-    assert BEGIN not in d["raw_text"], f.stem
+    # the stored page corrected as its readings are, never reassembled: the
+    # patches are built from it as the judge compared it (paths.judged_text)
+    d["raw_text"] = fix(d["raw_text"])
     f.write_bytes((json.dumps(d, ensure_ascii=False, indent=1) + "\n").encode("utf-8"))
     fixed.append(f.stem)
 kept = WORK / "kept.json"

@@ -24,10 +24,9 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).parents[1] / "diagnostics"))
-from paths import PAGES
+from paths import PAGES, label
 from supplied_gate import elements
 
-from eb1911.scans import _printed
 from eb1911.wikitext import BOLD, ITALIC, NOINCLUDE, TABLE_OPEN, TAG, TEMPLATE
 from wikikit.db.models import Article
 from wikikit.db.session import SessionLocal
@@ -49,7 +48,6 @@ def markup(body: str) -> Counter:
 
 def main():
     verbose = "-v" in sys.argv
-    pp = _printed("printed_pages.json")
     s = SessionLocal()
     whole, carries, patched = [], [], 0
     try:
@@ -61,7 +59,7 @@ def main():
             el = +elements(v, p, body)
             arts = ", ".join(a.title for a in s.query(Article).filter(
                 Article.volume == v, Article.page_start <= p, Article.page_end >= p))
-            row = (f"vol {v} p. {pp[str(v)][str(p)]}", stem, arts)
+            row = (label(stem), stem, arts)
             if not mk and not el:
                 whole.append(row)
             elif sum(mk.values()) <= 6 and not el.get("tables") and not el.get("footnotes"):

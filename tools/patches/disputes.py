@@ -6,8 +6,12 @@ things, after removing only differences that are provably the same text:
   - a formula is one token (MATH)
   - a word split or joined at a hyphen or line end ("water chamber" =
     "waterchamber"): a site whose two sides join to the same letters is equal
-  - footnotes: ours as the transcriber now assembles them (<ref> at the mark,
-    `supplied.name_sections`), so both sides carry them inline
+  - footnotes: ours as the transcriber assembled them (<ref> at the mark),
+    so both sides carry them inline
+
+Our page is the reading's stored raw_text, never reassembled here: the
+patches are built from the very text the judge compared (`paths.judged_text`,
+which refuses a page whose text has changed since — its `text_sha`).
 
 Every remaining site is a DISPUTE for the judge — no frequency list decides
 anything.  Each records both sides' words, 6 words of agreed context either
@@ -15,7 +19,6 @@ side, and the item (column/strip) of ours it falls in, found by its context.
 
 Pages: --set FILE (one stem per line) or stems.  Writes disputes.json; with
 --add, the pages join those already there."""
-import copy
 import difflib
 import json
 import re
@@ -26,10 +29,9 @@ sys.path.insert(0, "tools/diagnostics")
 sys.stdout.reconfigure(encoding="utf-8")
 import supplied_gate as g
 from wikikit.markers import markers_to_text
-from wikikit.scan import supplied
 from wikikit.source_pages import fetched_text
 sys.path.insert(0, str(Path(__file__).parent))
-from paths import DISPUTES, reading
+from paths import DISPUTES, reading, text_sha
 from patterns import TOKEN
 
 MATH = re.compile(r"«MATH(?:\[[^\]]*\])?:[\s\S]*?«/MATH»")
@@ -133,8 +135,8 @@ def page(stem, src_dir=None):
     src = Path(src_dir) / f"{stem}.json" if src_dir else reading(stem)
     d = json.loads(src.read_text(encoding="utf-8"))
     p = d["page_number"]
-    ours_text = supplied.name_sections(copy.deepcopy(d))["raw_text"]
-    t, o = tokens(v, p, fetched_text(v, p) or ""), tokens(v, p, ours_text)
+    ours_text = d["raw_text"]
+    t, o =tokens(v, p, fetched_text(v, p) or ""), tokens(v, p, ours_text)
     rt = {}
     for name, r in d["provenance"]["readings"].items():
         r = re.sub(r"⟦\d+⟧[ \t]*", "", r)          # recorded positions are not text
@@ -172,7 +174,7 @@ def page(stem, src_dir=None):
                 before, after = o[j - CTX:j], o[j + 1:j + 1 + CTX]
                 agreed.append({"word": w, "kind": kind, "before": " ".join(before), "after": " ".join(after),
                                "item": item_of(before[-4:], rt)})
-    return {"page": stem, "ws_tokens": len(t), "our_tokens": len(o), "agree": agree, "sites": sites,
+    return {"page": stem, "text_sha": text_sha(ours_text), "ws_tokens": len(t), "our_tokens": len(o), "agree": agree, "sites": sites,
             "agreed": agreed}
 
 

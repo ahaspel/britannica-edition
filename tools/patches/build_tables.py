@@ -17,7 +17,6 @@ For each table of the re-reading (not a chemical grid):
 
 Writes data/staging/patches/tables.json; prints each page's outcome.
 Usage: build_tables.py  (book root)"""
-import copy
 import json
 import re
 import sys
@@ -29,11 +28,10 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).parent))
 from build_formulas import displays, lost_words, prose, quotes_open, structure, vocabulary, words_of
 from build_words import find, locate
-from paths import DISPUTES, PAGES, RULINGS, TABLE_READINGS, WORK, page_files, reading
+from paths import DISPUTES, PAGES, RULINGS, TABLE_READINGS, WORK, judged_text, page_files, reading
 from patterns import MATH_TEX, TOKEN, WORD3
 from raw_tokens import tokens
 
-from wikikit.scan import supplied
 from wikikit.scan.carry import markup_balance
 from wikikit.scan.patches import MISSING_TABLE, patches_for
 from wikikit.scan.vocabulary import FORMULA_CLASS, TABLE_CLOSES, TABLE_OPENS
@@ -154,8 +152,10 @@ def main():
             continue
         d = json.loads(f.read_text(encoding="utf-8"))
         v, p = d["volume"], d["page_number"]
-        ours = supplied.name_sections(copy.deepcopy(d))["raw_text"]
-        old = json.loads(reading(stem).read_text(encoding="utf-8"))["raw_text"]
+        # the table re-reading as it was read and stored, and the judged
+        # page as the judge compared it — neither reassembled
+        ours = d["raw_text"]
+        old = judged_text(stem, dis)
         ws = fetched_text(v, p) or ""
         OT, WT = tokens(ours), tokens(ws)
         # words inside our displayed formulas' lines are no anchors (as for

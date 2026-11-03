@@ -7,11 +7,17 @@ place ("the functions so determined are called Lamé's functions" replaced by
 a formula: vol 25 p. 682), an equation number swallowed.  Also refused: a
 word patch turning a real word into a non-word (a misprint of the print kept
 by our reading: "that" -> "thac", vol 27 p. 277) — a word is real if it
-occurs 5+ times in the corpus.
+occurs 5+ times in the corpus.  And a patch that sets text TWICE: words it
+brings that Wikisource's page already has elsewhere (where ours and
+Wikisource's set a caption or a paragraph in different places, a patch adding
+it at ours leaves Wikisource's own copy standing; its sole disagreement
+counts as removed: Fig. 7's curve legend inserted mid-sentence, vol 27
+p. 176; "3. National Standards" over "Totals", vol 28 p. 478).
+
+Our page is the text the judge compared (`paths.judged_text`).
 
 Writes kept.json (the kept patches) and filter_report.json.
 Usage: filter_patches.py  (book root)"""
-import copy
 import json
 import re
 import sys
@@ -21,15 +27,35 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
-from paths import FILTER_VOCAB, WORK, reading
-from patterns import WORD, WORD2
+from paths import DISPUTES, FILTER_VOCAB, WORK, judged_text
+from patterns import TOKEN, WORD, WORD2
 from disputes import tokens
 from apply import apply
 from validate_patches import sites
 
 from wikikit.export.corpus import load_corpus
-from wikikit.scan import supplied
 from wikikit.source_pages import fetched_text
+
+#: Words in a row a patch brings that make a copy, not a coincidence
+RUN = 8
+
+
+def doubled(new: list[str], old: list[str], patched: list[str], ours: list[str]) -> str | None:
+    """A run of RUN words the patch brings (`new`, not all in what it
+    replaces, `old`) that the patched page holds twice or more, and more
+    often than our page does: text set twice.  A phrase our page itself
+    prints twice may stand twice; a table's words, from its re-reading, may
+    stand once where our judged page has none."""
+    have = set(old)
+    page, ourpage = " " + " ".join(patched) + " ", " " + " ".join(ours) + " "
+    for i in range(len(new) - RUN + 1):
+        run = new[i:i + RUN]
+        if all(w in have for w in run):
+            continue
+        r = " " + " ".join(run) + " "
+        if page.count(r) > max(1, ourpage.count(r)):
+            return " ".join(run)
+    return None
 
 
 def vocabulary():
@@ -51,12 +77,12 @@ def vocabulary():
 def main():
     vocab = vocabulary()
     patches = json.loads((WORK / "merged.json").read_text(encoding="utf-8"))
+    dis = json.loads(DISPUTES.read_text(encoding="utf-8"))
     kept, report, t = {}, {}, Counter()
     for stem, ps in sorted(patches.items()):
         v, p = int(stem[3:5]), int(stem[-4:])
         ws = fetched_text(v, p) or ""
-        d = json.loads((reading(stem)).read_text(encoding="utf-8"))
-        O = tokens(v, p, supplied.name_sections(copy.deepcopy(d))["raw_text"])
+        O = tokens(v, p, judged_text(stem, dis))
         before = sites(tokens(v, p, ws), O)
         old_ours = {(o, c) for _, o, c in before}
         good = []
@@ -68,15 +94,20 @@ def main():
                         and ow in vocab and nw not in vocab:
                     why = f"real word to non-word: {x['old']!r} -> {x['new']!r}"
             if why is None:
-                after = sites(tokens(v, p, apply(ws, [x])), O)
+                P = tokens(v, p, apply(ws, [x]))
+                after = sites(P, O)
                 new = [s for s in after if (s[1], s[2]) not in old_ours and s[1]]
                 if x["kind"] == "table":
                     # a table's words are the judged reading's figure for figure
                     # (build_tables.py); a word our two reads split differently
                     # ("fort nightly", TIDE) is no disagreement
                     new = [s for s in new if re.sub(r"\W", "", s[0]) != re.sub(r"\W", "", s[1])]
+                twice = len(TOKEN.findall(x["new"])) >= RUN and \
+                    doubled(tokens(v, p, x["new"]), tokens(v, p, x["old"]), P, O)
                 if new:
                     why = f"creates a disagreement: ws {new[0][0][:40]!r} vs ours {new[0][1][:40]!r}"
+                elif twice:
+                    why = f"sets text twice: {twice!r}"
                 elif len(after) >= len(before):
                     if x["kind"] == "table":
                         # a table's gain is its setting, which no word measures:

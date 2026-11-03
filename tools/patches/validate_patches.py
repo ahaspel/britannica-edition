@@ -1,8 +1,8 @@
 """Every patch in patches.json, checked mechanically (no sampling, no model):
 
   (c) agreement   Wikisource's page before and after patching, each compared
-                  with our page by the judge's own tokens (disputes.tokens,
-                  difflib): every patched page must differ from ours at FEWER
+                  with our page as the judge compared it (`paths.judged_text`)
+                  by the judge's own tokens (disputes.tokens, difflib): every patched page must differ from ours at FEWER
                   places, and at NO place where the unpatched page agreed —
                   a patch may only remove a disagreement, never make one
   (b) words       no patch takes out an ordinary word: Wikisource's text it
@@ -14,7 +14,6 @@
 
 Writes validate.json {stem: [problems]}; prints the tally.
 Usage: validate_patches.py  (book root)"""
-import copy
 import difflib
 import json
 import re
@@ -25,7 +24,7 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
-from paths import WORK, reading
+from paths import DISPUTES, WORK, judged_text
 from patterns import RAW_MATH
 sys.path.insert(0, "tools/diagnostics")
 import supplied_gate as g
@@ -34,7 +33,6 @@ from apply import apply
 from raw_tokens import SPLIT, norm
 from build_words import COMMON
 
-from wikikit.scan import supplied
 from wikikit.source_pages import fetched_text
 
 WORDS = {w for w in COMMON if len(w) >= 3}
@@ -53,14 +51,13 @@ def sites(a, b):
 
 def main():
     patches = json.loads((WORK / (sys.argv[1] if len(sys.argv) > 1 else "kept.json")).read_text(encoding="utf-8"))
+    dis = json.loads(DISPUTES.read_text(encoding="utf-8"))
     problems, tally, tex = {}, Counter(), {}
     for stem, ps in sorted(patches.items()):
         v, p = int(stem[3:5]), int(stem[-4:])
         ws = fetched_text(v, p) or ""
         patched = apply(ws, ps)
-        d = json.loads((reading(stem)).read_text(encoding="utf-8"))
-        ours = supplied.name_sections(copy.deepcopy(d))["raw_text"]
-        O = tokens(v, p, ours)
+        O = tokens(v, p, judged_text(stem, dis))
         before, after = sites(tokens(v, p, ws), O), sites(tokens(v, p, patched), O)
         bad = []
         if len(after) >= len(before):
