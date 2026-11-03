@@ -53,6 +53,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import difflib
 import json
 import re
 import sys
@@ -105,19 +106,42 @@ def _prose(ws: list[str]) -> list[str]:
     return [w for w in ws if len(w) >= 4 and w.isalpha()]
 
 
+#: Words in a row that place a stretch of prose on a page
+GRAM = 5
+#: A stretch ours sets ELSEWHERE keeps this share of its GRAM-word sequences
+#: (OCR noise and all: 28%+ on the 63 supplied pages; a lost one, 0-4%) ...
+MOVED = 0.15
+#: ... or, a table ours reads across where the OCR read down (vol 25 p. 615's
+#: Speakers: no sequence survives), this share of its distinct words (93%; a
+#: lost stretch 36-73%: its common words are on the page elsewhere)
+REORDERED = 0.85
+
+
 def missing_run(theirs: list[str], ours: list[str]) -> int:
-    """The longest run of the fetched page's prose words, in order, that ours
-    does not have — each of ours matched once."""
+    """The longest run of the fetched page's prose words that ours has
+    nowhere: the two sequences aligned, a stretch opposite which ours has
+    nothing (or that many fewer words), unless ours sets it elsewhere (MOVED)
+    or in another order (REORDERED).  Never a bag of words alone: a lost
+    passage's words ("printing", "which") are on the page elsewhere, and
+    matched there they hid three strips read empty, each a fifth of its page,
+    that entered and shipped (2026-11-03: longest run 6-14 by the bag, 194-226
+    here).  Nor alignment alone: ten good pages set a column, a figure's text,
+    a table or the notes in another order than Wikisource's OCR."""
     theirs, ours = _prose(theirs), _prose(ours)
-    have = Counter(ours)
-    run = best = 0
-    for w in theirs:
-        if have[w] > 0:
-            have[w] -= 1
-            run = 0
-        else:
-            run += 1
-            best = max(best, run)
+    grams = {tuple(ours[i:i + GRAM]) for i in range(len(ours) - GRAM + 1)}
+    have = set(ours)
+    best = 0
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, theirs, ours, autojunk=False).get_opcodes():
+        short = (i2 - i1) - (j2 - j1)
+        if op not in ("delete", "replace") or short <= best:
+            continue
+        run = theirs[i1:i2]
+        seqs = [tuple(run[i:i + GRAM]) for i in range(len(run) - GRAM + 1)]
+        if seqs and sum(s in grams for s in seqs) >= MOVED * len(seqs):
+            continue
+        if len(set(run) & have) >= REORDERED * len(set(run)):
+            continue
+        best = short
     return best
 
 
