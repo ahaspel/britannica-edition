@@ -11,6 +11,8 @@ WORD = re.compile(r"[^\W\d_]+")
 TOKEN = re.compile(r"[^\W\d_]+|\d+")
 WORD2 = re.compile(r"[^\W\d_]{2,}")
 WORD3 = re.compile(r"[^\W\d_]{3,}")
+#: a run of letters and figures together ("Cr89o" is one)
+ALNUM = re.compile(r"[^\W_]+")
 #: a template's name, at its opening
 TEMPLATE_NAME = re.compile(r"\{\{\s*([^|{}]*?)\s*(?:\||\}\})")
 

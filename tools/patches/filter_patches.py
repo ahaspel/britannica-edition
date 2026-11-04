@@ -14,10 +14,16 @@ it at ours leaves Wikisource's own copy standing; its sole disagreement
 counts as removed: Fig. 7's curve legend inserted mid-sentence, vol 27
 p. 176; "3. National Standards" over "Totals", vol 28 p. 478).
 
+Kept but doubted (`doubt`, laid by install.py only on a person's ruling): a
+word patch replacing clean text with text unlike it, or adding many words —
+where our reading is itself wrong, Wikisource's right words count as the
+disagreement a patch removes.
+
 Our page is the text the judge compared (`paths.judged_text`).
 
 Writes kept.json (the kept patches) and filter_report.json.
 Usage: filter_patches.py  (book root)"""
+import difflib
 import json
 import re
 import sys
@@ -28,7 +34,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
 from paths import DISPUTES, FILTER_VOCAB, WORK, judged_text
-from patterns import TOKEN, WORD, WORD2
+from patterns import ALNUM, TOKEN, WORD, WORD2
 from disputes import tokens
 from apply import apply
 from validate_patches import sites
@@ -38,6 +44,42 @@ from wikikit.source_pages import fetched_text
 
 #: Words in a row a patch brings that make a copy, not a coincidence
 RUN = 8
+#: A word patch resembling what it replaces less than this (letters and
+#: figures, difflib), where what it replaces is clean — real words, numbers —
+#: is a reading's text for the print's, not an OCR correction ...
+LIKE = 0.5
+#: ... and one adding this many words over what it replaces sets text where
+#: the two pages' texts do not line up.  Either waits for a person's ruling.
+INSERT = 8
+#: Characters clean text is made of besides letters and figures
+_CLEAN = re.compile(r"[\w\s.,;:'’()\-–—&]*")
+
+
+def doubt(v: int, p: int, x: dict, vocab: set[str]) -> str | None:
+    """Why a word patch the checks pass must still wait for a person, or None.
+    The checks count disagreements with our reading, so where our reading is
+    itself wrong and clean, Wikisource's right words "disagree" and a patch
+    replacing them passes: a bibliography's entries spliced and swapped (ten
+    patches, vol 24 p. 797), a paragraph laid over a figure key's "H" (vol 26
+    p. 68), "Martha's Vineyard" -> "Fire Island" (vol 25 p. 851), all
+    installed and built (2026-11-03)."""
+    if x["kind"] != "word":
+        return None
+    added = len(tokens(v, p, x["new"])) - len(tokens(v, p, x["old"]))
+    if added >= INSERT:
+        return f"adds {added} words"
+    a, b = (re.sub(r"[\W_]", "", s.lower()) for s in (x["old"], x["new"]))
+    pieces = ALNUM.findall(x["old"])
+    # clean: every piece a corpus word or a number.  A piece mixing letters
+    # and figures is OCR ("Cr89o", "Io0"); figures alone becoming letters are
+    # a formula's OCR ("2502" -> "2SO4")
+    clean = pieces and _CLEAN.fullmatch(x["old"]) and all(
+        w.isdigit() or (w.isalpha() and w.lower() in vocab) for w in pieces)
+    formula = all(w.isdigit() for w in pieces) and re.search(r"[^\W\d_]", x["new"])
+    if len(a) >= 4 and clean and not formula \
+            and difflib.SequenceMatcher(None, a, b, autojunk=False).ratio() < LIKE:
+        return "replaces clean text with text unlike it"
+    return None
 
 
 def doubled(new: list[str], old: list[str], patched: list[str], ours: list[str]) -> str | None:
@@ -124,6 +166,11 @@ def main():
                 t[f"dropped ({x['kind']})"] += 1
                 t["dropped: " + why.split(":")[0]] += 1
             else:
+                # kept for the desk's patch screen, flagged; install.py lays it
+                # only on a person's ruling
+                if d := doubt(v, p, x, vocab):
+                    x = {**x, "doubt": d}
+                    t["kept, waiting for a ruling: " + d.split(" ")[0]] += 1
                 good.append(x)
                 t[f"kept ({x['kind']})"] += 1
         if good:

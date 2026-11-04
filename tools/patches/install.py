@@ -19,7 +19,9 @@ Refuses too — --dry as well, so build.sh fails — if a patch installed now
 would be lost with no reason: every one is installed again, or dropped
 (drop.json, a person's ruling, the filter's refusal — each printed with its
 reason), or its page's own text enters (2026-10-20: 32 installed patches
-lost to a reassembly of our pages, silently).
+lost to a reassembly of our pages, silently).  A patch the filter doubts
+(`filter_patches.doubt`) waits for a person's ruling at the desk's patch
+screen, and Wikisource's text stands meanwhile.
 --dry: install nothing; say whether the result equals data/patches.json.
 Usage: install.py [--dry]  (book root)"""
 import json
@@ -65,6 +67,14 @@ def dropped(stem: str, x: dict) -> bool:
     return any(stem == s and (x["old"] == pre or (len(pre) >= 60 and x["old"].startswith(pre))) for s, pre in drop)
 
 
+def waiting(stem: str, x: dict) -> bool:
+    """A patch the filter doubts (`filter_patches.doubt`: clean text replaced
+    by text unlike it, or many words added) is laid only on a person's ruling
+    to keep or edit it; until then Wikisource's text stands."""
+    r = ruled.get((stem, x["old"], x["new"]))
+    return bool(x.get("doubt")) and not (r and r["ruling"] in ("keep", "edit"))
+
+
 def laid(stem: str, x: dict) -> dict:
     """The patch as installed: a person's edit in its place, if they made one
     (its own span: the patch's, or wider)."""
@@ -85,8 +95,10 @@ def ours_enters(v: int, p: int) -> bool:
 out, problems, t, entered = {}, [], Counter(), set()
 for stem in sorted(judged):
     ps_all = ok.get(stem, [])
-    ps = [laid(stem, x) for x in ps_all if not dropped(stem, x)]
-    t["dropped"] += len(ps_all) - len(ps)
+    held = [x for x in ps_all if not dropped(stem, x) and waiting(stem, x)]
+    ps = [laid(stem, x) for x in ps_all if not dropped(stem, x) and not waiting(stem, x)]
+    t["waiting for a ruling"] += len(held)
+    t["dropped"] += len(ps_all) - len(ps) - len(held)
     t["ruled at the desk"] += sum(1 for x in ps_all if (stem, x["old"], x["new"]) in ruled)
     t["edited at the desk"] += sum(1 for x in ps_all if ruled.get((stem, x["old"], x["new"]), {}).get("ruling") == "edit")
     t["in"] += len(ps_all)
@@ -112,7 +124,8 @@ for stem in sorted(judged):
     t["pages: patched"] += 1
     t["installed"] += len(ps)
     t["installed formulas"] += sum(x["kind"] == "formula" for x in ps)
-assert t["in"] == t["installed"] + t["dropped"] + t[NOT_READ] or problems, dict(t)
+assert t["in"] == t["installed"] + t["dropped"] + t["waiting for a ruling"] + t[NOT_READ] or problems, dict(t)
+doubted = {(s, x["old"], x["new"]): x["doubt"] for s, xs in ok.items() for x in xs if x.get("doubt")}
 # every installed patch is installed again or has its reason
 sig = lambda x: (x["kind"], x["old"], x["new"])
 for k, ps in have.items():
@@ -126,6 +139,9 @@ for k, ps in have.items():
         if why := refused.get((stem, x["old"][:80], x["new"][:80])):
             t["installed patches the filter now refuses"] += 1
             print(f"{label(stem)}: installed patch dropped, the filter: {why[:80]} — {what}")
+        elif why := doubted.get((stem, x["old"], x["new"])):
+            t["installed patches now waiting for a ruling"] += 1
+            print(f"{label(stem)}: installed patch held for a ruling, the filter doubts it: {why} — {what}")
         else:
             t["installed patches lost"] += 1
             problems.append((stem, [f"{label(stem)}: an installed patch would be lost, no reason: {what}"]))

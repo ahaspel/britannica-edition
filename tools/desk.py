@@ -144,6 +144,8 @@ class Patches:
                      if l["old"] == x["old"][:200] and l["new"] == x["new"][:200]]
             flags += [f"validator: {why}" for old, why in self.faults.get(stem, []) if _quoted(x, old)]
             flags += [f"the page's patches together: {w}" for w in together]
+            # the filter doubts it: laid only on a ruling to keep or edit
+            flags += [f"waits for a ruling: {x['doubt']}"] if x.get("doubt") else []
             dropped = any(s == stem and _quoted(x, old) for s, old in self.drop)
             r = rulings.get((x["old"], x["new"]))
             out.append({**{k: x[k] for k in ("kind", "start", "end", "old", "new")}, "flags": flags,

@@ -21,7 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from paths import ANSWERS, DISPUTES, RULINGS, reading
-from patterns import WORD
+from patterns import ALNUM, WORD
 sys.stdout.reconfigure(encoding="utf-8")
 from judge import ruling
 
@@ -69,7 +69,7 @@ CAPTION = re.compile(r"^fig \d+\b")
 
 def _norm(t):
     import unicodedata
-    return " ".join(re.findall(r"[^\W_]+", unicodedata.normalize("NFKC", t).lower()))
+    return " ".join(ALNUM.findall(unicodedata.normalize("NFKC", t).lower()))
 
 
 def is_caption(site, ours_norm):
