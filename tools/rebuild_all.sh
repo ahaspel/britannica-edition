@@ -30,7 +30,7 @@
 #                 6.3 Reader's Guide
 #   7  Gates      7.1 quality report · 7.2 overlap audit (reports)
 #                 7.3 mangled-marker · 7.4 link census · 7.5 contributor-dedup
-#                 7.6 image coverage · 7.8 word count (gates) · 7.9 stamp
+#                 7.6 image coverage · 7.7 section links · 7.8 word count (gates) · 7.9 stamp
 #   8  Deploy     opt-in (--deploy) — the SITE only; default is build-only
 #
 # 6.4 (download bundles) and 7.7 (TEI validation) moved out 2026-10-10: they
@@ -398,6 +398,15 @@ uv run python -m wikikit.diagnostics.check_dedup_candidates
 echo
 echo "=== Phase 7.6: Image-coverage gate [$(elapsed)] ==="
 uv run python -m wikikit.diagnostics.check_image_coverage
+
+# --- Phase 7.7: Section-link gate ---
+# Every `/article/X#section-Y` the corpus renders must land on an id X has.
+# 329 of 2,033 shipped pointing nowhere (2026-11-04): an apostrophe's `&#39;`
+# read as the `#`, and fragments bound to headings their article lacks.  The
+# MDX build caught it, a derivative after the deploy.  ~20s.
+echo
+echo "=== Phase 7.7: Section-link gate [$(elapsed)] ==="
+uv run python -m wikikit.diagnostics.check_section_links
 
 # --- Phase 7.8: Word-count gate ---
 # The shipped `word_count` must be `countable_words(body)`, its one owner.  The
