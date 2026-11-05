@@ -38,7 +38,17 @@ LIVE = "https://britannica11.org/data/articles/{}.json"
 # (2026-08-15: the -4 that failed the first gate run were three citations that
 # became BETTER links — Wikisource, the cited book itself — and one honest
 # strip).  Resolution is the thing this census exists to measure.
-ANCHOR = re.compile(r'<a href="/article/[^"]*" class="article-link"')
+#
+# Links to ANOTHER article only.  A link to the page it sits on is no
+# cross-reference: production's SEINE-INFÉRIEURE linked "France" to its own
+# "#section-france", a heading it lacks, and the fix that stopped such links
+# (2026-11-04) read here as a loss.  Whether a self-link's section lands is
+# Phase 7.7's question (check_section_links), not this census's.
+ANCHOR = re.compile(r'<a href="/article/([^"#]*)[^"]*" class="article-link"')
+
+
+def count(stem, d):
+    return sum(1 for target in ANCHOR.findall(d.get("rendered_html") or "") if target != stem)
 
 
 def local_count(stem):
@@ -46,7 +56,7 @@ def local_count(stem):
         d = json.loads((ART / f"{stem}.json").read_text(encoding="utf-8"))
     except Exception:
         return None
-    return len(ANCHOR.findall(d.get("rendered_html") or ""))
+    return count(stem, d)
 
 
 def live_count(stem):
@@ -55,7 +65,7 @@ def live_count(stem):
             LIVE.format(stem), headers={"User-Agent": "britannica11-census/1.0"})
         with urllib.request.urlopen(req, timeout=30) as r:
             d = json.loads(r.read().decode("utf-8"))
-        return len(ANCHOR.findall(d.get("rendered_html") or ""))
+        return count(stem, d)
     except Exception:
         return None
 
