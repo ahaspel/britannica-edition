@@ -1,7 +1,8 @@
 # Zenodo deposit — the TEI edition
 
-**Status: 2026.5 published 2026-10-16**, DOI `10.5281/zenodo.23426594`,
-against `tei-2026.5` (`d04703d`). 2026.4 was published 2026-10-13 as
+**Status: 2026.6 published 2026-11-06**, DOI `10.5281/zenodo.24014983`,
+against `tei-2026.6` (`e33a92d`).  2026.5 was published 2026-10-16 as
+`10.5281/zenodo.23426594` against `tei-2026.5` (`d04703d`). 2026.4 was published 2026-10-13 as
 `10.5281/zenodo.23353109` against `tei-2026.4` (`f63a65b`; four
 `corrections.json` entries in that tree postdate the bundle and entered 2026.5).
 The tags `tei-2026.4` and `tei-2026.5` were made on 2026-10-16 — 2026.4's had
@@ -27,6 +28,18 @@ the one the website should cite.
 | **version** — 2026.3 | `10.5281/zenodo.23288358` (published 2026-10-10, against `tei-2026.3` = `9a5c0ca`) |
 | **version** — 2026.4 | `10.5281/zenodo.23353109` (published 2026-10-13, against `tei-2026.4` = `f63a65b`) |
 | **version** — 2026.5 | `10.5281/zenodo.23426594` (published 2026-10-16, against `tei-2026.5` = `d04703d`) |
+| **version** — 2026.6 | `10.5281/zenodo.24014983` (published 2026-11-06, against `tei-2026.6` = `e33a92d`) |
+
+2026.6's file: `eb1911-tei.tar.gz`, 105,582,796 bytes,
+`md5:04331255e59b66cf66e4bce77e1abf84` (SHA-256 `f5704a27…7bb77657ba`) — verified
+2026-11-06 as the live record's only file, identical to our build and to the copy
+at britannica11.org/download/; version `2026.6`, licence `cc-by-sa-4.0`, creator
+`Haspel, Aaron` with the ORCID, the latest under the concept DOI.  Warranted by
+criterion 1 in substance: `corrections.json` unchanged (319), but the patches laid
+on raw-OCR pages went from 9,048 on 273 pages to 11,600 on 432, and they change
+the text a citer quotes.  The published description first said "11,601 on 433"
+(the `_doc` key counted as a page).  Not yet compared document by document
+against 2026.5's file.
 
 2026.5's file: `eb1911-tei.tar.gz`, 105,491,183 bytes,
 `md5:e47a2e4cdab58b311c93dc540e8d3480` (SHA-256 `b750a1f1…e1abab7a`) — verified

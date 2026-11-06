@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-10-10.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-11-06.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,41 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-10-16)
+## CURRENT STATE (2026-11-06)
+
+### 2026-11-05 — release: site, downloads, HuggingFace, Zenodo 2026.6, Payhip
+
+From the rebuild of 2026-11-04 21:27 (`--reimport`, 37,226 articles, on
+`e33a92d`), deployed 2026-11-05 08:07; derivatives built 08:38 and published
+from the same rebuild.  Two site-only deploys on 2026-11-04 (the patch rulings;
+then five patches dropped, URANUS / MINERALOGY / SKELETON) went before it.
+
+- **Patches:** 11,600 on 432 pages (2026.5: 9,048 on 273).  A word patch unlike
+  the clean text it replaces waits for a ruling (`data/readings/patch_rulings.json`,
+  keyed by stem, old and new; `install.py` honours keep / drop / edit); all 33
+  doubted were ruled.  Five more dropped that lose what the print has.
+- **Section links land** (wikikit `d535a48`, `c574479`): 329 of the site's 2,033
+  section links named an anchor their article lacks — 262 from an apostrophe's
+  `&#39;` read as the `#` of a section, 67 from the resolver binding a heading
+  the target does not have, mostly an article's link to itself.  Now every one
+  of 1,707 lands.  **Phase 7.7** (`check_section_links`, no exceptions file)
+  gates it; the MDX link check had caught it a derivative late.
+- **Link census** counts links to another article only: a self-link's loss
+  (SEINE-INFÉRIEURE's "France" → its own `#section-france`) failed Phase 7.4.
+- **Checked against live** before deploy: 250 articles changed, every one in
+  its links — 314 hrefs re-pointed within the same article, 47 self-links
+  unlinked with their text kept (17 articles lose their own title from the
+  Cross-references panel; 8 lose a panel that held only it).  After deploy the
+  250 are identical to the build.
+- **Derivatives:** TEI 37,225 valid, EPUBCheck clean (sampler + complete), MDX
+  verified (401,896 internal links).
+- **Zenodo 2026.6** — `10.5281/zenodo.24014983` against `tei-2026.6`
+  (`docs/zenodo_deposit.md`).
+- **Payhip** — EPUB + both MDX zips + README uploaded by hand.
+
+**Next:** the self-links unlinked above are references to OTHER articles the
+resolver bound to the page itself — TOKUGAWA's "Japan: History", PRESENTATIONISM's
+"Psychology", SARTHE's towns (Le Mans …): bind them to their articles.
 
 ### 2026-10-16 — release: site, downloads, HuggingFace, Zenodo 2026.5, Payhip
 
