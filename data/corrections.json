@@ -85,6 +85,13 @@
    "to": "'''TOLSTOY, LEO'''"
   }
  ],
+ "_21:930_note": "Vol 21 page 930 (printed p. 897) section s3 transcribes the city's heading as '''POLTIERS,''' — OCR's l for i.  The page's own running head (`{{EB1911 Page Heading|  |POISSY|POITIERS|897}}`) and the next page's (`|898|POITIERS||`) print POITIERS.  Titled POLTIERS, the article could not be found by its name: VIENNE's 'Poitiers' bound WILLIAM OF POITIERS (2026-11-06).  The id is hashed from the section slug, so the address does not move.",
+ "21:930": [
+  {
+   "from": "'''POLTIERS,'''",
+   "to": "'''POITIERS,'''"
+  }
+ ],
  "_20:13_note": "Vol 20 contributor table writes John Charles Van Dyke's signature with lowercase 'van' in both the initials (J. C. van D.) and the Author-link slug — disagreeing with vol 14's canonical capital-V form (J. C. Van D., Author:John Charles Van Dyke).  Net effect: build_contributor_table.py creates two distinct Contributor records for one person; vol 14's contribution (INNESS, GEORGE) goes to one record, vol 20's (PAINTING, U.S.) to the other.  Capital V is the standard reference form for the American art historian (1856-1932).",
  "20:13": [
   {
