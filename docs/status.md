@@ -48,6 +48,38 @@ agent's memory directory and are not duplicated here.
 
 ## CURRENT STATE (2026-11-06)
 
+### 2026-11-06 — release: site, downloads, HuggingFace, Payhip (no new Zenodo)
+
+From the rebuild of 2026-11-06 12:43 (37,228 articles, stamp `6a3fe46df5dfe57f`,
+wikikit `4adb621`), deployed 15:20; derivatives built and published from the
+same rebuild.  Zenodo stays at 2026.6 (user: too small a change for a version).
+
+- **Self-links bound:** `{{EB1911 intra-article link|Display|Target}}` is an
+  article link (Wikisource renders it the same), not a jump within the page.
+  SARTHE's, SOMME's, YONNE's towns, every department's "France", PRESENTATIONISM's
+  "Psychology", TOKUGAWA's "Japan: History" (→ JAPAN#Domestic History) land on
+  their articles.  The display slot comes first: SOMME prints "Ham", SOMERVILLE
+  "U.S.A.", RHÔNE "Villefranche", as the page does.
+- **"X, THE" is found as X:** 220 titles invert the article; "United States"
+  missed the exact rungs and an embedding chose UNITED STATES NAVAL ACADEMY
+  (26 links) or REFORMED CHURCH IN THE UNITED STATES.  Of 30,800 cross-references
+  exactly 28 move, all to UNITED STATES, THE / HEBRIDES, THE.  "Septuagint" →
+  SEPTUAGINT, THE.
+- **POITIERS** retitled from the source typo POLTIERS (corrections, vol 21 p. 897).
+- **Checked against live** before deploy: 32 articles changed, each explained;
+  link census 206 → 207.  After deploy the 32 plus a sample of 100 are
+  byte-identical to the build.
+- **HuggingFace card names its subsets** (`configs:` — articles default,
+  xref_edges, topics, contributors).  Without them the Hub read every JSON file
+  as one table and failed to cast, so `load_dataset("britannica11/eb1911")`
+  raised and the full viewer was off — since the first upload, 2026-07-06.
+  Monthly downloads had fallen ~1,400 → ~800; likely the slower publish cadence
+  since 2026-10-10 (Hub pushes: Aug 17, Sep 7, Oct 5), not this fault.
+- **Payhip** — EPUB + both MDX zips + README by hand.
+
+**Next:** anchors for in-article jumps to run-in subheads, numbered paragraphs
+and figures (OILS "Oil Testing", NUMBER "§ 39", MAP "fig. 11").
+
 ### 2026-11-05 — release: site, downloads, HuggingFace, Zenodo 2026.6, Payhip
 
 From the rebuild of 2026-11-04 21:27 (`--reimport`, 37,226 articles, on
