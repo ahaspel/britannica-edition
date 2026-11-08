@@ -1178,6 +1178,23 @@
       "should_title": "SHAKESPEARE, WILLIAM",
       "policy": "work-to-author",
       "key": "TIMON OF ATHENS (SHAKESPEARE)"
+    },
+    {
+      "source": "04-0693-dd33a0",
+      "src_title": "BROWNING, ROBERT",
+      "target": "PAULINE: A FRAGMENT OF A CONFESSION",
+      "display": "Pauline",
+      "observed": "07-0403-b1fa2d.json",
+      "observed_title": "CRAVEN, PAULINE MARIE ARMANDE AGLAÉ",
+      "verdict": "wrong",
+      "basis": "no link.  `[[Pauline: A Fragment of a Confession|''Pauline'']]` is Browning's first poem, a Wikisource work page; CRAVEN is a French writer named Pauline.  The poem has no article, and its author is the referring article.",
+      "by": "user",
+      "session": "2026-11-08 address-link audit before rebuild",
+      "shape": "wikilink to another work; the title's colon read as an address, the name fished to a namesake",
+      "should": null,
+      "should_title": null,
+      "policy": "abstain",
+      "key": "PAULINE: A FRAGMENT OF A CONFESSION"
     }
   ],
   "_policy": {
