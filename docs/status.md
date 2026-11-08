@@ -51,7 +51,10 @@ agent's memory directory and are not duplicated here.
 ### 2026-11-08 — site deploy: same-named articles picked by heading and qualifier
 
 From the rebuild of 2026-11-08 09:33 (37,228 articles, stamp `a279efc8b679292c`,
-wikikit `282d3f9`), deployed 10:05.  Derivatives not yet built.
+wikikit `282d3f9`), deployed 10:05.  Derivatives built from it and published
+the same morning: corpus, maps, TEI and the vol 1 sampler to /download, the
+HuggingFace mirror (commit `8641364`); the complete EPUB (EPUBCheck 0/0/0) and
+both MDX editions built, for Payhip by hand.
 
 - **The ~55 "see ITALY: *History*" heading links were not a loss.** The source
   writes `{{1911link|Italy|Italy#History}}, ''History''`; the name now links
@@ -88,8 +91,8 @@ wikikit `282d3f9`), deployed 10:05.  Derivatives not yet built.
   deploy: all identical to the build; CALIPHATE, SPINEL, BROWNING, BORGIA,
   JOHN XXIII rendered HTML equal.
 
-**Next:** derivatives for this build when wanted.  The capture tool's input
-re-read and CRLF output, when convenient.
+**Next:** Payhip upload of the four files (by hand).  The transform-snapshot
+capture tool now keeps committed inputs and writes LF (`--reinput` to re-read).
 
 ### 2026-11-07 — site deploy: figure links, Wikisource addresses, unprinted headings
 

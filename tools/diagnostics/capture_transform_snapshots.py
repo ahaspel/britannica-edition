@@ -1,26 +1,30 @@
-"""Capture ``_transform_text_v2`` input/output snapshots for a fixed
-set of seed articles, used by `tests/regression/test_transform_snapshots.py`
-to lock in current behaviour during the `_transform_text_v2`
-decomposition.
+"""Capture element-transform snapshots for a fixed set of seed articles, used
+by `tests/regression/test_transform_snapshots.py`.
 
-For each seed article, reads the SAME raw body that ``transform_articles``
-reads during a real run — `Article.body`, stored whole — and writes:
+Each seed is a pair under ``tests/snapshots/transform/``:
 
-  tests/snapshots/transform/<stable_id>.input.txt
-  tests/snapshots/transform/<stable_id>.body.txt
-  tests/snapshots/transform/<stable_id>.meta.json
+  <stem>.input.txt   the FIXTURE — the article's raw body (`Article.body`)
+  <stem>.body.txt    the SNAPSHOT — ``process_elements(_source_clean(input))``
 
-The regression test loads each triple, runs ``_transform_text_v2``
-on the input, and asserts equality with the captured body.  Any
-divergence is a behaviour change that must be intentional.
+The test re-runs the transform on the input and asserts the body.  Any
+divergence is a behaviour change that must be intentional; re-run this tool
+for the seeds it changes, read the diff, commit it with the change.  Do NOT
+re-run after a purely structural refactor — snapshots should not move.
 
-Re-run this script whenever you intentionally change behaviour (and
-update each seed's body snapshot accordingly).  Do NOT re-run after
-purely structural refactors — those should leave snapshots
-untouched, which is the whole point of the scaffolding.
+THE INPUT IS FROZEN.  By default a seed's body is regenerated from its
+COMMITTED input, so a refresh records the code's change and nothing else.  It
+used to re-read every input from the database, which has the source's later
+edits in it (Wikisource is edited continuously — 21.7% of pages in five
+months): refreshing STEAM ENGINE for a link fix on 2026-11-08 also rewrote 135
+lines of its input with upstream fraction and table edits, burying the one
+intended change.  Re-reading the source is a separate, deliberate act:
+``--reinput``, or a seed that has no input yet.
+
+Files are written with LF line endings — on Windows `write_text` translates to
+CRLF, which git then reports as a whole-file change.
 
 Usage::
-    uv run python tools/diagnostics/capture_transform_snapshots.py
+    uv run python tools/diagnostics/capture_transform_snapshots.py [--reinput] [STEM …]
 """
 from __future__ import annotations
 
@@ -114,46 +118,48 @@ def _article_for_stem(session, filename_stem: str):
     return best[1] if best else None
 
 
-def capture_one(session, filename_stem: str) -> tuple[str, str]:
-    """Capture input + body for a seed, located by its filename stem."""
+def _write(path: Path, text: str) -> None:
+    path.write_text(text, encoding="utf-8", newline="\n")
+
+
+def _read_input_from_db(session, filename_stem: str):
+    """(raw body, None) from the database, or (None, (status, message))."""
     article = _article_for_stem(session, filename_stem)
     if not article:
-        return ("MISSING", f"no DB row matching stem {filename_stem}")
+        return None, ("MISSING", f"no DB row matching stem {filename_stem}")
     if article.article_type == "plate":
-        return ("SKIP", "plate articles use parse_plate, not _transform_text_v2")
+        return None, ("SKIP", "plate articles are parsed by the plate path, not here")
+    if not article.body:
+        return None, ("MISSING", "article has no body")
+    return article.body, None
 
-    joined_raw = article.body or ""
-    if not joined_raw:
-        return ("MISSING", "article has no body")
-    first_page = article.page_start
 
-    # IMPORTANT: snapshot the IMMEDIATE output of `_transform_text_v2`,
-    # not the eventually-exported article body.  The exported body
-    # passes through downstream phases (resolve_xrefs translates `LN`
-    # markers to filename targets; a page-marker translator converts
-    # ws-page numbers to printed-page numbers; per-article qualifier
-    # strip) that are not part of the transform under test.  Locking
-    # those in would defeat the snapshot's purpose.
-    # Produce EXACTLY as `test_transform_snapshots` does — `_source_clean`, the
-    # re-appliable half of `preprocess`, NOT the full pass.  The full pass
-    # re-runs quote-run over already-converted markup; the test says so and
-    # computes the other way, so a fixture captured through `preprocess` would
-    # disagree with its own check the moment the two diverged.
-    body = process_elements(_source_clean(joined_raw),
-                            ElementContext(volume=article.volume))
+def capture_one(session, filename_stem: str, *, reinput: bool) -> tuple[str, str]:
+    """Regenerate a seed's body — from its committed input, or with ``reinput``
+    (or no input on disk) from a fresh read of the database."""
+    input_path = SNAPSHOT_DIR / f"{filename_stem}.input.txt"
+    fresh = reinput or not input_path.exists()
+    if fresh:
+        raw, failed = _read_input_from_db(session, filename_stem)
+        if failed:
+            return failed
+    else:
+        raw = input_path.read_text(encoding="utf-8")
 
-    # The `.body.txt` IS the snapshot; `.input.txt` is its fixture.  No
-    # per-seed meta file: the test parses volume + page from the `NN-NNNN-…`
-    # stem (the article's first ws page == `first_page`), so a metadata
-    # sidecar would only drift with the DB (it carried the now-removed
-    # stable_id/sizes).
-    (SNAPSHOT_DIR / f"{filename_stem}.input.txt").write_text(joined_raw,
-                                                              encoding="utf-8")
-    (SNAPSHOT_DIR / f"{filename_stem}.body.txt").write_text(body,
-                                                             encoding="utf-8")
-    return ("OK", f"vol {article.volume} pp.{article.page_start}-"
-                  f"{article.page_end}  in={len(joined_raw):>7,}  "
-                  f"out={len(body):>7,}")
+    # The IMMEDIATE output of the element transform, not the exported body: the
+    # export's later phases (xref resolution, page-position mapping) are not
+    # under test.  Produced EXACTLY as `test_transform_snapshots` does —
+    # `_source_clean`, the re-appliable half of `preprocess`, NOT the full pass,
+    # which would re-run quote-run over already-converted markup.  Volume comes
+    # from the stem, as the test reads it.
+    body = process_elements(_source_clean(raw),
+                            ElementContext(volume=int(filename_stem[:2])))
+
+    if fresh:
+        _write(input_path, raw)
+    _write(SNAPSHOT_DIR / f"{filename_stem}.body.txt", body)
+    return ("OK", f"{'input re-read' if fresh else 'input kept   '}  "
+                  f"in={len(raw):>7,}  out={len(body):>7,}")
 
 
 def main() -> int:
@@ -162,17 +168,20 @@ def main() -> int:
     # seed can be captured WITHOUT rewriting the other baselines (some of which
     # are post-downstream form from add_snapshot_from_production).  No args =
     # capture every seed.
-    only = set(sys.argv[1:])
-    seeds = tuple(f for f in SEED_FILENAMES if f in only) if only else SEED_FILENAMES
-    if only and not seeds:
-        print(f"no seed matches {sorted(only)}; known: {SEED_FILENAMES}")
+    args = sys.argv[1:]
+    reinput = "--reinput" in args
+    only = {a for a in args if a != "--reinput"}
+    unknown = only - set(SEED_FILENAMES)
+    if unknown:
+        print(f"not a seed: {sorted(unknown)}; known: {SEED_FILENAMES}")
         return 1
+    seeds = tuple(f for f in SEED_FILENAMES if f in only) if only else SEED_FILENAMES
     s = SessionLocal()
     try:
         widest = max(len(f) for f in seeds)
         ok = miss = skip = 0
         for stem in seeds:
-            status, msg = capture_one(s, stem)
+            status, msg = capture_one(s, stem, reinput=reinput)
             print(f"  [{status:7}] {stem:<{widest}}  {msg}")
             if status == "OK":   ok += 1
             elif status == "SKIP": skip += 1
