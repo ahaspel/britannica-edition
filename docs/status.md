@@ -46,7 +46,55 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-11-06)
+## CURRENT STATE (2026-11-07)
+
+### 2026-11-07 — site deploy: figure links, Wikisource addresses, unprinted headings
+
+From the rebuild of 2026-11-07 17:01 (37,228 articles, stamp `a1801abad49f7867`,
+wikikit `9a72ee9`), deployed 18:34.  Derivatives not yet built.
+
+- **Figures anchor and link** (`_figure_anchors.py`, post-walk beside
+  `stamp_section_anchors`): each image whose caption prints a number gets
+  «ANCHOR» "Fig. N" ("Fig. N second" for a repeat — MAP restarts for Map
+  Projections); "fig. 4" / "figs. 2 and 3" link to the nearest anchor of that
+  number.  7,905 anchors in 974 articles, 8,911 links in 639 (HYDRAULICS 185).
+  Captions pair in order across a run of images, a numbered file taking its own
+  caption first; a file/caption disagreement gets no anchor.  Not linked: a
+  plate's figure ("Plate II. fig. 3", "fig. 120, Plate XXV."), another work's
+  ("op. cit. p. 40, fig. 2"), a part of a figure (ECHINODERMA "fig. 19, 2").
+  Section links 1,707 → 10,579, all landing (7.7).
+- **MAP's Crates globe** is printed "FIG. 2" a second time (vol 17 p. 635,
+  scan read) — the book's numbering, not a transcription error; no correction.
+- **A Wikisource address is the target, whichever slot holds it:** two-slot
+  link templates are written both ways round; a slot carrying `#Section` or a
+  subpage path is never what the page prints (663 raw links, never both slots).
+  JULIAN showed "Shapur#II", ASMARA "Abyssinia#History", SENEGAL
+  "Senegal (colony)#Inhabitants"; now "Shapur II.", "Abyssinia", "native", and
+  the 211 `1911link`/`11link` cases keep the section they name.
+- **An unprinted heading lands on its article** (xref path only): ENGLAND has no
+  "Inhabitants", and UNITED KINGDOM's "English" fuzzed to ENGLISH LANGUAGE;
+  now ENGLAND (likewise SCOTLAND, INDIA).  Exact titles only; a Wikisource
+  qualifier ("Gregory (Popes)") tried bare first.  21 references move corpus-wide,
+  all improvements (BRIDGES not BRIDGE, TRANSVAAL not FINANCE, PAPACY's popes).
+- **Panel lists other articles only** (`panel_xrefs`): NUMBER listed NUMBER;
+  111 self entries in 50 articles, and every figure link would have added one.
+  Also leaves `xref_edges.jsonl` and the search index.
+- **Fragment jumps bind their own heading** (BIBLE "N.T. Criticism", UNITED
+  KINGDOM "Regular Army").
+- **Checked against live** before deploy: 11,862 articles with section links
+  plus 300 random — 11,584 differ only by figure work, 58 only inside links (all
+  displays now as printed), 65 otherwise, each read; the 300 identical; link
+  census 207 → 207.  After deploy the 974 figure articles and 300 random are
+  identical to the build; JULIAN, HYDRAULICS, NUMBER rendered HTML equal.
+- **Known losses, next build:** ~55 "see ITALY: *History*" heading links became
+  plain text — the name link now goes to ITALY#history itself, and the heading
+  link was bound through the name's old target (`bound` should also key the
+  article part).  CALIPHATE / CARMATHIANS' Egypt link lost its section.
+  SENEGAL's 13 "native" links reach the river SENEGAL (live had COLONY): the
+  bare name matches two titles, so its self-reference is not seen.  GREGORY,
+  LEO, ALEXANDER (popes) still need the "(Popes)" qualifier to pick.
+
+**Next:** the four losses above; derivatives for this build when wanted.
 
 ### 2026-11-06 — release: site, downloads, HuggingFace, Payhip (no new Zenodo)
 
