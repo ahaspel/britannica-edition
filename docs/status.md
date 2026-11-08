@@ -46,7 +46,50 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-11-07)
+## CURRENT STATE (2026-11-08)
+
+### 2026-11-08 — site deploy: same-named articles picked by heading and qualifier
+
+From the rebuild of 2026-11-08 09:33 (37,228 articles, stamp `a279efc8b679292c`,
+wikikit `282d3f9`), deployed 10:05.  Derivatives not yet built.
+
+- **The ~55 "see ITALY: *History*" heading links were not a loss.** The source
+  writes `{{1911link|Italy|Italy#History}}, ''History''`; the name now links
+  ITALY#history and the heading stays plain — the rule Wikisource's own order
+  (`Spain#History|Spain`) always had: one link per reference.  Live's second
+  link on the heading came from the old misread.
+- **An address's heading picks among same-named articles** (`_exact_at_heading`):
+  ROME#republic, not a town ROME; CHINA#history, not the porcelain; the colony
+  SENEGAL, not the river (its 13 "native" links are now jumps within the page);
+  SALAMANCA#battle-of-salamanca-1812, not CITY; ALEXANDER#vi, not POPE,
+  ALEXANDER.  Without a heading, a Wikisource qualifier picks through the
+  fisher, taken only when the qualifier decided: "Gregory (Popes)/Gregory XII"
+  → GREGORY the popes, not the Scottish family; LEO the popes, not CAPRIVI.
+- **An address target leads a wordier display:** CALIPHATE / CARMATHIANS'
+  `Egypt#Mahommedan`, shown "Egypt: History (§ Mahommedan)", had been landed on
+  bare EGYPT by the display's colon reading (a regression from 11-07's
+  unprinted-heading rule).  Back on #mahommedan.
+- **An HTML tag marks the printed slot:** SPINEL's
+  `{{11link|magnetite (Fe′′Fe<sub>2</sub>′′′O<sub>4</sub>)|Magnetite}}` lost the
+  formula from the text, and `</sub>` split as a subpage.  Now printed as the book has it.
+- **Wiktionary glosses never link** (`[[wikt:…]]` cites a dictionary): EGYPT's
+  `r`/`tꜣ`/`jnt` had bound R, T and REPRODUCTIVE SYSTEM; `bolis` BOLI;
+  "trebled" TREBLE.  `[[w:…]]` left as it is (mostly good; three bad binds, all
+  in vol 1 front matter).
+- **BROWNING's *Pauline*** ruled no link (`xref_adjudications.json`, by user);
+  it now renders as an external link to the poem on Wikisource, as the 954 other
+  unresolved Wikisource citations do (EPUB and MDX pass `https://` through).
+- **Transform snapshots** AFRICA and STEAM ENGINE refreshed for 11-07's address
+  fix (bodies regenerated from their committed inputs; the capture tool would
+  also have pulled upstream edits into the inputs and written CRLF).
+- **Checked against live** before deploy: 11,708 section-link articles plus 300
+  random — 59 link targets changed and 20 passages, each read, all fixes; gates
+  all passed (census 207 → 207, 10,696 section links all landing).  After
+  deploy: all identical to the build; CALIPHATE, SPINEL, BROWNING, BORGIA,
+  JOHN XXIII rendered HTML equal.
+
+**Next:** derivatives for this build when wanted.  The capture tool's input
+re-read and CRLF output, when convenient.
 
 ### 2026-11-07 — site deploy: figure links, Wikisource addresses, unprinted headings
 
@@ -94,7 +137,7 @@ wikikit `9a72ee9`), deployed 18:34.  Derivatives not yet built.
   bare name matches two titles, so its self-reference is not seen.  GREGORY,
   LEO, ALEXANDER (popes) still need the "(Popes)" qualifier to pick.
 
-**Next:** the four losses above; derivatives for this build when wanted.
+**Next:** the four losses above — dealt with 2026-11-08 (above).
 
 ### 2026-11-06 — release: site, downloads, HuggingFace, Payhip (no new Zenodo)
 
