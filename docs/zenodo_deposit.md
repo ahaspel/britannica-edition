@@ -1,7 +1,10 @@
 # Zenodo deposit — the TEI edition
 
-**Status: 2026.6 published 2026-11-06**, DOI `10.5281/zenodo.24014983`,
-against `tei-2026.6` (`e33a92d`).  2026.5 was published 2026-10-16 as
+**Status: 2026.7 published 2026-11-08**, DOI `10.5281/zenodo.24061248`,
+against `tei-2026.7` (britannica `7cd42e9`, wikikit `df2a6e7` — the engine has
+its own repository since 2026-09-29, so the tree is the pair).  2026.6 was
+published 2026-11-06 as `10.5281/zenodo.24014983` against `tei-2026.6`
+(`e33a92d`).  2026.5 was published 2026-10-16 as
 `10.5281/zenodo.23426594` against `tei-2026.5` (`d04703d`). 2026.4 was published 2026-10-13 as
 `10.5281/zenodo.23353109` against `tei-2026.4` (`f63a65b`; four
 `corrections.json` entries in that tree postdate the bundle and entered 2026.5).
@@ -29,6 +32,20 @@ the one the website should cite.
 | **version** — 2026.4 | `10.5281/zenodo.23353109` (published 2026-10-13, against `tei-2026.4` = `f63a65b`) |
 | **version** — 2026.5 | `10.5281/zenodo.23426594` (published 2026-10-16, against `tei-2026.5` = `d04703d`) |
 | **version** — 2026.6 | `10.5281/zenodo.24014983` (published 2026-11-06, against `tei-2026.6` = `e33a92d`) |
+| **version** — 2026.7 | `10.5281/zenodo.24061248` (published 2026-11-08, against `tei-2026.7` = britannica `7cd42e9` + wikikit `df2a6e7`) |
+
+2026.7's file: `eb1911-tei.tar.gz`, 105,806,202 bytes,
+`md5:ab022fe6849592396c3253888ff4664d` (SHA-256 `ad471e02…d155ff755`) — verified
+2026-11-08 as the live record's only file, identical to our build and to the copy
+at britannica11.org/download/ (size and SHA-256); version `2026.7`, licence
+`cc-by-sa-4.0`, creator `Haspel, Aaron` with the ORCID, the four related
+identifiers inherited.  Four builds since 2026.6 (11-06, 11-07, two on 11-08).
+Warranted by criteria 1 and 2: `corrections.json` 268 → 270 (POITIERS, SENEGAL),
+and the encoding — every link is a `<ref target>` and every anchor an `<anchor
+xml:id>` in the bundle, so the figure anchors (7,905), the section and figure
+links (1,707 → 10,777), the link displays now as printed, the links moved off
+same-named articles, and SPINEL's restored formulas all reach it.  Inventory
+unchanged (37,225, all valid).
 
 2026.6's file: `eb1911-tei.tar.gz`, 105,582,796 bytes,
 `md5:04331255e59b66cf66e4bce77e1abf84` (SHA-256 `f5704a27…7bb77657ba`) — verified

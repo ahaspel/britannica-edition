@@ -48,6 +48,52 @@ agent's memory directory and are not duplicated here.
 
 ## CURRENT STATE (2026-11-08)
 
+### 2026-11-08 (afternoon) — release: site, downloads, HuggingFace, Zenodo 2026.7, Payhip
+
+From the rebuild of 2026-11-08 13:57 (37,228 articles, stamp `8ba46593970cbd4a`,
+wikikit `df2a6e7`), deployed 15:07.  Derivatives built from it and published:
+corpus, maps, TEI (37,225 valid; 105,806,202 bytes, sha256 `ad471e02…d155ff755`)
+and the vol 1 sampler to /download, HuggingFace (commit `f4386d3`); the complete
+EPUB (EPUBCheck 0/0/0) and both MDX editions built and uploaded to Payhip by
+hand.  **Zenodo 2026.7** — `10.5281/zenodo.24061248` against `tei-2026.7`
+(britannica `7cd42e9`, wikikit `df2a6e7`; `docs/zenodo_deposit.md`).
+
+- **Jumps within an article land** (`_jump_anchors.py`, post-walk): an
+  article's own jump to a numbered paragraph (NUMBER "§ 39"), an equation
+  number (WAVE "(1)") or a run-in subhead (OILS "Oil Testing") gets an anchor
+  there when no heading of that name answers.  WAVE restarts its numbering by
+  part, so an equation jump takes the nearest equation before it.  14 dead
+  jumps of 83; the other 69 unchanged.
+- **A `#` target is judged by its parts** (extractor): WAVE's `#1` was "too
+  short", `Caliphate#C` "ended in an initial", `Alexandria (Egypt)#Battle of
+  1801` "a bibliographic date" — 12 source links never reached the resolver.
+  Now WAVE's 5 jumps and CALIPHATE §§ B, C, SUDAN § D, GEOMETRY § V, PIUS V,
+  SIXTUS V, ALEXANDRIA's battle of 1801 land.
+- **A figure after another article's name is that article's** (fixes 11-07):
+  NERVE's "see BRAIN, fig. 8" linked NERVE's own Fig. 8 — 21 such links in 12
+  articles (COSTUME, PLATE, WEAVING, THERMOMETRY …).  Stamped «LN[sec]», it
+  lands on BRAIN#fig-8, or stays text where that article has no such figure
+  (VESTMENTS "Mitre, fig. 3").  52 more gain a link ("In the article Greek Art,
+  fig. 12 represents …" across the mythology articles).
+- **"see History, below" points within**: a see followed by below/above that
+  names an own heading.  PORTUGAL and TUNISIA had bound HISTORY (the article on
+  historiography).  The other 47 below/above sees are articles and stay so.
+- **SENEGAL "I. and II. below"** — the second written `{{11link|II.|Upper
+  Senegal}}`, bound LEOPOLD II; corrected to its own section (scan read, vol 24
+  p. 640).
+- **Left as is:** SIGISMUND II's plain "(see Poland, History)" — "B is a
+  heading of A" is wrong about half the time ("Nile, Sobat").
+- **Checked against live** before deploy: 11,644 section-link articles and 300
+  random identical; 3 link retargets and 61 passages, each read, all the above.
+  Section links 10,696 → 10,777, all landing; census 207 → 207.  The gate's
+  count rose 15 where the bodies show 12 new section links — the other 3 not
+  traced (the intermediate build was overwritten).  After deploy the 11,708
+  section-link articles and 300 random are identical to the build; NERVE, WAVE,
+  NUMBER, PORTUGAL, TUNISIA, OILS, FRENCH REVOLUTIONARY WARS rendered HTML equal.
+
+**Next:** nothing queued from this release.  Older backlog stands (tables,
+Century vol 1, margin headings on unproofread pages, vol 26 p. 64 equation).
+
 ### 2026-11-08 — site deploy: same-named articles picked by heading and qualifier
 
 From the rebuild of 2026-11-08 09:33 (37,228 articles, stamp `a279efc8b679292c`,
