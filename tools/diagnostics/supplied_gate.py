@@ -42,6 +42,16 @@ the door lets in must pass every check below.  Each check caught a real fault:
             footnotes from SPECTROSCOPY and 12 margin headings from SURVEYING
             to checks that compared words (2026-10-12)
 
+REPORTED, NEVER FAILED:
+  links     a page edited at the desk keeps its text (`set_page_text`) and no
+            longer reassembles, so a link fixed on Wikisource after the edit
+            never reaches it (`assembled` holds only unedited pages to the
+            fetched page).  Each link on the fetched page is matched to the
+            link on ours with the same printed words; a different markup, or
+            no link there, is listed.  A difference may be deliberate (vol 18
+            p. 272's `{{EB1911 lkpl|Cloud|clouds}}`, ours, for Wikisource's
+            red link): the person reads the list and decides.  2026-11-09.
+
 Production's printed numbers come from the live site.  Read-only.  Exit 1 on
 any failure.
 
@@ -301,6 +311,35 @@ def compared(ws: str, pv: dict) -> str:
     return images.without_table_pictures(ws)
 
 
+def link_drift(d: dict, ws: str | None) -> list[str]:
+    """A desk-edited page's links that differ from the fetched page's: each
+    fetched link matched to ours by its printed words (`carry.links`).  Empty
+    for a page never edited at the desk (it reassembles from the fetched page,
+    and `assembled` holds it there)."""
+    if not ws or not d["provenance"].get("page_edited"):
+        return []
+    raw = d["raw_text"]
+    flat = lambda s: re.sub(r"\s+", " ", s).strip()
+
+    def by_words(text: str) -> dict[str, list[str]]:
+        out: dict[str, list[str]] = {}
+        for l in carry.links(text):
+            a, b = l["d"]
+            out.setdefault(flat(text[a:b]), []).append(flat(l["markup"]))
+        return out
+
+    ours = by_words(raw)
+    found = []
+    for shown, marks in by_words(ws).items():
+        for mark in marks:
+            if mark in ours.get(shown, []):
+                continue
+            there = ours.get(shown)
+            found.append(f"«{shown}»: Wikisource {mark}, ours "
+                         + (" / ".join(there) if there else "no link"))
+    return found
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("-v", "--verbose", action="store_true", help="list the held pages' gaps too")
@@ -308,10 +347,12 @@ def main() -> int:
     req = urllib.request.Request(LIVE_PRINTED, headers={"User-Agent": "supplied_gate"})
     live = json.loads(urllib.request.urlopen(req, timeout=60).read())
 
-    fails, held, pages, entered = {}, [], 0, 0
+    fails, held, pages, entered, drift = {}, [], 0, 0, {}
     for f, d in load_supplied(SUPPLIED):
         pages += 1
         ws = fetched_text(d["volume"], d["page_number"])
+        if (moved := link_drift(d, ws)):
+            drift[f.name] = moved
         if prefer({"raw_text": ws} if ws is not None else None, d) is not d:
             held.append((f.name, list(checks(d, ws, live))))
             continue
@@ -348,6 +389,11 @@ def main() -> int:
     for name, why in held:
         gaps = "; ".join(w for k, w in why if k == "complete") or "the fetched page stands"
         print(f"  HELD {name}: {gaps}" if args.verbose else f"  HELD {name}")
+    # reported, never failed: links on desk-edited pages that differ from the
+    # fetched page's (a fix made on Wikisource after the edit, or ours on purpose)
+    for name, moved in drift.items():
+        for m in moved:
+            print(f"  LINKS {name}: {m}")
     print(f"{pages} supplied pages: {entered} enter, {len(held)} held back by the door; "
           f"{len(fails)} fail" + ("" if fails else " — GATE PASSES"))
     return 1 if fails else 0
